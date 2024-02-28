@@ -13,8 +13,6 @@
 		<slf4j>2.0.7</slf4j>
 	</properties>
 
-
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>

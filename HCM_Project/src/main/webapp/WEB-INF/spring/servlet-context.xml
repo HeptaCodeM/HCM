@@ -8,7 +8,6 @@
 	<context:component-scan base-package="com.hcm.grw"/>
 	<mvc:annotation-driven/>
 
-	<!-- TODO 05 viewResolver -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 			<property name="prefix" value="/WEB-INF/views/"/>
 			<property name="suffix" value=".jsp"/>
