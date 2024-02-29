@@ -18,6 +18,7 @@ public class RJY_JUnitTest {
 	
 	@Test
 	public void test() {
+		int a = 1;
 		assertNotNull(sessionTemplate);
 	}
 
