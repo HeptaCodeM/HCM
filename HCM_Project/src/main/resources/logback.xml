@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%d{HH:mm} %-5level %logger{36} - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>C:/Client_Tools/eclipse_spring_MVC/workspace_spring/log/HCM_Project.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>C:/Client_Tools/eclipse_spring_MVC/workspace_spring/log/HCM_Project-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <Pattern>%d{HH:mm} %-5level %logger{36} - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="com.ojs.edu" level="TRACE"/>
+    <logger name="jdbc.sqlonly" level="TRACE" />
+    <logger name="jdbc.resultsettable" level="TRACE" />
+    <logger name="com.zaxxer.hikari" level="INFO"/>
+    <logger name="io.lettuce.core" level="INFO"/>
+    <logger name="io.netty" level="INFO"/>
+    <logger name="org.mybatis.spring" level="INFO"/>
+    
+
+    <root level="debug">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>

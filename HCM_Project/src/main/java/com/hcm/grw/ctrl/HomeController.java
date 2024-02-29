@@ -1,7 +1,14 @@
 package com.hcm.grw.ctrl;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class HomeController {
@@ -17,13 +24,15 @@ public class HomeController {
 	}
 	
 	@GetMapping("/Error404.do")
-	public String Error404() {
-		return "Error404";
+	@ResponseBody
+	public void Error404(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		request.getRequestDispatcher("/WEB-INF/error/Error404.jsp").forward(request, response);
 	}
 	
 	@GetMapping("/Error500.do")
-	public String Error500() {
-		return "Error500";
+	@ResponseBody
+	public void Error500(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		request.getRequestDispatcher("/WEB-INF/error/Error500.jsp").forward(request, response);
 	}
 	
 	@GetMapping("/login.do")
