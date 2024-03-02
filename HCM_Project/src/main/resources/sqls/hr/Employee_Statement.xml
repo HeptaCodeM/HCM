@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hcm.grw.model.mapper.EmployeeDaoImpl">
+<mapper namespace="com.hcm.grw.model.mapper.hr.EmployeeDaoImpl">
 
 	<!-- 일반로그인 -->
 	<select id="getLogin" parameterType="String" resultType="EmployeeDto">
@@ -34,7 +34,7 @@
 	</select>
 
 	<!-- 비밀번호 초기화 처리 -->
-	<update id="getInitPwdcheck" parameterType="Map">
+	<update id="setInitPwd" parameterType="Map">
 		UPDATE EMPLOYEE SET
 		EMPL_PWD = #{empl_pwd},
 		EMPL_MODIFY_ID = #{empl_id},
@@ -142,6 +142,9 @@
 		A.EMOR_ID,
 		C.EMPL_ID,
 		C.EMPL_NAME,
+		B.EMOD_ORDER_DT,
+		B.EMOD_TYPE,
+		J.COCO_NAME AS EMOD_TYPE_NM,
 		B.EMOD_PREV_DEPT,
 		D.COCO_NAME AS EMOD_PREV_DEPT_NM,
 		B.EMOD_ORDER_DEPT,
@@ -163,6 +166,7 @@
 		LEFT OUTER JOIN COMMON_CODE G ON B.EMOD_ORDER_RANK = G.COCO_CD
 		LEFT OUTER JOIN COMMON_CODE H ON B.EMOD_PREV_POSITION = H.COCO_CD
 		LEFT OUTER JOIN COMMON_CODE I ON B.EMOD_ORDER_POSITION = I.COCO_CD
+		LEFT OUTER JOIN COMMON_CODE J ON B.EMOD_TYPE = J.COCO_CD
 		WHERE EMOR_STATUS = 'Y'
 		AND C.EMPL_ID = #{empl_id}
 		ORDER BY A.EMOR_ID DESC, B.EMOD_SEQ ASC
@@ -174,6 +178,9 @@
 		A.EMOR_ID,
 		C.EMPL_ID,
 		C.EMPL_NAME,
+		B.EMOD_ORDER_DT,
+		B.EMOD_TYPE,
+		J.COCO_NAME AS EMOD_TYPE_NM,
 		B.EMOD_PREV_DEPT,
 		D.COCO_NAME AS EMOD_PREV_DEPT_NM,
 		B.EMOD_ORDER_DEPT,
@@ -195,6 +202,7 @@
 		LEFT OUTER JOIN COMMON_CODE G ON B.EMOD_ORDER_RANK = G.COCO_CD
 		LEFT OUTER JOIN COMMON_CODE H ON B.EMOD_PREV_POSITION = H.COCO_CD
 		LEFT OUTER JOIN COMMON_CODE I ON B.EMOD_ORDER_POSITION = I.COCO_CD
+		LEFT OUTER JOIN COMMON_CODE J ON B.EMOD_TYPE = J.COCO_CD
 		WHERE EMOR_STATUS = 'Y'
 		ORDER BY A.EMOR_ID DESC, B.EMOD_SEQ ASC
 	</select>
@@ -263,17 +271,16 @@
 	</update>
 
 	<!-- 출퇴근 현황 -->
-	<select id="commuteList" parameterType="Map">
+	<select id="commuteList" parameterType="Map" resultType="CommuteDto">
 		SELECT
+		A.EMCO_SEQ,
 		A.EMPL_ID,
 		A.EMCO_IN_DT,
-		A.EMCO_OUT_DT,
-		TO_CHAR(A.EMCO_IN_DT, 'YYYYMMDD')
+		A.EMCO_OUT_DT
 		FROM EMP_COMMUTE A
 		INNER JOIN EMPLOYEE B ON A.EMPL_ID = B.EMPL_ID
 		WHERE A.EMPL_ID = #{empl_id}
-		AND TO_CHAR(A.EMCO_IN_DT, 'YYYYMMDD') BETWEEN TO_DATE(#{searchdt}, 'YYYYMM') AND TRUNC(ADD_MONTHS(TO_DATE(#{searchdt},
-		'YYYYMM'), 1), 'MM')
+		AND TO_CHAR(A.EMCO_IN_DT, 'YYYYMMDD') BETWEEN TO_DATE(#{searchdt}, 'YYYYMM') AND TRUNC(ADD_MONTHS(TO_DATE(#{searchdt},'YYYYMM'), 1), 'MM')
 		ORDER BY A.EMCO_SEQ DESC
 	</select>
 
@@ -316,7 +323,7 @@
 
 
 	<!-- 휴가정보 조회 -->
-	<select id="holidayList" parameterType="String">
+	<select id="holidayList" parameterType="String" resultType="EmployeeHolidayDto">
 		SELECT
 		A.SIDB_DOC_NUM,
 		B.SICA_NAME,

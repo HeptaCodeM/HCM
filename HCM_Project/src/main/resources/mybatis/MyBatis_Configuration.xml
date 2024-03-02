@@ -10,6 +10,7 @@
 		<typeAlias type="com.hcm.grw.dto.hr.OrderInfoListDto" alias="OrderInfoListDto" />
 		<typeAlias type="com.hcm.grw.dto.hr.OrderInfoDetailDto" alias="OrderInfoDetailDto" />
 		<typeAlias type="com.hcm.grw.dto.hr.CommuteDto" alias="CommuteDto" />
+		<typeAlias type="com.hcm.grw.dto.hr.EmployeeHolidayDto" alias="EmployeeHolidayDto" />
 	</typeAliases>
 
 	<mappers>
