@@ -13,6 +13,6 @@
 	</typeAliases>
 
 	<mappers>
-		<mapper resource="sqls/Employee_Statement.xml" />
+		<mapper resource="sqls/hr/Employee_Statement.xml" />
 	</mappers>
 </configuration>
