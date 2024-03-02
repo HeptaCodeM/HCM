@@ -5,11 +5,11 @@
 		<typeAlias type="java.lang.Integer" alias="Integer" />
 		<typeAlias type="java.lang.String" alias="String" />
 		<typeAlias type="java.util.Map" alias="Map" />
-		<typeAlias type="com.hcm.grw.dto.EmployeeDto" alias="EmployeeDto" />
-		<typeAlias type="com.hcm.grw.dto.SnsInfoDto" alias="SnsInfoDto" />
-		<typeAlias type="com.hcm.grw.dto.OrderInfoListDto" alias="OrderInfoListDto" />
-		<typeAlias type="com.hcm.grw.dto.OrderInfoDetailDto" alias="OrderInfoDetailDto" />
-		<typeAlias type="com.hcm.grw.dto.CommuteDto" alias="CommuteDto" />
+		<typeAlias type="com.hcm.grw.dto.hr.EmployeeDto" alias="EmployeeDto" />
+		<typeAlias type="com.hcm.grw.dto.hr.SnsInfoDto" alias="SnsInfoDto" />
+		<typeAlias type="com.hcm.grw.dto.hr.OrderInfoListDto" alias="OrderInfoListDto" />
+		<typeAlias type="com.hcm.grw.dto.hr.OrderInfoDetailDto" alias="OrderInfoDetailDto" />
+		<typeAlias type="com.hcm.grw.dto.hr.CommuteDto" alias="CommuteDto" />
 	</typeAliases>
 
 	<mappers>
