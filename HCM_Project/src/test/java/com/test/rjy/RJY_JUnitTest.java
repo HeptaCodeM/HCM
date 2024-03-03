@@ -15,9 +15,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.hcm.grw.dto.DocBoxDto;
-import com.hcm.grw.model.mapper.IDocBoxDao;
-import com.hcm.grw.model.service.IDocBoxService;
+import com.hcm.grw.dto.doc.DocBoxDto;
+import com.hcm.grw.model.mapper.doc.IDocBoxDao;
+import com.hcm.grw.model.service.doc.IDocBoxService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/**/*.xml")

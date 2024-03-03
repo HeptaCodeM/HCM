@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
-	
 	<typeAliases>
-		<typeAlias type="com.hcm.grw.dto.DocBoxDto" alias="DocBoxDto" />
-		<typeAlias type="com.hcm.grw.dto.EmpDto" alias="EmpDto" />
+		<typeAlias type="com.hcm.grw.dto.doc.SignTreeDto" alias="SignTreeDto"/>
+		<typeAlias type="com.hcm.grw.dto.doc.SignFavoDto" alias="SignFavoDto"/>
+		<typeAlias type="com.hcm.grw.dto.doc.DocBoxDto" alias="DocBoxDto" />
 	</typeAliases>
 	
+
 	
 	
+	
+	
+
 	<mappers>
 		<mapper resource="sqls/DocBox_Statement.xml" />
+		<mapper resource="sqls/SignTree_Statement.xml"/>
+		<mapper resource="sqls/SignFavo_Statement.xml"/>
 	</mappers>
-	
 </configuration>
