@@ -2,4 +2,15 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
 	
+	<typeAliases>
+		<typeAlias type="com.hcm.grw.dto.DocBoxDto" alias="DocBoxDto" />
+		<typeAlias type="com.hcm.grw.dto.EmpDto" alias="EmpDto" />
+	</typeAliases>
+	
+	
+	
+	<mappers>
+		<mapper resource="sqls/DocBox_Statement.xml" />
+	</mappers>
+	
 </configuration>

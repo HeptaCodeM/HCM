@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcm.grw.model.mapper.DocBoxDaoImpl">
+
+	<!-- <resultMap type="com.hcm.grw.dto.EmpDto" id="EmpDto"> <result property="empl_id" 
+		column="EMPL_ID"/> <result property="empl_name" column="EMPL_NAME"/> <result 
+		property="empl_dept_cd" column="EMPL_DEPT_CD"/> </resultMap> -->
+
+
+	<!-- 전체 문서함 조회 -->
+	<select id="getAllDocs" resultType="DocBoxDto">
+		SELECT
+		SDB.SIDB_DOC_NUM,
+		SDB.SIDB_DOC_WRITEDT, SDB.SIDB_DOC_TITLE,
+		SDB.SIDB_DOC_CONTENT,
+		SDB.SICA_CD, SDB.SIDB_DOC_EXPIREDT,
+		SDB.SIDB_DOC_FLAG,
+		SDB.SIDB_DOC_APPRDT, SDB.SIDB_DOC_STAT,
+		SDB.EMPL_REF AS 참조자,
+		SDB.EMPL_DEPT_CD, SDB.SIDB_DOC_JSON,
+		E.EMPL_NAME AS 기안자
+		FROM
+		SIGN_DOC_BOX SDB
+		LEFT JOIN
+		EMPLOYEE E ON SDB.EMPL_ID = E.EMPL_ID
+		LEFT
+		JOIN
+		JSON_TABLE(
+		SDB.SIDB_DOC_JSON, '$[*]'
+		COLUMNS (
+		APPR_ID PATH
+		'$.APPR_ID',
+		APPR_DEPTH PATH '$.APPR_DEPTH',
+		APPR_SIGN PATH
+		'$.APPR_SIGN',
+		APPR_DT PATH '$.APPR_DT',
+		APPR_FLAG PATH '$.APPR_FLAG',
+		APPR_REPLY PATH '$.APPR_REPLY'
+		)
+		) AS SDBJ ON 1=1
+		WHERE
+		SDB.EMPL_ID =
+		#{empl_id}
+		OR SDBJ.APPR_ID = #{empl_id}
+		OR SDB.EMPL_REF = #{empl_id}
+		OR
+		SDB.EMPL_DEPT_CD = #{empl_dept_cd}
+	</select>
+
+
+	<!-- 내가 기안한 문서 조회 -->
+	<select id="getMyGian" resultType="DocBoxDto">
+		SELECT
+		SDB.SIDB_DOC_WRITEDT,
+		SDB.SIDB_DOC_TITLE, SDB.SIDB_DOC_CONTENT,
+		SDB.SICA_CD,
+		SDB.SIDB_DOC_EXPIREDT, SDB.SIDB_DOC_FLAG,
+		SDB.SIDB_DOC_APPRDT,
+		SDB.SIDB_DOC_STAT, SDB.EMPL_REF AS EMPL_ID,
+		SDB.EMPL_DEPT_CD,
+		SDB.SIDB_DOC_JSON, E.EMPL_NAME AS EMPLOYEE_NAME
+		FROM
+		SIGN_DOC_BOX SDB
+		LEFT JOIN
+		EMPLOYEE E ON SDB.EMPL_ID = E.EMPL_ID
+		WHERE
+		SDB.EMPL_ID =
+		#{empl_id} AND SIDB_DOC_STAT = '1'
+	</select>
+
+	<!-- 진행중인 결재 문서 조회 -->
+	<select id="getIngDocs" resultType="DocBoxDto">
+		SELECT SDB.SIDB_DOC_NUM,
+		E2.EMPL_NAME AS 현재결재자,
+		SDB.SIDB_DOC_WRITEDT, SDB.SIDB_DOC_TITLE,
+		SDB.SIDB_DOC_CONTENT,
+		SDB.SICA_CD, SDB.SIDB_DOC_EXPIREDT,
+		SDB.SIDB_DOC_FLAG,
+		SDB.SIDB_DOC_APPRDT, SDB.SIDB_DOC_STAT, SDB.EMPL_REF
+		AS,
+		SDB.EMPL_DEPT_CD, SDB.SIDB_DOC_JSON, E.EMPL_NAME AS 기안자
+		FROM
+		SIGN_DOC_BOX SDB
+		LEFT JOIN
+		EMPLOYEE E ON SDB.EMPL_ID = E.EMPL_ID
+		LEFT
+		JOIN
+		JSON_TABLE(
+		SDB.SIDB_DOC_JSON, '$[*]'
+		COLUMNS (
+		APPR_ID PATH
+		'$.APPR_ID',
+		APPR_DEPTH PATH '$.APPR_DEPTH',
+		APPR_SIGN PATH
+		'$.APPR_SIGN',
+		APPR_DT PATH '$.APPR_DT',
+		APPR_FLAG PATH '$.APPR_FLAG',
+		APPR_REPLY PATH '$.APPR_REPLY'
+		)
+		) AS SDBJ ON 1=1
+		LEFT JOIN
+		EMPLOYEE E2 ON
+		SDBJ.APPR_ID = E2.EMPL_ID
+		WHERE SDBJ.APPR_FLAG='0'
+		AND
+		SDBJ.APPR_DEPTH =
+		(
+		SELECT MIN(SDBJ2.APPR_DEPTH)
+		FROM JSON_TABLE(
+		SDB.SIDB_DOC_JSON, '$[*]'
+		COLUMNS (
+		APPR_ID PATH '$.APPR_ID',
+		APPR_FLAG PATH '$.APPR_FLAG',
+		APPR_DEPTH PATH '$.APPR_DEPTH'
+		)
+		) AS SDBJ2
+		WHERE SDBJ2.APPR_FLAG='0'
+		)
+		AND SDB.EMPL_ID = #{empl_id} AND SIDB_DOC_STAT ='2'
+	</select>
+
+	<!-- 승인된 결재 문서 조회 -->
+	<select id="getApprovedDocs" resultType="DocBoxDto">
+		SELECT
+		SDB.SIDB_DOC_WRITEDT, SDB.SIDB_DOC_TITLE, SDB.SIDB_DOC_CONTENT,
+		SDB.SICA_CD, SDB.SIDB_DOC_EXPIREDT, SDB.SIDB_DOC_FLAG,
+		SDB.SIDB_DOC_APPRDT, SDB.SIDB_DOC_STAT, SDB.EMPL_REF AS emplRef,
+		SDB.EMPL_DEPT_CD, SDB.SIDB_DOC_JSON, E.EMPL_NAME AS drafter
+		FROM
+		SIGN_DOC_BOX SDB
+		LEFT JOIN
+		EMPLOYEE E ON SDB.EMPL_ID = E.EMPL_ID
+		WHERE
+		SDB.EMPL_ID = #{empl_id} AND SIDB_DOC_STAT ='3'
+	</select>
+
+	<!-- 반려된 결재 문서 조회 -->
+	<select id="getDeniedDocs" resultType="DocBoxDto">
+		SELECT
+		SDB.SIDB_DOC_WRITEDT, SDB.SIDB_DOC_TITLE, SDB.SIDB_DOC_CONTENT,
+		SDB.SICA_CD, SDB.SIDB_DOC_EXPIREDT, SDB.SIDB_DOC_FLAG,
+		SDB.SIDB_DOC_APPRDT, SDB.SIDB_DOC_STAT, SDB.EMPL_REF AS emplRef,
+		SDB.EMPL_DEPT_CD, SDB.SIDB_DOC_JSON, E.EMPL_NAME AS drafter
+		FROM
+		SIGN_DOC_BOX SDB
+		LEFT JOIN
+		EMPLOYEE E ON SDB.EMPL_ID = E.EMPL_ID
+		WHERE
+		SDB.EMPL_ID = #{empl_id} AND SIDB_DOC_STAT ='4'
+	</select>
+
+
+	<!-- 나한테 결재 요청온 결재 문서 조회 -->
+	<select id="getMyTurnDocs" resultType="DocBoxDto">
+		SELECT
+		SDB.SIDB_DOC_NUM,
+		SDB.SIDB_DOC_WRITEDT, SDB.SIDB_DOC_TITLE, SDB.SIDB_DOC_CONTENT,
+		SDB.SICA_CD, SDB.SIDB_DOC_EXPIREDT, SDB.SIDB_DOC_FLAG,
+		SDB.SIDB_DOC_APPRDT, SDB.SIDB_DOC_STAT, SDB.EMPL_REF AS emplRef,
+		SDB.EMPL_DEPT_CD, SDB.SIDB_DOC_JSON, E.EMPL_NAME AS drafter
+		FROM
+		SIGN_DOC_BOX SDB
+		LEFT JOIN
+		EMPLOYEE E ON SDB.EMPL_ID = E.EMPL_ID
+		LEFT
+		JOIN
+		JSON_TABLE(
+		SDB.SIDB_DOC_JSON, '$[*]'
+		COLUMNS (
+		APPR_ID PATH
+		'$.APPR_ID',
+		APPR_DEPTH PATH '$.APPR_DEPTH',
+		APPR_SIGN PATH
+		'$.APPR_SIGN',
+		APPR_DT PATH '$.APPR_DT',
+		APPR_FLAG PATH '$.APPR_FLAG',
+		APPR_REPLY PATH '$.APPR_REPLY'
+		)
+		) AS SDBJ ON 1=1
+		WHERE
+		SDBJ.APPR_FLAG='0' AND SDBJ.APPR_ID= #{empl_id}
+		AND
+		SDBJ.APPR_DEPTH = (
+		SELECT MIN(SDBJ2.APPR_DEPTH)
+		FROM JSON_TABLE(
+		SDB.SIDB_DOC_JSON, '$[*]'
+		COLUMNS (
+		APPR_ID PATH '$.APPR_ID',
+		APPR_FLAG PATH '$.APPR_FLAG',
+		APPR_DEPTH PATH '$.APPR_DEPTH'
+		)
+		) AS SDBJ2
+		WHERE SDBJ2.APPR_FLAG='0'
+		)
+	</select>
+
+	<!-- 참조자로 지정된 결재 문서 조회 -->
+
+	<select id="getChamjoDocs" resultType="DocBoxDto">
+		SELECT
+		SDB.SIDB_DOC_NUM,
+		E2.EMPL_NAME AS approver, E.EMPL_NAME AS drafter,
+		SDB.SIDB_DOC_WRITEDT, SDB.SIDB_DOC_TITLE, SDB.SIDB_DOC_CONTENT,
+		SDB.SICA_CD, SDB.SIDB_DOC_EXPIREDT, SDB.SIDB_DOC_FLAG,
+		SDB.SIDB_DOC_APPRDT, SDB.SIDB_DOC_STAT, SDB.EMPL_REF AS reference,
+		SDB.EMPL_DEPT_CD AS referenceDept, SDB.SIDB_DOC_JSON
+		FROM
+		SIGN_DOC_BOX
+		SDB
+		LEFT JOIN
+		EMPLOYEE E ON SDB.EMPL_ID = E.EMPL_ID
+		LEFT JOIN
+		JSON_TABLE(
+		SDB.SIDB_DOC_JSON, '$[*]'
+		COLUMNS (
+		APPR_ID PATH '$.APPR_ID',
+		APPR_DEPTH
+		PATH '$.APPR_DEPTH',
+		APPR_SIGN PATH '$.APPR_SIGN',
+		APPR_DT PATH
+		'$.APPR_DT',
+		APPR_FLAG PATH '$.APPR_FLAG',
+		APPR_REPLY PATH
+		'$.APPR_REPLY'
+		)
+		) AS SDBJ ON 1=1
+		LEFT JOIN
+		EMPLOYEE E2 ON SDBJ.APPR_ID =
+		E2.EMPL_ID
+		WHERE
+		EXISTS (
+		SELECT 1
+		FROM
+		(SELECT REGEXP_SUBSTR(SDB.EMPL_REF,
+		'[^,]+', 1, level) AS EMPL_REF
+		FROM DUAL
+		CONNECT BY
+		REGEXP_SUBSTR(SDB.EMPL_REF, '[^,]+', 1, level) IS NOT NULL) Sub
+		WHERE
+		Sub.EMPL_REF=#{empl_id} OR SDB.EMPL_DEPT_CD = #{empl_dept_cd}
+		)
+	</select>
+
+	<!-- 상세 조회 -->
+	<select id="getDetailDocs" resultType="DocBoxDto">
+		SELECT
+		SDB.SIDB_DOC_NUM,
+		SDB.SIDB_DOC_WRITEDT, SDB.SIDB_DOC_TITLE, SDB.SIDB_DOC_CONTENT,
+		SDB.SICA_CD, SDB.SIDB_DOC_EXPIREDT, SDB.SIDB_DOC_FLAG,
+		SDB.SIDB_DOC_APPRDT, SDB.SIDB_DOC_STAT, SDB.EMPL_REF AS reference,
+		SDB.EMPL_DEPT_CD, SDB.SIDB_DOC_JSON, E.EMPL_NAME AS drafter
+		FROM
+		SIGN_DOC_BOX SDB
+		LEFT JOIN
+		EMPLOYEE E ON SDB.EMPL_ID = E.EMPL_ID
+		WHERE
+		SDB.SIDB_DOC_NUM = #{sidb_doc_num}
+	</select>
+
+
+	<!-- 결재승인 json 데이터 업데이트 + 문서 업데이트 트랜잭션 -->
+
+	<update id="approveJson">
+
+		UPDATE SIGN_DOC_BOX
+		SET SIDB_DOC_JSON =
+		JSON_TRANSFORM(
+		SIDB_DOC_JSON,
+		SET '$[0].APPR_FLAG' = '1'
+		)
+		WHERE
+		SIDB_DOC_NUM = #{sidb_doc_num}
+	</update>
+
+	<update id="approveDoc">
+
+		UPDATE SIGN_DOC_BOX
+		SET SIDB_DOC_STAT = '2'
+		WHERE
+		SIDB_DOC_NUM = #{sidb_doc_num}
+
+	</update>
+
+<!-- 문서반려 -->
+	<update id="denyDoc">
+
+		UPDATE SIGN_DOC_BOX
+		SET SIDB_DOC_STAT = '4'
+		WHERE
+		SIDB_DOC_NUM = #{sidb_doc_num}
+
+	</update>
+
+
+<!-- 최종승인 json 데이터 업데이트 + 문서 업데이트 트랜잭션 -->
+	<update id="finalJsonApprove">
+		UPDATE SIGN_DOC_BOX
+		SET
+		SIDB_DOC_JSON = JSON_TRANSFORM(
+		SIDB_DOC_JSON,
+		SET '$[2].APPR_FLAG' =
+		'1'
+		)
+		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
+	</update>
+
+	<update id="finalDocApprove">
+		UPDATE SIGN_DOC_BOX
+		SET SIDB_DOC_STAT = '3'
+		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
+	</update>
+</mapper>
