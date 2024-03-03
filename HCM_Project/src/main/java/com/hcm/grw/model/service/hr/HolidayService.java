@@ -1,10 +1,10 @@
-package com.hcm.grw.model.mapper.hr;
+package com.hcm.grw.model.service.hr;
 
 import java.util.List;
 
 import com.hcm.grw.dto.hr.HolidayDto;
 
-public interface HolidayDao {
+public interface HolidayService {
 
 	/*휴가일 발생 스케쥴 처리-cron*/
 	public int registEmployeeHoliday();

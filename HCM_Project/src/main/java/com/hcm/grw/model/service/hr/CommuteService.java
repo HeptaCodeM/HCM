@@ -1,11 +1,11 @@
-package com.hcm.grw.model.mapper.hr;
+package com.hcm.grw.model.service.hr;
 
 import java.util.List;
 import java.util.Map;
 
 import com.hcm.grw.dto.hr.CommuteDto;
 
-public interface CommuteDao {
+public interface CommuteService {
 
 	/*출근 등록*/
 	public int registCommute(String empl_id);

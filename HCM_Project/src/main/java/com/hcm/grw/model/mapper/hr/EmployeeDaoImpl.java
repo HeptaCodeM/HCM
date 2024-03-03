@@ -16,7 +16,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-	private String NS = "com.hcm.grw.model.mapper.hr.EmployeeDaoImpl";
+	private String NS = "com.hcm.grw.model.mapper.hr.EmployeeDaoImpl.";
 	
 	@Override
 	public EmployeeDto getLogin(String empl_id) {
