@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcm.grw.model.mapper.hr.SignDocBoxDaoImpl">
+
+	<resultMap type="com.hcm.grw.dto.hr.SignDocBoxDto" id="SignDocBoxDto">
+		<!-- <result property="sidb_doc_num" column="SIDB_DOC_NUM"/>
+		<result property="sidb_doc_writedt" column="SIDB_DOC_WRITEDT"/>
+		<result property="empl_id" column="EMPL_ID"/>
+		<result property="sidb_doc_title" column="SIDB_DOC_TITLE"/>
+		<result property="sidb_doc_content" column="SIDB_DOC_CONTENT"/>
+		<result property="sica_cd" column="SICA_CD"/>
+		<result property="sidb_doc_expiredt" column="SIDB_DOC_EXPIREDT"/>
+		<result property="sidb_doc_flag" column="SIDB_DOC_FLAG"/>
+		<result property="sidb_doc_apprdt" column="SIDB_DOC_APPRDT"/>
+		<result property="sidb_doc_delflag" column="SIDB_DOC_DELFLAG"/>
+		<result property="sidb_doc_alflag" column="SIDB_DOC_ALFLAG"/>
+		<result property="sidb_doc_stat" column="SIDB_DOC_STAT"/>
+		<result property="sidb_doc_modifydt" column="SIDB_DOC_MODIFYDT"/>
+		<result property="sidt_temp_cd" column="SIDT_TEMP_CD"/>
+		<result property="sidb_doc_json" column="SIDB_DOC_JSON"/>
+		<result property="empl_ref" column="EMPL_REF"/>
+		<result property="empl_dept_cd" column="EMPL_DEPT_CD"/>
+		<result property="sidb_doc_be" column="SIDB_DOC_BE"/>
+		<result property="sidb_doc_end" column="SIDB_DOC_END"/> -->
+		
+		<collection property="" resultMap=""/>
+		<collection property="" resultMap=""/>
+		<collection property="" resultMap=""/>
+		<collection property="" resultMap=""/>
+	</resultMap>
+
+</mapper>
