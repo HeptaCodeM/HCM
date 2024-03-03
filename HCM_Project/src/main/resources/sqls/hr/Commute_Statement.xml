@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcm.grw.model.mapper.hr.CommuteDaoImpl">
+
+
+	<!-- 출근 등록 -->
+	<insert id="registCommute" parameterType="CommuteDto">
+		<selectKey keyProperty="emco_seq" resultType="Integer" order="BEFORE">
+			SELECT NVL(MAX(EMCO_SEQ),0)+1 FROM EMP_COMMUTE
+		</selectKey>
+		INSERT INTO EMP_COMMUTE(EMCO_SEQ, EMPL_ID, EMCO_IN_DT)
+		VALUES(#{emco_seq}, #{empl_id}, CURRENT_DATE)
+	</insert>
+
+	<!-- 퇴근 등록 -->
+	<update id="updateCommute" parameterType="String">
+		UPDATE EMP_COMMUTE SET
+		EMCO_OUT_DT = CURRENT_DATE
+		WHERE EMCO_SEQ = #{emco_seq}
+	</update>
+
+	<!-- 출퇴근 현황 -->
+	<select id="commuteList" parameterType="Map" resultType="CommuteDto">
+		SELECT
+		A.EMCO_SEQ,
+		A.EMPL_ID,
+		A.EMCO_IN_DT,
+		A.EMCO_OUT_DT
+		FROM EMP_COMMUTE A
+		INNER JOIN EMPLOYEE B ON A.EMPL_ID = B.EMPL_ID
+		WHERE A.EMPL_ID = #{empl_id}
+		AND TO_CHAR(A.EMCO_IN_DT, 'YYYYMMDD') BETWEEN TO_DATE(#{searchdt}, 'YYYYMM') AND TRUNC(ADD_MONTHS(TO_DATE(#{searchdt},'YYYYMM'), 1), 'MM')
+		ORDER BY A.EMCO_SEQ DESC
+	</select>
+
+
+</mapper>

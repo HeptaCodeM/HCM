@@ -5,12 +5,19 @@
 		<typeAlias type="java.lang.Integer" alias="Integer" />
 		<typeAlias type="java.lang.String" alias="String" />
 		<typeAlias type="java.util.Map" alias="Map" />
+		
+		<!-- SDJ Area -->
+		<!-- 임직원 -->
 		<typeAlias type="com.hcm.grw.dto.hr.EmployeeDto" alias="EmployeeDto" />
-		<typeAlias type="com.hcm.grw.dto.hr.SnsInfoDto" alias="SnsInfoDto" />
+		<!-- 출퇴근 -->
+		<typeAlias type="com.hcm.grw.dto.hr.CommuteDto" alias="CommuteDto" />
+		<!-- 발령정보 -->
 		<typeAlias type="com.hcm.grw.dto.hr.OrderInfoListDto" alias="OrderInfoListDto" />
 		<typeAlias type="com.hcm.grw.dto.hr.OrderInfoDetailDto" alias="OrderInfoDetailDto" />
-		<typeAlias type="com.hcm.grw.dto.hr.CommuteDto" alias="CommuteDto" />
-		<typeAlias type="com.hcm.grw.dto.hr.EmployeeHolidayDto" alias="EmployeeHolidayDto" />
+		<!-- 휴가 -->
+		<typeAlias type="com.hcm.grw.dto.hr.HolidayDto" alias="HolidayDto" />
+
+		<typeAlias type="com.hcm.grw.dto.hr.SnsInfoDto" alias="SnsInfoDto" />
 		<typeAlias type="com.hcm.grw.dto.hr.CommonCodeDto" alias="CommonCodeDto"/>
 		<typeAlias type="com.hcm.grw.dto.hr.EmpSignDto" alias="EmpSignDto"/>
 		<typeAlias type="com.hcm.grw.dto.hr.CompanyDto" alias="CompanyDto"/>
@@ -18,6 +25,9 @@
 
 	<mappers>
 		<mapper resource="sqls/hr/Employee_Statement.xml" />
+		<mapper resource="sqls/hr/Commute_Statement.xml" />
+		<mapper resource="sqls/hr/Holiday_Statement.xml" />
+		<mapper resource="sqls/hr/Order_Statement.xml" />
 		<mapper resource="sqls/hr/CommonCode_Statement.xml"/>
 		<mapper resource="sqls/hr/EmpSignDto_Statement.xml"/>
 		<mapper resource="sqls/hr/CompanyDto_Statement.xml"/>

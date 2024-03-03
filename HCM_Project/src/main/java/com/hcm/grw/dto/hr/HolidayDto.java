@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeHolidayDto {
+public class HolidayDto {
 	private String sidb_doc_num;
 	private String sica_name;
 	private String sidt_temp_name;
