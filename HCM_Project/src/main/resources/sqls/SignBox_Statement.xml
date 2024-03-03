@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcm.grw.model.mapper.SignBoxDaoImpl">
+
+<!-- 	결재문서 작성 -->
+	<insert id="insertDoc">
+		"INSERT INTO SIGN_DOC_BOX
+							(SIDB_DOC_NUM, EMPL_ID, SIDB_DOC_TITLE,
+							SIDB_DOC_CONTENT, SICA_CD, SIDB_DOC_EXPIREDT, 
+							SIDT_TEMP_CD, SIDB_DOC_BE, SIDB_DOC_END,
+							SIDB_DOC_JSON)
+	VALUES					((SELECT NVL(MAX(SIDB_DOC_NUM) + 1, 24000001) FROM SIGN_DOC_BOX), #{empl_id}, #{sidb_doc_title},
+							#{sidb_doc_content}, #{sica_cd}, #{sidb_doc_expiredt},
+							#{}, '2024-03-07', '2024-03-12',
+							'[
+								{
+									"APPR_ID":"${appr_id}",
+									"APPR_DEPTH":"${appr_depth}",
+									"APPR_SIGN":"",
+									"APPR_DT":"",
+									"APPR_FLAG":""0"",
+									"APPR_REPLY":""
+								}
+							]');"
+	</insert>
+<!-- 	임시보관함 저장 -->
+	<insert id="insertTempDoc">
+	
+	</insert>
+<!-- 	보관함 불러오기 -->
+	<select id="getTempDoc">
+	
+	</select>
+<!-- 	첨부파일 등록(트랜잭션) -->
+	<insert id="insertDocFile">
+	
+	</insert>
+<!-- 	결재문서 수정 -->
+	<update id="updateDoc">
+	
+	</update>
+<!-- 	결재문서 삭제 -->
+	<delete id="deleteDoc">
+	
+	</delete>
+
+</mapper>

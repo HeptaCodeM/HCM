@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcm.grw.model.mapper.SignTreeDaoImpl">
+
+	<select id="getSignTree" resultType="SignTreeDto">
+		SELECT ID, PARENT , TEXT , ICON , POS_NA , POS_FLAG 
+        	FROM SIGN_DOC_TREE
+	</select>
+	
+	<insert id="insertTree">
+		INSERT INTO SIGN_DOC_TREE (ID, PARENT, TEXT, 
+									ICON, POS_NA, POS_FLAG)
+		VALUES (#{id}, #{parent}, #{text}, 
+                #{icon}, #{pos_na}, #{pos_flag})
+	</insert>
+
+	<update id="UpdateTree">
+		UPDATE SIGN_DOC_TREE 
+		SET PARENT = #{parent}, TEXT = #{text}, POS_NA = #{pos_na}, POS_FLAG = #{pos_flag}
+		WHERE ID = #{id}
+	</update>
+
+</mapper>
