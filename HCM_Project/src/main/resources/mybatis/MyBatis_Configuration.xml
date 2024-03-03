@@ -4,7 +4,11 @@
 	<typeAliases>
 		<typeAlias type="com.hcm.grw.dto.doc.SignTreeDto" alias="SignTreeDto"/>
 		<typeAlias type="com.hcm.grw.dto.doc.SignFavoDto" alias="SignFavoDto"/>
-		<typeAlias type="com.hcm.grw.dto.doc.DocBoxDto" alias="DocBoxDto" />
+		<typeAlias type="com.hcm.grw.dto.doc.SignBoxDto" alias="SignBoxDto"/>
+		<typeAlias type="com.hcm.grw.dto.doc.SignTempBoxDto" alias="SignTempBoxDto"/>
+		<typeAlias type="com.hcm.grw.dto.doc.SignJsonDto" alias="SignJsonDto"/>
+		<typeAlias type="com.hcm.grw.dto.doc.DocBoxDto" alias="DocBoxDto"/>
+		<typeAlias type="com.hcm.grw.dto.doc.TemplateDto" alias="TemplateDto"/>
 	</typeAliases>
 	
 
@@ -17,5 +21,6 @@
 		<mapper resource="sqls/DocBox_Statement.xml" />
 		<mapper resource="sqls/SignTree_Statement.xml"/>
 		<mapper resource="sqls/SignFavo_Statement.xml"/>
+		<mapper resource="sqls/SignBox_Statement.xml"/>
 	</mappers>
 </configuration>

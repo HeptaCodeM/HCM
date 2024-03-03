@@ -4,44 +4,95 @@
 
 <!-- 	결재문서 작성 -->
 	<insert id="insertDoc">
-		"INSERT INTO SIGN_DOC_BOX
+		INSERT INTO SIGN_DOC_BOX
 							(SIDB_DOC_NUM, EMPL_ID, SIDB_DOC_TITLE,
 							SIDB_DOC_CONTENT, SICA_CD, SIDB_DOC_EXPIREDT, 
 							SIDT_TEMP_CD, SIDB_DOC_BE, SIDB_DOC_END,
 							SIDB_DOC_JSON)
 	VALUES					((SELECT NVL(MAX(SIDB_DOC_NUM) + 1, 24000001) FROM SIGN_DOC_BOX), #{empl_id}, #{sidb_doc_title},
 							#{sidb_doc_content}, #{sica_cd}, #{sidb_doc_expiredt},
-							#{}, '2024-03-07', '2024-03-12',
+							#{sidt_temp_cd}, #{sidb_doc_be}, #{sidb_doc_end},
 							'[
+							<foreach collection="sidb_doc_json" separator="," item="json">
 								{
-									"APPR_ID":"${appr_id}",
-									"APPR_DEPTH":"${appr_depth}",
+									"APPR_ID":"${json.appr_id}",
+									"APPR_DEPTH":"${json.appr_depth}",
 									"APPR_SIGN":"",
 									"APPR_DT":"",
-									"APPR_FLAG":""0"",
+									"APPR_FLAG":"0",
 									"APPR_REPLY":""
 								}
-							]');"
+							</foreach>
+							]')
 	</insert>
+	
 <!-- 	임시보관함 저장 -->
 	<insert id="insertTempDoc">
-	
+	INSERT INTO SIGN_TEMP_BOX
+								(SITB_DOC_NUM, EMPL_ID, SITB_DOC_TITLE,
+								SITB_DOC_CONTENT, SICA_CD, SITB_DOC_EXPIREDT,
+								SIDT_TEMP_CD,
+								SITB_DOC_JSON)
+	VALUES ((SELECT NVL(MAX(SITB_DOC_NUM) + 1, 24000001) FROM SIGN_TEMP_BOX),
+			#{empl_id}, #{sitb_doc_title},
+			#{sitb_doc_content}, #{sica_cd}, #{sitb_doc_expiredt},
+			#{sidt_temp_cd},
+			'[
+			<foreach collection="sitb_doc_json" item="json" separator=",">
+				{
+					"APPR_ID":"${json.appr_id}",
+					"APPR_DEPTH":"${json.appr_depth}",
+					"APPR_SIGN":"",
+					"APPR_DT":"",
+					"APPR_FLAG":"0",
+					"APPR_REPLY":""
+				}
+			</foreach>
+			]')
 	</insert>
 <!-- 	보관함 불러오기 -->
-	<select id="getTempDoc">
-	
-	</select>
+	<select id="getTempDoc" resultType="SignTempBoxDto">
+      SELECT SITB_DOC_NUM , SITB_DOC_WRITEDT , EMPL_ID ,
+                SITB_DOC_TITLE , SITB_DOC_CONTENT , SICA_CD ,
+                SITB_DOC_EXPIREDT , SITB_DOC_ALFLAG , SIDT_TEMP_CD ,
+                SITB_DOC_JSON , EMPL_REF , EMPL_DEPT_CD , SITB_DOC_BE ,
+                SITB_DOC_END 
+        FROM SIGN_TEMP_BOX stb
+        WHERE SITB_DOC_NUM = #{sitb_doc_num}
+   </select>
 <!-- 	첨부파일 등록(트랜잭션) -->
 	<insert id="insertDocFile">
-	
+		INSERT INTO SIGN_DOC_FILE (SIDF_FILE_NUM, SIDB_DOC_NUM, SIDF_FILE_ORIGIN,
+                                                        SIDF_FILE_STORED, SIDF_FILE_SIZE, SIDF_FILE_CONTENT)
+		VALUES ((SELECT NVL(MAX(SIDF_FILE_NUM) + 1, 24000001) FROM SIGN_DOC_FILE), #{sidb_doc_num}, #{sidf_file_origin},
+                #{sidf_file_stored}, #{sidf_file_size}, #{sidf_file_content})
 	</insert>
 <!-- 	결재문서 수정 -->
 	<update id="updateDoc">
-	
+	UPDATE SIGN_DOC_BOX
+	SET SIDB_DOC_TITLE = #{sidb_doc_title}, SIDB_DOC_CONTENT = #{sidb_doc_content}, SICA_CD = #{sica_cd}, 
+	SIDB_DOC_ALFLAG = #{sidb_doc_alflag}, SIDB_DOC_MODIFYDT = CURRENT_DATE, SIDT_TEMP_CD = #{sidt_temp_cd},
+	SIDB_DOC_BE = #{sidb_doc_be}, SIDB_DOC_END = #{sidb_doc_end},
+	EMPL_REF = #{empl_ref}, EMPL_DEPT_CD = #{empl_dept_cd},
+	SIDB_DOC_JSON = '[
+					<foreach collection="sidb_doc_json" item="json" separator=",">
+						{
+							"APPR_ID":"${json.appr_id}",
+							"APPR_DEPTH":"${json.appr_depth}",
+							"APPR_SIGN":"",
+							"APPR_DT":"",
+							"APPR_FLAG":"",
+							"APPR_REPLY":""
+						}
+					</foreach>
+	]'
+	WHERE SIDB_DOC_NUM = ${sidb_doc_num}
 	</update>
 <!-- 	결재문서 삭제 -->
 	<delete id="deleteDoc">
-	
-	</delete>
+      UPDATE SIGN_DOC_BOX
+      SET SIDB_DOC_DELFLAG = 'N'
+      WHERE SIDB_DOC_NUM = #{sidb_doc_num}
+   </delete>
 
 </mapper>

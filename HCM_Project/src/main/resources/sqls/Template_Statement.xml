@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcm.grw.model.mapper.doc.TemplateDaoImpl">
+
+<!-- SEQ,ID,TITLE,CONTENT,FILESEQ,CREATEAT,ENABLED -->
+
+<!-- 템플릿 목록 전체조회 -->
+<select id="getTempList"  resultType="TemplateDto">
+	SELECT SIDT_TEMP_CD, SICA_CD, SIDT_TEMP_NAME, SIDT_TEMP_CREATEDT, SIDT_TEMP_MODIFYDT, SIDT_TEMP_FLAG
+		FROM SIGN_DOC_TEMP
+		ORDER BY LENGTH(SIDT_TEMP_CD), SIDT_TEMP_CD
+</select>
+
+<!-- 템플릿 목록 상세조회 -->
+<select id="getDetailTemp" resultType="TemplateDto">
+	SELECT SIDT_TEMP_CD, SICA_CD, SIDT_TEMP_NAME, SIDT_TEMP_CREATEDT, SIDT_TEMP_MODIFYDT, SIDT_TEMP_FLAG, SIDT_TEMP_CONTENT
+		FROM SIGN_DOC_TEMP
+		WHERE SIDT_TEMP_FLAG = 'N'
+		AND SIDT_TEMP_CD = #{sidt_temp_cd}
+</select>
+
+<!-- 템플릿 입력 -->
+<insert id="insertTemp">
+	INSERT INTO SIGN_DOC_TEMP (SIDT_TEMP_CD, SIDT_TEMP_NAME, SICA_CD, SIDT_TEMP_CREATEDT)
+		VALUES 
+		('TC' || LPAD((SELECT MAX(SUBSTR(SIDT_TEMP_CD, 3)) + 1 FROM SIGN_DOC_TEMP), 6, '0'),
+	  	#{sidt_temp_name}, #{sica_cd}, CURRENT_DATE)
+</insert>
+
+<!-- 템플릿 수정 -->
+<update id="updateTemp">
+	UPDATE SIGN_DOC_TEMP
+		SET SIDT_TEMP_CONTENT = #{sidt_temp_content},
+			SIDT_TEMP_NAME = #{sidt_temp_name},
+			SIDT_TEMP_MODIFYDT = CURRENT_DATE
+			WHERE SIDT_TEMP_CD = #{sidt_temp_cd}
+</update>
+
+<!-- 템플릿 삭제 -->
+<update id="deleteTemp">
+	UPDATE SIGN_DOC_TEMP 
+		SET SIDT_TEMP_FLAG = 'N'
+		WHERE SIDT_TEMP_CD = #{sidt_temp_cd}
+</update>
+
+
+</mapper>

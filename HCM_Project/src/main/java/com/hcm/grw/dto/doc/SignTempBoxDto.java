@@ -31,6 +31,6 @@ public class SignTempBoxDto {
 	private String sitb_doc_be;
 	private String sitb_doc_end;
 	
-	private List<String> sitb_doc_json;
+	private List<SignJsonDto> sitb_doc_json;
 	
 }
