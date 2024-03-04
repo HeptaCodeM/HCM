@@ -25,8 +25,8 @@
 		<mapper resource="sqls/SignTree_Statement.xml"/>
 		<mapper resource="sqls/SignFavo_Statement.xml"/>
 		<mapper resource="sqls/SignBox_Statement.xml"/>
-		<mapper resource="sqls/Gobo_Statement.xml"/>
-        <mapper resource="sqls/Reply_Statement.xml"/>
-        <mapper resource="sqls/Scb_Statement.xml"/>
+		<mapper resource="sqls/sm/Gobo_Statement.xml"/>
+        <mapper resource="sqls/sm/Reply_Statement.xml"/>
+        <mapper resource="sqls/sm/Scb_Statement.xml"/>
 	</mappers>
 </configuration>
