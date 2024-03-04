@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Repository
 @Slf4j
-public class EmpSignDaoImpl implements IEmpSignDao {
+public class EmpSignDaoImpl implements EmpSignDao {
 
 	@Autowired
 	private SqlSessionTemplate sessionTemplate;

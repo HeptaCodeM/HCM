@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcm.grw.dto.hr.CommonCodeDto;
-import com.hcm.grw.model.mapper.hr.ICommonCodeDao;
+import com.hcm.grw.model.mapper.hr.CommonCodeDao;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CommonCodeServiceImpl implements ICommonCodeService {
 
 	@Autowired
-	private ICommonCodeDao dao;
+	private CommonCodeDao dao;
 	
 	@Override
 	public List<CommonCodeDto> selectAllDept() {

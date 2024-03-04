@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcm.grw.dto.hr.EmpSignDto;
-import com.hcm.grw.model.mapper.hr.IEmpSignDao;
+import com.hcm.grw.model.mapper.hr.EmpSignDao;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class EmpSignServiceImpl implements IEmpSignService {
 
 	@Autowired
-	private IEmpSignDao dao;
+	private EmpSignDao dao;
 
 	@Override
 	public List<EmpSignDto> selectAllSign() {

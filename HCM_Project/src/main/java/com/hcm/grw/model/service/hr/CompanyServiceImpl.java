@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcm.grw.dto.hr.CompanyDto;
-import com.hcm.grw.model.mapper.hr.ICompanyDao;
+import com.hcm.grw.model.mapper.hr.CompanyDao;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CompanyServiceImpl implements ICompanyService {
 
 	@Autowired
-	private ICompanyDao dao;
+	private CompanyDao dao;
 
 	@Override
 	public int insertCompanyInfo(Map<String, Object> map) {

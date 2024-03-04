@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.hcm.grw.dto.hr.CommonCodeDto;
 
-public interface ICommonCodeDao {
+public interface CommonCodeDao {
 
 	public List<CommonCodeDto> selectAllDept();
 	

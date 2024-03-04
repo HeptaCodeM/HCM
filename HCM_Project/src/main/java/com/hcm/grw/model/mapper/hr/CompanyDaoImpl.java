@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Repository
 @Slf4j
-public class CompanyDaoImpl implements ICompanyDao {
+public class CompanyDaoImpl implements CompanyDao {
 
 	@Autowired
 	private SqlSessionTemplate sessionTemplate;
