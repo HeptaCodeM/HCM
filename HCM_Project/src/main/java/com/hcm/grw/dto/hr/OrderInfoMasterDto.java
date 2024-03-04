@@ -13,10 +13,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommuteDto {
-	private int emco_seq;
-	private String empl_id;
-	private Date emco_in_dt;
-	private Date emco_out_dt;
-
+public class OrderInfoMasterDto {
+	private String emor_id;
+	private String emor_create_id;
+	private Date emor_create_dt;
+	private String emor_modify_id;
+	private Date emor_modify_dt;
 }

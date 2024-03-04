@@ -17,13 +17,13 @@ public class CommuteDaoImpl implements CommuteDao {
 	private String NS = "com.hcm.grw.model.mapper.hr.CommuteDaoImpl.";
 	
 	@Override
-	public int registCommute(String empl_id) {
-		return sqlSessionTemplate.insert(NS+"registCommute", empl_id);
+	public int registCommute(CommuteDto dto) {
+		return sqlSessionTemplate.insert(NS+"registCommute", dto);
 	}
 
 	@Override
-	public int updateCommute(String emco_seq) {
-		return sqlSessionTemplate.insert(NS+"intupdateCommute", emco_seq);
+	public int updateCommute(CommuteDto dto) {
+		return sqlSessionTemplate.insert(NS+"updateCommute", dto);
 	}
 
 	@Override

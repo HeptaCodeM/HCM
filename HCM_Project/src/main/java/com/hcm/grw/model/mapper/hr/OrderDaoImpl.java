@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.hcm.grw.dto.hr.OrderInfoDetailDto;
 import com.hcm.grw.dto.hr.OrderInfoListDto;
+import com.hcm.grw.dto.hr.OrderInfoMasterDto;
 
 @Repository
 public class OrderDaoImpl implements OrderDao {
@@ -28,8 +29,8 @@ public class OrderDaoImpl implements OrderDao {
 	}
 
 	@Override
-	public int registOrderAdminMaster(String emor_create_id) {
-		return sqlSessionTemplate.insert(NS+"registOrderAdminMaster", emor_create_id);
+	public int registOrderAdminMaster(OrderInfoMasterDto dto) {
+		return sqlSessionTemplate.insert(NS+"registOrderAdminMaster", dto);
 	}
 
 	@Override

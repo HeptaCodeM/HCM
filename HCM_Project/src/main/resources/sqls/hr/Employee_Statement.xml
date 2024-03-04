@@ -65,7 +65,7 @@
 		EMPL_PHONE = #{empl_phone},
 		EMPL_TEL = #{empl_tel},
 		EMPL_FAX = #{empl_fax},
-		EMPL_PICTURE = #{empl_picture},
+		EMPL_PICTURE = #{empl_picture, jdbcType=BLOB},
 		EMPL_MODIFY_ID = #{empl_modify_id},
 		EMPL_MODIFY_DT = CURRENT_DATE
 		WHERE EMPL_ID = #{empl_id}

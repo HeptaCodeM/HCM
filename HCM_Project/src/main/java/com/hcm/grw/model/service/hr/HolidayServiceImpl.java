@@ -20,8 +20,8 @@ public class HolidayServiceImpl implements HolidayService {
 	}
 
 	@Override
-	public List<HolidayDto> holidayAdminList(String empl_id) {
-		return dao.holidayAdminList(empl_id);
+	public List<HolidayDto> holidayList(String empl_id) {
+		return dao.holidayList(empl_id);
 	}
 
 }

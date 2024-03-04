@@ -16,13 +16,13 @@ public class CommuteServiceImpl implements CommuteService {
 	private CommuteDao dao;
 	
 	@Override
-	public int registCommute(String empl_id) {
-		return dao.registCommute(empl_id);
+	public int registCommute(CommuteDto dto) {
+		return dao.registCommute(dto);
 	}
 
 	@Override
-	public int updateCommute(String emco_seq) {
-		return dao.updateCommute(emco_seq);
+	public int updateCommute(CommuteDto dto) {
+		return dao.updateCommute(dto);
 	}
 
 	@Override

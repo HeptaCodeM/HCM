@@ -22,8 +22,8 @@ public class HolidayDaoImpl implements HolidayDao {
 	}
 
 	@Override
-	public List<HolidayDto> holidayAdminList(String empl_id) {
-		return sqlSessionTemplate.selectList(NS+"holidayAdminList", empl_id);
+	public List<HolidayDto> holidayList(String empl_id) {
+		return sqlSessionTemplate.selectList(NS+"holidayList", empl_id);
 	}
 
 }

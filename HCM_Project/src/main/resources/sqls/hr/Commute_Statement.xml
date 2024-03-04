@@ -13,7 +13,7 @@
 	</insert>
 
 	<!-- 퇴근 등록 -->
-	<update id="updateCommute" parameterType="String">
+	<update id="updateCommute" parameterType="CommuteDto">
 		UPDATE EMP_COMMUTE SET
 		EMCO_OUT_DT = CURRENT_DATE
 		WHERE EMCO_SEQ = #{emco_seq}

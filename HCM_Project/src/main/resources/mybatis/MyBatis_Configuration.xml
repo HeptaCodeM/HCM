@@ -13,6 +13,7 @@
 		<typeAlias type="com.hcm.grw.dto.hr.CommuteDto" alias="CommuteDto" />
 		<!-- 발령정보 -->
 		<typeAlias type="com.hcm.grw.dto.hr.OrderInfoListDto" alias="OrderInfoListDto" />
+		<typeAlias type="com.hcm.grw.dto.hr.OrderInfoMasterDto" alias="OrderInfoMasterDto" />
 		<typeAlias type="com.hcm.grw.dto.hr.OrderInfoDetailDto" alias="OrderInfoDetailDto" />
 		<!-- 휴가 -->
 		<typeAlias type="com.hcm.grw.dto.hr.HolidayDto" alias="HolidayDto" />

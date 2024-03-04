@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hcm.grw.dto.hr.OrderInfoDetailDto;
 import com.hcm.grw.dto.hr.OrderInfoListDto;
+import com.hcm.grw.dto.hr.OrderInfoMasterDto;
 
 public interface OrderService {
 
@@ -14,7 +15,7 @@ public interface OrderService {
 	public List<OrderInfoListDto> getOrderAdminList();
 	
 	/*발령정보 등록_마스터_상세*/
-	public boolean registOrderAdmin(String emor_create_id, OrderInfoDetailDto dto);
+	public boolean registOrderAdmin(OrderInfoMasterDto dtoMaster, List<OrderInfoDetailDto> dtoDetails);
 	/*정보수정 처리*/
-	public int updateOrderAdminDetail(OrderInfoDetailDto dto);
+	public boolean updateOrderAdminDetail(List<OrderInfoDetailDto> dtoDetails);
 }

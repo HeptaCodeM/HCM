@@ -10,6 +10,6 @@ public interface HolidayDao {
 	public int registEmployeeHoliday();
 	
 	/*휴가정보 조회 - 사원검색기능*/
-	public List<HolidayDto> holidayAdminList(String empl_id);
+	public List<HolidayDto> holidayList(String empl_id);
 	
 }
