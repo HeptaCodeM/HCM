@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class CommonCodeServiceImpl implements ICommonCodeService {
+public class CommonCodeServiceImpl implements CommonCodeService {
 
 	@Autowired
 	private CommonCodeDao dao;

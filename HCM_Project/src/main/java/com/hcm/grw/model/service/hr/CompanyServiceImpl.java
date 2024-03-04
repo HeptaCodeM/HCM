@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class CompanyServiceImpl implements ICompanyService {
+public class CompanyServiceImpl implements CompanyService {
 
 	@Autowired
 	private CompanyDao dao;

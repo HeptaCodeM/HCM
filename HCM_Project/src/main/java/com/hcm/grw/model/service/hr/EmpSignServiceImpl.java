@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class EmpSignServiceImpl implements IEmpSignService {
+public class EmpSignServiceImpl implements EmpSignService {
 
 	@Autowired
 	private EmpSignDao dao;

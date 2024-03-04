@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.hcm.grw.dto.hr.EmpSignDto;
 
-public interface IEmpSignService {
+public interface EmpSignService {
 	
 	public List<EmpSignDto> selectAllSign();
 	

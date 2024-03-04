@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.hcm.grw.dto.hr.CompanyDto;
 
-public interface ICompanyService {
+public interface CompanyService {
 
 	public int insertCompanyInfo(Map<String, Object> map);
 	

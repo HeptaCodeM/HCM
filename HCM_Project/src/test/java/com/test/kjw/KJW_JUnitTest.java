@@ -18,9 +18,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.hcm.grw.dto.hr.CommonCodeDto;
 import com.hcm.grw.dto.hr.CompanyDto;
 import com.hcm.grw.dto.hr.EmpSignDto;
-import com.hcm.grw.model.service.hr.ICommonCodeService;
-import com.hcm.grw.model.service.hr.ICompanyService;
-import com.hcm.grw.model.service.hr.IEmpSignService;
+import com.hcm.grw.model.service.hr.CommonCodeService;
+import com.hcm.grw.model.service.hr.CompanyService;
+import com.hcm.grw.model.service.hr.EmpSignService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/**/*.xml")
@@ -30,13 +30,13 @@ public class KJW_JUnitTest {
 	private SqlSessionTemplate sessionTemplate;
 	
 	@Autowired
-	private ICommonCodeService codeService;
+	private CommonCodeService codeService;
 	
 	@Autowired
-	private IEmpSignService empSignService;
+	private EmpSignService empSignService;
 	
 	@Autowired
-	private ICompanyService companyService;
+	private CompanyService companyService;
 	
 	@Before
 	public void test() {
