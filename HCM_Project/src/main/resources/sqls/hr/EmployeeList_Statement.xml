@@ -4,7 +4,8 @@
 	
 	
 	<select id="selectAllEmployee" resultType="EmployeeDto">
-	SELECT 
+	SELECT 		
+				A.EMPL_ID,
 	            A.EMPL_NAME, 
 	            C1.COCO_CD AS COCO_CD_DCD,
 	            C1.COCO_NAME AS COCO_NAME_DNM,
@@ -22,6 +23,7 @@
 	
 	<select id="searchAllEmployee" parameterType="Map" resultType="EmployeeDto">
 	SELECT 
+				A.EMPL_ID,
 	            A.EMPL_NAME, 
 	            C1.COCO_CD AS COCO_CD_DCD,
 	            C1.COCO_NAME AS COCO_NAME_DNM,
@@ -45,6 +47,7 @@
 	
 	<select id="selectOneEmployee" parameterType="Map" resultType="EmployeeDto">
 		SELECT 
+					A.EMPL_ID,
 		            A.EMPL_NAME,
 		            A.EMPL_BIRTH,
 		            A.EMPL_PHONE,

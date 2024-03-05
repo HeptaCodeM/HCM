@@ -39,15 +39,26 @@
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
-							${deptList}<br>
-								<c:forEach var="deptList" items="${deptList}">
-									<a href="#">${deptList.getCoco_cd()} // ${deptList.getCoco_name()}</a><br>
+								<c:forEach var="deptList" items="${deptList}" varStatus="var">
+									<a href="./hrDeptDetail.do?coco_cd=${deptList.getCoco_cd()}">${deptList.getCoco_cd()} // ${deptList.getCoco_name()}</a><br>
 								</c:forEach>
+								<select id="deptSelectGroup_1" multiple="multiple">
+								<c:forEach var="deptList" items="${deptList}" varStatus="var">
+								    <optgroup label="${deptList.getCoco_name()}">
+								        <option>
+											<a href="./hrDeptDetail.do?coco_cd=${deptList.getCoco_cd()}">${deptList.getCoco_cd()} // ${deptList.getCoco_name()}</a><br>
+								        </option>
+								    </optgroup>
+								</c:forEach>
+								</select>
+								<script type="text/javascript">
+								$("#deptSelectGroup_1").multiselectsplitter();
+								</script>
+								
 							</div>
 							<div class="card-footer">
-								<a href="#" class="btn btn-primary me-10">수정</a>
-								<a href="#" class="btn btn-primary me-10">삭제</a>
-								<a href="#" class="btn btn-primary me-10">추가</a>
+								<!-- <a href="#" class="btn btn-primary me-10">삭제</a> -->
+								<a href="./insertDept.do" class="btn btn-primary me-10">추가</a>
 						    </div>
 						</div>
 					</div>
