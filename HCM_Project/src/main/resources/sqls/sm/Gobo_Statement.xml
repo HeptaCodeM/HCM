@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcm.grw.model.mapper.sm.GoboDaoImpl">
+
+
+<!-- 공지사항 전체조회 -->
+
+<select id="getAllGobo" resultType="GoboDto">
+SELECT GOBO_NO, GOBO_TITLE, GOBO_CONTENT, GOBO_VIEW, 
+GOBO_WRITER, GOBO_WRITER_ID, GOBO_REGDATE, GOBO_MODIFY_ID, 
+GOBO_MODIFY_DATE, GOBO_DELFLAG, GOBO_BIGO
+FROM ADMIN.GONGJI_BOARD
+</select>
+
+
+
+<!-- 공지사항 상세보기 -->
+<select id="getDetailGobo" resultType="GoboDto">
+SELECT GOBO_NO, GOBO_TITLE, GOBO_CONTENT, GOBO_VIEW, 
+GOBO_WRITER, GOBO_WRITER_ID, GOBO_REGDATE, GOBO_MODIFY_ID, 
+GOBO_MODIFY_DATE, GOBO_DELFLAG, GOBO_BIGO
+FROM ADMIN.GONGJI_BOARD
+WHERE GOBO_NO = #{gobo_no}
+
+</select>
+
+
+
+
+<!-- 조회수 업데이트 -->
+<update id="updateGoboView">
+UPDATE ADMIN.GONGJI_BOARD
+SET GOBO_VIEW = (SELECT MAX(GOBO_VIEW) + 1 FROM ADMIN.GONGJI_BOARD)
+WHERE GOBO_NO = #{gobo_no}
+</update>
+
+
+<!-- 공지사항 글 등록 -->
+<insert id="insertGobo">
+INSERT INTO ADMIN.GONGJI_BOARD
+(GOBO_NO, GOBO_TITLE, GOBO_CONTENT, GOBO_VIEW, 
+GOBO_WRITER, GOBO_WRITER_ID, GOBO_REGDATE, GOBO_MODIFY_ID, 
+GOBO_MODIFY_DATE, GOBO_DELFLAG, GOBO_BIGO)
+VALUES((SELECT NVL(MAX(GOBO_NO)+1,0) FROM GONGJI_BOARD), #{gobo_title}, #{gobo_content}, 0, 
+#{gobo_writer}, #{gobo_writer_id}, TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') , 'WHDDN1', TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), 'N' , #{gobo_bigo})
+</insert>
+
+
+
+<!-- 게시글 삭제 -->
+<update id="updateGoboDelFlag">
+UPDATE ADMIN.GONGJI_BOARD
+SET GOBO_DELFLAG = 'Y'
+WHERE GOBO_NO= #{gobo_no}
+</update>
+
+
+
+
+<!-- 게시글 수정 -->
+<update id="updateGobo">
+UPDATE ADMIN.GONGJI_BOARD
+SET GOBO_TITLE = #{gobo_title},GOBO_CONTENT = #{gobo_content},
+GOBO_MODIFY_ID = #{gobo_modify_id},GOBO_MODIFY_DATE = TO_DATE(#{gobo_modify_date}, 'YYYY-MM-DD HH24:MI:SS'),
+GOBO_BIGO = #{gobo_bigo}
+WHERE GOBO_NO = #{gobo_no}
+</update>
+
+
+
+
+
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcm.grw.model.mapper.sm.ReplyDaoImpl">
+
+
+<!-- 댓글 전체조회 -->
+<select id="getAllReply" resultType="ReplyDto">
+SELECT 
+    RB.REBO_NO,RB.GOBO_NO,RB.REBO_CONTENT,RB.REBO_WRITER,
+    RB.REBO_WRITER_ID,RB.REBO_REGDATE,RB.REBO_MODIFY_DATE,RB.REBO_STEP,
+    RB.REBO_DEPTH,GB.GOBO_NO
+FROM 
+    ADMIN.REPLY_BOARD RB INNER JOIN ADMIN.GONGJI_BOARD GB 
+    ON GB.GOBO_NO = RB.GOBO_NO
+WHERE RB.GOBO_NO = #{gobo_no}
+</select>
+
+
+<!-- 댓글등록 -->
+<insert id="insertReply">
+INSERT INTO ADMIN.REPLY_BOARD
+(REBO_NO, GOBO_NO, REBO_CONTENT, REBO_WRITER, 
+REBO_WRITER_ID, REBO_REGDATE, REBO_MODIFY_ID, REBO_MODIFY_DATE, 
+REBO_STEP, REBO_DEPTH, REBO_DELFLAG)
+VALUES((SELECT NVL(MAX(REBO_NO)+1,0) FROM REPLY_BOARD), #{gobo_no}, #{rebo_content}, #{rebo_writer}, 
+#{rebo_writer_id}, TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') , #{rebo_modify_id}, TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), 
+(SELECT NVL(MAX(REBO_STEP)+1,0) FROM REPLY_BOARD), 0, 'N' )
+</insert>
+
+
+
+<!-- 대댓글등록 -->
+<insert id="insertReplyTwo">
+INSERT INTO ADMIN.REPLY_BOARD
+(REBO_NO, GOBO_NO, REBO_CONTENT, REBO_WRITER, 
+REBO_WRITER_ID, REBO_REGDATE, REBO_MODIFY_ID, REBO_MODIFY_DATE, 
+REBO_STEP, REBO_DEPTH, REBO_DELFLAG)
+VALUES((SELECT NVL(MAX(REBO_NO)+1,0) FROM REPLY_BOARD), #{gobo_no}, #{rebo_content}, #{rebo_writer}, 
+#{rebo_writer_id}, TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') , #{rebo_writer_id}, TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), 
+#{rebo_step}, 1, 'N' )
+</insert>
+
+
+
+
+<!-- 댓글수정 -->
+<update id="updateReply">
+UPDATE ADMIN.REPLY_BOARD
+SET REBO_CONTENT= #{rebo_content},REBO_MODIFY_ID= #{rebo_modify_id}, REBO_MODIFY_DATE= TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+WHERE REBO_NO = #{rebo_no}
+</update>
+
+
+
+<!-- 댓글 삭제 -->
+<update id="updateReplyDelFlag">
+UPDATE ADMIN.REPLY_BOARD
+SET REBO_DELFLAG = 'Y'
+WHERE REBO_NO = #{rebo_no}
+</update>
+
+
+</mapper>
