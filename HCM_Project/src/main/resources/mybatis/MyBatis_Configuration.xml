@@ -13,8 +13,8 @@
         <typeAlias type="com.hcm.grw.dto.sm.ReplyDto" alias="ReplyDto"/>
         <typeAlias type="com.hcm.grw.dto.sm.ScbDto" alias="ScbDto"/> 
         <typeAlias type="java.lang.Integer" alias="Integer" />
-      <typeAlias g" alias="String" />
-      <typeAlias type="java.util.Map" type="java.lang.Strinalias="Map" />
+      <typeAlias type="java.lang.String" alias="String" />
+      <typeAlias type="java.util.Map" alias="Map" />
       <!-- SDJ Area -->
       <!-- 임직원 -->
       <typeAlias type="com.hcm.grw.dto.hr.EmployeeDto" alias="EmployeeDto" />
