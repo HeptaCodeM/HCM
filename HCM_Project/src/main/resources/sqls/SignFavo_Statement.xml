@@ -21,18 +21,20 @@
 	
 <!-- 	즐겨찾기 결재자 불러오기 -->
 	<select id="getFavAppr" resultType="SignFavoDto">
-		SELECT SIAF_FAVO_CD , SIAF_FAVO_NAME , SIAF_APPR_ID
-	        FROM SIGN_APPR_FAVO saf 
-	        WHERE SIAF_FAVO_CD = #{siaf_favo_cd}
-	        AND SIAF_APPR_FLAG = 1
+		SELECT saf.SIAF_FAVO_CD , saf.SIAF_FAVO_NAME , saf.SIAF_APPR_ID, e.EMPL_NAME
+	        FROM SIGN_APPR_FAVO saf JOIN EMPLOYEE e
+	        ON saf.EMPL_ID = e.EMPL_ID
+	        WHERE saf.SIAF_FAVO_CD = #{siaf_favo_cd}
+	        AND saf.SIAF_APPR_FLAG = 1
 	</select>
 	
 <!-- 	즐겨찾기 라인 불러오기 -->
 	<select id="getFavApprLine" resultType="SignFavoDto">
-		SELECT SIAF_FAVO_CD , SIAF_FAVO_NAME , SIAF_APPR_LINE
-	        FROM SIGN_APPR_FAVO saf 
-	        WHERE SIAF_FAVO_CD = #{siaf_favo_cd}
-	        AND SIAF_APPR_FLAG = 2
+		SELECT saf.SIAF_FAVO_CD , saf.SIAF_FAVO_NAME , saf.SIAF_APPR_LINE, e.EMPL_NAME
+	        FROM SIGN_APPR_FAVO saf JOIN EMPLOYEE e
+	        ON saf.EMPL_ID = e.EMPL_ID
+	        WHERE saf.SIAF_FAVO_CD = #{siaf_favo_cd}
+	        AND saf.SIAF_APPR_FLAG = 2
 	</select>
 	
 <!-- 	즐겨찾기 수정 -->
@@ -50,17 +52,19 @@
 	
 <!-- 	즐겨찾기 목록 조회(결재자) -->
 	<select id="getFavApprList" resultType="SignFavoDto">
-		SELECT SIAF_FAVO_CD , SIAF_FAVO_NAME , SIAF_APPR_ID
-	        FROM SIGN_APPR_FAVO 
-	        WHERE EMPL_ID = #{empl_id}
+		SELECT SIAF_FAVO_CD , SIAF_FAVO_NAME , SIAF_APPR_ID , e.EMPL_NAME
+	        FROM SIGN_APPR_FAVO saf JOIN EMPLOYEE e
+	        ON saf.SIAF_APPR_ID = e.EMPL_ID
+	        WHERE saf.EMPL_ID = #{empl_id}
 	        AND SIAF_APPR_FLAG = 1
 	</select>
 	
 <!-- 	즐겨찾기 목록 조회(라인) -->
 	<select id="getFavApprLineList" resultType="SignFavoDto">
-		SELECT SIAF_FAVO_CD , SIAF_FAVO_NAME , SIAF_APPR_LINE 
-	        FROM SIGN_APPR_FAVO 
-	        WHERE EMPL_ID = #{empl_id}
+		SELECT SIAF_FAVO_CD , SIAF_FAVO_NAME , SIAF_APPR_LINE , e.EMPL_NAME
+	        FROM SIGN_APPR_FAVO saf JOIN EMPLOYEE e
+	        ON saf.EMPL_ID = e.EMPL_ID
+	        WHERE saf.EMPL_ID = #{empl_id}
 	        AND SIAF_APPR_FLAG = 2
 	</select>
 

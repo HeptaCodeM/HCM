@@ -13,16 +13,20 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 <!--end::Fonts-->
 <!--begin::Vendor Stylesheets(used for this page only)-->
-<link href="assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
-<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+<link href="../assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+<link href="../assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 <!--end::Vendor Stylesheets-->
 <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+<link href="../assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+<link href="../assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <!--end::Global Stylesheets Bundle-->
 <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-<script src="assets/plugins/global/plugins.bundle.js"></script>
-<script src="assets/js/scripts.bundle.js"></script>
+<script src="../assets/plugins/global/plugins.bundle.js"></script>
+<script src="../assets/js/scripts.bundle.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!--end::Global Javascript Bundle-->
 <script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>
 
@@ -45,7 +49,7 @@
 						</div>
 						<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
 							<a href="file:///C:/Users/kjwkj/Desktop/html/keen_v3.0.6/demo1/index.html" class="d-lg-none">
-								<img alt="HCM" src="image/favicon.ico" class="theme-light-show h-30px">
+								<img alt="HCM" src="../image/favicon.ico" class="theme-light-show h-30px">
 							</a>
 						</div>
 						<div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
@@ -88,7 +92,7 @@
 									<div data-kt-menu-trigger="{default: &#39;click&#39;, lg: &#39;hover&#39;}" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-0 me-lg-2">
 										<!--begin:Menu link-->
 										<span class="menu-link">
-											<span class="menu-title" id="signTree">전자결재</span>
+											<span class="menu-title">전자결재</span>
 											<span class="menu-arrow d-lg-none"></span>
 										</span>
 									</div>
@@ -180,7 +184,7 @@
 								<div class="app-navbar-item ms-2 ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 									<!--begin::Menu wrapper-->
 									<div class="cursor-pointer symbol symbol-35px symbol-md-40px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-										<img src="image/300-3.jpg" alt="user">
+										<img src="../image/300-3.jpg" alt="user">
 									</div>
 								</div>
 								<!--end::User menu-->
@@ -197,7 +201,7 @@
 						<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
 							<!--begin::Logo image-->
 							<a href="#">
-								<img alt="HCM" src="image/favicon.ico" class="h-30px app-sidebar-logo-default">HCM
+								<img alt="HCM" src="../image/favicon.ico" class="h-30px app-sidebar-logo-default">HCM
 							</a>
 							<!--end::Logo image-->
 							<!--begin::Sidebar toggle-->
@@ -873,7 +877,7 @@
 									<!--begin::Page title-->
 									<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 										<!--begin::Title-->
-										<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Default</h1>
+										<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">결재선 구성</h1>
 										<!--end::Title-->
 										<!--begin::Breadcrumb-->
 										<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
@@ -893,768 +897,52 @@
 									</div>
 								</div>
 							</div>
-							<!-- 내용 시작 -->
 							<div id="kt_app_content" class="app-content flex-column-fluid">
-								<div class="app-container container-fluid">
-									<div class="card card-flush h-md-50 mb-xl-10">
-										<div class="card-header pt-5">
-											<h3 class="card-title text-gray-800 fw-bold">Text</h3>
-										</div>
-										<div class="separator separator-dashed my-3"></div>	
-										<div class="card-body pt-5">
-											<div class="text-white">text-white</div>
-											<div class="text-primary">text-primary</div>
-											<div class="text-secondary">text-secondary</div>
-											<div class="text-light">text-light</div>
-											<div class="text-success">text-success</div>
-											<div class="text-info">text-info</div>
-											<div class="text-warning">text-warning</div>
-											<div class="text-danger">text-danger</div>
-											<div class="text-dark">text-dark</div>
-											<div class="text-muted">text-muted</div>
-											<div class="text-gray-100">text-gray-100</div>
-											<div class="text-gray-200">text-gray-200</div>
-											<div class="text-gray-300">text-gray-300</div>
-											<div class="text-gray-400">text-gray-400</div>
-											<div class="text-gray-500">text-gray-500</div>
-											<div class="text-gray-600">text-gray-600</div>
-											<div class="text-gray-700">text-gray-700</div>
-											<div class="text-gray-800">text-gray-800</div>
-											<div class="text-gray-900">text-gray-900</div>
-										</div>
-									</div>
+							<div class="col-sm-2 sidenav"></div>
+							
+							<div class="col-sm-2 sidenav">
+								<div class="input-group">
+									<input type="text" id="schName" spellcheck="false" class="form-control" placeholder="검색할 사원을 입력하세요"> 
+									<span class="input-group-btn">
+										<button class="btn btn-default btn-sm" type="button" id="schBtn">
+											<span class="glyphicon glyphicon-search"></span>
+										</button>
+									</span>
 								</div>
+							<div id="jstree"></div>
+							
 							</div>
-							<!-- 내용 끝 -->
-							
-							
-							<!-- 내용 시작 -->
-							<div id="kt_app_content" class="app-content flex-column-fluid">
-								<div class="app-container container-fluid">
-									<div class="card card-flush h-md-50 mb-xl-10">
-										<div class="card-header pt-5">
-											<h3 class="card-title text-gray-800 fw-bold">Text2</h3>
-										</div>
-										<div class="separator separator-dashed my-3"></div>	
-										<div class="card-body pt-5">
-											<div class="text-inverse-primary bg-primary">text-inverse-primary bg-primary</div>
-											<div class="text-inverse-secondary bg-secondary">text-inverse-secondary bg-secondary</div>
-											<div class="text-inverse-light bg-light">text-inverse-light bg-light</div>
-											<div class="text-inverse-success bg-success">text-inverse-success bg-success</div>
-											<div class="text-inverse-info bg-info">text-inverse-info bg-info</div>
-											<div class="text-inverse-warning bg-warning">text-inverse-warning bg-warning</div>
-											<div class="text-inverse-danger bg-danger">text-inverse-danger bg-danger</div>
-											<div class="text-inverse-dark bg-dark">text-inverse-dark bg-dark</div>
-										</div>
+							<div class="col-sm-1 sidenav"></div>
+							<div class="col-sm-2 sidenav">
+								<form method="post">
+									<div class="input-group">
+										<input type="text" readonly class="form-control" id="1st">
+										<span class="input-group-btn">
+											<button class="btn btn-danger btn-sm cancelBtn">X</button>
+										</span>
 									</div>
-								</div>
-							</div>
-							<!-- 내용 끝 -->
-							
-							<!-- 내용 시작 -->
-							<div id="kt_app_content" class="app-content flex-column-fluid">
-								<div class="app-container container-fluid">
-									<div class="card card-flush h-md-50 mb-xl-10">
-										<div class="card-header pt-5">
-											<h3 class="card-title text-gray-800 fw-bold">배경설정</h3>
-										</div>
-										<div class="separator separator-dashed my-3"></div>	
-										<div class="card-body pt-5">
-											<div class="bg-light">bg-light</div>
-											<div class="bg-primary">bg-primary</div>
-											<div class="bg-secondary">bg-secondary</div>
-											<div class="bg-success">bg-success</div>
-											<div class="bg-info">bg-info</div>
-											<div class="bg-warning">bg-warning</div>
-											<div class="bg-danger">bg-danger</div>
-											<div class="bg-dark">bg-dark</div>
-											<div class="bg-white">bg-white</div>
-											<div class="bg-body">bg-body</div>
-										</div>
+									<hr>
+									<div class="input-group">
+										<input type="text" readonly class="form-control" id="2nd">
+										<span class="input-group-btn">
+											<button class="btn btn-danger btn-sm cancelBtn">X</button>
+										</span>
 									</div>
-								</div>
-							</div>
-							<!-- 내용 끝 -->
-							
-							<!-- 내용 시작 -->
-							<div id="kt_app_content" class="app-content flex-column-fluid">
-								<div class="app-container container-fluid">
-									<div class="card card-flush h-md-50 mb-xl-10">
-										<div class="card-header pt-5">
-											<h3 class="card-title text-gray-800 fw-bold">배경설정(호버)</h3>
-										</div>
-										<div class="separator separator-dashed my-3"></div>	
-										<div class="card-body pt-5">
-											<div class="bg-hover-light text-hover-inverse-light">bg-hover-light text-hover-inverse-light</div>
-											<div class="bg-hover-primary text-hover-inverse-primary">bg-hover-primary text-hover-inverse-primary</div>
-											<div class="bg-hover-secondary text-hover-inverse-secondary">bg-hover-secondary text-hover-inverse-secondary</div>
-											<div class="bg-hover-success text-hover-inverse-success">bg-hover-success text-hover-inverse-success</div>
-											<div class="bg-hover-info text-hover-inverse-info">bg-hover-info text-hover-inverse-info</div>
-											<div class="bg-hover-warning text-hover-inverse-warning">bg-hover-warning text-hover-inverse-warning</div>
-											<div class="bg-hover-danger text-hover-inverse-danger">bg-hover-danger text-hover-inverse-danger</div>
-											<div class="bg-hover-dark text-hover-inverse-dark">bg-hover-dark text-hover-inverse-dark</div>
-										</div>
+									<hr>
+									<div class="input-group">
+										<input type="text" readonly class="form-control" id="3rd">
+										<span class="input-group-btn">
+											<button class="btn btn-danger btn-sm cancelBtn">X</button>
+										</span>
 									</div>
-								</div>
-							</div>
-							<!-- 내용 끝 -->
-							
-							<!-- 내용 시작 -->
-							<div id="kt_app_content" class="app-content flex-column-fluid">
-								<div class="app-container container-fluid">
-									<div class="card card-flush h-md-50 mb-xl-10">
-										<div class="card-header pt-5">
-											<h3 class="card-title text-gray-800 fw-bold">Border</h3>
-										</div>
-										<div class="separator separator-dashed my-3"></div>	
-										<div class="card-body pt-5">
-											<div class="card-body pt-5">
-												<div class="border">
-												    border
-												</div>
-											</div>
-											
-											<div class="card-body pt-5">
-												<div class="border-gray-300 border-dotted">
-												    border-gray-300 border-dotted
-												</div>
-											</div>
-											
-											<div class="card-body pt-5">
-												<div class="border-gray-300 border-dashed">
-												    border-gray-300 border-dashed
-												</div>
-											</div>
-											
-											<div class="card-body pt-5">
-												<div class="border-gray-300 border-bottom-dashed">
-												    border-gray-300 border-bottom-dashed
-												</div>
-											</div>
-											
-											<div class="card-body pt-5">
-												<div class="border-gray-300 border-end-dashed">
-												    border-gray-300 border-end-dashed
-												</div>
-											</div>
-										</div>
+									<hr>
+									<div>
+										<input type="button" class="btn btn-sm btn-success" id="accept" value="확정"> 
+										<input type="button" class="btn btn-sm btn-success" value="결재선 관리" onclick="signFavo()">
 									</div>
-								</div>
+								</form>
 							</div>
-							<!-- 내용 끝 -->
-							
-							<!-- 내용 시작 -->
-							<div id="kt_app_content" class="app-content flex-column-fluid">
-								<div class="app-container container-fluid">
-									<div class="card card-flush h-md-50 mb-xl-10">
-										<div class="card-header pt-5">
-											<h3 class="card-title text-gray-800 fw-bold">Border(hover)</h3>
-										</div>
-										<div class="separator separator-dashed my-3"></div>	
-										<div class="card-body pt-5">
-										
-											<div class="card-body pt-5">
-												<div class="border border-hover">
-												   	border border-hover
-												</div>
-											</div>
-											
-											<div class="card-body pt-5">
-												<div class="border border-gray-500 border-hover">
-												    border border-gray-500 border-hover
-												</div>
-											</div>
-											
-											<div class="card-body pt-5">
-												<div class="border border-primary border-hover">
-												    border border-primary border-hover
-												</div>
-											</div>
-											
-										</div>
-									</div>
-								</div>
 							</div>
-							<!-- 내용 끝 -->
-							
-							<!-- 내용 시작 -->
-							<div id="kt_app_content" class="app-content flex-column-fluid">
-								<div class="app-container container-fluid">
-									<div class="card card-flush h-md-50 mb-xl-10">
-										<div class="card-header pt-5">
-											<h3 class="card-title text-gray-800 fw-bold">input</h3>
-										</div>
-										<div class="separator separator-dashed my-3"></div>	
-										<div class="card-body pt-5">
-										
-											<div class="card-body pt-5">
-												<h1>form-control form-control-solid</h1>
-												<input type="text" class="form-control form-control-solid" placeholder="name@example.com"/>
-											</div>
-											
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- 내용 끝 -->
-							
-							<!-- 내용 시작 -->
-							<div id="kt_app_content" class="app-content flex-column-fluid">
-								<div class="app-container container-fluid">
-									<div class="card card-flush h-md-50 mb-xl-10">
-										<div class="card-header pt-5">
-											<h3 class="card-title text-gray-800 fw-bold">Select Box</h3>
-										</div>
-										<div class="separator separator-dashed my-3"></div>	
-										<div class="card-body pt-5">
-										
-											<div class="card-body pt-5">
-												<select class="form-select" aria-label="Select example">
-												    <option>Open this select menu</option>
-												    <option value="1">One</option>
-												    <option value="2">Two</option>
-												    <option value="3">Three</option>
-												</select>
-											</div>
-											
-											<div class="card-body pt-5">
-												<select class="form-select form-select-solid" aria-label="Select example">
-												    <option>Open this select menu</option>
-												    <option value="1">One</option>
-												    <option value="2">Two</option>
-												    <option value="3">Three</option>
-												</select>
-											</div>
-											
-											
-											
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- 내용 끝 -->
-							
-							<!-- 내용 시작 -->
-							<div id="kt_app_content" class="app-content flex-column-fluid">
-								<div class="app-container container-fluid">
-									<div class="card card-flush h-md-50 mb-xl-10">
-										<div class="card-header pt-5">
-											<h3 class="card-title text-gray-800 fw-bold">check box</h3>
-										</div>
-										<div class="separator separator-dashed my-3"></div>	
-										<div class="card-body pt-5">
-											<div class="card-body pt-5">
-												<div class="form-check">
-												    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked />
-												    <label class="form-check-label" for="flexCheckChecked">
-												        Checked state
-												    </label>
-												</div>
-											</div>
-											
-											<div class="card-body pt-5">
-												<div class="form-check form-check-custom form-check-solid">
-												    <input class="form-check-input" type="checkbox" value="1" disabled id="flexCheckDisabled" />
-												    <label class="form-check-label" for="flexCheckDisabled">
-												        Disabled state
-												    </label>
-												</div>
-											</div>
-											
-											
-											<div class="card-body pt-5">
-												<div class="form-check form-check-custom form-check-solid form-check-lg">
-												    <input class="form-check-input" type="checkbox" value="" id="flexCheckboxLg"/>
-												    <label class="form-check-label" for="flexCheckboxLg">
-												        Large checkbox
-												    </label>
-												</div>
-											</div>
-											
-											<div class="card-body pt-5">
-												<div class="form-check form-check-custom form-check-solid form-check-lg">
-												    <input class="form-check-input" type="checkbox" value="" id="flexCheckboxLg"  />
-												    <label class="form-check-label" for="flexCheckboxSm">
-												        Large radio
-												    </label>
-												</div>
-											</div>
-											
-											<div class="card-body pt-5">
-												<div class="form-check form-check-custom form-check-solid form-check-sm">
-												    <input class="form-check-input" type="checkbox" value="" id="flexRadioLg"/>
-												    <label class="form-check-label" for="flexRadioLg">
-												        Small checkbox
-												    </label>
-												</div>
-											</div>
-											
-											<div class="card-body pt-5">
-												<div class="form-check form-check-custom form-check-solid me-10">
-												    <input class="form-check-input h-40px w-40px" type="checkbox" value="" id="flexCheckbox40"/>
-												    <label class="form-check-label" for="flexCheckbox40">
-												        40px
-												    </label>
-												</div>
-											</div>
-											
-											
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- 내용 끝 -->
-							
-							<!-- 내용 시작 -->
-							<div id="kt_app_content" class="app-content flex-column-fluid">
-								<div class="app-container container-fluid">
-									<div class="card card-flush h-md-50 mb-xl-10">
-										<div class="card-header pt-5">
-											<h3 class="card-title text-gray-800 fw-bold">Input Group</h3>
-										</div>
-										<div class="separator separator-dashed my-3"></div>	
-										<div class="card-body pt-5">
-											<!--begin::Input group-->
-											<div class="input-group input-group-solid mb-5">
-											    <span class="input-group-text" id="basic-addon1">@</span>
-											    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"/>
-											</div>
-											<!--end::Input group-->
-											
-											<!--begin::Input group-->
-											<div class="input-group input-group-solid mb-5">
-											    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2"/>
-											    <span class="input-group-text" id="basic-addon2">@example.com</span>
-											</div>
-											<!--end::Input group-->
-											
-											<!--begin::Input group-->
-											<label for="basic-url" class="form-label">Your vanity URL</label>
-											<div class="input-group input-group-solid mb-5">
-											    <span class="input-group-text" id="basic-addon3">https://example.com/users/</span>
-											    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3"/>
-											</div>
-											<!--end::Input group-->
-											
-											<!--begin::Input group-->
-											<div class="input-group input-group-solid mb-5">
-											    <span class="input-group-text">$</span>
-											    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"/>
-											    <span class="input-group-text">.00</span>
-											</div>
-											<!--end::Input group-->
-											
-											<!--begin::Input group-->
-											<div class="input-group input-group-solid mb-5">
-											    <input type="text" class="form-control" placeholder="Username" aria-label="Username"/>
-											    <span class="input-group-text">@</span>
-											    <input type="text" class="form-control" placeholder="Server" aria-label="Server"/>
-											</div>
-											<!--end::Input group-->
-											
-											<!--begin::Input group-->
-											<div class="input-group input-group-solid">
-											    <span class="input-group-text">With textarea</span>
-											    <textarea class="form-control" aria-label="With textarea"></textarea>
-											</div>
-											<!--end::Input group-->
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- 내용 끝 -->
-							
-							<!-- 내용 시작 -->
-							<div id="kt_app_content" class="app-content flex-column-fluid">
-								<div class="app-container container-fluid">
-									<div class="card card-flush h-md-50 mb-xl-10">
-										<div class="card-header pt-5">
-											<h3 class="card-title text-gray-800 fw-bold">Input</h3>
-										</div>
-										<div class="separator separator-dashed my-3"></div>	
-										<div class="card-body pt-5">
-											<label class="form-label">Basic example</label>
-											<input type="text" class="form-control" id="kt_docs_maxlength_basic" maxlength="10" />
-											<span class="fs-6 text-muted">The badge will show up by default when the remaining chars are 3 or less</span>		
-										</div>
-										<script type="text/javascript">
-											$('#kt_docs_maxlength_basic').maxlength({
-											    warningClass: "badge badge-warning",
-											    limitReachedClass: "badge badge-success"
-											});
-										</script>
-										
-										
-										<div class="card-body pt-5">
-											<label class="form-label">Custom text example</label>
-											<input type="text" class="form-control" id="kt_docs_maxlength_custom_text" maxlength="20" />
-											<span class="fs-6 text-muted">Display custom text on input focus</span>	
-										</div>
-										<script type="text/javascript">
-											$('#kt_docs_maxlength_custom_text').maxlength({
-											    threshold: 20,
-											    warningClass: "badge badge-danger",
-											    limitReachedClass: "badge badge-success",
-											    separator: ' of ',
-											    preText: 'You have ',
-											    postText: ' chars remaining.',
-											    validate: true
-											});
-										</script>
-										
-										<div class="card-body pt-5">
-											<label class="form-label">Textarea example</label>
-											<textarea class="form-control" id="kt_docs_maxlength_textarea" maxlength="20" placeholder="" rows="6"></textarea>
-											<span class="fs-6 text-muted">Bootstrap maxlength supports textarea as well as inputs</span>
-										</div>
-										<script type="text/javascript">
-											$('#kt_docs_maxlength_textarea').maxlength({
-											    warningClass: "badge badge-primary",
-											    limitReachedClass: "badge badge-success"
-											});
-										</script>
-										
-									</div>
-								</div>
-							</div>
-							<!-- 내용 끝 -->
-							
-							<!-- 내용 시작 -->
-							<div id="kt_app_content" class="app-content flex-column-fluid">
-								<div class="app-container container-fluid">
-									<div class="card card-flush h-md-50 mb-xl-10">
-										<div class="card-header pt-5">
-											<h3 class="card-title text-gray-800 fw-bold">Button</h3>
-										</div>
-										<div class="separator separator-dashed my-3"></div>	
-										<div class="card-body pt-5">
-											<h2>확인 / 취소</h2>
-											<a href="#" class="btn btn-secondary hover-scale">btn btn-secondary hover-scale</a>
-											<a href="#" class="btn btn-primary hover-scale">btn btn-primary hover-scale</a>
-										</div>
-										
-										<div class="card-body pt-5">
-										<h2>전송(Submit)</h2>
-											<button type="button" class="btn btn-primary me-10" id="kt_button_1">
-											    <span class="indicator-label">
-											        Submit
-											    </span>
-											    <span class="indicator-progress">
-											        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-											    </span>
-											</button>
-										</div>
-										<script type="text/javascript">
-											// Element to indecate
-											var button = document.querySelector("#kt_button_1");
-	
-											// Handle button click event
-											button.addEventListener("click", function() {
-											    // Activate indicator
-											    button.setAttribute("data-kt-indicator", "on");
-	
-											    // Disable indicator after 3 seconds
-											    setTimeout(function() {
-											        button.removeAttribute("data-kt-indicator");
-											    }, 3000);
-											});
-										</script>
-										
-									</div>
-								</div>
-							</div>
-							<!-- 내용 끝 -->
-							
-							<!-- 내용 시작 -->
-							<div id="kt_app_content" class="app-content flex-column-fluid">
-								<div class="app-container container-fluid">
-									<div class="card card-flush h-md-50 mb-xl-10">
-										<div class="card-header pt-5">
-											<h3 class="card-title text-gray-800 fw-bold">Accordion</h3>
-										</div>
-										<div class="separator separator-dashed my-3"></div>	
-										<div class="card-body pt-5">
-											<!--begin::Accordion-->
-											<div class="accordion" id="kt_accordion_1">
-											    <div class="accordion-item">
-											        <h2 class="accordion-header" id="kt_accordion_1_header_1">
-											            <button class="accordion-button fs-4 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_body_1" aria-expanded="true" aria-controls="kt_accordion_1_body_1">
-											                Accordion Item #1
-											            </button>
-											        </h2>
-											        <div id="kt_accordion_1_body_1" class="accordion-collapse collapse show" aria-labelledby="kt_accordion_1_header_1" data-bs-parent="#kt_accordion_1">
-											            <div class="accordion-body">
-											                ...
-											            </div>
-											        </div>
-											    </div>
-											
-											    <div class="accordion-item">
-											        <h2 class="accordion-header" id="kt_accordion_1_header_2">
-											            <button class="accordion-button fs-4 fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_body_2" aria-expanded="false" aria-controls="kt_accordion_1_body_2">
-											            Accordion Item #2
-											            </button>
-											        </h2>
-											        <div id="kt_accordion_1_body_2" class="accordion-collapse collapse" aria-labelledby="kt_accordion_1_header_2" data-bs-parent="#kt_accordion_1">
-											            <div class="accordion-body">
-											                ...
-											            </div>
-											        </div>
-											    </div>
-											
-											    <div class="accordion-item">
-											        <h2 class="accordion-header" id="kt_accordion_1_header_3">
-											            <button class="accordion-button fs-4 fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kt_accordion_1_body_3" aria-expanded="false" aria-controls="kt_accordion_1_body_3">
-											            Accordion Item #3
-											            </button>
-											        </h2>
-											        <div id="kt_accordion_1_body_3" class="accordion-collapse collapse" aria-labelledby="kt_accordion_1_header_3" data-bs-parent="#kt_accordion_1">
-											            <div class="accordion-body">
-											               ...
-											            </div>
-											        </div>
-											    </div>
-											</div>
-											<!--end::Accordion-->
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- 내용 끝 -->
-							
-							
-							<!-- 내용 시작 -->
-							<div id="kt_app_content" class="app-content flex-column-fluid">
-								<div class="app-container container-fluid">
-									<div class="card card-flush h-md-50 mb-xl-10">
-										<div class="card-header pt-5">
-											<h3 class="card-title text-gray-800 fw-bold">Modal</h3>
-										</div>
-										<div class="separator separator-dashed my-3"></div>	
-										
-										<div class="card-body pt-5">
-											<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_1">
-											   	일반모달창
-											</button>
-											
-											<div class="modal fade" tabindex="-1" id="kt_modal_1">
-											    <div class="modal-dialog">
-											        <div class="modal-content">
-											            <div class="modal-header">
-											                <h3 class="modal-title">Modal title</h3>
-											
-											                <!--begin::Close-->
-											                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-											                    <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
-											                </div>
-											                <!--end::Close-->
-											            </div>
-											
-											            <div class="modal-body">
-											                <p>Modal body text goes here.</p>
-											            </div>
-											
-											            <div class="modal-footer">
-											                <button type="button" class="btn btn-secondary hover-scale" data-bs-dismiss="modal">Close</button>
-											                <button type="button" class="btn btn-primary hover-scale">Save changes</button>
-											            </div>
-											        </div>
-											    </div>
-											</div>
-										</div>
-										
-										
-										<div class="card-body pt-5">
-											<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_3">
-											    움직이는 모달
-											</button>
-											
-											<div class="modal fade" tabindex="-1" id="kt_modal_3">
-											    <div class="modal-dialog">
-											        <div class="modal-content position-absolute">
-											            <div class="modal-header">
-											                <h5 class="modal-title">Modal title</h5>
-											
-											                <!--begin::Close-->
-											                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-											                    <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
-											                </div>
-											                <!--end::Close-->
-											            </div>
-											
-											            <div class="modal-body">
-											                <p>Modal body text goes here.</p>
-											            </div>
-											
-											            <div class="modal-footer">
-											                <button type="button" class="btn btn-secondary hover-scale" data-bs-dismiss="modal">Close</button>
-											                <button type="button" class="btn btn-primary hover-scale">Save changes</button>
-											            </div>
-											        </div>
-											    </div>
-											</div>
-										</div>
-										<script type="text/javascript">
-										// Make the DIV element draggable:
-										var element = document.querySelector('#kt_modal_3');
-										dragElement(element);
-
-										function dragElement(elmnt) {
-										    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-										    if (elmnt.querySelector('.modal-content')) {
-										        // if present, the header is where you move the DIV from:
-										        elmnt.querySelector('.modal-content').onmousedown = dragMouseDown;
-										    } else {
-										        // otherwise, move the DIV from anywhere inside the DIV:
-										        elmnt.onmousedown = dragMouseDown;
-										    }
-
-										    function dragMouseDown(e) {
-										        e = e || window.event;
-										        // get the mouse cursor position at startup:
-										        pos3 = e.clientX;
-										        pos4 = e.clientY;
-										        document.onmouseup = closeDragElement;
-										        // call a function whenever the cursor moves:
-										        document.onmousemove = elementDrag;
-										    }
-
-										    function elementDrag(e) {
-										        e = e || window.event;
-										        // calculate the new cursor position:
-										        pos1 = pos3 - e.clientX;
-										        pos2 = pos4 - e.clientY;
-										        pos3 = e.clientX;
-										        pos4 = e.clientY;
-										        // set the element's new position:
-										        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-										        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-										    }
-
-										    function closeDragElement() {
-										        // stop moving when mouse button is released:
-										        document.onmouseup = null;
-										        document.onmousemove = null;
-										    }
-										}
-										</script>
-										
-										
-									</div>
-								</div>
-							</div>
-							<!-- 내용 끝 -->
-							
-							<!-- 내용 시작 -->
-							<div id="kt_app_content" class="app-content flex-column-fluid">
-								<div class="app-container container-fluid">
-									<div class="card card-flush h-md-50 mb-xl-10">
-										<div class="card-header pt-5">
-											<h3 class="card-title text-gray-800 fw-bold">Date</h3>
-										</div>
-										<div class="separator separator-dashed my-3"></div>	
-										
-										<div class="card-body pt-5">
-											<div class="input-group" id="kt_td_picker_custom_icons" data-td-target-input="nearest" data-td-target-toggle="nearest">
-											    <input id="kt_td_picker_custom_icons_input" type="text" class="form-control" data-td-target="#kt_td_picker_custom_icons"/>
-											    <span class="input-group-text" data-td-target="#kt_td_picker_custom_icons" data-td-toggle="datetimepicker">
-											        <i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
-											    </span>
-											</div>
-										</div>
-										<script type="text/javascript">
-											new tempusDominus.TempusDominus(document.getElementById("kt_td_picker_custom_icons"), {
-											    display: {
-											    icons: {
-											        time: "ki-outline ki-time fs-1",
-											        date: "ki-outline ki-calendar fs-1",
-											        up: "ki-outline ki-up fs-1",
-											        down: "ki-outline ki-down fs-1",
-											        previous: "ki-outline ki-left fs-1",
-											        next: "ki-outline ki-right fs-1",
-											        today: "ki-outline ki-check fs-1",
-											        clear: "ki-outline ki-trash fs-1",
-											        close: "ki-outline ki-cross fs-1",
-											    },
-											    buttons: {
-											        today: true,
-											        clear: true,
-											        close: true,
-											    },
-											    }
-											});
-										</script>
-										
-										<div class="card-body pt-5">
-											<div class="row">
-											    <div class="col-sm-6">
-											        <label for="kt_td_picker_linked_1_input" class="form-label">From</label>
-											        <div class="input-group log-event" id="kt_td_picker_linked_1" data-td-target-input="nearest" data-td-target-toggle="nearest">
-											            <input id="kt_td_picker_linked_1_input" type="text" class="form-control" data-td-target="#kt_td_picker_linked_1"/>
-											            <span class="input-group-text" data-td-target="#kt_td_picker_linked_1" data-td-toggle="datetimepicker">
-											                <i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
-											            </span>
-											        </div>
-											    </div>
-											    <div class="col-sm-6">
-											        <label for="kt_td_picker_linked_2_input" class="form-label">To</label>
-											        <div class="input-group log-event" id="kt_td_picker_linked_2" data-td-target-input="nearest" data-td-target-toggle="nearest">
-											            <input id="kt_td_picker_linked_2_input" type="text" class="form-control" data-td-target="#kt_td_picker_linked_2"/>
-											            <span class="input-group-text" data-td-target="#kt_td_picker_linked_2" data-td-toggle="datetimepicker">
-											                <i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
-											            </span>
-											        </div>
-											    </div>
-											</div>
-										</div>
-										<script type="text/javascript">
-											const linkedPicker1Element = document.getElementById("kt_td_picker_linked_1");
-											const linked1 = new tempusDominus.TempusDominus(linkedPicker1Element);
-											const linked2 = new tempusDominus.TempusDominus(document.getElementById("kt_td_picker_linked_2"), {
-											    useCurrent: false,
-											});
-	
-											//using event listeners
-											linkedPicker1Element.addEventListener(tempusDominus.Namespace.events.change, (e) => {
-											    linked2.updateOptions({
-											        restrictions: {
-											        minDate: e.detail.date,
-											        },
-											    });
-											});
-	
-											//using subscribe method
-											const subscription = linked2.subscribe(tempusDominus.Namespace.events.change, (e) => {
-											    linked1.updateOptions({
-											        restrictions: {
-											        maxDate: e.date,
-											        },
-											    });
-											});
-										</script>
-										
-										<div class="card-body pt-5">
-											<div class="mb-0">
-											    <label class="form-label">Example</label>
-											    <input class="form-control form-control-solid" placeholder="Pick date rage" id="kt_daterangepicker_2"/>
-											</div>
-										</div>
-										<script type="text/javascript">
-										$("#kt_daterangepicker_2").daterangepicker({
-										    timePicker: true,
-										    startDate: moment().startOf("hour"),
-										    endDate: moment().startOf("hour").add(32, "hour"),
-										    locale: {
-										        format: "M/DD hh:mm A"
-										    }
-										});
-										</script>
-										
-										
-									</div>
-								</div>
-							</div>
-							<!-- 내용 끝 -->
 							
 							
 						</div>
@@ -1685,7 +973,7 @@
 <!--begin::Javascript-->
 <script>var hostUrl = "assets/";</script>
 <!--begin::Vendors Javascript(used for this page only)-->
-<script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+<script src="../assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
@@ -1697,15 +985,16 @@
 <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
-<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+<script src="../assets/plugins/custom/datatables/datatables.bundle.js"></script>
 <!--end::Vendors Javascript-->
 <!--begin::Custom Javascript(used for this page only)-->
-<script src="assets/js/widgets.bundle.js"></script>
-<script src="assets/js/custom/apps/chat/chat.js"></script>
-<script src="assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-<script src="assets/js/custom/utilities/modals/create-campaign.js"></script>
-<script src="assets/js/custom/utilities/modals/users-search.js"></script>
+<script src="../assets/js/widgets.bundle.js"></script>
+<script src="../assets/js/custom/apps/chat/chat.js"></script>
+<script src="../assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+<script src="../assets/js/custom/utilities/modals/create-campaign.js"></script>
+<script src="../assets/js/custom/utilities/modals/users-search.js"></script>
 <!--end::Custom Javascript-->
 <!--end::Javascript-->
-<script type="text/javascript" src="./js/signTree.js"></script>
+<script type="text/javascript" src="../js/signTree.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 </html>
