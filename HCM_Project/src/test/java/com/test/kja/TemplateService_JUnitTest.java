@@ -42,7 +42,7 @@ public class TemplateService_JUnitTest {
 		assertEquals(1, deleteCnt);
 	}
 	
-//	@Test
+	@Test
 	public void listTest() {
 		List<TemplateDto> list =  service.getTempList();
 		assertNotEquals(0, list.size());
@@ -59,7 +59,7 @@ public class TemplateService_JUnitTest {
 		assertNotNull(detailTem);
 	}
 	
-	@Test
+//	@Test
 	public void insertTest() {
 		TemplateDto dto = new TemplateDto();
 		dto.setSidt_temp_name("시말서");
