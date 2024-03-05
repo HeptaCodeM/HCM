@@ -4,14 +4,14 @@
 String hrLeftMenu [] = {"조직관리", "증명서관리", "인사발령관리", "근태관리"};
 // 소분류 메뉴명
 String hrSubLeftMenu [][] = {
-		{"부서관리","직위관리","직책관리"},		//hrLeftMenu[0]
+		{"부서관리","직위관리","직책관리", "사원등록", "사원조회"},		//hrLeftMenu[0]
 		{"증명서리스트"},					//hrLeftMenu[1]
 		{"인사발령조회", "인사발령관리(관리자)"},	//hrLeftMenu[2]
 		{"출퇴근등록", "출퇴근현황"}			//hrLeftMenu[3]
 };
 //소분류 링크
 String hrSubLinkLeftMenu [][] = {
-		{"./hrDept.do","#","#"},		//hrLeftMenu[0]
+		{"./hrDept.do","#","#", "/hr/employee/regist.do", "/hr/employee/list.do"},		//hrLeftMenu[0]
 		{"#"},							//hrLeftMenu[1]
 		{"#", "#"},						//hrLeftMenu[2]
 		{"#", "#"}						//hrLeftMenu[3]

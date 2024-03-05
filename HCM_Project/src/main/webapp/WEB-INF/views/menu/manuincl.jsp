@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="canonical" href="https://preview.keenthemes.com/keen" />
-<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+<link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
 <!--begin::Fonts(mandatory for all pages)-->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 <!--end::Fonts-->
@@ -24,7 +24,7 @@
 <!--end::Global Javascript Bundle-->
 
 <!--begin::Javascript-->
-<script>var hostUrl = "assets/";</script>
+<script>var hostUrl = "/assets/";</script>
 <!--begin::Vendors Javascript(used for this page only)-->
 <script src="assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
