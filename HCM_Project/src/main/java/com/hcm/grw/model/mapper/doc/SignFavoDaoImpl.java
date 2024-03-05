@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hcm.grw.dto.doc.SignFavoDto;
+import com.hcm.grw.dto.hr.EmployeeDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -64,6 +65,12 @@ public class SignFavoDaoImpl implements ISignFavoDao {
 	public List<SignFavoDto> getFavApprLineList(String empl_id) {
 		log.info("SignFavoDaoImpl getFavApprLineList DAO Access");
 		return sessionTemplate.selectList(NS + "getFavApprLineList", empl_id);
+	}
+	
+	@Override
+	public List<EmployeeDto> getFav(String empl_id) {
+		log.info("SignFavoDaoImpl getFav DAO Access");
+		return sessionTemplate.selectList(NS + "getFav", empl_id);
 	}
 
 }

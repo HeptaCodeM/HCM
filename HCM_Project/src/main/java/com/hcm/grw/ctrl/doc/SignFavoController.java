@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hcm.grw.dto.doc.SignFavoDto;
+import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.doc.ISignFavoService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,13 @@ public class SignFavoController {
 	public ResponseEntity<?> signFavoLineList(@RequestParam String empl_id) {
 		log.info("SignFavoController signFavoLineList.do GET 즐겨찾기 라인 불러오기");
 		List<SignFavoDto> lineList = service.getFavApprLineList(empl_id);
+		String appr_id = "";
+		for(int i=0; i<lineList.size(); i++) {
+			appr_id = lineList.get(i).getSiaf_appr_line();
+		}
+		System.out.println(appr_id);
+		List<EmployeeDto> dto = service.getFav(appr_id);
+		System.out.println(dto);
 		return ResponseEntity.ok(lineList);
 	}
 	

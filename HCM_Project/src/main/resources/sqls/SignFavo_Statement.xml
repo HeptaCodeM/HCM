@@ -67,5 +67,15 @@
 	        WHERE saf.EMPL_ID = #{empl_id}
 	        AND SIAF_APPR_FLAG = 2
 	</select>
+	
+	<select id="getFav" resultType="EmployeeDto">
+		SELECT EMPL_ID, EMPL_NAME
+		FROM EMPLOYEE e 
+		WHERE EMPL_ID IN (
+<!-- 							<foreach collection="empl_id" separator="," open="(" close=")"> -->
+								#{empl_id}
+<!-- 							</foreach> -->
+						)
+	</select>
 
 </mapper>
