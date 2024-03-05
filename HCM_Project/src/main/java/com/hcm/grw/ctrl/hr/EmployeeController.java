@@ -1,17 +1,24 @@
 package com.hcm.grw.ctrl.hr;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hcm.grw.dto.hr.CommonCodeDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.model.mapper.hr.EmployeeListDao;
 import com.hcm.grw.model.service.hr.CommonCodeService;
 import com.hcm.grw.model.service.hr.EmployeeService;
 
@@ -26,6 +33,9 @@ public class EmployeeController {
 	
 	@Autowired
 	private EmployeeService employeeService;
+	
+	@Autowired
+	private EmployeeListDao employeeListDao;
 	
 	
 	@GetMapping("/hr/employee/regist.do")
@@ -44,8 +54,10 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/hr/employee/regist.do")
-	public @ResponseBody void registEmployee(EmployeeDto emp) {
+	public @ResponseBody void registEmployee(EmployeeDto emp, HttpServletResponse resp) throws IOException {
 		log.info("EmployeeController registEmployee 등록처리");
+		
+		resp.setContentType("text/html;charset=utf-8;");
 		
         // Random 객체 생성
         Random random = new Random();
@@ -67,10 +79,36 @@ public class EmployeeController {
 			sb.append("alert('등록 시 오류가 발생하였습니다.'); history.back();");
 		}else {
 			sb.append("alert('정상적으로 등록 되었습니다.');");
-			sb.append("location.href='/hr/employee/regist.do';");
+			sb.append("location.href='/hr/employee/list.do';");
 		}
-		sb.append("<script>");
+		sb.append("</script>");
+		
+		resp.getWriter().print(sb);
 	}
 
+	
+	@GetMapping("/hr/employee/list.do")
+	public String employeeAllList(Model model) {
+		log.info("EmployeeController employeeAllList 진입");
+		
+		List<EmployeeDto> lists = employeeListDao.selectAllEmployee();
+		
+		model.addAttribute("lists", lists);
+		
+		return "/hr/employee/list";
+	}	
 
+	@GetMapping("/hr/employee/modify.do")
+	public String employeeModify(@RequestParam String empl_id, Model model) {
+		log.info("EmployeeController employeeModify 수정페이지 진입");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("empl_id", empl_id);
+		EmployeeDto empInfo = employeeListDao.selectOneEmployee(map);
+		
+		model.addAttribute("empInfo", empInfo);
+		
+		return "/hr/employee/modify";
+	}	
+	
 }
