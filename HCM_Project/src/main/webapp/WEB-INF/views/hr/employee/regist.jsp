@@ -78,7 +78,7 @@
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
 
-								<form name="form1" method="post" action="/hr/regist.do">
+								<form name="form1" method="post" action="/hr/employee/regist.do">
 									<table class="table table-hover">
 										<tr>
 											<th>성명</th>
@@ -110,6 +110,10 @@
 										<tr>
 											<th>팩스번호</th>
 											<td><input type="text" name="empl_fax" maxlength="15"></td>
+										</tr>
+										<tr>
+											<th>입사년도</th>
+											<td><input type="date" name="empl_joindate" required="required"></td>
 										</tr>
 										<!-- 
 										<tr>
