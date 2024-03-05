@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-// 대분류 순서	
+// 중분류 순서
 String hrLeftMenu [] = {"조직관리", "증명서관리", "인사발령관리", "근태관리"};
-// 중분류 메뉴명
+// 소분류 메뉴명
 String hrSubLeftMenu [][] = {
 		{"부서관리","직위관리","직책관리"},		//hrLeftMenu[0]
 		{"증명서리스트"},					//hrLeftMenu[1]
 		{"인사발령조회", "인사발령관리(관리자)"},	//hrLeftMenu[2]
 		{"출퇴근등록", "출퇴근현황"}			//hrLeftMenu[3]
 };
+//소분류 링크
 String hrSubLinkLeftMenu [][] = {
 		{"./hrDept.do","#","#"},		//hrLeftMenu[0]
 		{"#"},							//hrLeftMenu[1]
