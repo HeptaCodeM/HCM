@@ -1,5 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
+	<typeAliases>
+		<typeAlias type="com.hcm.grw.dto.doc.SignTreeDto" alias="SignTreeDto"/>
+		<typeAlias type="com.hcm.grw.dto.doc.SignFavoDto" alias="SignFavoDto"/>
+		<typeAlias type="com.hcm.grw.dto.doc.SignBoxDto" alias="SignBoxDto"/>
+		<typeAlias type="com.hcm.grw.dto.doc.SignTempBoxDto" alias="SignTempBoxDto"/>
+		<typeAlias type="com.hcm.grw.dto.doc.SignJsonDto" alias="SignJsonDto"/>
+		<typeAlias type="com.hcm.grw.dto.doc.DocBoxDto" alias="DocBoxDto"/>
+		<typeAlias type="com.hcm.grw.dto.doc.TemplateDto" alias="TemplateDto"/>
+	 	<typeAlias type="com.hcm.grw.dto.sm.GoboDto" alias="GoboDto"/>
+        <typeAlias type="com.hcm.grw.dto.sm.ReplyDto" alias="ReplyDto"/>
+        <typeAlias type="com.hcm.grw.dto.sm.ScbDto" alias="ScbDto"/> 
+        <typeAlias type="java.lang.Integer" alias="Integer" />
+		<typeAlias type="java.lang.String" alias="String" />
+		<typeAlias type="java.util.Map" alias="Map" />
+		<!-- SDJ Area -->
+		<!-- 임직원 -->
+		<typeAlias type="com.hcm.grw.dto.hr.EmployeeDto" alias="EmployeeDto" />
+		<!-- 출퇴근 -->
+		<typeAlias type="com.hcm.grw.dto.hr.CommuteDto" alias="CommuteDto" />
+		<!-- 발령정보 -->
+		<typeAlias type="com.hcm.grw.dto.hr.OrderInfoListDto" alias="OrderInfoListDto" />
+		<typeAlias type="com.hcm.grw.dto.hr.OrderInfoMasterDto" alias="OrderInfoMasterDto" />
+		<typeAlias type="com.hcm.grw.dto.hr.OrderInfoDetailDto" alias="OrderInfoDetailDto" />
+		<!-- 휴가 -->
+		<typeAlias type="com.hcm.grw.dto.hr.HolidayDto" alias="HolidayDto" />
+
+		<typeAlias type="com.hcm.grw.dto.hr.SnsInfoDto" alias="SnsInfoDto" />
+		<typeAlias type="com.hcm.grw.dto.hr.CommonCodeDto" alias="CommonCodeDto"/>
+		<typeAlias type="com.hcm.grw.dto.hr.EmpSignDto" alias="EmpSignDto"/>
+		<typeAlias type="com.hcm.grw.dto.hr.CompanyDto" alias="CompanyDto"/>
+	</typeAliases>
 	
+
+	
+	
+	
+	
+
+	<mappers>
+		<mapper resource="sqls/DocBox_Statement.xml" />
+		<mapper resource="sqls/SignTree_Statement.xml"/>
+		<mapper resource="sqls/SignFavo_Statement.xml"/>
+		<mapper resource="sqls/SignBox_Statement.xml"/>
+ 		<mapper resource="sqls/sm/Gobo_Statement.xml"/>
+        <mapper resource="sqls/sm/Reply_Statement.xml"/>
+        <mapper resource="sqls/sm/Scb_Statement.xml"/> 
+        <mapper resource="sqls/hr/Employee_Statement.xml" />
+		<mapper resource="sqls/hr/Commute_Statement.xml" />
+		<mapper resource="sqls/hr/Holiday_Statement.xml" />
+		<mapper resource="sqls/hr/Order_Statement.xml" />
+		<mapper resource="sqls/hr/CommonCode_Statement.xml"/>
+		<mapper resource="sqls/hr/EmpSignDto_Statement.xml"/>
+		<mapper resource="sqls/hr/CompanyDto_Statement.xml"/>
+		<mapper resource="sqls/hr/SignDocBoxDto_Statement.xml"/>
+		<mapper resource="sqls/hr/EmployeeList_Statement.xml"/>
+	</mappers>
 </configuration>
