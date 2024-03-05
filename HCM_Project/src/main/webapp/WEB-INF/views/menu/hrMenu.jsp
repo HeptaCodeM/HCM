@@ -2,179 +2,247 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<!--begin::Menu-->
-									<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
-										<!--begin:Menu item-->
-										
-										<!--end:Menu item-->
-										<!--begin:Menu item-->
-										<div data-kt-menu-trigger="click" class="menu-item pt-5 menu-item menu-accordion">
-											<!--begin:Menu content-->
-											<span class="menu-link">
-												<span class="menu-icon">
-														<i class="ki-duotone ki-user fs-2">
-															<span class="path1"></span>
-															<span class="path2"></span>
-															<span class="path3"></span>
-														</i>
-													</span>
-													<span class="menu-heading fw-bold text-uppercase fs-7 menu-title">인사관리</span>
-													<span class="menu-arrow"></span>
-											</span>
-											<!--end:Menu content-->
-										<!--end:Menu item-->
-										<!--begin:Menu item-->
-										<div class="menu-sub menu-sub-accordion" kt-hidden-height="242" style="display: none; overflow: hidden;">
-										<div  data-kt-menu-trigger="click" class="menu-item menu-accordion">
-											<!--begin:Menu link-->
-											<span class="menu-link">
-												<span class="menu-icon">
-													<i class="ki-duotone ki-address-book fs-2">
-														<span class="path1"></span>
-														<span class="path2"></span>
-														<span class="path3"></span>
-													</i>
-												</span>
-												<span class="menu-title">직위,직책,부서 관리</span>
-												<span class="menu-arrow"></span>
-											</span>
-											<!--end:Menu link-->
-											<!--begin:Menu sub-->
-											<div class="menu-sub menu-sub-accordion" kt-hidden-height="242" style="display: none; overflow: hidden;">
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="./hrDept.do">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">부서관리</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="#">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">직위관리</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="#">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">직책관리</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-											</div>
-											<!--end:Menu sub-->
-										</div>
-										
-										<!--begin:Menu item-->
-										<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-											<!--begin:Menu link-->
-											<span class="menu-link">
-												<span class="menu-icon">
-													<i class="ki-duotone ki-address-book fs-2">
-														<span class="path1"></span>
-														<span class="path2"></span>
-														<span class="path3"></span>
-													</i>
-												</span>
-												<span class="menu-title">기능대분류 2</span>
-												<span class="menu-arrow"></span>
-											</span>
-											<!--end:Menu link-->
-											<!--begin:Menu sub-->
-											<div class="menu-sub menu-sub-accordion" kt-hidden-height="242" style="display: none; overflow: hidden;">
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="file:///C:/Users/kjwkj/Desktop/html/keen_v3.0.6/demo1/pages/user-profile/overview.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">기능소분류 1</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="file:///C:/Users/kjwkj/Desktop/html/keen_v3.0.6/demo1/pages/user-profile/projects.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">기능소분류 2</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="file:///C:/Users/kjwkj/Desktop/html/keen_v3.0.6/demo1/pages/user-profile/campaigns.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">기능소분류 3</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="file:///C:/Users/kjwkj/Desktop/html/keen_v3.0.6/demo1/pages/user-profile/documents.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">기능소분류 4</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="file:///C:/Users/kjwkj/Desktop/html/keen_v3.0.6/demo1/pages/user-profile/followers.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">기능소분류 5</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-												<!--begin:Menu item-->
-												<div class="menu-item">
-													<!--begin:Menu link-->
-													<a class="menu-link" href="file:///C:/Users/kjwkj/Desktop/html/keen_v3.0.6/demo1/pages/user-profile/activity.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">기능소분류 6</span>
-													</a>
-													<!--end:Menu link-->
-												</div>
-												<!--end:Menu item-->
-											</div>
-											<!--end:Menu sub-->
-										</div>
-									</div>
-									</div>
-									</div>		
-									<!--end::Menu-->
+	<!-- 대분류별 영역 시작 -->
+	<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
+
+		
+		<div data-kt-menu-trigger="click" class="menu-item pt-5 menu-item menu-accordion">
+
+			<!-- 대분류 타이틀 영역 시작 ------------------------------------------------------------------------->
+			<span class="menu-link">
+				<span class="menu-icon">
+						<i class="ki-duotone ki-user fs-2">
+							<span class="path1"></span>
+							<span class="path2"></span>
+							<span class="path3"></span>
+						</i>
+					</span>
+					<span class="menu-heading fw-bold text-uppercase fs-7 menu-title">인사관리</span>
+					<span class="menu-arrow"></span>
+			</span>
+			<!-- 대분류 타이틀 영역 종료 -->
+
+
+			<!-- 중분류 영역 시작 ********************************************************************************-->
+			
+			
+			<div class="menu-sub menu-sub-accordion" kt-hidden-height="242" style="display: none; overflow: hidden;">
+				
+				
+				<!-- 중분류 1 시작 -->
+				<div  data-kt-menu-trigger="click" class="menu-item menu-accordion">
+					
+					<!-- 중분류1 메뉴링크 시작 -->
+					<span class="menu-link">
+						<span class="menu-icon">
+							<i class="ki-duotone ki-address-book fs-2">
+								<span class="path1"></span>
+								<span class="path2"></span>
+								<span class="path3"></span>
+							</i>
+						</span>
+						<span class="menu-title">조직 관리</span>
+						<span class="menu-arrow"></span>
+					</span>
+					<!-- 중분류1 메뉴링크 종료 -->
+
+					<!-- 소분류 영역 시작 ========================================================-->
+					<div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;">
+
+						<!-- 소분류1 메뉴 영역 시작 -->
+						<div class="menu-item">
+							<!--begin:Menu link-->
+							<a class="menu-link" href="./hrDept.do">
+								<span class="menu-bullet">
+									<span class="bullet bullet-dot"></span>
+								</span>
+								<span class="menu-title">부서관리</span>
+							</a>
+						</div>
+						<!-- 소분류1 메뉴 영역 종료 -->
+
+						<!-- 소분류2 메뉴 영역 시작 -->
+						<div class="menu-item">
+							<!--begin:Menu link-->
+							<a class="menu-link" href="#">
+								<span class="menu-bullet">
+									<span class="bullet bullet-dot"></span>
+								</span>
+								<span class="menu-title">직위관리</span>
+							</a>
+							<!--end:Menu link-->
+						</div>
+						<!-- 소분류2 메뉴 영역 종료 -->
+
+						<!-- 소분류3 메뉴 영역 시작 -->
+						<div class="menu-item">
+							<!--begin:Menu link-->
+							<a class="menu-link" href="#">
+								<span class="menu-bullet">
+									<span class="bullet bullet-dot"></span>
+								</span>
+								<span class="menu-title">직책관리</span>
+							</a>
+							<!--end:Menu link-->
+						</div>
+						<!-- 소분류3 메뉴 영역 종료 -->
+
+					</div>
+					<!-- 소분류 영역 종료 ========================================================-->
+			
+				</div>
+				<!-- 중분류 1 종료 -->
+				
+
+				<!-- 중분류 2 시작 -->
+				<div  data-kt-menu-trigger="click" class="menu-item menu-accordion">
+					
+					<!-- 중분류2 메뉴링크 시작 -->
+					<span class="menu-link">
+						<span class="menu-icon">
+							<i class="ki-duotone ki-address-book fs-2">
+								<span class="path1"></span>
+								<span class="path2"></span>
+								<span class="path3"></span>
+							</i>
+						</span>
+						<span class="menu-title">증명서 관리</span>
+						<span class="menu-arrow"></span>
+					</span>
+					<!-- 중분류2 메뉴링크 종료 -->
+
+					<!-- 소분류 영역 시작 ========================================================-->
+					<div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;">
+
+						<!-- 소분류1 메뉴 영역 시작 -->
+						<div class="menu-item">
+							<a class="menu-link" href="./hrDept.do">
+								<span class="menu-bullet">
+									<span class="bullet bullet-dot"></span>
+								</span>
+								<span class="menu-title">증명서 리스트</span>
+							</a>
+						</div>
+						<!-- 소분류1 메뉴 영역 종료 -->
+
+
+
+					</div>
+					<!-- 소분류 영역 종료 ========================================================-->
+			
+				</div>
+				<!-- 중분류 2 종료 -->
+
+
+				<!-- 중분류 3 시작 -->
+				<div  data-kt-menu-trigger="click" class="menu-item menu-accordion">
+					
+					<!-- 중분류3 메뉴링크 시작 -->
+					<span class="menu-link">
+						<span class="menu-icon">
+							<i class="ki-duotone ki-address-book fs-2">
+								<span class="path1"></span>
+								<span class="path2"></span>
+								<span class="path3"></span>
+							</i>
+						</span>
+						<span class="menu-title">인사발령 관리</span>
+						<span class="menu-arrow"></span>
+					</span>
+					<!-- 중분류3 메뉴링크 종료 -->
+
+					<!-- 소분류 영역 시작 ========================================================-->
+					<div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;">
+
+						<!-- 소분류1 메뉴 영역 시작 -->
+						<div class="menu-item">
+							<a class="menu-link" href="./hrDept.do">
+								<span class="menu-bullet">
+									<span class="bullet bullet-dot"></span>
+								</span>
+								<span class="menu-title">인사발령 조회</span>
+							</a>
+						</div>
+						<!-- 소분류1 메뉴 영역 종료 -->
+
+						<!-- 소분류2 메뉴 영역 시작 -->
+						<div class="menu-item">
+							<a class="menu-link" href="./hrDept.do">
+								<span class="menu-bullet">
+									<span class="bullet bullet-dot"></span>
+								</span>
+								<span class="menu-title">인사발령 관리(관리자)</span>
+							</a>
+						</div>
+						<!-- 소분류2 메뉴 영역 종료 -->
+
+
+
+					</div>
+					<!-- 소분류 영역 종료 ========================================================-->
+			
+				</div>
+				<!-- 중분류 3 종료 -->
+
+
+				<!-- 중분류 4 시작 -->
+				<div  data-kt-menu-trigger="click" class="menu-item menu-accordion">
+					
+					<!-- 중분류3 메뉴링크 시작 -->
+					<span class="menu-link">
+						<span class="menu-icon">
+							<i class="ki-duotone ki-address-book fs-2">
+								<span class="path1"></span>
+								<span class="path2"></span>
+								<span class="path3"></span>
+							</i>
+						</span>
+						<span class="menu-title">근태 관리</span>
+						<span class="menu-arrow"></span>
+					</span>
+					<!-- 중분류3 메뉴링크 종료 -->
+
+					<!-- 소분류 영역 시작 ========================================================-->
+					<div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;">
+
+						<!-- 소분류1 메뉴 영역 시작 -->
+						<div class="menu-item">
+							<a class="menu-link" href="./hrDept.do">
+								<span class="menu-bullet">
+									<span class="bullet bullet-dot"></span>
+								</span>
+								<span class="menu-title">출퇴근 등록</span>
+							</a>
+						</div>
+						<!-- 소분류1 메뉴 영역 종료 -->
+
+						<!-- 소분류2 메뉴 영역 시작 -->
+						<div class="menu-item">
+							<a class="menu-link" href="./hrDept.do">
+								<span class="menu-bullet">
+									<span class="bullet bullet-dot"></span>
+								</span>
+								<span class="menu-title">출퇴근 현황</span>
+							</a>
+						</div>
+						<!-- 소분류2 메뉴 영역 종료 -->
+
+
+
+					</div>
+					<!-- 소분류 영역 종료 ========================================================-->
+			
+				</div>
+				<!-- 중분류 4 종료 -->
+				
+
+			</div>
+			<!-- 중분류 영역 종료 ********************************************************************************-->
+
+
+
+		</div>		
+	</div>		
+	<!-- 대분류별 영역 종료 ------------------------------------------------------------------------->
+
 </html>
