@@ -9,5 +9,7 @@
 </head>
 <body>
 
+	<a href="./template.do">[관리자] 템플릿 관리 페이지 이동</a>
+
 </body>
 </html>
