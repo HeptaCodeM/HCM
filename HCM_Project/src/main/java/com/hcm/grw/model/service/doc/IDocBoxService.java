@@ -4,43 +4,46 @@ import java.util.List;
 import java.util.Map;
 
 import com.hcm.grw.dto.doc.DocBoxDto;
+import com.hcm.grw.dto.doc.SignBoxDto;
 
 public interface IDocBoxService {
 
 		//전체 문서함 조회
-		public List<DocBoxDto> getAllDocs(Map<String, String> inMap);
+		public List<SignBoxDto> getAllDocs(Map<String, String> inMap);
 		
 		//기안중인 문서 조회
-		public List<DocBoxDto> getMyGian(DocBoxDto dto);	
+		public List<SignBoxDto> getMyGian(SignBoxDto dto);	
 		
 		//진행중인 문서 조회
-		public List<DocBoxDto>  getIngDocs(DocBoxDto dto);
+		public List<SignBoxDto>  getIngDocs(SignBoxDto dto);
 		
 		//승인된 문서 조회
-		public List<DocBoxDto>  getApprovedDocs(DocBoxDto dto);
+		public List<SignBoxDto>  getApprovedDocs(SignBoxDto dto);
 		
 		//반려된 문서 조회
-		public List<DocBoxDto>  getDeniedDocs(DocBoxDto dto);
+		public List<SignBoxDto>  getDeniedDocs(SignBoxDto dto);
 		
 		//나에게 결재 요청된 문서 조회
-		public List<DocBoxDto>  getMyTurnDocs(DocBoxDto dto);
+		public List<SignBoxDto>  getMyTurnDocs(SignBoxDto dto);
 		
 		//참조자로 지정된 문서 조회
-		public List<DocBoxDto>  getChamjoDocs(Map<String, String> inMap);
+		public List<SignBoxDto>  getChamjoDocs(Map<String, String> inMap);
 		
 		//결재문서 상세 조회
-		public DocBoxDto getDetailDocs(DocBoxDto dto);
+		public SignBoxDto getDetailDocs(SignBoxDto dto);
 		
+		//상세조회 리스트
+		public List<DocBoxDto>getDetailDocsList(DocBoxDto dto);
 		
 		//결재승인 트랜잭션 처리
-		public boolean approve(DocBoxDto dto);
+		public boolean approve(SignBoxDto dto);
 		
 		//반려시 문서 업데이트
-		public int denyDoc(DocBoxDto dto);
+		public int denyDoc(SignBoxDto dto);
 		
 		
 		//최종 결재 승인 트랜잭션 처리
-		public boolean finalApprove(DocBoxDto dto);
+		public boolean finalApprove(SignBoxDto dto);
 		
 		
 }
