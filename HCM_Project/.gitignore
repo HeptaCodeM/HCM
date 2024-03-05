@@ -5,6 +5,9 @@
 # ide config file
 .dbeaver-data-sources*.xml
 *.sql
+.dbeaver/
+credentials-config.json
+project-metadata.json
 
 ### Eclipse ###
 .metadata
