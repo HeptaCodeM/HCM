@@ -17,7 +17,7 @@
 				</div>
 				<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
 					<a
-						href="#"
+						href="./mainTmp.do"
 						class="d-lg-none"> <img alt="HCM" src="image/favicon.ico"
 						class="theme-light-show h-30px">
 					</a>
@@ -46,8 +46,7 @@
 								data-kt-menu-placement="bottom-start"
 								class="menu-item here menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
 								<a href="./mainTmp.do">
-									<span class="menu-link"> 
-										<span class="menu-title">메인화면</span>
+									<span class="menu-link"> <span class="menu-title">메인화면</span>
 										<span class="menu-arrow d-lg-none"></span>
 									</span>
 								</a>

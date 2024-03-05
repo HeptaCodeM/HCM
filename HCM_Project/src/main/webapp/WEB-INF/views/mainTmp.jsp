@@ -29,10 +29,11 @@
 				</div>		
 			</div>
 			<div class="app-content flex-column-fluid">
+			
 				<!-- 내용 시작 -->
-				<div id="kt_app_content" class="app-content flex-column-fluid">
+				<div class="app-content flex-column-fluid ">
 					<div class="app-container container-fluid">
-						<div class="card card-flush h-md-50 mb-xl-10">
+						<div class="card card-flush h-md-50">
 							<div class="card-header pt-5">
 								<h3 class="card-title text-gray-800 fw-bold">소제목? 들어갑니다</h3>
 							</div>
@@ -46,6 +47,60 @@
 					</div>
 				</div>
 				<!-- 내용 끝 -->
+				
+				<div class="app-container container-fluid">
+					<div class="row gx-5 gx-xl-10">
+						<!--begin::Col-->
+						<div class="col-xxl-6 mb-5 mb-xl-10">
+							<!--begin::Chart widget 8-->
+							<div class="card card-flush h-xl-100">
+								<!--begin::Header-->
+								<div class="card-header pt-5">
+									<!--begin::Title-->
+									<h3 class="card-title align-items-start flex-column">
+										<span class="card-label fw-bold text-gray-900">Performance
+											Overview</span> <span class="text-gray-500 mt-1 fw-semibold fs-6">Users
+											from all channels</span>
+									</h3>
+									<!--end::Title-->
+								</div>
+								<!--end::Header-->
+								<!--begin::Body-->
+								<div class="card-body pt-6">
+									<!--begin::Tab content-->
+									<div class="tab-content"></div>
+									<!--end::Tab content-->
+								</div>
+								<!--end::Body-->
+							</div>
+							<!--end::Chart widget 8-->
+						</div>
+						<!--end::Col-->
+						<!--begin::Col-->
+						<div class="col-xl-6 mb-5 mb-xl-10">
+							<!--begin::Chart widget 36-->
+							<div class="card card-flush overflow-hidden h-xl-100">
+								<!--begin::Header-->
+								<div class="card-header pt-5">
+									<!--begin::Title-->
+									<h3 class="card-title align-items-start flex-column">
+										<span class="card-label fw-bold text-gray-900">Performance</span> 
+										<span class="text-gray-500 mt-1 fw-semibold fs-6">1,046 Inbound Calls today</span>
+									</h3>
+									<!--end::Title-->
+								</div>
+								<!--end::Header-->
+								<!--begin::Card body-->
+								<div class="card-body d-flex align-items-end p-0">
+	
+								</div>
+								<!--end::Card body-->
+							</div>
+							<!--end::Chart widget 36-->
+						</div>
+						<!--end::Col-->
+					</div>
+				</div>
 			</div>
 		</div>
 			

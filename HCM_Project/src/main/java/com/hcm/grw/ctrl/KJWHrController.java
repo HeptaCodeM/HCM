@@ -23,4 +23,6 @@ public class KJWHrController {
 		return "hr/KJW/hrDept";
 	}
 	
+	
+	
 }
