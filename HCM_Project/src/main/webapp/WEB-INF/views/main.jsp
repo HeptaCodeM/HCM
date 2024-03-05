@@ -88,7 +88,7 @@
 									<div data-kt-menu-trigger="{default: &#39;click&#39;, lg: &#39;hover&#39;}" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-0 me-lg-2">
 										<!--begin:Menu link-->
 										<span class="menu-link">
-											<span class="menu-title">전자결재</span>
+											<span class="menu-title" id="signTree">전자결재</span>
 											<span class="menu-arrow d-lg-none"></span>
 										</span>
 									</div>
