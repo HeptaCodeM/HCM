@@ -776,7 +776,8 @@
 												<!--begin:Menu item-->
 												<div class="menu-item">
 													<!--begin:Menu link-->
-													<a class="menu-link" href="file:///C:/Users/kjwkj/Desktop/html/keen_v3.0.6/demo1/pages/user-profile/overview.html">
+<!-- 													<a class="menu-link" href="file:///C:/Users/kjwkj/Desktop/html/keen_v3.0.6/demo1/pages/user-profile/overview.html"> -->
+														<a class="menu-link" href="./template.do">
 														<span class="menu-bullet">
 															<span class="bullet bullet-dot"></span>
 														</span>
@@ -1329,8 +1330,8 @@
 										<div class="separator separator-dashed my-3"></div>	
 										<div class="card-body pt-5">
 											<h2>확인 / 취소</h2>
-											<a href="#" class="btn btn-secondary hover-scale">btn btn-secondary hover-scale</a>
-											<a href="#" class="btn btn-primary hover-scale">btn btn-primary hover-scale</a>
+											<a href="#" class="btn btn-secondary me-10">btn btn-secondary me-10</a>
+											<a href="#" class="btn btn-primary me-10">btn btn-primary me-10</a>
 										</div>
 										
 										<div class="card-body pt-5">
@@ -1455,8 +1456,8 @@
 											            </div>
 											
 											            <div class="modal-footer">
-											                <button type="button" class="btn btn-secondary hover-scale" data-bs-dismiss="modal">Close</button>
-											                <button type="button" class="btn btn-primary hover-scale">Save changes</button>
+											                <button type="button" class="btn btn-secondary me-10" data-bs-dismiss="modal">Close</button>
+											                <button type="button" class="btn btn-primary me-10">Save changes</button>
 											            </div>
 											        </div>
 											    </div>
@@ -1487,8 +1488,8 @@
 											            </div>
 											
 											            <div class="modal-footer">
-											                <button type="button" class="btn btn-secondary hover-scale" data-bs-dismiss="modal">Close</button>
-											                <button type="button" class="btn btn-primary hover-scale">Save changes</button>
+											                <button type="button" class="btn btn-secondary me-10" data-bs-dismiss="modal">Close</button>
+											                <button type="button" class="btn btn-primary me-10">Save changes</button>
 											            </div>
 											        </div>
 											    </div>

@@ -15,16 +15,16 @@
 <select id="getDetailTemp" resultType="TemplateDto">
 	SELECT SIDT_TEMP_CD, SICA_CD, SIDT_TEMP_NAME, SIDT_TEMP_CREATEDT, SIDT_TEMP_MODIFYDT, SIDT_TEMP_FLAG, SIDT_TEMP_CONTENT
 		FROM SIGN_DOC_TEMP
-		WHERE SIDT_TEMP_FLAG = 'N'
+		WHERE SIDT_TEMP_FLAG = 'Y'
 		AND SIDT_TEMP_CD = #{sidt_temp_cd}
 </select>
 
 <!-- 템플릿 입력 -->
 <insert id="insertTemp">
-	INSERT INTO SIGN_DOC_TEMP (SIDT_TEMP_CD, SIDT_TEMP_NAME, SICA_CD, SIDT_TEMP_CREATEDT)
+	INSERT INTO SIGN_DOC_TEMP (SIDT_TEMP_CD, SIDT_TEMP_NAME, SICA_CD, SIDT_TEMP_CREATEDT, SIDT_TEMP_CONTENT)
 		VALUES 
 		('TC' || LPAD((SELECT MAX(SUBSTR(SIDT_TEMP_CD, 3)) + 1 FROM SIGN_DOC_TEMP), 6, '0'),
-	  	#{sidt_temp_name}, #{sica_cd}, CURRENT_DATE)
+	  	#{sidt_temp_name}, #{sica_cd}, CURRENT_DATE, #{sidt_temp_content})
 </insert>
 
 <!-- 템플릿 수정 -->
