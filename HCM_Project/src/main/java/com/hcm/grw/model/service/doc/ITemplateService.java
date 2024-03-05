@@ -8,7 +8,7 @@ import com.hcm.grw.dto.doc.TemplateDto;
 
 public interface ITemplateService {
 	
-public List<TemplateDto> getTempList();
+	public List<TemplateDto> getTempList();
 	
 	public TemplateDto getDetailTemp(String sidt_temp_cd);
 	

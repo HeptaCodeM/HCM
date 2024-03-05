@@ -1,1 +1,9 @@
+<<<<<<< HEAD
 {"resources":{"Scripts/Script.sql":{"default-datasource":"oracle_thin-18df5574df2-750b789a120e75b","default-schema":"ADMIN"}}}
+=======
+<<<<<<< HEAD
+{"resources":{"Scripts/OJS_QueryTest.sql":{"default-datasource":"oracle_thin-18df5574df2-750b789a120e75b","default-schema":"ADMIN"}}}
+=======
+{"resources":{"Scripts/OJS_QueryTest.sql":{"default-datasource":"oracle_thin-18dfed1a999-426918e221f0e8dd","default-schema":"ADMIN"},"Scripts/RJY_QueryTest.sql":{"default-datasource":"oracle_thin-18dfed1a999-426918e221f0e8dd","default-schema":"ADMIN"}}}
+>>>>>>> branch 'doc' of https://github.com/HeptaCodeM/HCM.git
+>>>>>>> branch 'doc' of https://github.com/HeptaCodeM/HCM.git
