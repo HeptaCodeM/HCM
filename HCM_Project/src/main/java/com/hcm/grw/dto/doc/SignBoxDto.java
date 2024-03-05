@@ -37,5 +37,6 @@ public class SignBoxDto {
 	private String sidb_doc_end;
 	
 	private List<SignJsonDto> sidb_doc_json;
+	private String empl_name;
 	
 }
