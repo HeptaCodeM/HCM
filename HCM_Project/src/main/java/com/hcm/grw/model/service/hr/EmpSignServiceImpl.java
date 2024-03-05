@@ -19,15 +19,21 @@ public class EmpSignServiceImpl implements EmpSignService {
 	private EmpSignDao dao;
 
 	@Override
-	public List<EmpSignDto> selectAllSign() {
-		log.info("EmpSignServiceImpl selectAllSign");
-		return dao.selectAllSign();
+	public List<EmpSignDto> selectAllSign(Map<String, Object> map) {
+		log.info("EmpSignServiceImpl selectAllSign // {}",map);
+		return dao.selectAllSign(map);
 	}
 
 	@Override
 	public int insertSign(Map<String, Object> map) {
 		log.info("EmpSignServiceImpl insertSign // {}",map);
 		return dao.insertSign(map);
+	}
+	
+	@Override
+	public int setDefaultSign(Map<String, Object> map) {
+		log.info("EmpSignServiceImpl insertSign // {}",map);
+		return dao.setDefaultSign(map);
 	}
 
 	@Override

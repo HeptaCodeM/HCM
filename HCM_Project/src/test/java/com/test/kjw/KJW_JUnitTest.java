@@ -18,9 +18,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.hcm.grw.dto.hr.CommonCodeDto;
 import com.hcm.grw.dto.hr.CompanyDto;
 import com.hcm.grw.dto.hr.EmpSignDto;
+import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.dto.hr.SignDocBoxDto;
 import com.hcm.grw.model.service.hr.CommonCodeService;
 import com.hcm.grw.model.service.hr.CompanyService;
 import com.hcm.grw.model.service.hr.EmpSignService;
+import com.hcm.grw.model.service.hr.EmployeeListService;
+import com.hcm.grw.model.service.hr.SignDocBoxService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/**/*.xml")
@@ -37,6 +41,12 @@ public class KJW_JUnitTest {
 	
 	@Autowired
 	private CompanyService companyService;
+	
+	@Autowired
+	private SignDocBoxService boxService;
+	
+	@Autowired
+	private EmployeeListService employeeListService;
 	
 	@Before
 	public void test() {
@@ -166,32 +176,41 @@ public class KJW_JUnitTest {
 	//@Test
 	public void testSign() {	
 		
-		List<EmpSignDto> list = empSignService.selectAllSign();
+		Map<String, Object> map4 = new HashMap<String, Object>();
+		map4.put("empl_id", "20230102");
+		List<EmpSignDto> list = empSignService.selectAllSign(map4);
 		System.out.println(list);
 		assertNotNull(list);
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("empl_id", "20230102");
-		map.put("emsi_title", "서명추가용");
-		map.put("emsi_sign_img", "www.naver.com2");
-		map.put("emsi_create_id", "20230102");
-		int cnt = empSignService.insertSign(map);
-		assertEquals(1, cnt);
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("empl_id", "20230102");
+//		map.put("emsi_title", "서명추가용");
+//		map.put("emsi_sign_img", "www.naver.com2");
+//		map.put("emsi_create_id", "20230102");
+//		int cnt = empSignService.insertSign(map);
+//		assertEquals(1, cnt);
 		
-		List<EmpSignDto> list2 = empSignService.selectAllSign();
+		Map<String, Object> map3 = new HashMap<String, Object>();
+		map3.put("emsi_seq", "2");
+		map3.put("empl_id", "20230102");
+		int cnt3 = empSignService.setDefaultSign(map3);
+		assertEquals(1, cnt3);
+		
+		List<EmpSignDto> list2 = empSignService.selectAllSign(map4);
 		System.out.println(list2);
 		
 		Map<String, Object> map2 = new HashMap<String, Object>();
 		map2.put("emsi_seq", "2");
+		map2.put("empl_id", "20230102");
 		int cnt2 = empSignService.deleteSign(map2);
 		assertEquals(1, cnt2);
 		
-		List<EmpSignDto> list3 = empSignService.selectAllSign();
+		List<EmpSignDto> list3 = empSignService.selectAllSign(map4);
 		System.out.println(list3);
 		
 	}
 	
-	@Test
+	//@Test
 	public void testCompany() {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -234,5 +253,68 @@ public class KJW_JUnitTest {
 		System.out.println(dto2);
 		
 	}
-
+	
+	//@Test
+	public void testSignDocBox() {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("empl_id", "20220101");
+		List<SignDocBoxDto> lists = boxService.selectAllDocList(map);
+		System.out.println(lists);
+		assertNotNull(lists);
+		map.put("sidb_doc_num", "24000003");
+		SignDocBoxDto dto = boxService.selectOneDocList(map);
+		System.out.println(dto);
+		assertNotNull(dto);
+		
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		map2.put("emdn_id", "24000003");
+		map2.put("emdh_empl_id", "20220101");
+		map2.put("emdh_type", "D");
+		int cnt = boxService.downloadOneDoc(map2);
+		assertEquals(1, cnt);
+		
+	}
+	
+	@Test
+	public void testEmployeeListService() {
+		List<EmployeeDto> lists = employeeListService.selectAllEmployee();
+		System.out.println(lists);
+		assertNotNull(lists);
+		
+		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("empl_name", "김재원");
+//		map.put("empl_dept_cd", "DT000004");
+//		map.put("empl_rank_cd", "RK000002");
+//		map.put("empl_position_cd", "PN000002");
+//		map.put("startdate", "2023-01-10");
+//		map.put("enddate", "2023-05-20");
+//		map.put("empl_id", "20230102");
+//		Map<String, Object> map2 = new HashMap<String, Object>();
+//		map2.put("empl_name", "김재원수정");
+//		map2.put("empl_birth", "19990304");
+//		map2.put("empl_email", "test1234@gmail.com");
+//		map2.put("empl_phone", "010-9999-1111");
+//		map2.put("empl_tel", "999");
+//		map2.put("empl_fax", "02-111-9999");
+//		map2.put("empl_modify_id", "SYSTEM");
+//		map2.put("empl_id", "20240012");
+//		
+//		
+//		List<EmployeeDto> list = employeeListService.searchAllEmployee(map);
+//		System.out.println(list);
+//		assertNotNull(list);
+//		
+//		EmployeeDto dto = employeeListService.selectOneEmployee(map);
+//		System.out.println(dto);
+//		assertNotNull(dto);
+//		
+//		int cnt = employeeListService.correctionEmployee(map2);
+//		assertEquals(1, cnt);
+//		
+//		List<EmployeeDto> lists2 = employeeListService.selectAllEmployee();
+//		System.out.println(lists2);
+		
+	}
 }

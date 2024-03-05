@@ -36,4 +36,10 @@ public class EmployeeDto {
 	private Date empl_create_dt;
 	private String empl_modify_id;
 	private Date empl_modify_dt;
+	
+	private String coco_name_dnm;
+	private String coco_name_rnm;
+	private String coco_name_pnm;
+	private String startdate;
+	private String enddate;
 }

@@ -7,9 +7,11 @@ import com.hcm.grw.dto.hr.EmpSignDto;
 
 public interface EmpSignDao {
 
-	public List<EmpSignDto> selectAllSign();
+	public List<EmpSignDto> selectAllSign(Map<String, Object> map);
 	
 	public int insertSign(Map<String, Object> map);
+	
+	public int setDefaultSign(Map<String, Object> map);
 	
 	public int deleteSign(Map<String, Object> map);
 	

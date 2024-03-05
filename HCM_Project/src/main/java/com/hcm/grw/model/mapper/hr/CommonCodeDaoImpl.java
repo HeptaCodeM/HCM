@@ -14,11 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 @Slf4j
 public class CommonCodeDaoImpl implements CommonCodeDao {
-
+			
 	@Autowired
 	private SqlSessionTemplate sessionTemplate;
 	
-	private final String NS = "com.hcm.grw.model.mapper.CommonCodeDaoImpl.";
+	private final String NS = "com.hcm.grw.model.mapper.hr.CommonCodeDaoImpl.";
 	
 	
 	@Override

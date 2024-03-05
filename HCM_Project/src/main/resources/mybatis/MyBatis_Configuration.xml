@@ -33,5 +33,6 @@
 		<mapper resource="sqls/hr/EmpSignDto_Statement.xml"/>
 		<mapper resource="sqls/hr/CompanyDto_Statement.xml"/>
 		<mapper resource="sqls/hr/SignDocBoxDto_Statement.xml"/>
+		<mapper resource="sqls/hr/EmployeeList_Statement.xml"/>
 	</mappers>
 </configuration>
