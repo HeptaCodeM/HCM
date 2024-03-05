@@ -2,4 +2,16 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
 	
+	<typeAliases>
+		<typeAlias type="com.hcm.grw.dto.sm.GoboDto" alias="GoboDto"/>
+		<typeAlias type="com.hcm.grw.dto.sm.ReplyDto" alias="ReplyDto"/>
+		<typeAlias type="com.hcm.grw.dto.sm.ScbDto" alias="ScbDto"/>
+	</typeAliases>
+	
+	
+	<mappers>
+		<mapper resource="sqls/sm/Gobo_Statement.xml"/>
+		<mapper resource="sqls/sm/Reply_Statement.xml"/>
+		<mapper resource="sqls/sm/Scb_Statement.xml"/>
+	</mappers>
 </configuration>
