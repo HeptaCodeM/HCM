@@ -40,4 +40,25 @@ public class HomeController {
 		return "login";
 	}
 	
+	@GetMapping("/mainTmp.do")
+	public String mainTmp() {
+		return "mainTmp";
+	}
+	
+	@GetMapping("/hrMainTmp.do")
+	public String hrMainTmp() {
+		return "hr/hrMainTmp";
+	}
+	
+	@GetMapping("/smMainTmp.do")
+	public String smMainTmp() {
+		return "sm/smMainTmp";
+	}
+	
+	@GetMapping("/docMainTmp.do")
+	public String docMainTmp() {
+		return "doc/docMainTmp";
+	}
+	
+	
 }

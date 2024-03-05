@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcm.grw.model.mapper.hr.SignDocBoxDaoImpl">
+
+	<resultMap type="com.hcm.grw.dto.hr.SignDocBoxDto" id="SignDocBoxDto">
+		<result property="sidb_doc_num" column="SIDB_DOC_NUM"/>
+		<result property="sidb_doc_writedt" column="SIDB_DOC_WRITEDT"/>
+		<result property="empl_id" column="EMPL_ID"/>
+		<result property="sidb_doc_title" column="SIDB_DOC_TITLE"/>
+		<result property="sidb_doc_content" column="SIDB_DOC_CONTENT"/>
+		<result property="sica_cd" column="SICA_CD"/>
+		<result property="sidb_doc_expiredt" column="SIDB_DOC_EXPIREDT"/>
+		<result property="sidb_doc_flag" column="SIDB_DOC_FLAG"/>
+		<result property="sidb_doc_apprdt" column="SIDB_DOC_APPRDT"/>
+		<result property="sidb_doc_delflag" column="SIDB_DOC_DELFLAG"/>
+		<result property="sidb_doc_alflag" column="SIDB_DOC_ALFLAG"/>
+		<result property="sidb_doc_stat" column="SIDB_DOC_STAT"/>
+		<result property="sidb_doc_modifydt" column="SIDB_DOC_MODIFYDT"/>
+		<result property="sidt_temp_cd" column="SIDT_TEMP_CD"/>
+		<result property="sidb_doc_json" column="SIDB_DOC_JSON"/>
+		<result property="empl_ref" column="EMPL_REF"/>
+		<result property="empl_dept_cd" column="EMPL_DEPT_CD"/>
+		<result property="sidb_doc_be" column="SIDB_DOC_BE"/>
+		<result property="sidb_doc_end" column="SIDB_DOC_END"/>
+		
+		<collection property="sDto" resultMap="SignCategoryDto"/>
+		<collection property="sdtDto" resultMap="SignDocTempDto"/>
+		<collection property="eDto" resultMap="EmployeeDto"/>
+	</resultMap>
+	
+	<resultMap type="com.hcm.grw.dto.hr.SignCategoryDto" id="SignCategoryDto">
+		<result property="sica_cd" column="SICA_CD"/>
+		<result property="sica_name" column="SICA_NAME"/>
+	</resultMap>
+	
+	<resultMap type="com.hcm.grw.dto.hr.SignDocTempDto" id="SignDocTempDto">
+		<result property="sidt_temp_cd" column="SIDT_TEMP_CD"/>
+		<result property="sica_cd" column="SICA_CD"/>
+		<result property="sidt_temp_name" column="SIDT_TEMP_NAME"/>
+		<result property="sidt_temp_createdt" column="SIDT_TEMP_CREATEDT"/>
+		<result property="sidt_temp_modifydt" column="SIDT_TEMP_MODIFYDT"/>
+		<result property="sidt_temp_flag" column="SIDT_TEMP_FLAG"/>
+		<result property="sidt_temp_content" column="SIDT_TEMP_CONTENT"/>
+	</resultMap>
+	
+	<resultMap type="com.hcm.grw.dto.hr.EmployeeDto" id="EmployeeDto">
+		<result property="empl_id" column="EMPL_ID"/>
+		<result property="empl_pwd" column="EMPL_PWD"/>
+		<result property="empl_name" column="EMPL_NAME"/>
+		<result property="empl_birth" column="EMPL_BIRTH"/>
+		<result property="empl_gender" column="EMPL_GENDER"/>
+		<result property="empl_email" column="EMPL_EMAIL"/>
+		<result property="empl_phone" column="EMPL_PHONE"/>
+		<result property="empl_tel" column="EMPL_TEL"/>
+		<result property="empl_fax" column="EMPL_FAX"/>
+		<result property="empl_joindate" column="EMPL_JOINDATE"/>
+		<result property="empl_leavedate" column="EMPL_LEAVEDATE"/>
+		<result property="empl_picture" column="EMPL_PICTURE"/>
+		<result property="empl_dept_cd" column="EMPL_DEPT_CD"/>
+		<result property="empl_rank_cd" column="EMPL_RANK_CD"/>
+		<result property="empl_position_cd" column="EMPL_POSITION_CD"/>
+		<result property="empl_auth" column="EMPL_AUTH"/>
+		<result property="empl_delflag" column="EMPL_DELFLAG"/>
+		<result property="empl_last_login_dt" column="EMPL_LAST_LOGIN_DT"/>
+		<result property="empl_create_id" column="EMPL_CREATE_ID"/>
+		<result property="empl_create_dt" column="EMPL_CREATE_DT"/>
+		<result property="empl_modify_id" column="EMPL_MODIFY_ID"/>
+		<result property="empl_modify_dt" column="EMPL_MODIFY_DT"/>
+	</resultMap>
+	
+	<select id="selectAllDocList" resultMap="SignDocBoxDto">
+		SELECT
+		   A.SIDB_DOC_NUM,
+		   B.SICA_NAME,
+		   C.SIDT_TEMP_NAME,
+		   A.SIDB_DOC_TITLE,
+		   A.SIDB_DOC_APPRDT
+		FROM   SIGN_DOC_BOX A 
+		INNER JOIN SIGN_CATEGORY B ON A.SICA_CD = B.SICA_CD
+		INNER JOIN SIGN_DOC_TEMP C ON A.SIDT_TEMP_CD = C.SIDT_TEMP_CD 
+		INNER JOIN  EMPLOYEE D ON A.EMPL_ID = D.EMPL_ID 
+		WHERE  D.EMPL_ID = #{empl_id}
+		AND   A.SIDB_DOC_STAT = '3'
+		AND   B.SICA_CD = 'CC000005'
+	</select>
+	
+	<select id="selectOneDocList" resultMap="SignDocBoxDto">
+		SELECT
+		   A.SIDB_DOC_NUM,
+		   B.SICA_NAME,
+		   C.SIDT_TEMP_NAME,
+		   A.SIDB_DOC_TITLE,
+		   A.SIDB_DOC_APPRDT,
+		   A.SIDB_DOC_JSON 
+		FROM   SIGN_DOC_BOX A 
+		INNER JOIN SIGN_CATEGORY B ON A.SICA_CD = B.SICA_CD
+		INNER JOIN SIGN_DOC_TEMP C ON A.SIDT_TEMP_CD = C.SIDT_TEMP_CD 
+		INNER JOIN  EMPLOYEE D ON A.EMPL_ID = D.EMPL_ID 
+		WHERE  D.EMPL_ID = #{empl_id}
+		AND   A.SIDB_DOC_STAT = '3'
+		AND   B.SICA_CD = 'CC000005'
+		AND   A.SIDB_DOC_NUM = #{sidb_doc_num}
+	</select>
+	
+	
+	<insert id="downloadOneDoc" parameterType="Map">
+		INSERT INTO EMP_DOC_HISTORY(EMDH_SEQ, EMDN_ID, EMDH_EMPL_ID, 
+	                                                        EMDH_TYPE, EMDH_CREATE_DT)
+	                                        VALUES((SELECT NVL(MAX(EMDH_SEQ)+1, 1) EMDH_SEQ FROM EMP_DOC_HISTORY), #{emdn_id}, #{emdh_empl_id}, 
+	                                                        #{emdh_type}, CURRENT_DATE)
+	</insert>
+	
+
+</mapper>
