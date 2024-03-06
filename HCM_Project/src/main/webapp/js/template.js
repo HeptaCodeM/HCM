@@ -42,20 +42,20 @@ function writeTemplate(){
 }
 
 // 템플릿 수정하기
-function updateTemplate(){
-	const data = editor.getData();
-	
-	var opt = $('#selectCategory option:selected').val();
-	var title = $('input[name=sidt_temp_name]').val();
-	var content = $("#editor").text(data);
-	
-	$.ajax({
-		url : './updateTemplate.do',
-		method : 'post',
-		data : {"sica_cd":opt, "sidt_temp_name":title, "sidt_temp_content":content},
+//function updateTemplate(){
+//	const data = editor.getData();
+//	
+//	var opt = $('#selectCategory option:selected').val();
+//	var title = $('input[name=sidt_temp_name]').val();
+//	var content = $("#editor").text(data);
+//	
+//	$.ajax({
+//		url : './updateTemplate.do',
+//		method : 'post',
+//		data : {"sica_cd":opt, "sidt_temp_name":title, "sidt_temp_content":content},
 //		dataType : 'json',
-		success : alert('수정 완료'),
-		error : alert('수정 실패')
-	})
+//		success : alert('수정 완료'),
+//		error : alert('수정 실패')
+//	})
 //	$("form").eq(0).submit();
-}
+//}

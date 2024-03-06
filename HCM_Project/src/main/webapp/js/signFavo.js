@@ -57,9 +57,9 @@ onload = function() {
 					for (let j = 0; j < empList[i].length; j++) {
 						console.log(empList[i][j].empl_id, empList[i][j].empl_name);
 						if(j == empList[i].length - 1) {
-							opt.textContent += empList[i][j].empl_name
+							opt.textContent += empList[i][j].empl_name;
 						} else {
-							opt.textContent += empList[i][j].empl_name + ' - '
+							opt.textContent += empList[i][j].empl_name + ' - ';
 						}
 					}
 					opt.textContent += ')';
@@ -91,26 +91,23 @@ onload = function() {
 		
 	// 즐겨찾기 결재자 결재선으로 보내기
 	document.getElementById('insBtn').addEventListener('click', function() {
-		let first = document.getElementById('first').value;
-		let second = document.getElementById('second').value;
-		let third = document.getElementById('third').value;
+		var firstRank = document.getElementById('first');
+		var secondRank = document.getElementById('second');
+		var thirdRank = document.getElementById('third');
 		var select = document.querySelector('select#apprList');
 		var selValue = select.options[select.selectedIndex].value;
 		var selContent = select.options[select.selectedIndex].textContent;
-		if(first == '') {
-			first = selContent + '&nbsp;&nbsp;&nbsp;' + selValue;
-		}
-		if(first.length > 0 && second == '') {
-			second = selContent + '&nbsp;&nbsp;&nbsp;' + selValue;
-		}
-		if(first.length > 0 && second.length > 0) {
-			third = selContent + '&nbsp;&nbsp;&nbsp;' + selValue;
-		}
-		if(first.length > 0 && second.length > 0 && third.length > 0) {
-			alert('결재선이 모두 등록되었습니다');
-			return;
-		}
 		console.log(selValue, selContent);
+		if(firstRank.value == '') {
+			firstRank.value = selContent + ' ' + selValue;
+		} else if(firstRank.value != '' && secondRank.value == '') {
+			secondRank.value = selContent + ' ' + selValue;
+		} else if(firstRank.value != '' && secondRank.value != '') {
+			thirdRank.value = selContent + ' ' + selValue;
+		} else if(firstRank.value != '' && secondRank.value != '' && thirdRank.value != '') {
+			alert('결재선이 모두 등록되었습니다');
+		}
+		console.log(firstRank.value,secondRank.value,thirdRank.value)
 		
 	})
 	

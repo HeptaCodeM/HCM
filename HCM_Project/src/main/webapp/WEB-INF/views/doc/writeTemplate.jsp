@@ -23,11 +23,11 @@
 		</div>
 			<h3>제목 <input type="text" name="sidt_temp_name"></h3>
 			<textarea id="editor" name="sidt_temp_content"></textarea>
-		</form>	
 		<div class="btn">
-			<input type="button" onclick="writeTemplate()" value="등록하기">
+			<input type="submit" value="등록하기">
 			<input type="button" onclick="location.href='./template.do'" value="목록보기">
 		</div>	
+		</form>	
 	</div>
 
 </body>

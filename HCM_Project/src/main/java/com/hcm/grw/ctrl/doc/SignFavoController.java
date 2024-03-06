@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,11 +66,8 @@ public class SignFavoController {
 	}
 	
 	@GetMapping(value = "insertFavo.do", produces = "text/html; charset=UTF-8")
-	public ResponseEntity<?> insertFavo(@RequestParam String siaf_appr_id, @RequestParam String empl_id) {
-		log.info("SignFavoController insertFavo.do GET 즐겨찾기 결재자 등록 요청 값 : {} {}", siaf_appr_id, empl_id);
-		SignFavoDto dto = new SignFavoDto();
-		dto.setEmpl_id(empl_id);
-		dto.setSiaf_appr_id(siaf_appr_id);
+	public ResponseEntity<?> insertFavo(@ModelAttribute SignFavoDto dto) {
+		log.info("SignFavoController insertFavo.do GET 즐겨찾기 결재자 등록 요청 값 : {}", dto);
 		int n = service.insertFavAppr(dto);
 		if(n != 0) {
 			return ResponseEntity.ok("저장 성공");

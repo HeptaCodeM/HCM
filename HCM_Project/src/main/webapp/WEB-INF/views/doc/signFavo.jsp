@@ -54,8 +54,9 @@
 							<div class="col-sm-5 sidenav">
 							<input type="hidden" value="20230108" id="empl_id">
 								<div>
-									즐겨찾는 결재자 <select id="apprList" style="width: 250px;">
-									<option selected>결재자를 선택해주세요</option>
+									즐겨찾는 결재자<br> 
+									<select id="apprList" style="width: 250px;">
+										<option selected>결재자를 선택해주세요</option>
 									</select>
 									<button id="insBtn">추가</button>
 									<button id="delBtn">삭제</button>
@@ -74,30 +75,31 @@
 							</div>
 							<div class="col-sm-5 sidenav">
 								<div>
-								결재라인 선택 <select id="apprLineList" style="width: 300px;">
-									<option selected>결재선을 선택해주세요</option>
+								결재라인 선택<br>
+									<select id="apprLineList" style="width: 250px;">
+										<option selected>결재선을 선택해주세요</option>
 									</select>
 									<button id="selectApprLine">적용</button>
 									<button id="delLineBtn">삭제</button>
 									<br><br><br>
 									</div>
 								<form method="post">
-									<div class="input-group">
-										<input type="text" readonly class="form-control" id="first">
+									<div class="input-group" style="width: 300px;">
+										<input type="text" readonly class="form-control" id="first" value="">
 										<span class="input-group-btn">
 											<button class="btn btn-danger btn-sm cancelBtn">X</button>
 										</span>
 									</div>
 									<hr>
-									<div class="input-group">
-										<input type="text" readonly class="form-control" id="second">
+									<div class="input-group" style="width: 300px;">
+										<input type="text" readonly class="form-control" id="second" value="">
 										<span class="input-group-btn">
 											<button class="btn btn-danger btn-sm cancelBtn">X</button>
 										</span>
 									</div>
 									<hr>
-									<div class="input-group">
-										<input type="text" readonly class="form-control" id="third">
+									<div class="input-group" style="width: 300px;">
+										<input type="text" readonly class="form-control" id="third" value="">
 										<span class="input-group-btn">
 											<button class="btn btn-danger btn-sm cancelBtn">X</button>
 										</span>
