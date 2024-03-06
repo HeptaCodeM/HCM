@@ -136,5 +136,4 @@
 		AND EMPL_DELFLAG = 'N'
 	</update>
 
-
 </mapper>

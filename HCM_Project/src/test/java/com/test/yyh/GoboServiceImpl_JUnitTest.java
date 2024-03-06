@@ -37,14 +37,11 @@ public class GoboServiceImpl_JUnitTest {
 		
 //		int n = service.updateGoboView("1");
 //		System.out.println(n);
-//		
-		dto.setGobo_title("제목");
-		dto.setGobo_content("내용");
-		dto.setGobo_writer("작성자");
-		dto.setGobo_writer_id("123123");
-		dto.setGobo_bigo("");
-		int m = service.insertGobo(dto);
-		System.out.println(m);
+		/*
+		 * // dto.setGobo_title("제목"); dto.setGobo_content("내용");
+		 * dto.setGobo_writer("작성자"); dto.setGobo_writer_id("123123");
+		 * dto.setGobo_bigo(""); int m = service.insertGobo(dto);
+		 */
 		
 //		dto.setGobo_title("22222");
 //		dto.setGobo_content("22222");
@@ -55,8 +52,9 @@ public class GoboServiceImpl_JUnitTest {
 //		
 //		int m = service.updateGobo(dto);
 		
-		
-		assertNotNull(m);
+		dto.setGobo_no("2");
+		int n =service.updateGoboDelFlag("2");
+		assertNotNull(n);
 		
 		
 	}

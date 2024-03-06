@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hcm.grw.dto.sm.GoboDto;
 import com.hcm.grw.model.mapper.sm.IGoboDao;
@@ -24,16 +25,13 @@ public class GoboServiceImpl implements IGoboService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public GoboDto getDetailGobo(String no) {
 		log.info("GoboServiceImpl getDetailGobo Service 공지사항 글 상세조회");
+		dao.updateGoboView(no);
 		return dao.getDetailGobo(no);
 	}
 
-	@Override
-	public int updateGoboView(String no) {
-		log.info("GoboServiceImpl updateGoboView Service 공지사항 조회수 업데이트");
-		return dao.updateGoboView(no);
-	}
 
 	@Override
 	public int insertGobo(GoboDto dto) {
