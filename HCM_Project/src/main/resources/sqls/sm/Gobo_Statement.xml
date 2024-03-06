@@ -42,7 +42,7 @@ INSERT INTO ADMIN.GONGJI_BOARD
 GOBO_WRITER, GOBO_WRITER_ID, GOBO_REGDATE, GOBO_MODIFY_ID, 
 GOBO_MODIFY_DATE, GOBO_DELFLAG, GOBO_BIGO)
 VALUES((SELECT NVL(MAX(GOBO_NO)+1,0) FROM GONGJI_BOARD), #{gobo_title}, #{gobo_content}, 0, 
-#{gobo_writer}, #{gobo_writer_id}, TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') , #{gobo_writer}, TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'), 'N' , #{gobo_bigo})
+#{gobo_writer}, #{gobo_writer_id}, SYSDATE , #{gobo_writer}, SYSDATE, 'N' , #{gobo_bigo})
 </insert>
 
 
