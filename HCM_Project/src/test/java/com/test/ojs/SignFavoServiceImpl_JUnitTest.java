@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.hcm.grw.dto.doc.SignFavoDto;
+import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.doc.ISignFavoService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -31,8 +32,8 @@ public class SignFavoServiceImpl_JUnitTest {
 	@Test
 	public void signFavoServiceImplTest() {
 		
-		SignFavoDto dto1 = new SignFavoDto("50000001", "20230108", "대리님", "20220101", "", "1");
-		SignFavoDto dto2 = new SignFavoDto("50000002", "20230108", "업무보고용", "", "20220101, 20230104, 20230108", "2");
+		SignFavoDto dto1 = new SignFavoDto("50000001", "20230108", "대리님", "20220101", "", "1", new EmployeeDto());
+		SignFavoDto dto2 = new SignFavoDto("50000002", "20230108", "업무보고용", "", "20220101, 20230104, 20230108", "2", new EmployeeDto());
 		int n1 = service.insertFavAppr(dto1);
 		int n2 = service.insertFavApprLine(dto2);
 		
@@ -52,7 +53,7 @@ public class SignFavoServiceImpl_JUnitTest {
 		
 		assertEquals(n3 + n4, 2);
 		
-		SignFavoDto dto5 = new SignFavoDto("", "20230108", "업무보고용", "", "20220101, 20230104, 20230108", "2");
+		SignFavoDto dto5 = new SignFavoDto("", "20230108", "업무보고용", "", "20220101, 20230104, 20230108", "2", new EmployeeDto());
 		service.insertFavApprLine(dto5);
 		
 		List<SignFavoDto> list1 = service.getFavApprList(dto1.getEmpl_id());

@@ -2,7 +2,10 @@ package com.hcm.grw.model.mapper.doc;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.hcm.grw.dto.doc.SignFavoDto;
+import com.hcm.grw.dto.hr.EmployeeDto;
 
 public interface ISignFavoDao {
 	
@@ -21,5 +24,7 @@ public interface ISignFavoDao {
 	public List<SignFavoDto> getFavApprList(String empl_id);
 
 	public List<SignFavoDto> getFavApprLineList(String empl_id);
+	
+	public List<EmployeeDto> getFav(@Param("empl_id") List<String> empl_id);
 	
 }

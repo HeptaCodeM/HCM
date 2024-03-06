@@ -276,12 +276,26 @@
 		SIDB_DOC_NUM = #{sidb_doc_num}
 	</update> -->
 	
+<!-- 	<update id="approveJson">
+    UPDATE SIGN_DOC_BOX
+    SET SIDB_DOC_JSON = JSON_TRANSFORM(
+        SIDB_DOC_JSON,
+        <foreach collection="sidb_doc_json" separator="," item="json">
+        SET '$[0].APPR_DT' = '' || TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '',
+            '$[0].APPR_REPLY' = "${json.appr_reply}",
+            '$[0].APPR_FLAG' = '1',
+            '$[0].APPR_SIGN' = '' || (SELECT EMSI_SIGN_IMG FROM EMP_SIGN
+                                        WHERE EMSI_SEQ = 1) || '')
+                                        </foreach>
+    WHERE SIDB_DOC_NUM = #{sidb_doc_num}
+</update> -->
+
 	<update id="approveJson">
     UPDATE SIGN_DOC_BOX
     SET SIDB_DOC_JSON = JSON_TRANSFORM(
         SIDB_DOC_JSON,
         SET '$[0].APPR_DT' = '' || TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '',
-            '$[0].APPR_REPLY' = '회사의 사활이 걸려있는 프로젝트네...화이팅 ^^...!',
+            '$[0].APPR_REPLY' = #{appr_reply},
             '$[0].APPR_FLAG' = '1',
             '$[0].APPR_SIGN' = '' || (SELECT EMSI_SIGN_IMG FROM EMP_SIGN
                                         WHERE EMSI_SEQ = 1) || '')

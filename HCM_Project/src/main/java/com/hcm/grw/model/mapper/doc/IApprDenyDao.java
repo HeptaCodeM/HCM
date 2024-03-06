@@ -4,11 +4,14 @@ import com.hcm.grw.dto.doc.SignBoxDto;
 
 public interface IApprDenyDao {
 	
-	//결재승인
+		//결재승인
 		public int approveJson(SignBoxDto dto);
 		
 		//승인시 문서 업데이트
 		public int approveDoc(SignBoxDto dto);
+		
+		//반려
+		public int denyJson(SignBoxDto dto);
 		
 		//반려시 문서 업데이트
 		public int denyDoc(SignBoxDto dto);

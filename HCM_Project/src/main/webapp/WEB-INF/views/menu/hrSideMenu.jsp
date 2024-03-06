@@ -10,7 +10,7 @@
 						<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
 							<!--begin::Logo image-->
 							<a href="./mainTmp.do">
-								<img alt="HCM" src="image/favicon.ico" class="h-30px app-sidebar-logo-default">HCM
+								<img alt="HCM" src="/image/favicon.ico" class="h-30px app-sidebar-logo-default">HCM
 							</a>
 							<!--end::Logo image-->
 						</div>

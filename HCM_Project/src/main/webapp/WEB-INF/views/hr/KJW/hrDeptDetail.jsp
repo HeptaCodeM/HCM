@@ -5,6 +5,45 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
+<script type="text/javascript">
+window.onload = function(){
+	orgCoco_name = document.getElementById("coco_name").value;
+	console.log(orgCoco_name+"!!");
+}
+
+function checkNameValue(){
+    
+    var coco_name = document.getElementById("coco_name").value;
+    console.log(orgCoco_name);
+    console.log(coco_name);
+    
+    var checkKor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+
+    if(orgCoco_name == coco_name){
+    	console.log("값이 같음");
+    	alert("수정내용이 같습니다!(swal로 바꿀예정)");
+    	return false;
+    }else{
+	    if(checkKor.test(coco_name)){
+	    	console.log("성공");
+	    }else{
+	    	alert("한글만 입력해주세요!(swal로 바꿀예정)");
+		    return false;
+	    }
+    }
+
+}
+
+
+
+function deleteDept(){
+    console.log("동작");
+    var coco_cd = document.getElementById("coco_cd").value;
+    
+    location.href="./deleteDeptOne.do?coco_cd="+coco_cd;
+}
+
+</script>
 <title>Dept Detail</title>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
@@ -17,38 +56,51 @@
 		data-kt-app-toolbar-enabled="true" class="app-default">
 
 		<div class="app-wrapper flex-column flex-row-fluid">
-			<div class="app-toolbar py-3 py-lg-6">
-				<div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
-					<!--begin::Page title-->
-					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-						<!--begin::Title-->
-						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">제목이 여기에 들어가요!</h1>
-						<!--end::Title-->
-					</div>
-					<!--end::Page title-->
-				</div>		
-			</div>
+			<br>
 			<div class="app-content flex-column-fluid">
 				<!-- 내용 시작 -->
 				<div id="kt_app_content" class="app-content flex-column-fluid">
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-header pt-5">
-								<h3 class="card-title text-gray-800 fw-bold">소제목? 들어갑니다</h3>
+								<h3 class="card-title text-gray-800 fw-bold">${codeDto.getCoco_name()} 정보수정</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
-							<div class="card-body pt-5">
-								대충 여기에 내용이 들어가요!<br>
-								대충 여기에 내용이 들어가요!<br>
-								대충 여기에 내용이 들어가요!<br>
-							</div>
+							<form action="./correctionDept.do" onsubmit="return checkNameValue()" method="post">
+								<div class="card-body pt-5">
+									부서명<input id="coco_name" name="coco_name" class="form-control form-control-solid" type="text" value="${codeDto.getCoco_name()}"><br>
+									부서코드<input id="coco_cd" name="coco_cd" class="form-control form-control-solid" type="text" value="${codeDto.getCoco_cd()}" readonly="readonly">
+								</div>
+								<div class="card-footer">
+									<button class="btn btn-primary me-10" type="submit">저장</button>
+									<button class="btn btn-primary me-10" type="button" data-bs-toggle="modal" data-bs-target="#deptModal">삭제</button>
+									<button class="btn btn-primary me-10" type="reset">초기화</button>
+									<a onclick="javascript:window.history.back(-1)" class="btn btn-primary me-10">취소</a>
+							    </div>
+							</form>
 						</div>
 					</div>
 				</div>
 				<!-- 내용 끝 -->
+				
 			</div>
 		</div>
-			
+<!-- 모달창 -->			
+<div class="modal fade" tabindex="-1" id="deptModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3>삭제하시겠습니까?</h3>
+                <h4>[이것도 swal로 바꿀예정 입니다!]</h4>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary me-10" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary me-10" onclick="deleteDept()">삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
 </body>
 </html>

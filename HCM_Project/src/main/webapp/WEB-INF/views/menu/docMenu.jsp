@@ -81,7 +81,7 @@
 															<span class="path3"></span>
 														</i>
 													</span>
-													<span class="menu-title">결재설정</span>
+													<span class="menu-title" onclick="location.href='../doc/signFavo.do';">결재설정</span>
 												</span>
 												<!--end:Menu link-->
 											</a>

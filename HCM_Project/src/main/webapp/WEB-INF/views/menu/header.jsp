@@ -18,7 +18,7 @@
 				<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
 					<a
 						href="./mainTmp.do"
-						class="d-lg-none"> <img alt="HCM" src="image/favicon.ico"
+						class="d-lg-none"> <img alt="HCM" src="/image/favicon.ico"
 						class="theme-light-show h-30px">
 					</a>
 				</div>
@@ -170,7 +170,7 @@
 						<div class="cursor-pointer symbol symbol-35px symbol-md-40px"
 							data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
 							data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-							<img src="image/300-3.jpg" alt="user">
+							<img src="/image/300-3.jpg" alt="user">
 						</div>
 					</div>
 					<!--end::User menu-->
