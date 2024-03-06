@@ -1,17 +1,1 @@
-<<<<<<< HEAD
-{"resources":{"Scripts/Commons_data.sql":{"default-schema":"ADMIN","default-datasource":"oracle_thin-18df5574df2-750b789a120e75b"},"Scripts/DDL.sql":{"default-schema":"ADMIN","default-datasource":"oracle_thin-18df5574df2-750b789a120e75b"},"Scripts/HR_data.sql":{"default-schema":"ADMIN","default-datasource":"oracle_thin-18df5574df2-750b789a120e75b"},"Scripts/KJW_QueryTest.sql":{"default-datasource":"oracle_thin-18df5574df2-750b789a120e75b","default-schema":"ADMIN"},"Scripts/OJS_QueryTest.sql":{"default-schema":"ADMIN","default-datasource":"oracle_thin-18df5574df2-750b789a120e75b"},"Scripts/Sign_Commons_Data.sql":{"default-schema":"ADMIN","default-datasource":"oracle_thin-18df5574df2-750b789a120e75b"}}}
-
-{"resources":{"Scripts/Script.sql":{"default-datasource":"oracle_thin-18df5574df2-750b789a120e75b","default-schema":"ADMIN"}}}
-
 {"resources":{"Scripts/OJS_QueryTest.sql":{"default-datasource":"oracle_thin-18df5574df2-750b789a120e75b","default-schema":"ADMIN"}}}
-=======
-<<<<<<< HEAD
-{"resources":{"Scripts/Script.sql":{"default-datasource":"oracle_thin-18df5574df2-750b789a120e75b","default-schema":"ADMIN"}}}
-=======
-<<<<<<< HEAD
-{"resources":{"Scripts/OJS_QueryTest.sql":{"default-datasource":"oracle_thin-18df5574df2-750b789a120e75b","default-schema":"ADMIN"}}}
-=======
->>>>>>> branch 'sub' of https://github.com/HeptaCodeM/HCM.git
-{"resources":{"Scripts/OJS_QueryTest.sql":{"default-datasource":"oracle_thin-18dfed1a999-426918e221f0e8dd","default-schema":"ADMIN"},"Scripts/RJY_QueryTest.sql":{"default-datasource":"oracle_thin-18dfed1a999-426918e221f0e8dd","default-schema":"ADMIN"}}}
->>>>>>> branch 'doc' of https://github.com/HeptaCodeM/HCM.git
->>>>>>> branch 'doc' of https://github.com/HeptaCodeM/HCM.git

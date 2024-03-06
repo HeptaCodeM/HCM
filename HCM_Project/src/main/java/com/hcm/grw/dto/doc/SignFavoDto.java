@@ -1,5 +1,7 @@
 package com.hcm.grw.dto.doc;
 
+import com.hcm.grw.dto.hr.EmployeeDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -21,4 +23,6 @@ public class SignFavoDto {
 	private String siaf_appr_id;
 	private String siaf_appr_line;
 	private String siaf_appr_flag;
+	
+	private EmployeeDto employee;
 }

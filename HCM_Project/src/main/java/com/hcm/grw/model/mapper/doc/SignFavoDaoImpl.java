@@ -2,6 +2,7 @@ package com.hcm.grw.model.mapper.doc;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -68,7 +69,7 @@ public class SignFavoDaoImpl implements ISignFavoDao {
 	}
 	
 	@Override
-	public List<EmployeeDto> getFav(String empl_id) {
+	public List<EmployeeDto> getFav(@Param("empl_id") List<String> empl_id) {
 		log.info("SignFavoDaoImpl getFav DAO Access");
 		return sessionTemplate.selectList(NS + "getFav", empl_id);
 	}

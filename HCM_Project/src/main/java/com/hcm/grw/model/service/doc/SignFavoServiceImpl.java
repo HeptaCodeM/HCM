@@ -2,6 +2,7 @@ package com.hcm.grw.model.service.doc;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +68,7 @@ public class SignFavoServiceImpl implements ISignFavoService {
 	}
 	
 	@Override
-	public List<EmployeeDto> getFav(String empl_id) {
+	public List<EmployeeDto> getFav(@Param("empl_id") List<String> empl_id) {
 		log.info("SignFavoServiceImpl getFav Service 결재라인 결재자 정보 조회");
 		return dao.getFav(empl_id);
 	}
