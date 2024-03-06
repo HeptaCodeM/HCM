@@ -11,9 +11,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+	
 	<div class="container" style="margin: 200px auto;">
-	${temDto.sidt_temp_content }
+	<h2 style="text-align: center;">${temDto.sidt_temp_name}</h2>
+	${temDto.sidt_temp_content}
 	
 	<div style="text-align: center;">
 		<button class="modifyTemplate">수정하기</button>
@@ -22,11 +23,19 @@
 	</div>
 	
 <script type="text/javascript">
+	/* table 위치 설정 */
+	var table = document.querySelectorAll('table');
+	for(let t of table) {
+		t.setAttribute('style', 'margin:20px auto;')
+	}
+
+	/* 수정하기 */
 	var modifybtn = document.querySelector('.modifyTemplate');
 	modifybtn.addEventListener("click", function(){
-		window.location.href = "./modifyTemplate.do";
+		window.location.href = "./modifyTemplate.do?sidt_temp_cd=${temDto.sidt_temp_cd}";
 	});
 	
+	/* 삭제하기 */
 	var deletebtn = document.querySelector('.deleteTemplate');
 	deletebtn.addEventListener("click", function(){
 		var confirmation = confirm("해당 템플릿을 삭제하시겠습니까?");

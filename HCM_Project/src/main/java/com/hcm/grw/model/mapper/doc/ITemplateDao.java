@@ -18,4 +18,5 @@ public interface ITemplateDao {
 	
 	public int insertTemp(TemplateDto dto);
 
+	public List<TemplateDto> getCategory();
 }
