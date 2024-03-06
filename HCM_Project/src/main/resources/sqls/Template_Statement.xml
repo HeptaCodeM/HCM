@@ -43,5 +43,11 @@
 		WHERE SIDT_TEMP_CD = #{sidt_temp_cd}
 </update>
 
+<!-- 템플릿 카테고리 조회 -->
+<select id="getCategory" resultType="TemplateDto">
+	SELECT SICA_CD, SICA_NAME
+		FROM SIGN_CATEGORY
+</select>
+
 
 </mapper>
