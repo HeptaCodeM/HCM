@@ -74,7 +74,7 @@
 	</select>
 	
 <!-- 	즐겨찾기 라인 불러오기 -->
-	<select id="getFavApprLine" resultType="SignFavoDto">
+	<select id="getFavApprLine" resultType="SignFavoDto" resultMap="SignFavoResultMap">
 		SELECT saf.SIAF_FAVO_CD , saf.SIAF_FAVO_NAME , saf.SIAF_APPR_LINE, e.EMPL_NAME
 	        FROM SIGN_APPR_FAVO saf JOIN EMPLOYEE e
 	        ON saf.EMPL_ID = e.EMPL_ID
