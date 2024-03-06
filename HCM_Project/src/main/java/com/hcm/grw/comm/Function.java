@@ -1,6 +1,23 @@
 package com.hcm.grw.comm;
 
+/**
+* 공통함수 클래스
+* @author : SDJ
+* @since : 2024.01.13
+* @version : 1.0
+*/
 public class Function {
+
+	
+	/**
+	* alert 메시지 발생 후 url이동
+	* @param : 메시지
+	* @param : 이동경로(미필수)
+	* @param : 포커스이동(미필수)
+	* @return : String(메시지 발생 스크립트 호출)
+	* @author : SDJ
+	* @since : 2024.03.06
+	*/
 	public static String alertLocation(String msg, String location, String focus) {
 		if(msg == "" || msg == null) msg = "";
 		if(location == "" || location == null) location = "";
@@ -17,6 +34,13 @@ public class Function {
 		return sb.toString();
 	}
 
+	/**
+	* alert 메시지 발생 후 history.back()
+	* @param : 메시지
+	* @return : String(메시지 발생 스크립트 호출)
+	* @author : SDJ
+	* @since : 2024.03.06
+	*/
 	public static String alertHistoryBack(String msg) {
 		if(msg == "" || msg == null) msg = "";
 
