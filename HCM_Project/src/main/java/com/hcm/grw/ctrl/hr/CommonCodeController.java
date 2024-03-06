@@ -16,7 +16,7 @@ import com.hcm.grw.dto.hr.CommonCodeDto;
 import com.hcm.grw.model.service.hr.CommonCodeService;
 
 @Controller
-public class KJWHrController {
+public class CommonCodeController {
 
 	@Autowired
 	private CommonCodeService codeService;
@@ -25,7 +25,7 @@ public class KJWHrController {
 	public String hrDept(Model model) {
 		List<CommonCodeDto> deptList = codeService.selectAllDept();
 		model.addAttribute("deptList",deptList);
-		return "hr/KJW/hrDept";
+		return "hr/CommonCode/hrDept";
 	}
 	
 	@GetMapping(value = "/hrDeptDetail.do")
@@ -36,7 +36,7 @@ public class KJWHrController {
 		CommonCodeDto codeDto = codeService.selectOneDept(map);
 		System.out.println(codeDto);
 		model.addAttribute("codeDto" , codeDto);
-		return "hr/KJW/hrDeptDetail";
+		return "hr/CommonCode/hrDeptDetail";
 	}
 	
 	@PostMapping(value = "/correctionDept.do")
@@ -68,7 +68,7 @@ public class KJWHrController {
 	
 	@GetMapping(value = "/insertDept.do")
 	public String insertDept() {
-		return "hr/KJW/insertDept";
+		return "hr/CommonCode/insertDept";
 	}
 	
 	@PostMapping(value = "/insertDeptOne.do")

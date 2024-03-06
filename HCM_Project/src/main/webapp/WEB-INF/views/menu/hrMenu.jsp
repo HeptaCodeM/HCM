@@ -44,7 +44,7 @@ Boolean openMenuFlag = false;
 
 
 			<!-- 중분류 영역 시작 ********************************************************************************-->
-			<div class="menu-sub menu-sub-accordion  show" kt-hidden-height="242">
+			<div class="menu-sub menu-sub-accordion  show" style="display: none; overflow: hidden;">
 			<%for(int i=0;i<hrLeftMenu.length;i++){ %>
 				<!-- 중분류 1 시작 -->
 				<div  data-kt-menu-trigger="click" class="menu-item menu-accordion">
