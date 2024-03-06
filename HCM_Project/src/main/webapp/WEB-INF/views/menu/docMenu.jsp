@@ -111,7 +111,7 @@
 															<span class="path3"></span>
 														</i>
 													</span>
-													<span class="menu-title">관리자메뉴</span>
+													<span class="menu-title" onclick="location.href='../doc/template.do';">관리자메뉴</span>
 												</span>
 												<!--end:Menu link-->
 											</a>

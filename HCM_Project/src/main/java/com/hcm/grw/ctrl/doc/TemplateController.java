@@ -1,4 +1,4 @@
-package com.hcm.grw.ctrl;
+package com.hcm.grw.ctrl.doc;
 
 import java.util.List;
 import java.util.Map;
