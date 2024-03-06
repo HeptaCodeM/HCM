@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcm.grw.model.mapper.hr.EmpSignDaoImpl">
+
+	<select id="selectAllSign" resultType="EmpSignDto">
+		SELECT EMSI_SEQ, EMPL_ID, EMSI_TITLE, EMSI_SIGN_IMG, EMSI_CREATE_ID, EMSI_CREATE_DT , EMSI_SETFLAG, EMSI_DELFLAG
+			FROM EMP_SIGN 
+			WHERE EMSI_DELFLAG = 'N'
+			AND EMPL_ID = #{empl_id}
+			ORDER BY EMSI_SEQ
+	</select>
+	
+	<insert id="insertSign" parameterType="Map">
+		INSERT INTO EMP_SIGN(EMSI_SEQ, EMPL_ID, EMSI_TITLE, 
+					EMSI_SIGN_IMG, 
+					EMSI_STAMP_IMG, 
+					EMSI_DELFLAG, EMSI_CREATE_ID, EMSI_CREATE_DT, EMSI_MODIFY_ID, 
+					EMSI_MODIFY_DT, EMSI_SETFLAG)
+			VALUES((SELECT NVL(MAX(EMSI_SEQ)+1, 1) EMSI_SEQ FROM EMP_SIGN) , #{empl_id}, #{emsi_title}, 
+					#{emsi_sign_img}, 
+					'', 
+					'N' , #{emsi_create_id}, CURRENT_DATE, '', 
+					'','')
+	</insert>
+	
+	<update id="setDefaultSign" parameterType="Map">
+		UPDATE EMP_SIGN SET EMSI_SETFLAG = 'Y'
+			WHERE EMSI_SEQ = #{emsi_seq}
+			AND EMPL_ID = #{empl_id}
+	</update>
+	
+	<update id="deleteSign" parameterType="Map">
+		UPDATE EMP_SIGN SET EMSI_DELFLAG = 'Y'
+			WHERE EMSI_SEQ = #{emsi_seq}
+			AND EMPL_ID = #{empl_id}
+	</update>
+		
+</mapper>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcm.grw.model.mapper.hr.EmployeeDaoImpl">
+
+	<!-- 일반로그인 -->
+	<select id="getLogin" parameterType="String" resultType="EmployeeDto">
+		SELECT EMPL_ID, EMPL_PWD, EMPL_AUTH
+		FROM EMPLOYEE
+		WHERE EMPL_ID = #{empl_id}
+		AND EMPL_DELFLAG = 'N'
+	</select>
+
+	<!-- 소셜로그인 -->
+	<select id="getSnsLoginInfo" parameterType="String" resultType="SnsInfoDto">
+		SELECT
+		ES.EMSN_ID,
+		ES.EMPL_ID,
+		ES.EMSN_EMAIL,
+		ES.EMSN_CREATE_DT
+		FROM EMPLOYEE E
+		INNER JOIN EMP_SNS ES ON E.EMPL_ID = ES.EMPL_ID
+		WHERE E.EMPL_ID = #{empl_id}
+		AND E.EMPL_DELFLAG = 'N'
+	</select>
+
+	<!-- 인증번호 메일발송 -->
+	<select id="getInitPwdcheck" parameterType="Map" resultType="Integer">
+		SELECT COUNT(*)
+		FROM EMPLOYEE
+		WHERE EMPL_ID = #{empl_id}
+		AND EMPL_NAME = #{empl_name}
+		AND EMPL_EMAIL = #{empl_email}
+		AND EMPL_DELFLAG = 'N'
+	</select>
+
+	<!-- 비밀번호 초기화 처리 -->
+	<update id="setInitPwd" parameterType="Map">
+		UPDATE EMPLOYEE SET
+		EMPL_PWD = #{empl_pwd},
+		EMPL_MODIFY_ID = #{empl_id},
+		EMPL_MODIFY_DT = CURRENT_DATE
+		WHERE EMPL_ID = #{empl_id}
+		AND EMPL_DELFLAG = 'N'
+	</update>
+
+	<!-- 사원등록 -->
+	<insert id="registEmployee" parameterType="EmployeeDto">
+		<selectKey keyProperty="empl_id" resultType="String" order="BEFORE">
+			SELECT TO_CHAR(NVL(MAX(EMPL_ID), TO_CHAR(CURRENT_DATE, 'YYYY')||'0000')+1)
+			FROM EMPLOYEE
+			WHERE SUBSTR(EMPL_ID, 1, 4) = TO_CHAR(CURRENT_DATE, 'YYYY')
+		</selectKey>
+		INSERT INTO EMPLOYEE
+		(EMPL_ID, EMPL_PWD, EMPL_NAME, EMPL_BIRTH, EMPL_GENDER, EMPL_EMAIL,
+		EMPL_PHONE, EMPL_JOINDATE, EMPL_DEPT_CD, EMPL_RANK_CD,
+		EMPL_AUTH, EMPL_CREATE_ID)
+		VALUES(#{empl_id}, #{empl_pwd}, #{empl_name}, #{empl_birth}, #{empl_gender}, #{empl_email},
+		#{empl_phone}, #{empl_joindate}, #{empl_dept_cd}, #{empl_rank_cd},
+		#{empl_auth}, #{empl_create_id})
+	</insert>
+
+	<!-- 사원관리(임직원) - 수정 -->
+	<update id="updateEmployee" parameterType="EmployeeDto">
+		UPDATE EMPLOYEE SET
+		EMPL_PHONE = #{empl_phone},
+		EMPL_TEL = #{empl_tel},
+		EMPL_FAX = #{empl_fax},
+		EMPL_PICTURE = #{empl_picture, jdbcType=BLOB},
+		EMPL_MODIFY_ID = #{empl_modify_id},
+		EMPL_MODIFY_DT = CURRENT_DATE
+		WHERE EMPL_ID = #{empl_id}
+		AND EMPL_DELFLAG = 'N'
+	</update>
+
+	<!-- 권한관리 리스트 -->
+	<select id="getAuthList" resultType="EmployeeDto">
+		SELECT
+		EMPL_ID, EMPL_NAME, EMPL_DEPT_CD, EMPL_RANK_CD, EMPL_AUTH
+		FROM EMPLOYEE
+		WHERE EMPL_DELFLAG = 'N'
+		AND EMPL_AUTH != 'ROLE_USER'
+		ORDER BY EMPL_ID ASC, EMPL_AUTH DESC
+	</select>
+
+	<!-- 권한관리 상세페이지 -->
+	<select id="getAuthDetail" parameterType="String" resultType="EmployeeDto">
+		SELECT
+		EMPL_ID, EMPL_NAME, EMPL_DEPT_CD, EMPL_RANK_CD, EMPL_AUTH
+		FROM EMPLOYEE
+		WHERE EMPL_DELFLAG = 'N'
+		AND EMPL_AUTH != 'ROLE_USER'
+		AND EMPL_ID = #{empl_id}
+	</select>
+
+	<!-- 권한관리 등록처리 및 해당 페이지 권한적용 -->
+	<update id="updateAuthEmployee" parameterType="Map">
+		UPDATE EMPLOYEE SET
+		EMPL_AUTH = #{empl_auth},
+		EMPL_MODIFY_ID = #{empl_modify_id},
+		EMPL_MODIFY_DT = CURRENT_DATE
+		WHERE EMPL_ID = #{empl_id}
+	</update>
+
+	<!-- 간편로그인 조회 -->
+	<select id="getSnsInfo" parameterType="String" resultType="SnsInfoDto">
+		SELECT
+		ES.EMSN_ID,
+		ES.EMPL_ID,
+		ES.EMSN_EMAIL,
+		ES.EMSN_CREATE_DT
+		FROM EMPLOYEE E
+		INNER JOIN EMP_SNS ES ON E.EMPL_ID = ES.EMPL_ID
+		WHERE E.EMPL_ID = #{empl_id}
+	</select>
+
+	<!-- 간편로그인 삭제 -->
+	<delete id="delSnsInfo" parameterType="String">
+		DELETE FROM EMP_SNS
+		WHERE EMSN_ID = #{emsn_id}
+	</delete>
+
+	<!-- 등록처리-OAuth2 -->
+	<insert id="registSnsLoginInfo" parameterType="SnsInfoDto">
+		INSERT INTO EMP_SNS(EMSN_ID, EMPL_ID, EMSN_EMAIL)
+		VALUES(#{emsn_id}, #{empl_id}, #{emsn_email})
+	</insert>
+
+	<!-- 비밀번호 변경 -->
+	<update id="updatePwd" parameterType="Map">
+		UPDATE EMPLOYEE SET
+		EMPL_PWD = #{empl_new_pwd},
+		EMPL_MODIFY_ID = #{empl_modify_id},
+		EMPL_MODIFY_DT = CURRENT_DATE
+		WHERE EMPL_ID = #{empl_id}
+		AND EMPL_PWD = #{empl_pwd}
+		AND EMPL_DELFLAG = 'N'
+	</update>
+
+</mapper>

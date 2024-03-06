@@ -9,5 +9,7 @@
 </head>
 <body>
 
+
+	<a href="/sm/getAllGobo.do"></a>
 </body>
 </html>
