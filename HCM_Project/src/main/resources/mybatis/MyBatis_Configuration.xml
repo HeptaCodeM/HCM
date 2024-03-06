@@ -40,6 +40,7 @@
    
 
    <mappers>
+   	  <mapper resource="sqls/ApprDeny_Statement.xml" />
       <mapper resource="sqls/DocBox_Statement.xml" />
       <mapper resource="sqls/SignTree_Statement.xml"/>
       <mapper resource="sqls/SignFavo_Statement.xml"/>
