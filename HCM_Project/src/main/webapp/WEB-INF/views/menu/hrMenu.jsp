@@ -44,7 +44,7 @@ Boolean openMenuFlag = false;
 
 
 			<!-- 중분류 영역 시작 ********************************************************************************-->
-			<div class="menu-sub menu-sub-accordion" kt-hidden-height="242" style="display: none; overflow: hidden;">
+			<div class="menu-sub menu-sub-accordion  show" kt-hidden-height="242">
 			<%for(int i=0;i<hrLeftMenu.length;i++){ %>
 				<!-- 중분류 1 시작 -->
 				<div  data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -72,7 +72,7 @@ Boolean openMenuFlag = false;
 						openMenuFlag = true;
 					}
 				}
-				
+
 				if(openMenuFlag == true){
 				%>
 					<div class="menu-sub menu-sub-accordion show" style="">
@@ -91,7 +91,7 @@ Boolean openMenuFlag = false;
 								<span class="menu-bullet">
 									<span class="bullet bullet-dot"></span>
 								</span>
-								<span class="menu-title"><%=hrSubLeftMenu[i][j]%>/<%=hrSubLinkLeftMenu[i][j].indexOf(currentPageName)%></span>
+								<span class="menu-title"><%=hrSubLeftMenu[i][j]%></span>
 							</a>
 						</div>
 						<!-- 소분류1 메뉴 영역 종료 -->

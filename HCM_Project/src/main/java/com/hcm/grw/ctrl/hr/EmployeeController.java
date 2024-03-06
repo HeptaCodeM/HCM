@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.CommonCodeDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.mapper.hr.EmployeeListDao;
@@ -121,18 +122,20 @@ public class EmployeeController {
 
 		log.info("수정값 : {}", emp);
 		
-		int n = employeeService.updateEmployee(emp);
-		StringBuffer sb = new StringBuffer();
-		sb.append("<script>");
-		if(n < 1) {
-			sb.append("alert('수정 시 오류가 발생하였습니다.'); history.back();");
-		}else {
-			sb.append("alert('정상적으로 수정 되었습니다.');");
-			sb.append("location.href='/hr/employee/list.do';");
-		}
-		sb.append("</script>");
 		
-		resp.getWriter().print(sb);
+		
+		int n = employeeService.updateEmployee(emp);
+		String msg;
+		if(n < 1) {
+			msg = Function.alertHistoryBack("수정 시 오류가 발생하였습니다.");
+			//sb.append("alert('수정 시 오류가 발생하였습니다.'); history.back();");
+		}else {
+			msg = Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/list.do", "");
+			//sb.append("alert('정상적으로 수정 되었습니다.');");
+			//sb.append("location.href='/hr/employee/list.do';");
+		}
+		
+		resp.getWriter().print(msg);
 	}	
 
 }
