@@ -48,4 +48,10 @@ public class TemplateServiceImpl implements ITemplateService{
 		return dao.insertTemp(dto);
 	}
 
+	@Override
+	public List<TemplateDto> getCategory() {
+		log.info("TemplateServiceImpl getCategory 템플릿 카테고리 조회");
+		return dao.getCategory();
+	}
+	
 }

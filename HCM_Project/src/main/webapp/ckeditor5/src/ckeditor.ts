@@ -101,6 +101,7 @@ class Editor extends ClassicEditor {
 				'redo',
 				'|',
 				'heading',
+				'alignment',
 				'bold',
 				'underline',
 				'italic',
