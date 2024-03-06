@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.hcm.grw.dto.doc.DocBoxDto;
 import com.hcm.grw.dto.doc.SignBoxDto;
+import com.hcm.grw.dto.doc.SignJsonDto;
 import com.hcm.grw.model.mapper.doc.IDocBoxDao;
+import com.hcm.grw.model.service.doc.IApprDenyService;
 import com.hcm.grw.model.service.doc.IDocBoxService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -35,6 +38,9 @@ public class RJY_JUnitTest {
 	private IDocBoxDao dao;
 	@Autowired
 	private IDocBoxService service;
+	
+	@Autowired
+	private IApprDenyService apprService;
 
 	// @Test
 	public void test() {
@@ -43,6 +49,7 @@ public class RJY_JUnitTest {
 	}
 
 	private String NS = "com.hcm.grw.model.mapper.doc.DocBoxDaoImpl.";
+	private String NS1 = "com.hcm.grw.model.mapper.doc.ApprDenyServiceImpl.";
 
 	// 전체문서함 조회
 	 //@Test
@@ -129,7 +136,7 @@ public class RJY_JUnitTest {
 	}
 	
 	//상세조회 리스트방식
-	@Test
+	//@Test
 	public void getDetailDocsList() {
 		String sidb_doc_num = "24000003";
 		List<DocBoxDto> dto = sessionTemplate.selectList(NS + "getDetailDocsList", sidb_doc_num);
@@ -138,12 +145,33 @@ public class RJY_JUnitTest {
 	}
 	
 	
+	/*
+	 * @Test public void approve() { SignBoxDto dto1 = new SignBoxDto();
+	 * 
+	 * SignJsonDto dto2 = new SignJsonDto();
+	 * 
+	 * dto1.setSidb_doc_num("24000001");
+	 * 
+	 * List<SignJsonDto> list = new ArrayList<SignJsonDto>();
+	 * 
+	 * 
+	 * dto2.setAppr_reply("회사의 사활 어쩌구 "); list.add(dto2);
+	 * 
+	 * dto1.setSidb_doc_json(list);
+	 * 
+	 * 
+	 * boolean result = service.approve(dto1); assertTrue(result); }
+	 */
+	
+	//DTO 추가버전
 	// @Test
 	    public void approve() {
-		 DocBoxDto dto = new DocBoxDto();
 		 SignBoxDto dto1 = new SignBoxDto();
 		 
 		 dto1.setSidb_doc_num("24000001");
+		 
+		dto1.setAppr_reply("입력돼주겠니 제발?");
+			
 		 boolean result = service.approve(dto1);		
 		 assertTrue(result);
 	 }
@@ -155,6 +183,18 @@ public class RJY_JUnitTest {
 			
 			assertEquals(num, 1);
 		}
+		
+		 @Test
+	    public void deny() {
+		 SignBoxDto dto = new SignBoxDto();
+		 
+		 dto.setSidb_doc_num("24000003");
+		 
+		dto.setAppr_reply("일처리 똑바로해");
+			
+		 boolean result = apprService.deny(dto);
+		 assertTrue(result);
+	 }	
 		
 	//	@Test
 	    public void finalApprove() {

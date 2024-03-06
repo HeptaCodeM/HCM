@@ -16,7 +16,9 @@ import lombok.ToString;
 @AllArgsConstructor
 public class DocBoxDto {
 
+
 	
+
 	private String sidt_temp_cd;
 	private String sidb_doc_writedt;
 	private String sidb_doc_title;
@@ -38,5 +40,8 @@ public class DocBoxDto {
 	private String empl_dept_cd;
 
 	private String empl_name;
-	
+
+
+   
+
 }

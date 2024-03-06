@@ -2,10 +2,12 @@ package com.hcm.grw.model.service.doc;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcm.grw.dto.doc.SignFavoDto;
+import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.mapper.doc.ISignFavoDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -63,6 +65,12 @@ public class SignFavoServiceImpl implements ISignFavoService {
 	public List<SignFavoDto> getFavApprLineList(String empl_id) {
 		log.info("SignFavoServiceImpl getFavApprLineList Service 즐겨찾기 결재라인 목록 조회");
 		return dao.getFavApprLineList(empl_id);
+	}
+	
+	@Override
+	public List<EmployeeDto> getFav(@Param("empl_id") List<String> empl_id) {
+		log.info("SignFavoServiceImpl getFav Service 결재라인 결재자 정보 조회");
+		return dao.getFav(empl_id);
 	}
 
 }
