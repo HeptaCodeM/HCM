@@ -22,5 +22,6 @@ public class TemplateDto {
 	private String sidt_temp_modifydt;
 	private String sidt_temp_flag;
 	private String sidt_temp_content;
+	private String sica_name;
 
 }

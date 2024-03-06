@@ -16,6 +16,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class DocBoxDto {
 
+
 	
 
 	private String sidt_temp_cd;
@@ -37,8 +38,9 @@ public class DocBoxDto {
 	private String empl_ref;
 	private String empl_id;
 	private String empl_dept_cd;
-
+	
 	private String empl_name;
 
-	
+
+   
 }

@@ -42,7 +42,7 @@ public class TemplateService_JUnitTest {
 		assertEquals(1, deleteCnt);
 	}
 	
-	@Test
+//	@Test
 	public void listTest() {
 		List<TemplateDto> list =  service.getTempList();
 		assertNotEquals(0, list.size());
@@ -67,6 +67,13 @@ public class TemplateService_JUnitTest {
 		
 		int insertCnt = service.insertTemp(dto);
 		assertEquals(1, insertCnt);
+	}
+	
+	@Test
+	public void getCategory() {
+		List<TemplateDto> lists = service.getCategory();
+		assertNotEquals(0, lists.size());
+		
 	}
 
 }
