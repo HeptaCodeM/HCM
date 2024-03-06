@@ -28,6 +28,10 @@ public class ApprDenyDaoImpl implements IApprDenyDao {
 		return sqlSessionTemplate.update(NS+"approveDoc", dto);
 	}
 
+	@Override
+	public int denyJson(SignBoxDto dto) {
+		return sqlSessionTemplate.update(NS+"denyJson", dto);
+	}
 
 	@Override
 	public int denyDoc(SignBoxDto dto) {
@@ -45,4 +49,6 @@ public class ApprDenyDaoImpl implements IApprDenyDao {
 	public int finalDocApprove(SignBoxDto dto) {
 		return sqlSessionTemplate.update(NS+"finalDocApprove", dto);
 	}
+
+
 }

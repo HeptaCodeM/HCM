@@ -17,5 +17,7 @@ public interface ITemplateService {
 	public int deleteTemp(String sidt_temp_cd);
 	
 	public int insertTemp(TemplateDto dto);
+	
+	public List<TemplateDto> getCategory();
 
 }

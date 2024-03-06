@@ -40,10 +40,12 @@
    
 
    <mappers>
-      <mapper resource="sqls/DocBox_Statement.xml" />
-      <mapper resource="sqls/SignTree_Statement.xml"/>
-      <mapper resource="sqls/SignFavo_Statement.xml"/>
-      <mapper resource="sqls/SignBox_Statement.xml"/>
+   	  <mapper resource="sqls/doc/Template_Statement.xml" />
+   	  <mapper resource="sqls/doc/ApprDeny_Statement.xml" />
+      <mapper resource="sqls/doc/DocBox_Statement.xml" />
+      <mapper resource="sqls/doc/SignTree_Statement.xml"/>
+      <mapper resource="sqls/doc/SignFavo_Statement.xml"/>
+      <mapper resource="sqls/doc/SignBox_Statement.xml"/>
        <mapper resource="sqls/sm/Gobo_Statement.xml"/>
         <mapper resource="sqls/sm/Reply_Statement.xml"/>
         <mapper resource="sqls/sm/Scb_Statement.xml"/> 

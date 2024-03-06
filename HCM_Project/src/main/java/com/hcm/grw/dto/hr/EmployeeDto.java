@@ -42,4 +42,13 @@ public class EmployeeDto {
 	private String coco_name_pnm;
 	private String startdate;
 	private String enddate;
+	
+	
+	
+	
+	
+	
+	
+	
+	private CommonCodeDto comm;
 }

@@ -24,10 +24,14 @@ public class ApprDenyServiceImpl implements IApprDenyService {
 		return (n+m)>1?true:false;
 	}
 
+	@Transactional
 	@Override
-	public int denyDoc(SignBoxDto dto) {
-		return dao.denyDoc(dto);
+	public boolean deny(SignBoxDto dto) {
+		int a = dao.denyJson(dto);
+		int b = dao.denyDoc(dto); 
+		return (a+b)>1?true:false;
 	}
+
 
 	@Transactional(readOnly = true)
 	@Override
@@ -36,4 +40,5 @@ public class ApprDenyServiceImpl implements IApprDenyService {
 		int m = dao.finalDocApprove(dto);
 		return (n+m)>1?true:false;
 	}
+
 }

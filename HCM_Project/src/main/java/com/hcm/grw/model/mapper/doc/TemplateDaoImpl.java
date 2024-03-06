@@ -50,6 +50,10 @@ public class TemplateDaoImpl implements ITemplateDao {
 		return session.insert(NS+"insertTemp", dto);
 	}
 	
-	
+	@Override
+	public List<TemplateDto> getCategory() {
+		// TODO Auto-generated method stub
+		return session.selectList(NS + "getCategory");
+	}
 
 }
