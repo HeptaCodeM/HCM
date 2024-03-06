@@ -11,11 +11,15 @@ String hrSubLeftMenu [][] = {
 };
 //소분류 링크
 String hrSubLinkLeftMenu [][] = {
-		{"./hrDept.do","#","#", "/hr/employee/regist.do", "/hr/employee/list.do"},		//hrLeftMenu[0]
+		{"/hrDept.do","#","#", "/hr/employee/regist.do", "/hr/employee/list.do"},		//hrLeftMenu[0]
 		{"#"},							//hrLeftMenu[1]
 		{"#", "#"},						//hrLeftMenu[2]
 		{"#", "#"}						//hrLeftMenu[3]
 };
+
+String uri = request.getRequestURI();
+String currentPageName = uri.substring(uri.lastIndexOf("/") + 1).replace(".jsp","");
+Boolean openMenuFlag = false;
 %>
 <!DOCTYPE html>
 <html>
@@ -60,8 +64,25 @@ String hrSubLinkLeftMenu [][] = {
 					<!-- 중분류1 메뉴링크 종료 -->
 
 					<!-- 소분류 영역 시작 ========================================================-->
+					
+				<%
+				openMenuFlag = false;
+				for(int j=0;j<hrSubLeftMenu[i].length;j++){ 
+					if(hrSubLinkLeftMenu[i][j].indexOf(currentPageName)>=0){
+						openMenuFlag = true;
+					}
+				}
+				
+				if(openMenuFlag == true){
+				%>
+					<div class="menu-sub menu-sub-accordion show" style="">
+				<%
+				}else{
+				%>
 					<div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;">
-
+				<%
+				}
+				%>
 				<%for(int j=0;j<hrSubLeftMenu[i].length;j++){ %>
 						<!-- 소분류1 메뉴 영역 시작 -->
 						<div class="menu-item">
@@ -70,7 +91,7 @@ String hrSubLinkLeftMenu [][] = {
 								<span class="menu-bullet">
 									<span class="bullet bullet-dot"></span>
 								</span>
-								<span class="menu-title"><%=hrSubLeftMenu[i][j]%></span>
+								<span class="menu-title"><%=hrSubLeftMenu[i][j]%>/<%=hrSubLinkLeftMenu[i][j].indexOf(currentPageName)%></span>
 							</a>
 						</div>
 						<!-- 소분류1 메뉴 영역 종료 -->

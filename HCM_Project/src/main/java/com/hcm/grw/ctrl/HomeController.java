@@ -45,17 +45,17 @@ public class HomeController {
 		return "mainTmp";
 	}
 	
-	@GetMapping("/hrMainTmp.do")
+	@GetMapping("/hr/hrMainTmp.do")
 	public String hrMainTmp() {
 		return "hr/hrMainTmp";
 	}
 	
-	@GetMapping("/smMainTmp.do")
+	@GetMapping("/sm/smMainTmp.do")
 	public String smMainTmp() {
 		return "sm/smMainTmp";
 	}
 	
-	@GetMapping("/docMainTmp.do")
+	@GetMapping("/doc/docMainTmp.do")
 	public String docMainTmp() {
 		return "doc/docMainTmp";
 	}
