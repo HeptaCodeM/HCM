@@ -79,19 +79,25 @@
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
 
-								<form name="form1" method="post" action="/hr/employee/regist.do">
+								<form name="form1" method="post" action="/hr/employee/modify.do">
 									<table class="table table-hover">
 										<tr>
 											<th>사번</th>
-											<td><input type="text" name="empl_name" maxlength="20" value="${empInfo.empl_id}" readonly></td>
+											<td>
+												${empInfo.empl_id}
+												<input type="hidden" name="empl_id" maxlength="20" value="${empInfo.empl_id}">
+											</td>
 										</tr>
 										<tr>
 											<th>성명</th>
-											<td><input type="text" name="empl_name" maxlength="20" value="${empInfo.empl_name}" readonly></td>
+											<td>${empInfo.empl_name}</td>
 										</tr>
 										<tr>
 											<th>생년월일</th>
-											<td><input type="date" name="empl_birth" value="${empInfo.empl_birth}" readonly></td>
+											<td>
+												<fmt:parseDate var="parseDate" value="${empInfo.empl_birth}" pattern="yyyyMMdd" />
+												<fmt:formatDate value="${parseDate}" pattern="yyyy-MM-dd" />
+											</td>
 										</tr>
 										<tr>
 											<th>성별</th>
@@ -102,24 +108,24 @@
 												<c:if test="${empInfo.empl_gender ne 'M'}">
 												여성
 												</c:if>
-												<input type="hidden" name=empl_gender value="${empInfo.empl_gender}">
 											</td>
 										</tr>
 										<tr>
 											<th>이메일</th>
-											<td><input type="text" name="empl_email" maxlength="50" value="${empInfo.empl_email}" readonly></td>
+											<td>${empInfo.empl_email}</td>
 										</tr>
+
 										<tr>
 											<th>전화번호</th>
 											<td><input type="text" name="empl_phone" maxlength="15" value="${empInfo.empl_phone}" required="required"></td>
 										</tr>
 										<tr>
 											<th>내선번호</th>
-											<td><input type="text" name="empl_tel" maxlength="3"></td>
+											<td><input type="text" name="empl_tel" maxlength="3" value="${empInfo.empl_tel}"></td>
 										</tr>
 										<tr>
 											<th>팩스번호</th>
-											<td><input type="text" name="empl_fax" maxlength="15"></td>
+											<td><input type="text" name="empl_fax" maxlength="15" value="${empInfo.empl_fax}"></td>
 										</tr>
 										<tr>
 											<th>입사년도</th>
@@ -128,29 +134,34 @@
 										<tr>
 											<th>부서</th>
 											<td>
-												${empInfo.empl_dept_cd}
+												${empInfo.coco_name_dnm}
 											</td>
 										</tr>
 										<tr>
 											<th>직위</th>
 											<td>
-												${empInfo.empl_rank_cd}
+												${empInfo.coco_name_rnm}
 											</td>
 										</tr>
 										<tr>
 											<th>직책</th>
 											<td>
-												${empInfo.empl_position_cd}
+												${empInfo.coco_name_pnm}
 											</td>
 										</tr>
 										<tr>
-											<td colspan="2">
+											<td colspan="2" style="text-align:center;">
 												<button class="btn btn-primary me-10" id="kt_button_1">
 												    <span class="indicator-label">
-												        Submit
+												        수정
 												    </span>
 												    <span class="indicator-progress">
 												        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+												    </span>
+												</button>
+												<button type="button" class="btn btn-danger me-10" id="kt_button_1" onclick="location.href='/hr/employee/list.do';">
+												    <span class="indicator-label">
+												        리스트
 												    </span>
 												</button>
 											</td>

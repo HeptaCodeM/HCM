@@ -54,8 +54,8 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/hr/employee/regist.do")
-	public @ResponseBody void registEmployee(EmployeeDto emp, HttpServletResponse resp) throws IOException {
-		log.info("EmployeeController registEmployee 등록처리");
+	public @ResponseBody void registEmployeeOk(EmployeeDto emp, HttpServletResponse resp) throws IOException {
+		log.info("EmployeeController registEmployeeOk 등록처리");
 		
 		resp.setContentType("text/html;charset=utf-8;");
 		
@@ -111,4 +111,28 @@ public class EmployeeController {
 		return "/hr/employee/modify";
 	}	
 	
+	@PostMapping("/hr/employee/modify.do")
+	public @ResponseBody void employeeModifyOk(EmployeeDto emp, HttpServletResponse resp) throws IOException {
+		log.info("EmployeeController employeeModifyOk 수정처리");
+		
+		String empl_modify_id = emp.getEmpl_id();
+		emp.setEmpl_modify_id(empl_modify_id);
+
+
+		log.info("수정값 : {}", emp);
+		
+		int n = employeeService.updateEmployee(emp);
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script>");
+		if(n < 1) {
+			sb.append("alert('수정 시 오류가 발생하였습니다.'); history.back();");
+		}else {
+			sb.append("alert('정상적으로 수정 되었습니다.');");
+			sb.append("location.href='/hr/employee/list.do';");
+		}
+		sb.append("</script>");
+		
+		resp.getWriter().print(sb);
+	}	
+
 }

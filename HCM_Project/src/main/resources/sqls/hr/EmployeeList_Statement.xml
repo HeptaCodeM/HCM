@@ -50,6 +50,7 @@
 					A.EMPL_ID,
 		            A.EMPL_NAME,
 		            A.EMPL_BIRTH,
+		            A.EMPL_EMAIL,
 		            A.EMPL_PHONE,
 		            A.EMPL_TEL,
 		            A.EMPL_FAX,
