@@ -8,7 +8,7 @@ public interface IApprDenyService {
 			public boolean approve(SignBoxDto dto);
 			
 			//반려시 문서 업데이트
-			public int denyDoc(SignBoxDto dto);
+			public boolean deny(SignBoxDto dto);
 			
 			
 			//최종 결재 승인 트랜잭션 처리

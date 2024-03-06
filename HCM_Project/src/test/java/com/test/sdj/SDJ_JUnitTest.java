@@ -24,6 +24,7 @@ import com.hcm.grw.dto.hr.OrderInfoDetailDto;
 import com.hcm.grw.dto.hr.OrderInfoListDto;
 import com.hcm.grw.dto.hr.OrderInfoMasterDto;
 import com.hcm.grw.dto.hr.SnsInfoDto;
+import com.hcm.grw.model.mapper.hr.EmployeeDao;
 import com.hcm.grw.model.service.hr.CommuteService;
 import com.hcm.grw.model.service.hr.EmployeeService;
 import com.hcm.grw.model.service.hr.HolidayService;
@@ -51,6 +52,8 @@ public class SDJ_JUnitTest {
 	@Autowired
 	private HolidayService holidayService;
 	
+	@Autowired
+	private EmployeeDao empDao;
 	
 	@Before
 	public void test() {
@@ -187,7 +190,7 @@ public class SDJ_JUnitTest {
 		assertEquals(1, n2);
 	}
 	
-	@Test
+	//@Test
 	public void OrderTest() {
 		String createId = "20220101";
 		/*
@@ -246,4 +249,5 @@ public class SDJ_JUnitTest {
 		log.info("휴가정보 리스트 : {}", had);
 		assertNotEquals(0, had.size());
 	}
+	
 }

@@ -10,6 +10,6 @@
 <body>
 
 
-	<a href="./getAllGobo.do"></a>
+	<a href="/sm/getAllGobo.do"></a>
 </body>
 </html>

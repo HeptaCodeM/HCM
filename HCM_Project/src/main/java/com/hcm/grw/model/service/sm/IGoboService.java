@@ -13,8 +13,6 @@ public interface IGoboService {
 	public List<GoboDto> getAllGobo();
 	/* 공지사항 상세보기 */
 	public GoboDto getDetailGobo(String no);
-	/* 조회수 업데이트 */
-	public int updateGoboView(String no);
 	/* 공지사항 글 등록 */
 	public int insertGobo(GoboDto dto); 
 	/* 게시글 삭제 */
