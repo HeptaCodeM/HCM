@@ -21,50 +21,72 @@ public class CommonCodeController {
 	@Autowired
 	private CommonCodeService codeService;
 	
-	@GetMapping(value = "/hrDept.do")
-	public String hrDept(Model model) {
-		List<CommonCodeDto> deptList = codeService.selectAllDept();
-		model.addAttribute("deptList",deptList);
-		return "hr/CommonCode/hrDept";
-	}
 	
-	@GetMapping(value = "/hrDeptDetail.do")
-	public String hrDeptDetail(String coco_cd , Model model) {
+	
+	@GetMapping(value = "/roleList.do")
+	public String roleList(Model model, String role) {
+		System.out.println(role);
+		
+		Map<String, Object> roleMap = new HashMap<String, Object>();
+		roleMap.put("role", role);
+		
+		List<CommonCodeDto> codeList = codeService.selectAllRole(roleMap);
+		model.addAttribute("codeList", codeList);
+		model.addAttribute("role", role);
+		
+		return "hr/CommonCode/roleList";
+	}	
+	
+	
+	@GetMapping(value = "/roleDetail.do")
+	public String hrDeptDetail(String coco_cd , String role , Model model) {
 		System.out.println(coco_cd);
+		System.out.println(role);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("coco_cd", coco_cd);
-		CommonCodeDto codeDto = codeService.selectOneDept(map);
-		System.out.println(codeDto);
-		model.addAttribute("codeDto" , codeDto);
-		return "hr/CommonCode/hrDeptDetail";
+		map.put("role", role);
+		CommonCodeDto roleDto = codeService.selectOneRole(map);
+		System.out.println(roleDto);
+		model.addAttribute("roleDto" , roleDto);
+		model.addAttribute("role", role);
+		return "hr/CommonCode/roleDetail";
 	}
 	
-	@PostMapping(value = "/correctionDept.do")
-	public String correctionDept(HttpServletRequest request) {
-		String coco_name = request.getParameter("coco_name");
-		String coco_cd = request.getParameter("coco_cd");
-		System.out.println(coco_name);
-		System.out.println(coco_cd);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("coco_name", coco_name);
-		map.put("coco_cd", coco_cd);
-		codeService.correctionDept(map);
-		return "redirect:./hrDept.do";
-	}
-	
-	@GetMapping(value = "/deleteDeptOne.do")
+	@GetMapping(value = "/deleteRoleOne.do")
 	public String deleteDeptOne(HttpServletRequest request) {
 		String coco_cd = request.getParameter("coco_cd");
 		System.out.println(coco_cd);
+		String role = request.getParameter("role");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("coco_cd", coco_cd);
-		int cnt = codeService.deleteDeptOne(map);
+		int cnt = codeService.deleteRoleOne(map);
 		if(cnt == 1) {
-			return "redirect:./hrDept.do";
+			return "redirect:./roleList.do?role="+role;
 		}else {
-			return "redirect:./hrDept.do";
+			return "redirect:./roleList.do?role="+role;
 		}
+	}	
+
+	@PostMapping(value = "/correctionRole.do")
+	public String correctionDept(HttpServletRequest request) {
+		String coco_name = request.getParameter("coco_name");
+		String coco_cd = request.getParameter("coco_cd");
+		String role = request.getParameter("role");
+		System.out.println(coco_name);
+		System.out.println(coco_cd);
+		System.out.println(role);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("coco_name", coco_name);
+		map.put("coco_cd", coco_cd);
+		codeService.correctionRole(map);
+		return "redirect:./roleList.do?role="+role;
 	}
+	
+	// ================================================
+
+	
+	
+	
 	
 	@GetMapping(value = "/insertDept.do")
 	public String insertDept() {

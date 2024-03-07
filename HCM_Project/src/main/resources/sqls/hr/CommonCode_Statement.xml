@@ -2,6 +2,56 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hcm.grw.model.mapper.hr.CommonCodeDaoImpl">
 	
+	<select id="selectAllRole" parameterType="java.util.Map" resultType="CommonCodeDto">
+		SELECT 
+		      COCO_CD, COCO_NAME 
+		FROM    COMMON_CODE
+		WHERE    COCO_DELFLAG = 'N'
+		AND      SUBSTR(COCO_CD, 1, 2) = #{role}
+		AND      COCO_PARENT_ID IS NOT NULL
+		ORDER BY COCO_CD ASC
+	</select>
+	
+	<select id="selectOneRole" parameterType="java.util.Map" resultType="CommonCodeDto">
+		SELECT 
+		      COCO_CD , COCO_NAME
+		FROM    COMMON_CODE
+		WHERE    COCO_DELFLAG = 'N'
+		AND      SUBSTR(COCO_CD, 1, 2) = #{role}
+		AND      COCO_PARENT_ID IS NOT NULL
+		AND 	 COCO_CD = #{coco_cd}
+	</select>
+	
+	<update id="deleteRoleOne" parameterType="java.util.Map">
+		UPDATE COMMON_CODE SET COCO_DELFLAG = 'Y'
+			WHERE COCO_CD = #{coco_cd}
+	</update>
+	
+	
+	<insert id="insertRoleOne" parameterType="java.util.Map">
+		INSERT INTO COMMON_CODE (COCO_CD, COCO_NAME, COCO_PARENT_ID, COCO_CREATE_ID)
+						VALUES(#{coco_cd}, #{coco_name}, (
+						                     SELECT 
+						                           COCO_CD
+						                     FROM    COMMON_CODE
+						                     WHERE    COCO_DELFLAG = 'N'
+						                     AND      SUBSTR(COCO_CD, 1, 2) = #{role}
+						                     AND      COCO_PARENT_ID IS NULL
+						                     ), #{coco_create_id})
+	</insert>
+	
+	
+	
+	<update id="correctionRole" parameterType="java.util.Map">
+		UPDATE COMMON_CODE SET COCO_NAME = #{coco_name}
+			WHERE COCO_CD = #{coco_cd}
+	</update>
+	
+	
+	
+	
+	<!-- ============================= 구분선 ============================= -->
+
 
 	<select id="selectAllDept" resultType="CommonCodeDto">
 		SELECT 

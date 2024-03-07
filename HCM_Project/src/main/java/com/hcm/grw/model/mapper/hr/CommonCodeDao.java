@@ -7,6 +7,18 @@ import com.hcm.grw.dto.hr.CommonCodeDto;
 
 public interface CommonCodeDao {
 
+	public List<CommonCodeDto> selectAllRole(Map<String, Object> map);
+	
+	public int insertRoleOne(Map<String, Object> map);
+	
+	public int deleteRoleOne(Map<String, Object> map);
+	
+	public CommonCodeDto selectOneRole(Map<String, Object> map);
+	
+	public int correctionRole(Map<String, Object> map);	
+	
+	// ======================= 구분선 ======================= 
+	
 	public List<CommonCodeDto> selectAllDept();
 	
 	public int insertDeptOne(Map<String, Object> map);

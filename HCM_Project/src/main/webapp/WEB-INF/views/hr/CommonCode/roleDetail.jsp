@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,15 +37,29 @@ function checkNameValue(){
 
 
 
-function deleteDept(){
+function deleteRole(){
     console.log("동작");
     var coco_cd = document.getElementById("coco_cd").value;
+    var role = document.getElementById("role").value;
     
-    location.href="./deleteDeptOne.do?coco_cd="+coco_cd;
+    location.href="./deleteRoleOne.do?coco_cd="+coco_cd+"&role="+role;
 }
 
 </script>
-<title>Dept Detail</title>
+<c:choose>
+	<c:when test="${role eq 'DT'}">
+		<c:set var="thisRole" value="부서"/>
+	</c:when>
+	
+	<c:when test="${role eq 'RK'}">
+		<c:set var="thisRole" value="직위"/>
+	</c:when>
+	
+	<c:when test="${role eq 'PN'}">
+		<c:set var="thisRole" value="직책"/>
+	</c:when>
+</c:choose>
+<title>${thisRole}정보 상세보기</title>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -63,13 +78,14 @@ function deleteDept(){
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-header pt-5">
-								<h3 class="card-title text-gray-800 fw-bold">${codeDto.getCoco_name()} 정보수정</h3>
+								<h3 class="card-title text-gray-800 fw-bold">${roleDto.getCoco_name()} 정보수정</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
-							<form action="./correctionDept.do" onsubmit="return checkNameValue()" method="post">
+							<form action="./correctionRole.do" onsubmit="return checkNameValue()" method="post">
 								<div class="card-body pt-5">
-									부서명<input id="coco_name" name="coco_name" class="form-control form-control-solid" type="text" value="${codeDto.getCoco_name()}"><br>
-									부서코드<input id="coco_cd" name="coco_cd" class="form-control form-control-solid" type="text" value="${codeDto.getCoco_cd()}" readonly="readonly">
+									${thisRole}명<input id="coco_name" name="coco_name" class="form-control form-control-solid" type="text" value="${roleDto.getCoco_name()}"><br>
+									${thisRole}코드<input id="coco_cd" name="coco_cd" class="form-control form-control-solid" type="text" value="${roleDto.getCoco_cd()}" readonly="readonly">
+									<input type="hidden" id="role" name="role" value="${role}">
 								</div>
 								<div class="card-footer">
 									<button class="btn btn-primary me-10" type="submit">저장</button>
@@ -96,7 +112,7 @@ function deleteDept(){
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary me-10" data-bs-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-primary me-10" onclick="deleteDept()">삭제</button>
+                <button type="button" class="btn btn-primary me-10" onclick="deleteRole()">삭제</button>
             </div>
         </div>
     </div>

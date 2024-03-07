@@ -31,7 +31,7 @@
 								<div class="card-body pt-5">
 									부서명<input id="coco_name" name="coco_name" class="form-control form-control-solid" type="text" maxlength="6">
 										<span class="fs-6 text-muted">한글 6글자 이내로 입력해주세요!</span><br>
-									부서코드<input id="coco_cd" name="coco_cd" class="form-control form-control-solid" type="text" maxlength="8">
+									부서코드<input id="coco_cd" name="coco_cd" class="form-control form-control-solid" onchange="" type="text" maxlength="8">
 										<span class="fs-6 text-muted">EX)"DT000001" 형식으로 입력해주세요</span><br>
 										<!-- Ajax로 중복검사 필요 -->
 										<!-- 유효값 검사도 필요 -->

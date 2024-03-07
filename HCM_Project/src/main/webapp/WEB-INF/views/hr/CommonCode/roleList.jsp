@@ -6,7 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<title>부서관리</title>
+<c:choose>
+	<c:when test="${role eq 'DT'}">
+		<c:set var="thisRole" value="부서"/>
+	</c:when>
+	
+	<c:when test="${role eq 'RK'}">
+		<c:set var="thisRole" value="직위"/>
+	</c:when>
+	
+	<c:when test="${role eq 'PN'}">
+		<c:set var="thisRole" value="직책"/>
+	</c:when>
+</c:choose>
+<title>${thisRole}관리</title>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -35,18 +48,18 @@
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-header pt-5">
-								<h3 class="card-title text-gray-800 fw-bold">부서</h3>
+								<h3 class="card-title text-gray-800 fw-bold">${thisRole}</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
-								<c:forEach var="deptList" items="${deptList}" varStatus="var">
-									<a href="./hrDeptDetail.do?coco_cd=${deptList.getCoco_cd()}">${deptList.getCoco_cd()} // ${deptList.getCoco_name()}</a><br>
+								<c:forEach var="codeList" items="${codeList}" varStatus="var">
+									<a href="./roleDetail.do?coco_cd=${codeList.getCoco_cd()}&role=${role}">${codeList.getCoco_cd()} // ${codeList.getCoco_name()}</a><br>
 								</c:forEach>
 								<select id="deptSelectGroup_1" multiple="multiple">
-								<c:forEach var="deptList" items="${deptList}" varStatus="var">
-								    <optgroup label="${deptList.getCoco_name()}">
+								<c:forEach var="codeList" items="${codeList}" varStatus="var">
+								    <optgroup label="${codeList.getCoco_name()}">
 								        <option>
-											<a href="./hrDeptDetail.do?coco_cd=${deptList.getCoco_cd()}">${deptList.getCoco_cd()} // ${deptList.getCoco_name()}</a><br>
+											${codeList.getCoco_cd()} // ${codeList.getCoco_name()}
 								        </option>
 								    </optgroup>
 								</c:forEach>

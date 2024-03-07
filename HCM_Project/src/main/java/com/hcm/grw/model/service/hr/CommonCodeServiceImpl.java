@@ -17,6 +17,37 @@ public class CommonCodeServiceImpl implements CommonCodeService {
 
 	@Autowired
 	private CommonCodeDao dao;
+
+	@Override
+	public List<CommonCodeDto> selectAllRole(Map<String, Object> map) {
+		log.info("CommonCodeServiceImpl selectAllRole // {}",map);
+		return dao.selectAllRole(map);
+	}
+
+	@Override
+	public int insertRoleOne(Map<String, Object> map) {
+		log.info("CommonCodeServiceImpl insertRoleOne // {}",map);
+		return dao.insertRoleOne(map);
+	}
+
+	@Override
+	public int deleteRoleOne(Map<String, Object> map) {
+		log.info("CommonCodeServiceImpl deleteRoleOne // {}",map);
+		return dao.deleteRoleOne(map);
+	}
+
+	@Override
+	public CommonCodeDto selectOneRole(Map<String, Object> map) {
+		log.info("CommonCodeServiceImpl deleteRoleOne // {}",map);
+		return dao.selectOneRole(map);
+	}
+
+	@Override
+	public int correctionRole(Map<String, Object> map) {
+		log.info("CommonCodeServiceImpl correctionRole // {}",map);
+		return dao.correctionRole(map);
+	}
+	
 	
 	@Override
 	public List<CommonCodeDto> selectAllDept() {
@@ -108,6 +139,7 @@ public class CommonCodeServiceImpl implements CommonCodeService {
 		log.info("CommonCodeServiceImpl correctionPosition // {}",map);
 		return dao.correctionPosition(map);
 	}
+
 	
 	
 }
