@@ -1,11 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<title>HR메인화면</title>
+<c:choose>
+	<c:when test="${role eq 'DT'}">
+		<c:set var="thisRole" value="부서"/>
+	</c:when>
+	
+	<c:when test="${role eq 'RK'}">
+		<c:set var="thisRole" value="직위"/>
+	</c:when>
+	
+	<c:when test="${role eq 'PN'}">
+		<c:set var="thisRole" value="직책"/>
+	</c:when>
+</c:choose>
+<title>${thisRole}정보 입력하기</title>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -24,17 +38,18 @@
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-header pt-5">
-								<h3 class="card-title text-gray-800 fw-bold">부서입력</h3>
+								<h3 class="card-title text-gray-800 fw-bold">${thisRole}입력</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
-							<form action="./insertDeptOne.do" onsubmit="return checkNameValue()" method="post">
+							<form action="./insertRoleOne.do" onsubmit="return checkNameValue()" method="post">
 								<div class="card-body pt-5">
-									부서명<input id="coco_name" name="coco_name" class="form-control form-control-solid" type="text" maxlength="6">
+									${thisRole}명<input id="coco_name" name="coco_name" class="form-control form-control-solid" type="text" maxlength="6">
 										<span class="fs-6 text-muted">한글 6글자 이내로 입력해주세요!</span><br>
-									부서코드<input id="coco_cd" name="coco_cd" class="form-control form-control-solid" onchange="" type="text" maxlength="8">
-										<span class="fs-6 text-muted">EX)"DT000001" 형식으로 입력해주세요</span><br>
+									${thisRole}코드<input id="coco_cd" name="coco_cd" class="form-control form-control-solid" onchange="" type="text" maxlength="8">
+										<span class="fs-6 text-muted">EX)"${role}000001" 형식으로 입력해주세요</span><br>
 										<!-- Ajax로 중복검사 필요 -->
 										<!-- 유효값 검사도 필요 -->
+										<input type="hidden" id="role" name="role" value="${role}">
 								</div>
 								<div class="card-footer">
 									<button class="btn btn-primary me-10" type="submit">저장</button>

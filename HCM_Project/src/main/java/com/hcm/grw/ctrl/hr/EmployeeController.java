@@ -43,9 +43,18 @@ public class EmployeeController {
 	public String registEmployee(Model model) {
 		log.info("EmployeeController registEmployee 진입");
 		
-		List<CommonCodeDto> deptList = codeService.selectAllDept();
-		List<CommonCodeDto> rankList = codeService.selectAllRank();
-		List<CommonCodeDto> positionList = codeService.selectAllPosition();
+		Map<String, Object> mapDept = new HashMap<String, Object>();
+		mapDept.put("role", "DT");
+		
+		Map<String, Object> mapRank = new HashMap<String, Object>();
+		mapRank.put("role", "RK");
+		
+		Map<String, Object> mapPosit = new HashMap<String, Object>();
+		mapPosit.put("role", "PN");
+		
+		List<CommonCodeDto> deptList = codeService.selectAllRole(mapDept);
+		List<CommonCodeDto> rankList = codeService.selectAllRole(mapRank);
+		List<CommonCodeDto> positionList = codeService.selectAllRole(mapPosit);
 
 		model.addAttribute("deptList", deptList);
 		model.addAttribute("rankList", rankList);

@@ -82,23 +82,21 @@ public class CommonCodeController {
 		return "redirect:./roleList.do?role="+role;
 	}
 	
-	// ================================================
 
-	
-	
-	
-	
-	@GetMapping(value = "/insertDept.do")
-	public String insertDept() {
-		return "hr/CommonCode/insertDept";
+	@GetMapping(value = "/insertRole.do")
+	public String insertRole(String role , Model model) {
+		model.addAttribute("role", role);
+		return "hr/CommonCode/insertRole";
 	}
 	
-	@PostMapping(value = "/insertDeptOne.do")
+	@PostMapping(value = "/insertRoleOne.do")
 	public String insertDeptOne(HttpServletRequest request) {
 		String coco_name = request.getParameter("coco_name");
 		String coco_cd = request.getParameter("coco_cd");
+		String role = request.getParameter("role");
 		System.out.println(coco_name);
 		System.out.println(coco_cd);
+		System.out.println(role);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("coco_name", coco_name);
 		map.put("coco_cd", coco_cd);
@@ -108,9 +106,9 @@ public class CommonCodeController {
 		
 		int cnt = codeService.insertDeptOne(map);
 		if(cnt == 1) {
-			return "redirect:./hrDept.do";
+			return "redirect:./roleList.do?role="+role;
 		}else {
-			return "redirect:./hrDept.do";
+			return "redirect:./roleList.do?role="+role;
 		}
 	}
 	

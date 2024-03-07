@@ -52,9 +52,32 @@
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
-								<c:forEach var="codeList" items="${codeList}" varStatus="var">
-									<a href="./roleDetail.do?coco_cd=${codeList.getCoco_cd()}&role=${role}">${codeList.getCoco_cd()} // ${codeList.getCoco_name()}</a><br>
-								</c:forEach>
+								<div class="table-responsive">
+									<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
+										<thead>
+											<tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+												<th>순번</th>
+												<th>${thisRole}코드</th>
+												<th>${thisRole}명</th>
+												<th>생성자ID</th>
+												<th>생성일자</th>
+											</tr>
+										</thead>	
+										<tbody>
+											<c:forEach var="codeList" items="${codeList}" varStatus="var">
+												<tr style="cursor: pointer;" onclick="location.href='./roleDetail.do?coco_cd=${codeList.getCoco_cd()}&role=${role}'" class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
+													<td>NO.${var.count}</td>
+													<td>${codeList.getCoco_cd()}</td>
+													<td>${codeList.getCoco_name()}</td>
+													<td>${codeList.getCoco_create_id()}</td>
+													<td>${codeList.getCoco_create_dt()}</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+								
+								<%-- 
 								<select id="deptSelectGroup_1" multiple="multiple">
 								<c:forEach var="codeList" items="${codeList}" varStatus="var">
 								    <optgroup label="${codeList.getCoco_name()}">
@@ -66,12 +89,13 @@
 								</select>
 								<script type="text/javascript">
 								$("#deptSelectGroup_1").multiselectsplitter();
-								</script>
+								</script> 
+								--%>
 								
 							</div>
 							<div class="card-footer">
 								<!-- <a href="#" class="btn btn-primary me-10">삭제</a> -->
-								<a href="./insertDept.do" class="btn btn-primary me-10">추가</a>
+								<a href="./insertRole.do?role=${role}" class="btn btn-primary me-10">추가</a>
 						    </div>
 						</div>
 					</div>
