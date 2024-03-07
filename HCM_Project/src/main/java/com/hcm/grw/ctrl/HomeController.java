@@ -67,18 +67,31 @@ public class HomeController {
 		return "doc/docMainTmp";
 	}
 
+	//쿠키생성
 	@GetMapping("/setCookies.do")
-	public String cookiesTest(HttpServletResponse resp) {
-		
+	public String setCookiesTest(HttpServletResponse resp) {
+		log.info("testCk 쿠키생성");
 		CookiesMgr.setCookies(resp, "testCk", "1111");
 		
 		return "redirect:/";
 	}
 
+	//쿠키값 확인
 	@GetMapping("/getCookies.do")
-	public String cookiesTest(HttpServletRequest req) {
+	public String getCookiesTest(HttpServletRequest req) {
 		
 		log.info(CookiesMgr.getCookies(req, "testCk"));
+		log.info("testCk 쿠키확인 : {}", CookiesMgr.getCookies(req, "testCk"));
+		
+		return "redirect:/";
+	}
+	
+	//쿠키삭제
+	@GetMapping("/delCookies.do")
+	public String delCookiesTest(HttpServletRequest req, HttpServletResponse resp) {
+		log.info("testCk 쿠키삭제");
+		
+		CookiesMgr.delCookies(req, resp);
 		
 		return "redirect:/";
 	}
