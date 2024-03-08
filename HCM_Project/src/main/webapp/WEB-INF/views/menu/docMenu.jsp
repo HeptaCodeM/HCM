@@ -1,124 +1,63 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+// 메뉴명
+String docLeftMenu [] = {"내결재관리", "기안서작성", "임시저장", "결재설정" , "서명관리" , "관리자메뉴"};
+// 메뉴링크
+String docLeftMenuLink [] = {"#", "#", "#", "#" ,"#","#"};
+
+String docUri = request.getRequestURI();
+String currentDocPageName = docUri.substring(docUri.lastIndexOf("/") + 1).replace(".jsp","");
+Boolean openDocMenuFlag = false;
+%>
 <!DOCTYPE html>
 <html>
-<!--begin::Menu-->
-								<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
-										<!--begin:Menu item-->
-										
-										<!--end:Menu item-->
-										<!--begin:Menu item-->
-									<div data-kt-menu-trigger="click" class="menu-item pt-5 menu-item menu-accordion">
-											<!--begin:Menu content-->
-											<span class="menu-link">
-												<span class="menu-icon">
-														<i class="ki-duotone ki-address-book fs-2">
-															<span class="path1"></span>
-															<span class="path2"></span>
-															<span class="path3"></span>
-														</i>
-												</span>
-													<span class="menu-heading fw-bold text-uppercase fs-7 menu-title">전자결재</span>
-													<span class="menu-arrow"></span>
-											</span>
-											<!--end:Menu content-->
-										<!--end:Menu item-->
-										<!--begin:Menu item-->
-									<div class="menu-sub menu-sub-accordion"  style="display: none; overflow: hidden;">
-										<div  class="menu-item menu-accordion">
-											<a href="#">
-												<!--begin:Menu link-->
-												<span class="menu-link">
-													<span class="menu-icon">
-														<i class="ki-duotone ki-address-book fs-2">
-															<span class="path1"></span>
-															<span class="path2"></span>
-															<span class="path3"></span>
-														</i>
-													</span>
-													<span class="menu-title">내결재관리</span>
-												</span>
-												<!--end:Menu link-->
-											</a>
-											
-											<a href="#">
-												<!--begin:Menu link-->
-												<span class="menu-link">
-													<span class="menu-icon">
-														<i class="ki-duotone ki-address-book fs-2">
-															<span class="path1"></span>
-															<span class="path2"></span>
-															<span class="path3"></span>
-														</i>
-													</span>
-													<span class="menu-title">기안서작성</span>
-												</span>
-												<!--end:Menu link-->
-											</a>
-											
-											<a href="#">
-												<!--begin:Menu link-->
-												<span class="menu-link">
-													<span class="menu-icon">
-														<i class="ki-duotone ki-address-book fs-2">
-															<span class="path1"></span>
-															<span class="path2"></span>
-															<span class="path3"></span>
-														</i>
-													</span>
-													<span class="menu-title">임시저장</span>
-												</span>
-												<!--end:Menu link-->
-											</a>
-											
-											<a href="#">
-												<!--begin:Menu link-->
-												<span class="menu-link">
-													<span class="menu-icon">
-														<i class="ki-duotone ki-address-book fs-2">
-															<span class="path1"></span>
-															<span class="path2"></span>
-															<span class="path3"></span>
-														</i>
-													</span>
-													<span class="menu-title" onclick="location.href='../doc/signFavo.do';">결재설정</span>
-												</span>
-												<!--end:Menu link-->
-											</a>
-											
-											<a href="#">
-												<!--begin:Menu link-->
-												<span class="menu-link">
-													<span class="menu-icon">
-														<i class="ki-duotone ki-address-book fs-2">
-															<span class="path1"></span>
-															<span class="path2"></span>
-															<span class="path3"></span>
-														</i>
-													</span>
-													<span class="menu-title">서명관리</span>
-												</span>
-												<!--end:Menu link-->
-											</a>
-											
-											<a href="#">
-												<!--begin:Menu link-->
-												<span class="menu-link">
-													<span class="menu-icon">
-														<i class="ki-duotone ki-address-book fs-2">
-															<span class="path1"></span>
-															<span class="path2"></span>
-															<span class="path3"></span>
-														</i>
-													</span>
-													<span class="menu-title">관리자메뉴</span>
-												</span>
-												<!--end:Menu link-->
-											</a>
-										</div>
-										
-									</div>
-								</div>
-							</div>		
-							<!--end::Menu-->
+	<!-- 대분류별 영역 시작 -->
+	<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
+		
+		<div data-kt-menu-trigger="click" class="menu-item pt-5 menu-item menu-accordion">
+
+			<!-- 대분류 타이틀 영역 시작 ------------------------------------------------------------------------->
+			<span class="menu-link">
+				<span class="menu-icon">
+						<i class="ki-duotone ki-user fs-2">
+							<span class="path1"></span>
+							<span class="path2"></span>
+							<span class="path3"></span>
+						</i>
+					</span>
+					<span class="menu-heading fw-bold text-uppercase fs-7 menu-title">인사관리</span>
+					<span class="menu-arrow"></span>
+			</span>
+			<!-- 대분류 타이틀 영역 종료 -->
+
+
+			<!-- 중분류 영역 시작 ********************************************************************************-->
+			<div class="menu-sub menu-sub-accordion  show" style="display: none; overflow: hidden;">
+			<%for(int i=0;i<docLeftMenu.length;i++){ %>
+				<!-- 중분류 1 시작 -->
+				<div class="menu-item menu-accordion">
+					<a href="<%=docLeftMenuLink[i]%>">
+						<!-- 중분류1 메뉴링크 시작 -->
+						<span class="menu-link">
+							<span class="menu-icon">
+								<i class="ki-duotone ki-address-book fs-2">
+									<span class="path1"></span>
+									<span class="path2"></span>
+									<span class="path3"></span>
+								</i>
+							</span>
+							<span class="menu-title"><%=docLeftMenu[i]%></span>
+							<span class="menu-title"></span>
+						</span>
+						<!-- 중분류1 메뉴링크 종료 -->
+					</a>
+				</div>
+				<!-- 중분류 1 종료 -->
+			<%} %>
+			</div>
+			<!-- 중분류 영역 종료 ********************************************************************************-->
+		</div>		
+	</div>		
+	<!-- 대분류별 영역 종료 ------------------------------------------------------------------------->
+
 </html>
