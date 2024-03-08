@@ -18,7 +18,7 @@ public class Function {
 	* @author : SDJ
 	* @since : 2024.03.06
 	*/
-	public static String alertLocation(String msg, String location, String focus) {
+	public static String alertLocation(String msg, String location, String className, String btnName, String focus) {
 		if(msg == "" || msg == null) msg = "";
 		if(location == "" || location == null) location = "";
 		if(focus == "" || focus == null) focus = "";
@@ -28,7 +28,7 @@ public class Function {
 		sb.append("<script src='/js/common.js' defer></script>");
 		sb.append("<script>");
 		sb.append("window.onload = function(){");
-		sb.append("swalAlert('"+ msg +"','"+ location +"','"+ focus +"');");
+		sb.append("swalAlert('"+ msg +"','"+ location +"','"+ className +"','"+ btnName +"','"+ focus +"');");
 		sb.append("}");
 		sb.append("</script>");
 		return sb.toString();
@@ -41,7 +41,7 @@ public class Function {
 	* @author : SDJ
 	* @since : 2024.03.06
 	*/
-	public static String alertHistoryBack(String msg) {
+	public static String alertHistoryBack(String msg, String className, String btnName) {
 		if(msg == "" || msg == null) msg = "";
 
 		StringBuffer sb = new StringBuffer();
@@ -49,7 +49,7 @@ public class Function {
 		sb.append("<script src='/js/common.js' defer></script>");
 		sb.append("<script>");
 		sb.append("window.onload = function(){");
-		sb.append("swalAlert('"+ msg +"');");
+		sb.append("swalAlert('"+ msg +"','"+ className +"','"+ btnName +"');");
 		sb.append("}");
 		sb.append("</script>");
 		return sb.toString();

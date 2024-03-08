@@ -43,6 +43,7 @@
 <script src="/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
 <script src="/assets/js/custom/utilities/modals/create-campaign.js"></script>
 <script src="/assets/js/custom/utilities/modals/users-search.js"></script>
+<script src="/js/common.js"></script>
 <!--end::Custom Javascript-->
 <!--end::Javascript-->
 </html>
