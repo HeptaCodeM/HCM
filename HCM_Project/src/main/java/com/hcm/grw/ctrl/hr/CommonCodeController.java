@@ -104,7 +104,7 @@ public class CommonCodeController {
 		// TODO login세션 생기면 제서하고 테스트 1
 		map.put("coco_create_id", "SYSTEM");
 		
-		int cnt = codeService.insertDeptOne(map);
+		int cnt = codeService.insertRoleOne(map);
 		if(cnt == 1) {
 			return "redirect:./roleList.do?role="+role;
 		}else {

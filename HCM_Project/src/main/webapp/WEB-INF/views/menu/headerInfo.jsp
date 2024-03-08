@@ -20,6 +20,21 @@
 <script src="/assets/js/scripts.bundle.js"></script>
 <!--end::Global Javascript Bundle-->
 
+<!-- 사용CSS오버라이딩 -->
+<style type="text/css">
+
+	.btn-primary{
+		width: 150px;
+	}
+	
+	.btn-secondary{
+		width: 150px;
+	}
+	
+	
+</style>
+<!-- 사용CSS오버라이딩 -->
+
 <!--begin::Javascript-->
 <script>var hostUrl = "/assets/";</script>
 <!--begin::Vendors Javascript(used for this page only)-->

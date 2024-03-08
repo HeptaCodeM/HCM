@@ -24,9 +24,15 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public int correctionCompanyInfo(Map<String, Object> map) {
-		log.info("CompanyServiceImpl correctionCompanyInfo // {}",map);
-		return dao.correctionCompanyInfo(map);
+	public int correctionCompanyInfo(CompanyDto dto) {
+		log.info("CompanyServiceImpl correctionCompanyInfo // {}",dto);
+		return dao.correctionCompanyInfo(dto);
+	}
+	
+	@Override
+	public int insertCompanySeal(Map<String, Object> map) {
+		log.info("CompanyServiceImpl insertCompanySeal // {}",map);
+		return dao.insertCompanySeal(map);
 	}
 
 	@Override

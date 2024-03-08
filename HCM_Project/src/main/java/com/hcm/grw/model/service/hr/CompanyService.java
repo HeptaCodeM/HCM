@@ -8,7 +8,9 @@ public interface CompanyService {
 
 	public int insertCompanyInfo(Map<String, Object> map);
 	
-	public int correctionCompanyInfo(Map<String, Object> map);
+	public int correctionCompanyInfo(CompanyDto dto);
+	
+	public int insertCompanySeal(Map<String, Object> map);
 	
 	public CompanyDto showCompanyInfo(Map<String, Object> map);
 	

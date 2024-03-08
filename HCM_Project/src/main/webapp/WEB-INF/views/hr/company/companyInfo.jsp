@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +39,64 @@
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
-								${companyDto}
+								<div class="table-responsive">
+									<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
+										<tbody class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+											<tr>
+												<td>회사명</td>
+												<td colspan="2">${companyDto.getComp_name()}</td>
+											</tr>
+		
+											<tr>
+												<td>사업자 등록번호</td>
+												<td colspan="2">${companyDto.getComp_num()}</td>
+											</tr>
+											
+											<tr>
+												<td>대표자명</td>
+												<td colspan="2">${companyDto.getComp_ceo_name()}</td>
+											</tr>
+											
+											<tr>
+												<td>대표전화번호</td>
+												<td colspan="2">${companyDto.getComp_tel()}</td>
+											</tr>
+											
+											<tr>
+												<td>팩스번호</td>
+												<td colspan="2">${companyDto.getComp_fax()}</td>
+											</tr>
+											
+											<tr>
+												<td>주소</td>
+												<td>${companyDto.getComp_addr1()}</td>
+												<td>(${companyDto.getComp_addr2()})</td>
+											</tr>
+											
+											<tr>
+												<td>우편번호</td>
+												<td colspan="2">${companyDto.getComp_post()}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<input type="hidden" value="작성자 : ${companyDto.getComp_create_id()}">
+								<input type="hidden" value="작성일자 : ${companyDto.getComp_create_dt()}">
+								<c:choose>
+									<c:when test="${companyDto.getComp_modify_id() eq null}">
+										<input type="hidden" value="최초입력">
+									</c:when>
+									
+									<c:otherwise>
+										<input type="hidden" value="수정">
+										<input type="hidden" value="수정자 : ${companyDto.getComp_modify_id()}">
+										<input type="hidden" value="수정일자 : ${companyDto.getComp_modify_dt()}">
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div class="card-footer">
+								<!-- 관리자만 보이게 할 예정 -->
+								<button class="btn btn-primary me-10" type="button" onclick="location.href='./companyInfoCorrection.do'">수정</button>
 							</div>
 						</div>
 					</div>

@@ -25,7 +25,7 @@ Boolean openDocMenuFlag = false;
 							<span class="path3"></span>
 						</i>
 					</span>
-					<span class="menu-heading fw-bold text-uppercase fs-7 menu-title">인사관리</span>
+					<span class="menu-heading fw-bold text-uppercase fs-7 menu-title">전자결재</span>
 					<span class="menu-arrow"></span>
 			</span>
 			<!-- 대분류 타이틀 영역 종료 -->
