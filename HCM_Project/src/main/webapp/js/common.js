@@ -1,11 +1,17 @@
-
 //Swal Alert
-function swalAlert(msg, movePage, focusid) {
+function swalAlert(msg, movePage, className, btnName, focusid) {
+	if(btnName == "" || btnName == "undefiend"){
+		btnName == "확인";
+	}
+	if(className == "" || className == "undefiend"){
+		className == "btn-primary";
+	}
 	Swal.fire({
 		width: 500,
 		html: msg,
 		allowOutsideClick: false,	// 팝업 외부 클릭하여 창닫기 금지
 		returnFocus: false,			// 팝업을 호출한 곳으로 focus 반환하지 않음
+        confirmButtonText: btnName,
 		showClass: {
 			popup: `
 		      animate__animated
@@ -19,7 +25,10 @@ function swalAlert(msg, movePage, focusid) {
 		      animate__fadeOutDown
 		      animate__faster
 		    `
-		}
+		},
+        customClass: {
+            confirmButton: "btn "+className
+        }
 	})
 		//document.getElementById("main").focus()	//input으로   focus 해줘야 버튼포커스 빠져나감
 		.then((result) => {
@@ -35,12 +44,19 @@ function swalAlert(msg, movePage, focusid) {
 }
 
 //Swal Alert History Back
-function swalHistoryBack(msg) {
+function swalHistoryBack(msg, className, btnName) {
+	if(btnName == "" || btnName == "undefiend"){
+		btnName == "확인";
+	}
+	if(className == "" || className == "undefiend"){
+		className == "btn-primary";
+	}
 	Swal.fire({
 		width: 500,
 		html: msg,
 		allowOutsideClick: false,	// 팝업 외부 클릭하여 창닫기 금지
 		returnFocus: false,			// 팝업을 호출한 곳으로 focus 반환하지 않음
+        confirmButtonText: btnName,
 		showClass: {
 			popup: `
 		      animate__animated
@@ -54,7 +70,10 @@ function swalHistoryBack(msg) {
 		      animate__fadeOutDown
 		      animate__faster
 		    `
-		}
+		},
+        customClass: {
+            confirmButton: "btn "+className
+        }
 	})
 		.then((result) => {
 			if (result.isConfirmed) {
@@ -64,6 +83,39 @@ function swalHistoryBack(msg) {
 }
 
 //Swal Alert Confirm
+var sc = function(msg, callback) {
+	Swal.fire({
+		html: msg,
+		showCancelButton: true,
+		confirmButtonColor: "#3085d6",
+		cancelButtonColor: "#d33",
+		confirmButtonText: "확인",
+		cancelButtonText: "취소",
+		showClass: {
+			popup: `
+		      animate__animated
+		      animate__fadeInUp
+		      animate__faster
+			`
+		},
+		hideClass: {
+			popup: `
+		      animate__animated
+		      animate__fadeOutDown
+		      animate__faster
+		    `
+		}		
+	}).then((result) => {
+		if (result.isConfirmed) {
+			return true;
+		}else{
+			return false;
+		}
+	});
+}
+
+
+/*
 function swalConfirm(msg) {
 	Swal.fire({
 		html: msg,
@@ -94,6 +146,7 @@ function swalConfirm(msg) {
 		}
 	});
 }
+*/
 
 /* check 시작 */
 /*숫자만*/
