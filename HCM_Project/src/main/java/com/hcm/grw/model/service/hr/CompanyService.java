@@ -14,4 +14,6 @@ public interface CompanyService {
 	
 	public CompanyDto showCompanyInfo(Map<String, Object> map);
 	
+	public CompanyDto showCompanySeal(Map<String, Object> map);	
+	
 }

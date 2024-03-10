@@ -1,6 +1,8 @@
 package com.hcm.grw.ctrl.hr;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hcm.grw.dto.hr.CompanyDto;
 import com.hcm.grw.model.service.hr.CompanyService;
@@ -72,6 +75,30 @@ public class CompanyController {
 		}else {
 			return "redirect:./companyInfo.do";
 		}
+		
+	}
+	
+	@GetMapping(value = "/showCompanySeal.do")
+	public String showCompanySeal(Model model) {
+		Map<String, Object> sealMap = new HashMap<String, Object>();
+		sealMap.put("comp_id", "ITCOM0A1");
+		CompanyDto sealDto = companyService.showCompanySeal(sealMap);
+		System.out.println(sealDto);
+		model.addAttribute("sealDto",sealDto);
+		return "hr/company/showCompanySeal";
+	}
+	
+	
+	@GetMapping(value = "/insertCompanySealForm.do")
+	public String insertCompanySeal(Model model) {
+		return "hr/company/insertCompanySealForm";
+	}
+	
+	
+	@PostMapping(value = "/companySealUpload.do")
+	public void companySealUpload(HttpServletRequest request,List<MultipartFile> file)throws IOException {
+		System.out.println("동작");
+//		System.out.println(file.size());
 		
 	}
 	

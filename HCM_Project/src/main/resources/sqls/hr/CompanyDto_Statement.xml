@@ -44,4 +44,10 @@
 			WHERE COMP_ID = #{comp_id}
 	</select>
 	
+	<select id="showCompanySeal" resultType="CompanyDto" parameterType="java.util.Map">
+		SELECT COMP_SEAL
+			FROM COMPANY
+			WHERE COMP_ID = #{comp_id}
+	</select>
+	
 </mapper>

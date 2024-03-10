@@ -43,4 +43,10 @@ public class CompanyDaoImpl implements CompanyDao {
 		return sessionTemplate.selectOne(NS+"showCompanyInfo",map);
 	}
 
+	@Override
+	public CompanyDto showCompanySeal(Map<String, Object> map) {
+		log.info("CompanyDaoImpl showCompanySeal // {}",map);
+		return  sessionTemplate.selectOne(NS+"showCompanySeal",map);
+	}
+	
 }

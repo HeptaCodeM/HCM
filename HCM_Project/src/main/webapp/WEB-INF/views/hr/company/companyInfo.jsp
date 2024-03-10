@@ -97,6 +97,8 @@
 							<div class="card-footer">
 								<!-- 관리자만 보이게 할 예정 -->
 								<button class="btn btn-primary me-10" type="button" onclick="location.href='./companyInfoCorrection.do'">수정</button>
+								<button class="btn btn-primary me-10" type="button" onclick="location.href='./insertCompanySealForm.do'">회사직인입력</button>
+								<button class="btn btn-primary me-10" type="button" onclick="location.href='./showCompanySeal.do'">회사직인조회</button>
 							</div>
 						</div>
 					</div>

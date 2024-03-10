@@ -41,6 +41,10 @@ public class CompanyServiceImpl implements CompanyService {
 		return dao.showCompanyInfo(map);
 	}
 	
-	
+	@Override
+	public CompanyDto showCompanySeal(Map<String, Object> map) {
+		log.info("CompanyServiceImpl showCompanySeal // {}",map);
+		return dao.showCompanySeal(map);
+	}
 	
 }

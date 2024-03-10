@@ -13,5 +13,7 @@ public interface CompanyDao {
 	public int insertCompanySeal(Map<String, Object> map);
 	
 	public CompanyDto showCompanyInfo(Map<String, Object> map);
+	
+	public CompanyDto showCompanySeal(Map<String, Object> map);
 
 }
