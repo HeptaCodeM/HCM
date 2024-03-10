@@ -25,6 +25,9 @@
 		<result property="empl_create_dt" column="EMPL_CREATE_DT"/>
 		<result property="empl_modify_id" column="EMPL_MODIFY_ID"/>
 		<result property="empl_modify_dt" column="EMPL_MODIFY_DT"/>
+		<result property="coco_name_dnm" column="COCO_NAME_DNM"/>
+		<result property="coco_name_rnm" column="COCO_NAME_RNM"/>
+		<result property="coco_name_pnm" column="COCO_NAME_PNM"/>
 		<collection property="comm" resultMap="CommonCode"/>
 	</resultMap>
 	<resultMap type="CommonCodeDto" id="CommonCode">
@@ -65,10 +68,10 @@
 	</insert>
 	
 <!-- 	즐겨찾기 결재자 불러오기 -->
-	<select id="getFavAppr" resultType="SignFavoDto">
+	<select id="getFavAppr" resultType="SignFavoDto" resultMap="SignFavoResultMap">
 		SELECT saf.SIAF_FAVO_CD , saf.SIAF_FAVO_NAME , saf.SIAF_APPR_ID, e.EMPL_NAME
 	        FROM SIGN_APPR_FAVO saf JOIN EMPLOYEE e
-	        ON saf.EMPL_ID = e.EMPL_ID
+	        ON saf.EMPL_ID = e.EMPL_ID 
 	        WHERE saf.SIAF_FAVO_CD = #{siaf_favo_cd}
 	        AND saf.SIAF_APPR_FLAG = 1
 	</select>
@@ -97,9 +100,12 @@
 	
 <!-- 	즐겨찾기 목록 조회(결재자) -->
 	<select id="getFavApprList" resultType="SignFavoDto" resultMap="SignFavoResultMap">
-		SELECT SIAF_FAVO_CD , SIAF_FAVO_NAME , SIAF_APPR_ID , e.EMPL_NAME, e.EMPL_DEPT_CD, e.EMPL_ID
+		SELECT SIAF_FAVO_CD , SIAF_FAVO_NAME , SIAF_APPR_ID , e.EMPL_NAME, e.EMPL_DEPT_CD, e.EMPL_ID,
+				c.COCO_NAME coco_name_pnm
 	        FROM SIGN_APPR_FAVO saf JOIN EMPLOYEE e
 	        ON saf.SIAF_APPR_ID = e.EMPL_ID
+	        JOIN COMMON_CODE c
+	        ON e.EMPL_RANK_CD = c.COCO_CD
 	        WHERE saf.EMPL_ID = #{empl_id}
 	        AND SIAF_APPR_FLAG = 1
 	        ORDER BY 4
@@ -109,11 +115,20 @@
 	<select id="getFavApprLineList" resultType="SignFavoDto">
 		SELECT SIAF_FAVO_CD , SIAF_FAVO_NAME , SIAF_APPR_LINE
 	        FROM SIGN_APPR_FAVO saf
-	        WHERE saf.EMPL_ID = #{empl_id}
+	        WHERE saf.EMPL_ID = #{empl_id} 
 	        AND SIAF_APPR_FLAG = 2
 	        ORDER BY 1
 	</select>
 	
+<!-- 	즐겨찾기 중복 검사 -->
+	<select id="duplicateFav" resultType="SignFavoDto">
+		SELECT SIAF_FAVO_CD , EMPL_ID , SIAF_APPR_ID , SIAF_APPR_FLAG 
+	        FROM SIGN_APPR_FAVO
+	        WHERE EMPL_ID = #{empl_id}
+	        AND SIAF_APPR_ID = #{siaf_appr_id}
+	</select>
+	
+<!-- 	즐겨찾기 결재자 정보 상세조회 -->
 	<select id="getFav" resultType="EmployeeDto">
 		SELECT e.EMPL_ID, e.EMPL_NAME, c1.COCO_NAME coco_name_dnm, c2.COCO_NAME coco_name_rnm, c3.COCO_NAME coco_name_pnm
 		FROM EMPLOYEE e JOIN COMMON_CODE c1
