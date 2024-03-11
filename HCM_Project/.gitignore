@@ -22,7 +22,7 @@ local.properties
 .loadpath
 .recommenders
 *.MF
-
+db.properties
 
 # External tool builders
 .externalToolBuilders/
