@@ -1,21 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 // 중분류 순서
-String hrLeftMenu [] = {"조직관리", "증명서관리", "인사발령관리", "근태관리"};
+String hrLeftMenu [] = {"조직관리", "증명서관리", "인사발령관리", "근태관리" , "메뉴이름미정"};
 // 소분류 메뉴명
 String hrSubLeftMenu [][] = {
 		{"부서관리","직위관리","직책관리", "사원등록", "사원조회"},		//hrLeftMenu[0]
 		{"증명서리스트"},					//hrLeftMenu[1]
 		{"인사발령조회", "인사발령관리(관리자)"},	//hrLeftMenu[2]
-		{"출퇴근등록", "출퇴근현황"}			//hrLeftMenu[3]
+		{"출퇴근등록", "출퇴근현황"},			//hrLeftMenu[3]
+		{"HCMINFO"}			//hrLeftMenu[4]
 };
 //소분류 링크
 String hrSubLinkLeftMenu [][] = {
-		{"./hrDept.do","#","#", "/hr/employee/regist.do", "/hr/employee/list.do"},		//hrLeftMenu[0]
+		{"/roleList.do?role=DT","/roleList.do?role=RK","/roleList.do?role=PN", "/hr/employee/regist.do", "/hr/employee/list.do"},		//hrLeftMenu[0]
 		{"#"},							//hrLeftMenu[1]
 		{"#", "#"},						//hrLeftMenu[2]
-		{"#", "#"}						//hrLeftMenu[3]
+		{"#", "#"},						//hrLeftMenu[3]
+		{"/companyInfo.do"}						//hrLeftMenu[3]
 };
+
+String uri = request.getRequestURI();
+String currentPageName = uri.substring(uri.lastIndexOf("/") + 1).replace(".jsp","");
+Boolean openMenuFlag = false;
 %>
 <!DOCTYPE html>
 <html>
@@ -40,7 +46,7 @@ String hrSubLinkLeftMenu [][] = {
 
 
 			<!-- 중분류 영역 시작 ********************************************************************************-->
-			<div class="menu-sub menu-sub-accordion" kt-hidden-height="242" style="display: none; overflow: hidden;">
+			<div class="menu-sub menu-sub-accordion  show" style="display: none; overflow: hidden;">
 			<%for(int i=0;i<hrLeftMenu.length;i++){ %>
 				<!-- 중분류 1 시작 -->
 				<div  data-kt-menu-trigger="click" class="menu-item menu-accordion">
@@ -60,8 +66,25 @@ String hrSubLinkLeftMenu [][] = {
 					<!-- 중분류1 메뉴링크 종료 -->
 
 					<!-- 소분류 영역 시작 ========================================================-->
-					<div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;">
+					
+				<%
+				openMenuFlag = false;
+				for(int j=0;j<hrSubLeftMenu[i].length;j++){ 
+					if(hrSubLinkLeftMenu[i][j].indexOf(currentPageName)>=0){
+						openMenuFlag = true;
+					}
+				}
 
+				if(openMenuFlag == true){
+				%>
+					<div class="menu-sub menu-sub-accordion show" style="">
+				<%
+				}else{
+				%>
+					<div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;">
+				<%
+				}
+				%>
 				<%for(int j=0;j<hrSubLeftMenu[i].length;j++){ %>
 						<!-- 소분류1 메뉴 영역 시작 -->
 						<div class="menu-item">

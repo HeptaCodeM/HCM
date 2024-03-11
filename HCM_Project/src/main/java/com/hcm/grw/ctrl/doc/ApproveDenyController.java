@@ -1,5 +1,7 @@
 package com.hcm.grw.ctrl.doc;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,13 +28,15 @@ public class ApproveDenyController {
 	private IDocBoxService docService;
 	
 	@PostMapping("/doc/getDetail.do")
-	public String approve(@RequestParam("reply") String reply) {
+	public String approve(@RequestParam("reply") String reply, Model model) {
 		log.info("approve 승인 진입", reply);
 		SignBoxDto dto = new SignBoxDto();
 		dto.setSidb_doc_num("24000003");
 		dto.setAppr_reply(reply);
 		
 	    boolean isc= apprService.approve(dto);
+	    List<SignBoxDto> docDto= docService.getDetailDocsList(dto);
+		model.addAttribute("docDto",docDto);
 	    
 		return "/doc/boardDetail";
 	}
@@ -47,7 +51,7 @@ public class ApproveDenyController {
 	    boolean isc= apprService.deny(dto);
 	    
 		
-		SignBoxDto docDto= docService.getDetailDocs(dto);
+	    List<SignBoxDto> docDto= docService.getDetailDocsList(dto);
 		model.addAttribute("docDto",docDto);
 	    
 		return "/doc/boardDetail";

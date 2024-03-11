@@ -54,4 +54,9 @@ public class TemplateServiceImpl implements ITemplateService{
 		return dao.getCategory();
 	}
 	
+	@Override
+	public String getTemplate(String sidt_temp_cd) {
+		log.info("TemplateServiceImpl getTemplate 선택한 템플릿 가져오기");
+		return dao.getTemplate(sidt_temp_cd);
+	}
 }

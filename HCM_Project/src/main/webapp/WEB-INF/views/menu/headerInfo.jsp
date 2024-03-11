@@ -20,6 +20,21 @@
 <script src="/assets/js/scripts.bundle.js"></script>
 <!--end::Global Javascript Bundle-->
 
+<!-- 사용CSS오버라이딩 -->
+<style type="text/css">
+
+	.btn-primary{
+		width: 150px;
+	}
+	
+	.btn-secondary{
+		width: 150px;
+	}
+	
+	
+</style>
+<!-- 사용CSS오버라이딩 -->
+
 <!--begin::Javascript-->
 <script>var hostUrl = "/assets/";</script>
 <!--begin::Vendors Javascript(used for this page only)-->
@@ -43,6 +58,7 @@
 <script src="/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
 <script src="/assets/js/custom/utilities/modals/create-campaign.js"></script>
 <script src="/assets/js/custom/utilities/modals/users-search.js"></script>
+<script src="/js/common.js"></script>
 <!--end::Custom Javascript-->
 <!--end::Javascript-->
 </html>

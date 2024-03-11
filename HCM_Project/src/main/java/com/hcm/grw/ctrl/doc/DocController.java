@@ -1,5 +1,7 @@
 package com.hcm.grw.ctrl.doc;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +27,9 @@ public class DocController {
 		SignBoxDto dto = new SignBoxDto();
 		dto.setSidb_doc_num("24000003");
 		
-		SignBoxDto docDto= docService.getDetailDocs(dto);
+		List<SignBoxDto> docDto= docService.getDetailDocsList(dto);
 		model.addAttribute("docDto",docDto);
-		log.info("상세조회  데이터값{}", docDto);
+		log.info("상세조회  데이터 리스트 결과{}", docDto);
 		return "/doc/boardDetail";
 	}
 }

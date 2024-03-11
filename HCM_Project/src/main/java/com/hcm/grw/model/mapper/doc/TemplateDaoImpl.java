@@ -52,8 +52,14 @@ public class TemplateDaoImpl implements ITemplateDao {
 	
 	@Override
 	public List<TemplateDto> getCategory() {
-		// TODO Auto-generated method stub
+		log.info("TemplateDaoImpl getCategory DAO Access");
 		return session.selectList(NS + "getCategory");
+	}
+	
+	@Override
+	public String getTemplate(String sidt_temp_cd) {
+		log.info("TemplateDaoImpl getTemplate DAO Access");
+		return session.selectOne(NS+"getTemplate");
 	}
 
 }

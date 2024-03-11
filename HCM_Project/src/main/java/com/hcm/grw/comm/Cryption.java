@@ -8,6 +8,12 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+/**
+* 암호화 클래스
+* @author : SDJ
+* @since : 2024.01.13
+* @version : 1.0
+*/
 public class Cryption {
 
 	//SHA256 암호화
