@@ -45,5 +45,7 @@ public class SignBoxDto {
 	private String appr_sign;
 	private String appr_dt;
 	private String appr_flag;
+	private String appr_name;
+	
 	
 }
