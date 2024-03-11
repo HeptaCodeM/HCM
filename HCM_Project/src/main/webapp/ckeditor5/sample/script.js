@@ -64,7 +64,18 @@ ClassicEditor
             save( editor ) {
                 return saveData( editor.getData() );
         }
-        }
+        },
+        /* html support */
+        htmlSupport: {
+                    allow: [
+                        {
+                            name: /.*/,
+                            attributes: true,
+                            classes: true,
+                            styles: true
+                        }
+                    ]
+                },
 	} )
 	.then( editor => {
 		window.editor = editor;

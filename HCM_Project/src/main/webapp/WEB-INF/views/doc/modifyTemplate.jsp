@@ -22,11 +22,11 @@
 		</div>
 			<h3>제목 <input type="text" name="sidt_temp_name" value="${temDto.sidt_temp_name }"></h3>
 			<textarea id="editor" name="sidt_temp_content">${temDto.sidt_temp_content}</textarea>
+		</form>
 		<div class="btn">
 <!-- 		<input type="button" onclick="updateTemplate()" value="수정완료"> -->
 		<button class="updateTemplate">수정완료</button>
 		</div>
-		</form>
 	</div>
 
 <script type="text/javascript" src="../ckeditor5/build/ckeditor.js"></script>
