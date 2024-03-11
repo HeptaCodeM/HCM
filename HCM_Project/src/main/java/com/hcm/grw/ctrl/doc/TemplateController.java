@@ -1,7 +1,17 @@
 package com.hcm.grw.ctrl.doc;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.WebUtils;
 
 import com.hcm.grw.dto.doc.TemplateDto;
 import com.hcm.grw.model.service.doc.ITemplateService;
@@ -73,15 +85,14 @@ public class TemplateController {
 		return "doc/modifyTemplate";
 	}	
 	
-	@PostMapping(value = "updateTemplate.do", produces = "text/html; charset=UTF-8")
+	@PostMapping(value = "/updateTemplate.do", produces = "text/html; charset=UTF-8")
 	@ResponseBody
 	public String updateTemplate(@RequestBody Map<String, Object> map) {
 		log.info("TemplateController 템플릿 수정하는 updateTemplate");
 //		Map<String, Object> paramMap = new HashMap<String, Object>();
 //        paramMap.put("sica_cd", sicaCd);
 //        paramMap.put("sidt_temp_name", tempName);
-//        paramMap.put("sidt_temp_content", tempContent);
-        
+//        paramMap.put("sidt_temp_content", tempContent);        
         service.updateTemp(map);
 		
 		return "redirect:/detailTemplate.do?sidt_temp_cd=" + map.get("sidt_temp_cd");
@@ -94,13 +105,85 @@ public class TemplateController {
 		return "redirect:template.do";		
 	}
 	
-	@PostMapping(value = "getTemplate.do", produces = "text/html; charset=UTF-8")
+	@PostMapping(value = "/getTemplate.do", produces = "text/html; charset=UTF-8")
 	@ResponseBody
 	public String getTemplate(String sidt_temp_cd) {
 		log.info("TemplateController 선택한 템플릿 에디터로 가져오는 getTemplate");
 		String getTemp = service.getTemplate(sidt_temp_cd);		
 		return getTemp;
 		
+	}
+	
+	@PostMapping(value = "/uploadImage.do")
+	@ResponseBody
+	public Map<String, String> uploadImage(MultipartFile upload, HttpServletRequest request) {
+		log.info("TemplateController 이미지 업로드 uploadImage {}", upload);
+		
+		String originFileName = upload.getOriginalFilename();
+		String saveName = UUID.randomUUID().toString()+originFileName.substring(originFileName.lastIndexOf("."));
+		
+		InputStream inputStream = null;
+		OutputStream outputStream = null;
+		String path="";
+		
+		try {
+			inputStream = upload.getInputStream();
+			
+			path = WebUtils.getRealPath(request.getSession().getServletContext(),"/ckupload"); 
+			System.out.println("저장경로: "+path);
+			
+			File storage = new File(path);
+			if(!storage.exists()) {
+				storage.mkdir();
+			}
+			File newFile = new File(path+"/"+saveName);
+			if(!newFile.exists()) {
+				newFile.createNewFile();
+			}
+			
+			outputStream = new FileOutputStream(newFile);
+			
+			int read = 0;
+			byte[] b = new byte[(int)upload.getSize()];
+			while((read=inputStream.read(b))!=-1) {
+				outputStream.write(b,0,read);
+			}
+			
+		} catch (IOException e) {
+			log.error("uploadImage read Error : \n"+e.getMessage());
+		} finally {
+				try {
+					inputStream.close();
+					outputStream.close();
+				} 	catch (IOException e) {
+					log.error("uploadImage close Error : \n"+e.getMessage());
+					e.printStackTrace();
+				}
+		}
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("url", "/ckupload/"+saveName);
+		
+		return map;
+	}
+	
+	
+	@PostMapping(value="/removeImage.do")
+	@ResponseBody
+	public void removeImage(String saveName, HttpServletRequest req) {
+		log.info("TemplateController 이미지 삭제: {}", saveName);
+		
+		String path = "";
+		
+		try {
+			path = WebUtils.getRealPath(req.getSession().getServletContext(),"/ckupload");
+			File oldFile = new File(path+"/"+saveName);
+			if(oldFile.exists()) {
+				oldFile.delete();
+			}
+		} catch (FileNotFoundException e) {
+			log.error("TemplateController removeImage Error : \n"+e.getMessage());
+		}
 	}
 	
 	

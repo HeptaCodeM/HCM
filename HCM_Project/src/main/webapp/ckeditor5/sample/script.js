@@ -35,16 +35,6 @@ ClassicEditor
 				'findAndReplace'
 			]
 		},
-		htmlSupport: {
-                    allow: [
-                        {
-                            name: /.*/,
-                            attributes: true,
-                            classes: true,
-                            styles: true
-                        }
-                    ]
-                },
 		language: 'ko',
 		image: {
 			toolbar: [
@@ -67,7 +57,8 @@ ClassicEditor
 		/* 이미지 업로드 */
         simpleUpload: {
             uploadUrl: './uploadImage.do',
-            withCredentials: true,
+            withCredentials: true
+            
         }, 
         /* 문서 자동저장 */
 		autosave: {
