@@ -27,12 +27,23 @@ public class ApproveDenyController {
 	@Autowired
 	private IDocBoxService docService;
 	
-	@PostMapping("/doc/getDetail.do")
+	@PostMapping("/doc/approve.do")
 	public String approve(@RequestParam("reply") String reply, Model model) {
 		log.info("approve 승인 진입", reply);
 		SignBoxDto dto = new SignBoxDto();
 		dto.setSidb_doc_num("24000003");
 		dto.setAppr_reply(reply);
+		
+		String seq = "6";
+		dto.setEmsi_seq(seq);
+		
+		//로그인세션에서 뜯어온 appr_depth
+			String turn = "1";
+			int turnInt = Integer.parseInt(turn)-1;
+			String string_index = Integer.toString(turnInt);
+			dto.setString_index(string_index);
+			
+		
 		
 	    boolean isc= apprService.approve(dto);
 	    List<SignBoxDto> docDto= docService.getDetailDocsList(dto);
@@ -47,6 +58,20 @@ public class ApproveDenyController {
 		SignBoxDto dto = new SignBoxDto();
 		dto.setSidb_doc_num("24000003");
 		dto.setAppr_reply(reply);
+		
+		//로그인세션에서 뜯어온 appr_depth
+	//	String turn = dto.getAppr_depth();
+		
+		String turn = "2";
+		
+		//그걸 int로 바꿈
+		int turnInt = Integer.parseInt(turn)-1;
+		
+		//그걸 다시 String으로 바꿈
+		String string_index = Integer.toString(turnInt);
+		
+		//담음
+		dto.setString_index(string_index);
 		
 	    boolean isc= apprService.deny(dto);
 	    

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.model.service.doc.IDocBoxService;
+import com.min.edu.vo.JobsVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,5 +32,16 @@ public class DocController {
 		model.addAttribute("docDto",docDto);
 		log.info("상세조회  데이터 리스트 결과{}", docDto);
 		return "/doc/boardDetail";
+	}
+	
+	
+	@GetMapping(value="/doc/docBox.do")
+	public String jobs(Model model) {
+	log.info("결재함 진입");
+	SignBoxDto dto = new SignBoxDto();
+	dto.setEmpl_id("20220101");
+	List<SignBoxDto> lists = docService.getAllDocs(dto);
+	model.addAttribute("lists", lists);
+	return "/doc/docBox";
 	}
 }

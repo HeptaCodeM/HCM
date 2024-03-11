@@ -34,5 +34,19 @@
 			WHERE EMSI_SEQ = #{emsi_seq}
 			AND EMPL_ID = #{empl_id}
 	</update>
+	
+	<select id="defaultChk" parameterType="Map" resultType="EmpSignDto">
+		SELECT EMSI_SEQ ,EMSI_SETFLAG
+		FROM EMP_SIGN  
+		WHERE EMPL_ID = #{empl_id}
+		AND EMSI_DELFLAG = 'N'
+		AND EMSI_SETFLAG IS NULL
+	</select>
+	
+	<update id="setUnDefaultSign" parameterType="Map">
+		UPDATE EMP_SIGN SET EMSI_SETFLAG = 'N'
+			WHERE EMSI_SEQ = #{emsi_seq}
+			AND EMPL_ID = #{empl_id}
+	</update>
 		
 </mapper>
