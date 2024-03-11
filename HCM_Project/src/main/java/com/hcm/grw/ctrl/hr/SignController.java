@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,7 +74,6 @@ public class SignController {
 		}
 	}
 	
-	
 	@GetMapping(value = "/setDefaultSign.do")
 	public void setDefaultSign(String emsi_seq) {
 		System.out.println(emsi_seq);
@@ -82,8 +82,12 @@ public class SignController {
 		signMap.put("empl_id", "20230102");
 		
 		List<EmpSignDto> defSign = empSignService.defaultChk(signMap);
-		System.out.println(defSign);
-		System.out.println(defSign.size()+"========================================");
+		List<EmpSignDto> signList = empSignService.selectAllSign(signMap);
+		System.out.println(defSign.size());
+		if(defSign.size() < signList.size()) {
+			System.out.println("디폴트 제거해라");
+			
+		}
 	}
 	
 }
