@@ -35,7 +35,7 @@ public interface IDocBoxDao {
 	
 	//상세조회 리스트버전
 	
-	public List<SignBoxDto> getDetailDocsList(SignBoxDto dto);
+	public List<SignBoxDto>getDetailDocsList(SignBoxDto dto);
 	
 	//결재승인
 	public int approveJson(SignBoxDto dto);

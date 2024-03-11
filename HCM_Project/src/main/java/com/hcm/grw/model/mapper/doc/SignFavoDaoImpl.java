@@ -1,6 +1,7 @@
 package com.hcm.grw.model.mapper.doc;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -21,9 +22,9 @@ public class SignFavoDaoImpl implements ISignFavoDao {
 	private final String NS = "com.hcm.grw.model.mapper.SignFavoDaoImpl.";
 
 	@Override
-	public int insertFavAppr(SignFavoDto faDto) {
+	public int insertFavAppr(Map<String, Object> map) {
 		log.info("SignFavoDaoImpl insertFavAppr DAO Access");
-		return sessionTemplate.insert(NS + "insertFavAppr", faDto);
+		return sessionTemplate.insert(NS + "insertFavAppr", map);
 	}
 
 	@Override
@@ -33,15 +34,15 @@ public class SignFavoDaoImpl implements ISignFavoDao {
 	}
 
 	@Override
-	public SignFavoDto getFavAppr(SignFavoDto faDto) {
+	public SignFavoDto getFavAppr(String siaf_favo_cd) {
 		log.info("SignFavoDaoImpl getFavAppr DAO Access");
-		return sessionTemplate.selectOne(NS + "getFavAppr", faDto);
+		return sessionTemplate.selectOne(NS + "getFavAppr", siaf_favo_cd);
 	}
 
 	@Override
-	public SignFavoDto getFavApprLine(SignFavoDto faDto) {
+	public SignFavoDto getFavApprLine(String siaf_favo_cd) {
 		log.info("SignFavoDaoImpl getFavApprLine DAO Access");
-		return sessionTemplate.selectOne(NS + "getFavApprLine", faDto);
+		return sessionTemplate.selectOne(NS + "getFavApprLine", siaf_favo_cd);
 	}
 
 	@Override
@@ -72,6 +73,12 @@ public class SignFavoDaoImpl implements ISignFavoDao {
 	public List<EmployeeDto> getFav(@Param("empl_id") List<String> empl_id) {
 		log.info("SignFavoDaoImpl getFav DAO Access");
 		return sessionTemplate.selectList(NS + "getFav", empl_id);
+	}
+	
+	@Override
+	public SignFavoDto duplicateFav(Map<String, Object> map) {
+		log.info("SignFavoDaoImpl duplicateFav DAO Access");
+		return sessionTemplate.selectOne(NS + "duplicateFav", map);
 	}
 
 }

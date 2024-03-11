@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"resources":{"Scripts/RJY_QueryTest.sql":{"default-schema":"ADMIN","default-datasource":"oracle_thin-18df5574df2-750b789a120e75b"}}}
+=======
+{"resources":{"Scripts/OJS_QueryTest.sql":{"default-datasource":"oracle_thin-18df5574df2-750b789a120e75b","default-schema":"ADMIN"}}}
+>>>>>>> branch 'doc' of https://github.com/HeptaCodeM/HCM.git

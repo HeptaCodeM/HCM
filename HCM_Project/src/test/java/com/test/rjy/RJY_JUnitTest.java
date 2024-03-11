@@ -135,8 +135,9 @@ public class RJY_JUnitTest {
 		assertNotNull(dto);
 	}
 
-	// 상세조회 리스트방식
-	//@Test
+	
+	//상세조회 리스트방식
+	@Test
 	public void getDetailDocsList() {
 		String sidb_doc_num = "24000003";
 		List<SignBoxDto> dto = sessionTemplate.selectList(NS + "getDetailDocsList", sidb_doc_num);
@@ -163,6 +164,7 @@ public class RJY_JUnitTest {
 	  dto1.setSidb_doc_json(list);
 	  
 	 
+
 	  boolean result = service.approve(dto1); 
 	  assertTrue(result); 
 	  }
@@ -211,5 +213,6 @@ public class RJY_JUnitTest {
 		boolean result = service.finalApprove(dto1);
 		assertTrue(result);
 	}
+
 
 }

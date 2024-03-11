@@ -2,7 +2,9 @@ package com.test.ojs;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,15 +34,18 @@ public class SignFavoServiceImpl_JUnitTest {
 	@Test
 	public void signFavoServiceImplTest() {
 		
-		SignFavoDto dto1 = new SignFavoDto("50000001", "20230108", "대리님", "20220101", "", "1", new EmployeeDto());
-		SignFavoDto dto2 = new SignFavoDto("50000002", "20230108", "업무보고용", "", "20220101, 20230104, 20230108", "2", new EmployeeDto());
-		int n1 = service.insertFavAppr(dto1);
+		Map<String, Object> map = new HashMap<String, Object>();
+		SignFavoDto dto1 = new SignFavoDto(null , "20230108", "", "20220101", "", "1", new EmployeeDto());
+		map.put("empl_id", dto1.getEmpl_id());
+		map.put("siaf_appr_id", dto1.getSiaf_appr_id());
+		SignFavoDto dto2 = new SignFavoDto(null , "20230108", "업무보고용", "", "20220101, 20230104, 20230108", "2", new EmployeeDto());
+		int n1 = service.insertFavAppr(map);
 		int n2 = service.insertFavApprLine(dto2);
 		
 		assertEquals(n1 + n2, 2);
 		
-		SignFavoDto dto3 = service.getFavAppr(dto1);
-		SignFavoDto dto4 = service.getFavApprLine(dto2);
+		SignFavoDto dto3 = service.getFavAppr(dto1.getSiaf_favo_cd());
+		SignFavoDto dto4 = service.getFavApprLine(dto2.getSiaf_favo_cd());
 		
 		assertNotNull(dto3);
 		assertNotNull(dto4);

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,8 +80,19 @@ public class TemplateController {
 		return ResponseEntity.ok(list);
 	}
 	
+//	@PostMapping("/insertTemplate.do")
+//	public String insertTemplate(@RequestParam Map<String, Object> map) {
+//		log.info("TemplateController 템플릿 등록하는 insertTemplate");
+//		TemplateDto dto = new TemplateDto();
+//		dto.setSica_cd((String)map.get("sica_cd"));
+//		dto.setSidt_temp_name((String)map.get("sidt_temp_name"));
+//		dto.setSidt_temp_content((String)map.get("sidt_temp_content"));
+//		int n = service.insertTemp(dto);
+//		return (n==0)? "" : "redirect:template.do";
+//	}
+	
 	@PostMapping("/insertTemplate.do")
-	public String insertTemplate(TemplateDto dto) {
+	public String insertTemplate(@ModelAttribute TemplateDto dto) {
 		log.info("TemplateController 템플릿 등록하는 insertTemplate");
 		int n = service.insertTemp(dto);
 		return (n==0)? "" : "redirect:template.do";
@@ -89,7 +101,7 @@ public class TemplateController {
 	@GetMapping("/deleteTemplate.do")
 	public String deleteTemplate(@RequestParam(name = "sidt_temp_cd") String sidt_temp_cd) {
 		log.info("TemplateController 템플릿 삭제하는 deleteTemplate");
-		int n = service.deleteTemp(sidt_temp_cd);
+		service.deleteTemp(sidt_temp_cd);
 		return "redirect:template.do";		
 	}
 	
