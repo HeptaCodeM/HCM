@@ -24,9 +24,9 @@ public class DocBoxDaoImpl implements IDocBoxDao {
 	
 	//전체 문서함 조회
 	@Override
-	public List<SignBoxDto> getAllDocs(Map<String, String> inMap) {
+	public List<SignBoxDto> getAllDocs(SignBoxDto dto) {
 		log.info("DocBoxDaoImpl 전체문서함 조회");
-		return sqlSessionTemplate.selectList(NS+"getAllDocs",inMap);
+		return sqlSessionTemplate.selectList(NS+"getAllDocs",dto);
 	}
 
 

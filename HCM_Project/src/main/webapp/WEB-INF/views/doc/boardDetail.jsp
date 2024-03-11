@@ -88,30 +88,30 @@ th, td {
 									<table>
 										<tr>
 											<c:set var="docDto1" value="${docDto[1]}" />
-											<th rowspan="3">결재</th>
-											
-											<th>기안자</th>
-											<th>팀장</th>
-											<th>대리</th>
-										</tr>
-										<tr>
+											<th rowspan="3">결<br>재
+											</th>
+
 											<c:forEach items="${docDto}" var="dt" varStatus="i">
-											<td>
-											<c:if test="${dt.appr_sign==''||dt.appr_sign== null}  ">
-												&nbsp; 
-											</c:if>
-											${dt.appr_sign} ${i.index} <br> <br>
-											</td>
-										
+												<td><c:choose>
+													<%-- 	<c:when test="${empty dt.appr_sign}"> --%>
+														<c:when test="${dt.appr_sign == null || dt.appr_sign ==' '}">
+            											    &nbsp;
+         											   </c:when>
+														<c:otherwise>
+															<img style="width: 100px; height: 70px; border: none;"
+																src="${dt.appr_sign}" />
+														</c:otherwise>
+													</c:choose></td>
 											</c:forEach>
-										<!-- 	<td>ㅇ</td>
+
+											<!-- 	<td>ㅇ</td>
 											<td>ㅇ</td>
 											<td>ㅇ</td> -->
 										</tr>
 										<tr>
-											<td>2024/03/04</td>
-											<td>ㅇ</td>
-											<td>ㅇ</td>
+											<c:forEach items="${docDto}" var="dt" varStatus="i">
+												<td>${dt.appr_dt}</td>
+											</c:forEach>
 										</tr>
 									</table>
 								</div>
@@ -128,7 +128,7 @@ th, td {
 									<table>
 										<tr>
 											<th>문서제목 ${docDto1.sidb_doc_title}</th>
-											<td>부서</td>
+											<td>부서 ${docDto[1].writer_dt}</td>
 										</tr>
 										<tr>
 											<th>기안자 ${docDto1.empl_name}</th>
@@ -140,17 +140,8 @@ th, td {
 										</tr>
 										<tr>
 											<td colspan="2">${docDto1.sidb_doc_content}<br> <br>
-											<br>
-											<br>
-											<br>
-											<br>
-											<br>
-											<br>
-											<br>
-											<br>
-											<br>
-											<br>
-											<br>
+												<br> <br> <br> <br> <br> <br>
+												<br> <br> <br> <br> <br>
 											</td>
 										</tr>
 									</table>
@@ -163,16 +154,24 @@ th, td {
 											<th>결재결과</th>
 											<th>내용</th>
 										</tr>
-										
+
 										<c:forEach items="${docDto}" var="dt">
-										
-												<tr>
-											<td>${dt.appr_name} <br> <br></td>
-											<td>${dt.appr_flag} <br> <br></td>
-											<td>${dt.appr_reply}<br> <br></td>
+
+											<tr>
+												<td>${dt.appr_name}<br>
+												</td>
+												<td><c:choose>
+														<c:when test="${dt.appr_flag eq 1}">
+															<p>승인</p>
+														</c:when>
+														<c:when test="${dt.appr_flag eq 3}">
+															<p>반려</p>
+														</c:when>
+													</c:choose></td>
+												<td>${dt.appr_reply}<br></td>
 											</tr>
-											</c:forEach>
-									<%-- 	<tr>
+										</c:forEach>
+										<%-- 	<tr>
 											<td>${docDto1.appr_name} <br> <br></td>
 											<td>${docDto1.appr_reply}<br> <br></td>
 										</tr> --%>
@@ -217,7 +216,7 @@ th, td {
 				<!-- 승인 첨언 입력 form -->
 				<div class="modal-body">
 					<p>첨언</p>
-					<form id="reply" action="./getDetail.do" method="post">
+					<form id="reply" action="./approve.do" method="post">
 						<textarea name="reply" style="width: 100%;"></textarea>
 					</form>
 				</div>
