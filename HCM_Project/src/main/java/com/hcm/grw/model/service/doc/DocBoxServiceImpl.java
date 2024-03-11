@@ -65,7 +65,7 @@ public class DocBoxServiceImpl implements IDocBoxService {
 	
 	//상세조회 리스트 버전
 	@Override
-	public List<DocBoxDto>getDetailDocsList(DocBoxDto dto){
+	public List<SignBoxDto>getDetailDocsList(SignBoxDto dto){
 		return dao.getDetailDocsList(dto);
 	}
 	

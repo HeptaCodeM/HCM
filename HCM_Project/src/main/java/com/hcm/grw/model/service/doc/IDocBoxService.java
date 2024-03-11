@@ -33,7 +33,7 @@ public interface IDocBoxService {
 		public SignBoxDto getDetailDocs(SignBoxDto dto);
 		
 		//상세조회 리스트
-		public List<DocBoxDto>getDetailDocsList(DocBoxDto dto);
+		public List<SignBoxDto> getDetailDocsList(SignBoxDto dto);
 		
 		//결재승인 트랜잭션 처리
 		public boolean approve(SignBoxDto dto);
