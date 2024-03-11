@@ -1,9 +1,14 @@
 
-/* 템플릿 카테고리 선택 */
+
 onload = function() {
+	
+}
+
+onload = function(){
+	/* 템플릿 카테고리 선택 */	
 	var select = document.getElementById('selectCategory');	
 	// 서버에서 데이터를 가져와서 select 옵션 추가
-	fetch('./selectCategory.do',{})
+	fetch('./selectCategory.do')
 	.then(resp => {
 		return resp.json();
 	})
@@ -20,10 +25,8 @@ onload = function() {
 	.catch(error => {
 		console.log(error);
 	})
-}
-
-/* 템플릿 가져오기 */
-onload = function(){
+	
+	/* 템플릿 가져오기 */
 	document.getElementById('getTemplate').addEventListener('click', function(){
 		fetch('./getTemplate.do',{
 			method : 'post'
@@ -36,6 +39,44 @@ onload = function(){
 		});
 	});
 }
+
+
+$(document).ready(function(){
+
+	const target = document.getElementsByClassName("ck-content")[0]
+
+	const callback = (mutationList, observer) => {
+		const node = mutationList[0].removedNodes[0].childNodes[0]
+	  	if(node.localName == "img"){
+		fetch('./removeImage.do', {
+		  method: 'POST',
+		  headers: {
+		    'Content-Type': 'application/x-www-form-urlencoded',
+		  },
+		  body: 'saveName=' + node.currentSrc.substring(node.currentSrc.lastIndexOf('/') + 1),
+		})
+		  .then(response => {
+		    if (!response.ok) {
+		      throw new Error('getContent.do 잘못된 요청입니다.');
+		    }
+		  })
+		  .catch(error => {
+		    alert(error.message);
+  		});
+
+		}
+	};
+
+	observer = new MutationObserver(callback);
+
+	const config = { 
+	    childList: true,
+	};
+
+	observer.observe(target, config);
+	
+});
+
 
 // 템플릿 게시하기
 /*function writeTemplate(){
