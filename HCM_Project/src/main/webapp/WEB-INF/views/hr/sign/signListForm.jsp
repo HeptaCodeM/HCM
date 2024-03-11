@@ -6,6 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
+<script type="text/javascript">
+	function chkOnly(chk){
+	    console.log(chk.value);
+	}
+</script>
 <title>서명리스트화면</title>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
@@ -30,7 +35,6 @@
 				</div>		
 			</div>
 			<div class="app-content flex-column-fluid">
-			
 				<c:forEach var="signList" items="${signList}" varStatus="var">
 					<!-- 내용 시작 -->
 					<div id="kt_app_content" class="app-content flex-column-fluid">
@@ -44,7 +48,10 @@
 										<img src="${signList.getEmsi_sign_img()}"><br>
 								</div>
 								<div class="card-footer">
-									<a class="btn btn-primary me-10" href="./delThisSign.do?emsi_seq=${signList.getEmsi_seq()}">삭제</a>
+									<div class="form-check form-check-custom form-check-solid form-check-lg">
+										<a class="btn btn-primary me-10" href="./delThisSign.do?emsi_seq=${signList.getEmsi_seq()}">삭제</a>
+										<input type="checkbox" class="form-check-input" onclick="chkOnly(this)" value="${signList.getEmsi_seq()}">
+									</div>
 							    </div>
 							</div>
 						</div>
@@ -54,6 +61,7 @@
 				<div class="app-container container-fluid">
 					<div>
 						<button class="btn btn-primary me-10" type="button" onclick="location.href='./insertSignForm.do'">서명추가</button>
+						<button class="btn btn-primary me-10" type="button" onclick="location.href=''">기본서명설정</button>
 					</div>
 				</div>
 			</div>
