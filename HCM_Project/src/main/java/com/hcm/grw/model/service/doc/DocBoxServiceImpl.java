@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hcm.grw.dto.doc.DocBoxDto;
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.model.mapper.doc.IDocBoxDao;
 
@@ -65,7 +64,7 @@ public class DocBoxServiceImpl implements IDocBoxService {
 	
 	//상세조회 리스트 버전
 	@Override
-	public List<DocBoxDto>getDetailDocsList(DocBoxDto dto){
+	public List<SignBoxDto>getDetailDocsList(SignBoxDto dto){
 		return dao.getDetailDocsList(dto);
 	}
 	

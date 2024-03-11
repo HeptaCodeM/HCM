@@ -1,10 +1,13 @@
 package com.hcm.grw.model.service.doc;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hcm.grw.dto.doc.SignFavoDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
@@ -20,9 +23,9 @@ public class SignFavoServiceImpl implements ISignFavoService {
 	private ISignFavoDao dao;
 	
 	@Override
-	public int insertFavAppr(SignFavoDto faDto) {
+	public int insertFavAppr(Map<String, Object> map) {
 		log.info("SignFavoServiceImpl insertFavAppr Service 즐겨찾기 결재자 등록");
-		return dao.insertFavAppr(faDto);
+		return dao.insertFavAppr(map);
 	}
 
 	@Override
@@ -32,15 +35,15 @@ public class SignFavoServiceImpl implements ISignFavoService {
 	}
 
 	@Override
-	public SignFavoDto getFavAppr(SignFavoDto faDto) {
+	public SignFavoDto getFavAppr(String siaf_favo_cd) {
 		log.info("SignFavoServiceImpl getFavAppr Service 즐겨찾기 결재자 선택");
-		return dao.getFavAppr(faDto);
+		return dao.getFavAppr(siaf_favo_cd);
 	}
 
 	@Override
-	public SignFavoDto getFavApprLine(SignFavoDto faDto) {
+	public SignFavoDto getFavApprLine(String siaf_favo_cd) {
 		log.info("SignFavoServiceImpl getFavApprLine Service 즐겨찾기 결재라인 선택");
-		return dao.getFavApprLine(faDto);
+		return dao.getFavApprLine(siaf_favo_cd);
 	}
 
 	@Override
@@ -69,8 +72,25 @@ public class SignFavoServiceImpl implements ISignFavoService {
 	
 	@Override
 	public List<EmployeeDto> getFav(@Param("empl_id") List<String> empl_id) {
-		log.info("SignFavoServiceImpl getFav Service 결재라인 결재자 정보 조회");
+		log.info("SignFavoServiceImpl getFav Service 결재라인 즐겨찾기 결재자 정보 조회");
 		return dao.getFav(empl_id);
+	}
+	
+	@Override
+	public SignFavoDto duplicateFav(Map<String, Object> map) {
+		log.info("SignFavoServiceImpl duplicateFav Service 즐겨찾기 중복 검사");
+		return dao.duplicateFav(map);
+	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED , rollbackFor = Exception.class)
+	public void insert(Map<String, Object> map) {
+		log.info("SignFavoServiceImpl insert Service 즐겨찾기 등록 트랜잭션 동작");
+		SignFavoDto dto = dao.duplicateFav(map);
+		if(dto != null) {
+			return;
+		}
+		dao.insertFavAppr(map);
 	}
 
 }

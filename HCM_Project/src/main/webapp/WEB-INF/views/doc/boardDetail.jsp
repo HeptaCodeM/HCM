@@ -87,15 +87,26 @@ th, td {
 									<div></div>
 									<table>
 										<tr>
+											<c:set var="docDto1" value="${docDto[1]}" />
 											<th rowspan="3">결재</th>
+											
 											<th>기안자</th>
 											<th>팀장</th>
 											<th>대리</th>
 										</tr>
 										<tr>
+											<c:forEach items="${docDto}" var="dt" varStatus="i">
+											<td>
+											<c:if test="${dt.appr_sign==''||dt.appr_sign== null}  ">
+												&nbsp; 
+											</c:if>
+											${dt.appr_sign} ${i.index} <br> <br>
+											</td>
+										
+											</c:forEach>
+										<!-- 	<td>ㅇ</td>
 											<td>ㅇ</td>
-											<td>ㅇ</td>
-											<td>ㅇ</td>
+											<td>ㅇ</td> -->
 										</tr>
 										<tr>
 											<td>2024/03/04</td>
@@ -104,11 +115,11 @@ th, td {
 										</tr>
 									</table>
 								</div>
-								기안자 사원번호: ${docDto.sidb_doc_num}
+								기안자 사원번호: ${docDto1.sidb_doc_num}
 								<p>
 									결재문서기한:
 									<fmt:parseDate var="patternDate"
-										value="${docDto.sidb_doc_expiredt}"
+										value="${docDto1.sidb_doc_expiredt}"
 										pattern="yyyy-MM-dd HH:mm:ss" />
 									<fmt:formatDate value="${patternDate}" pattern="yyyy년 MM월 dd일" />
 
@@ -116,20 +127,30 @@ th, td {
 								<div class="content">
 									<table>
 										<tr>
-											<th>문서제목 ${docDto.sidb_doc_title}</th>
+											<th>문서제목 ${docDto1.sidb_doc_title}</th>
 											<td>부서</td>
 										</tr>
 										<tr>
-											<th>기안자</th>
+											<th>기안자 ${docDto1.empl_name}</th>
 											<td>작성일 <fmt:parseDate var="patternDate"
-													value=" ${docDto.sidb_doc_writedt}"
+													value=" ${docDto1.sidb_doc_writedt}"
 													pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
 													value="${patternDate}" pattern="yyyy년 MM월 dd일" />
 											</td>
 										</tr>
 										<tr>
-											<td colspan="2">${docDto.sidb_doc_content}<br>
-											<br><br><br><br><br><br><br><br><br><br><br><br>
+											<td colspan="2">${docDto1.sidb_doc_content}<br> <br>
+											<br>
+											<br>
+											<br>
+											<br>
+											<br>
+											<br>
+											<br>
+											<br>
+											<br>
+											<br>
+											<br>
 											</td>
 										</tr>
 									</table>
@@ -139,14 +160,22 @@ th, td {
 									<table>
 										<tr>
 											<th>작성자</th>
-											<td>내용</td>
+											<th>결재결과</th>
+											<th>내용</th>
 										</tr>
-										<tr>
-											<td><br>
-											<br></td>
-											<td>${docDto.sidb_doc_json}<br>
-											<br></td>
-										</tr>
+										
+										<c:forEach items="${docDto}" var="dt">
+										
+												<tr>
+											<td>${dt.appr_name} <br> <br></td>
+											<td>${dt.appr_flag} <br> <br></td>
+											<td>${dt.appr_reply}<br> <br></td>
+											</tr>
+											</c:forEach>
+									<%-- 	<tr>
+											<td>${docDto1.appr_name} <br> <br></td>
+											<td>${docDto1.appr_reply}<br> <br></td>
+										</tr> --%>
 									</table>
 								</div>
 								<div style="text-align: center;">
@@ -185,7 +214,7 @@ th, td {
 					<!--end::Close-->
 				</div>
 
-	<!-- 승인 첨언 입력 form -->
+				<!-- 승인 첨언 입력 form -->
 				<div class="modal-body">
 					<p>첨언</p>
 					<form id="reply" action="./getDetail.do" method="post">
@@ -216,8 +245,8 @@ th, td {
 					</div>
 					<!--end::Close-->
 				</div>
-	
-	<!-- 반려사유 입력 form -->			
+
+				<!-- 반려사유 입력 form -->
 				<div class="modal-body">
 					<p>반려사유</p>
 					<form id="denyReply" action="./deny.do" method="post">
@@ -236,7 +265,7 @@ th, td {
 	function approve() {
 		document.getElementById('reply').submit();
 	}
-	
+
 	function deny() {
 		document.getElementById('denyReply').submit();
 	}

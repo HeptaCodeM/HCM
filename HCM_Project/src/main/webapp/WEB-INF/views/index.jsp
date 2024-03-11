@@ -17,6 +17,8 @@
 		<a href="./Error500.do">500ERROR</a><br>
 		<a href="./login.do">login</a><br>
 		<a href="/sm/getAllGobo.do">SM넘어가기</a>
+		<hr>
+		<a href="/doc/getDetail.do">결재문서 상세페이지</a>
 
 	</div>
 </body>

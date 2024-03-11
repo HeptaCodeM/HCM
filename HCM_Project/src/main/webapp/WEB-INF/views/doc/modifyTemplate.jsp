@@ -16,14 +16,17 @@
 
 	<div id="container">
 		<h1>템플릿 수정</h1>
-<!-- 		<form action="./updateTemplate.do" method="post" > -->
+		<form action="./updateTemplate.do" method="post" >
 			<div id="category">
 			결재 구분 : <select id="selectCategory" name="sica_cd"></select>
 		</div>
 			<h3>제목 <input type="text" name="sidt_temp_name" value="${temDto.sidt_temp_name }"></h3>
 			<textarea id="editor" name="sidt_temp_content">${temDto.sidt_temp_content}</textarea>
-		<div class="btn"><input type="button" onclick="updateTemplate()" value="수정완료"></div>
-<!-- 		</form> -->
+		</form>
+		<div class="btn">
+<!-- 		<input type="button" onclick="updateTemplate()" value="수정완료"> -->
+		<button class="updateTemplate">수정완료</button>
+		</div>
 	</div>
 
 <script type="text/javascript" src="../ckeditor5/build/ckeditor.js"></script>

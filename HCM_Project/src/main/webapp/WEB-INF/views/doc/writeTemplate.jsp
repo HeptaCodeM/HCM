@@ -1,35 +1,93 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>템플릿 작성</title>
-<link rel="stylesheet" href="../css/template.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+<%@include file="/WEB-INF/views/menu/headerInfo.jsp"%>
+<title>DOC메인화면</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 </head>
+<%@include file="/WEB-INF/views/menu/header.jsp"%>
+<body id="kt_app_body" data-kt-app-layout="dark-sidebar"
+	data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true"
+	data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true"
+	data-kt-app-sidebar-push-header="true"
+	data-kt-app-sidebar-push-toolbar="true"
+	data-kt-app-sidebar-push-footer="true"
+	data-kt-app-toolbar-enabled="true" class="app-default">
 
-<body>
-	<div id="container">
-		<h1>템플릿 등록</h1>
-		<button id="getTemplate">[TEST] 템플릿 가져오기</button>
-		<form action="./insertTemplate.do" method="post">
-		<div id="category">
-			결재 구분 : <select id="selectCategory" name="sica_cd"></select>
+	<div class="app-wrapper flex-column flex-row-fluid">
+		<div class="app-toolbar py-3 py-lg-6">
+			<div id="kt_app_toolbar_container"
+				class="app-container container-fluid d-flex flex-stack">
+				<!--begin::Page title-->
+				<div
+					class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+					<!--begin::Title-->
+					<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
+						관리자 메뉴</h1>
+					<!--end::Title-->
+				</div>
+				<!--end::Page title-->
+			</div>
 		</div>
-			<h3>제목 <input type="text" name="sidt_temp_name"></h3>
-			<textarea id="editor" name="sidt_temp_content"></textarea>
-		</form>	
-		<div class="btn">
-			<input type="button" onclick="writeTemplate()" value="등록하기">
-			<input type="button" onclick="location.href='./template.do'" value="목록보기">
-		</div>	
+		<div class="app-content flex-column-fluid">
+			<!-- 내용 시작 -->
+			<div id="kt_app_content" class="app-content flex-column-fluid">
+				<div class="app-container container-fluid">
+					<div class="card card-flush h-md-50 mb-xl-10">
+						<div class="card-header pt-5">
+							<h3 class="card-title text-gray-800 fw-bold">템플릿 등록</h3>
+						</div>
+						<div class="separator separator-dashed my-3"></div>
+						<div class="card-body pt-5">
+							<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+								<!--begin::Content wrapper-->
+								<div class="d-flex flex-column flex-column-fluid">
+									<!--begin::Toolbar-->
+									<div id="kt_app_content" class="app-content flex-column-fluid">
+
+										<div class="container"></div>
+
+										<div class="col-sm-5 sidenav">
+											<!-- 내용 시작 -->
+											<button id="getTemplate">[TEST] 템플릿 가져오기</button>
+											<form action="./insertTemplate.do" method="post">
+												<div id="category">
+													결재 구분 : <select id="selectCategory" name="sica_cd"></select>
+												</div>
+												<h3>
+													제목 <input type="text" name="sidt_temp_name">
+												</h3>
+												<textarea id="editor" name="sidt_temp_content"></textarea>
+
+												<div class="btn">
+													<input type="submit" value="등록하기"> <input
+														type="button" onclick="location.href='./template.do'"
+														value="목록보기">
+												</div>
+											</form>
+											<!-- 내용 끝 -->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 내용 끝 -->
+			</div>
+		</div>
+			
 	</div>
 
+	<%@include file="/WEB-INF/views/menu/docSideMenu.jsp"%>
 </body>
 
 <script type="text/javascript" src="../ckeditor5/build/ckeditor.js"></script>

@@ -21,7 +21,7 @@
 				"auth-model": "oracle_native"
 			}
 		},
-		"oracle_thin-18df5574df2-750b789a120e75b": {
+		"oracle_thin-18e12889c5f-4c5fe4631e50bd37": {
 			"provider": "oracle",
 			"driver": "oracle_thin",
 			"name": "ORCL",
@@ -32,7 +32,7 @@
 				"database": "ORCL",
 				"url": "jdbc:oracle:thin:@qzls8opftlz4d7hc_medium?TNS_ADMIN\u003dC:\\\\Wallet",
 				"configurationType": "MANUAL",
-				"home": "C:\\app\\JISU\\product\\21c\\dbhomeXE",
+				"home": "C:\\app\\JIA\\product\\21c\\dbhomeXE",
 				"type": "dev",
 				"provider-properties": {
 					"@dbeaver-connection-type@": "CUSTOM",
