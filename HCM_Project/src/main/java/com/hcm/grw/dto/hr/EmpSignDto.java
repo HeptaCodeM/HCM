@@ -25,5 +25,6 @@ public class EmpSignDto {
 	private String emsi_create_dt;
 	private String emsi_modify_id;
 	private String emsi_modify_dt;
+	private String emsi_setflag;
 	
 }

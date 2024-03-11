@@ -8,7 +8,23 @@
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
 <script type="text/javascript">
 	function chkOnly(chk){
-	    console.log(chk.value);
+//	    console.log(chk.value);
+	    
+	    const checkboxes = document.getElementsByName("signDefault");
+//	    console.log(checkboxes);
+		checkboxes.forEach((cb) => {
+	    cb.checked = false;
+	  	})
+	  
+	    chk.checked = true;
+
+	    
+	}
+	
+	function chkValue(){
+		var chked  = $("input[name=signDefault]:checked")
+		console.log(chked.val());
+		location.href="./setDefaultSign.do?emsi_seq="+chked.val();
 	}
 </script>
 <title>서명리스트화면</title>
@@ -35,6 +51,7 @@
 				</div>		
 			</div>
 			<div class="app-content flex-column-fluid">
+			
 				<c:forEach var="signList" items="${signList}" varStatus="var">
 					<!-- 내용 시작 -->
 					<div id="kt_app_content" class="app-content flex-column-fluid">
@@ -49,8 +66,8 @@
 								</div>
 								<div class="card-footer">
 									<div class="form-check form-check-custom form-check-solid form-check-lg">
-										<a class="btn btn-primary me-10" href="./delThisSign.do?emsi_seq=${signList.getEmsi_seq()}">삭제</a>
-										<input type="checkbox" class="form-check-input" onclick="chkOnly(this)" value="${signList.getEmsi_seq()}">
+										<a class="btn btn-primary btnSm me-10" href="./delThisSign.do?emsi_seq=${signList.getEmsi_seq()}">삭제</a>
+										<input name="signDefault" type="checkbox" class="form-check-input" onclick="chkOnly(this)" value="${signList.getEmsi_seq()}">
 									</div>
 							    </div>
 							</div>
@@ -60,8 +77,8 @@
 				</c:forEach>
 				<div class="app-container container-fluid">
 					<div>
-						<button class="btn btn-primary me-10" type="button" onclick="location.href='./insertSignForm.do'">서명추가</button>
-						<button class="btn btn-primary me-10" type="button" onclick="location.href=''">기본서명설정</button>
+						<button class="btn btn-primary btnLg me-10" type="button" onclick="location.href='./insertSignForm.do'">서명추가</button>
+						<button class="btn btn-primary btnLg me-10" type="button" onclick="chkValue()">기본서명설정</button>
 					</div>
 				</div>
 			</div>

@@ -73,4 +73,17 @@ public class SignController {
 		}
 	}
 	
+	
+	@GetMapping(value = "/setDefaultSign.do")
+	public void setDefaultSign(String emsi_seq) {
+		System.out.println(emsi_seq);
+		// TODO login세션 생기면 수정하고 테스트 3
+		Map<String, Object> signMap = new HashMap<String, Object>();
+		signMap.put("empl_id", "20230102");
+		
+		List<EmpSignDto> defSign = empSignService.defaultChk(signMap);
+		System.out.println(defSign);
+		System.out.println(defSign.size()+"========================================");
+	}
+	
 }
