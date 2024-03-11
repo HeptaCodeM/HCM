@@ -10,11 +10,15 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <style type="text/css">
-th {
+th,td {
 	text-align: center;
 }
 td>input {
 	text-align: center;
+	height: 28px;
+}
+td>img {
+	height: 32px;
 }
 </style>
 </head>
@@ -34,6 +38,7 @@ td>input {
 					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 						<!--begin::Title-->
 						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">결재선 관리</h1>
+						<button type="button" id="signRefer">참조</button>
 						<!--end::Title-->
 					</div>
 					<!--end::Page title-->
@@ -47,12 +52,12 @@ td>input {
 			<!-- OJS -->	
 			<div class="app-container container-fulid">
 				<div class="row gx-5 gx-xl-10">
-				<div class="col-xxl-4 mb-5 mb-xl-10">
+				<div class="col-xxl-3 mb-5 mb-xl-10">
 					<div class="card card-flush h-md-100 mb-xl-10">
 						<div class="card-header pt-5">
 							<h3 class="card-title text-gray-800 fw-bold">사원 검색</h3>
 						</div> 
-						<div class="separator separator-dashed my-3"></div>	
+						<div class="separator separator-dashed my-3"></div>
 						<div class="card-body pt-5" style="overflow: auto;">
 							<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
 								<div class="d-flex flex-column flex-column-fluid">
@@ -73,64 +78,8 @@ td>input {
 						</div>
 					</div>
 				</div>
-				<div class="col-xxl-8 mb-5 mb-xl-10">
-					<div class="card card-flush h-md-100 mb-xl-10">
-						<div class="card-header pt-5">
-							<h3 class="card-title text-gray-800 fw-bold">즐겨찾기 등록</h3>
-						</div> 
-						<div class="separator separator-dashed my-3"></div>	
-						<div class="card-body pt-5">
-							<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
-								<div class="d-flex flex-column flex-column-fluid">
-									<div id="kt_app_content" class="app-content flex-column-fluid">
-										<div>
-											<select id="apprList" class="form-select" style="height: 40px;">
-												<option selected>결재자를 선택해주세요</option>
-											</select>
-											<br>
-											<button type="button" class="btn btn-primary me-10" id="kt_button_1" name="insBtn" style="height: 32px; line-height: 14px;">
-											    <span class="indicator-label">
-											        추가
-											    </span>
-											    <span class="indicator-progress">
-											        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-											    </span>
-											</button>
-											<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_3" id="delBtn" style="height: 32px; line-height: 14px;">
-											    삭제
-											</button>
-										</div>
-										<br><br>
-										<div class="separator separator-dashed my-3"></div>
-										<br><br>
-										<div>
-											<select id="apprLineList" class="form-select" style="height: 40px;">
-												<option selected>결재선을 선택해주세요</option>
-											</select>
-											<br>
-											<button type="button" class="btn btn-primary me-10" id="kt_button_1" name="selectApprLine" style="height: 32px; line-height: 14px;">
-											    <span class="indicator-label">
-											        적용
-											    </span>
-											    <span class="indicator-progress">
-											        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-											    </span>
-											</button>
-											<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_3" id="delLineBtn" style="height: 32px; line-height: 14px;">
-											    삭제
-											</button>
-										</div>
-								
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				</div>
-			</div>
-			
-			<div class="app-container container-fulid">
+				
+				<div class="col-xxl-5 mb-5 mb-xl-10">
 					<div class="card card-flush h-md-100 mb-xl-10">
 						<div class="card-header pt-5">
 							<h3 class="card-title text-gray-800 fw-bold">결재라인</h3>
@@ -140,14 +89,15 @@ td>input {
 							<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
 								<div class="d-flex flex-column flex-column-fluid">
 									<div id="kt_app_content" class="app-content flex-column-fluid">
+								
 										<table class="table table-condensed" style="width: 90%; margin: 0 auto;">
 											<thead>
 												<tr>
-													<th></th>
-													<th>결재자</th>
+													<th width="5%"></th>
+													<th width="33%">결재자</th>
 													<th>직급</th>
 													<th>소속</th>
-													<th>순서</th>
+													<th width="15%">순서</th>
 													<th style="display: none;" id="empl_id">20230108</th>
 												</tr>
 											</thead>
@@ -232,8 +182,8 @@ td>input {
 										</table>
 										<br>
 										<div style="text-align: right;">
-											<input type="text" id="favoName" placeholder="별칭 입력" maxlength="20">
-											<input type="button" class="btn btn-sm btn-primary" id="addLine" value="결재선 추가" style="margin-right: 50px;">
+											<input type="text" id="favoName" placeholder="별칭 입력" maxlength="20" class="col-xs-3" style="float: none;">
+											<input type="button" class="btn btn-sm btn-primary" id="addLine" value="결재선 추가" style="margin-right: 50px; width: 100px;">
 										</div>
 								
 									</div>
@@ -241,10 +191,71 @@ td>input {
 							</div>
 						</div>
 					</div>
-				</div>	
+				</div>
+				
+				<div class="col-xxl-4 mb-5 mb-xl-10">
+					<div class="card card-flush h-md-100 mb-xl-10">
+						<div class="card-header pt-5">
+							<h3 class="card-title text-gray-800 fw-bold">즐겨찾기 등록</h3>
+						</div> 
+						<div class="separator separator-dashed my-3"></div>	
+						<div class="card-body pt-5">
+							<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+								<div class="d-flex flex-column flex-column-fluid">
+									<div id="kt_app_content" class="app-content flex-column-fluid">
+										<div>
+											<select id="apprList" class="form-select" style="height: 40px;">
+												<option selected>결재자를 선택해주세요</option>
+											</select>
+											<br>
+											<button type="button" class="btn btn-primary me-10" id="kt_button_1" name="insBtn" style="height: 32px; line-height: 14px; width: 100px;">
+											    <span class="indicator-label">
+											        추가
+											    </span>
+											    <span class="indicator-progress">
+											        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+											    </span>
+											</button>
+											<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_3" id="delBtn" style="height: 32px; line-height: 14px; width: 100px;">
+											    삭제
+											</button>
+										</div>
+										<br><br>
+										<div class="separator separator-dashed my-3"></div>
+										<br><br>
+										<div>
+											<select id="apprLineList" class="form-select" style="height: 40px;">
+												<option selected>결재선을 선택해주세요</option>
+											</select>
+											<br>
+											<button type="button" class="btn btn-primary me-10" id="kt_button_1" name="selectApprLine" style="height: 32px; line-height: 14px; width: 100px;">
+											    <span class="indicator-label">
+											        적용
+											    </span>
+											    <span class="indicator-progress">
+											        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+											    </span>
+											</button>
+											<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_3" id="delLineBtn" style="height: 32px; line-height: 14px; width: 100px;">
+											    삭제
+											</button>
+										</div>
+								
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				</div>
+				
+				
 				
 			<!-- OJS  -->	
 			</div>
+		</div>
+				
 			
 <%@include file="/WEB-INF/views/menu/docSideMenu.jsp" %>		
 </body>

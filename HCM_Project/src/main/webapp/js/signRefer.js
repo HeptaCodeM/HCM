@@ -1,243 +1,65 @@
 onload = function() {
-	
-	document.getElementById('signRefer').addEventListener('click', function() {
-		open('./signRefer.do', '', 'width=800px height=1080px left=300')
+	// 동적 참조자 행 추가
+	document.getElementById('tbody1').addEventListener('click', function(e) {
+		var addRow = e.target.id;
+		if(addRow.startsWith('addRow1')){
+			var rowCount = document.querySelectorAll('#tbody1 tr').length + 1;
+			console.log(rowCount);
+			var newRow = '<tr>                                                                                                    '
+									+	'		<td>                                                                          '
+									+	'			<button class="cancelBtn btn btn-sm btn-basic" id="addRow1">➕</button>    '
+									+	'		</td>                                                                         '
+									+	'		<td>                                                                          '
+									+	'			<button class="cancelBtn btn btn-sm btn-basic">➖</button>                '
+									+	'		</td>                                                                         '
+									+	'		<td>                                                                          '
+									+	'			<input class="form-control form-control-solid" id="re'+rowCount+'">                  '
+									+	'		</td>                                                                         '
+									+	'		<td>                                                                          '
+									+	'			<input class="form-control form-control-solid" id="rk'+rowCount+'">                  '
+									+	'		</td>                                                                         '
+									+	'		<td>                                                                          '
+									+	'			<input class="form-control form-control-solid" id="dp'+rowCount+'">                  '
+									+	'		</td>                                                                         '
+									+	'		<td style="display: none;">                                                   '
+									+	'			<span id="rid'+rowCount+'"></span>                                                   '
+									+	'		</td>                                                                         '
+									+	'	</tr>'                                                                            
+			var tbody1 = document.querySelector('#tbody1');
+			document.querySelectorAll('#tbody1 td>button')[rowCount * 2 - 4].removeAttribute('id')
+			document.querySelectorAll('#tbody1 td>button')[rowCount * 2 - 4].textContent = '';
+			tbody1.insertAdjacentHTML('beforeend', newRow);
+		}
 	});
 	
-	// 즐겨찾기 불러오기
-	var id = document.getElementById('empl_id').value;
-	document.getElementById('apprList').addEventListener('focus', function() {
-		
-		var apprList = document.getElementById('apprList');
-		apprList.innerHTML = '';
-		var opt = document.createElement('option');
-		opt.textContent = '결재자를 선택해주세요';
-		apprList.appendChild(opt);
-		fetch('./signFavoList.do?empl_id=' + id)
-			.then(resp => {
-				return resp.json();
-			})
-			.then(data => {
-				console.log(data);
-				
-				for (let d of data) {
-					var opt = document.createElement('option');
-					opt.setAttribute('value', d.siaf_favo_cd);
-					opt.textContent = d.employee.empl_name + ' (' + d.employee.coco_name_pnm + ')'; 
-					apprList.appendChild(opt);
-				}
-
-			})
-			.catch(error => {
-				console.log(error)
-			});
+	// 동적 참조부서 행 추가
+	document.getElementById('tbody2').addEventListener('click', function(e) {
+		var addRow = e.target.id;
+		if(addRow.startsWith('addRow2')){
+			var rowCount = document.querySelectorAll('#tbody2 tr').length + 1;
+			console.log(rowCount);
+			var newRow = '<tr>'
+								+'					<td>                                                                         '
+								+'						<button class="cancelBtn btn btn-sm btn-basic" id="addRow2">➕</button>  '
+								+'					</td>                                                                        '
+								+'					<td>                                                                         '
+								+'						<button class="cancelBtn btn btn-sm btn-basic">➖</button>               '
+								+'					</td>                                                                        '
+								+'					<td>                                                                         '
+								+'						<input class="form-control form-control-solid" id="rd'+rowCount+'">'
+								+'					</td>'
+								+'					<td style="display: none;"'
+								+'						<span id="rde'+rowCount+'"></span>'
+								+'					</td>'
+								+'				</tr>';                              
+			var tbody1 = document.querySelector('#tbody2');
+			document.querySelectorAll('#tbody2 td>button')[rowCount * 2 - 4].removeAttribute('id')
+			document.querySelectorAll('#tbody2 td>button')[rowCount * 2 - 4].textContent = '';
+			tbody1.insertAdjacentHTML('beforeend', newRow);
+		}
 	});
 	
-	// 즐겨찾기 라인 불러오기
-	document.getElementById('apprLineList').addEventListener('focus', function() {
-		
-		var apprLineList = document.getElementById('apprLineList');	
-		apprLineList.innerHTML = '';
-		var opt = document.createElement('option');
-		opt.textContent = '결재선을 선택해주세요';
-		apprLineList.appendChild(opt)
-		
-		fetch('./signFavoLineList.do?empl_id=' + id)
-			.then(resp => {
-				return resp.json();
-			})
-			.then(data => {
-				console.log(data);
-				var lineList = data.lineList;
-				var empList = data.resultList[0];
-				console.log(empList);
-				
-				for (let i = 0; i < lineList.length; i++) {
-					console.log(lineList[i].siaf_favo_cd, lineList[i].siaf_favo_name);
-					var opt = document.createElement('option');
-					opt.setAttribute('value', lineList[i].siaf_favo_cd);
-					opt.textContent = lineList[i].siaf_favo_name + ' ➡️ (';
-					
-					for (let j = 0; j < empList[i].length; j++) {
-						console.log(empList[i][j].empl_id, empList[i][j].empl_name);
-						if(j == empList[i].length - 1) {
-							opt.textContent += empList[i][j].empl_name;
-						} else {
-							opt.textContent += empList[i][j].empl_name + ' - ';
-						}
-					}
-					opt.textContent += ')';
-					apprLineList.appendChild(opt);
-				}
-			})
-			.catch(error => {
-				console.log(error);
-			});
-	});
 	
-	// 즐겨찾기 삭제
-	document.getElementById('delBtn').addEventListener('click', function() {
-		var selectId = document.querySelectorAll('select')[0].value;
-	 	fetch('./deleteFav.do?siaf_favo_cd=' + selectId)
-			.then(resp => {
-				return resp.text();
-			}).then(data => {
-				alert(data);
-				document.getElementById('apprList').innerHTML = '';
-				var sel = document.getElementById('apprList');
-				var opt = document.createElement('option');
-				opt.textContent = '결재자를 선택해주세요';
-				sel.appendChild(opt);
-			}).catch(err => {
-				console.log(err);
-			});
-		})
-		
-	// 즐겨찾기 결재자 결재선으로 보내기
-	document.getElementsByName('insBtn')[0].addEventListener('click', function() {
-		
-		var select = document.querySelector('select#apprList');
-		var selValue = select.options[select.selectedIndex].value;
-		
-		fetch('./getFavo.do?siaf_favo_cd=' + selValue)
-		.then(resp => {return resp.json();})
-		.then(data => {
-			console.log(data);
-			var f = data[0];
-			var first = $('#first').val();
-			var second = $('#second').val();
-			var third = $('#third').val();
-			var posFlag = f.coco_name_rnm;
-			var resFlag;
-			switch (posFlag) {
-				case '사원': resFlag = 1; break;
-				case '대리': resFlag = 2; break;
-				case '과장': resFlag = 3; break;
-				case '차장': resFlag = 4; break;
-				case '부장': resFlag = 5; break;
-				case '상무': resFlag = 6; break;
-				case '전무': resFlag = 7; break;
-				case '부사장': resFlag = 8; break;
-				case '사장': resFlag = 9; break;
-				default: resFlag = 0;
-			}
-			
-			if(first.length == 0) {
-				fFlag = resFlag;
-			} else if(first.length > 0 && second.length == 0) {
-				sFlag = resFlag;
-			} else if (first.length > 0 && second.length > 0 && third.length == 0) {
-				tFlag = resFlag;
-			}
-			
-			if(fFlag > sFlag || fFlag > tFlag || sFlag > tFlag) {
-				alert('더 높은 직급의 결재자를 선택해주세요');
-				return;
-			}
-			console.log(fFlag, sFlag, tFlag)
-			if(f.empl_name == $('#first').val() || f.empl_name == $('#second').val() || f.empl_name == $('#third').val()) {
-				alert('중복된 결재자 입니다');
-				return;
-			}
-			if(first.length == 0) {
-				$('#first').val(f.empl_name);
-				$('#rk1').val(f.coco_name_rnm);
-				$('#dp1').val(f.coco_name_dnm);
-				$('#id1').text(f.empl_id);
-				$('#de1').val(1);
-			} else if(first.length > 0 && second.length == 0) {
-				$('#second').val(f.empl_name);
-				$('#rk2').val(f.coco_name_rnm);
-				$('#dp2').val(f.coco_name_dnm);
-				$('#id2').text(f.empl_id);
-				$('#de2').val(2);
-			} else if(first.length > 0 && second.length > 0 && third.length == 0) {
-				$('#third').val(f.empl_name);
-				$('#rk3').val(f.coco_name_rnm);
-				$('#dp3').val(f.coco_name_dnm);
-				$('#id3').text(f.empl_id);
-				$('#de3').val(3);
-			}
-		})
-		.catch(err => {console.log(err);});
-	})
-	
-	// 즐겨찾기 라인 결재선으로 보내기
-	document.getElementsByName('selectApprLine')[0].addEventListener('click', function() {
-		var select = document.querySelector('select#apprLineList');
-		var selList = select.options[select.selectedIndex].value;
-		console.log(selList);
-		fetch('./favoInfo.do?siaf_favo_cd=' + selList)
-		.then(resp => {return resp.json()})
-		.then(data => {
-			console.log(data);
-			if(data.length == 1) {
-				let f = data[0];
-				$('#first').val(f.empl_name);
-				$('#rk1').val(f.coco_name_rnm);
-				$('#dp1').val(f.coco_name_dnm);
-				$('#id1').text(f.empl_id);
-				$('#de1').val(1);
-			}
-			if(data.length == 2) {
-				let f = data[0];
-				let s = data[1];
-				$('#first').val(f.empl_name);
-				$('#rk1').val(f.coco_name_rnm);
-				$('#dp1').val(f.coco_name_dnm);
-				$('#id1').text(f.empl_id);
-				$('#de1').val(1);
-				$('#second').val(s.empl_name);
-				$('#rk2').val(s.coco_name_rnm);
-				$('#dp2').val(s.coco_name_dnm);
-				$('#id2').text(s.empl_id);
-				$('#de2').val(2);
-			}
-			if(data.length == 3) {
-				let f = data[0];
-				let s = data[1];
-				let t = data[2];
-				$('#first').val(f.empl_name);
-				$('#rk1').val(f.coco_name_rnm);
-				$('#dp1').val(f.coco_name_dnm);
-				$('#id1').text(f.empl_id);
-				$('#de1').val(1);
-				$('#second').val(s.empl_name);
-				$('#rk2').val(s.coco_name_rnm);
-				$('#dp2').val(s.coco_name_dnm);
-				$('#id2').text(s.empl_id);
-				$('#de2').val(2);
-				$('#third').val(t.empl_name);
-				$('#rk3').val(t.coco_name_rnm);
-				$('#dp3').val(t.coco_name_dnm);
-				$('#id3').text(t.empl_id);
-				$('#de3').val(3);
-			}
-		})
-		.catch(err => {
-			console.log(err);
-		});
-	})
-	
-	// 즐겨찾기 라인 삭제
-	document.getElementById('delLineBtn').addEventListener('click', function() {
-		var select = document.querySelector('select#apprLineList');
-		var selList = select.options[select.selectedIndex].value;
-		console.log(selList);
-		fetch('./deleteFav.do?siaf_favo_cd=' + selList)
-			.then(resp => {
-				return resp.text();
-			}).then(data => {
-				alert(data);
-				document.getElementById('apprLineList').innerHTML = '';
-				var sel = document.getElementById('apprLineList');
-				var opt = document.createElement('option');
-				opt.textContent = '결재선을 선택해주세요';
-				sel.appendChild(opt);
-			}).catch(err => {
-				console.log(err);
-			});
-	})
 }
 
 // jsTree 검색창의 엔터키로 검색 가능하게 하는 함수
@@ -247,31 +69,6 @@ $('#schName').on('keydown', function(e) {
 	}
 });
 
-// 로그인한 사용자의 직급을 숫자처리
-var myPositionFlagText = document.getElementById('positionFlag').value;
-var myPositionFlag;
-switch (myPositionFlagText) {
-	case '사원': myPositionFlag = 1; break;
-	case '대리': myPositionFlag = 2; break;
-	case '과장': myPositionFlag = 3; break;
-	case '차장': myPositionFlag = 4; break;
-	case '부장': myPositionFlag = 5; break;
-	case '상무': myPositionFlag = 6; break;
-	case '전무': myPositionFlag = 7; break;
-	case '부사장': myPositionFlag = 8; break;
-	case '사장': myPositionFlag = 9; break;
-	default: myPositionFlag = 0;
-}
-
-// 결재순번 로직을 위한 변수 선언
-var first;
-var second;
-var third;
-
-// 결재자 최종 저장을 위한 변수 선언
-var firstApprover;
-var secondApprover;
-var thirdApprover;
 
 // jstree 출력
 $().ready(function() {
