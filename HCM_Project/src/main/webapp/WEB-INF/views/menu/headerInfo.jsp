@@ -23,14 +23,23 @@
 <!-- 사용CSS오버라이딩 -->
 <style type="text/css">
 
-	.btn-primary{
-		width: 150px;
+	.btnLg{
+		width: 130px;
+		height: 40px;
+		line-height: 19px;
 	}
 	
-	.btn-secondary{
-		width: 150px;
+	.btnMd{
+		width: 100px;
+		height: 32px;
+		line-height: 14px;
 	}
 	
+	.btnSm{
+		width: 80px;
+		height: 32px;
+		line-height: 14px;
+	}
 	
 </style>
 <!-- 사용CSS오버라이딩 -->

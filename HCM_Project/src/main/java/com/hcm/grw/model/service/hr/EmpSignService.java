@@ -14,4 +14,9 @@ public interface EmpSignService {
 	public int setDefaultSign(Map<String, Object> map);
 	
 	public int deleteSign(Map<String, Object> map);
+	
+	public List<EmpSignDto> defaultChk(Map<String, Object> map);
+	
+	public int setUnDefaultSign(Map<String, Object> map);	
+	
 }
