@@ -104,6 +104,6 @@
 			</div>
 		</div>
 			
-<%@include file="/WEB-INF/views/menu/mainSideMenu.jsp" %>		
+<%@include file="/WEB-INF/views/menu/mainSideMenu.jsp"%>		
 </body>
 </html>

@@ -3,6 +3,8 @@ package com.hcm.grw.ctrl.sm;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,7 +59,7 @@ public class SMHomeController {
 		return "redirect:/sm/GongiBoard/getAllGobo.do";
 	}
 	
-	@GetMapping("insertGobo.do")
+	@GetMapping("insertGoboForm.do")
 	public String insertGoboWrite() {
 		log.info("SMHomeController insertGobo.do 공지사항 글등록 화면 이동");
 		return "sm/GongiBoard/insertGobo";
@@ -65,17 +67,17 @@ public class SMHomeController {
 	
 	
 	@PostMapping("insertGobo.do")
-	public String insertGobo(GoboDto dto) {
-		log.info("SMHomeController insertGobo.do 공지사항 글등록");
-		dto.setGobo_modify_id("1");
-		dto.setGobo_writer("오종우");
-		dto.setGobo_writer_id("dhwhddn1");
-		int n = GoboService.insertGobo(dto);
-		if(n>0) {
-			return "sm/GongiBoard/insertGobo";
-		}else {
-			return "alert('글 작성 실패')";
-		}
+	public ResponseEntity<String> insertGobo(GoboDto dto) {
+	    log.info("SMHomeController insertGobo.do 공지사항 글 등록: {}", dto);
+	    dto.setGobo_writer("서종우");
+	    dto.setGobo_writer_id("whda2");
+	    int n = GoboService.insertGobo(dto);
+	    
+	    if (n > 0) {
+	        return ResponseEntity.ok("글 작성 완료");
+	    } else {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("글 작성 실패");
+	    }
 	}
 	
 	

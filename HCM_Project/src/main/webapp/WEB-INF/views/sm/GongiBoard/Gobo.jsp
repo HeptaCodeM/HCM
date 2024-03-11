@@ -22,7 +22,7 @@
 
 		<div class="container">
 		 <h2>공지사항 게시판</h2>
-		 <button btn btn-info onclick="location.href='/sm/insertGobo.do'">글작성</button>
+		 <button btn btn-info onclick="location.href='/sm/insertGoboForm.do'">글작성</button>
 		 	<table class="table">
 		 		<thead>
 		 			<tr>
