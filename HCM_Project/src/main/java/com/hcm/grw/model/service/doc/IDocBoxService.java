@@ -8,7 +8,7 @@ import com.hcm.grw.dto.doc.SignBoxDto;
 public interface IDocBoxService {
 
 		//전체 문서함 조회
-		public List<SignBoxDto> getAllDocs(Map<String, String> inMap);
+		public List<SignBoxDto> getAllDocs(SignBoxDto dto);
 		
 		//기안중인 문서 조회
 		public List<SignBoxDto> getMyGian(SignBoxDto dto);	

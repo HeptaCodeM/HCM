@@ -20,9 +20,9 @@ public class DocBoxServiceImpl implements IDocBoxService {
 	private IDocBoxDao dao;
 	
 	@Override
-	public List<SignBoxDto> getAllDocs(Map<String, String> inMap) {
+	public List<SignBoxDto> getAllDocs(SignBoxDto dto) {
 		log.info("DocBoxServiceImpl  전체 문서 조회");
-		return dao.getAllDocs(inMap);
+		return dao.getAllDocs(dto);
 	}
 
 	@Override

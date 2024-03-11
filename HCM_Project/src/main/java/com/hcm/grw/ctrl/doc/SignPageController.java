@@ -22,4 +22,10 @@ public class SignPageController {
 		log.info("SignTreeController signFavo.do GET 결재선 관리 페이지");
 		return "doc/signFavo";
 	}
+	
+	@GetMapping("signRefer.do")
+	public String signRefer() {
+		log.info("SignTreeController signRefer.do GET 참조 등록 페이지");
+		return "doc/signRefer";
+	}
 }
