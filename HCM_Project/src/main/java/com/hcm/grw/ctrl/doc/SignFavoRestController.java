@@ -145,16 +145,4 @@ public class SignFavoRestController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

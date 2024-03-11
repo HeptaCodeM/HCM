@@ -3,18 +3,18 @@
 // 메뉴명
 String docLeftMenu [] = {"내결재관리", "기안서작성", "임시저장", "결재설정" , "서명관리" , "관리자메뉴"};
 // 메뉴링크
-String docLeftMenuLink [] = {"#", "#", "#", "#" ,"#","#"};
+String docLeftMenuLink [] = {"/doc/myDocs.do", "/doc/writeDoc.do", "/doc/tempDocs.do", "/doc/signFavo.do" ,"/doc/signManagement.do","/doc/template.do"};
 
 String docUri = request.getRequestURI();
 String currentDocPageName = docUri.substring(docUri.lastIndexOf("/") + 1).replace(".jsp","");
-Boolean openDocMenuFlag = false;
+Boolean openDocMenuFlag = true;
 %>
 <!DOCTYPE html>
 <html>
 	<!-- 대분류별 영역 시작 -->
 	<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 		
-		<div data-kt-menu-trigger="click" class="menu-item pt-5 menu-item menu-accordion">
+		<div data-kt-menu-trigger="click" class="menu-item pt-5 menu-item menu-accordion hover show">
 
 			<!-- 대분류 타이틀 영역 시작 ------------------------------------------------------------------------->
 			<span class="menu-link">
@@ -32,7 +32,7 @@ Boolean openDocMenuFlag = false;
 
 
 			<!-- 중분류 영역 시작 ********************************************************************************-->
-			<div class="menu-sub menu-sub-accordion  show" style="display: none; overflow: hidden;">
+			<div class="menu-sub menu-sub-accordion show">
 			<%for(int i=0;i<docLeftMenu.length;i++){ %>
 				<!-- 중분류 1 시작 -->
 				<div class="menu-item menu-accordion">

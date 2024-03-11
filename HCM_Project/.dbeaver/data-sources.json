@@ -30,9 +30,9 @@
 				"host": "localhost",
 				"port": "1521",
 				"database": "ORCL",
-				"url": "jdbc:oracle:thin:@qzls8opftlz4d7hc_medium?TNS_ADMIN\u003dC:\\\\Wallet",
+				"url": "jdbc:oracle:thin:@qzls8opftlz4d7hc_low?TNS_ADMIN\u003dC:\\\\Wallet",
 				"configurationType": "MANUAL",
-				"home": "C:\\app\\JIA\\product\\21c\\dbhomeXE",
+				"home": "C:\\app\\JISU\\product\\21c\\dbhomeXE",
 				"type": "dev",
 				"provider-properties": {
 					"@dbeaver-connection-type@": "CUSTOM",
