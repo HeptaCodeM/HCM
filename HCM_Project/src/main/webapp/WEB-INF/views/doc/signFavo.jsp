@@ -10,11 +10,15 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <style type="text/css">
-th {
+th,td {
 	text-align: center;
 }
 td>input {
 	text-align: center;
+	height: 28px;
+}
+td>img {
+	
 }
 </style>
 </head>
@@ -169,6 +173,12 @@ td>input {
 													<td style="display: none;" id="empl_id"></td>
 												</tr>
 												<tr>
+													<td></td>
+													<td colspan="6">
+														<img alt="아래화살표" src="/image/down-icon.png">
+													</td>
+												</tr>
+												<tr>
 													<td>
 														<button class="cancelBtn btn btn-sm btn-basic">➖</button>
 													</td>
@@ -232,7 +242,7 @@ td>input {
 										</table>
 										<br>
 										<div style="text-align: right;">
-											<input type="text" id="favoName" placeholder="별칭 입력" maxlength="20">
+											<input type="text" id="favoName" placeholder="별칭 입력" maxlength="20" class="col-xs-3" style="float: none;">
 											<input type="button" class="btn btn-sm btn-primary" id="addLine" value="결재선 추가" style="margin-right: 50px;">
 										</div>
 								
