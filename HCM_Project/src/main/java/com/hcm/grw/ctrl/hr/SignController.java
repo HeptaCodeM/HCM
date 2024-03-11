@@ -75,7 +75,7 @@ public class SignController {
 	}
 	
 	@GetMapping(value = "/setDefaultSign.do")
-	public void setDefaultSign(String emsi_seq) {
+	public String setDefaultSign(String emsi_seq) {
 		System.out.println(emsi_seq);
 		// TODO login세션 생기면 수정하고 테스트 3
 		Map<String, Object> signMap = new HashMap<String, Object>();
@@ -86,8 +86,19 @@ public class SignController {
 		System.out.println(defSign.size());
 		if(defSign.size() < signList.size()) {
 			System.out.println("디폴트 제거해라");
-			
+			empSignService.setAllDefaultSign(signMap);
 		}
+		
+		Map<String, Object> signDefMap = new HashMap<String, Object>();
+		signDefMap.put("empl_id", "20230102");
+		signDefMap.put("emsi_seq", emsi_seq);
+		int cnt = empSignService.setDefaultSign(signDefMap);
+		if(cnt > 0) {
+			return "redirect:./signListForm.do";
+		}else {
+			return "redirect:./signListForm.do";
+		}
+		
 	}
 	
 }
