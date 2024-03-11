@@ -80,7 +80,7 @@ public class DocBoxDaoImpl implements IDocBoxDao {
 	}
 	
 	@Override
-	public List<DocBoxDto> getDetailDocsList(DocBoxDto dto) {
+	public List<SignBoxDto> getDetailDocsList(SignBoxDto dto) {
 		log.info("DocBoxDaoImpl 상세 조회 리스트 버전");
 		return sqlSessionTemplate.selectList(NS+"getDetailDocs", dto);
 	}

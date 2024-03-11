@@ -35,6 +35,16 @@ ClassicEditor
 				'findAndReplace'
 			]
 		},
+		htmlSupport: {
+                    allow: [
+                        {
+                            name: /.*/,
+                            attributes: true,
+                            classes: true,
+                            styles: true
+                        }
+                    ]
+                },
 		language: 'ko',
 		image: {
 			toolbar: [

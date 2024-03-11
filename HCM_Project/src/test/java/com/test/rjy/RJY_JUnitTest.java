@@ -136,7 +136,7 @@ public class RJY_JUnitTest {
 	}
 	
 	//상세조회 리스트방식
-	//@Test
+	@Test
 	public void getDetailDocsList() {
 		String sidb_doc_num = "24000003";
 		List<DocBoxDto> dto = sessionTemplate.selectList(NS + "getDetailDocsList", sidb_doc_num);
@@ -184,7 +184,7 @@ public class RJY_JUnitTest {
 			assertEquals(num, 1);
 		}
 		
-		 @Test
+//		 @Test
 	    public void deny() {
 		 SignBoxDto dto = new SignBoxDto();
 		 

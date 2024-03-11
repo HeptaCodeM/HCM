@@ -4,7 +4,7 @@
 
 	<select id="getSignTree" resultType="SignTreeDto">
 		SELECT ID, PARENT , TEXT , ICON , POS_NA , POS_FLAG 
-        	FROM SIGN_DOC_TREE
+        	FROM VW_SIGN_DOC_TREE
 	</select>
 	
 	<insert id="insertTree">
@@ -14,7 +14,7 @@
                 #{icon}, #{pos_na}, #{pos_flag})
 	</insert>
 
-	<update id="UpdateTree">
+	<update id="updateTree">
 		UPDATE SIGN_DOC_TREE 
 		SET PARENT = #{parent}, TEXT = #{text}, POS_NA = #{pos_na}, POS_FLAG = #{pos_flag}
 		WHERE ID = #{id}
