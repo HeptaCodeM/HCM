@@ -96,10 +96,18 @@ public class CompanyController {
 	
 	
 	@PostMapping(value = "/companySealUpload.do")
-	public void companySealUpload(HttpServletRequest request,List<MultipartFile> file)throws IOException {
+	public String companySealUpload(HttpServletRequest request, List<MultipartFile> file)throws IOException {
 		System.out.println("동작");
-//		System.out.println(file.size());
-		
+		System.out.println(file.size());
+		System.out.println(file);
+		for(MultipartFile f : file) {
+			Map<String, Object> sealMap = new HashMap<String, Object>();
+			byte[] comp_seal = f.getBytes();
+			sealMap.put("comp_seal", comp_seal);
+			sealMap.put("comp_id", "ITCOM0A1");
+			companyService.insertCompanySeal(sealMap);
+		}
+		return "redirect:./companyInfo.do";
 	}
 	
 }

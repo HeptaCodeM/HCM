@@ -101,7 +101,7 @@ public class CommonCodeController {
 		map.put("coco_name", coco_name);
 		map.put("coco_cd", coco_cd);
 		
-		// TODO login세션 생기면 제거하고 테스트 1
+		// TODO login세션 생기면 제거하고 테스트 [재원]
 		map.put("coco_create_id", "SYSTEM");
 		
 		int cnt = codeService.insertRoleOne(map);
