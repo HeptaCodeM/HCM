@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<title>HR메인화면</title>
+<title>회사직인조회창</title>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -22,7 +23,7 @@
 					<!--begin::Page title-->
 					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 						<!--begin::Title-->
-						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">제목이 여기에 들어가요!</h1>
+						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">회사직인조회</h1>
 						<!--end::Title-->
 					</div>
 					<!--end::Page title-->
@@ -34,28 +35,18 @@
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-header pt-5">
-								<h3 class="card-title text-gray-800 fw-bold">소제목? 들어갑니다</h3>
+								<h3 class="card-title text-gray-800 fw-bold">직인</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5" >
-								대충 여기에 내용이 들어가요!<br>
-								대충 여기에 내용이 들어가요!<br>
-								대충 여기에 내용이 들어가요!<br>
-								
-								
-								<button class="btn btn-primary" onclick="swalAlert('테스트', '', 'btn-danger', '주의')">일반 alert</button><br /><br />
-								<button class="btn btn-primary" onclick="swalHistoryBack('테스트', 'btn-info', '뒤로갑니다.')">alert history.back()</button><br /><br />
-								<button class="btn btn-primary" onclick="confirmTest();">confirm 테스트</button>
-							
-								<script>
-									function confirmTest(){
-										if(sc('confirm 확인')){
-											alert("실행")
-										}else{
-											alert("취소")
-										}
-									}
-								</script>
+								<c:choose>
+									<c:when test="${sealDto eq null}">
+										<h1>널</h1>
+									</c:when>
+									<c:otherwise>
+										${sealDto}
+									</c:otherwise>
+								</c:choose>
 							</div>
 						</div>
 					</div>

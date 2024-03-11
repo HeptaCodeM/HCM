@@ -6,7 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<title>부서관리</title>
+<c:choose>
+	<c:when test="${role eq 'DT'}">
+		<c:set var="thisRole" value="부서"/>
+	</c:when>
+	
+	<c:when test="${role eq 'RK'}">
+		<c:set var="thisRole" value="직위"/>
+	</c:when>
+	
+	<c:when test="${role eq 'PN'}">
+		<c:set var="thisRole" value="직책"/>
+	</c:when>
+</c:choose>
+<title>${thisRole}관리</title>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -35,30 +48,54 @@
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-header pt-5">
-								<h3 class="card-title text-gray-800 fw-bold">부서</h3>
+								<h3 class="card-title text-gray-800 fw-bold">${thisRole}</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
-								<c:forEach var="deptList" items="${deptList}" varStatus="var">
-									<a href="./hrDeptDetail.do?coco_cd=${deptList.getCoco_cd()}">${deptList.getCoco_cd()} // ${deptList.getCoco_name()}</a><br>
-								</c:forEach>
+								<div class="table-responsive">
+									<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
+										<thead>
+											<tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+												<th>순번</th>
+												<th>${thisRole}코드</th>
+												<th>${thisRole}명</th>
+												<th>생성자ID</th>
+												<th>생성일자</th>
+											</tr>
+										</thead>	
+										<tbody>
+											<c:forEach var="codeList" items="${codeList}" varStatus="var">
+												<tr style="cursor: pointer;" onclick="location.href='./roleDetail.do?coco_cd=${codeList.getCoco_cd()}&role=${role}'" class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
+													<td>NO.${var.count}</td>
+													<td>${codeList.getCoco_cd()}</td>
+													<td>${codeList.getCoco_name()}</td>
+													<td>${codeList.getCoco_create_id()}</td>
+													<td>${codeList.getCoco_create_dt()}</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+								
+								<%-- 
 								<select id="deptSelectGroup_1" multiple="multiple">
-								<c:forEach var="deptList" items="${deptList}" varStatus="var">
-								    <optgroup label="${deptList.getCoco_name()}">
+								<c:forEach var="codeList" items="${codeList}" varStatus="var">
+								    <optgroup label="${codeList.getCoco_name()}">
 								        <option>
-											<a href="./hrDeptDetail.do?coco_cd=${deptList.getCoco_cd()}">${deptList.getCoco_cd()} // ${deptList.getCoco_name()}</a><br>
+											${codeList.getCoco_cd()} // ${codeList.getCoco_name()}
 								        </option>
 								    </optgroup>
 								</c:forEach>
 								</select>
 								<script type="text/javascript">
 								$("#deptSelectGroup_1").multiselectsplitter();
-								</script>
+								</script> 
+								--%>
 								
 							</div>
 							<div class="card-footer">
 								<!-- <a href="#" class="btn btn-primary me-10">삭제</a> -->
-								<a href="./insertDept.do" class="btn btn-primary me-10">추가</a>
+								<a href="./insertRole.do?role=${role}" class="btn btn-primary me-10">추가</a>
 						    </div>
 						</div>
 					</div>
