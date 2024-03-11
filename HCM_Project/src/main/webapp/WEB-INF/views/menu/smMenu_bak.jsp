@@ -21,6 +21,7 @@
 													<span class="menu-heading fw-bold text-uppercase fs-7 menu-title">일정관리</span>
 													<span class="menu-arrow"></span>
 											</span>
+											
 											<!--end:Menu content-->
 										<!--end:Menu item-->
 										<!--begin:Menu item-->
@@ -35,7 +36,7 @@
 														<span class="path3"></span>
 													</i>
 												</span>
-												<span class="menu-title">기능대분류 1</span>
+												<span class="menu-title">캘린더</span>
 												<span class="menu-arrow"></span>
 											</span>
 											<!--end:Menu link-->
@@ -128,7 +129,7 @@
 														<span class="path3"></span>
 													</i>
 												</span>
-												<span class="menu-title">기능대분류 2</span>
+												<span class="menu-title">공지사항</span>
 												<span class="menu-arrow"></span>
 											</span>
 											<!--end:Menu link-->
