@@ -19,5 +19,8 @@ public interface ITemplateService {
 	public int insertTemp(TemplateDto dto);
 	
 	public List<TemplateDto> getCategory();
+	
+	public String getTemplate(String sidt_temp_cd);
+	
 
 }

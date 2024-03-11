@@ -49,5 +49,12 @@
 		FROM SIGN_CATEGORY
 </select>
 
+<!-- 템플릿 가져오기 -->
+<select id="getTemplate" resultType="java.lang.String">
+	SELECT SIDT_TEMP_CONTENT
+		FROM SIGN_DOC_TEMP
+		WHERE SIDT_TEMP_CD = 'TC000005'
+</select>
+
 
 </mapper>
