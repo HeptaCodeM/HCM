@@ -83,70 +83,48 @@ function swalHistoryBack(msg, className, btnName) {
 }
 
 //Swal Alert Confirm
-var sc = function(msg, callback) {
-	Swal.fire({
-		html: msg,
-		showCancelButton: true,
-		confirmButtonColor: "#3085d6",
-		cancelButtonColor: "#d33",
-		confirmButtonText: "확인",
-		cancelButtonText: "취소",
-		showClass: {
-			popup: `
-		      animate__animated
-		      animate__fadeInUp
-		      animate__faster
-			`
-		},
-		hideClass: {
-			popup: `
-		      animate__animated
-		      animate__fadeOutDown
-		      animate__faster
-		    `
-		}		
-	}).then((result) => {
-		if (result.isConfirmed) {
-			return true;
-		}else{
-			return false;
-		}
-	});
+async function sweetAlertConfirm(msg, tFunc, fFunc){
+	var cFlag = await sc(msg);
+	console.log(cFlag);
+	if(cFlag){
+		tFunc;
+	}else{
+		fFunc;
+	}
 }
 
-
-/*
-function swalConfirm(msg) {
-	Swal.fire({
-		html: msg,
-		showCancelButton: true,
-		confirmButtonColor: "#3085d6",
-		cancelButtonColor: "#d33",
-		confirmButtonText: "확인",
-		cancelButtonText: "취소",
-		showClass: {
-			popup: `
-		      animate__animated
-		      animate__fadeInUp
-		      animate__faster
-			`
-		},
-		hideClass: {
-			popup: `
-		      animate__animated
-		      animate__fadeOutDown
-		      animate__faster
-		    `
-		}		
-	}).then((result) => {
-		if (result.isConfirmed) {
-			return true;
-		}else{
-			return false;
-		}
-	});
+var sc = function(msg) {
+	return new Promise((resolve, reject) => {
+		Swal.fire({
+			html: msg,
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "확인",
+			cancelButtonText: "취소",
+			showClass: {
+				popup: `
+			      animate__animated
+			      animate__fadeInUp
+			      animate__faster
+				`
+			},
+			hideClass: {
+				popup: `
+			      animate__animated
+			      animate__fadeOutDown
+			      animate__faster
+			    `
+			}		
+		}).then((result) => {
+			if (result.isConfirmed) {
+				resolve(true);
+			}else{
+				resolve(false);
+			}
+		}).catch(error => reject(error));
+    });
 }
-*/
 
 /* check 시작 */
 /*숫자만*/
