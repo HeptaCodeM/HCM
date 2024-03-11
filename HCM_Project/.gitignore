@@ -23,7 +23,10 @@ local.properties
 .recommenders
 *.MF
 db.properties
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'doc' of https://github.com/HeptaCodeM/HCM.git
 
 # External tool builders
 .externalToolBuilders/

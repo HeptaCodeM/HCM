@@ -28,14 +28,14 @@ public class HomeController {
 		return "main";
 	}
 
-	@GetMapping("/Error404.do")
+	@GetMapping("/error404.do")
 	@ResponseBody
 	public void Error404(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		request.getRequestDispatcher("/WEB-INF/error/Error404.jsp").forward(request, response);
 	}
 
-	@GetMapping("/Error500.do")
+	@GetMapping("/error500.do")
 	@ResponseBody
 	public void Error500(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {

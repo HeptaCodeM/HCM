@@ -1,5 +1,9 @@
 onload = function() {
 	
+	document.getElementById('signRefer').addEventListener('click', function() {
+		open('./signRefer.do', '', 'width=800px height=1080px left=300')
+	});
+	
 	// 즐겨찾기 불러오기
 	var id = document.getElementById('empl_id').value;
 	document.getElementById('apprList').addEventListener('focus', function() {
