@@ -17,97 +17,35 @@ public class CommonCodeServiceImpl implements CommonCodeService {
 
 	@Autowired
 	private CommonCodeDao dao;
-	
+
 	@Override
-	public List<CommonCodeDto> selectAllDept() {
-		log.info("CommonCodeServiceImpl selectAllDept ");
-		return dao.selectAllDept();
-	}
-	
-	@Override
-	public int insertDeptOne(Map<String, Object> map) {
-		log.info("CommonCodeServiceImpl selectAllDept // {}",map);
-		return dao.insertDeptOne(map);
-	}
-	
-	@Override
-	public int deleteDeptOne(Map<String, Object> map) {
-		log.info("CommonCodeServiceImpl deleteDeptOne // {}",map);
-		return dao.deleteDeptOne(map);
-	}
-	
-	@Override
-	public CommonCodeDto selectOneDept(Map<String, Object> map) {
-		log.info("CommonCodeServiceImpl selectOneDept // {}",map);
-		return dao.selectOneDept(map);
-	}
-	
-	@Override
-	public int correctionDept(Map<String, Object> map) {
-		log.info("CommonCodeServiceImpl correctionDept // {}",map);
-		return dao.correctionDept(map);
-	}
-	
-	
-	@Override
-	public List<CommonCodeDto> selectAllRank() {
-		log.info("CommonCodeServiceImpl selectAllRank");
-		return dao.selectAllRank();
+	public List<CommonCodeDto> selectAllRole(Map<String, Object> map) {
+		log.info("CommonCodeServiceImpl selectAllRole // {}",map);
+		return dao.selectAllRole(map);
 	}
 
 	@Override
-	public int insertRankOne(Map<String, Object> map) {
-		log.info("CommonCodeServiceImpl insertRankOne // {}",map);
-		return dao.insertRankOne(map);
+	public int insertRoleOne(Map<String, Object> map) {
+		log.info("CommonCodeServiceImpl insertRoleOne // {}",map);
+		return dao.insertRoleOne(map);
 	}
 
 	@Override
-	public int deleteRankOne(Map<String, Object> map) {
-		log.info("CommonCodeServiceImpl deleteRankOne // {}",map);
-		return dao.deleteRankOne(map);
+	public int deleteRoleOne(Map<String, Object> map) {
+		log.info("CommonCodeServiceImpl deleteRoleOne // {}",map);
+		return dao.deleteRoleOne(map);
 	}
 
 	@Override
-	public CommonCodeDto selectOneRank(Map<String, Object> map) {
-		log.info("CommonCodeServiceImpl selectOneRank // {}",map);
-		return dao.selectOneRank(map);
+	public CommonCodeDto selectOneRole(Map<String, Object> map) {
+		log.info("CommonCodeServiceImpl deleteRoleOne // {}",map);
+		return dao.selectOneRole(map);
 	}
 
 	@Override
-	public int correctionRank(Map<String, Object> map) {
-		log.info("CommonCodeServiceImpl correctionRank // {}",map);
-		return dao.correctionRank(map);
+	public int correctionRole(Map<String, Object> map) {
+		log.info("CommonCodeServiceImpl correctionRole // {}",map);
+		return dao.correctionRole(map);
 	}
-
-	@Override
-	public List<CommonCodeDto> selectAllPosition() {
-		log.info("CommonCodeServiceImpl selectAllPosition");
-		return dao.selectAllPosition();
-	}
-
-	@Override
-	public int insertPositionOne(Map<String, Object> map) {
-		log.info("CommonCodeServiceImpl insertPositionOne // {}",map);
-		return dao.insertPositionOne(map);
-	}
-
-	@Override
-	public int deletePositionOne(Map<String, Object> map) {
-		log.info("CommonCodeServiceImpl deletePositionOne // {}",map);
-		return dao.deletePositionOne(map);
-	}
-
-	@Override
-	public CommonCodeDto selectOnePosition(Map<String, Object> map) {
-		log.info("CommonCodeServiceImpl selectOnePosition // {}",map);
-		return dao.selectOnePosition(map);
-	}
-
-	@Override
-	public int correctionPosition(Map<String, Object> map) {
-		log.info("CommonCodeServiceImpl correctionPosition // {}",map);
-		return dao.correctionPosition(map);
-	}
-	
 	
 }

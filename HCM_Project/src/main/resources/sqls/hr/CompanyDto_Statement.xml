@@ -15,7 +15,7 @@
 					'', '')
 	</insert>
 	
-	<update id="correctionCompanyInfo" parameterType="java.util.Map">
+	<update id="correctionCompanyInfo" parameterType="CompanyDto">
 		UPDATE COMPANY SET COMP_NAME = #{comp_name},
 						   COMP_NUM = #{comp_num},
 						   COMP_CEO_NAME = #{comp_ceo_name},
@@ -24,9 +24,13 @@
 						   COMP_POST = #{comp_post},
 						   COMP_ADDR1 = #{comp_addr1},
 						   COMP_ADDR2 = #{comp_addr2},
-						   COMP_SEAL = #{comp_seal},
 						   COMP_MODIFY_ID = #{comp_modify_id},
 						   COMP_MODIFY_DT = CURRENT_DATE
+			WHERE COMP_ID = #{comp_id}
+	</update>
+	
+	<update id="insertCompanySeal" parameterType="java.util.Map">
+		UPDATE COMPANY SET COMP_SEAL = #{comp_seal}
 			WHERE COMP_ID = #{comp_id}
 	</update>
 	
@@ -36,6 +40,12 @@
 				COMP_POST, COMP_ADDR1, COMP_ADDR2, 
 				COMP_SEAL, COMP_CREATE_ID, COMP_CREATE_DT, 
 				COMP_MODIFY_ID, COMP_MODIFY_DT
+			FROM COMPANY
+			WHERE COMP_ID = #{comp_id}
+	</select>
+	
+	<select id="showCompanySeal" resultType="CompanyDto" parameterType="java.util.Map">
+		SELECT COMP_SEAL
 			FROM COMPANY
 			WHERE COMP_ID = #{comp_id}
 	</select>

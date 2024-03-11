@@ -26,9 +26,15 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public int correctionCompanyInfo(Map<String, Object> map) {
-		log.info("CompanyDaoImpl correctionCompanyInfo // {}",map);
-		return sessionTemplate.update(NS+"correctionCompanyInfo", map);
+	public int correctionCompanyInfo(CompanyDto dto) {
+		log.info("CompanyDaoImpl correctionCompanyInfo // {}",dto);
+		return sessionTemplate.update(NS+"correctionCompanyInfo", dto);
+	}
+	
+	@Override
+	public int insertCompanySeal(Map<String, Object> map) {
+		log.info("CompanyDaoImpl insertCompanySeal // {}",map);
+		return sessionTemplate.update(NS+"insertCompanySeal", map);
 	}
 
 	@Override
@@ -37,4 +43,10 @@ public class CompanyDaoImpl implements CompanyDao {
 		return sessionTemplate.selectOne(NS+"showCompanyInfo",map);
 	}
 
+	@Override
+	public CompanyDto showCompanySeal(Map<String, Object> map) {
+		log.info("CompanyDaoImpl showCompanySeal // {}",map);
+		return  sessionTemplate.selectOne(NS+"showCompanySeal",map);
+	}
+	
 }
