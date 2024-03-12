@@ -1,6 +1,9 @@
 package com.hcm.grw.ctrl.hr;
 
 import java.io.IOException;
+import java.sql.Blob;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -83,8 +87,10 @@ public class CompanyController {
 		Map<String, Object> sealMap = new HashMap<String, Object>();
 		sealMap.put("comp_id", "ITCOM0A1");
 		CompanyDto sealDto = companyService.showCompanySeal(sealMap);
-		System.out.println(sealDto);
-		model.addAttribute("sealDto",sealDto);
+		byte[] sealImg = sealDto.getComp_seal();
+		
+		System.out.println(Base64Utils.encodeToString(sealImg));
+		model.addAttribute("sealDto",Base64Utils.encodeToString(sealImg));
 		return "hr/company/showCompanySeal";
 	}
 	
@@ -96,10 +102,18 @@ public class CompanyController {
 	
 	
 	@PostMapping(value = "/companySealUpload.do")
-	public void companySealUpload(HttpServletRequest request,List<MultipartFile> file)throws IOException {
+	public String companySealUpload(HttpServletRequest request, List<MultipartFile> file)throws IOException {
 		System.out.println("동작");
-//		System.out.println(file.size());
-		
+		System.out.println(file.size());
+		System.out.println(file);
+		for(MultipartFile f : file) {
+			Map<String, Object> sealMap = new HashMap<String, Object>();
+			byte[] comp_seal = f.getBytes();
+			sealMap.put("comp_seal", comp_seal);
+			sealMap.put("comp_id", "ITCOM0A1");
+			companyService.insertCompanySeal(sealMap);
+		}
+		return "redirect:./companyInfo.do";
 	}
 	
 }

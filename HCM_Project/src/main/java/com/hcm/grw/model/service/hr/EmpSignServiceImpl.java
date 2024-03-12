@@ -54,6 +54,10 @@ public class EmpSignServiceImpl implements EmpSignService {
 		return dao.setUnDefaultSign(map);
 	}
 	
-	
+	@Override
+	public int setAllDefaultSign(Map<String, Object> map) {
+		log.info("EmpSignServiceImpl setAllDefaultSign // {}",map);
+		return dao.setAllDefaultSign(map);
+	}
 	
 }

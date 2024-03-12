@@ -14,7 +14,7 @@ String hrSubLeftMenu [][] = {
 //소분류 링크
 String hrSubLinkLeftMenu [][] = {
 		{"/roleList.do?role=DT","/roleList.do?role=RK","/roleList.do?role=PN", "/hr/employee/regist.do", "/hr/employee/list.do"},		//hrLeftMenu[0]
-		{"#"},							//hrLeftMenu[1]
+		{"/certificate.do"},							//hrLeftMenu[1]
 		{"#", "#"},						//hrLeftMenu[2]
 		{"#", "#"},					//hrLeftMenu[3]
 		{"/companyInfo.do"},						//hrLeftMenu[4]
@@ -23,14 +23,18 @@ String hrSubLinkLeftMenu [][] = {
 
 String uri = request.getRequestURI();
 String currentPageName = uri.substring(uri.lastIndexOf("/") + 1).replace(".jsp","");
-Boolean openMenuFlag = false;
+String currentRootName = uri.replace("/WEB-INF/views/hr/","");
+//currentRootName = currentRootName.substring(0, currentRootName.indexOf("/"));
+
+Boolean menuFlag1 = false;
+Boolean menuFlag2 = false;
 %>
 <!DOCTYPE html>
 <html>
 	<!-- 대분류별 영역 시작 -->
 	<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 		
-		<div data-kt-menu-trigger="click" class="menu-item pt-5 menu-item menu-accordion">
+		<div data-kt-menu-trigger="click" class="menu-item pt-5 menu-item menu-accordion hover show">
 
 			<!-- 대분류 타이틀 영역 시작 ------------------------------------------------------------------------->
 			<span class="menu-link">
@@ -48,10 +52,10 @@ Boolean openMenuFlag = false;
 
 
 			<!-- 중분류 영역 시작 ********************************************************************************-->
-			<div class="menu-sub menu-sub-accordion  show" style="display: none; overflow: hidden;">
+			<div class="menu-sub menu-sub-accordion">
 			<%for(int i=0;i<hrLeftMenu.length;i++){ %>
 				<!-- 중분류 1 시작 -->
-				<div  data-kt-menu-trigger="click" class="menu-item menu-accordion">
+				<div  data-kt-menu-trigger="click" class="menu-item menu-accordion hover show">
 
 					<!-- 중분류1 메뉴링크 시작 -->
 					<span class="menu-link">
@@ -70,16 +74,16 @@ Boolean openMenuFlag = false;
 					<!-- 소분류 영역 시작 ========================================================-->
 					
 				<%
-				openMenuFlag = false;
+				menuFlag2 = false;
 				for(int j=0;j<hrSubLeftMenu[i].length;j++){ 
 					if(hrSubLinkLeftMenu[i][j].indexOf(currentPageName)>=0){
-						openMenuFlag = true;
+						menuFlag2 = true;
 					}
 				}
 
-				if(openMenuFlag == true){
+				if(menuFlag2 == true){
 				%>
-					<div class="menu-sub menu-sub-accordion show" style="">
+					<div class="menu-sub menu-sub-accordion hover show" style="">
 				<%
 				}else{
 				%>

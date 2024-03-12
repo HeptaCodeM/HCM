@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.7.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- loginService 사용자 정보 DAO 처리 시 필요함 -->
+	<context:component-scan base-package="com.hcm.grw" />
+
+	<!-- 접근권한 미만 처리로직 Handler -->
+	<bean id="customAccessDenied" class="com.hcm.grw.config.CustomAccessDeniedHandler"/>
+	<!-- 로그인 성공 시 처리로직 Handler -->
+	<bean id="customLoginSuccess" class="com.hcm.grw.config.CustomLoginSuccessHandler" />
+	<!-- Spring Security API제공 암호화 -->
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<!-- 로그인 처리 서비스 -->
+	<bean id="loginService" class="com.hcm.grw.config.LoginService" />
+    <!-- HttpFirewall 빈을 정의합니다. -->
+    <bean id="httpFirewall" class="org.springframework.security.web.firewall.StrictHttpFirewall">
+        <property name="allowUrlEncodedDoubleSlash" value="true"/>
+    </bean>
+	
+	<!--
+	security:http : http 요청처리를 위한 보안구성 정의 
+	auto-config="true" : Spring Security 보안설정을 자동으로 구성 적용처리
+	-->
+	<security:http auto-config="true" use-expressions="true">
+		<!-- 접근제한 설정 : URL 단위로 매핑 -->
+		<!-- 모든 사용자 접근 권한 -->
+		<!-- <security:intercept-url pattern="/login.*" access="permitAll" /> -->
+		<security:intercept-url pattern="/main*.do" access="permitAll" />
+		<security:intercept-url pattern="/assets/**" access="permitAll" />
+		<security:intercept-url pattern="/images/**" access="permitAll" />
+		<!-- 에러페이지 접근 권한 -->
+		<security:intercept-url pattern="/error*.do" access="permitAll" />
+		<security:intercept-url pattern="/WEB-INF/error/error*.jsp" access="permitAll" />
+
+		<!-- 시스템 권한 -->
+		<!-- <security:intercept-url pattern="/system.do" access="hasRole('SYS_ADMIN')" /> -->
+		<security:intercept-url pattern="/sys/*admin*.do" access="hasRole('SYS_ADMIN')" />
+		<!-- 인사관리자 접근 권한 -->
+		<!-- <security:intercept-url pattern="/hr/*admin*.do" access="hasAnyRole('HR_ADMIN')" /> -->
+		<security:intercept-url pattern="/hr/*admin*.do" access="hasAnyRole('HR_ADMIN')" />
+		<!-- 일정관리자 접근 권한 -->
+		<!-- <security:intercept-url pattern="/sm/*admin*.do" access="hasAnyRole('SC_ADMIN')" /> -->
+		<security:intercept-url pattern="/sm/*admin*.do" access="hasAnyRole('SC_ADMIN')" />
+		<!-- 결재관리자 접근 권한 -->
+		<!-- <security:intercept-url pattern="/doc/*admin*.do" access="hasAnyRole('DOC_ADMIN')" /> -->
+		<security:intercept-url pattern="/doc/*admin*.do" access="hasAnyRole('DOC_ADMIN')" />
+		<!-- 일반회원 접근 권한 -->
+		<!-- <security:intercept-url pattern="/hr/*" access="isAuthenticated()" />
+		<security:intercept-url pattern="/sm/*" access="isAuthenticated()" />
+		<security:intercept-url pattern="/doc/*" access="isAuthenticated()" /> -->
+		<security:intercept-url pattern="/hr/*" access="permitAll" />
+		<security:intercept-url pattern="/sm/*" access="permitAll" />
+		<security:intercept-url pattern="/doc/*" access="permitAll" />
+
+		<!-- 
+		login-page : 로그인 Custom Page 설정
+		authentication-success-handler-ref : 로그인 성공handler 이동, 처리 로직 
+		-->
+		<security:form-login login-page="/login.do" 
+							 authentication-success-handler-ref="customLoginSuccess" />
+		
+		<!-- AccessDeniedHandler 등록 -->
+		<security:access-denied-handler ref="customAccessDenied" />
+	
+		<!-- 
+		logout 처리 
+		logout-url			: 로그아웃 처리 URL
+		logout-success-url	: 로그아웃 후 이동 Url
+		invalidate-session	: 로그아웃 시 session을 무효화할 지 선택
+		-->
+		<security:logout logout-url="/logout.do"
+						 logout-success-url="/login.do" 
+						 invalidate-session="true" />
+
+		<!-- csrf 사용여부(사이트간 위변조 방지를 위한 처리 - true : 미사용) -->
+		<security:csrf disabled="true" />
+		
+		<!-- 
+		key						: token 생성용 키값
+		token-validity-seconds	: token의 유효 시간(10일)
+		remember-me-parameter	: 로그인 화면에서 전달되는 remember-me 파라미터
+		-->
+		<security:remember-me key="HCM"
+							  token-validity-seconds="864000" 
+							  remember-me-parameter="remember-me"/>
+	</security:http>
+
+
+	<!-- HttpFirewall 빈을 등록합니다. -->
+	<security:http-firewall ref="httpFirewall"/>
+
+
+	<security:authentication-manager>
+		<!-- loginService 인증 프로세스로 위임 -->
+		<security:authentication-provider user-service-ref="loginService">
+			<!-- Spring Security 암호화 bcryptPasswordEncoder 참조 -->
+			<security:password-encoder ref="bcryptPasswordEncoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+</beans>

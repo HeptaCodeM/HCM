@@ -19,4 +19,6 @@ public interface EmpSignDao {
 	
 	public int setUnDefaultSign(Map<String, Object> map);
 	
+	public int setAllDefaultSign(Map<String, Object> map);
+	
 }
