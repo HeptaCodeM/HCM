@@ -45,7 +45,7 @@ td>img {
 			</div>
 			
 			<!-- 로그인세션영역 -->
-			<input type="hidden" value="${loginInfo.empl_id }" id="empl_id"> 
+			<input type="hidden" value="${loginInfo.empl_id}" id="empl_id"> 
 			<input type="hidden" value="${loginInfo.coco_name_rnm}" id="positionFlag">
 			<!-- OJS -->	
 			<div class="app-container container-fulid">
