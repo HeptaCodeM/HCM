@@ -7,7 +7,8 @@
 </head>
 <body>
 	<div>
-		Hello World!!!
+		Hello World!!!<br>
+		로그인 아이디 : ${getId} (/index.do로 접근)
 	</div>
 	<div>
 
