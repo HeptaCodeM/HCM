@@ -32,7 +32,7 @@
 	.btnMd{
 		width: 100px;
 		height: 32px;
-		line-height: 14px;
+		line-height: 12px;
 	}
 	
 	.btnSm{

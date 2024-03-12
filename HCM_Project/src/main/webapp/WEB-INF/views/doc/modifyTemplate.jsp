@@ -59,12 +59,13 @@
 			결재 구분 : <select id="selectCategory" name="sica_cd"></select>
 		</div>
 			<h3>제목 <input type="text" name="sidt_temp_name" value="${temDto.sidt_temp_name }"></h3>
+			<input type="hidden" name="sidt_temp_cd" value="${temDto.sidt_temp_cd }">
 			<textarea id="editor" name="sidt_temp_content">${temDto.sidt_temp_content}</textarea>
-		</form>
 		<div class="btn">
 <!-- 		<input type="button" onclick="updateTemplate()" value="수정완료"> -->
 		<input type="submit" value="수정완료"> 
 		</div>
+		</form>
 		</div>
 						</div>
 						

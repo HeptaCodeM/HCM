@@ -1,0 +1,80 @@
+	#container{
+		width: 100%;
+		margin: 50px auto;
+	}
+	#container>h1, h3{
+		color: gray;
+		margin: 0px;
+		padding: 20px 0px;
+	}
+	#category{
+		color: gray;
+		margin: 0px;
+		padding-top: 20px;
+		font-size: 22px;
+	}
+	
+	h3>input {
+		width: 100%;
+		padding: 5px;
+		border: 1px solid gray;
+	}
+	
+	.ck-content {
+		height: 600px;
+	}
+	
+	.ck-editor__editable {
+	    max-height: 1200px;
+	}
+	
+	.ck-editor p {
+	  margin-block-start: 0.5em;
+	  margin-block-end: 0.5em;
+	}
+	
+	.ck-content p {
+	  margin-block-start: 0.5em;
+	  margin-block-end: 0.5em;
+	}
+	
+	.ck-editor__editable img {
+	  width: 300px; /* 원하는 가로 크기로 조절 */
+	  height: auto; /* 세로 크기를 자동으로 조절하여 비율 유지 */
+	  display: block; /* 이미지를 블록 요소로 설정하여 다른 요소와의 간격을 조절할 수 있도록 함 */
+	  margin-left: auto; /* 왼쪽 여백을 자동으로 설정하여 가운데 정렬 */
+	  margin-right: auto; /* 오른쪽 여백을 자동으로 설정하여 가운데 정렬 */
+	}
+	
+	.ck-content .image.image_resized {
+	    display: block;
+	    box-sizing: border-box;
+	}
+	
+	.ck-content .image.image_resized img {
+	    width: 100%;
+	}
+	
+	.ck-content .image.image_resized > figcaption {
+	    display: block;
+	}
+	
+	.ck.ck-content .image {
+	    position: relative;
+	}
+	.ck.ck-content .image img {
+	    position: absolute;
+	    left: 0;
+	    top: 0;
+	    width: 100%;
+	    height: 100%;
+	    object-fit: cover;
+	    border-radius: 50%;
+	}
+	.ck.ck-content .image::before {
+	    content: '';
+	    padding-top: 100%;
+	    display: block;
+	}
+	
+	
