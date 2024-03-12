@@ -21,8 +21,9 @@ GOBO_WRITER, GOBO_WRITER_ID, GOBO_REGDATE, GOBO_MODIFY_ID,
 GOBO_MODIFY_DATE, GOBO_DELFLAG, GOBO_BIGO
 FROM ADMIN.GONGJI_BOARD
 WHERE GOBO_NO = #{gobo_no}
-
 </select>
+
+
 
 
 
@@ -42,7 +43,7 @@ INSERT INTO ADMIN.GONGJI_BOARD
 GOBO_WRITER, GOBO_WRITER_ID, GOBO_REGDATE, GOBO_MODIFY_ID, 
 GOBO_MODIFY_DATE, GOBO_DELFLAG, GOBO_BIGO)
 VALUES((SELECT NVL(MAX(GOBO_NO)+1,0) FROM GONGJI_BOARD), #{gobo_title}, #{gobo_content}, 0, 
-#{gobo_writer}, #{gobo_writer_id}, TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') , #{gobo_writer_id}, TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
+#{gobo_writer}, #{gobo_writer_id}, CURRENT_TIMESTAMP , #{gobo_writer_id}, CURRENT_TIMESTAMP,
  'N' , #{gobo_bigo})
 </insert>
 
@@ -62,7 +63,7 @@ WHERE GOBO_NO= #{gobo_no}
 <update id="updateGobo">
 UPDATE ADMIN.GONGJI_BOARD
 SET GOBO_TITLE = #{gobo_title},GOBO_CONTENT = #{gobo_content},
-GOBO_MODIFY_ID = #{gobo_modify_id},GOBO_MODIFY_DATE = TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'),
+GOBO_MODIFY_ID = #{gobo_modify_id},GOBO_MODIFY_DATE = TO_DATE(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS'),
 GOBO_BIGO = #{gobo_bigo}
 WHERE GOBO_NO = #{gobo_no}
 </update>
