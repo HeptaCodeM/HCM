@@ -2,7 +2,10 @@ package com.hcm.grw.ctrl.doc;
 
 import java.util.List;
 
+<<<<<<< HEAD
 import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
+=======
+>>>>>>> branch 'doc' of https://github.com/HeptaCodeM/HCM.git
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -30,8 +33,11 @@ public class SignPageController {
 	}
 	
 	@GetMapping("signFavo.do")
-	public String signFavo() {
+	public String signFavo(Authentication auth, Model model) {
 		log.info("SignTreeController signFavo.do GET 결재선 관리 페이지");
+		List<String> list = List.of(auth.getName());
+		List<EmployeeDto> loginInfo = service.getFav(list);
+		model.addAttribute("loginInfo", loginInfo.get(0));
 		return "doc/signFavo";
 	}
 	
