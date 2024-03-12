@@ -116,6 +116,19 @@ public class DocBoxDaoImpl implements IDocBoxDao {
 	}
 
 
+	@Override
+	public List<SignBoxDto> getAllDocsTable(SignBoxDto dto) {
+		return sqlSessionTemplate.selectList(NS+"getAllDocsTable",dto);
+	}
+
+
+	@Override
+	public List<SignBoxDto> getAllDocsJson(SignBoxDto dto) {
+		return sqlSessionTemplate.selectList(NS+"getAllDocsJson",dto);
+
+	}
+
+
 	
 
 }

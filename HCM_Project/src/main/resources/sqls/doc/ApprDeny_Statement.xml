@@ -69,7 +69,7 @@
 	<update id="denyDoc">
 
 		UPDATE SIGN_DOC_BOX
-		SET SIDB_DOC_STAT = '4'
+		SET SIDB_DOC_STAT = '4', SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_FLAG = '2'
 		WHERE
 		SIDB_DOC_NUM = #{sidb_doc_num}
 

@@ -5,13 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<title>SM메인화면</title>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
-<script type="text/javascript" src="/js/sm/calendar.js"></script>
+<title>증명서출력화면</title>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -28,7 +22,7 @@
 					<!--begin::Page title-->
 					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 						<!--begin::Title-->
-						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">캘린더</h1>
+						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">제목이 여기에 들어가요!</h1>
 						<!--end::Title-->
 					</div>
 					<!--end::Page title-->
@@ -39,14 +33,13 @@
 				<div id="kt_app_content" class="app-content flex-column-fluid">
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
-							<div class="card-body pt-5">
-							
-							<div id="calendar"></div>
-							
-							
+							<div class="card-header pt-5">
+								<h3 class="card-title text-gray-800 fw-bold">소제목? 들어갑니다</h3>
 							</div>
-							
-							
+							<div class="separator separator-dashed my-3"></div>	
+							<div class="card-body pt-5" >
+								${boxDto}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -54,6 +47,7 @@
 			</div>
 		</div>
 			
-<%@include file="/WEB-INF/views/menu/smSideMenu.jsp" %>		
+<%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
+<script src="/js/common.js"></script>
 </body>
 </html>

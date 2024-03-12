@@ -7,24 +7,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<%@include file="/WEB-INF/views/menu/headerInfo.jsp"%>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />	
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
-<%@include file="/WEB-INF/views/menu/headerInfo.jsp"%>
 <title>결재문서함메인화면</title>
 </head>
+
 <%@include file="/WEB-INF/views/menu/header.jsp"%>
-<style>
-.container {
-	width: 80%;
-	height: 80%;
-	margin: 0 auto;
-}
-
-
-</style>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
 	data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true"
 	data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true"
@@ -58,9 +47,8 @@
 							<h3 class="card-title text-gray-800 fw-bold">결재문서</h3>
 						</div>
 						<div class="separator separator-dashed my-3"></div>
-						<div class="card-body pt-5">
+						<div class="card-body pt-5" style="height: 80%;">
 
-							<div class="container">
 
 								<table id="myTable" class="cell-border stripe hover">
 									<thead>
@@ -75,10 +63,15 @@
 									<tbody>
 										<c:forEach var="dto" items="${lists}">
 											<tr>
-												<td>${dto.sidb_doc_writedt}</td>
-												<td>${dto.sidb_doc_title}</td>
-												<td>템플릿코드조인 추가 예정</td>
-												<td>진행상태 프로그래스바</td>
+												<td>
+												<fmt:parseDate var="patternDate"
+                              value="${dto.sidb_doc_writedt}"
+                              pattern="yyyy-MM-dd HH:mm:ss" />
+                           <fmt:formatDate value="${patternDate}" pattern="yyyy년 MM월 dd일" />
+										 </td>
+												<td><a href="#" onclick="detailBoard('${dto.sidb_doc_num}')">${dto.sidb_doc_title}</a></td>
+												<td>결재템플릿이 될거야</td>
+												<td>나는 커서 프로그래스바가 될거야</td>
 												<td>${dto.empl_name}</td>
 											</tr>
 										</c:forEach>
@@ -86,7 +79,6 @@
 								</table>
 
 
-							</div>
 						</div>
 					</div>
 				</div>
@@ -101,6 +93,14 @@
 
 </body>
 <script type="text/javascript">
+
+function detailBoard(docNum) {
+    // Constructing the URL with the parameter
+    var url = '/doc/getDetail.do?docNum=' + encodeURIComponent(docNum);
+    // Redirecting to the URL
+    window.location.href = url;
+}
+
 $(document).ready( function () {
 	$('#myTable').DataTable({ 
 
@@ -122,9 +122,9 @@ $(document).ready( function () {
         searching: true, // 검색 기능 
         ordering: true, // 정렬 기능
         paging:true, // 페이징 기능 
-        lengthChange: true, //  좌상단 몇 건씩 볼지 정하는 기능
+        lengthChange: false, //  좌상단 몇 건씩 볼지 정하는 기능
    //   order: [ [ 3, "desc" ], [ 1, "asc"] ], //첫 화면 출력시 정렬 기준  + 안할시 첫 열을 기준으로 정렬하는듯
-   	    autoWidth: true,    //자동 열 조정
+   	//    autoWidth: true,    //자동 열 조정
    //  	columnDefs: [{ targets: 3, width: 10 }], //열의 너비 조절 0,1,2,3 순임
 //      displayLength: 20, //처음에 몇 건을 볼지 
 		lengthMenu: [ 5, 10, 15 ], //몇개씩 볼지(기본값 10, 25, 50, 100)

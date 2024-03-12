@@ -47,11 +47,14 @@ function deleteRole(){
 
 
 function checkTest(){
-	   let chk = document.getElementById("coco_name").value;
-	   console.log(chk.length);
-	   if(chk.length >=6){
-		   
-	   }
+		let chk = document.getElementById("coco_name").value;
+		console.log(chk.length);
+		let innerTextVal = document.getElementById("coco_nameSpan");
+		if(chk.length > 5){
+			innerTextVal.innerText = "성공";
+		}else{
+			innerTextVal.innerText = "한글 6글자 이내로 입력해주세요!";
+		}
 }
 </script>
 <c:choose>
@@ -92,7 +95,7 @@ function checkTest(){
 							<form action="./correctionRole.do" onsubmit="return checkNameValue()" method="post">
 								<div class="card-body pt-5">
 									${thisRole}명<input id="coco_name" name="coco_name" onkeypress="checkTest()" class="form-control form-control-solid" type="text" maxlength="6" value="${roleDto.getCoco_name()}">
-										<span class="fs-6 text-muted">한글 6글자 이내로 입력해주세요!</span><br>
+										<span id="coco_nameSpan" class="fs-6 text-muted">한글 6글자 이내로 입력해주세요!</span><br>
 									${thisRole}코드<input id="coco_cd" name="coco_cd" class="form-control form-control-solid" type="text" value="${roleDto.getCoco_cd()}" readonly="readonly">
 									<input type="hidden" id="role" name="role" value="${role}">
 								</div>

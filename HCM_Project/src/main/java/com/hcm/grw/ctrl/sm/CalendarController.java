@@ -22,7 +22,7 @@ public class CalendarController {
 	@GetMapping("calendar.do")
 	public String calendar(){
 		log.info("CalendarController 캘린더 화면 이동");
-		return "calendar";
+		return "sm/schedule/calendar";
 	}
 	
 }
