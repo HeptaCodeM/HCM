@@ -33,7 +33,7 @@ public class DocController {
 		return "/doc/boardDetail";
 	}
 	
-	
+	 
 	@GetMapping(value="/doc/docBox.do")
 	public String jobs(Model model) {
 	log.info("결재함 진입");
