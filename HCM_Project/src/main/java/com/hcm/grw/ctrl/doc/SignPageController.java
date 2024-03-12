@@ -2,6 +2,10 @@ package com.hcm.grw.ctrl.doc;
 
 import java.util.List;
 
+<<<<<<< HEAD
+import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
+=======
+>>>>>>> branch 'doc' of https://github.com/HeptaCodeM/HCM.git
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -41,5 +45,14 @@ public class SignPageController {
 	public String signRefer() {
 		log.info("SignTreeController signRefer.do GET 참조 등록 페이지");
 		return "doc/signRefer";
+	}
+	
+	@GetMapping("writeDoc.do")
+	public String writeDoc(Authentication auth, Model model) {
+		String id = auth.getName();
+		List<String> list = List.of(id);
+		List<EmployeeDto> dto = service.getFav(list);
+		model.addAttribute("loginInfo", dto.get(0));
+		return "writeDoc";
 	}
 }

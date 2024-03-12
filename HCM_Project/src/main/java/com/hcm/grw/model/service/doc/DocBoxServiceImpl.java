@@ -89,4 +89,24 @@ public class DocBoxServiceImpl implements IDocBoxService {
 		int m = dao.finalDocApprove(dto);
 		return (n+m)>1?true:false;
 	}
+	
+	//문서 조회 테이블+json 동시 트랜잭션
+	@Transactional(readOnly = true)
+	public boolean getDocs(SignBoxDto dto) {
+		
+	 List<SignBoxDto> table=dao.getAllDocsTable(dto);
+	 List<SignBoxDto> json=	dao.getAllDocsJson(dto);
+		
+	 int n = 0;
+	 int m = 0;
+
+	 if (table != null) {
+		  n = 1;
+		 }
+	 if (json != null) {
+		  m = 1;
+		 }
+		
+		return (n+m)>1?true:false;
+	}
 }	

@@ -94,7 +94,7 @@ th, td {
 											<c:forEach items="${docDto}" var="dt" varStatus="i">
 												<td><c:choose>
 													<%-- 	<c:when test="${empty dt.appr_sign}"> --%>
-														<c:when test="${dt.appr_sign == null || dt.appr_sign ==' '}">
+														<c:when test="${dt.appr_sign == null || dt.appr_sign ==' '|| dt.appr_sign ==''}">
             											    &nbsp;
          											   </c:when>
 														<c:otherwise>

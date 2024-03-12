@@ -34,9 +34,7 @@ public class SignDocBoxDto {
 	private String empl_dept_cd;
 	private String sidb_doc_be;
 	private String sidb_doc_end;
-
-	private SignCategoryDto sDto;
-	private SignDocTempDto sdtDto;
-	private EmployeeDto eDto;
 	
+	private String sica_name;
+	private String sidt_temp_name;
 }
