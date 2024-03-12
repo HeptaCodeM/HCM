@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.model.service.doc.IDocBoxService;
-import com.min.edu.vo.JobsVo;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,37 +69,18 @@
 				<!--begin::Wrapper-->
 				<div class="w-lg-500px p-10">
 					<!--begin::Form-->
-					<form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="index.html" action="#">
+					<form class="form w-100" method="post" action="/login">
 						<!--begin::Heading-->
 						<div class="text-center mb-11">
 							<!--begin::Title-->
 							<h1 class="text-gray-900 fw-bolder mb-3">로그인</h1>
 							<!--end::Title-->
-							<!--begin::Subtitle-->
-							<div class="text-gray-500 fw-semibold fs-6">소셜 로그인</div>
-							<!--end::Subtitle=-->
+							<div>
+								<h2 style="color:red;"><c:out value="${error}" /></h2>
+								<h2 style="color:red;"><c:out value="${logout}" /></h2>
+							</div>
 						</div>
 						<!--begin::Heading-->
-						<!--begin::Login options-->
-						<div class="row g-3 mb-9">
-							<!--begin::Col-->
-							<div class="col-md-6">
-								<!--begin::Google link=-->
-								<a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-								<img alt="Logo" src="assets/media/svg/brand-logos/google-icon.svg" class="h-15px me-3" />Google 계정으로 로그인</a>
-								<!--end::Google link=-->
-							</div>
-							<!--end::Col-->
-							<!--begin::Col-->
-							<div class="col-md-6">
-								<!--begin::Google link=-->
-								<a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
-								<img alt="Logo" src="image/miniNaver.png" class="theme-light-show h-15px me-3" />Naver 계정으로 로그인</a>
-								<!--end::Google link=-->
-							</div>
-							<!--end::Col-->
-						</div>
-						<!--end::Login options-->
 						<!--begin::Separator-->
 						<div class="separator separator-content my-14">
 							<span class="w-200px text-gray-500 fw-semibold fs-7">HCM 계정로그인</span>
@@ -108,7 +89,7 @@
 						<!--begin::Input group=-->
 						<div class="fv-row mb-8">
 							<!--begin::Email-->
-							<input type="text" placeholder="아이디" name="id" autocomplete="off" class="form-control bg-transparent" />
+							<input type="text" placeholder="아이디" name="username" autocomplete="off" class="form-control bg-transparent" />
 							<!--end::Email-->
 						</div>
 						<!--end::Input group=-->
@@ -128,19 +109,32 @@
 						<!--end::Wrapper-->
 						<!--begin::Submit button-->
 						<div class="d-grid mb-10">
-							<button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
+							<button class="btn btn-primary">
 								<!--begin::Indicator label-->
 								<span class="indicator-label">로그인</span>
 								<!--end::Indicator label-->
-								<!--begin::Indicator progress-->
-								<span class="indicator-progress">로그인중... 
-								<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-								<!--end::Indicator progress-->
 							</button>
 						</div>
 						<!--end::Submit button-->
+
+						<!-- 사이트간 위변조 방지를 위한 CSRF 처리 -->
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 					</form>
 					<!--end::Form-->
+
+					<!--begin::Login options-->
+					<div class="row g-3 mb-9">
+						<!--begin::Col-->
+						<div class="col-md-6">
+							<!--begin::Google link=-->
+							<a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
+							<img alt="Logo" src="image/miniNaver.png" class="theme-light-show h-15px me-3" />Naver 계정으로 로그인</a>
+							<!--end::Google link=-->
+						</div>
+						<!--end::Col-->
+					</div>
+					<!--end::Login options-->
+
 				</div>
 				<!--end::Wrapper-->
 			</div>
