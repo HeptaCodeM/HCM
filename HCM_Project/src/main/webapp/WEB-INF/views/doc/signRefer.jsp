@@ -166,8 +166,11 @@ td>img {
 												</tr>
 											</tbody>
 										</table>
-								
-								
+										<br><br>
+										<div style="text-align: center;">
+											<button class="btn btnMd btn-primary" id="">저장</button>
+											<button class="btn btnMd btn-primary" id="">닫기</button>
+										</div>
 									</div>
 								</div>
 							</div>

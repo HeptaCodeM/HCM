@@ -1,8 +1,16 @@
 package com.hcm.grw.ctrl.doc;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.model.service.doc.ISignFavoService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,6 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("doc/")
 public class SignPageController {
 	
+	@Autowired
+	private ISignFavoService service;
+	
 	@GetMapping("write.do")
 	public String write() {
 		log.info("SignTreeController write.do GET 문서작성 페이지");
@@ -18,8 +29,11 @@ public class SignPageController {
 	}
 	
 	@GetMapping("signFavo.do")
-	public String signFavo() {
+	public String signFavo(Authentication auth, Model model) {
 		log.info("SignTreeController signFavo.do GET 결재선 관리 페이지");
+		List<String> list = List.of(auth.getName());
+		List<EmployeeDto> loginInfo = service.getFav(list);
+		model.addAttribute("loginInfo", loginInfo.get(0));
 		return "doc/signFavo";
 	}
 	

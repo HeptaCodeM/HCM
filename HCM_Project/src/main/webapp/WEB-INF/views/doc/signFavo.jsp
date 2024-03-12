@@ -45,9 +45,8 @@ td>img {
 			</div>
 			
 			<!-- 로그인세션영역 -->
-			<input type="hidden" value="20230108" id="empl_id"> 
-			<input type="hidden" value="대리" id="positionFlag">
-			
+			<input type="hidden" value="${loginInfo.empl_id }" id="empl_id"> 
+			<input type="hidden" value="${loginInfo.coco_name_rnm}" id="positionFlag">
 			<!-- OJS -->	
 			<div class="app-container container-fulid">
 				<div class="row gx-5 gx-xl-10">
@@ -104,18 +103,18 @@ td>img {
 												<tr>
 													<td></td>
 													<td>
-														<input class="form-control form-control-solid" value="전민균">
+														<input class="form-control form-control-solid" value="${loginInfo.empl_name}">
 													</td>
 													<td>
-														<input class="form-control form-control-solid" value="인턴">
+														<input class="form-control form-control-solid" value="${loginInfo.coco_name_rnm}">
 													</td>
 													<td>
-														<input class="form-control form-control-solid" value="개발팀">
+														<input class="form-control form-control-solid" value="${loginInfo.coco_name_dnm}">
 													</td>
 													<td>
-														<input class="form-control form-control-solid" value="기안자">
+														<input class="form-control form-control-solid" value="본인">
 													</td>
-													<td style="display: none;" id="empl_id"></td>
+													<td style="display: none;"></td>
 												</tr>
 												<tr>
 													<td>

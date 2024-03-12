@@ -330,7 +330,7 @@ $().ready(function() {
 					return {
 						m1: {
 							label: '결재자 지정',
-							icon: 'fas fa-user',
+							icon: 'ki-solid ki-notepad-edit',
 							// 결재자 지정 로직
 							action: function() {
 								
@@ -440,7 +440,7 @@ $().ready(function() {
 						},
 						m2: {
 							label: '즐겨찾기 추가',
-							icon: 'fas fa-star',
+							icon: 'ki-duotone ki-star',
 							// 즐겨찾기 등록 
 							action: function(e) {
 								console.log(e);
@@ -478,7 +478,8 @@ $().ready(function() {
 				method : 'get',
 				dataType : 'json',
 				success : function(data) {
-					data.forEach(function(node) {
+					data.forEach(function(node, idx) {
+						
 						if(node.pos_na != undefined) {
 							if(myPositionFlag > node.pos_flag) {
 								node.text = node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;<span class="positionFlag" style="display: none;">' + node.pos_flag + '</span>';
@@ -490,6 +491,7 @@ $().ready(function() {
 						if(myPositionFlag > parseInt(node.pos_flag) && node.pos_na != null) {
 							node.state = {disabled : true};
 						}
+						
 					});
 					
 					
@@ -536,6 +538,17 @@ $().ready(function() {
 		$('#de3').val(3);
 
 	});
+	
+	// 로그인한 본인 아이디 숨김
+	setTimeout(function () {
+		var empl_id = document.getElementById('empl_id').value;
+		var allNode = $('#jstree').jstree('get_json', '#', { flat: true });
+		var sel = allNode.find(function(node) {
+			return node.id == empl_id;
+		})
+		$('#jstree').jstree('hide_node', sel);
+	}, 1000)
+	
 	
 	// 결재자 리스트를 json형태로 저장
 	$('#addLine').on('click', function(e) {
