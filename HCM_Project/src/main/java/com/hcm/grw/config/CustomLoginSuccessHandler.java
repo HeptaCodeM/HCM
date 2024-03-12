@@ -35,12 +35,6 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
 		log.info("ROLE NAME : {}", roleNames);
 
-		// 시스템 관리자 로그인 시
-		if(roleNames.contains("SYSADMIN")) {
-			response.sendRedirect("/system.do");
-			return;
-		}
-		
 		// 로그인 성공 시 메인화면 이동
 		if(authentication.isAuthenticated()) {
 			response.sendRedirect("/mainTmp.do");
