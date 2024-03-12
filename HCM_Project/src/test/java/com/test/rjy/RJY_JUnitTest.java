@@ -138,7 +138,7 @@ public class RJY_JUnitTest {
 
 	
 	//상세조회 리스트방식
-	@Test
+	//@Test
 	public void getDetailDocsList() {
 		String sidb_doc_num = "24000003";
 		List<SignBoxDto> dto = sessionTemplate.selectList(NS + "getDetailDocsList", sidb_doc_num);
@@ -222,15 +222,15 @@ public class RJY_JUnitTest {
 	  SignBoxDto dto = new SignBoxDto();
 	 
 	  
-	  dto.setSidb_doc_num("24000001");
+	  dto.setSidb_doc_num("24000003");
 	 
 	  List<SignBoxDto> table=dao.getAllDocsTable(dto);
 		 List<SignBoxDto> json=	dao.getAllDocsJson(dto);
 		 
+		 System.out.println("나는테이블"+table.get(0));
+		 System.out.println("나는json@@@@@"+json.get(1));
 	  boolean result = service.getDocs(dto); 
 
-	  System.out.println(table);
-	  System.out.println(json);
 	  assertTrue(result); 
 	  
 	  }
