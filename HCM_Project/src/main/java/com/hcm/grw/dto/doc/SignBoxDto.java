@@ -52,4 +52,6 @@ public class SignBoxDto {
 	private String string_index = Integer.toString(turn_index);
 	private String emsi_seq;
 	private String sidt_temp_name;
+	private String appr_name1;
+	private String appr_name2;
 }

@@ -231,6 +231,22 @@ public class RJY_JUnitTest {
 		 System.out.println("나는json@@@@@"+json.get(1));
 	  boolean result = service.getDocs(dto); 
 
+	  //합치기
+	  List<SignBoxDto> fusion = new ArrayList<>();
+	  SignBoxDto table1 = table.get(0);
+	  SignBoxDto json1 = json.get(0);
+	  SignBoxDto json2 = json.get(1);
+	  
+	   SignBoxDto fusionResult = new SignBoxDto();
+	   fusionResult.setSidb_doc_num(table1.getSidb_doc_num());
+	   fusionResult.setSidb_doc_title(table1.getSidb_doc_title());
+	   fusionResult.setSidb_doc_writedt(table1.getSidb_doc_writedt());
+	   fusionResult.setEmpl_name(table1.getEmpl_name());
+	   fusionResult.setAppr_name(json1.getAppr_name());
+	   fusionResult.setAppr_name1(json2.getAppr_name());
+	    fusion.add(fusionResult);
+	    System.out.println("제발!!!!!!!!!성공!!!!!!!!!"+fusion.get(0));
+	  
 	  assertTrue(result); 
 	  
 	  }
