@@ -87,7 +87,7 @@ Boolean menuFlag2 = false;
 				<%
 				}else{
 				%>
-					<div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;">
+					<div class="menu-sub menu-sub-accordion" style="display: block; overflow: hidden;">
 				<%
 				}
 				%>
