@@ -8,7 +8,10 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,8 +41,10 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeListDao employeeListDao;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
-	@GetMapping("/hr/employee/regist.do")
+	@GetMapping("/hr/employee/registAdmin.do")
 	public String registEmployee(Model model) {
 		log.info("EmployeeController registEmployee 진입");
 		
@@ -60,11 +65,11 @@ public class EmployeeController {
 		model.addAttribute("rankList", rankList);
 		model.addAttribute("positionList", positionList);
 		
-		return "/hr/employee/regist";
+		return "/hr/employee/registAdmin";
 	}
 
-	@PostMapping("/hr/employee/regist.do")
-	public @ResponseBody void registEmployeeOk(EmployeeDto emp, HttpServletResponse resp) throws IOException {
+	@PostMapping("/hr/employee/registAdmin.do")
+	public @ResponseBody void registEmployeeOk(EmployeeDto emp, HttpServletResponse resp, Authentication authentication) throws IOException {
 		log.info("EmployeeController registEmployeeOk 등록처리");
 		
 		resp.setContentType("text/html;charset=utf-8;");
@@ -74,11 +79,11 @@ public class EmployeeController {
 
         // 8자리 숫자 생성
         int randomNumber = random.nextInt(90000000) + 10000000;
-        emp.setEmpl_pwd(String.valueOf(randomNumber));
+        emp.setEmpl_pwd(passwordEncoder.encode(String.valueOf(randomNumber)));
         String birth = emp.getEmpl_birth();
         emp.setEmpl_birth(birth.replace("-", ""));
         emp.setEmpl_auth("ROLE_USER");
-        emp.setEmpl_create_id("20220101");
+        emp.setEmpl_create_id(authentication.getName());
         
 		log.info("등록값 : {}", emp);
 		
