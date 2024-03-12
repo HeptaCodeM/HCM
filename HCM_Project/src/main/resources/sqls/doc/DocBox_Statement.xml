@@ -41,6 +41,39 @@
 		SDB.EMPL_ID =
 		#{empl_id}
 	</select>
+	
+	<!-- 전체문서함 조회 수정1 본테이블만 가져오기-->
+<select id="getAllDocsTable" resultType="SignBoxDto">	
+SELECT SDB.SIDB_DOC_NUM,
+    SDB.SIDB_DOC_WRITEDT, SDB.SIDB_DOC_TITLE, SDB.SIDB_DOC_CONTENT,
+    SDB.SICA_CD, SDB.SIDB_DOC_EXPIREDT, SDB.SIDB_DOC_FLAG,
+    SDB.SIDB_DOC_APPRDT, SDB.SIDB_DOC_STAT, SDB.EMPL_REF AS EMPLOYEE_REF,
+    SDB.EMPL_DEPT_CD, SDB.SIDB_DOC_JSON, SDB.EMPL_ID, E.EMPL_NAME AS 기안자, 
+    e.EMPL_PICTURE AS 프로필, t.SIDT_TEMP_NAME, t.SIDT_TEMP_CD  
+FROM SIGN_DOC_BOX sdb
+JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
+JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD 
+WHERE sdb.EMPL_ID = 20230107;
+</select>
+	
+	
+	<!-- 전체문서함 조회 수정1-1 json컬럼만 가져오기 -->
+<select id="getAllDocsJson" resultType="SignBoxDto">	
+	SELECT sdb.SIDB_DOC_NUM, APPR_id, E2.EMPL_NAME AS 결재자, appr_depth AS
+	결재순번
+	FROM SIGN_DOC_BOX sdb
+	CROSS JOIN JSON_TABLE(SDB.SIDB_DOC_JSON, '$[*]' COLUMNS (
+	APPR_ID PATH '$.APPR_ID',
+	APPR_DEPTH INT PATH '$.APPR_DEPTH',
+	APPR_SIGN PATH '$.APPR_SIGN',
+	APPR_DT PATH '$.APPR_DT',
+	APPR_FLAG PATH '$.APPR_FLAG',
+	APPR_REPLY PATH '$.APPR_REPLY'
+	)) j
+	JOIN EMPLOYEE e2 ON e2.EMPL_ID = j.appr_id
+	WHERE SIDB_DOC_NUM = 24000001;
+</select>	
+	
 
 
 	<!-- 내가 기안한 문서 조회 -->
@@ -260,84 +293,4 @@ LEFT JOIN COMMON_CODE cc2 ON E2.EMPL_RANK_CD = CC2.COCO_CD
 	</select>
 
 
-	<!-- 결재승인 json 데이터 업데이트 + 문서 업데이트 트랜잭션 -->
-
-<!-- 	<update id="approveJson">
-
-		UPDATE SIGN_DOC_BOX
-		SET SIDB_DOC_JSON =
-		JSON_TRANSFORM(
-		SIDB_DOC_JSON,
-		SET '$[0].APPR_FLAG' = '1'
-		)
-		WHERE
-		SIDB_DOC_NUM = #{sidb_doc_num}
-	</update> -->
-	
-<!-- 	<update id="approveJson">
-    UPDATE SIGN_DOC_BOX
-    SET SIDB_DOC_JSON = JSON_TRANSFORM(
-        SIDB_DOC_JSON,
-        <foreach collection="sidb_doc_json" separator="," item="json">
-        SET '$[0].APPR_DT' = '' || TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '',
-            '$[0].APPR_REPLY' = "${json.appr_reply}",
-            '$[0].APPR_FLAG' = '1',
-            '$[0].APPR_SIGN' = '' || (SELECT EMSI_SIGN_IMG FROM EMP_SIGN
-                                        WHERE EMSI_SEQ = 1) || '')
-                                        </foreach>
-    WHERE SIDB_DOC_NUM = #{sidb_doc_num}
-</update> -->
-
-	<update id="approveJson">
-    UPDATE SIGN_DOC_BOX
-    SET SIDB_DOC_JSON = JSON_TRANSFORM(
-        SIDB_DOC_JSON,
-        SET '$[0].APPR_DT' = '' || TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '',
-            '$[0].APPR_REPLY' = #{appr_reply},
-            '$[0].APPR_FLAG' = '1',
-            '$[0].APPR_SIGN' = '' || (SELECT EMSI_SIGN_IMG FROM EMP_SIGN
-                                        WHERE EMSI_SEQ = 1) || '')
-    WHERE SIDB_DOC_NUM = #{sidb_doc_num}
-</update>
-
-	<update id="approveDoc">
-
-		UPDATE SIGN_DOC_BOX
-		SET SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_STAT = '2'
-		WHERE
-		SIDB_DOC_NUM = #{sidb_doc_num}
-
-	</update>
-
-<!-- 결재반려 json 데이터 업데이트 + 문서 업데이트 트랜잭션 -->
-	
-
-
-	<update id="denyDoc">
-
-		UPDATE SIGN_DOC_BOX
-		SET SIDB_DOC_STAT = '4'
-		WHERE
-		SIDB_DOC_NUM = #{sidb_doc_num}
-
-	</update>
-
-
-<!-- 최종승인 json 데이터 업데이트 + 문서 업데이트 트랜잭션 -->
-	<update id="finalJsonApprove">
-		UPDATE SIGN_DOC_BOX
-		SET
-		SIDB_DOC_JSON = JSON_TRANSFORM(
-		SIDB_DOC_JSON,
-		SET '$[2].APPR_FLAG' =
-		'1'
-		)
-		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
-	</update>
-
-	<update id="finalDocApprove">
-		UPDATE SIGN_DOC_BOX
-		SET SIDB_DOC_STAT = '3'
-		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
-	</update>
 </mapper>

@@ -52,4 +52,10 @@ public interface IDocBoxDao {
 	//결재 최종 승인시 문서 업데이트
 	public int finalDocApprove(SignBoxDto dto);
 	
+	//전체 문서함 테이블만 조회
+	public List<SignBoxDto> getAllDocsTable(SignBoxDto dto);
+	
+	//전체 문서함 Json만 조회
+	public List<SignBoxDto> getAllDocsJson(SignBoxDto dto);
+	
 }

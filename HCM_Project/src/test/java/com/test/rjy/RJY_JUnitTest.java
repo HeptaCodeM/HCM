@@ -38,6 +38,7 @@ public class RJY_JUnitTest {
 	private IDocBoxDao dao;
 	@Autowired
 	private IDocBoxService service;
+	
 
 	@Autowired
 	private IApprDenyService apprService;
@@ -146,7 +147,7 @@ public class RJY_JUnitTest {
 	}
 
 	
-	  @Test 
+	//  @Test 
 	  public void approve1() { 
 	  
 	  SignBoxDto dto1 = new SignBoxDto();
@@ -214,5 +215,24 @@ public class RJY_JUnitTest {
 		assertTrue(result);
 	}
 
+	
+	 @Test 
+	  public void getDocs() { 
+	  
+	  SignBoxDto dto = new SignBoxDto();
+	 
+	  
+	  dto.setSidb_doc_num("24000001");
+	 
+	  List<SignBoxDto> table=dao.getAllDocsTable(dto);
+		 List<SignBoxDto> json=	dao.getAllDocsJson(dto);
+		 
+	  boolean result = service.getDocs(dto); 
+
+	  System.out.println(table);
+	  System.out.println(json);
+	  assertTrue(result); 
+	  
+	  }
 
 }
