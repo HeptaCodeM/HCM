@@ -1,12 +1,19 @@
 package com.hcm.grw.ctrl;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,9 +25,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class HomeController {
 
-	@GetMapping("/")
-	public void index() {
-
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@GetMapping({"/index.do", "/"})
+	public String index(Model model) {
+		return "index";
 	}
 
 	@GetMapping("/main.do")
@@ -32,18 +42,29 @@ public class HomeController {
 	@ResponseBody
 	public void Error404(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		request.getRequestDispatcher("/WEB-INF/error/Error404.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/error/error404.jsp").forward(request, response);
 	}
 
 	@GetMapping("/error500.do")
 	@ResponseBody
 	public void Error500(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		request.getRequestDispatcher("/WEB-INF/error/Error500.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/error/error500.jsp").forward(request, response);
 	}
 
 	@GetMapping("/login.do")
-	public String login() {
+	public String login(String error, String logout, Model model) {
+		log.info("error : {}", error);
+		log.info("logout : {}", logout);
+
+		if (error != null) {
+			model.addAttribute("error", "로그인 오류! 계정을 확인하세요.");
+		}
+
+		if (logout != null) {
+			model.addAttribute("logout", "로그아웃!!");
+		}
+
 		return "login";
 	}
 

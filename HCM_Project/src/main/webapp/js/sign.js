@@ -1,4 +1,3 @@
-// TODO 06-5 sign.js작성
 
 var canvas = document.getElementById("signpad");
 var signature = new SignaturePad(canvas, {

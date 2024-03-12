@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ public class SignController {
 	@GetMapping(value = "/signListForm.do")
 	public String signListForm(Model model) {
 		Map<String, Object> signMap = new HashMap<String, Object>();
-		// TODO login세션 생기면 수정하고 테스트 2
+		// TODO login세션 생기면 수정하고 테스트 [재원]
 		signMap.put("empl_id", "20230102");
 		List<EmpSignDto> signList = empSignService.selectAllSign(signMap);
 		System.out.println(signList);
@@ -43,7 +44,7 @@ public class SignController {
 	@ResponseBody
 	public void insertSign(@RequestBody String signJson) {
 		Gson signGson = new Gson();
-		// TODO login세션 생기면 수정하고 테스트 
+		// TODO login세션 생기면 수정하고 테스트 [재원]
 		Map<String, String> map = signGson.fromJson(signJson, Map.class);
 		String emsi_title = map.get("emsi_title");
 		String emsi_sign_img = map.get("emsi_sign_img");
@@ -61,7 +62,7 @@ public class SignController {
 	@GetMapping(value = "/delThisSign.do")
 	public String delThisSign(String emsi_seq) {
 		System.out.println(emsi_seq);
-		// TODO login세션 생기면 수정하고 테스트 2
+		// TODO login세션 생기면 수정하고 테스트 [재원]
 		Map<String, Object> signMap = new HashMap<String, Object>();
 		signMap.put("empl_id", "20230102");
 		signMap.put("emsi_seq", emsi_seq);
@@ -73,17 +74,31 @@ public class SignController {
 		}
 	}
 	
-	
 	@GetMapping(value = "/setDefaultSign.do")
-	public void setDefaultSign(String emsi_seq) {
+	public String setDefaultSign(String emsi_seq) {
 		System.out.println(emsi_seq);
-		// TODO login세션 생기면 수정하고 테스트 3
+		// TODO login세션 생기면 수정하고 테스트 [재원]
 		Map<String, Object> signMap = new HashMap<String, Object>();
 		signMap.put("empl_id", "20230102");
 		
 		List<EmpSignDto> defSign = empSignService.defaultChk(signMap);
-		System.out.println(defSign);
-		System.out.println(defSign.size()+"========================================");
+		List<EmpSignDto> signList = empSignService.selectAllSign(signMap);
+		System.out.println(defSign.size());
+		if(defSign.size() < signList.size()) {
+			System.out.println("디폴트 제거해라");
+			empSignService.setAllDefaultSign(signMap);
+		}
+		
+		Map<String, Object> signDefMap = new HashMap<String, Object>();
+		signDefMap.put("empl_id", "20230102");
+		signDefMap.put("emsi_seq", emsi_seq);
+		int cnt = empSignService.setDefaultSign(signDefMap);
+		if(cnt > 0) {
+			return "redirect:./signListForm.do";
+		}else {
+			return "redirect:./signListForm.do";
+		}
+		
 	}
 	
 }

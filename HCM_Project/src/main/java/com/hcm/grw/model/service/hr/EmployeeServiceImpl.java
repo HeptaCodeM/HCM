@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hcm.grw.dto.hr.EmployeeDto;
@@ -15,6 +16,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private EmployeeDao dao;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public EmployeeDto getLogin(String empl_id) {
@@ -38,6 +42,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public int registEmployee(EmployeeDto dto) {
+		
+		String enc_empl_pwd = passwordEncoder.encode(dto.getEmpl_pwd());
+		dto.setEmpl_pwd(enc_empl_pwd);
+
 		return dao.registEmployee(dto);
 	}
 
@@ -78,6 +86,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public int updatePwd(Map<String, Object> map) {
+
+		String enc_empl_new_pwd = passwordEncoder.encode(map.get("empl_new_pwd").toString());
+		String enc_empl_pwd = passwordEncoder.encode(map.get("empl_pwd").toString());
+
+		map.put("empl_new_pwd", enc_empl_new_pwd);
+		map.put("empl_pwd", enc_empl_pwd);
+		
 		return dao.updatePwd(map);
 	}
 

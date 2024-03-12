@@ -30,7 +30,7 @@
 	</update>
 	
 	<update id="insertCompanySeal" parameterType="java.util.Map">
-		UPDATE COMPANY SET COMP_SEAL = #{comp_seal}
+		UPDATE COMPANY SET COMP_SEAL = #{comp_seal,jdbcType=BLOB}
 			WHERE COMP_ID = #{comp_id}
 	</update>
 	
