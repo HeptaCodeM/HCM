@@ -65,7 +65,7 @@
 								                <div class="dropzone-panel mb-lg-0 mb-2">
 								                    <a class="dropzone-select btn btn-sm btn-primary me-2">파일</a>
 								                    <a class="dropzone-upload btn btn-sm btn-light-primary me-2">직인등록</a>
-								                    <a class="dropzone-remove-all btn btn-sm btn-light-primary">직인제거</a>
+								                    <a class="dropzone-remove-all btn btn-sm btn-light-primary">파일제거</a>
 								                </div>
 								                <!--end::Controls-->
 								
@@ -118,7 +118,7 @@
 								<!--end::Form-->
 								
 								<div>
-									<a onclick="javascript:window.history.back(-1)" class="btn btn-primary me-10 sealBtn">취소</a>
+									<a onclick="javascript:window.history.back(-1)" class="btn btn-primary me-10 btnLg">뒤로가기</a>
 								</div>
 							</div>
 							<script type="text/javascript">

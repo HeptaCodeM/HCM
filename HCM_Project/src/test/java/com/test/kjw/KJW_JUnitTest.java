@@ -15,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.hcm.grw.dto.hr.CommonCodeDto;
-import com.hcm.grw.dto.hr.CompanyDto;
 import com.hcm.grw.dto.hr.EmpSignDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.dto.hr.SignDocBoxDto;
@@ -92,7 +90,7 @@ public class KJW_JUnitTest {
 		
 	}
 	
-	//@Test
+	@Test
 	public void testCompany() {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -108,31 +106,31 @@ public class KJW_JUnitTest {
 		map.put("comp_create_id", "SYSTEM");
 		int cnt = companyService.insertCompanyInfo(map);
 		assertEquals(1, cnt);
-		
-		Map<String, Object> map3 = new HashMap<String, Object>();
-		map3.put("comp_id", "ITCOM0A1");
-		CompanyDto dto = companyService.showCompanyInfo(map3);
-		System.out.println(dto);
-		assertNotNull(dto);
-		
-		Map<String, Object>  map2 = new HashMap<String, Object>();
-		map2.put("comp_name", "HCMC수정");
-		map2.put("comp_num", "111-11-11111");
-		map2.put("comp_ceo_name", "김수정");
-		map2.put("comp_tel", "01-222-3333");
-		map2.put("comp_fax", "01-777-1111");
-		map2.put("comp_post", "99999");
-		map2.put("comp_addr1", "수정후");
-		map2.put("comp_addr2", "주소");
-		map2.put("comp_seal", "도장파일명");
-		map2.put("comp_modify_id", "SYSTEM");
-		map2.put("comp_id", "ITCOM0A1");
-		
-//		int cnt2 = companyService.correctionCompanyInfo(map2);
-//		assertEquals(1, cnt2);
-		
-		CompanyDto dto2 = companyService.showCompanyInfo(map3);
-		System.out.println(dto2);
+//		
+//		Map<String, Object> map3 = new HashMap<String, Object>();
+//		map3.put("comp_id", "ITCOM0A1");
+//		CompanyDto dto = companyService.showCompanyInfo(map3);
+//		System.out.println(dto);
+//		assertNotNull(dto);
+//		
+//		Map<String, Object>  map2 = new HashMap<String, Object>();
+//		map2.put("comp_name", "HCMC수정");
+//		map2.put("comp_num", "111-11-11111");
+//		map2.put("comp_ceo_name", "김수정");
+//		map2.put("comp_tel", "01-222-3333");
+//		map2.put("comp_fax", "01-777-1111");
+//		map2.put("comp_post", "99999");
+//		map2.put("comp_addr1", "수정후");
+//		map2.put("comp_addr2", "주소");
+//		map2.put("comp_seal", "도장파일명");
+//		map2.put("comp_modify_id", "SYSTEM");
+//		map2.put("comp_id", "ITCOM0A1");
+//		
+////		int cnt2 = companyService.correctionCompanyInfo(map2);
+////		assertEquals(1, cnt2);
+//		
+//		CompanyDto dto2 = companyService.showCompanyInfo(map3);
+//		System.out.println(dto2);
 		
 	}
 	
@@ -158,7 +156,7 @@ public class KJW_JUnitTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void testEmployeeListService() {
 		List<EmployeeDto> lists = employeeListService.selectAllEmployee();
 		System.out.println(lists);

@@ -43,10 +43,18 @@
 		AND EMSI_SETFLAG IS NULL
 	</select>
 	
+	
+	
 	<update id="setUnDefaultSign" parameterType="Map">
 		UPDATE EMP_SIGN SET EMSI_SETFLAG = 'N'
 			WHERE EMSI_SEQ = #{emsi_seq}
 			AND EMPL_ID = #{empl_id}
+	</update>
+	
+	<update id="setAllDefaultSign" parameterType="Map">
+		UPDATE EMP_SIGN SET EMSI_SETFLAG = NULL
+			WHERE EMPL_ID = #{empl_id}
+			AND EMSI_DELFLAG = 'N'
 	</update>
 		
 </mapper>
