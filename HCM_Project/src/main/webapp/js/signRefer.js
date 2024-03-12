@@ -1,4 +1,5 @@
 onload = function() {
+	
 	// 동적 참조자 행 추가
 	document.getElementById('tbody1').addEventListener('click', function(e) {
 		var addRow = e.target.id;

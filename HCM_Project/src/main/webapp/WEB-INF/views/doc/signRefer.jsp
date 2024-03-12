@@ -139,7 +139,7 @@ td>img {
 							<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
 								<div class="d-flex flex-column flex-column-fluid">
 									<div id="kt_app_content" class="app-content flex-column-fluid">
-								
+									
 										<table class="table table-condensed" style="width: 90%; margin: 0 auto;">
 											<thead>
 												<tr>
@@ -179,9 +179,8 @@ td>img {
 			</div>
 				
 			<!-- OJS  -->	
-			</div>
-			
-<%@include file="/WEB-INF/views/menu/docSideMenu.jsp" %>		
+		</div>
+	<%@include file="/WEB-INF/views/menu/docSideMenu.jsp" %>		
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 <script type="text/javascript" src="../js/signTree.js"></script>
