@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,10 +39,15 @@
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5" >
-								${docList}<br>
-								<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_3">
-								    움직이는 모달
-								</button>
+								<c:choose>
+									<c:when test="${docList eq null}">
+										<h1>결제완료된 증명서가 없습니다</h1>
+									</c:when>
+									
+									<c:otherwise>
+										${docList}
+									</c:otherwise>
+								</c:choose>
 							</div>
 						</div>
 					</div>
@@ -52,72 +58,4 @@
 			
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
 </body>
-<div class="modal fade" tabindex="-1" id="kt_modal_3">
-    <div class="modal-dialog">
-        <div class="modal-content position-absolute">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-
-                <!--begin::Close-->
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
-                </div>
-                <!--end::Close-->
-            </div>
-
-            <div class="modal-body">
-                <p>Modal body text goes here.</p>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary me-10" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary me-10">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-<script type="text/javascript">
-// Make the DIV element draggable:
-var element = document.querySelector('#kt_modal_3');
-dragElement(element);
-
-function dragElement(elmnt) {
-    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    if (elmnt.querySelector('.modal-content')) {
-        // if present, the header is where you move the DIV from:
-        elmnt.querySelector('.modal-content').onmousedown = dragMouseDown;
-    } else {
-        // otherwise, move the DIV from anywhere inside the DIV:
-        elmnt.onmousedown = dragMouseDown;
-    }
-
-    function dragMouseDown(e) {
-        e = e || window.event;
-        // get the mouse cursor position at startup:
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        // call a function whenever the cursor moves:
-        document.onmousemove = elementDrag;
-    }
-
-    function elementDrag(e) {
-        e = e || window.event;
-        // calculate the new cursor position:
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        // set the element's new position:
-        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-    }
-
-    function closeDragElement() {
-        // stop moving when mouse button is released:
-        document.onmouseup = null;
-        document.onmousemove = null;
-    }
-}
-</script>
 </html>
