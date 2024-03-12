@@ -6,14 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<script type="text/javascript">
-	window.onload = function(){
-		var blobSeal = document.getElementById("hiddenSeal").value;
-		console.log(blobSeal , typeof blobSeal);
-	   
-	   
-	}
-</script>
 <title>회사직인조회창</title>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
@@ -52,8 +44,8 @@
 										<h1>널</h1>
 									</c:when>
 									<c:otherwise>
-										<input id="hiddenSeal" type="hidden" value="${sealDto.getComp_seal()}">									
-										<img src="">
+									<c:set var="data" value="data:image/png;base64,"/>
+										<img class="sealImg" src="${data}${sealDto}">
 									</c:otherwise>
 								</c:choose>
 							</div>

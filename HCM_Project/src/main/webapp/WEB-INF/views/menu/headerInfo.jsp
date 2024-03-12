@@ -41,6 +41,10 @@
 		line-height: 14px;
 	}
 	
+	.sealImg{
+		width: 82px;
+	}
+	
 </style>
 <!-- 사용CSS오버라이딩 -->
 

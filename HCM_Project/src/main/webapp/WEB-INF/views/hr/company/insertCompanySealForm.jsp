@@ -118,7 +118,7 @@
 								<!--end::Form-->
 								
 								<div>
-									<a onclick="javascript:window.history.back(-1)" class="btn btn-primary me-10 sealBtn">취소</a>
+									<a onclick="javascript:window.history.back(-1)" class="btn btn-primary me-10 btnLg">뒤로가기</a>
 								</div>
 							</div>
 							<script type="text/javascript">
