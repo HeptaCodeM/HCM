@@ -13,7 +13,7 @@ String hrSubLeftMenu [][] = {
 };
 //소분류 링크
 String hrSubLinkLeftMenu [][] = {
-		{"/roleList.do?role=DT","/roleList.do?role=RK","/roleList.do?role=PN", "/hr/employee/regist.do", "/hr/employee/list.do"},		//hrLeftMenu[0]
+		{"/roleList.do?role=DT","/roleList.do?role=RK","/roleList.do?role=PN", "/hr/employee/registAdmin.do", "/hr/employee/list.do"},		//hrLeftMenu[0]
 		{"/certificate.do"},							//hrLeftMenu[1]
 		{"#", "#"},						//hrLeftMenu[2]
 		{"#", "#"},					//hrLeftMenu[3]
@@ -76,7 +76,7 @@ Boolean menuFlag2 = false;
 				<%
 				menuFlag2 = false;
 				for(int j=0;j<hrSubLeftMenu[i].length;j++){ 
-					if(hrSubLinkLeftMenu[i][j].indexOf(currentPageName)>=0){
+					if(hrSubLinkLeftMenu[i][j].indexOf(currentPageName)>=0 || currentPageName.equals("hrMainTmp")){
 						menuFlag2 = true;
 					}
 				}
