@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<title>증명서리스트</title>
+<title>증명서출력화면</title>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -23,7 +22,7 @@
 					<!--begin::Page title-->
 					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 						<!--begin::Title-->
-						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">결제완료된 증명서</h1>
+						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">제목이 여기에 들어가요!</h1>
 						<!--end::Title-->
 					</div>
 					<!--end::Page title-->
@@ -35,40 +34,11 @@
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-header pt-5">
-								<h3 class="card-title text-gray-800 fw-bold">증명서</h3>
+								<h3 class="card-title text-gray-800 fw-bold">소제목? 들어갑니다</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
-							<div class="card-body pt-5 table-responsive">
-								<c:choose>
-									<c:when test="${docList eq '[]'}">
-										<h1>결제완료된 증명서가 없습니다</h1>
-									</c:when>
-									
-									<c:otherwise>
-										${docList}<br>
-										<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
-											<thead>
-												<tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-													<td>순번</td>
-													<td>제목</td>
-													<td>템플릿이름</td>
-													<td>결재완료일</td>
-												</tr>
-											</thead>
-											
-											<c:forEach var="doc" items="${docList}" varStatus="var"> 
-												<tbody>
-													<tr style="cursor: pointer;" onclick="location.href='./selectOneCertificate.do?sidb_doc_num=${doc.getSidb_doc_num()}'">
-														<td>${var.count}</td>
-														<td>${doc.getSidb_doc_title()}</td>
-														<td>${doc.getSidt_temp_name()}</td>
-														<td>${doc.getSidb_doc_apprdt()}</td>
-													</tr>
-												</tbody>
-											</c:forEach>
-										</table>
-									</c:otherwise>
-								</c:choose>
+							<div class="card-body pt-5" >
+								${boxDto}
 							</div>
 						</div>
 					</div>
@@ -78,5 +48,6 @@
 		</div>
 			
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
+<script src="/js/common.js"></script>
 </body>
 </html>

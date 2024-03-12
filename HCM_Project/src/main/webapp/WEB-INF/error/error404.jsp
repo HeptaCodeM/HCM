@@ -76,7 +76,7 @@ if ( document.documentElement ) {
 				<!--end::Illustration-->
 				<!--begin::Link-->
 				<div class="mb-0">
-					<a href="./main.do" class="btn btn-sm btn-primary">메인페이지로</a>
+					<a href="./mainTmp.do" class="btn btn-sm btn-primary">메인페이지로</a>
 				</div>
 				<!--end::Link-->
 			</div>
