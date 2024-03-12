@@ -43,4 +43,9 @@ public class DocController {
 	model.addAttribute("lists", lists);
 	return "/doc/docBox";
 	}
+	
+	@GetMapping(value = "/doc/writeDoc.do")
+	public String writeDoc() {
+		return "/doc/writeDoc";
+	}
 }
