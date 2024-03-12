@@ -1,4 +1,5 @@
 onload = function() {
+	
 	// 동적 참조자 행 추가
 	document.getElementById('tbody1').addEventListener('click', function(e) {
 		var addRow = e.target.id;
@@ -74,157 +75,8 @@ $('#schName').on('keydown', function(e) {
 $().ready(function() {
 	$('#jstree').jstree({
 		// 검색기능 , 우클릭메뉴, 라벨 효과
-		plugins: ['search', 'contextmenu', 'wholerow'],
+		plugins: ['search', 'wholerow'],
 		// 우클릭메뉴 정의
-		contextmenu: {
-			items: function(node) {
-				if (node.children.length == 0 && node.state.disabled != true) {
-					console.log(node.state.disabled);
-					return {
-						m1: {
-							label: '결재자 지정',
-							icon: 'fas fa-user',
-							// 결재자 지정 로직
-							action: function() {
-								
-								var sel = $("#jstree").jstree('get_selected'); // 선택된 노드
-								fetch('./userInfo.do?empl_id=' + sel[0])
-								.then(resp => {return resp.json()})
-								.then(data => {
-									
-									console.log(data);
-									var val1 = $('#first').val();
-									var val2 = $('#second').val();
-									
-									if (val1.length > 0 && val2.length > 0) {
-										third = data[0].coco_name_rnm;
-									} else if (val1.length > 0 && val2.length == 0) {
-										second = data[0].coco_name_rnm;
-									} else {
-										first = data[0].coco_name_rnm;
-									}
-									
-									switch(first) {
-										case '사원' : first = 1; break;
-										case '대리' : first = 2; break;
-										case '과장' : first = 3; break;
-										case '차장' : first = 4; break;
-										case '부장' : first = 5; break;
-										case '상무' : first = 6; break;
-										case '전무' : first = 7; break;
-										case '부사장' : first = 8; break;
-										case '사장' : first = 9; break;
-										default : 0;
-									}
-									switch(second) {
-										case '사원' : second = 1; break;
-										case '대리' : second = 2; break;
-										case '과장' : second = 3; break;
-										case '차장' : second = 4; break;
-										case '부장' : second = 5; break;
-										case '상무' : second = 6; break;
-										case '전무' : second = 7; break;
-										case '부사장' : second = 8; break;
-										case '사장' : second = 9; break;
-										default : 0;
-									}
-									switch(third) {
-										case '사원' : third = 1; break;
-										case '대리' : third = 2; break;
-										case '과장' : third = 3; break;
-										case '차장' : third = 4; break;
-										case '부장' : third = 5; break;
-										case '상무' : third = 6; break;
-										case '전무' : third = 7; break;
-										case '부사장' : third = 8; break;
-										case '사장' : third = 9; break;
-										default : 0;
-									}
-									
-									console.log(first, second, third);
-									
-										// 결재자를 순서대로 화면에 뿌려줌
-									if (val1.length > 0 && val2.length > 0) {
-										if(second > third) {
-											alert('낮은 직급의 결재자를 지정할 수 없습니다');
-											return;
-										}
-										$('#third').val(data[0].empl_name); // 3차결재자
-										$('#rk3').val(data[0].coco_name_rnm);
-										$('#dp3').val(data[0].coco_name_dnm);
-										$('#id3').text(data[0].empl_id);
-										$('#de3').val(3);
-										var id = $('#jstree').jstree('get_selected')[0];
-										$('#jstree').jstree('hide_node', id);
-										$('#jstree').jstree('deselect_all');
-									} else if (val1.length > 0 && val2.length == 0) {
-										if(first > second) {
-											alert('낮은 직급의 결재자를 지정할 수 없습니다');
-											return;
-										}
-										$('#second').val(data[0].empl_name); // 2차결재자
-										$('#rk2').val(data[0].coco_name_rnm);
-										$('#dp2').val(data[0].coco_name_dnm);
-										$('#id2').text(data[0].empl_id);
-										$('#de2').val(2);
-										var id = $('#jstree').jstree('get_selected')[0];
-										$('#jstree').jstree('hide_node', id);
-										$('#jstree').jstree('deselect_all');
-									} else {
-										if(first > third || first > second) {
-											alert('높은 직급의 결재자를 지정할 수 없습니다');
-											return;
-										}
-										$('#first').val(data[0].empl_name); // 1차결재자
-										$('#rk1').val(data[0].coco_name_rnm);
-										$('#dp1').val(data[0].coco_name_dnm);
-										$('#id1').text(data[0].empl_id);
-										$('#de1').val(1);
-										var id = $('#jstree').jstree('get_selected')[0];
-										$('#jstree').jstree('hide_node', id);
-										$('#jstree').jstree('deselect_all');
-									}
-								})
-								.catch(err => {
-									console.log(err);
-								});
-								
-							}
-						},
-						m2: {
-							label: '즐겨찾기 추가',
-							icon: 'fas fa-star',
-							// 즐겨찾기 등록 
-							action: function(e) {
-								console.log(e);
-								var id = document.getElementById('empl_id').value
-								var siaf_appr_id = $('#jstree').jstree('get_selected')[0];
-								let addData = {
-												empl_id : id,
-												siaf_appr_id : siaf_appr_id
-											}
-								console.log(siaf_appr_id, id)
-								fetch('./insertFavo.do', {
-									headers : {'Content-Type' : 'application/json'},
-									method : 'post',
-									body : JSON.stringify(addData)
-								})
-									.then(resp => {
-										return resp.text();
-									})
-									.then(data => {
-										alert(data);
-									})
-									.catch(error => {
-										console.log(error);
-									})
-								
-							}
-						}
-					}
-				}
-			}
-		},
 		core: {
 			data : {
 				url : './signTree.do',
@@ -233,15 +85,9 @@ $().ready(function() {
 				success : function(data) {
 					data.forEach(function(node) {
 						if(node.pos_na != undefined) {
-							if(myPositionFlag > node.pos_flag) {
-								node.text = node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;<span class="positionFlag" style="display: none;">' + node.pos_flag + '</span>';
-							} else {
-								node.text = node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="pick()" class="btn btn-basic btn-sm addd" style="padding: 0.2px;">➕</button><span class="positionFlag" style="display: none;">' + node.pos_flag + '</span>';
-							}
-						}
-						
-						if(myPositionFlag > parseInt(node.pos_flag) && node.pos_na != null) {
-							node.state = {disabled : true};
+							node.text = node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="pick()" class="btn btn-basic btn-sm addd" style="padding: 0.2px;">➕</button><span class="positionFlag" style="display: none;">' + node.pos_flag + '</span>';
+						} else {
+							node.text = node.text + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="pick()" class="btn btn-basic btn-sm addd" style="padding: 0.2px;">➕</button>'
 						}
 					});
 					
