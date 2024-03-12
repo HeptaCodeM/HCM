@@ -10,7 +10,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +32,12 @@ public class HomeController {
 	private PasswordEncoder passwordEncoder;
 	
 	@GetMapping({"/index.do", "/"})
-	public String index(Model model) {
+	public String index(Model model, Authentication authentication) {
+		
+		String getId = authentication.getName();
+		log.info("getId : {}", getId);
+		model.addAttribute("getId", getId);
+		
 		return "index";
 	}
 
