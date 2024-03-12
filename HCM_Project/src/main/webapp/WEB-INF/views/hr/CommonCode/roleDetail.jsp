@@ -45,6 +45,14 @@ function deleteRole(){
     location.href="./deleteRoleOne.do?coco_cd="+coco_cd+"&role="+role;
 }
 
+
+function checkTest(){
+	   let chk = document.getElementById("coco_name").value;
+	   console.log(chk.length);
+	   if(chk.length >=6){
+		   
+	   }
+}
 </script>
 <c:choose>
 	<c:when test="${role eq 'DT'}">
@@ -83,15 +91,16 @@ function deleteRole(){
 							<div class="separator separator-dashed my-3"></div>	
 							<form action="./correctionRole.do" onsubmit="return checkNameValue()" method="post">
 								<div class="card-body pt-5">
-									${thisRole}명<input id="coco_name" name="coco_name" class="form-control form-control-solid" type="text" value="${roleDto.getCoco_name()}"><br>
+									${thisRole}명<input id="coco_name" name="coco_name" onkeypress="checkTest()" class="form-control form-control-solid" type="text" maxlength="6" value="${roleDto.getCoco_name()}">
+										<span class="fs-6 text-muted">한글 6글자 이내로 입력해주세요!</span><br>
 									${thisRole}코드<input id="coco_cd" name="coco_cd" class="form-control form-control-solid" type="text" value="${roleDto.getCoco_cd()}" readonly="readonly">
 									<input type="hidden" id="role" name="role" value="${role}">
 								</div>
 								<div class="card-footer">
-									<button class="btn btn-primary me-10" type="submit">저장</button>
-									<button class="btn btn-primary me-10" type="button" data-bs-toggle="modal" data-bs-target="#deptModal">삭제</button>
-									<button class="btn btn-primary me-10" type="reset">초기화</button>
-									<a onclick="javascript:window.history.back(-1)" class="btn btn-primary me-10">취소</a>
+									<button class="btn btn-primary btnMd me-10" type="submit">저장</button>
+									<button class="btn btn-primary btnMd me-10" type="button" data-bs-toggle="modal" data-bs-target="#deptModal">삭제</button>
+									<button class="btn btn-primary btnMd me-10" type="reset">초기화</button>
+									<a onclick="javascript:window.history.back(-1)" class="btn btn-primary btnMd me-10">취소</a>
 							    </div>
 							</form>
 						</div>
