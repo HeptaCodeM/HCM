@@ -181,7 +181,7 @@ td>img {
 										<br>
 										<div style="text-align: right;">
 											<input type="text" id="favoName" placeholder="별칭 입력" maxlength="20" class="col-xs-3" style="float: none;">
-											<input type="button" class="btn btn-primary btnMd" id="addLine" value="결재선 추가" style="width: 120px;">
+											<input type="button" class="btn btn-primary btnMd" id="addLine" value="등록">
 											<input type="button" class="btn btnMd btn-primary" id="initial" value="초기화" style="margin-right: 40px;">
 										</div>
 								
@@ -203,11 +203,14 @@ td>img {
 								<div class="d-flex flex-column flex-column-fluid">
 									<div id="kt_app_content" class="app-content flex-column-fluid">
 										<div>
-											<select id="apprList" class="form-select" style="height: 40px;">
+											<div>
+											<select id="apprList" class="form-select form-select-sm" style="height: 40px;" data-control="select2">
 												<option selected>결재자를 선택해주세요</option>
 											</select>
+											</div>
 											<br>
-											<button type="button" class="btn btn-primary me-10" id="kt_button_1" name="insBtn" style="height: 32px; line-height: 14px; width: 100px;">
+											<div style="text-align: left">
+											<button type="button" class="btn btn-primary btnSm" id="kt_button_1" name="insBtn" style="height: 32px; line-height: 14px; width: 100px;">
 											    <span class="indicator-label">
 											        추가
 											    </span>
@@ -215,19 +218,20 @@ td>img {
 											        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 											    </span>
 											</button>
-											<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_3" id="delBtn" style="height: 32px; line-height: 14px; width: 100px;">
+											<button type="button" class="btn btn-primary btnSm" id="delBtn" style="height: 32px; line-height: 14px; width: 100px;">
 											    삭제
 											</button>
+											</div>
 										</div>
 										<br><br>
 										<div class="separator separator-dashed my-3"></div>
 										<br><br>
 										<div>
-											<select id="apprLineList" class="form-select" style="height: 40px;">
+											<select id="apprLineList" class="form-select form-select-sm" style="height: 40px;" data-control="select2">
 												<option selected>결재선을 선택해주세요</option>
 											</select>
-											<br>
-											<button type="button" class="btn btn-primary me-10" id="kt_button_1" name="selectApprLine" style="height: 32px; line-height: 14px; width: 100px;">
+											<br><br>
+											<button type="button" class="btn btn-primary btnMd" id="kt_button_1" name="selectApprLine" style="height: 32px; line-height: 14px; width: 100px;">
 											    <span class="indicator-label">
 											        적용
 											    </span>
@@ -235,7 +239,7 @@ td>img {
 											        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 											    </span>
 											</button>
-											<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_3" id="delLineBtn" style="height: 32px; line-height: 14px; width: 100px;">
+											<button type="button" class="btn btn-primary btnMd" id="delLineBtn" style="height: 32px; line-height: 14px; width: 100px;">
 											    삭제
 											</button>
 										</div>
@@ -276,8 +280,8 @@ td>img {
 				</div>
 
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary me-10" data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary me-10" data-bs-dismiss="modal">확인</button>
+					<button type="button" class="btn btn-secondary me-10" data-bs-dismiss="modal" id="can">취소</button>
+					<button type="button" class="btn btn-primary me-10" data-bs-dismiss="modal" id="con">확인</button>
 				</div>
 			</div>
 		</div>
