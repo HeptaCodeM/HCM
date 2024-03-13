@@ -17,7 +17,7 @@
 				</div>
 				<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
 					<a
-						href="./mainTmp.do"
+						href="/"
 						class="d-lg-none"> <img alt="HCM" src="/image/favicon.ico"
 						class="theme-light-show h-30px">
 					</a>
@@ -45,8 +45,8 @@
 								data-kt-menu-trigger="{default: &#39;click&#39;, lg: &#39;hover&#39;}"
 								data-kt-menu-placement="bottom-start"
 								class="menu-item here menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
-								<a href="./mainTmp.do">
-									<span class="menu-link"> <span class="menu-title">메인화면</span>
+								<a href="/mainTmp.do">
+									<span class="menu-link"> <span class="menu-title">메인템플릿화면</span>
 										<span class="menu-arrow d-lg-none"></span>
 									</span>
 								</a>
@@ -57,7 +57,7 @@
 								data-kt-menu-trigger="{default: &#39;click&#39;, lg: &#39;hover&#39;}"
 								data-kt-menu-placement="bottom-start"
 								class="menu-item menu-lg-down-accordion me-0 me-lg-2">
-								<a href="./hrMainTmp.do">
+								<a href="/hr/hrMainTmp.do">
 									<span class="menu-link"> <span class="menu-title">인사관리</span>
 										<span class="menu-arrow d-lg-none"></span>
 									</span>
@@ -70,7 +70,7 @@
 								data-kt-menu-trigger="{default: &#39;click&#39;, lg: &#39;hover&#39;}"
 								data-kt-menu-placement="bottom-start"
 								class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
-								<a href="./smMainTmp.do">
+								<a href="/sm/smMainTmp.do">
 									<span class="menu-link"> <span class="menu-title">일정관리</span>
 										<span class="menu-arrow d-lg-none"></span>
 									</span>
@@ -83,7 +83,7 @@
 								data-kt-menu-trigger="{default: &#39;click&#39;, lg: &#39;hover&#39;}"
 								data-kt-menu-placement="bottom-start"
 								class="menu-item menu-lg-down-accordion me-0 me-lg-2">
-								<a href="./docMainTmp.do">
+								<a href="/doc/docMainTmp.do">
 									<span class="menu-link"> <span class="menu-title">전자결재</span>
 										<span class="menu-arrow d-lg-none"></span>
 									</span>

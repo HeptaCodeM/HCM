@@ -41,9 +41,23 @@ public class EmpSignServiceImpl implements EmpSignService {
 		log.info("EmpSignServiceImpl deleteSign // {}",map);
 		return dao.deleteSign(map);
 	}
+
+	@Override
+	public List<EmpSignDto> defaultChk(Map<String, Object> map) {
+		log.info("EmpSignServiceImpl defaultChk // {}",map);
+		return dao.defaultChk(map);
+	}
+
+	@Override
+	public int setUnDefaultSign(Map<String, Object> map) {
+		log.info("EmpSignServiceImpl setUnDefaultSign // {}",map);
+		return dao.setUnDefaultSign(map);
+	}
 	
-	
-	
-	
+	@Override
+	public int setAllDefaultSign(Map<String, Object> map) {
+		log.info("EmpSignServiceImpl setAllDefaultSign // {}",map);
+		return dao.setAllDefaultSign(map);
+	}
 	
 }

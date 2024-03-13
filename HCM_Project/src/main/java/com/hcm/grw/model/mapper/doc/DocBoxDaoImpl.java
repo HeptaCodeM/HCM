@@ -24,9 +24,9 @@ public class DocBoxDaoImpl implements IDocBoxDao {
 	
 	//전체 문서함 조회
 	@Override
-	public List<SignBoxDto> getAllDocs(Map<String, String> inMap) {
+	public List<SignBoxDto> getAllDocs(SignBoxDto dto) {
 		log.info("DocBoxDaoImpl 전체문서함 조회");
-		return sqlSessionTemplate.selectList(NS+"getAllDocs",inMap);
+		return sqlSessionTemplate.selectList(NS+"getAllDocs",dto);
 	}
 
 
@@ -80,9 +80,9 @@ public class DocBoxDaoImpl implements IDocBoxDao {
 	}
 	
 	@Override
-	public List<DocBoxDto> getDetailDocsList(DocBoxDto dto) {
+	public List<SignBoxDto> getDetailDocsList(SignBoxDto dto) {
 		log.info("DocBoxDaoImpl 상세 조회 리스트 버전");
-		return sqlSessionTemplate.selectList(NS+"getDetailDocs", dto);
+		return sqlSessionTemplate.selectList(NS+"getDetailDocsList", dto);
 	}
 
 
@@ -113,6 +113,19 @@ public class DocBoxDaoImpl implements IDocBoxDao {
 	@Override
 	public int finalDocApprove(SignBoxDto dto) {
 		return sqlSessionTemplate.update(NS+"finalDocApprove", dto);
+	}
+
+
+	@Override
+	public List<SignBoxDto> getAllDocsTable(SignBoxDto dto) {
+		return sqlSessionTemplate.selectList(NS+"getAllDocsTable",dto);
+	}
+
+
+	@Override
+	public List<SignBoxDto> getAllDocsJson(SignBoxDto dto) {
+		return sqlSessionTemplate.selectList(NS+"getAllDocsJson",dto);
+
 	}
 
 

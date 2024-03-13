@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 <!--end::Fonts-->
 <!--begin::Vendor Stylesheets(used for this page only)-->
-<link href="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
 <link href="/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 <!--end::Vendor Stylesheets-->
 <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
@@ -19,6 +18,34 @@
 <script src="/assets/plugins/global/plugins.bundle.js"></script>
 <script src="/assets/js/scripts.bundle.js"></script>
 <!--end::Global Javascript Bundle-->
+
+<!-- 사용CSS오버라이딩 -->
+<style type="text/css">
+
+	.btnLg{
+		width: 130px;
+		height: 40px;
+		line-height: 19px;
+	}
+	
+	.btnMd{
+		width: 100px;
+		height: 32px;
+		line-height: 12px;
+	}
+	
+	.btnSm{
+		width: 80px;
+		height: 32px;
+		line-height: 14px;
+	}
+	
+	.sealImg{
+		width: 82px;
+	}
+	
+</style>
+<!-- 사용CSS오버라이딩 -->
 
 <!--begin::Javascript-->
 <script>var hostUrl = "/assets/";</script>
@@ -43,6 +70,7 @@
 <script src="/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
 <script src="/assets/js/custom/utilities/modals/create-campaign.js"></script>
 <script src="/assets/js/custom/utilities/modals/users-search.js"></script>
+<script src="/js/common.js"></script>
 <!--end::Custom Javascript-->
 <!--end::Javascript-->
 </html>

@@ -57,14 +57,26 @@ ClassicEditor
 		/* 이미지 업로드 */
         simpleUpload: {
             uploadUrl: './uploadImage.do',
-            withCredentials: true,
+            withCredentials: true
+            
         }, 
         /* 문서 자동저장 */
 		autosave: {
             save( editor ) {
                 return saveData( editor.getData() );
         }
-        }
+        },
+        /* html support */
+        htmlSupport: {
+                    allow: [
+                        {
+                            name: /.*/,
+                            attributes: true,
+                            classes: true,
+                            styles: true
+                        }
+                    ]
+                },
 	} )
 	.then( editor => {
 		window.editor = editor;

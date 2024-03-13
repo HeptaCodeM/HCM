@@ -9,7 +9,7 @@ import com.hcm.grw.dto.doc.SignBoxDto;
 public interface IDocBoxDao {
 
 	//전체 문서함 조회
-	public List<SignBoxDto> getAllDocs(Map<String, String> inMap);
+	public List<SignBoxDto> getAllDocs(SignBoxDto dto);
 	
 	//기안중인 문서 조회
 	public List<SignBoxDto> getMyGian(SignBoxDto dto);
@@ -35,7 +35,7 @@ public interface IDocBoxDao {
 	
 	//상세조회 리스트버전
 	
-	public List<DocBoxDto>getDetailDocsList(DocBoxDto dto);
+	public List<SignBoxDto>getDetailDocsList(SignBoxDto dto);
 	
 	//결재승인
 	public int approveJson(SignBoxDto dto);
@@ -51,5 +51,11 @@ public interface IDocBoxDao {
 	
 	//결재 최종 승인시 문서 업데이트
 	public int finalDocApprove(SignBoxDto dto);
+	
+	//전체 문서함 테이블만 조회
+	public List<SignBoxDto> getAllDocsTable(SignBoxDto dto);
+	
+	//전체 문서함 Json만 조회
+	public List<SignBoxDto> getAllDocsJson(SignBoxDto dto);
 	
 }

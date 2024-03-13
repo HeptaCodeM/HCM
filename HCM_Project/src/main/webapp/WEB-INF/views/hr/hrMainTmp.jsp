@@ -37,10 +37,24 @@
 								<h3 class="card-title text-gray-800 fw-bold">소제목? 들어갑니다</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
-							<div class="card-body pt-5">
+							<div class="card-body pt-5" >
 								대충 여기에 내용이 들어가요!<br>
 								대충 여기에 내용이 들어가요!<br>
 								대충 여기에 내용이 들어가요!<br>
+								
+								
+								<button class="btn btn-primary" onclick="swalAlert('테스트', '', 'btn-danger', '주의')">일반 alert</button><br /><br />
+								<button class="btn btn-primary" onclick="swalHistoryBack('테스트', 'btn-info', '뒤로갑니다.')">alert history.back()</button><br /><br />
+								<button class="btn btn-primary" onclick="sweetAlertConfirm('테스트', a(), b());">confirm 테스트</button>
+							
+								<script>
+								function a(){
+									alert('a');
+								}
+								function b(){
+									alert('b');
+								}
+								</script>
 							</div>
 						</div>
 					</div>
@@ -50,5 +64,6 @@
 		</div>
 			
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
+<script src="/js/common.js"></script>
 </body>
 </html>

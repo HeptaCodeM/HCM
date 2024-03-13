@@ -8,9 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hcm.grw.dto.sm.GoboDto;
+import com.hcm.grw.dto.sm.ReplyDto;
 import com.hcm.grw.model.service.sm.IGoboService;
+import com.hcm.grw.model.service.sm.IReplyService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,6 +25,9 @@ public class SMHomeController {
 	
 	@Autowired
 	private IGoboService GoboService;
+	@Autowired
+	private IReplyService ReplyService;
+	
 	
 	
 	@GetMapping("getAllGobo.do")
@@ -38,7 +44,9 @@ public class SMHomeController {
 	public String getDetailGobo(String gobo_no,Model model) {
 		log.info("SMHomeController getDetailGobo.do 공지사항 상세조회 화면 이동");
 		GoboDto dto =  GoboService.getDetailGobo(gobo_no);
+		List<ReplyDto> Rlist = ReplyService.getAllReply(gobo_no);
 		model.addAttribute("dto",dto);
+		model.addAttribute("Rlist",Rlist);
 		return "sm/GongiBoard/GoboDetail";
 	}
 	
@@ -54,10 +62,10 @@ public class SMHomeController {
 	public String updateGoboDelFlag(String gobo_no) {
 		log.info("SMHomeController updateGoboDelFlag.do 공지사항 삭제 : {} ", gobo_no);
 		int n = GoboService.updateGoboDelFlag(gobo_no);
-		return "redirect:/sm/GongiBoard/getAllGobo.do";
+		return "redirect:/sm/getAllGobo.do";
 	}
 	
-	@GetMapping("insertGobo.do")
+	@GetMapping("insertGoboForm.do")
 	public String insertGoboWrite() {
 		log.info("SMHomeController insertGobo.do 공지사항 글등록 화면 이동");
 		return "sm/GongiBoard/insertGobo";
@@ -65,18 +73,17 @@ public class SMHomeController {
 	
 	
 	@PostMapping("insertGobo.do")
-	public String insertGobo(GoboDto dto) {
-		log.info("SMHomeController insertGobo.do 공지사항 글등록");
-		dto.setGobo_modify_id("1");
-		dto.setGobo_writer("오종우");
-		dto.setGobo_writer_id("dhwhddn1");
-		int n = GoboService.insertGobo(dto);
-		if(n>0) {
-			return "sm/GongiBoard/insertGobo";
-		}else {
-			return "alert('글 작성 실패')";
-		}
+	@ResponseBody
+	public Boolean insertGobo(GoboDto dto) {
+	    log.info("SMHomeController insertGobo.do 공지사항 글 등록: {}", dto);
+	    dto.setGobo_writer("서종우");
+	    dto.setGobo_writer_id("whda2");
+	    int n = GoboService.insertGobo(dto);
+	    return (n>0)?true:false;
 	}
+	
+	
+	
 	
 	
 }

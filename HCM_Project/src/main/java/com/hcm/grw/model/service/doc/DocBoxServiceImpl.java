@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hcm.grw.dto.doc.DocBoxDto;
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.model.mapper.doc.IDocBoxDao;
 
@@ -21,9 +20,9 @@ public class DocBoxServiceImpl implements IDocBoxService {
 	private IDocBoxDao dao;
 	
 	@Override
-	public List<SignBoxDto> getAllDocs(Map<String, String> inMap) {
+	public List<SignBoxDto> getAllDocs(SignBoxDto dto) {
 		log.info("DocBoxServiceImpl  전체 문서 조회");
-		return dao.getAllDocs(inMap);
+		return dao.getAllDocs(dto);
 	}
 
 	@Override
@@ -65,7 +64,7 @@ public class DocBoxServiceImpl implements IDocBoxService {
 	
 	//상세조회 리스트 버전
 	@Override
-	public List<DocBoxDto>getDetailDocsList(DocBoxDto dto){
+	public List<SignBoxDto>getDetailDocsList(SignBoxDto dto){
 		return dao.getDetailDocsList(dto);
 	}
 	
@@ -88,6 +87,26 @@ public class DocBoxServiceImpl implements IDocBoxService {
 	public boolean finalApprove(SignBoxDto dto) {
 		int n = dao.finalJsonApprove(dto);
 		int m = dao.finalDocApprove(dto);
+		return (n+m)>1?true:false;
+	}
+	
+	//문서 조회 테이블+json 동시 트랜잭션
+	@Transactional(readOnly = true)
+	public boolean getDocs(SignBoxDto dto) {
+		
+	 List<SignBoxDto> table=dao.getAllDocsTable(dto);
+	 List<SignBoxDto> json=	dao.getAllDocsJson(dto);
+		
+	 int n = 0;
+	 int m = 0;
+
+	 if (table != null) {
+		  n = 1;
+		 }
+	 if (json != null) {
+		  m = 1;
+		 }
+		
 		return (n+m)>1?true:false;
 	}
 }	

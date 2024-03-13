@@ -13,7 +13,7 @@ SCBO_TITLE, SCBO_CONTENT, SCBO_REGDATE, SCBO_START,
 SCBO_END, SCBO_MODIFY_ID, SCBO_MODIFY_DATE, SCBO_BIGO, 
 SCBO_DELFLAG)
 VALUES((SELECT NVL(MAX(SCBO_NO)+1,0) FROM SCHEDULE_BOARD), #{scbo_cgory_no}, #{scbo_empno}, #{scbo_writer}, 
-#{scbo_title}, #{scbo_content}, TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') , #{scbo_start}, 
+#{scbo_title}, #{scbo_content}, TO_DATE(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS') , #{scbo_start}, 
 #{scbo_end}, #{scbo_modify_id}, SYSDATE , #{scbo_bigo}, 'N' )
 </insert>
 
@@ -21,7 +21,7 @@ VALUES((SELECT NVL(MAX(SCBO_NO)+1,0) FROM SCHEDULE_BOARD), #{scbo_cgory_no}, #{s
 <update id="updateScbo">
 UPDATE ADMIN.SCHEDULE_BOARD
 SET  SCBO_CGORY_NO= #{scbo_cgory_no}, SCBO_TITLE = #{scbo_title}, SCBO_CONTENT = #{scbo_content}, SCBO_START = #{scbo_start},
-SCBO_END = #{scbo_end},SCBO_BIGO = #{scbo_bigo},SCBO_MODIFY_ID= #{scbo_modify_id} , SCBO_MODIFY_DATE = TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+SCBO_END = #{scbo_end},SCBO_BIGO = #{scbo_bigo},SCBO_MODIFY_ID= #{scbo_modify_id} , SCBO_MODIFY_DATE = TO_DATE(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS')
 WHERE SCBO_NO = #{scbo_no}
 </update>
 
@@ -30,7 +30,7 @@ WHERE SCBO_NO = #{scbo_no}
 <!-- 일정 삭제 -->
 <update id="updateScboDelFlag">
 UPDATE ADMIN.SCHEDULE_BOARD
-SET SCBO_DELFLAG = 'Y',SCBO_MODIFY_ID=#{scbo_modify_id}, SCBO_MODIFY_DATE = SYSDATE 
+SET SCBO_DELFLAG = 'Y',SCBO_MODIFY_ID=#{scbo_modify_id}, SCBO_MODIFY_DATE = CURRENT_TIMESTAMP 
 WHERE SCBO_NO = #{scbo_no}
 </update>
 

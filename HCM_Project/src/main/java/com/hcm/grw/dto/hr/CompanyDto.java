@@ -24,7 +24,7 @@ public class CompanyDto {
 	private String comp_post;
 	private String comp_addr1;
 	private String comp_addr2;
-	private String comp_seal;
+	private byte[] comp_seal;
 	private String comp_create_id;
 	private String comp_create_dt;
 	private String comp_modify_id;

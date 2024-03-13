@@ -32,7 +32,8 @@
 	UPDATE SIGN_DOC_TEMP
 		SET SIDT_TEMP_CONTENT = #{sidt_temp_content},
 			SIDT_TEMP_NAME = #{sidt_temp_name},
-			SIDT_TEMP_MODIFYDT = CURRENT_DATE
+			SIDT_TEMP_MODIFYDT = CURRENT_DATE,
+			SICA_CD = #{sica_cd}
 			WHERE SIDT_TEMP_CD = #{sidt_temp_cd}
 </update>
 
@@ -47,6 +48,13 @@
 <select id="getCategory" resultType="TemplateDto">
 	SELECT SICA_CD, SICA_NAME
 		FROM SIGN_CATEGORY
+</select>
+
+<!-- 템플릿 가져오기 -->
+<select id="getTemplate" resultType="java.lang.String">
+	SELECT SIDT_TEMP_CONTENT
+		FROM SIGN_DOC_TEMP
+		WHERE SIDT_TEMP_CD = 'TC000005'
 </select>
 
 

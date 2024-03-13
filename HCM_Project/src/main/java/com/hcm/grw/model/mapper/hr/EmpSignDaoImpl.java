@@ -42,6 +42,24 @@ public class EmpSignDaoImpl implements EmpSignDao {
 	public int deleteSign(Map<String, Object> map) {
 		log.info("EmpSignDaoImpl deleteSign // {}",map);
 		return sessionTemplate.update(NS+"deleteSign",map);
+	}
+
+	@Override
+	public List<EmpSignDto> defaultChk(Map<String, Object> map) {
+		log.info("EmpSignDaoImpl defaultChk // {}",map);
+		return sessionTemplate.selectList(NS+"defaultChk",map);
+	}
+
+	@Override
+	public int setUnDefaultSign(Map<String, Object> map) {
+		log.info("EmpSignDaoImpl setUnDefaultSign // {}",map);
+		return sessionTemplate.update(NS+"setUnDefaultSign",map);
 	}	
 
+	@Override
+	public int setAllDefaultSign(Map<String, Object> map) {
+		log.info("EmpSignDaoImpl setAllDefaultSign // {}",map);
+		return sessionTemplate.update(NS+"setAllDefaultSign",map);
+	}
+	
 }

@@ -35,11 +35,11 @@
     UPDATE SIGN_DOC_BOX
     SET SIDB_DOC_JSON = JSON_TRANSFORM(
         SIDB_DOC_JSON,
-        SET '$[0].APPR_DT' = '' || TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '',
-            '$[0].APPR_REPLY' = #{appr_reply},
-            '$[0].APPR_FLAG' = '1',
-            '$[0].APPR_SIGN' = '' || (SELECT EMSI_SIGN_IMG FROM EMP_SIGN
-                                        WHERE EMSI_SEQ = 1) || '')
+        SET '$[${string_index}].APPR_DT' = '' || TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '',
+            '$[${string_index}].APPR_REPLY' = #{appr_reply},
+            '$[${string_index}].APPR_FLAG' = '1',
+            '$[${string_index}].APPR_SIGN' = '' || (SELECT EMSI_SIGN_IMG FROM EMP_SIGN
+                                        WHERE EMSI_SEQ = #{emsi_seq}) || '')
     WHERE SIDB_DOC_NUM = #{sidb_doc_num}
 </update>
 
@@ -54,22 +54,22 @@
 
 <!-- 결재반려 json 데이터 업데이트 + 문서 업데이트 트랜잭션 -->
 	
-<update id="denyJson">
+  
+<update id="denyJson" >
+  
     UPDATE SIGN_DOC_BOX
     SET SIDB_DOC_JSON = JSON_TRANSFORM(
         SIDB_DOC_JSON,
-        SET '$[1].APPR_DT' = '' || TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '',
-            '$[1].APPR_REPLY' = #{appr_reply},
-            '$[1].APPR_FLAG' = '3',
-            '$[1].APPR_SIGN' = '' || (SELECT EMSI_SIGN_IMG FROM EMP_SIGN
-                                        WHERE EMSI_SEQ = 1) || '')
+        SET '$[${string_index}].APPR_DT' = '' || TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '',
+            '$[${string_index}].APPR_REPLY' = #{appr_reply},
+            '$[${string_index}].APPR_FLAG' = '3')
     WHERE SIDB_DOC_NUM = #{sidb_doc_num}
 </update>
 
 	<update id="denyDoc">
 
 		UPDATE SIGN_DOC_BOX
-		SET SIDB_DOC_STAT = '4'
+		SET SIDB_DOC_STAT = '4', SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_FLAG = '2'
 		WHERE
 		SIDB_DOC_NUM = #{sidb_doc_num}
 

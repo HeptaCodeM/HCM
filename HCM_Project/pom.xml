@@ -9,6 +9,7 @@
 
 	<properties>
 		<org.springframework>5.3.20</org.springframework>
+		<org.springsecurity>5.7.1</org.springsecurity>
 		<org.aspect>1.9.21</org.aspect>
 		<slf4j>2.0.7</slf4j>
 	</properties>
@@ -35,6 +36,34 @@
 			<artifactId>spring-orm</artifactId>
 			<version>${org.springframework}</version>
 		</dependency>
+
+		<!-- Spring Security 사용을 위한 dependency 등록 Start -->
+		<!-- 인증 및 액세스 제어 기능이 포함 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${org.springsecurity}</version>
+		</dependency>
+		<!-- Servlet 환경에서 URL 액세스 제어를 가능하게 하는 필터 및 관련 웹 Security 인프라가 포함 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${org.springsecurity}</version>
+		</dependency>
+		<!-- XML 또는 JavaConfig를 사용하여 인증, 권한부여 등 설정을 지정하는데 사용 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${org.springsecurity}</version>
+		</dependency>
+		<!-- jsp에서 taglib를 사용하기 위한 추가 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${org.springsecurity}</version>
+		</dependency>
+		<!-- Spring Security 사용을 위한 dependency 등록 End -->
+
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ojdbc10</artifactId>
@@ -109,12 +138,30 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.16.1</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.14.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 			<!-- <scope>test</scope> -->
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.11.0</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.5</version>
 		</dependency>
 	</dependencies>
 	<build>

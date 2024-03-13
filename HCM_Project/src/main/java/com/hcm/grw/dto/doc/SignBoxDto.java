@@ -45,5 +45,13 @@ public class SignBoxDto {
 	private String appr_sign;
 	private String appr_dt;
 	private String appr_flag;
-	
+	private String appr_name;
+	private String appr_rank;
+	private String writer_dt;
+	private int turn_index;
+	private String string_index = Integer.toString(turn_index);
+	private String emsi_seq;
+	private String sidt_temp_name;
+	private String appr_name1;
+	private String appr_name2;
 }

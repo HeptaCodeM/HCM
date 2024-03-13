@@ -3,13 +3,12 @@ package com.hcm.grw.model.service.doc;
 import java.util.List;
 import java.util.Map;
 
-import com.hcm.grw.dto.doc.DocBoxDto;
 import com.hcm.grw.dto.doc.SignBoxDto;
 
 public interface IDocBoxService {
 
 		//전체 문서함 조회
-		public List<SignBoxDto> getAllDocs(Map<String, String> inMap);
+		public List<SignBoxDto> getAllDocs(SignBoxDto dto);
 		
 		//기안중인 문서 조회
 		public List<SignBoxDto> getMyGian(SignBoxDto dto);	
@@ -33,7 +32,7 @@ public interface IDocBoxService {
 		public SignBoxDto getDetailDocs(SignBoxDto dto);
 		
 		//상세조회 리스트
-		public List<DocBoxDto>getDetailDocsList(DocBoxDto dto);
+		public List<SignBoxDto>getDetailDocsList(SignBoxDto dto);
 		
 		//결재승인 트랜잭션 처리
 		public boolean approve(SignBoxDto dto);
@@ -45,5 +44,7 @@ public interface IDocBoxService {
 		//최종 결재 승인 트랜잭션 처리
 		public boolean finalApprove(SignBoxDto dto);
 		
+		//문서 조회 테이블+json 동시 트랜잭션
+		public boolean getDocs(SignBoxDto dto);
 		
 }
