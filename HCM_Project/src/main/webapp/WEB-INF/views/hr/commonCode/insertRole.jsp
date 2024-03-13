@@ -45,9 +45,8 @@
 								<div class="card-body pt-5">
 									${thisRole}명<input id="coco_name" name="coco_name" class="form-control form-control-solid" type="text" maxlength="6">
 										<span class="fs-6 text-muted">한글 6글자 이내로 입력해주세요!</span><br>
-									${thisRole}코드<input id="coco_cd" name="coco_cd" class="form-control form-control-solid" onchange="" type="text" maxlength="8">
+									${thisRole}코드<input id="coco_cd" name="coco_cd" class="form-control form-control-solid" type="text" maxlength="8">
 										<span class="fs-6 text-muted">EX)"${role}000001" 형식으로 입력해주세요</span><br>
-										<!-- Ajax로 중복검사 필요 -->
 										<!-- 유효값 검사도 필요 -->
 										<input type="hidden" id="role" name="role" value="${role}">
 								</div>
@@ -89,30 +88,46 @@
 					}
 					
 					var nameChk = document.querySelector("#coco_name");
-					
-					nameChk.addEventListener("focusout",function(){
+					var codeChk = document.querySelector("#coco_cd");
+					nameChk.addEventListener("focusout",function(){ valueChk(); });
+					codeChk.addEventListener("focusout",function(){ valueChk(); });
+					function valueChk(){
 						console.log("작동");
                   		var coco_name = document.getElementById('coco_name').value;
-						var nameChk = new URLSearchParams();
-						nameChk.append('coco_name', coco_name);
+                  		var coco_cd = document.getElementById('coco_cd').value;
+                  		var role = document.getElementById('role').value;
+						var valueChk = new URLSearchParams();
+						valueChk.append('coco_name', coco_name);
+						valueChk.append('coco_cd', coco_cd);
+						valueChk.append('role', role);
 						fetch('/hr/commonCode/roleNameDuplicateChk.do',{
 							method: "POST",
 							headers: {
 							    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
 							},
-							body: nameChk
+							body: valueChk
 						})
 						.then(response =>{
+							return response.json();
 							console.log(response);
-							return response.json()	;
 						})
 						.then(data => {
-							console.log(data);
+							console.log('CODE중복 : ',data.codeFlag);
+							console.log('NAME중복 : ',data.nameFlag);
+							
+							if(data.codeFlag == "false"){
+								alert("코드중복");
+							}
+							
+							if(data.nameFlag == "false"){
+								alert("이름중복");
+							}
+							
 						})
 					    .catch(err => { 
 					        console.log('에러발생', err);
 					    });
-					});
+					}
 				</script>
 			</div>
 		</div>
