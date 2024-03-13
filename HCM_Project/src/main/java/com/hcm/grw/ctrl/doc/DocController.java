@@ -21,7 +21,7 @@ public class DocController {
 	private IDocBoxService docService;
 	
 	
-	@GetMapping("/doc/getDetail.do")
+	@GetMapping("/doc/docBox/getDetail.do")
 	public String getDetailBoard(Model model, SignBoxDto dto, String docNum ) {
 		
 		dto.setSidb_doc_num(docNum);
@@ -43,4 +43,5 @@ public class DocController {
 	}
 	
 	
+
 }

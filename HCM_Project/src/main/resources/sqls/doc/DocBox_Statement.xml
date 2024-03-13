@@ -53,7 +53,7 @@ SELECT SDB.SIDB_DOC_NUM,
 FROM SIGN_DOC_BOX sdb
 JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD 
-WHERE SIDB_DOC_NUM = #{sidb_doc_num}
+WHERE SDB.empl_id = #{empl_id}
 </select>
 	
 	
@@ -70,7 +70,7 @@ WHERE SIDB_DOC_NUM = #{sidb_doc_num}
 	APPR_REPLY PATH '$.APPR_REPLY'
 	)) j
 	JOIN EMPLOYEE e2 ON e2.EMPL_ID = j.appr_id
-	WHERE SIDB_DOC_NUM = #{sidb_doc_num}
+	WHERE SDB.empl_id = #{empl_id}
 </select>	
 	
 
