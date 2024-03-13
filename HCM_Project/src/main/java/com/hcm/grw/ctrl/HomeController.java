@@ -1,17 +1,12 @@
 package com.hcm.grw.ctrl;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
-import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -21,9 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.EmailService;
-import com.hcm.grw.comm.Function;
-import com.hcm.grw.dto.hr.CompanyDto;
-import com.hcm.grw.model.mapper.hr.CompanyDao;
 
 import lombok.extern.slf4j.Slf4j;
 
