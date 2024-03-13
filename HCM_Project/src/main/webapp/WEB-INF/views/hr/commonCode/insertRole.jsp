@@ -44,11 +44,12 @@
 							<form action="/hr/commonCode/insertRoleOne.do" onsubmit="return checkNameValue()" method="post">
 								<div class="card-body pt-5">
 									${thisRole}명<input id="coco_name" name="coco_name" class="form-control form-control-solid" type="text" maxlength="6">
-										<span class="fs-6 text-muted">한글 6글자 이내로 입력해주세요!</span><br>
+										<span id="nameSpan" class="fs-6 text-muted">한글 6글자 이내로 입력해주세요!</span><br>
 									${thisRole}코드<input id="coco_cd" name="coco_cd" class="form-control form-control-solid" type="text" maxlength="8">
-										<span class="fs-6 text-muted">EX)"${role}000001" 형식으로 입력해주세요</span><br>
+										<span id="codeSpan" class="fs-6 text-muted">EX)"${role}000001" 형식으로 입력해주세요</span><br>
 										<!-- 유효값 검사도 필요 -->
 										<input type="hidden" id="role" name="role" value="${role}">
+										<br>
 								</div>
 								<div class="card-footer">
 									<button class="btn btn-primary btnLg me-10" type="submit">저장</button>
@@ -114,13 +115,17 @@
 						.then(data => {
 							console.log('CODE중복 : ',data.codeFlag);
 							console.log('NAME중복 : ',data.nameFlag);
+							var codeSpan = document.getElementById("codeSpan");
 							
 							if(data.codeFlag == "false"){
-								alert("코드중복");
+								/* alert("코드중복"); */
+								codeSpan.innerHTML = "코드를 확인 ㄱㄱ";
+							}else{
+								codeSpan.innerHTML = "EX)${role}000001 형식으로 입력해주세요";
 							}
 							
 							if(data.nameFlag == "false"){
-								alert("이름중복");
+								/* alert("이름중복"); */
 							}
 							
 						})
