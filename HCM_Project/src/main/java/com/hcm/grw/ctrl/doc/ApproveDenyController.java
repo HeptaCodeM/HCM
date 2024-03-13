@@ -27,7 +27,7 @@ public class ApproveDenyController {
 	@Autowired
 	private IDocBoxService docService;
 	
-	@PostMapping("/doc/approve.do")
+	@PostMapping("/doc/docBox/approve.do")
 	public String approve(@RequestParam("reply") String reply, Model model) {
 		log.info("approve 승인 진입", reply);
 		SignBoxDto dto = new SignBoxDto();
@@ -52,7 +52,7 @@ public class ApproveDenyController {
 		return "/doc/boardDetail";
 	}
 	
-	@PostMapping("/doc/deny.do")
+	@PostMapping("/doc/docBox/deny.do")
 	public String deny(@RequestParam("reply") String reply, Model model) {
 		log.info("deny 반려 진입", reply);
 		SignBoxDto dto = new SignBoxDto();

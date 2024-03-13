@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +20,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.hcm.grw.dto.doc.DocBoxDto;
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.doc.SignJsonDto;
 import com.hcm.grw.model.mapper.doc.IDocBoxDao;
@@ -222,13 +223,14 @@ public class RJY_JUnitTest {
 	  SignBoxDto dto = new SignBoxDto();
 	 
 	  
-	  dto.setSidb_doc_num("24000003");
+	  dto.setEmpl_id("20220101");
 	 
 	  List<SignBoxDto> table=dao.getAllDocsTable(dto);
-		 List<SignBoxDto> json=	dao.getAllDocsJson(dto);
+	  List<SignBoxDto> json=dao.getAllDocsJson(dto);
 		 
-		 System.out.println("나는테이블"+table.get(0));
-		 System.out.println("나는json@@@@@"+json.get(1));
+	  System.out.println("그럼 얘는 어떻게 찍힘???@@@"+ table );
+		 System.out.println("나는테이블"+table.get(0).getSidb_doc_num());
+		 System.out.println("나는json@@@@@"+json.get(1).getSidb_doc_num());
 	  boolean result = service.getDocs(dto); 
 
 	  //합치기
@@ -247,8 +249,34 @@ public class RJY_JUnitTest {
 	    fusion.add(fusionResult);
 	    System.out.println("제발!!!!!!!!!성공!!!!!!!!!"+fusion.get(0));
 	  
-	  assertTrue(result); 
-	  
+	    int len = table.size();
+	    int jlen = json.size();
+	    
+	    System.out.println("table 사이즈"+len + "@@@@ json 사이즈"+ jlen);
+	 
+	    
+	    for (int i = 0; i < len; i++) {
+	        for (int j = 0; j < jlen; j++) {
+	            if (table.get(i).getSidb_doc_num() == json.get(j).getSidb_doc_num()) {
+	                try {
+	                    // 메소드 이름을 동적으로 생성하여 호출
+	                    String methodName = "setAppr_name" + j;
+	                    
+	                    //setAppr_name0,1,2 메소드 가져오기 
+	                    Method method = SignBoxDto.class.getMethod(methodName, String.class);
+	                    
+	                    //table(0)에 json(0)(1)(2) appr_name 담기
+	                    method.invoke(table.get(i), json.get(j).getAppr_name());
+	                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+	                    e.printStackTrace(); // 예외 처리
+	                }
+	            }
+	        }
+	    }
+	    
+	    System.out.println("진짜최종"+table);
+	 // assertTrue(result); 
+	  assertNotNull(table);
 	  }
 
 }

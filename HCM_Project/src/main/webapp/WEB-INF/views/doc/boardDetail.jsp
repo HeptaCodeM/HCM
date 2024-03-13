@@ -262,10 +262,12 @@ th, td {
 </body>
 <script type="text/javascript">
 	function approve() {
+		alert("승인처리 되었습니다");
 		document.getElementById('reply').submit();
 	}
 
 	function deny() {
+		alert("반려처리 되었습니다");
 		document.getElementById('denyReply').submit();
 	}
 
