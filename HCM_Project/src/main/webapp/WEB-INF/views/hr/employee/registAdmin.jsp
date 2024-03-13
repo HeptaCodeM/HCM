@@ -8,6 +8,11 @@
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
 <title>조직관리</title>
 
+<style type="text/css">
+.table th { vertical-align:middle; }
+.form-check-input.radio {margin-right:10px;}
+.form-check-input.radio.last {margin-left:30px;}
+</style>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -78,9 +83,9 @@
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
 
-								<form name="form1" method="post" action="/hr/employee/regist.do">
+								<form name="form1" method="post" action="/hr/employee/registAdmin.do" enctype="multipart/form-data">
 									<div class="table-responsive">
-										<table class="table table-hover">
+										<table class="table ">
 											<tr>
 												<th>성명</th>
 												<td><input type="text" class="form-control form-control-solid" name="empl_name" maxlength="20" required="required"></td>
@@ -92,8 +97,8 @@
 											<tr>
 												<th>성별</th>
 												<td>
-													<input type="radio" name=empl_gender value="M" checked>남성
-													<input type="radio" name=empl_gender value="F">여성
+													<input type="radio" class="form-check-input radio" name=empl_gender value="M" checked>남성
+													<input type="radio" class="form-check-input radio last" name=empl_gender value="F">여성
 												</td>
 											</tr>
 											<tr>
@@ -133,7 +138,7 @@
 											<tr>
 												<th>부서</th>
 												<td>
-													<select name="empl_dept_cd" required="required">
+													<select name="empl_dept_cd" required="required" class="form-select">
 														<option value="">==== 부서선택 ====</option>
 														<c:forEach items="${deptList}" var="dept">
 														<option value="${dept.coco_cd}">${dept.coco_name}</option>
@@ -144,7 +149,7 @@
 											<tr>
 												<th>직위</th>
 												<td>
-													<select name="empl_rank_cd" required="required">
+													<select name="empl_rank_cd" required="required" class="form-select">
 														<option value="">==== 직위선택 ====</option>
 														<c:forEach items="${rankList}" var="rank">
 														<option value="${rank.coco_cd}">${rank.coco_name}</option>
@@ -155,7 +160,7 @@
 											<tr>
 												<th>직책</th>
 												<td>
-													<select name="empl_position_cd">
+													<select name="empl_position_cd" class="form-select">
 														<option value="">==== 직책선택 ====</option>
 														<c:forEach items="${positionList}" var="position">
 														<option value="${position.coco_cd}">${position.coco_name}</option>
@@ -163,12 +168,10 @@
 													</select>
 												</td>
 											</tr>
-											<!-- 
 											<tr>
 												<th>증명사진</th>
-												<td><input type="file" name="empl_name"></td>
+												<td><input type="file" class="form-control form-control-solid" name="empl_name"></td>
 											</tr>
-											 -->
 											<tr>
 												<td colspan="2">
 													<button class="btn btn-primary me-10" id="kt_button_1">
