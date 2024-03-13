@@ -7,31 +7,12 @@
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp"%>
 <title>DOC메인화면</title>
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <link rel="stylesheet"
 	href="../ckeditor5/sample/template.css">
-<style type="text/css">
-	.wrapper-form,
-	.wrapper-form > li {
-		display: flex;
-		flex-wrap: wrap;
-		align-content: center;
-		position: relative;
-	}
-	.whole-row{
 	
-	}
-/* 	div.title{ */
-/* 		width : 119px; */
-/* 	} */
-	div.form{
-		width: 100%;
-	}
-</style>	
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp"%>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -94,6 +75,27 @@
 				<div><input type="text" name="sidt_temp_cd"></div>
 				<div class="title">첨부파일</div>
 				<div><input type="text"></div> -->
+				<div class="input-group input-group-sm mb-5">
+				    <span class="input-group-text" id="inputGroup-sizing-sm">결재유형</span>
+				    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
+				</div>
+				<div class="input-group input-group-sm mb-5">
+				    <span class="input-group-text" id="inputGroup-sizing-sm">일자선택</span>
+				    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
+				</div>
+				<div class="input-group input-group-sm mb-5">
+				    <span class="input-group-text" id="inputGroup-sizing-sm">알림여부</span>
+				    <input type="checkbox" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
+				</div>
+				<div class="input-group input-group-sm mb-5">
+				    <span class="input-group-text" id="inputGroup-sizing-sm">제목</span>
+				    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
+				</div>
+				<div class="input-group input-group-sm mb-5">
+				    <span class="input-group-text" id="inputGroup-sizing-sm">결재라인</span>
+				    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
+				</div>
+				
 			<textarea id="editor" name="sidb_doc_content"></textarea>
 			
 			<div>
