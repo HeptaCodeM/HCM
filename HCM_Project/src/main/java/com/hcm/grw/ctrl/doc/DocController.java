@@ -31,15 +31,15 @@ public class DocController {
 		return "/doc/boardDetail";
 	}
 	
-	
+	 
 	@GetMapping(value="/doc/docBox.do")
 	public String jobs(Model model) {
-	log.info("결재함 진입");
-	SignBoxDto dto = new SignBoxDto();
-	dto.setEmpl_id("20220101");
-	List<SignBoxDto> lists = docService.getAllDocs(dto);
-	model.addAttribute("lists", lists);
-	return "/doc/docBox";
+		log.info("결재함 진입");
+		SignBoxDto dto = new SignBoxDto();
+		dto.setEmpl_id("20220101");
+		List<SignBoxDto> lists = docService.getAllDocs(dto);
+		model.addAttribute("lists", lists);
+		return "/doc/docBox";
 	}
 	
 	
