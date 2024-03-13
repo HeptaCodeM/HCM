@@ -79,108 +79,110 @@
 							<div class="card-body pt-5">
 
 								<form name="form1" method="post" action="/hr/employee/regist.do">
-									<table class="table table-hover">
-										<tr>
-											<th>성명</th>
-											<td><input type="text" name="empl_name" maxlength="20" required="required"></td>
-										</tr>
-										<tr>
-											<th>생년월일</th>
-											<td><input type="date" name="empl_birth" required="required"></td>
-										</tr>
-										<tr>
-											<th>성별</th>
-											<td>
-												<input type="radio" name=empl_gender value="M" checked>남성
-												<input type="radio" name=empl_gender value="F">여성
-											</td>
-										</tr>
-										<tr>
-											<th>이메일</th>
-											<td><input type="text" name="empl_email" maxlength="50" required="required"></td>
-										</tr>
-										<tr>
-											<th>전화번호</th>
-											<td><input type="text" name="empl_phone" maxlength="15" required="required"></td>
-										</tr>
-										<tr>
-											<th>내선번호</th>
-											<td><input type="text" name="empl_tel" maxlength="3"></td>
-										</tr>
-										<tr>
-											<th>팩스번호</th>
-											<td><input type="text" name="empl_fax" maxlength="15"></td>
-										</tr>
-										<tr>
-											<th>입사년도</th>
-											<td><input type="date" name="empl_joindate" required="required"></td>
-										</tr>
-										<!-- 
-										<tr>
-											<th>우편번호</th>
-											<td><input type="text" name="zipcode" id="zipcode" readonly required="required"> <button type="button" class="btn btn-info" onclick="searchAddr()">주소찾기</button></td>
-										</tr>
-										<tr>
-											<th>주소</th>
-											<td><input type="text" name="addr1" id="addr1" readonly required="required"></td>
-										</tr>
-										<tr>
-											<th>상세주소</th>
-											<td><input type="text" name="addr2" id="addr2" maxlength="100" required="required"></td>
-										</tr>
-										 -->
-										<tr>
-											<th>부서</th>
-											<td>
-												<select name="empl_dept_cd" required="required">
-													<option value="">==== 부서선택 ====</option>
-													<c:forEach items="${deptList}" var="dept">
-													<option value="${dept.coco_cd}">${dept.coco_name}</option>
-													</c:forEach>
-												</select>
-											</td>
-										</tr>
-										<tr>
-											<th>직위</th>
-											<td>
-												<select name="empl_rank_cd" required="required">
-													<option value="">==== 직위선택 ====</option>
-													<c:forEach items="${rankList}" var="rank">
-													<option value="${rank.coco_cd}">${rank.coco_name}</option>
-													</c:forEach>
-												</select>
-											</td>
-										</tr>
-										<tr>
-											<th>직책</th>
-											<td>
-												<select name="empl_position_cd">
-													<option value="">==== 직책선택 ====</option>
-													<c:forEach items="${positionList}" var="position">
-													<option value="${position.coco_cd}">${position.coco_name}</option>
-													</c:forEach>
-												</select>
-											</td>
-										</tr>
-										<!-- 
-										<tr>
-											<th>증명사진</th>
-											<td><input type="file" name="empl_name"></td>
-										</tr>
-										 -->
-										<tr>
-											<td colspan="2">
-												<button class="btn btn-primary me-10" id="kt_button_1">
-												    <span class="indicator-label">
-												        Submit
-												    </span>
-												    <span class="indicator-progress">
-												        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-												    </span>
-												</button>
-											</td>
-										</tr>
-									</table>
+									<div class="table-responsive">
+										<table class="table table-hover">
+											<tr>
+												<th>성명</th>
+												<td><input type="text" class="form-control form-control-solid" name="empl_name" maxlength="20" required="required"></td>
+											</tr>
+											<tr>
+												<th>생년월일</th>
+												<td><input type="date" class="form-control form-control-solid" name="empl_birth" required="required"></td>
+											</tr>
+											<tr>
+												<th>성별</th>
+												<td>
+													<input type="radio" name=empl_gender value="M" checked>남성
+													<input type="radio" name=empl_gender value="F">여성
+												</td>
+											</tr>
+											<tr>
+												<th>이메일</th>
+												<td><input type="text" class="form-control form-control-solid" name="empl_email" maxlength="50" required="required"></td>
+											</tr>
+											<tr>
+												<th>전화번호</th>
+												<td><input type="text" class="form-control form-control-solid" name="empl_phone" maxlength="15" required="required"></td>
+											</tr>
+											<tr>
+												<th>내선번호</th>
+												<td><input type="text" class="form-control form-control-solid" name="empl_tel" maxlength="3"></td>
+											</tr>
+											<tr>
+												<th>팩스번호</th>
+												<td><input type="text" class="form-control form-control-solid" name="empl_fax" maxlength="15"></td>
+											</tr>
+											<tr>
+												<th>입사년도</th>
+												<td><input type="date" class="form-control form-control-solid" name="empl_joindate" required="required"></td>
+											</tr>
+											<!-- 
+											<tr>
+												<th>우편번호</th>
+												<td><input type="text" name="zipcode" id="zipcode" readonly required="required"> <button type="button" class="btn btn-info" onclick="searchAddr()">주소찾기</button></td>
+											</tr>
+											<tr>
+												<th>주소</th>
+												<td><input type="text" name="addr1" id="addr1" readonly required="required"></td>
+											</tr>
+											<tr>
+												<th>상세주소</th>
+												<td><input type="text" name="addr2" id="addr2" maxlength="100" required="required"></td>
+											</tr>
+											 -->
+											<tr>
+												<th>부서</th>
+												<td>
+													<select name="empl_dept_cd" required="required">
+														<option value="">==== 부서선택 ====</option>
+														<c:forEach items="${deptList}" var="dept">
+														<option value="${dept.coco_cd}">${dept.coco_name}</option>
+														</c:forEach>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<th>직위</th>
+												<td>
+													<select name="empl_rank_cd" required="required">
+														<option value="">==== 직위선택 ====</option>
+														<c:forEach items="${rankList}" var="rank">
+														<option value="${rank.coco_cd}">${rank.coco_name}</option>
+														</c:forEach>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<th>직책</th>
+												<td>
+													<select name="empl_position_cd">
+														<option value="">==== 직책선택 ====</option>
+														<c:forEach items="${positionList}" var="position">
+														<option value="${position.coco_cd}">${position.coco_name}</option>
+														</c:forEach>
+													</select>
+												</td>
+											</tr>
+											<!-- 
+											<tr>
+												<th>증명사진</th>
+												<td><input type="file" name="empl_name"></td>
+											</tr>
+											 -->
+											<tr>
+												<td colspan="2">
+													<button class="btn btn-primary me-10" id="kt_button_1">
+													    <span class="indicator-label">
+													        Submit
+													    </span>
+													    <span class="indicator-progress">
+													        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+													    </span>
+													</button>
+												</td>
+											</tr>
+										</table>
+									</div>
 								</form>
 
 							</div>

@@ -40,16 +40,16 @@
 
 		<!-- 시스템 권한 -->
 		<!-- <security:intercept-url pattern="/system.do" access="hasRole('SYS_ADMIN')" /> -->
-		<security:intercept-url pattern="/sys/*admin*.do" access="hasRole('SYS_ADMIN')" />
+		<security:intercept-url pattern="/sys/*Admin*.do" access="hasRole('SYS_ADMIN')" />
 		<!-- 인사관리자 접근 권한 -->
 		<!-- <security:intercept-url pattern="/hr/*admin*.do" access="hasAnyRole('HR_ADMIN')" /> -->
-		<security:intercept-url pattern="/hr/**/*admin*.do" access="hasAnyRole('HR_ADMIN')" />
+		<security:intercept-url pattern="/hr/**/*Admin*.do" access="hasAnyRole('HR_ADMIN')" />
 		<!-- 일정관리자 접근 권한 -->
 		<!-- <security:intercept-url pattern="/sm/*admin*.do" access="hasAnyRole('SC_ADMIN')" /> -->
-		<security:intercept-url pattern="/sm/**/*admin*.do" access="hasAnyRole('SC_ADMIN')" />
+		<security:intercept-url pattern="/sm/**/*Admin*.do" access="hasAnyRole('SC_ADMIN')" />
 		<!-- 결재관리자 접근 권한 -->
 		<!-- <security:intercept-url pattern="/doc/*admin*.do" access="hasAnyRole('DOC_ADMIN')" /> -->
-		<security:intercept-url pattern="/doc/**/*admin*.do" access="hasAnyRole('DOC_ADMIN')" />
+		<security:intercept-url pattern="/doc/**/*Admin*.do" access="hasAnyRole('DOC_ADMIN')" />
 		<!-- 일반회원 접근 권한 -->
 		<!-- <security:intercept-url pattern="/hr/*" access="isAuthenticated()" />
 		<security:intercept-url pattern="/sm/*" access="isAuthenticated()" />
