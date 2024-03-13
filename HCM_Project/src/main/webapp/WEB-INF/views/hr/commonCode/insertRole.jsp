@@ -41,7 +41,7 @@
 								<h3 class="card-title text-gray-800 fw-bold">${thisRole}입력</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
-							<form action="./insertRoleOne.do" onsubmit="return checkNameValue()" method="post">
+							<form action="/hr/commonCode/insertRoleOne.do" onsubmit="return checkNameValue()" method="post">
 								<div class="card-body pt-5">
 									${thisRole}명<input id="coco_name" name="coco_name" class="form-control form-control-solid" type="text" maxlength="6">
 										<span class="fs-6 text-muted">한글 6글자 이내로 입력해주세요!</span><br>
@@ -52,8 +52,8 @@
 										<input type="hidden" id="role" name="role" value="${role}">
 								</div>
 								<div class="card-footer">
-									<button class="btn btn-primary me-10" type="submit">저장</button>
-									<button class="btn btn-primary me-10" type="reset">초기화</button>
+									<button class="btn btn-primary btnLg me-10" type="submit">저장</button>
+									<button class="btn btn-primary btnLg me-10" type="reset">초기화</button>
 									<a onclick="javascript:window.history.back(-1)" class="btn btn-primary me-10">취소</a>
 							    </div>
 							</form>

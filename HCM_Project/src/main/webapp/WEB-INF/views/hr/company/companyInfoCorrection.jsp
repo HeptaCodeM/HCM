@@ -38,7 +38,7 @@
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5" >
-								<form action="./correctionCompanyInfo.do" method="post">
+								<form action="/hr/company/correctionCompanyInfo.do" method="post">
 									<div class="table-responsive">
 										<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
 											<tbody class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
@@ -63,6 +63,11 @@
 												</tr>
 												
 												<tr>
+													<td>회사메일</td>
+													<td colspan="2"><input name="comp_email" id="comp_email" class="form-control form-control-solid" type="text" value="${companyDto.getComp_email()}"></td>
+												</tr>
+												
+												<tr>
 													<td>팩스번호</td>
 													<td colspan="2"><input name="comp_fax" id="comp_fax" class="form-control form-control-solid" type="text" value="${companyDto.getComp_fax()}"></td>
 												</tr>
@@ -81,9 +86,9 @@
 											<tfoot>
 												<tr>
 													<td colspan="3">
-														<button class="btn btn-primary me-10" type="submit">저장</button>
-														<button class="btn btn-primary me-10" type="reset">초기화</button>
-														<a onclick="javascript:window.history.back(-1)" class="btn btn-primary me-10">취소</a>
+														<button class="btn btn-primary btnLg me-10" type="submit">저장</button>
+														<button class="btn btn-primary btnLg me-10" type="reset">초기화</button>
+														<a onclick="javascript:window.history.back(-1)" class="btn btn-primary btnLg me-10">취소</a>
 														<input name="comp_id" id="comp_id" type="hidden" value="${companyDto.getComp_id()}">
 													</td>	
 												</tr>

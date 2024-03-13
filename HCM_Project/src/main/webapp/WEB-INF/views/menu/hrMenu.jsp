@@ -13,12 +13,12 @@ String hrSubLeftMenu [][] = {
 };
 //소분류 링크
 String hrSubLinkLeftMenu [][] = {
-		{"/roleList.do?role=DT","/roleList.do?role=RK","/roleList.do?role=PN", "/hr/employee/registAdmin.do", "/hr/employee/list.do"},		//hrLeftMenu[0]
-		{"/certificate.do"},							//hrLeftMenu[1]
+		{"/hr/commonCode/roleList.do?role=DT","/hr/commonCode/roleList.do?role=RK","/hr/commonCode/roleList.do?role=PN", "/hr/employee/registAdmin.do", "/hr/employee/list.do"},		//hrLeftMenu[0]
+		{"/hr/certificate/certificate.do"},							//hrLeftMenu[1]
 		{"#", "#"},						//hrLeftMenu[2]
 		{"#", "#"},					//hrLeftMenu[3]
-		{"/companyInfo.do"},						//hrLeftMenu[4]
-		{"/signListForm.do"}						//hrLeftMenu[5]
+		{"/hr/company/companyInfo.do"},						//hrLeftMenu[4]
+		{"/hr/sign/signListForm.do"}						//hrLeftMenu[5]
 };
 
 String uri = request.getRequestURI();

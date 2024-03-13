@@ -63,6 +63,11 @@
 											</tr>
 											
 											<tr>
+												<td>회사메일</td>
+												<td colspan="2">${companyDto.getComp_email()}</td>
+											</tr>
+											
+											<tr>
 												<td>팩스번호</td>
 												<td colspan="2">${companyDto.getComp_fax()}</td>
 											</tr>
@@ -96,9 +101,9 @@
 							</div>
 							<div class="card-footer">
 								<!-- 관리자만 보이게 할 예정 -->
-								<button class="btn btn-primary me-10" type="button" onclick="location.href='./companyInfoCorrection.do'">수정</button>
-								<button class="btn btn-primary me-10" type="button" onclick="location.href='./insertCompanySealForm.do'">회사직인입력</button>
-								<button class="btn btn-primary me-10" type="button" onclick="location.href='./showCompanySeal.do'">회사직인조회</button>
+								<button class="btn btn-primary btnLg me-10" type="button" onclick="location.href='/hr/company/companyInfoCorrection.do'">수정</button>
+								<button class="btn btn-primary btnLg me-10" type="button" onclick="location.href='/hr/company/insertCompanySealForm.do'">회사직인입력</button>
+								<button class="btn btn-primary btnLg me-10" type="button" onclick="location.href='/hr/company/showCompanySeal.do'">회사직인조회</button>
 							</div>
 						</div>
 					</div>
