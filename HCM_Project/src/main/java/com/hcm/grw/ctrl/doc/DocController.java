@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.model.service.doc.IDocBoxService;
@@ -32,17 +31,17 @@ public class DocController {
 		return "/doc/boardDetail";
 	}
 	
-	
+	 
 	@GetMapping(value="/doc/docBox.do")
 	public String jobs(Model model) {
-	log.info("결재함 진입");
-	SignBoxDto dto = new SignBoxDto();
-	dto.setEmpl_id("20220101");
-	List<SignBoxDto> lists = docService.getAllDocs(dto);
-	model.addAttribute("lists", lists);
-	return "/doc/docBox";
+		log.info("결재함 진입");
+		SignBoxDto dto = new SignBoxDto();
+		dto.setEmpl_id("20220101");
+		List<SignBoxDto> lists = docService.getAllDocs(dto);
+		model.addAttribute("lists", lists);
+		return "/doc/docBox";
 	}
 	
 	
-	
+
 }
