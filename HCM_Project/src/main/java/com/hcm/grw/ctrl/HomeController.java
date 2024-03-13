@@ -1,17 +1,12 @@
 package com.hcm.grw.ctrl;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
-import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -20,8 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hcm.grw.comm.CookiesMgr;
-import com.hcm.grw.dto.hr.CompanyDto;
-import com.hcm.grw.model.mapper.hr.CompanyDao;
+import com.hcm.grw.comm.EmailService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,16 +27,16 @@ public class HomeController {
 	private PasswordEncoder passwordEncoder;
 
 	@Autowired
-	private CompanyDao companyDao;
-
-	@Autowired
-	private JavaMailSenderImpl mailSender;	
+	private EmailService emailService;
 
 	
 	@GetMapping({"/index.do", "/"})
 	public String index(Model model, Authentication authentication) {
 		
-		String getId = authentication.getName();
+		String getId = "";
+		if(authentication != null) {
+			getId = authentication.getName();
+		}
 		log.info("getId : {}", getId);
 		model.addAttribute("getId", getId);
 		
@@ -139,48 +133,18 @@ public class HomeController {
 	public String sendMailTest() {
 		log.info("메일발송");
 		
-		//Function fn = new Function();
-		
 		String subject = "테스트 메일 입니다.";
 		String content = "테스트 입니다.";
 		String toEmail = "hcm_0415@naver.com";
-		String fromEmail = "";
+		String fromEmail = null;
 
-		if(fromEmail == "" || fromEmail == null) {
-			Map<String, Object> companyMap = new HashMap<String, Object>();
-			companyMap.put("comp_id", "ITCOM0A1");
-			
-			CompanyDto comDto = companyDao.showCompanyInfo(companyMap);
-			fromEmail = comDto.getComp_email();
-			log.info("companyMap : {}", companyMap);
-			System.out.println("companyMap : {}"+ companyMap);
-		}
-		
-		
 		//boolean sendFlag = fn.sendMail(subject, content, toEmail, fromEmail);
-		boolean sendFlag = sendMail(subject, content, toEmail, fromEmail);
+		boolean sendFlag = emailService.sendMail(subject, content, toEmail, fromEmail);
 		log.info("메일발송 : {}", sendFlag);
 		
 		return "redirect:/";
 	}
 
-	public Boolean sendMail(String subject, String content, String toEmail, String fromEmail) {
-		try {
 
-			MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-            messageHelper.setSubject(subject);	// 메일제목은 생략이 가능하다			
-            messageHelper.setText(content);
-            messageHelper.setTo(toEmail);
-            messageHelper.setFrom(fromEmail);
-			
-            mailSender.send(message);
-		}catch(Exception ex) {
-			log.info("EMail Send Error : {}", ex.getMessage());
-			return false;
-		}
-		
-		return true;
-	}
 	
 }

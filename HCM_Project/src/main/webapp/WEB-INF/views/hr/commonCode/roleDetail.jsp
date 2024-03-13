@@ -42,7 +42,7 @@ function deleteRole(){
     var coco_cd = document.getElementById("coco_cd").value;
     var role = document.getElementById("role").value;
     
-    location.href="./deleteRoleOne.do?coco_cd="+coco_cd+"&role="+role;
+    location.href="/hr/commonCode/deleteRoleOne.do?coco_cd="+coco_cd+"&role="+role;
 }
 
 
@@ -92,7 +92,7 @@ function checkTest(){
 								<h3 class="card-title text-gray-800 fw-bold">${roleDto.getCoco_name()} 정보수정</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
-							<form action="./correctionRole.do" onsubmit="return checkNameValue()" method="post">
+							<form action="/hr/commonCode/correctionRole.do" onsubmit="return checkNameValue()" method="post">
 								<div class="card-body pt-5">
 									${thisRole}명<input id="coco_name" name="coco_name" onkeypress="checkTest()" class="form-control form-control-solid" type="text" maxlength="6" value="${roleDto.getCoco_name()}">
 										<span id="coco_nameSpan" class="fs-6 text-muted">한글 6글자 이내로 입력해주세요!</span><br>

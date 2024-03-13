@@ -1,25 +1,13 @@
 package com.hcm.grw.comm;
 
-import javax.mail.internet.MimeMessage;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-
-import lombok.extern.slf4j.Slf4j;
-
 /**
 * 공통함수 클래스
 * @author : SDJ
 * @since : 2024.01.13
 * @version : 1.0
 */
-@Slf4j
 public class Function {
 
-//	@Autowired
-//	private JavaMailSender mailSender;
-	
 	/**
 	* alert 메시지 발생 후 url이동
 	* @param : 메시지
@@ -65,36 +53,5 @@ public class Function {
 		sb.append("</script>");
 		return sb.toString();
 	}
-
-
-	
-	/**
-	* 메일발송 Method
-	* @param : 제목
-	* @param : 내용
-	* @param : 수신자 메일주소
-	* @param : 발신자 메일주소
-	* @return : Boolean(메일발송 Flag값)
-	* @author : SDJ
-	* @since : 2024.03.12
-	*/
-//	public Boolean sendMail(String subject, String content, String toEmail, String fromEmail) {
-//		try {
-//
-//			MimeMessage message = mailSender.createMimeMessage();
-//            MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-//            messageHelper.setSubject(subject);	// 메일제목은 생략이 가능하다			
-//            messageHelper.setText(content);
-//            messageHelper.setTo(toEmail);
-//            messageHelper.setFrom(fromEmail);
-//			
-//            mailSender.send(message);
-//		}catch(Exception ex) {
-//			log.info("EMail Send Error : {}", ex.getMessage());
-//			return false;
-//		}
-//		
-//		return true;
-//	}
 
 }

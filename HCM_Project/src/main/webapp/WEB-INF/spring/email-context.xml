@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- 메일링 -->
+	<bean id="javaMailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${ehost}" />
+		<property name="port" value="${eport}" />
+		<property name="username" value="${euser}" />
+		<property name="password" value="${epwd}" />
+
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.debug">true</prop>
+				<prop key="mail.smtp.auth"></prop>
+				<prop key="mail.transport.protocal">smtp</prop>
+				<prop key="mail.smtp.starttls.enable">false</prop>
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

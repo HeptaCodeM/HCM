@@ -21,7 +21,7 @@ public class DocController {
 	private IDocBoxService docService;
 	
 	
-	@GetMapping("/doc/docBox/getDetail.do")
+	@GetMapping("/doc/getDetail.do")
 	public String getDetailBoard(Model model, SignBoxDto dto, String docNum ) {
 		
 		dto.setSidb_doc_num(docNum);
@@ -31,17 +31,16 @@ public class DocController {
 		return "/doc/boardDetail";
 	}
 	
-	 
+	
 	@GetMapping(value="/doc/docBox.do")
 	public String jobs(Model model) {
-		log.info("결재함 진입");
-		SignBoxDto dto = new SignBoxDto();
-		dto.setEmpl_id("20220101");
-		List<SignBoxDto> lists = docService.getAllDocs(dto);
-		model.addAttribute("lists", lists);
-		return "/doc/docBox";
+	log.info("결재함 진입");
+	SignBoxDto dto = new SignBoxDto();
+	dto.setEmpl_id("20220101");
+	List<SignBoxDto> lists = docService.getAllDocs(dto);
+	model.addAttribute("lists", lists);
+	return "/doc/docBox";
 	}
-	
 	
 	
 }

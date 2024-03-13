@@ -8,14 +8,6 @@
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
 <title>SM메인화면</title>
-<style type="text/css">
- /* 화면늘리는 버튼 숨기기 */
-    textarea.comment_inbox_text {
-        resize: none; /* 사용자가 텍스트 영역 크기를 조절할 수 없도록 함 */
-        min-height: 38px; /* 최소 높이 지정 */
-    }
-
-</style>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -32,7 +24,7 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">${dto.gobo_title}</h1>
+                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">공지사항 상세보기</h1>
                     <!--end::Title-->
                 </div>
                 <!--end::Page title-->
@@ -45,9 +37,10 @@
                     <div class="card card-flush h-md-50 mb-xl-10">
                         <div class="card-body pt-5">
                             <!-- 공지사항 상세 내용 표시 -->
+                            <h2>${dto.gobo_title}</h2>
                             <p>작성자: ${dto.gobo_writer}</p>
                             <p>작성일: <fmt:formatDate value="${dto.gobo_regdate}" pattern="yyyy-MM-dd"/></p>
-                            <p  style="font-size: 20px;">${dto.gobo_content}</p>
+                            <p  style="font-size: 30px;">${dto.gobo_content}</p>
 
                             <!-- 댓글 표시 -->
                             <h3>댓글</h3>
@@ -66,18 +59,18 @@
 						    </c:forEach>
 						</ul>
                             <!-- 댓글 작성 폼 -->
-						     <div class="CommentWriter mb-4">
-							        <div class="comment_inbox border border-2">
-							            <em class="comment_inbox_name">${dto.gobo_writer}</em>
-							            <textarea placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0"></textarea>
-							       <div class="d-flex justify-content-end align-items-end">
-							        <div class="register_box">
-							            <button type="button" class="btn btn-primary" onclick="insertReply(${dto.gobo_no})">등록</button>
-							        </div>
-							        </div>
-							        </div>
-							  </div>
-							</div>
+                           <form id="commentForm" method="post">
+						    <div class="CommentWriter">
+						        <div class="comment_inbox">
+						            <textarea placeholder="댓글을 남겨보세요" rows="3" class="comment_inbox_text form-control" style="overflow: hidden; overflow-wrap: break-word;"></textarea>
+						        </div>
+						        <div class="comment_attach">
+						            <div class="register_box">
+						                <button type="button" class="btn btn-primary" onclick="insertComment(${dto.gobo_no})">등록</button>
+						            </div>
+						        </div>
+						    </div>
+						</form>
                         </div>
                     </div>
                 </div>
@@ -85,21 +78,4 @@
 			
 <%@include file="/WEB-INF/views/menu/smSideMenu.jsp" %>		
 </body>
-
-
-<script type="text/javascript">
-
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.CommentWriter').forEach(function(commentWriter) {
-        commentWriter.addEventListener('click', function() {
-            var textarea = this.querySelector('.comment_inbox_text');
-            if (textarea) {
-                textarea.focus();
-            }
-        });
-    });
-});
-
-
-</script>
 </html>
