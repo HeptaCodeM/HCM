@@ -33,7 +33,10 @@ public class HomeController {
 	@GetMapping({"/index.do", "/"})
 	public String index(Model model, Authentication authentication) {
 		
-		String getId = authentication.getName();
+		String getId = "";
+		if(authentication != null) {
+			getId = authentication.getName();
+		}
 		log.info("getId : {}", getId);
 		model.addAttribute("getId", getId);
 		
