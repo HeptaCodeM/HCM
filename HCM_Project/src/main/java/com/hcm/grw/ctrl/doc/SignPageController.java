@@ -3,45 +3,52 @@ package com.hcm.grw.ctrl.doc;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.hcm.grw.dto.doc.SignBoxDto;
-import com.hcm.grw.model.service.doc.IDocBoxService;
+import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.model.service.doc.ISignFavoService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
-public class DocController {
-
+@RequestMapping("doc/")
+public class SignPageController {
 	
 	@Autowired
-	private IDocBoxService docService;
+	private ISignFavoService service;
 	
-	
-	@GetMapping("/doc/docBox/getDetail.do")
-	public String getDetailBoard(Model model, SignBoxDto dto, String docNum ) {
-		
-		dto.setSidb_doc_num(docNum);
-		List<SignBoxDto> docDto= docService.getDetailDocsList(dto);
-		model.addAttribute("docDto",docDto);
-		log.info("상세조회  데이터 리스트 결과{}", docDto);
-		return "/doc/boardDetail";
+	@GetMapping("write.do")
+	public String write() {
+		log.info("SignTreeController write.do GET 문서작성 페이지");
+		return "doc/write";
 	}
 	
-	 
-	@GetMapping(value="/doc/docBox.do")
-	public String jobs(Model model) {
-		log.info("결재함 진입");
-		SignBoxDto dto = new SignBoxDto();
-		dto.setEmpl_id("20220101");
-		List<SignBoxDto> lists = docService.getAllDocs(dto);
-		model.addAttribute("lists", lists);
-		return "/doc/docBox";
+	@GetMapping("signFavo.do")
+	public String signFavo(Authentication auth, Model model) {
+		log.info("SignTreeController signFavo.do GET 결재선 관리 페이지");
+		List<String> list = List.of(auth.getName());
+		List<EmployeeDto> loginInfo = service.getFav(list);
+		model.addAttribute("loginInfo", loginInfo.get(0));
+		return "doc/signFavo";
 	}
 	
+	@GetMapping("signRefer.do")
+	public String signRefer() {
+		log.info("SignTreeController signRefer.do GET 참조 등록 페이지");
+		return "doc/signRefer";
+	}
 	
-
+	@GetMapping("writeDoc.do")
+	public String writeDoc(Authentication auth, Model model) {
+		String id = auth.getName();
+		List<String> list = List.of(id);
+		List<EmployeeDto> dto = service.getFav(list);
+		model.addAttribute("loginInfo", dto.get(0));
+		return "writeDoc";
+	}
 }
