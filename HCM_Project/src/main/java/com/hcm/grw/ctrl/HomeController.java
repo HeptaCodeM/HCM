@@ -35,8 +35,8 @@ public class HomeController {
 	@Autowired
 	private CompanyDao companyDao;
 
-	@Autowired
-	private JavaMailSenderImpl mailSender;	
+//	@Autowired
+//	private JavaMailSenderImpl mailSender;	
 
 	
 	@GetMapping({"/index.do", "/"})
@@ -134,53 +134,54 @@ public class HomeController {
 	}
 
 	
-	//메일발송 테스트
-	@GetMapping("/sendMailTest.do")
-	public String sendMailTest() {
-		log.info("메일발송");
-		
-		//Function fn = new Function();
-		
-		String subject = "테스트 메일 입니다.";
-		String content = "테스트 입니다.";
-		String toEmail = "hcm_0415@naver.com";
-		String fromEmail = "";
+//	//메일발송 테스트
+//	@GetMapping("/sendMailTest.do")
+//	public String sendMailTest() {
+//		log.info("메일발송");
+//		
+//		//Function fn = new Function();
+//		
+//		String subject = "테스트 메일 입니다.";
+//		String content = "테스트 입니다.";
+//		String toEmail = "hcm_0415@naver.com";
+//		String fromEmail = "";
+//
+//		if(fromEmail == "" || fromEmail == null) {
+//			Map<String, Object> companyMap = new HashMap<String, Object>();
+//			companyMap.put("comp_id", "ITCOM0A1");
+//			
+//			CompanyDto comDto = companyDao.showCompanyInfo(companyMap);
+//			fromEmail = comDto.getComp_email();
+//			log.info("companyMap : {}", companyMap);
+//			System.out.println("companyMap : {}"+ companyMap);
+//		}
+//		
+//		
+//		//boolean sendFlag = fn.sendMail(subject, content, toEmail, fromEmail);
+//		boolean sendFlag = sendMail(subject, content, toEmail, fromEmail);
+//		log.info("메일발송 : {}", sendFlag);
+//		
+//		return "redirect:/";
+//	}
 
-		if(fromEmail == "" || fromEmail == null) {
-			Map<String, Object> companyMap = new HashMap<String, Object>();
-			companyMap.put("comp_id", "ITCOM0A1");
-			
-			CompanyDto comDto = companyDao.showCompanyInfo(companyMap);
-			fromEmail = comDto.getComp_email();
-			log.info("companyMap : {}", companyMap);
-			System.out.println("companyMap : {}"+ companyMap);
-		}
-		
-		
-		//boolean sendFlag = fn.sendMail(subject, content, toEmail, fromEmail);
-		boolean sendFlag = sendMail(subject, content, toEmail, fromEmail);
-		log.info("메일발송 : {}", sendFlag);
-		
-		return "redirect:/";
-	}
-
-	public Boolean sendMail(String subject, String content, String toEmail, String fromEmail) {
-		try {
-
-			MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-            messageHelper.setSubject(subject);	// 메일제목은 생략이 가능하다			
-            messageHelper.setText(content);
-            messageHelper.setTo(toEmail);
-            messageHelper.setFrom(fromEmail);
-			
-            mailSender.send(message);
-		}catch(Exception ex) {
-			log.info("EMail Send Error : {}", ex.getMessage());
-			return false;
-		}
-		
-		return true;
-	}
+	
+//	public Boolean sendMail(String subject, String content, String toEmail, String fromEmail) {
+//		try {
+//
+//			MimeMessage message = mailSender.createMimeMessage();
+//            MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+//            messageHelper.setSubject(subject);	// 메일제목은 생략이 가능하다			
+//            messageHelper.setText(content);
+//            messageHelper.setTo(toEmail);
+//            messageHelper.setFrom(fromEmail);
+//			
+//            mailSender.send(message);
+//		}catch(Exception ex) {
+//			log.info("EMail Send Error : {}", ex.getMessage());
+//			return false;
+//		}
+//		
+//		return true;
+//	}
 	
 }

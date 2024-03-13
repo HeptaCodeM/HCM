@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,14 +50,16 @@
 										</tr>
 									</thead>
 								
-									<tbody>
-										<tr style="cursor: pointer;" onclick="location.href='./selectOneCertificate.do?sidb_doc_num=${doc.getSidb_doc_num()}'">
-											<td>${var.count}</td>
-											<td>${doc.getSidb_doc_title()}</td>
-											<td>${doc.getSidt_temp_name()}</td>
-											<td>${doc.getSidb_doc_apprdt()}</td>
-										</tr>
-									</tbody>
+									<%-- <tbody>
+										<c:forEach var="doc" items="${boxDto}" varStatus="var">
+											<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+										</c:forEach>
+									</tbody> --%>
 								</table>
 							</div>
 						</div>
@@ -67,6 +70,5 @@
 		</div>
 			
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
-<script src="/js/common.js"></script>
 </body>
 </html>
