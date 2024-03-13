@@ -1,17 +1,28 @@
 package com.hcm.grw.model.service.hr;
 
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.Printer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.hcm.grw.comm.EmailService;
+import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.dto.hr.SnsInfoDto;
 import com.hcm.grw.model.mapper.hr.EmployeeDao;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
@@ -19,6 +30,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	@Override
 	public EmployeeDto getLogin(String empl_id) {
@@ -42,10 +56,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public int registEmployee(EmployeeDto dto) {
-		
-		String enc_empl_pwd = passwordEncoder.encode(dto.getEmpl_pwd());
+		String empl_pwd = dto.getEmpl_pwd();
+		String enc_empl_pwd = passwordEncoder.encode(empl_pwd);
 		dto.setEmpl_pwd(enc_empl_pwd);
 
+		String subject = "[HCM]그룹웨어 사원 등록이 완료되었습니다.";
+		String content = "임시비밀번호를 안내드립니다.<br />임시 비밀번호 : "+empl_pwd;
+		String toEmail = dto.getEmpl_email();
+		String fromEmail = "";
+		
+		boolean sendFlag = emailService.sendMail(subject, content, toEmail, fromEmail);
+		log.info("메일발송 여부 : {}", sendFlag);
+		
 		return dao.registEmployee(dto);
 	}
 
