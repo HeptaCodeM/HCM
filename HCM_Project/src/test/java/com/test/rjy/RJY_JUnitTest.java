@@ -228,55 +228,72 @@ public class RJY_JUnitTest {
 	  List<SignBoxDto> table=dao.getAllDocsTable(dto);
 	  List<SignBoxDto> json=dao.getAllDocsJson(dto);
 		 
-	  System.out.println("그럼 얘는 어떻게 찍힘???@@@"+ table );
-		 System.out.println("나는테이블"+table.get(0).getSidb_doc_num());
-		 System.out.println("나는json@@@@@"+json.get(1).getSidb_doc_num());
-	  boolean result = service.getDocs(dto); 
+//	  System.out.println("그럼 얘는 어떻게 찍힘???@@@"+ table );
+//		 System.out.println("나는테이블"+table.get(0).getSidb_doc_num());
+//		 System.out.println("나는json@@@@@"+json.get(1).getSidb_doc_num());
+//	  boolean result = service.getDocs(dto); 
 
 	  //합치기
 	  List<SignBoxDto> fusion = new ArrayList<>();
-	  SignBoxDto table1 = table.get(0);
-	  SignBoxDto json1 = json.get(0);
-	  SignBoxDto json2 = json.get(1);
 	  
-	   SignBoxDto fusionResult = new SignBoxDto();
-	   fusionResult.setSidb_doc_num(table1.getSidb_doc_num());
-	   fusionResult.setSidb_doc_title(table1.getSidb_doc_title());
-	   fusionResult.setSidb_doc_writedt(table1.getSidb_doc_writedt());
-	   fusionResult.setEmpl_name(table1.getEmpl_name());
-	   fusionResult.setAppr_name(json1.getAppr_name());
-	   fusionResult.setAppr_name1(json2.getAppr_name());
-	    fusion.add(fusionResult);
-	    System.out.println("제발!!!!!!!!!성공!!!!!!!!!"+fusion.get(0));
-	  
-	    int len = table.size();
-	    int jlen = json.size();
-	    
-	    System.out.println("table 사이즈"+len + "@@@@ json 사이즈"+ jlen);
-	 
-	    
-	    for (int i = 0; i < len; i++) {
-	        for (int j = 0; j < jlen; j++) {
-	            if (table.get(i).getSidb_doc_num() == json.get(j).getSidb_doc_num()) {
-	                try {
-	                    // 메소드 이름을 동적으로 생성하여 호출
-	                    String methodName = "setAppr_name" + j;
-	                    
-	                    //setAppr_name0,1,2 메소드 가져오기 
-	                    Method method = SignBoxDto.class.getMethod(methodName, String.class);
-	                    
-	                    //table(0)에 json(0)(1)(2) appr_name 담기
-	                    method.invoke(table.get(i), json.get(j).getAppr_name());
-	                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-	                    e.printStackTrace(); // 예외 처리
-	                }
-	            }
-	        }
+	    for(int i=0; i<table.size(); i++) {
+	    	String apprName = "";
+	    	for(int j=0; j<json.size(); j++) {
+	    		if(table.get(i).getSidb_doc_num().equals(json.get(j).getSidb_doc_num())) {
+	    			System.out.println("같은 문서번호" + j);
+	    			apprName += json.get(j).getAppr_name() + ",";
+	    		}
+	    	}
+	    	table.get(i).setAppr_name(apprName);
+	    	fusion.add(table.get(i));
 	    }
 	    
-	    System.out.println("진짜최종"+table);
+	    for(SignBoxDto a : fusion) {
+	    	System.out.println("[완성된 DTO] 문서번호 : " + a.getSidb_doc_num() + " 결재자 : " + a.getAppr_name());
+	    }
+	    
+//	  SignBoxDto table1 = table.get(0);
+//	  SignBoxDto json1 = json.get(0);
+//	  SignBoxDto json2 = json.get(1);
+	  
+//	   SignBoxDto fusionResult = new SignBoxDto();
+//	   fusionResult.setSidb_doc_num(table1.getSidb_doc_num());
+//	   fusionResult.setSidb_doc_title(table1.getSidb_doc_title());
+//	   fusionResult.setSidb_doc_writedt(table1.getSidb_doc_writedt());
+//	   fusionResult.setEmpl_name(table1.getEmpl_name());
+//	   fusionResult.setAppr_name(json1.getAppr_name());
+//	   fusionResult.setAppr_name1(json2.getAppr_name());
+//	    fusion.add(fusionResult);
+//	    System.out.println("제발!!!!!!!!!성공!!!!!!!!!" + fusion.get(0));
+	  
+//	    int len = table.size();
+//	    int jlen = json.size();
+	    
+//	    System.out.println("table 사이즈"+len + "@@@@ json 사이즈"+ jlen);
+	   
+	    
+//	    for (int i = 0; i < len; i++) {
+//	        for (int j = 0; j < jlen; j++) {
+//	            if (table.get(i).getSidb_doc_num() == json.get(j).getSidb_doc_num()) {
+//	                try {
+//	                    // 메소드 이름을 동적으로 생성하여 호출
+//	                    String methodName = "setAppr_name" + j;
+//	                    
+//	                    //setAppr_name0,1,2 메소드 가져오기 
+//	                    Method method = SignBoxDto.class.getMethod(methodName, String.class);
+//	                    
+//	                    //table(0)에 json(0)(1)(2) appr_name 담기
+//	                    method.invoke(table.get(i), json.get(j).getAppr_name());
+//	                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+//	                    e.printStackTrace(); // 예외 처리
+//	                }
+//	            }
+//	        }
+//	    }
+	    
+//	    System.out.println("진짜최종"+table);
 	 // assertTrue(result); 
-	  assertNotNull(table);
+//	  assertNotNull(table);
 	  }
 
 }
