@@ -96,7 +96,7 @@
 
 function detailBoard(docNum) {
     // Constructing the URL with the parameter
-    var url = '/doc/getDetail.do?docNum=' + encodeURIComponent(docNum);
+    var url = '/doc/docBox/getDetail.do?docNum=' + encodeURIComponent(docNum);
     // Redirecting to the URL
     window.location.href = url;
 }
