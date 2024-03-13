@@ -104,7 +104,7 @@
 						})
 						.then(response =>{
 							console.log(response);
-							console.log('작동');	
+							return response.json()	;
 						})
 						.then(data => {
 							console.log(data);

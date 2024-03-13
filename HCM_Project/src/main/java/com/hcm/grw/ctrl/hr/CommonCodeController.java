@@ -118,8 +118,11 @@ public class CommonCodeController {
 	
 	
 	@PostMapping(value = "/hr/commonCode/roleNameDuplicateChk.do")
-	public String roleNameDuplicateChk(@RequestParam("coco_name") String coco_name) {
+	@ResponseBody
+	public Map<String, String> roleNameDuplicateChk(@RequestParam("coco_name") String coco_name) {
 		System.out.println(coco_name);
-		return coco_name;
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("isc", "전달");
+		return map;
 	}
 }
