@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hcm.grw.dto.hr.CommonCodeDto;
 import com.hcm.grw.model.service.hr.CommonCodeService;
@@ -114,4 +117,9 @@ public class CommonCodeController {
 	}
 	
 	
+	@PostMapping(value = "/hr/commonCode/roleNameDuplicateChk.do")
+	public String roleNameDuplicateChk(@RequestParam("coco_name") String coco_name) {
+		System.out.println(coco_name);
+		return coco_name;
+	}
 }

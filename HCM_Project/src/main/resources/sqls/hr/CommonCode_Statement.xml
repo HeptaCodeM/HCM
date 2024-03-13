@@ -47,5 +47,22 @@
 			WHERE COCO_CD = #{coco_cd}
 	</update>
 	
+	<select id="roleCodeDuplicateChk" parameterType="java.util.Map" resultType="CommonCodeDto">
+		SELECT 
+			      COCO_CD, COCO_NAME 
+			FROM    COMMON_CODE
+			WHERE    COCO_CD = #{coco_cd}
+			AND      SUBSTR(COCO_CD, 1, 2) = #{role}
+			AND      COCO_PARENT_ID IS NOT NULL
+	</select>
+
+	<select id="roleNameDuplicateChk" parameterType="java.util.Map" resultType="CommonCodeDto">
+		SELECT 
+			      COCO_CD, COCO_NAME 
+			FROM    COMMON_CODE
+			WHERE    COCO_NAME = #{coco_name}
+			AND      SUBSTR(COCO_CD, 1, 2) = #{role}
+			AND      COCO_PARENT_ID IS NOT NULL
+	</select>	
 	
 </mapper>

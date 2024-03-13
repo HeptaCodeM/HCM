@@ -86,8 +86,33 @@
 							alert("한글만 입력해주세요!(swal로 바꿀예정)");
 							return false;
 						}
-
 					}
+					
+					var nameChk = document.querySelector("#coco_name");
+					
+					nameChk.addEventListener("focusout",function(){
+						console.log("작동");
+                  		var coco_name = document.getElementById('coco_name').value;
+						var nameChk = new URLSearchParams();
+						nameChk.append('coco_name', coco_name);
+						fetch('/hr/commonCode/roleNameDuplicateChk.do',{
+							method: "POST",
+							headers: {
+							    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+							},
+							body: nameChk
+						})
+						.then(response =>{
+							console.log(response);
+							console.log('작동');	
+						})
+						.then(data => {
+							console.log(data);
+						})
+					    .catch(err => { 
+					        console.log('에러발생', err);
+					    });
+					});
 				</script>
 			</div>
 		</div>
