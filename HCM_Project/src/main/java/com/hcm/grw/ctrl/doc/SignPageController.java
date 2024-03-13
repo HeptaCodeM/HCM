@@ -2,7 +2,6 @@ package com.hcm.grw.ctrl.doc;
 
 import java.util.List;
 
-import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -32,11 +31,9 @@ public class SignPageController {
 	@GetMapping("signFavo.do")
 	public String signFavo(Authentication auth, Model model) {
 		log.info("SignTreeController signFavo.do GET 결재선 관리 페이지");
-		if(auth != null) {
-			List<String> list = List.of(auth.getName());
-			List<EmployeeDto> loginInfo = service.getFav(list);
-			model.addAttribute("loginInfo", loginInfo.get(0));
-		}
+		List<String> list = List.of(auth.getName());
+		List<EmployeeDto> loginInfo = service.getFav(list);
+		model.addAttribute("loginInfo", loginInfo.get(0));
 		return "doc/signFavo";
 	}
 	
@@ -48,12 +45,10 @@ public class SignPageController {
 	
 	@GetMapping("writeDoc.do")
 	public String writeDoc(Authentication auth, Model model) {
-		if(auth != null) {
-			String id = auth.getName();
-			List<String> list = List.of(id);
-			List<EmployeeDto> dto = service.getFav(list);
-			model.addAttribute("loginInfo", dto.get(0));
-		}
-		return "doc/writeDoc";
+		String id = auth.getName();
+		List<String> list = List.of(id);
+		List<EmployeeDto> dto = service.getFav(list);
+		model.addAttribute("loginInfo", dto.get(0));
+		return "writeDoc";
 	}
 }
