@@ -102,30 +102,6 @@ public class EmployeeController {
 	}
 
 	
-	@GetMapping("/hr/employee/list.do")
-	public String employeeAllList(Model model) {
-		log.info("EmployeeController employeeAllList 진입");
-		
-		List<EmployeeDto> lists = employeeListDao.selectAllEmployee();
-		
-		model.addAttribute("lists", lists);
-		
-		return "/hr/employee/list";
-	}	
-
-	@GetMapping("/hr/employee/modify.do")
-	public String employeeModify(@RequestParam String empl_id, Model model) {
-		log.info("EmployeeController employeeModify 수정페이지 진입");
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("empl_id", empl_id);
-		EmployeeDto empInfo = employeeListDao.selectOneEmployee(map);
-		
-		model.addAttribute("empInfo", empInfo);
-		
-		return "/hr/employee/modify";
-	}	
-	
 	@PostMapping("/hr/employee/modify.do")
 	public @ResponseBody void employeeModifyOk(EmployeeDto emp, HttpServletResponse resp) throws IOException {
 		log.info("EmployeeController employeeModifyOk 수정처리");
