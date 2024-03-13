@@ -2,10 +2,6 @@ package com.hcm.grw.ctrl.doc;
 
 import java.util.List;
 
-<<<<<<< HEAD
-import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
-=======
->>>>>>> branch 'doc' of https://github.com/HeptaCodeM/HCM.git
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

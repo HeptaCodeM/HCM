@@ -43,8 +43,5 @@ public class DocController {
 	return "/doc/docBox";
 	}
 	
-	@GetMapping(value = "/doc/writeDoc.do")
-	public String writeDoc() {
-		return "/doc/writeDoc";
-	}
+	
 }
