@@ -1,5 +1,7 @@
 package com.hcm.grw.model.service.doc;
 
+import java.util.List;
+
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.doc.SignFileDto;
 import com.hcm.grw.dto.doc.SignTempBoxDto;
@@ -19,5 +21,9 @@ public interface ISignBoxService {
 	public int deleteDoc(String sidb_doc_num);
 	
 	public int insertTransaction(SignBoxDto bDto, SignFileDto fDto);
+	
+	public List<SignFileDto> getFile();
+	
+	public SignFileDto getDetailFile(String sidf_file_num);
 	
 }

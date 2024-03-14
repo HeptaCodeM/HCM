@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
    <typeAliases>
       <typeAlias type="com.hcm.grw.dto.doc.SignTreeDto" alias="SignTreeDto"/>
       <typeAlias type="com.hcm.grw.dto.doc.SignFavoDto" alias="SignFavoDto"/>
@@ -9,10 +12,11 @@
       <typeAlias type="com.hcm.grw.dto.doc.SignJsonDto" alias="SignJsonDto"/>
       <typeAlias type="com.hcm.grw.dto.doc.DocBoxDto" alias="DocBoxDto"/>
       <typeAlias type="com.hcm.grw.dto.doc.TemplateDto" alias="TemplateDto"/>
-       <typeAlias type="com.hcm.grw.dto.sm.GoboDto" alias="GoboDto"/>
-        <typeAlias type="com.hcm.grw.dto.sm.ReplyDto" alias="ReplyDto"/>
-        <typeAlias type="com.hcm.grw.dto.sm.ScbDto" alias="ScbDto"/> 
-        <typeAlias type="java.lang.Integer" alias="Integer" />
+      <typeAlias type="com.hcm.grw.dto.doc.TempTreeDto" alias="TempTreeDto"/>
+      <typeAlias type="com.hcm.grw.dto.sm.GoboDto" alias="GoboDto"/>
+      <typeAlias type="com.hcm.grw.dto.sm.ReplyDto" alias="ReplyDto"/>
+      <typeAlias type="com.hcm.grw.dto.sm.ScbDto" alias="ScbDto"/> 
+      <typeAlias type="java.lang.Integer" alias="Integer" />
       <typeAlias type="java.lang.String" alias="String" />
       <typeAlias type="java.util.Map" alias="Map" />
       <!-- SDJ Area -->
@@ -32,25 +36,26 @@
       <typeAlias type="com.hcm.grw.dto.hr.EmpSignDto" alias="EmpSignDto"/>
       <typeAlias type="com.hcm.grw.dto.hr.CompanyDto" alias="CompanyDto"/>
       <typeAlias type="com.hcm.grw.dto.hr.SignDocBoxDto" alias="SignDocBoxDto"/>
+      <typeAlias type="com.hcm.grw.dto.doc.SignFileDto" alias="SignFileDto"/>
    </typeAliases>
    
 
    
    
    
-   
 
    <mappers>
+   	  <mapper resource="sqls/doc/TempTree_Statement.xml"/>
    	  <mapper resource="sqls/doc/Template_Statement.xml" />
    	  <mapper resource="sqls/doc/ApprDeny_Statement.xml" />
       <mapper resource="sqls/doc/DocBox_Statement.xml" />
       <mapper resource="sqls/doc/SignTree_Statement.xml"/>
       <mapper resource="sqls/doc/SignFavo_Statement.xml"/>
       <mapper resource="sqls/doc/SignBox_Statement.xml"/>
-       <mapper resource="sqls/sm/Gobo_Statement.xml"/>
-        <mapper resource="sqls/sm/Reply_Statement.xml"/>
-        <mapper resource="sqls/sm/Scb_Statement.xml"/> 
-        <mapper resource="sqls/hr/Employee_Statement.xml" />
+      <mapper resource="sqls/sm/Gobo_Statement.xml"/>
+      <mapper resource="sqls/sm/Reply_Statement.xml"/>
+      <mapper resource="sqls/sm/Scb_Statement.xml"/> 
+      <mapper resource="sqls/hr/Employee_Statement.xml" />
       <mapper resource="sqls/hr/Commute_Statement.xml" />
       <mapper resource="sqls/hr/Holiday_Statement.xml" />
       <mapper resource="sqls/hr/Order_Statement.xml" />

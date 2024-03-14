@@ -1,18 +1,13 @@
 package com.hcm.grw.ctrl;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -21,6 +16,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hcm.grw.comm.CookiesMgr;
+import com.hcm.grw.comm.EmailService;
+import com.hcm.grw.comm.Function;
+import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.model.mapper.hr.EmployeeDao;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,13 +29,35 @@ public class HomeController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private EmailService emailService;
+	
+	@Autowired
+	private EmployeeDao employeeDao;
+
 	
 	@GetMapping({"/index.do", "/"})
-	public String index(Model model, Authentication authentication) {
+	public String index(HttpServletRequest request, Model model, Authentication authentication, HttpSession session) {
 		
-		String getId = authentication.getName();
+		String getId = "";
+		if(authentication != null) {
+			getId = authentication.getName();
+		}
 		log.info("getId : {}", getId);
+		
 		model.addAttribute("getId", getId);
+
+		//공통함수를 이용한 사원정보 조회
+		EmployeeDto employeeDto = (EmployeeDto)session.getAttribute("userInfoVo");
+		String empl_id = "";
+		if(employeeDto != null) {
+			empl_id = employeeDto.getEmpl_id();
+		}
+		log.info("empl_id : {}", empl_id);
+		EmployeeDto fnEmployeeDto = employeeDao.getUserInfo(empl_id);
+		log.info("Function Info : {}", fnEmployeeDto);
+		model.addAttribute("empl_info", fnEmployeeDto);
 		
 		return "index";
 	}
@@ -124,6 +145,25 @@ public class HomeController {
 		
 		return "redirect:/";
 	}
+
 	
+	//메일발송 테스트
+	@GetMapping("/sendMailTest.do")
+	public String sendMailTest() {
+		log.info("메일발송");
+		
+		String subject = "테스트 메일 입니다.";
+		String content = "테스트 입니다.";
+		String toEmail = "hcm_0415@naver.com";
+		String fromEmail = null;
+
+		//boolean sendFlag = fn.sendMail(subject, content, toEmail, fromEmail);
+		boolean sendFlag = emailService.sendMail(subject, content, toEmail, fromEmail);
+		log.info("메일발송 : {}", sendFlag);
+		
+		return "redirect:/";
+	}
+
+
 	
 }

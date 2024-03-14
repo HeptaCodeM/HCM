@@ -1,10 +1,10 @@
 //Swal Alert
 function swalAlert(msg, movePage, className, btnName, focusid) {
-	if(btnName == "" || btnName == "undefiend"){
-		btnName == "확인";
+	if(btnName == "" || className == "undefined"){
+		btnName = "확인";
 	}
-	if(className == "" || className == "undefiend"){
-		className == "btn-primary";
+	if(className == "" || className == "undefined"){
+		className = "btn-primary";
 	}
 	Swal.fire({
 		width: 500,
@@ -45,11 +45,11 @@ function swalAlert(msg, movePage, className, btnName, focusid) {
 
 //Swal Alert History Back
 function swalHistoryBack(msg, className, btnName) {
-	if(btnName == "" || btnName == "undefiend"){
-		btnName == "확인";
+	if(btnName == "" || btnName == "undefined"){
+		btnName = "확인";
 	}
-	if(className == "" || className == "undefiend"){
-		className == "btn-primary";
+	if(className == "" || className == "undefined"){
+		className = "btn-primary";
 	}
 	Swal.fire({
 		width: 500,
@@ -83,15 +83,15 @@ function swalHistoryBack(msg, className, btnName) {
 }
 
 //Swal Alert Confirm
-//async function sweetAlertConfirm(msg, tFunc, fFunc){
-//	var cFlag = await sc(msg);
-//	console.log(cFlag);
-//	if(cFlag){
-//		tFunc;
-//	}else{
-//		fFunc;
-//	}
-//}
+async function sweetAlertConfirm(msg, tFunc, fFunc){
+	var cFlag = await sc(msg);
+	console.log(cFlag);
+	if(cFlag){
+		tFunc();
+	}else{
+		fFunc;
+	}
+}
 
 var sc = function(msg) {
 	return new Promise((resolve, reject) => {

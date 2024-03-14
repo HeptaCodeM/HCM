@@ -65,7 +65,7 @@
 										</thead>	
 										<tbody>
 											<c:forEach var="codeList" items="${codeList}" varStatus="var">
-												<tr style="cursor: pointer;" onclick="location.href='./roleDetail.do?coco_cd=${codeList.getCoco_cd()}&role=${role}'" class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
+												<tr style="cursor: pointer;" onclick="location.href='/hr/commonCode/roleDetail.do?coco_cd=${codeList.getCoco_cd()}&role=${role}'" class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
 													<td>NO.${var.count}</td>
 													<td>${codeList.getCoco_cd()}</td>
 													<td>${codeList.getCoco_name()}</td>
@@ -77,25 +77,10 @@
 									</table>
 								</div>
 								
-								<%-- 
-								<select id="deptSelectGroup_1" multiple="multiple">
-								<c:forEach var="codeList" items="${codeList}" varStatus="var">
-								    <optgroup label="${codeList.getCoco_name()}">
-								        <option>
-											${codeList.getCoco_cd()} // ${codeList.getCoco_name()}
-								        </option>
-								    </optgroup>
-								</c:forEach>
-								</select>
-								<script type="text/javascript">
-								$("#deptSelectGroup_1").multiselectsplitter();
-								</script> 
-								--%>
-								
 							</div>
 							<div class="card-footer">
 								<!-- <a href="#" class="btn btn-primary me-10">삭제</a> -->
-								<a href="./insertRole.do?role=${role}" class="btn btn-primary me-10">추가</a>
+								<a href="/hr/commonCode/insertRole.do?role=${role}" class="btn btn-primary me-10">추가</a>
 						    </div>
 						</div>
 					</div>

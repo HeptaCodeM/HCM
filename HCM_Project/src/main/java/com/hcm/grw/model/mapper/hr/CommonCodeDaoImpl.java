@@ -49,7 +49,20 @@ public class CommonCodeDaoImpl implements CommonCodeDao {
 	public int correctionRole(Map<String, Object> map) {
 		log.info("CommonCodeImpl correctionRole 진입 // {}",map);
 		return sessionTemplate.update(NS+"correctionRole",map);
+	}
+
+	@Override
+	public int roleCodeDuplicateChk(Map<String, Object> map) {
+		log.info("CommonCodeImpl roleCodeDuplicateChk 진입 // {}",map);
+		return sessionTemplate.selectOne(NS+"roleCodeDuplicateChk",map);
+	}
+
+	@Override
+	public int roleNameDuplicateChk(Map<String, Object> map) {
+		log.info("CommonCodeImpl roleNameDuplicateChk 진입 // {}",map);
+		return sessionTemplate.selectOne(NS+"roleNameDuplicateChk",map);
 	}	
+	
 	
 
 }

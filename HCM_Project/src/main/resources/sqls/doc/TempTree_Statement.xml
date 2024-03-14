@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcm.grw.model.mapper.doc.TempTreeDaoImpl">
+
+	<select id="getTempTree" resultType="TempTreeDto">
+		SELECT ID, PARENT , TEXT, ICON, DELFLAG
+			FROM VW_SIGN_TEMP_DOC
+			WHERE DELFLAG = 'Y' 
+	</select>
+
+</mapper>

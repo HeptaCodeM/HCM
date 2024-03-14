@@ -10,6 +10,8 @@ public interface EmployeeService {
 
 	/*일반로그인*/
 	public EmployeeDto getLogin(String empl_id);
+	/*일반로그인*/
+	public EmployeeDto getUserInfo(String empl_id);
 	/*소셜로그인*/
 	public SnsInfoDto getSnsLoginInfo(String empl_id);
 

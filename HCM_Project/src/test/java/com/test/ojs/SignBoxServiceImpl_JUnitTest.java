@@ -98,7 +98,7 @@ public class SignBoxServiceImpl_JUnitTest {
 		int n2 = service.insertTempDoc(tDto);
 		assertEquals(1, n2);
 		
-		SignFileDto fDto = new SignFileDto("", "24000002", "파아일.png", "DJIFOIQOJKOQWNKN", "12385313", "10101010101010100101111", "");
+		SignFileDto fDto = new SignFileDto("", "24000002", "파아일.png", "DJIFOIQOJKOQWNKN", "12385313", null, "");
 		int n3 = service.insertDocFile(fDto);
 		assertEquals(1, n3);
 		

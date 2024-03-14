@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
 <title>DOC메인화면</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <style type="text/css">
@@ -68,7 +67,7 @@ td>img {
 										<input type="text" id="schName" spellcheck="false" class="form-control" placeholder="검색할 사원을 입력하세요"> 
 										<span class="input-group-btn">
 											<button class="btn btn-default btn-sm" type="button" id="schBtn">
-												<span class="glyphicon glyphicon-search"></span>
+												<span class="ki-solid ki-magnifier fs-2qx"></span>
 											</button>
 										</span>
 										</div>
@@ -91,41 +90,7 @@ td>img {
 								<div class="d-flex flex-column flex-column-fluid">
 									<div id="kt_app_content" class="app-content flex-column-fluid">
 								
-										<table class="table table-condensed" style="width: 90%; margin: 0 auto;">
-											<thead>
-												<tr>
-													<th></th>
-													<th></th>
-													<th width="40%">참조자</th>
-													<th width="30%">직급</th>
-													<th width="30%">소속</th>
-													<th style="display: none;" id="empl_id">20230108</th>
-												</tr>
-											</thead>
-											<tbody id="tbody1">
-												<tr>
-													<td>
-														<button class="cancelBtn btn btn-sm btn-basic" id="addRow1">➕</button>
-													</td>
-													<td>
-														<button class="cancelBtn btn btn-sm btn-basic">➖</button>
-													</td>
-													<td>
-														<input class="form-control form-control-solid" id="re1">
-													</td>
-													<td>
-														<input class="form-control form-control-solid" id="rk1">
-													</td>
-													<td>
-														<input class="form-control form-control-solid" id="dp1">
-													</td>
-													<td style="display: none;">
-														<span id="rid1"></span>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-								
+										<div id="ref-emp" class="input-group input-group-solid mb-5"></div>
 								
 									</div>
 								</div>
@@ -140,36 +105,12 @@ td>img {
 								<div class="d-flex flex-column flex-column-fluid">
 									<div id="kt_app_content" class="app-content flex-column-fluid">
 									
-										<table class="table table-condensed" style="width: 90%; margin: 0 auto;">
-											<thead>
-												<tr>
-													<th width="2%"></th>
-													<th width="2%"></th>
-													<th>부서명 (팀명)</th>
-													<th style="display: none;" id="empl_id">20230108</th>
-												</tr>
-											</thead>
-											<tbody id="tbody2">
-												<tr>
-													<td>
-														<button class="cancelBtn btn btn-sm btn-basic" id="addRow2">➕</button>
-													</td>
-													<td>
-														<button class="cancelBtn btn btn-sm btn-basic">➖</button>
-													</td>
-													<td>
-														<input class="form-control form-control-solid" id="rd1">
-													</td>
-													<td style="display: none;">
-														<span id="rde1"></span>
-													</td>
-												</tr>
-											</tbody>
-										</table>
+										<div id="ref-dept" class="input-group input-group-solid mb-5"></div>
+									
 										<br><br>
 										<div style="text-align: center;">
-											<button class="btn btnMd btn-primary" id="">저장</button>
-											<button class="btn btnMd btn-primary" id="">닫기</button>
+											<button class="btn btnMd btn-primary" id="saveRefer">저장</button>
+											<button class="btn btnMd btn-primary" id="closeRefer">닫기</button>
 										</div>
 									</div>
 								</div>

@@ -40,12 +40,14 @@
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5" >
 								<c:choose>
-									<c:when test="${sealDto eq null}">
+									<c:when test="${sealImg eq null}">
 										<h1>널</h1>
 									</c:when>
 									<c:otherwise>
-									<c:set var="data" value="data:image/png;base64,"/>
-										<img class="sealImg" src="${data}${sealDto}">
+									<c:set var="data" value=""/>
+										<img class="sealImg" src="${data}${sealImg}">
+										<h1>${sealTest}</h1>
+										<h1>${sealTest2}</h1>
 									</c:otherwise>
 								</c:choose>
 							</div>
