@@ -16,6 +16,10 @@
 		width: 130px;
 		height: 40px;
 	}
+	.searchEmpDate{
+		width: 290px;
+		height: 40px;
+	}
 	.cardFlexSearch{
 		display: flex;
 		justify-content: center;
@@ -73,7 +77,7 @@
 									</span>&nbsp;&nbsp;
 									
 									<span>
-    									<input class="form-control form-control-solid searchEmpSelect" placeholder="재직기간" id="empDatepicker" />
+    									<input class="form-control form-control-solid searchEmpDate" placeholder="재직기간" id="empDatepicker" />
 									</span>&nbsp;&nbsp;
 									
 									
@@ -83,7 +87,6 @@
 									</span>&nbsp;&nbsp;
 								
 									<button class="btn btn-primary btnLg me-10" id="empSearchBtn">검색</button>
-									<button class="btn btn-primary btnLg me-10" id="testBtn">테스트용</button>
 								</div>
 								<div class="separator border-2 separator-dashed my-5"></div>
 								<div>
@@ -157,6 +160,9 @@
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
 </body>
 <script type="text/javascript">
+var startDate = "";
+var endDate = "";
+
 
 	$(document).ready(function(){
 		$('#emplListTable').DataTable({
@@ -178,18 +184,20 @@
 	  });
 	
 	  $('#empDatepicker').on('apply.daterangepicker', function(ev, picker) {
-	      $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
+	     	$(this).val(picker.startDate.format('YYYY년MM월DD일') + ' ~ ' + picker.endDate.format('YYYY년MM월DD일'));
+	 		startDate = picker.startDate.format('YYYY-MM-DD');
+	 		endDate = picker.endDate.format('YYYY-MM-DD');
 	  });
 	
 	  $('#empDatepicker').on('cancel.daterangepicker', function(ev, picker) {
-	      $(this).val('');
+	      	$(this).val('');
 	  });
 	
 	});
 	
 	var empSearchBtn = document.getElementById("empSearchBtn");
 	empSearchBtn.addEventListener('click',function(){
-		console.log("작동");
+//		console.log("작동");
 		
 		var empShCtgVal = document.getElementById('empShCtg').value;
 		console.log(empShCtgVal);
@@ -197,37 +205,70 @@
 		var empStaCtg = document.getElementById('empStaCtg').value;
 		console.log(empStaCtg);
 		
-		var empDatepicker = document.getElementById('empDatepicker').value;
-		console.log(empDatepicker);
-		
 		var empSearchValue = document.getElementById('empSearchValue').value;
 		console.log(empSearchValue);
 
 	   
 		var dtChkVal = document.getElementsByName('dtChkVal');
-			
+		let dtArr = new Array();	
 			for(let i = 0; i < dtChkVal.length; i++){
 				if(dtChkVal[i].checked){
-					dtChkVal[i].value
+					dtArr.push(dtChkVal[i].value);
 				}
 			}
+		console.log(dtArr);
 			
 		var rkChkVal = document.getElementsByName('rkChkVal');
-			
+		let rkArr = new Array();
 			for(let j = 0; j < rkChkVal.length; j++){
 				if(rkChkVal[j].checked){
-					rkChkVal[j].value
+					rkArr.push(rkChkVal[j].value);
 				}
 			}
+		console.log(rkArr);
 			
 		var pnChkVal = document.getElementsByName('pnChkVal');
-			
+		let pnArr = new Array();
+		
 			for(let k = 0; k < pnChkVal.length; k++){
 				if(pnChkVal[k].checked){
-					pnChkVal[k].value
+					pnArr.push(pnChkVal[k].value);
 				}
 			}
-	   
+		console.log(pnArr);	
+		
+		
+		var valueChk = new URLSearchParams();
+		valueChk.append('empShCtgVal', empShCtgVal);
+		valueChk.append('empStaCtg', empStaCtg);
+		valueChk.append('startDate', startDate);
+		valueChk.append('endDate', endDate);
+		valueChk.append('empSearchValue', empSearchValue);
+		valueChk.append('dtArr', dtArr);
+		valueChk.append('rkArr', rkArr);
+		valueChk.append('pnArr', pnArr);
+		fetch('/hr/employee/empSearching.do',{
+			method: "POST",
+			headers: {
+			    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+			},
+			body: valueChk
+		})
+		.then(response =>{
+			return response.json();
+			console.log(response);
+		})
+		.then(data => {
+			console.log("");
+			/* alert(""); */
+		})
+	    .catch(err => { 
+	        console.log('에러발생', err);
+	    });
+		
+		
+		
+			
 	});
 	
 </script>
