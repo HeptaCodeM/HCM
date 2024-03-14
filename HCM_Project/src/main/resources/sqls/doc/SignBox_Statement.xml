@@ -94,5 +94,16 @@
       SET SIDB_DOC_DELFLAG = 'N'
       WHERE SIDB_DOC_NUM = #{sidb_doc_num}
    </delete>
+   
+   <select id="getFile" resultType="SignFileDto">
+   		SELECT *
+   		FROM SIGN_DOC_FILE
+   </select>
+   
+    <select id="getDetailFile" resultType="SignFileDto">
+   		SELECT *
+   		FROM SIGN_DOC_FILE
+   		WHERE SIDF_FILE_NUM = #{sidf_file_num}
+   </select>
 
 </mapper>
