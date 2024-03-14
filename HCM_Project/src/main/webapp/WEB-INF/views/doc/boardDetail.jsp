@@ -164,7 +164,7 @@ th, td {
 														<c:when test="${dt.appr_flag eq 1}">
 															<p>승인</p>
 														</c:when>
-														<c:when test="${dt.appr_flag eq 3}">
+														<c:when test="${dt.appr_flag eq 2}">
 															<p>반려</p>
 														</c:when>
 													</c:choose></td>
