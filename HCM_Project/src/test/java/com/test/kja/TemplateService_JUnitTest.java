@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.hcm.grw.dto.doc.TempTreeDto;
 import com.hcm.grw.dto.doc.TemplateDto;
+import com.hcm.grw.model.service.doc.ITempTreeService;
 import com.hcm.grw.model.service.doc.ITemplateService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -22,6 +24,9 @@ public class TemplateService_JUnitTest {
 
 	@Autowired
 	private ITemplateService service;
+	
+	@Autowired
+	private ITempTreeService sv;
 	
 	
 //	@Test
@@ -69,11 +74,17 @@ public class TemplateService_JUnitTest {
 		assertEquals(1, insertCnt);
 	}
 	
-	@Test
+//	@Test
 	public void getCategory() {
 		List<TemplateDto> lists = service.getCategory();
 		assertNotEquals(0, lists.size());
 		
+	}
+	
+	@Test
+	public void getTempTree() {
+		List<TempTreeDto> lists = sv.getTempTree();
+		assertNotEquals(0, lists.size());
 	}
 
 }

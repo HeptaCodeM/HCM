@@ -19,7 +19,7 @@ $('#schName').on('keydown', function(e) {
 $().ready(function() {
 	$('#jstree').jstree({
 		// 검색기능 , 우클릭메뉴, 라벨 효과
-		plugins: ['search', 'wholerow'],
+		plugins: ['search', 'contextmenu', 'wholerow'],
 		// 우클릭메뉴 정의
 		core: {
 			data : {
