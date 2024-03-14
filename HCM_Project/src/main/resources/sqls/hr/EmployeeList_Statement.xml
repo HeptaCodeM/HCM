@@ -15,7 +15,8 @@
 	            C3.COCO_CD AS COCO_CD_PCD,
 	            C3.COCO_NAME AS COCO_NAME_PNM,
 	            A.EMPL_JOINDATE,
-	            A.EMPL_LEAVEDATE  
+	            A.EMPL_LEAVEDATE,  
+	            A.EMPL_DELFLAG   
 	FROM          EMPLOYEE A
 	INNER JOIN      COMMON_CODE C1 ON A.EMPL_DEPT_CD = C1.COCO_CD
 	INNER JOIN      COMMON_CODE C2 ON A.EMPL_RANK_CD = C2.COCO_CD
@@ -35,52 +36,57 @@
 	            C3.COCO_CD AS COCO_CD_PCD,
 	            C3.COCO_NAME AS COCO_NAME_PNM,
 	            A.EMPL_JOINDATE,
-	            A.EMPL_LEAVEDATE  
+	            A.EMPL_LEAVEDATE,  
+	            A.EMPL_DELFLAG  
 	FROM          EMPLOYEE A
 	INNER JOIN      COMMON_CODE C1 ON A.EMPL_DEPT_CD = C1.COCO_CD
 	INNER JOIN      COMMON_CODE C2 ON A.EMPL_RANK_CD = C2.COCO_CD
 	LEFT OUTER JOIN   COMMON_CODE C3 ON A.EMPL_POSITION_CD  = C3.COCO_CD
+		WHERE A.EMPL_PWD IS NOT NULL
 	<choose>
-		<when test="searchCtg == 'empl_name'">
-			WHERE A.EMPL_NAME = #{empl_name}
-		</when>
-		<when test="searchCtg == 'empl_id'">
-			WHERE A.EMPL_ID = #{empl_id}
-		</when>
-		<when test="searchCtg == 'empl_phone'">
-			WHERE A.EMPL_PHONE = #{empl_phone}
-		</when>
-		<otherwise>
-			WHERE A.EMPL_NAME = #{empl_name}
-		</otherwise>
-	</choose>
-	
-	<choose>
-		<when test="empl_delflag == 'N'">
+		<when test='empl_delflag == "N"'>
 			AND A.EMPL_DELFLAG = 'N'
 		</when>
-		<when test="empl_delflag == 'Y'">
+		<when test='empl_delflag == "Y"'>
 			AND A.EMPL_DELFLAG = 'Y'
 		</when>
 	</choose>
+	
+	<choose>
+		<when test="searchCtg == 'empl_name'">
+			AND A.EMPL_NAME = #{empl_name}
+		</when>
+		<when test="searchCtg == 'empl_id'">
+			AND A.EMPL_ID = #{empl_id}
+		</when>
+		<when test="searchCtg == 'empl_phone'">
+			AND A.EMPL_PHONE = #{empl_phone}
+		</when>
+	</choose>
+	
 	
 	<if test="startdate != null and enddate != null">
 		AND TO_DATE(A.EMPL_JOINDATE) BETWEEN TO_DATE(#{startdate},'YYYY-MM-DD') AND TO_DATE(#{enddate},'YYYY-MM-DD')
 	</if>
 	
-	
 	<if test="empl_dept_cd != null">
-		AND A.EMPL_DEPT_CD = 
+		AND A.EMPL_DEPT_CD IN 
 		<foreach collection="dtArr" item="dtA" open="(" separator="," close=")">
 			#{dtA}
 		</foreach>
 	</if>
-<!-- 	<if test="empl_rank_cd != null">
-		AND A.EMPL_RANK_CD = #{empl_rank_cd}
+ 	<if test="empl_rank_cd != null">
+		AND A.EMPL_RANK_CD IN
+		<foreach collection="rkArr" item="rkA" open="(" separator="," close=")">
+			#{rkA}
+		</foreach>
 	</if>
 	<if test="empl_position_cd != null">
-		AND A.EMPL_POSITION_CD = #{empl_position_cd}
-	</if> -->
+		AND A.EMPL_POSITION_CD IN
+		<foreach collection="pnArr" item="pnA" open="(" separator="," close=")">
+			#{pnA}
+		</foreach>
+	</if>
 	</select>
 	
 	<select id="selectOneEmployee" parameterType="Map" resultType="EmployeeDto">

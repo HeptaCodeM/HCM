@@ -77,14 +77,15 @@ public class EmployeeListController {
 	
 	@PostMapping(value = "/hr/employee/empSearching.do")
 	@ResponseBody
-	public void empSearching(@RequestParam("empShCtgVal") String empShCtgVal,
+	public Map<String, Object> empSearching(@RequestParam("empShCtgVal") String empShCtgVal,
 								@RequestParam("empStaCtg") String empStaCtg,
 								@RequestParam("startDate") String startDate,
 								@RequestParam("endDate") String endDate,
 								@RequestParam("empSearchValue") String empSearchValue,
 								@RequestParam("dtArr") String[] dtArr,
 								@RequestParam("rkArr") String[] rkArr,
-								@RequestParam("pnArr") String[] pnArr
+								@RequestParam("pnArr") String[] pnArr,
+								Model model
 							) {
 		System.out.println(empShCtgVal);
 		System.out.println(empStaCtg);
@@ -94,37 +95,24 @@ public class EmployeeListController {
 		System.out.println(Arrays.toString(dtArr));
 		System.out.println(Arrays.toString(rkArr));
 		System.out.println(Arrays.toString(pnArr));
-		System.err.println("=============================================");
-		StringUtils.defaultIfEmpty(empShCtgVal, null);
-		StringUtils.defaultIfEmpty(empStaCtg, null);
-		StringUtils.defaultIfEmpty(startDate, null);
-		StringUtils.defaultIfEmpty(endDate, null);
-		StringUtils.defaultIfEmpty(empSearchValue, null);
-		if(dtArr.length == 0) {
-			dtArr = null;
-		}
 		
-		if(rkArr.length == 0) {
-			rkArr = null;
-		}
 		
-		if(pnArr.length == 0) {
-			pnArr = null;
-		}
+		
+		
 		String searchCtg = StringUtils.defaultIfEmpty(empShCtgVal, null);
 		String delCtg = StringUtils.defaultIfEmpty(empStaCtg, null);
 		String start = StringUtils.defaultIfEmpty(startDate, null);
 		String end = StringUtils.defaultIfEmpty(endDate, null);
 		String searchVal = StringUtils.defaultIfEmpty(empSearchValue, null);
 		
-		System.err.println(searchCtg);
-		System.err.println(delCtg);
-		System.err.println(start);
-		System.err.println(end);
-		System.err.println(searchVal);
-		System.err.println(Arrays.toString(dtArr));
-		System.err.println(Arrays.toString(rkArr));
-		System.err.println(Arrays.toString(pnArr));
+//		System.err.println(searchCtg);
+//		System.err.println(delCtg);
+//		System.err.println(start);
+//		System.err.println(end);
+//		System.err.println(searchVal);
+//		System.err.println(Arrays.toString(dtArr));
+//		System.err.println(Arrays.toString(rkArr));
+//		System.err.println(Arrays.toString(pnArr));
 		
 		
 		Map<String, Object> searchMap = new HashMap<String, Object>();
@@ -132,15 +120,40 @@ public class EmployeeListController {
 		searchMap.put("empl_name", searchVal);
 		searchMap.put("empl_id", searchVal);
 		searchMap.put("empl_phone", searchVal);
-		searchMap.put("empl_dept_cd", dtArr.toString());
-		searchMap.put("empl_rank_cd", rkArr.toString());
-		searchMap.put("empl_position_cd", pnArr.toString());
 		searchMap.put("empl_delflag", delCtg);
 		searchMap.put("startdate", start);
 		searchMap.put("enddate", end);
 		
-		List<EmployeeDto> lists = employeeListService.searchAllEmployee(searchMap);
-		System.out.println(lists);
+		if(dtArr.length == 0) {
+			dtArr = null;
+		}else {
+			searchMap.put("empl_dept_cd", "work");
+		}
+		
+		if(rkArr.length == 0) {
+			rkArr = null;
+		}else{
+			searchMap.put("empl_rank_cd", "work");
+		}
+		
+		if(pnArr.length == 0) {
+			pnArr = null;
+		}else {
+			searchMap.put("empl_position_cd", "work");
+		}
+		
+		searchMap.put("dtArr", dtArr);
+		searchMap.put("rkArr", rkArr);
+		searchMap.put("pnArr", pnArr);
+		
+		
+		List<EmployeeDto> searchlists = employeeListService.searchAllEmployee(searchMap);
+		System.out.println(searchlists);
+		model.addAttribute("searchlists", searchlists);
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("searchlists", searchlists);
+		return returnMap;
 	}
 	
 	
