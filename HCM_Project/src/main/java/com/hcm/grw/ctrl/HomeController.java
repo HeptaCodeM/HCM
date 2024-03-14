@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.EmailService;
-import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.mapper.hr.EmployeeDao;
 
@@ -36,7 +35,7 @@ public class HomeController {
 	@Autowired
 	private EmployeeDao employeeDao;
 
-	
+		
 	@GetMapping({"/index.do", "/"})
 	public String index(HttpServletRequest request, Model model, Authentication authentication, HttpSession session) {
 		
@@ -58,7 +57,7 @@ public class HomeController {
 		EmployeeDto fnEmployeeDto = employeeDao.getUserInfo(empl_id);
 		log.info("Function Info : {}", fnEmployeeDto);
 		model.addAttribute("empl_info", fnEmployeeDto);
-		
+
 		return "index";
 	}
 

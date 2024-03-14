@@ -61,5 +61,17 @@
 		AND C.SIDT_TEMP_CD IN ('TC000001', 'TC000002') --TC000001(연차신청서), TC000002(휴가신청서)
 	</select>
 
+	<insert id="registSpecialDay" parameterType="Map">
+		MERGE INTO HOLIDAY H
+		USING (SELECT #{holi_date} HOLI_DATE FROM DUAL) S
+		ON (H.HOLI_DATE = S.HOLI_DATE)
+		WHEN MATCHED THEN
+			UPDATE SET
+		    	HOLI_NAME = #{holi_name},
+		    	HOLI_FLAG = #{holi_flag}
+		WHEN NOT MATCHED THEN
+			INSERT (HOLI_DATE, HOLI_NAME, HOLI_FLAG, HOLI_CREATE_ID)
+			VALUES (#{holi_date}, #{holi_name}, #{holi_flag}, 'SYSTEM')
+	</insert>
 
 </mapper>

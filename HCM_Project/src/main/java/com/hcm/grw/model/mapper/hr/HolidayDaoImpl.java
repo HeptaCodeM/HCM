@@ -1,6 +1,7 @@
 package com.hcm.grw.model.mapper.hr;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,4 +27,10 @@ public class HolidayDaoImpl implements HolidayDao {
 		return sqlSessionTemplate.selectList(NS+"holidayList", empl_id);
 	}
 
+	@Override
+	public int registSpecialDay(Map<String, String> map) {
+		return sqlSessionTemplate.insert(NS+"registSpecialDay", map);
+	}
+
+	
 }

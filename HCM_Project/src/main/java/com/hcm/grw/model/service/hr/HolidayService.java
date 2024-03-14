@@ -1,6 +1,7 @@
 package com.hcm.grw.model.service.hr;
 
 import java.util.List;
+import java.util.Map;
 
 import com.hcm.grw.dto.hr.HolidayDto;
 
@@ -12,4 +13,6 @@ public interface HolidayService {
 	/*휴가정보 조회 - 사원검색기능*/
 	public List<HolidayDto> holidayList(String empl_id);
 	
+	/*특일(공휴일)정보 입력*/
+	public int registSpecialDay(Map<String, String> map);
 }
