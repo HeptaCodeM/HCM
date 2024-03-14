@@ -92,7 +92,9 @@ public class CompanyController {
 		byte[] sealImg = sealDto.getComp_seal();
 		
 		System.out.println(Base64Utils.encodeToString(sealImg));
-		model.addAttribute("sealDto",Base64Utils.encodeToString(sealImg));
+		model.addAttribute("sealImg",Base64Utils.encodeToString(sealImg));
+		model.addAttribute("sealTest",sealDto.getComp_seal());
+		model.addAttribute("sealTest2",sealDto);
 		return "hr/company/showCompanySeal";
 	}
 	

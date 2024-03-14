@@ -13,13 +13,17 @@
 	}
 	
 	.searchEmpSelect{
-		width: 250px;
+		width: 130px;
 		height: 40px;
 	}
 	.cardFlexSearch{
 		display: flex;
+		justify-content: center;
 	}
 </style>
+<script type="text/javascript">
+	
+</script>
 <title>조직관리</title>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
@@ -52,55 +56,65 @@
 							<div class="card-body pt-5">
 								<div class="cardFlexSearch">
 									<span>
-										<select class="form-select form-select-solid searchEmpSelect">
-											<option value="">분류</option>
-											<option value="">사원번호</option>
-											<option value="">전화번호</option>
+										<select id="empShCtg" class="form-select form-select-solid searchEmpSelect">
+											<option value="">검색분류</option>
+											<option value="empl_name">성명</option>
+											<option value="empl_id">사원번호</option>
+											<option value="empl_phone">전화번호</option>
 										</select>
 									</span>&nbsp;&nbsp;
 									
 									<span>
-										<select class="form-select form-select-solid searchEmpSelect">
-											<option value="">재직기간</option>
-											<option value="">???</option>
+										<select id="empStaCtg" class="form-select form-select-solid searchEmpSelect">
+											<option value="">재직여부</option>
+											<option value="N">재직</option>
+											<option value="Y">퇴직</option>
 										</select>
 									</span>&nbsp;&nbsp;
 									
 									<span>
-										<input type="text" class="form-control form-control-solid searchEmpInput" id="" name="" placeholder="검색">
+    									<input class="form-control form-control-solid searchEmpSelect" placeholder="재직기간" id="empDatepicker" />
+									</span>&nbsp;&nbsp;
+									
+									
+									
+									<span>
+										<input type="text" class="form-control form-control-solid searchEmpInput" id="empSearchValue" name="empSearchValue" placeholder="검색">
 									</span>&nbsp;&nbsp;
 								
-									<button class="btn btn-primary btnLg me-10" id="">검색</button>
+									<button class="btn btn-primary btnLg me-10" id="empSearchBtn">검색</button>
+									<button class="btn btn-primary btnLg me-10" id="testBtn">테스트용</button>
 								</div>
+								<div class="separator border-2 separator-dashed my-5"></div>
 								<div>
 									<div class="form-check form-check-custom form-check-solid">
 										부서&nbsp;&nbsp;
-										<c:forEach var="dt" items="${deptList}">
-											<span>  
-												<input class="form-check-input" type="checkbox" value="" id=""/>&nbsp;
+										<span>  
+											<c:forEach var="dt" items="${deptList}">
+												<input name="dtChkVal" class="form-check-input" type="checkbox" value="${dt.getCoco_cd()}"/>&nbsp;
 												${dt.getCoco_name()}
-											</span>&nbsp;
-										</c:forEach>
+											</c:forEach>
+										</span>&nbsp;
 									</div>
-									
+									<div class="separator border-2 separator-dashed my-5"></div>
 									<div class="form-check form-check-custom form-check-solid">
 										직위&nbsp;&nbsp;
-										<c:forEach var="rk" items="${rankList}">
-											<span>
-												<input class="form-check-input" type="checkbox" value="" id=""/>&nbsp;
+										<span>
+											<c:forEach var="rk" items="${rankList}">
+												<input name="rkChkVal" class="form-check-input" type="checkbox" value="${rk.getCoco_cd()}"/>&nbsp;
 												${rk.getCoco_name()}
-											</span>&nbsp;
-										</c:forEach>
+											</c:forEach>
+										</span>&nbsp;
 									</div>
-									
+									<div class="separator border-2 separator-dashed my-5"></div>
 									<div class="form-check form-check-custom form-check-solid">
 										직책&nbsp;&nbsp;
-										<c:forEach var="pn" items="${positionList}">
-											<span>
-												<input class="form-check-input" type="checkbox" value="" id=""/>&nbsp;
+										<span>
+											<c:forEach var="pn" items="${positionList}">
+												<input name="pnChkVal" class="form-check-input" type="checkbox" value="${pn.getCoco_cd()}"/>&nbsp;
 												${pn.getCoco_name()}
-											</span>&nbsp;
-										</c:forEach>
+											</c:forEach>
+										</span>&nbsp;
 									</div>
 								</div>
 							</div>
@@ -152,6 +166,69 @@
 	});
 
 	
+	
+	$(function() {
+
+	  $('#empDatepicker').daterangepicker({
+	      autoUpdateInput: false,
+	      locale: {
+	          cancelLabel: '초기화',
+	          applyLabel: '설정'
+	      }
+	  });
+	
+	  $('#empDatepicker').on('apply.daterangepicker', function(ev, picker) {
+	      $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
+	  });
+	
+	  $('#empDatepicker').on('cancel.daterangepicker', function(ev, picker) {
+	      $(this).val('');
+	  });
+	
+	});
+	
+	var empSearchBtn = document.getElementById("empSearchBtn");
+	empSearchBtn.addEventListener('click',function(){
+		console.log("작동");
+		
+		var empShCtgVal = document.getElementById('empShCtg').value;
+		console.log(empShCtgVal);
+		
+		var empStaCtg = document.getElementById('empStaCtg').value;
+		console.log(empStaCtg);
+		
+		var empDatepicker = document.getElementById('empDatepicker').value;
+		console.log(empDatepicker);
+		
+		var empSearchValue = document.getElementById('empSearchValue').value;
+		console.log(empSearchValue);
+
+	   
+		var dtChkVal = document.getElementsByName('dtChkVal');
+			
+			for(let i = 0; i < dtChkVal.length; i++){
+				if(dtChkVal[i].checked){
+					dtChkVal[i].value
+				}
+			}
+			
+		var rkChkVal = document.getElementsByName('rkChkVal');
+			
+			for(let j = 0; j < rkChkVal.length; j++){
+				if(rkChkVal[j].checked){
+					rkChkVal[j].value
+				}
+			}
+			
+		var pnChkVal = document.getElementsByName('pnChkVal');
+			
+			for(let k = 0; k < pnChkVal.length; k++){
+				if(pnChkVal[k].checked){
+					pnChkVal[k].value
+				}
+			}
+	   
+	});
 	
 </script>
 </html>
