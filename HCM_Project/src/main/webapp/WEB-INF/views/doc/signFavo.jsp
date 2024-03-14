@@ -38,6 +38,7 @@ td>img {
 						<!--begin::Title-->
 						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">결재선 관리</h1>
 						<button type="button" id="signRefer">참조</button>
+						<button type="button" id="fileTest">파일테스트</button>
 						<!--end::Title-->
 					</div>
 					<!--end::Page title-->

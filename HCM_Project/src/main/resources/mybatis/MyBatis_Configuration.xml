@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
    <typeAliases>
       <typeAlias type="com.hcm.grw.dto.doc.SignTreeDto" alias="SignTreeDto"/>
       <typeAlias type="com.hcm.grw.dto.doc.SignFavoDto" alias="SignFavoDto"/>
@@ -33,10 +36,10 @@
       <typeAlias type="com.hcm.grw.dto.hr.EmpSignDto" alias="EmpSignDto"/>
       <typeAlias type="com.hcm.grw.dto.hr.CompanyDto" alias="CompanyDto"/>
       <typeAlias type="com.hcm.grw.dto.hr.SignDocBoxDto" alias="SignDocBoxDto"/>
+      <typeAlias type="com.hcm.grw.dto.doc.SignFileDto" alias="SignFileDto"/>
    </typeAliases>
    
 
-   
    
    
    

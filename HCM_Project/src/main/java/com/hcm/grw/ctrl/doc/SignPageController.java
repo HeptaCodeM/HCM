@@ -32,9 +32,11 @@ public class SignPageController {
 	@GetMapping("signFavo.do")
 	public String signFavo(Authentication auth, Model model) {
 		log.info("SignTreeController signFavo.do GET 결재선 관리 페이지");
-		List<String> list = List.of(auth.getName());
-		List<EmployeeDto> loginInfo = service.getFav(list);
-		model.addAttribute("loginInfo", loginInfo.get(0));
+		if(auth != null) {
+			List<String> list = List.of(auth.getName());
+			List<EmployeeDto> loginInfo = service.getFav(list);
+			model.addAttribute("loginInfo", loginInfo.get(0));
+		}
 		return "doc/signFavo";
 	}
 	
@@ -52,4 +54,11 @@ public class SignPageController {
 		model.addAttribute("loginInfo", dto.get(0));
 		return "doc/writeDoc";
 	}
+	
+	@GetMapping("fileTest.do")
+	public String fileTest() {
+		return "doc/fileTest";
+	}
+	
+	
 }

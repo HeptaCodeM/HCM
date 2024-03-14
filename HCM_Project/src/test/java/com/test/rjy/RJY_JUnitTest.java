@@ -238,19 +238,46 @@ public class RJY_JUnitTest {
      
        for(int i=0; i<table.size(); i++) {
           String apprName = "";
+          String apprDepth= "";
+          String apprFlag= "";
           for(int j=0; j<json.size(); j++) {
              if(table.get(i).getSidb_doc_num().equals(json.get(j).getSidb_doc_num())) {
                 System.out.println("같은 문서번호" + j);
                 apprName += json.get(j).getAppr_name() + ",";
+                apprFlag += json.get(j).getAppr_flag() + ",";
+                apprDepth += json.get(j).getAppr_depth() + ",";
              }
           }
           table.get(i).setAppr_name(apprName);
+          table.get(i).setAppr_depth(apprDepth);
+          table.get(i).setAppr_flag(apprFlag);
           fusion.add(table.get(i));
        }
        
        for(SignBoxDto a : fusion) {
-          System.out.println("[완성된 DTO] 문서번호 : " + a.getSidb_doc_num() + " 결재자 : " + a.getAppr_name());
+          System.out.println("[완성된 DTO] 문서번호 : " + a.getSidb_doc_num() + " 결재자 : " + a.getAppr_name()
+          					+ " 승인여부 : " + a.getAppr_flag() + " 결재순서 : " + a.getAppr_depth());
        }
+
+       
+       for (int i=0; i<table.size(); i++) {
+	       table.get(i).setAppr_name0(fusion.get(i).getAppr_name().split(",")[0].trim());
+	       table.get(i).setAppr_depth0(fusion.get(i).getAppr_depth().split(",")[0].trim());
+	       table.get(i).setAppr_flag0(fusion.get(i).getAppr_flag().split(",")[0].trim());
+	       if (fusion.get(i).getAppr_name().split(",").length >= 2) {
+	    	   table.get(i).setAppr_name1(fusion.get(i).getAppr_name().split(",")[1].trim());
+	    	   table.get(i).setAppr_depth1(fusion.get(i).getAppr_depth().split(",")[1].trim());
+		       table.get(i).setAppr_flag1(fusion.get(i).getAppr_flag().split(",")[1].trim());
+	       }
+	       if (fusion.get(i).getAppr_name().split(",").length >= 3) {
+	    	   table.get(i).setAppr_name2(fusion.get(i).getAppr_name().split(",")[2].trim());
+	    	   table.get(i).setAppr_depth2(fusion.get(i).getAppr_depth().split(",")[2].trim());
+		       table.get(i).setAppr_flag2(fusion.get(i).getAppr_flag().split(",")[2].trim());
+	       }
+	       
+       }
+//       
+       System.out.println("진짜최종"+table);
        
 //     SignBoxDto table1 = table.get(0);
 //     SignBoxDto json1 = json.get(0);

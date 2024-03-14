@@ -43,6 +43,10 @@ onload = function() {
 		open('./signRefer.do', '', 'width=640px height=960px left=300')
 	});
 	
+	document.getElementById('fileTest').addEventListener('click', function() {
+		location.href='./fileTest.do';
+	});
+	
 	
 	// 즐겨찾기 삭제
 	document.getElementById('delBtn').addEventListener('click', function() {

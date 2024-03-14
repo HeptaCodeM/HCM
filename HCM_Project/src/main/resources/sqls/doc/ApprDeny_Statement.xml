@@ -62,7 +62,7 @@
         SIDB_DOC_JSON,
         SET '$[${string_index}].APPR_DT' = '' || TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '',
             '$[${string_index}].APPR_REPLY' = #{appr_reply},
-            '$[${string_index}].APPR_FLAG' = '1')
+            '$[${string_index}].APPR_FLAG' = '2')
     WHERE SIDB_DOC_NUM = #{sidb_doc_num}
 </update>
 
