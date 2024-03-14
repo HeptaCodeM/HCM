@@ -1,5 +1,7 @@
 package com.hcm.grw.model.service.doc;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,5 +67,17 @@ public class SignBoxServiceImpl implements ISignBoxService {
 			return 0;
 		}
 		return 1;
+	}
+	
+	@Override
+	public List<SignFileDto> getFile() {
+		log.info("SignBoxServiceImpl getFile Service 파일목록 조회");
+		return dao.getFile();
+	}
+	
+	@Override
+	public SignFileDto getDetailFile(String sidf_file_num) {
+		log.info("SignBoxServiceImpl getdetailFile Service 파일 조회");
+		return dao.getDetailFile(sidf_file_num);
 	}
 }

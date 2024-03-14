@@ -19,7 +19,7 @@ $('#schName').on('keydown', function(e) {
 $().ready(function() {
 	$('#jstree').jstree({
 		// 검색기능 , 우클릭메뉴, 라벨 효과
-		plugins: ['search', 'wholerow'],
+		plugins: ['search', 'contextmenu', 'wholerow'],
 		// 우클릭메뉴 정의
 		core: {
 			data : {
@@ -104,6 +104,7 @@ function pick() {
 			inSpan.setAttribute('class', 'ki-solid ki-cross-square fs-1');
 			inSpan.setAttribute('style', 'margin-left: -10px;');
 			btn.setAttribute('class', 'btn btn-default');
+			btn.setAttribute('onclick', 'removeRefer(this)');
 			input.setAttribute('value', dname);
 			input.setAttribute('class', 'form-control');
 			input.setAttribute('readonly', 'readonly');
@@ -131,6 +132,7 @@ function pick() {
 					inSpan.setAttribute('class', 'ki-solid ki-cross-square fs-1');
 					inSpan.setAttribute('style', 'margin-left: -10px;');
 					btn.setAttribute('class', 'btn btn-default');
+					btn.setAttribute('onclick', 'removeRefer(this)');
 					input.setAttribute('value', d.empl_name);
 					input.setAttribute('class', 'form-control');
 					input.setAttribute('readonly', 'readonly');
@@ -158,7 +160,12 @@ function saveRefer() {
 	
 }
 
+function removeRefer(btn) {
+	var pa = btn.parentNode;
+	
+	console.log(pa)
 
+}
 
 
 

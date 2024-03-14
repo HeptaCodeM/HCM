@@ -56,7 +56,8 @@
 
 
 							<h2 style="text-align: center;">${temDto.sidt_temp_name}</h2>
-							${temDto.sidt_temp_content}
+							<div class="ck_content_detail">${temDto.sidt_temp_content}</div>
+							
 							
 							<div style="text-align: center;">
 								<button class="modifyTemplate">수정하기</button>
