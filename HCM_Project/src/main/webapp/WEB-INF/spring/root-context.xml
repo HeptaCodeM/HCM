@@ -7,8 +7,16 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-<context:property-placeholder location="classpath:properties/db.properties"/>
 
+<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:properties/db.properties</value>
+				<value>classpath:properties/email.properties</value>
+			</list>
+		</property>
+</bean>
+   
 <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 	<property name="driverClassName" value="${driver}"/>
 	<property name="jdbcUrl" value="${url}"/>

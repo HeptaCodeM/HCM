@@ -10,6 +10,22 @@
 		AND EMPL_DELFLAG = 'N'
 	</select>
 
+	<!-- 사용저 정보 -->
+	<select id="getUserInfo" parameterType="String" resultType="EmployeeDto">
+		SELECT 
+						EMPL_ID, EMPL_NAME, 
+						EMPL_DEPT_CD, D.COCO_NAME EMPL_DEPT_NM, 
+						EMPL_RANK_CD, R.COCO_NAME EMPL_RANK_NM, 
+						EMPL_POSITION_CD, P.COCO_NAME EMPL_POSITION_NM, 
+						EMPL_PICTURE, EMPL_AUTH
+		FROM 			EMPLOYEE E
+		INNER JOIN		COMMON_CODE D ON E.EMPL_DEPT_CD = D.COCO_CD 
+		INNER JOIN		COMMON_CODE R ON E.EMPL_RANK_CD = R.COCO_CD 
+		LEFT OUTER JOIN COMMON_CODE P ON E.EMPL_POSITION_CD = P.COCO_CD 
+		WHERE 			EMPL_ID = #{empl_id}
+		AND 			EMPL_DELFLAG = 'N'
+	</select>
+
 	<!-- 소셜로그인 -->
 	<select id="getSnsLoginInfo" parameterType="String" resultType="SnsInfoDto">
 		SELECT
@@ -65,7 +81,9 @@
 		EMPL_PHONE = #{empl_phone},
 		EMPL_TEL = #{empl_tel},
 		EMPL_FAX = #{empl_fax},
-		EMPL_PICTURE = #{empl_picture, jdbcType=BLOB},
+		<if test="!empl_picture.equals('') and empl_picture!=null">
+		EMPL_PICTURE = #{empl_picture},
+		</if>
 		EMPL_MODIFY_ID = #{empl_modify_id},
 		EMPL_MODIFY_DT = CURRENT_DATE
 		WHERE EMPL_ID = #{empl_id}

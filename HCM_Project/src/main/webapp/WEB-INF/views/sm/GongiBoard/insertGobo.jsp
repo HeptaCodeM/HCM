@@ -44,10 +44,6 @@
 					      <form id="insertForm" method="post">
 					      <input type="hidden" name="gobo_writer_id" id="gobo_writer_id" value="${dto.gobo_writer_id}">
 					         <div class="form-group">
-					            <label for="id">작성자</label>
-					            <input class="form-control" id="gobo_writer" name="gobo_writer" value="${dto.gobo_writer}" readonly="readonly">
-					         </div>
-					         <div class="form-group">
 					            <label for="title">제목</label>
 					            <input class="form-control" id="gobo_title"  name="gobo_title">
 					         </div>
@@ -61,10 +57,10 @@
 					         </div>
 					         <div>
 					         </div>
-					      </form>
 					            <input type="button" class="btn btn-success" value="글입력" onclick="insertGobo()" id="savebutton">
-					            <input type="reset" class="btn btn-danger" value="글초기화">
+					            <input type="reset" class="btn btn-danger" value="글초기화" id="resetbutton">
 					            <input type="button" class="btn btn-info" value="뒤로가기" onclick="history.back(-1)">
+					      </form>
 					   </div>
 							</div>
 						</div>
@@ -74,8 +70,7 @@
 			</div>
 		</div>
 			
-<%@include file="/WEB-INF/views/menu/smSideMenu.jsp" %>	
-<script type="text/javascript" src="/smartEditor/js/smart.js"></script>	
+<%@include file="/WEB-INF/views/menu/smSideMenu.jsp"%>	
 </body>
 
 

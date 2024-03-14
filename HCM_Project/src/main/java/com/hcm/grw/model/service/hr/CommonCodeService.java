@@ -16,5 +16,9 @@ public interface CommonCodeService {
 	public CommonCodeDto selectOneRole(Map<String, Object> map);
 	
 	public int correctionRole(Map<String, Object> map);	
+
+	public int roleCodeDuplicateChk(Map<String, Object> map);
+	
+	public int roleNameDuplicateChk(Map<String, Object> map);
 	
 }

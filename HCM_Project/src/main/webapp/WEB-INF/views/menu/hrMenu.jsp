@@ -4,7 +4,7 @@
 String hrLeftMenu [] = {"조직관리", "증명서관리", "인사발령관리", "근태관리" , "메뉴이름미정","서명관리"};
 // 소분류 메뉴명
 String hrSubLeftMenu [][] = {
-		{"부서관리","직위관리","직책관리", "사원등록", "사원조회"},		//hrLeftMenu[0]
+		{"부서관리","직위관리","직책관리", "정보수정", "사원등록", "사원조회"},		//hrLeftMenu[0]
 		{"증명서리스트"},					//hrLeftMenu[1]
 		{"인사발령조회", "인사발령관리(관리자)"},	//hrLeftMenu[2]
 		{"출퇴근등록", "출퇴근현황"},			//hrLeftMenu[3]
@@ -13,12 +13,12 @@ String hrSubLeftMenu [][] = {
 };
 //소분류 링크
 String hrSubLinkLeftMenu [][] = {
-		{"/roleList.do?role=DT","/roleList.do?role=RK","/roleList.do?role=PN", "/hr/employee/regist.do", "/hr/employee/list.do"},		//hrLeftMenu[0]
-		{"/certificate.do"},							//hrLeftMenu[1]
+		{"/hr/commonCode/roleList.do?role=DT","/hr/commonCode/roleList.do?role=RK","/hr/commonCode/roleList.do?role=PN", "/hr/employee/modify.do", "/hr/employee/registAdmin.do", "/hr/employee/list.do"},		//hrLeftMenu[0]
+		{"/hr/certificate/certificate.do"},							//hrLeftMenu[1]
 		{"#", "#"},						//hrLeftMenu[2]
 		{"#", "#"},					//hrLeftMenu[3]
-		{"/companyInfo.do"},						//hrLeftMenu[4]
-		{"/signListForm.do"}						//hrLeftMenu[5]
+		{"/hr/company/companyInfo.do"},						//hrLeftMenu[4]
+		{"/hr/sign/signListForm.do"}						//hrLeftMenu[5]
 };
 
 String uri = request.getRequestURI();
@@ -76,18 +76,18 @@ Boolean menuFlag2 = false;
 				<%
 				menuFlag2 = false;
 				for(int j=0;j<hrSubLeftMenu[i].length;j++){ 
-					if(hrSubLinkLeftMenu[i][j].indexOf(currentPageName)>=0){
+					if(hrSubLinkLeftMenu[i][j].indexOf(currentPageName)>=0 || currentPageName.equals("hrMainTmp")){
 						menuFlag2 = true;
 					}
 				}
 
 				if(menuFlag2 == true){
 				%>
-					<div class="menu-sub menu-sub-accordion hover show" style="">
+					<div class="menu-sub menu-sub-accordion show" style="">
 				<%
 				}else{
 				%>
-					<div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;">
+					<div class="menu-sub menu-sub-accordion" style="display: block; overflow: hidden;">
 				<%
 				}
 				%>
