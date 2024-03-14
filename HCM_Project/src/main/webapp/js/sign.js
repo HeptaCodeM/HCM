@@ -35,7 +35,7 @@ save.addEventListener("click",function(){
 		signData.empl_id = empl_id;
 		signData.emsi_create_id = emsi_create_id;
 		console.log(signData);
-		fetch('./insertSign.do',{
+		fetch('/hr/sign/insertSign.do',{
 			method:"post",
 			headers: {
             	"Content-Type": "application/json"
@@ -47,7 +47,7 @@ save.addEventListener("click",function(){
 			if(!response.ok){
 				throw new Error("에러! :( ");
 			}else{
-				location.href="./signListForm.do"
+				location.href="/hr/sign/signListForm.do"
 			}
 		})
 		.then(data => {

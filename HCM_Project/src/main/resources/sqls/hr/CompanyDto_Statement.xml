@@ -7,12 +7,12 @@
 					COMP_CEO_NAME, COMP_TEL, COMP_FAX, 
 					COMP_POST, COMP_ADDR1, COMP_ADDR2, 
 					COMP_SEAL, COMP_CREATE_ID, COMP_CREATE_DT, 
-					COMP_MODIFY_ID, COMP_MODIFY_DT)
+					COMP_MODIFY_ID, COMP_MODIFY_DT, COMP_EMAIL)
 			VALUES(#{comp_id}, #{comp_name}, #{comp_num}, 
 					#{comp_ceo_name}, #{comp_tel}, #{comp_fax}, 
 					#{comp_post}, #{comp_addr1}, #{comp_addr2}, 
 					'', #{comp_create_id}, CURRENT_DATE , 
-					'', '')
+					'', '', '#{comp_email}')
 	</insert>
 	
 	<update id="correctionCompanyInfo" parameterType="CompanyDto">
@@ -25,7 +25,8 @@
 						   COMP_ADDR1 = #{comp_addr1},
 						   COMP_ADDR2 = #{comp_addr2},
 						   COMP_MODIFY_ID = #{comp_modify_id},
-						   COMP_MODIFY_DT = CURRENT_DATE
+						   COMP_MODIFY_DT = CURRENT_DATE,
+						   COMP_EMAIL = #{comp_email}
 			WHERE COMP_ID = #{comp_id}
 	</update>
 	
@@ -39,7 +40,7 @@
 				COMP_CEO_NAME, COMP_TEL, COMP_FAX, 
 				COMP_POST, COMP_ADDR1, COMP_ADDR2, 
 				COMP_SEAL, COMP_CREATE_ID, COMP_CREATE_DT, 
-				COMP_MODIFY_ID, COMP_MODIFY_DT
+				COMP_MODIFY_ID, COMP_MODIFY_DT, COMP_EMAIL
 			FROM COMPANY
 			WHERE COMP_ID = #{comp_id}
 	</select>
