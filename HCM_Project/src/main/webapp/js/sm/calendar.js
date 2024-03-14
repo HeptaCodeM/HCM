@@ -3,13 +3,13 @@ document.addEventListener('DOMContentLoaded', listAjax());
 function listAjax() {
 	$.ajax({
 		type: "get",
-		url: "./Ajax.do",
+		url: "/sm/getAllCalendar.do",
 		dataType: "json",
 		success: function(data) {
 			var calendarEl = document.getElementById('calendar');
 
 			var calendar = new FullCalendar.Calendar(calendarEl, {
-				googleCalendarApiKey: 'AIzaSyCbBec_oN7U_GVDunlGZ5Cq4GQkESsDV-Y',  // 구글 api 키
+				googleCalendarApiKey: 'AIzaSyBBTfPVr0UjVIt-H0VGRuLFRg-ltL-YQDk',  // 구글 api 키
 				initialView: 'dayGridMonth',   //월 달력 표시
 				
 
@@ -23,7 +23,7 @@ function listAjax() {
 				eventSources: [
 					{
 						// 구글 캘린더에서 가져올 이벤트의 ID 특일정보 아이디
-						googleCalendarId: "ko.south_korea.official#holiday@group.v.calendar.google.com"
+						googleCalendarId: "ko.south_korea#holiday@group.v.calendar.google.com"
 						// 클릭 이벤트를 제거하기 위해 넣은 클래스
 						, className: "koHol"
 						
@@ -64,7 +64,6 @@ function listAjax() {
 			calendar.render();
 		},
 		error: function() {
-
 		}
 	});
 }
@@ -83,7 +82,7 @@ function detail(seq){
             $("#start1").text(data.start);
             $("#end1").text(data.end);
             // 모달 창 표시
-            $("#detailModal").modal("show");	
+            $("#kt_modal_scrollable_2").modal("show");	
         },
         error: function() {
             console.log("오류임");
@@ -92,7 +91,7 @@ function detail(seq){
 }
 
 function insert(){
-		$("#calendarModal").modal("show"); // modal 나타내기
+		$("#kt_modal_scrollable_2").modal("show"); // modal 나타내기
 
 		$("#addCalendar").on("click", function() {  // modal의 추가 버튼 클릭 시
 			var groupid = $("#groupid").val();
@@ -127,7 +126,7 @@ function insert(){
 							return false;
 						} else {
 							$("#form")[0].reset(); // 폼 초기화
-							$("#calendarModal").modal("hide");
+							$("#kt_modal_scrollable_2").modal("hide");
 							listAjax();
 
 						}
@@ -175,3 +174,24 @@ $("#imagebutton2").click(function(){
 	$("#end").datetimepicker('show');
 });
 })
+
+
+$("button.fc-prev-button").click(function() {            
+var date = jQuery("#calendar").fullCalendar("getDate");            
+convertDate(date);        
+});        // 오른쪽 버튼을 클릭하였을 경우        
+$("button.fc-next-button").click(function() {            
+var date = jQuery("#calendar").fullCalendar("getDate");            
+convertDate(date);        
+});
+
+function convertDate(date) {        
+var date = new Date(date);        
+alert(date.yyyymm());    }
+
+ Date.prototype.yyyymm = function() {        
+ var yyyy = this.getFullYear().toString();        
+ var mm = (this.getMonth() + 1).toString();        
+ var dd = this.getDate().toString();        
+ return yyyy + "-" + mm[1] ? mm : "0" + mm[0];    
+ }
