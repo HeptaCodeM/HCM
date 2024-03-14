@@ -81,7 +81,7 @@
 								                <input type="hidden" name="rebo_writer" value="윤영훈">
 								                <div class="comment_inbox border border-2">
 								                    <em class="comment_inbox_name">${session.empl_name}</em>
-								                    <textarea placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0"></textarea>
+								                    <textarea placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" name="rebo_content"></textarea>
 								                    <div class="d-flex justify-content-end align-items-end">
 								                        <div class="register_box">
 								                            <button type="button" class="btn btn-primary" onclick="cancelReply(${comment.rebo_no})">취소</button>
