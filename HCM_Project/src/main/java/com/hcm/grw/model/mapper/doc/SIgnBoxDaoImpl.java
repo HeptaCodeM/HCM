@@ -1,5 +1,7 @@
 package com.hcm.grw.model.mapper.doc;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -51,5 +53,17 @@ public class SIgnBoxDaoImpl implements ISignBoxDao {
 	public int deleteDoc(String sidb_doc_num) {
 		log.info("SignBoxDaoImpl deleteDoc DAO Access");
 		return template.delete(NS + "deleteDoc", sidb_doc_num);
+	}
+	
+	@Override
+	public List<SignFileDto> getFile() {
+		log.info("SignBoxDaoImpl getFile DAO Access");
+		return template.selectList(NS + "getFile");
+	}
+	
+	@Override
+	public SignFileDto getDetailFile(String sidf_file_num) {
+		log.info("SignBoxDaoImpl getDetailFile DAO Access");
+		return template.selectOne(NS + "getDetailFile", sidf_file_num);
 	}
 }

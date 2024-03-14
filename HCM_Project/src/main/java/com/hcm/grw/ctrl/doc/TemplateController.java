@@ -76,6 +76,18 @@ public class TemplateController {
 		int n = service.insertTemp(dto);
 		return (n == 0) ? "" : "redirect:template.do";
 	}
+	
+//  @PostMapping("/insertTemplate.do")
+//  public String insertTemplate(@RequestParam Map<String, Object> map) {
+//     log.info("TemplateController 템플릿 등록하는 insertTemplate");
+//     TemplateDto dto = new TemplateDto();
+//     dto.setSica_cd((String)map.get("sica_cd"));
+//     dto.setSidt_temp_name((String)map.get("sidt_temp_name"));
+//     dto.setSidt_temp_content((String)map.get("sidt_temp_content"));
+//     int n = service.insertTemp(dto);
+//     return (n==0)? "" : "redirect:template.do";
+//  }
+
 
 	@GetMapping("/modifyTemplate.do")
 	public String modifyTemplate(String sidt_temp_cd, Model model) {

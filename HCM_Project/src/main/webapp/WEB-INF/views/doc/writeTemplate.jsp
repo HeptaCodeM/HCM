@@ -56,7 +56,7 @@
 			<!-- ---------------------------- 내 용 입 력 -------------------------------- -->				
 							
 							<button id="getTemplate">[TEST] 템플릿 가져오기</button>
-							<form action="./writeTemplate.do" method="post">
+							<form action="./insertTemplate.do" method="post">
 								<div id="category">
 									결재 구분 : <select id="selectCategory" name="sica_cd"></select>
 								</div>
