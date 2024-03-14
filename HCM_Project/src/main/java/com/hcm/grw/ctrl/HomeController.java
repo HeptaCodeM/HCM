@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.EmailService;
+import com.hcm.grw.comm.Function;
+import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.model.mapper.hr.EmployeeDao;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,18 +32,33 @@ public class HomeController {
 
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private EmployeeDao employeeDao;
 
 	
 	@GetMapping({"/index.do", "/"})
-	public String index(HttpServletRequest request, Model model, Authentication authentication) {
+	public String index(HttpServletRequest request, Model model, Authentication authentication, HttpSession session) {
 		
 		String getId = "";
 		if(authentication != null) {
 			getId = authentication.getName();
 		}
 		log.info("getId : {}", getId);
+		
 		model.addAttribute("getId", getId);
 
+		//공통함수를 이용한 사원정보 조회
+		EmployeeDto employeeDto = (EmployeeDto)session.getAttribute("userInfoVo");
+		String empl_id = "";
+		if(employeeDto != null) {
+			empl_id = employeeDto.getEmpl_id();
+		}
+		log.info("empl_id : {}", empl_id);
+		EmployeeDto fnEmployeeDto = employeeDao.getUserInfo(empl_id);
+		log.info("Function Info : {}", fnEmployeeDto);
+		model.addAttribute("empl_info", fnEmployeeDto);
+		
 		return "index";
 	}
 

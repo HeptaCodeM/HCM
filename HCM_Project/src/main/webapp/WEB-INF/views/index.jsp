@@ -9,7 +9,8 @@
 	<div>
 		Hello World!!!<br>
 		로그인 아이디 : ${getId} (/index.do로 접근)<br>
-		Session : ${sessionScope.userInfoVo}
+		Session : ${sessionScope.userInfoVo}<br>
+		getUserInfo : ${empl_info}
 	</div>
 	<div>
 
