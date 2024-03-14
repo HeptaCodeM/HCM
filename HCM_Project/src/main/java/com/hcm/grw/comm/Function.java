@@ -1,14 +1,20 @@
 package com.hcm.grw.comm;
 
+import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.model.mapper.hr.EmployeeDao;
+import com.hcm.grw.model.mapper.hr.EmployeeDaoImpl;
+
+import lombok.extern.slf4j.Slf4j;
+
 /**
 * 공통함수 클래스
 * @author : SDJ
 * @since : 2024.01.13
 * @version : 1.0
 */
+@Slf4j
 public class Function {
 
-	
 	/**
 	* alert 메시지 발생 후 url이동
 	* @param : 메시지
@@ -54,5 +60,5 @@ public class Function {
 		sb.append("</script>");
 		return sb.toString();
 	}
-
+	
 }

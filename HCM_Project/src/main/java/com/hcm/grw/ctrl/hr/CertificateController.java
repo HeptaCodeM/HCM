@@ -20,21 +20,12 @@ public class CertificateController {
 	private SignDocBoxService boxService;
 	
 	
-	@GetMapping(value = "/certificate.do")
+	@GetMapping(value = "/hr/certificate/certificate.do")
 	public String certificate(Model model , Authentication authentication) {
 		Map<String, Object> docMap = new HashMap<String, Object>();
-		
-		try {
-			String empl_id = authentication.getName();
-			System.out.println(empl_id);
-			docMap.put("empl_id", empl_id);
-		} catch (Exception e) {
-			docMap.put("empl_id", "20220101");
-			System.out.println("===============================================================");
-			System.out.println("오류");
-			System.out.println("===============================================================");
-			return "redirect:./error500.do";
-		}
+		String empl_id = authentication.getName();
+		System.out.println(empl_id);
+		docMap.put("empl_id", empl_id);
 		List<SignDocBoxDto> docList = boxService.selectAllDocList(docMap);
 		System.out.println(docList);
 		model.addAttribute("docList" ,docList);
@@ -42,7 +33,7 @@ public class CertificateController {
 	}
 	
 	
-	@GetMapping(value = "/selectOneCertificate.do")
+	@GetMapping(value = "/hr/certificate/selectOneCertificate.do")
 	public String selectOneCertificate(String sidb_doc_num , Model model , Authentication authentication) {
 		System.out.println(sidb_doc_num);
 		String empl_id = authentication.getName();

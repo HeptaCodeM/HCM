@@ -45,7 +45,6 @@
 									</c:when>
 									
 									<c:otherwise>
-										${docList}<br>
 										<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
 											<thead>
 												<tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
@@ -58,7 +57,7 @@
 											
 											<c:forEach var="doc" items="${docList}" varStatus="var"> 
 												<tbody>
-													<tr style="cursor: pointer;" onclick="location.href='./selectOneCertificate.do?sidb_doc_num=${doc.getSidb_doc_num()}'">
+													<tr style="cursor: pointer;" onclick="location.href='/hr/certificate/selectOneCertificate.do?sidb_doc_num=${doc.getSidb_doc_num()}'">
 														<td>${var.count}</td>
 														<td>${doc.getSidb_doc_title()}</td>
 														<td>${doc.getSidt_temp_name()}</td>

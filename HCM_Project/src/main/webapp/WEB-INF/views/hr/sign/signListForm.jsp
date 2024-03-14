@@ -24,7 +24,7 @@
 	function chkValue(){
 		var chked  = $("input[name=signDefault]:checked")
 		console.log(chked.val());
-		location.href="./setDefaultSign.do?emsi_seq="+chked.val();
+		location.href="/hr/sign/setDefaultSign.do?emsi_seq="+chked.val();
 	}
 </script>
 <title>서명리스트화면</title>
@@ -66,7 +66,7 @@
 								</div>
 								<div class="card-footer">
 									<div class="form-check form-check-custom form-check-solid form-check-lg">
-										<a class="btn btn-primary btnSm me-10" href="./delThisSign.do?emsi_seq=${signList.getEmsi_seq()}">삭제</a>
+										<a class="btn btn-primary btnSm me-10" href="/hr/sign/delThisSign.do?emsi_seq=${signList.getEmsi_seq()}">삭제</a>
 										<input name="signDefault" type="checkbox" class="form-check-input" onclick="chkOnly(this)" value="${signList.getEmsi_seq()}">
 										<c:if test="${signList.getEmsi_setflag() eq 'Y'}">
 											<span class="badge badge-primary">기본서명</span>

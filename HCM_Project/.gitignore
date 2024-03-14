@@ -23,6 +23,7 @@ local.properties
 .recommenders
 *.MF
 db.properties
+mail.properties
 
 
 # External tool builders

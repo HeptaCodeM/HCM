@@ -39,6 +39,7 @@
 		<security:intercept-url pattern="/WEB-INF/error/error*.jsp" access="permitAll" />
 
 		<!-- 시스템 권한 -->
+
 		<!-- <security:intercept-url pattern="/system.do" access="hasRole('SYSADMIN')" /> -->
 		<security:intercept-url pattern="/system.do" access="permitAll" />
 		<!-- 인사관리자 접근 권한 -->
@@ -50,6 +51,7 @@
 		<!-- 결재관리자 접근 권한 -->
 		<!-- <security:intercept-url pattern="/doc/*admin*.do" access="hasAnyRole('DOC_ADMIN')" /> -->
 		<security:intercept-url pattern="/doc/*admin*.do" access="permitAll" />
+
 		<!-- 일반회원 접근 권한 -->
 		<!-- <security:intercept-url pattern="/hr/*" access="isAuthenticated()" />
 		<security:intercept-url pattern="/sm/*" access="isAuthenticated()" />

@@ -23,7 +23,7 @@ public class SignController {
 	@Autowired
 	private EmpSignService empSignService;
 	
-	@GetMapping(value = "/signListForm.do")
+	@GetMapping(value = "/hr/sign/signListForm.do")
 	public String signListForm(Model model) {
 		Map<String, Object> signMap = new HashMap<String, Object>();
 		// TODO login세션 생기면 수정하고 테스트 [재원]
@@ -35,12 +35,12 @@ public class SignController {
 	}
 	
 	
-	@GetMapping(value = "/insertSignForm.do")
+	@GetMapping(value = "/hr/sign/insertSignForm.do")
 	public String insertSignForm() {
 		return "hr/sign/insertSignForm";
 	}
 	
-	@PostMapping(value = "/insertSign.do")
+	@PostMapping(value = "/hr/sign/insertSign.do")
 	@ResponseBody
 	public void insertSign(@RequestBody String signJson) {
 		Gson signGson = new Gson();
@@ -59,7 +59,7 @@ public class SignController {
 		System.out.println(cnt);
 	}
 	
-	@GetMapping(value = "/delThisSign.do")
+	@GetMapping(value = "/hr/sign/delThisSign.do")
 	public String delThisSign(String emsi_seq) {
 		System.out.println(emsi_seq);
 		// TODO login세션 생기면 수정하고 테스트 [재원]
@@ -68,13 +68,13 @@ public class SignController {
 		signMap.put("emsi_seq", emsi_seq);
 		int cnt = empSignService.deleteSign(signMap);
 		if(cnt == 1) {
-			return "redirect:./signListForm.do";
+			return "redirect:/hr/sign/signListForm.do";
 		}else {
-			return "redirect:./signListForm.do";
+			return "redirect:/hr/sign/signListForm.do";
 		}
 	}
 	
-	@GetMapping(value = "/setDefaultSign.do")
+	@GetMapping(value = "/hr/sign/setDefaultSign.do")
 	public String setDefaultSign(String emsi_seq) {
 		System.out.println(emsi_seq);
 		// TODO login세션 생기면 수정하고 테스트 [재원]
@@ -94,9 +94,9 @@ public class SignController {
 		signDefMap.put("emsi_seq", emsi_seq);
 		int cnt = empSignService.setDefaultSign(signDefMap);
 		if(cnt > 0) {
-			return "redirect:./signListForm.do";
+			return "redirect:/hr/sign/signListForm.do";
 		}else {
-			return "redirect:./signListForm.do";
+			return "redirect:/hr/sign/signListForm.do";
 		}
 		
 	}
