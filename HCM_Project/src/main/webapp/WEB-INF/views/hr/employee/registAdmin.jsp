@@ -85,28 +85,28 @@
 
 								<form name="form1" method="post" action="/hr/employee/registAdmin.do" enctype="multipart/form-data">
 									<div class="table-responsive">
-										<table class="table ">
+										<table class="table table-bordered">
 											<tr>
-												<th>성명</th>
+												<th class="required">성명</th>
 												<td><input type="text" class="form-control form-control-solid" name="empl_name" maxlength="20" required="required"></td>
 											</tr>
 											<tr>
-												<th>생년월일</th>
+												<th class="required">생년월일</th>
 												<td><input type="date" class="form-control form-control-solid" name="empl_birth" required="required"></td>
 											</tr>
 											<tr>
-												<th>성별</th>
+												<th class="required">성별</th>
 												<td>
 													<input type="radio" class="form-check-input radio" name=empl_gender value="M" checked>남성
 													<input type="radio" class="form-check-input radio last" name=empl_gender value="F">여성
 												</td>
 											</tr>
 											<tr>
-												<th>이메일</th>
+												<th class="required">이메일</th>
 												<td><input type="text" class="form-control form-control-solid" name="empl_email" maxlength="50" required="required"></td>
 											</tr>
 											<tr>
-												<th>전화번호</th>
+												<th class="required">전화번호</th>
 												<td><input type="text" class="form-control form-control-solid" name="empl_phone" maxlength="15" required="required"></td>
 											</tr>
 											<tr>
@@ -136,7 +136,7 @@
 											</tr>
 											 -->
 											<tr>
-												<th>부서</th>
+												<th class="required">부서</th>
 												<td>
 													<select name="empl_dept_cd" required="required" class="form-select">
 														<option value="">==== 부서선택 ====</option>
@@ -147,7 +147,7 @@
 												</td>
 											</tr>
 											<tr>
-												<th>직위</th>
+												<th class="required">직위</th>
 												<td>
 													<select name="empl_rank_cd" required="required" class="form-select">
 														<option value="">==== 직위선택 ====</option>
@@ -158,7 +158,7 @@
 												</td>
 											</tr>
 											<tr>
-												<th>직책</th>
+												<th class="required">직책</th>
 												<td>
 													<select name="empl_position_cd" class="form-select">
 														<option value="">==== 직책선택 ====</option>
@@ -173,10 +173,10 @@
 												<td><input type="file" class="form-control form-control-solid" name="empl_picture"></td>
 											</tr>
 											<tr>
-												<td colspan="2">
+												<td colspan="2" style="text-align:center;">
 													<button class="btn btn-primary me-10" id="kt_button_1">
 													    <span class="indicator-label">
-													        Submit
+													        등록
 													    </span>
 													    <span class="indicator-progress">
 													        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>

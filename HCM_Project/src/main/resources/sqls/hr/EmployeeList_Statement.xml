@@ -41,42 +41,46 @@
 	INNER JOIN      COMMON_CODE C2 ON A.EMPL_RANK_CD = C2.COCO_CD
 	LEFT OUTER JOIN   COMMON_CODE C3 ON A.EMPL_POSITION_CD  = C3.COCO_CD
 	<choose>
-		<when test="empl_name != null">
+		<when test="searchCtg == 'empl_name'">
 			WHERE A.EMPL_NAME = #{empl_name}
 		</when>
-		<when test="empl_id != null">
+		<when test="searchCtg == 'empl_id'">
 			WHERE A.EMPL_ID = #{empl_id}
 		</when>
-		<when test="empl_phone != null">
+		<when test="searchCtg == 'empl_phone'">
 			WHERE A.EMPL_PHONE = #{empl_phone}
 		</when>
 		<otherwise>
 			WHERE A.EMPL_NAME = #{empl_name}
 		</otherwise>
 	</choose>
-	<if test="empl_dept_cd != null">
-		AND A.EMPL_DEPT_CD = #{empl_dept_cd}
+	
+	<choose>
+		<when test="empl_delflag == 'N'">
+			AND A.EMPL_DELFLAG = 'N'
+		</when>
+		<when test="empl_delflag == 'Y'">
+			AND A.EMPL_DELFLAG = 'Y'
+		</when>
+	</choose>
+	
+	<if test="startdate != null and enddate != null">
+		AND TO_DATE(A.EMPL_JOINDATE) BETWEEN TO_DATE(#{startdate},'YYYY-MM-DD') AND TO_DATE(#{enddate},'YYYY-MM-DD')
 	</if>
-	<if test="empl_rank_cd != null">
+	
+	
+	<if test="empl_dept_cd != null">
+		AND A.EMPL_DEPT_CD = 
+		<foreach collection="dtArr" item="dtA" open="(" separator="," close=")">
+			#{dtA}
+		</foreach>
+	</if>
+<!-- 	<if test="empl_rank_cd != null">
 		AND A.EMPL_RANK_CD = #{empl_rank_cd}
 	</if>
 	<if test="empl_position_cd != null">
 		AND A.EMPL_POSITION_CD = #{empl_position_cd}
-	</if>
-	<choose>
-		<when test="empl_delflag == null">
-			AND A.EMPL_DELFLAG = 'N'
-		</when>
-		<when test="empl_delflag != null">
-			AND A.EMPL_DELFLAG = 'Y'
-		</when>
-		<otherwise>
-			AND A.EMPL_DELFLAG = 'N'
-		</otherwise>
-	</choose>
-	<if test="startdate != null and enddate != null">
-		AND TO_DATE(A.EMPL_JOINDATE) BETWEEN TO_DATE(#{startdate},'YYYY-MM-DD') AND TO_DATE(#{enddate},'YYYY-MM-DD')
-	</if>
+	</if> -->
 	</select>
 	
 	<select id="selectOneEmployee" parameterType="Map" resultType="EmployeeDto">
@@ -95,7 +99,8 @@
 		            C3.COCO_CD AS COCO_CD_PCD,
 		            C3.COCO_NAME AS COCO_NAME_PNM,
 		            A.EMPL_JOINDATE,
-		            A.EMPL_LEAVEDATE
+		            A.EMPL_LEAVEDATE,
+		            A.EMPL_PICTURE
 		FROM          EMPLOYEE A
 		INNER JOIN      COMMON_CODE C1 ON A.EMPL_DEPT_CD = C1.COCO_CD
 		INNER JOIN      COMMON_CODE C2 ON A.EMPL_RANK_CD = C2.COCO_CD

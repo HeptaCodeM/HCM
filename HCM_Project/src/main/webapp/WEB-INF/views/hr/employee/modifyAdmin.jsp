@@ -9,12 +9,6 @@
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
 <title>조직관리</title>
 
-<style type="text/css">
-.table th { vertical-align:middle; }
-.form-check-input.radio {margin-right:10px;}
-.form-check-input.radio.last {margin-left:30px;}
-</style>
-
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -31,7 +25,7 @@
 					<!--begin::Page title-->
 					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 						<!--begin::Title-->
-						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">사원수정</h1>
+						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">사원정보</h1>
 						<!--end::Title-->
 					</div>
 					<!--end::Page title-->
@@ -43,21 +37,18 @@
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-header pt-5">
-								<h3 class="card-title text-gray-800 fw-bold">사원수정</h3>
+								<h3 class="card-title text-gray-800 fw-bold">사원정보</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
 
-								<form name="form1" method="post" action="/hr/employee/modify.do" enctype="multipart/form-data">
-									<table class="table table-bordered">
-										<tr class="success">
+								<form name="form1" method="post" action="/hr/employee/modify.do">
+									<table class="table table-hover">
+										<tr>
 											<th>사번</th>
 											<td>
 												${empInfo.empl_id}
 												<input type="hidden" name="empl_id" maxlength="20" value="${empInfo.empl_id}">
-											</td>
-											<td style="width:150px;" rowspan="4">
-												<img src="${empInfo.empl_picture_str}" style="width:100%;height:100%;" >
 											</td>
 										</tr>
 										<tr>
@@ -84,49 +75,45 @@
 										</tr>
 										<tr>
 											<th>이메일</th>
-											<td colspan="2">${empInfo.empl_email}</td>
+											<td>${empInfo.empl_email}</td>
 										</tr>
 
 										<tr>
-											<th class="required">전화번호</th>
-											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_phone" maxlength="15" value="${empInfo.empl_phone}" required="required"></td>
+											<th>전화번호</th>
+											<td><input type="text" name="empl_phone" maxlength="15" value="${empInfo.empl_phone}" required="required"></td>
 										</tr>
 										<tr>
 											<th>내선번호</th>
-											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_tel" maxlength="3" value="${empInfo.empl_tel}"></td>
+											<td><input type="text" name="empl_tel" maxlength="3" value="${empInfo.empl_tel}"></td>
 										</tr>
 										<tr>
 											<th>팩스번호</th>
-											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_fax" maxlength="15" value="${empInfo.empl_fax}"></td>
+											<td><input type="text" name="empl_fax" maxlength="15" value="${empInfo.empl_fax}"></td>
 										</tr>
 										<tr>
 											<th>입사년도</th>
-											<td colspan="2">${empInfo.empl_joindate}</td>
+											<td>${empInfo.empl_joindate}</td>
 										</tr>
 										<tr>
 											<th>부서</th>
-											<td colspan="2">
+											<td>
 												${empInfo.coco_name_dnm}
 											</td>
 										</tr>
 										<tr>
 											<th>직위</th>
-											<td colspan="2">
+											<td>
 												${empInfo.coco_name_rnm}
 											</td>
 										</tr>
 										<tr>
 											<th>직책</th>
-											<td colspan="2">
+											<td>
 												${empInfo.coco_name_pnm}
 											</td>
 										</tr>
 										<tr>
-											<th>증명사진</th>
-											<td colspan="2"><input type="file" class="form-control form-control-solid" name="empl_picture"></td>
-										</tr>
-										<tr>
-											<td colspan="3" style="text-align:center;">
+											<td colspan="2" style="text-align:center;">
 												<button class="btn btn-primary me-10" id="kt_button_1">
 												    <span class="indicator-label">
 												        수정
@@ -135,7 +122,7 @@
 												        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 												    </span>
 												</button>
-												<button type="button" class="btn btn-success me-10" id="kt_button_1" onclick="location.href='/hr/employee/list.do';">
+												<button type="button" class="btn btn-danger me-10" id="kt_button_1" onclick="location.href='/hr/employee/list.do';">
 												    <span class="indicator-label">
 												        리스트
 												    </span>
