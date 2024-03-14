@@ -67,8 +67,8 @@
 				    기안문 템플릿 선택하기
 				</button>
 				</div>
-				
-				<div id="jstree_temp"></div>
+				<input type="button" id="tree" value="JSTREE나와라">
+				<div id="jstree"></div>
 				<!-- 모달 화면 -->
 				<div class="modal fade" tabindex="-1" id="kt_modal_3">
 				    <div class="modal-dialog">
@@ -106,7 +106,7 @@
 													<div class="card-body pt-6">
 														<!--begin::Tab content-->
 														<div class="tab-content">
-														<div id="jstree"></div>
+<!-- 														<div id="jstree"></div> -->
 														</div>
 														<!--end::Tab content-->
 													</div>
@@ -168,8 +168,8 @@
 </body>
 
 
-<script type="text/javascript" src="../ckeditor5/build/ckeditor.js"></script>
-<script type="text/javascript" src="../js/writeDoc.js"></script>
+<script type="text/javascript" src="/ckeditor5/build/ckeditor.js"></script>
+<script type="text/javascript" src="/js/writeDoc.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 <!-- <script type="module" src="../ckeditor5/sample/script.js"></script> -->
 <!-- <script type="text/javascript" src="../js/template.js"></script> -->

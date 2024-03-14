@@ -37,22 +37,7 @@ function dragElement(elmnt) {
 
 
 onload = function() {
-	$('#jstree_temp').jstree({
-		plugins: ['search', 'wholerow'],
-		core : {
-			data : {
-				url : './getTempTree.do',
-				method : 'get',
-				dataType : 'json',
-				success : function(data) {
-					console.log(data)
-				},
-				error: function(){
-					alert('데이터 전송 실패');
-				}
-			}
-		}
-	});
+	document.getElementById('tree').addEventListener('click', getTree)
 }
 
 /*$().ready(function() {
@@ -72,7 +57,24 @@ onload = function() {
 })*/
 
 
-
+function getTree() {
+	$('#jstree').jstree({
+		plugins: ['search', 'wholerow'],
+		core : {
+			data : {
+				url : './getTempTree.do',
+				method : 'get',
+				dataType : 'json',
+				success : function(data) {
+					console.log(data)
+				},
+				error: function(){
+					alert('데이터 전송 실패');
+				}
+			}
+		}
+	});
+}
 
 
 

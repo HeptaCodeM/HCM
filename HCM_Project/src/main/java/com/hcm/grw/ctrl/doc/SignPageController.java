@@ -50,6 +50,6 @@ public class SignPageController {
 		List<String> list = List.of(id);
 		List<EmployeeDto> dto = service.getFav(list);
 		model.addAttribute("loginInfo", dto.get(0));
-		return "writeDoc";
+		return "doc/writeDoc";
 	}
 }
