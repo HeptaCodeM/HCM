@@ -1,6 +1,7 @@
 package com.hcm.grw.dto.sm;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +31,8 @@ public class ScbDto {
 	private Date scbo_modify_date;
 	private String scbo_bigo;
 	private String scbo_delflag;
+	private String daygridmonth;
+	private List<String> type;
 	
 	
 	

@@ -4,7 +4,9 @@ import static org.junit.Assert.assertNotNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,15 +57,21 @@ public class ScbServiceImpl_JUnitTest {
 //		dto.setScbo_end(en);
 //		dto.setScbo_modify_id("111111");
 //		dto.setScbo_no("1");
-//		dto.setScbo_bigo("");
-		dto.setScbo_no("0");
-		dto.setScbo_modify_id("윤영훈");
-		int n  = dao.updateScboDelFlag(dto);
-		assertNotNull(n);
+//		dto.setScbo_bigo("")
+		List<String> list = new ArrayList<String>();
+		list.add("1");
+		list.add("2");
+		dto.setType(list);
+		dto.setScbo_empno("20220101");
+		dto.setDaygridmonth("2024-03");
 		
+		List<ScbDto> lists  = dao.getAllCalendar(dto);
+		System.out.println(lists);
 		
-		
-		
+		assertNotNull(lists);
+		for(ScbDto vo : lists) {
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+vo.getScbo_title());
+		}
 	}
 
 }

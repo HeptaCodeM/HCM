@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
+<script type="text/javascript" src="/js/sm/Gobo.js"></script>
 <title>SM메인화면</title>
 <style type="text/css">
  /* 화면늘리는 버튼 숨기기 */
@@ -14,7 +15,13 @@
         resize: none; /* 사용자가 텍스트 영역 크기를 조절할 수 없도록 함 */
         min-height: 38px; /* 최소 높이 지정 */
     }
-
+	.comment_info_button{
+	text-decoration: none;
+	color: gray;
+	}
+	ul {
+    list-style-type: none; /* 리스트 스타일을 없앰 */
+}
 </style>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
@@ -59,16 +66,45 @@
 						                <div>
 						                    <strong>${comment.rebo_writer}</strong><br>
 						                    <div>${comment.rebo_content}</div>
-						                    <div><small><fmt:formatDate value="${comment.rebo_regdate}" pattern="yyyy-MM-dd"/></small></div>
+						                    <div><small><fmt:formatDate value="${comment.rebo_regdate}" pattern="yyyy-MM-dd"/></small>
+						                    <a role="button" class="comment_info_button" onclick="showCommentForm(${comment.rebo_no})">답글쓰기</a>
+						                    </div>
 						                </div>
 						            </div>
 						        </li>
+						        <li  id="commentFormContainer${comment.rebo_no}" style="display: none;">
+						        	<div>
+						        		<div class="CommentWriter mb-4">
+								            <form id="ReplyTwoForm">
+								                <input type="hidden" name="rebo_writer_id" value="20240013">
+								                <input type="hidden" name="rebo_writer" value="윤영훈">
+								                <input type="hidden" name="rebo_writer" value="윤영훈">
+								                <div class="comment_inbox border border-2">
+								                    <em class="comment_inbox_name">${session.empl_name}</em>
+								                    <textarea placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0"></textarea>
+								                    <div class="d-flex justify-content-end align-items-end">
+								                        <div class="register_box">
+								                            <button type="button" class="btn btn-primary" onclick="cancelReply(${comment.rebo_no})">취소</button>
+								                            <button type="button" class="btn btn-primary" onclick="insertReply(${dto.gobo_no})">등록</button>
+								                        </div>
+								                    </div>
+								                </div>
+								            </form>
+								        </div>
+						        	</div>
+						        </li>
 						    </c:forEach>
 						</ul>
+						
+						
                             <!-- 댓글 작성 폼 -->
-						     <div class="CommentWriter mb-4">
+						     <div class="CommentWriter mb-4" style="margin-top: 50px ">
+						     		<form id="ReplyForm">
+						     		<input type="hidden" name="rebo_writer_id" value="20240013">
+						     		<input type="hidden" name="rebo_writer" value="윤영훈">
+						     		<input type="hidden" name="rebo_writer" value="윤영훈">
 							        <div class="comment_inbox border border-2">
-							            <em class="comment_inbox_name">${dto.gobo_writer}</em>
+							            <em class="comment_inbox_name">${session.empl_name}</em>
 							            <textarea placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0"></textarea>
 							       <div class="d-flex justify-content-end align-items-end">
 							        <div class="register_box">
@@ -76,6 +112,7 @@
 							        </div>
 							        </div>
 							        </div>
+							        </form>
 							  </div>
 							</div>
                         </div>
@@ -86,20 +123,27 @@
 <%@include file="/WEB-INF/views/menu/smSideMenu.jsp" %>		
 </body>
 
-
 <script type="text/javascript">
-
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.CommentWriter').forEach(function(commentWriter) {
-        commentWriter.addEventListener('click', function() {
-            var textarea = this.querySelector('.comment_inbox_text');
-            if (textarea) {
-                textarea.focus();
-            }
-        });
-    });
-});
+function showCommentForm(commentId) {
+    // commentFormContainer 요소 찾기
+    var commentFormContainer = document.getElementById("commentFormContainer" + commentId);
+    // commentFormContainer가 존재하면 보이게 함
+    if (commentFormContainer) {
+        commentFormContainer.style.display = 'block';
+    }
+}
+function cancelReply(commentId) {
+	  // commentFormContainer 요소 찾기
+    var commentFormContainer = document.getElementById("commentFormContainer" + commentId);
+    // commentFormContainer가 존재하면 보이게 함
+    if (commentFormContainer) {
+        commentFormContainer.style.display = 'none';
+    }
+}
 
 
 </script>
+
+
+
 </html>
