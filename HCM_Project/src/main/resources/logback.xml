@@ -21,8 +21,8 @@
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>C:/Client_Tools/eclipse_spring_MVC/workspace_spring/log/HCM_Project.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>C:/Client_Tools/eclipse_spring_MVC/workspace_spring/log/HCM_Project-%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
+            <fileNamePattern>C:/Client_Tools/eclipse_spring_MVC/workspace_spring/log/HCM_Project-%d{yyyy-MM}.log</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
         </rollingPolicy>
 
         <encoder>
