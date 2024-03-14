@@ -40,6 +40,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	public EmployeeDto getUserInfo(String empl_id) {
+		return dao.getUserInfo(empl_id);
+	}
+
+	@Override
 	public SnsInfoDto getSnsLoginInfo(String empl_id) {
 		return dao.getSnsInfo(empl_id);
 	}

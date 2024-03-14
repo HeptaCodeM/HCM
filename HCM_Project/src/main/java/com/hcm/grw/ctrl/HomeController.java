@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -31,7 +32,7 @@ public class HomeController {
 
 	
 	@GetMapping({"/index.do", "/"})
-	public String index(Model model, Authentication authentication) {
+	public String index(HttpServletRequest request, Model model, Authentication authentication) {
 		
 		String getId = "";
 		if(authentication != null) {
@@ -39,7 +40,7 @@ public class HomeController {
 		}
 		log.info("getId : {}", getId);
 		model.addAttribute("getId", getId);
-		
+
 		return "index";
 	}
 

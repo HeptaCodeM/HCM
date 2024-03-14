@@ -1,5 +1,7 @@
 package com.hcm.grw.comm;
 
+import org.springframework.security.core.Authentication;
+
 /**
 * 공통함수 클래스
 * @author : SDJ
@@ -53,5 +55,7 @@ public class Function {
 		sb.append("</script>");
 		return sb.toString();
 	}
+	
+
 
 }

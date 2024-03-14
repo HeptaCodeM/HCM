@@ -1,5 +1,8 @@
 package com.hcm.grw.ctrl.hr;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +11,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
+import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,8 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.CommonCodeDto;
@@ -44,6 +48,9 @@ public class EmployeeController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	private String authRole = "HR_ADMIN";
+	
+
 	@GetMapping("/hr/employee/registAdmin.do")
 	public String registEmployee(Model model) {
 		log.info("EmployeeController registEmployee 진입");
@@ -69,10 +76,11 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/hr/employee/registAdmin.do")
-	public @ResponseBody void registEmployeeOk(EmployeeDto emp, HttpServletResponse resp, Authentication authentication) throws IOException {
+	public @ResponseBody void registEmployeeOk(List<MultipartFile> file, HttpServletResponse resp, Authentication authentication) throws IOException {
 		log.info("EmployeeController registEmployeeOk 등록처리");
-		
 		resp.setContentType("text/html;charset=utf-8;");
+
+		EmployeeDto emp = new EmployeeDto();
 		
         // Random 객체 생성
         Random random = new Random();
@@ -84,8 +92,13 @@ public class EmployeeController {
         emp.setEmpl_birth(birth.replace("-", ""));
         emp.setEmpl_auth("ROLE_USER");
         emp.setEmpl_create_id(authentication.getName());
+		log.info("등록값1 : {}", emp);
+
+//		for(MultipartFile f : file){
+//			f.
+//		}
         
-		log.info("등록값 : {}", emp);
+		log.info("등록값2 : {}", emp);
 		
 		int n = employeeService.registEmployee(emp);
 		StringBuffer sb = new StringBuffer();
@@ -101,6 +114,45 @@ public class EmployeeController {
 		resp.getWriter().print(sb);
 	}
 
+	//파일을 byte[] 로 변환
+	private byte[] convertFileToByte(MultipartFile mfile) throws Exception {
+			File file = new File(mfile.getOriginalFilename());
+			file.createNewFile();
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.write(mfile.getBytes());
+			
+			byte[] returnValue = null;		
+			ByteArrayOutputStream baos = null;	    
+		    FileInputStream fis = null;
+		  
+		    try {
+		    	
+		    	baos = new ByteArrayOutputStream();
+		    	fis = new FileInputStream(file);
+		    		    	
+		        byte[] buf = new byte[1024];
+		        int read = 0;
+		        
+		        while ((read=fis.read(buf,0,buf.length)) != -1){
+		        	baos.write(buf,0,read);
+		        }
+		        
+		        returnValue = baos.toByteArray();
+		   
+		    } catch (Exception e) {
+		        throw e;
+		    } finally {
+		            if (baos != null) {
+		            	baos.close();
+		            }
+		            if (fis != null) {
+		            	fis.close();
+		            }
+		    }
+		    
+		    fos.close();
+		    return returnValue;
+		}	
 	
 	@PostMapping("/hr/employee/modify.do")
 	public @ResponseBody void employeeModifyOk(EmployeeDto emp, HttpServletResponse resp) throws IOException {

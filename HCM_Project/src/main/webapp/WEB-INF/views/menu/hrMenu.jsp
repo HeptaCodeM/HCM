@@ -83,7 +83,7 @@ Boolean menuFlag2 = false;
 
 				if(menuFlag2 == true){
 				%>
-					<div class="menu-sub menu-sub-accordion hover show" style="">
+					<div class="menu-sub menu-sub-accordion show" style="">
 				<%
 				}else{
 				%>

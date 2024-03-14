@@ -170,7 +170,7 @@
 											</tr>
 											<tr>
 												<th>증명사진</th>
-												<td><input type="file" class="form-control form-control-solid" name="empl_name"></td>
+												<td><input type="file" class="form-control form-control-solid" name="empl_picture"></td>
 											</tr>
 											<tr>
 												<td colspan="2">
