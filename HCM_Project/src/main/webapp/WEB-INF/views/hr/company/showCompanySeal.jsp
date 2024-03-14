@@ -44,7 +44,7 @@
 										<h1>널</h1>
 									</c:when>
 									<c:otherwise>
-									<c:set var="data" value="data:image/png;base64,"/>
+									<c:set var="data" value=""/>
 										<img class="sealImg" src="${data}${sealImg}">
 										<h1>${sealTest}</h1>
 										<h1>${sealTest2}</h1>

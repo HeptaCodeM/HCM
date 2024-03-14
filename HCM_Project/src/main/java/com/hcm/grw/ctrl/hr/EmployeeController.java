@@ -11,12 +11,14 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +31,7 @@ import com.hcm.grw.dto.hr.CommonCodeDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.mapper.hr.EmployeeListDao;
 import com.hcm.grw.model.service.hr.CommonCodeService;
+import com.hcm.grw.model.service.hr.EmployeeListService;
 import com.hcm.grw.model.service.hr.EmployeeService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +51,9 @@ public class EmployeeController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private EmployeeListService employeeListService;
 	
 	private String authRole = "HR_ADMIN";
 	
@@ -108,8 +114,10 @@ public class EmployeeController {
         emp.setEmpl_create_id(authentication.getName());
 		log.info("등록값1 : {}", emp);
 
-		for(MultipartFile f : file){
-			emp.setEmpl_picture(f.getBytes());
+		if(file != null) {
+			for(MultipartFile f : file){
+				emp.setEmpl_picture(f.getBytes());
+			}
 		}
         
 		log.info("등록값2 : {}", emp);
@@ -133,7 +141,16 @@ public class EmployeeController {
 		log.info("EmployeeController employeeModify 수정페이지 진입");
 		
 		String empl_id = authentication.getName();
-		EmployeeDto empInfo = employeeService.getUserInfo(empl_id);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("empl_id", empl_id);
+
+		EmployeeDto empInfo = employeeListService.selectOneEmployee(map);
+		byte[] empPic = empInfo.getEmpl_picture();
+		if(empPic != null) {
+			empInfo.setEmpl_picture_str(Function.blobImageToString(empPic));
+		} else {
+			empInfo.setEmpl_picture_str("/images/blank.png");
+		}
 		
 		model.addAttribute("empInfo", empInfo);
 		
@@ -142,27 +159,36 @@ public class EmployeeController {
 	
 	
 	@PostMapping("/hr/employee/modify.do")
-	public @ResponseBody void employeeModifyOk(EmployeeDto emp, HttpServletResponse resp, Authentication authentication) throws IOException {
+	public @ResponseBody void employeeModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, @RequestParam Map<String, String> map, HttpServletResponse resp, Authentication authentication) throws IOException {
 		log.info("EmployeeController employeeModifyOk 수정처리");
 		
-		String empl_modify_id = authentication.getName();
-		emp.setEmpl_modify_id(empl_modify_id);
+        String empl_modify_id = authentication.getName();
+        EmployeeDto emp = new EmployeeDto();
 
+        emp.setEmpl_phone(map.get("empl_phone"));
+        emp.setEmpl_tel(map.get("empl_tel"));
+        emp.setEmpl_fax(map.get("empl_fax"));
+		emp.setEmpl_modify_id(empl_modify_id);
+        emp.setEmpl_id(map.get("empl_id"));
+
+		if(file != null) {
+			for(MultipartFile f : file){
+				emp.setEmpl_picture(f.getBytes());
+			}
+		}
+        
+        
 
 		log.info("수정값 : {}", emp);
-		
-		
 		
 		int n = employeeService.updateEmployee(emp);
 		String msg;
 		if(n < 1) {
-
-
 			msg = Function.alertHistoryBack("수정 시 오류가 발생하였습니다.", "", "");
 
 			//sb.append("alert('수정 시 오류가 발생하였습니다.'); history.back();");
 		}else {
-			msg = Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/list.do", "","","");
+			msg = Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/modify.do", "","","");
 			//sb.append("alert('정상적으로 수정 되었습니다.');");
 			//sb.append("location.href='/hr/employee/list.do';");
 		}
