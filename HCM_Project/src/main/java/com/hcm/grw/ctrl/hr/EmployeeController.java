@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -76,27 +77,40 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/hr/employee/registAdmin.do")
-	public @ResponseBody void registEmployeeOk(List<MultipartFile> file, HttpServletResponse resp, Authentication authentication) throws IOException {
+	public @ResponseBody void registEmployeeOk(@RequestParam("empl_picture") List<MultipartFile> file, @RequestParam Map<String, String> map, HttpServletResponse resp, Authentication authentication) throws IOException {
 		log.info("EmployeeController registEmployeeOk 등록처리");
+		log.info("input map : {}", map);
+		log.info("MultipartFile : {}", file);
 		resp.setContentType("text/html;charset=utf-8;");
 
-		EmployeeDto emp = new EmployeeDto();
-		
         // Random 객체 생성
         Random random = new Random();
-
         // 8자리 숫자 생성
         int randomNumber = random.nextInt(90000000) + 10000000;
-        emp.setEmpl_pwd(passwordEncoder.encode(String.valueOf(randomNumber)));
-        String birth = emp.getEmpl_birth();
-        emp.setEmpl_birth(birth.replace("-", ""));
+		
+
+        EmployeeDto emp = new EmployeeDto();
+
+		emp.setEmpl_pwd(passwordEncoder.encode(String.valueOf(randomNumber)));
+		
+        emp.setEmpl_birth(map.get("empl_birth").replace("-",""));
+        emp.setEmpl_email(map.get("empl_email"));
+        emp.setEmpl_name(map.get("empl_name"));
+        emp.setEmpl_gender(map.get("empl_gender"));
+        emp.setEmpl_fax(map.get("empl_fax"));
+        emp.setEmpl_phone(map.get("empl_phone"));
+        emp.setEmpl_tel(map.get("empl_tel"));
+        emp.setEmpl_dept_cd(map.get("empl_dept_cd"));
+        emp.setEmpl_rank_cd(map.get("empl_rank_cd"));
+        emp.setEmpl_position_cd(map.get("empl_position_cd"));
+        emp.setEmpl_joindate(map.get("empl_joindate"));
         emp.setEmpl_auth("ROLE_USER");
         emp.setEmpl_create_id(authentication.getName());
 		log.info("등록값1 : {}", emp);
 
-//		for(MultipartFile f : file){
-//			f.
-//		}
+		for(MultipartFile f : file){
+			emp.setEmpl_picture(f.getBytes());
+		}
         
 		log.info("등록값2 : {}", emp);
 		
@@ -114,45 +128,6 @@ public class EmployeeController {
 		resp.getWriter().print(sb);
 	}
 
-	//파일을 byte[] 로 변환
-	private byte[] convertFileToByte(MultipartFile mfile) throws Exception {
-			File file = new File(mfile.getOriginalFilename());
-			file.createNewFile();
-			FileOutputStream fos = new FileOutputStream(file);
-			fos.write(mfile.getBytes());
-			
-			byte[] returnValue = null;		
-			ByteArrayOutputStream baos = null;	    
-		    FileInputStream fis = null;
-		  
-		    try {
-		    	
-		    	baos = new ByteArrayOutputStream();
-		    	fis = new FileInputStream(file);
-		    		    	
-		        byte[] buf = new byte[1024];
-		        int read = 0;
-		        
-		        while ((read=fis.read(buf,0,buf.length)) != -1){
-		        	baos.write(buf,0,read);
-		        }
-		        
-		        returnValue = baos.toByteArray();
-		   
-		    } catch (Exception e) {
-		        throw e;
-		    } finally {
-		            if (baos != null) {
-		            	baos.close();
-		            }
-		            if (fis != null) {
-		            	fis.close();
-		            }
-		    }
-		    
-		    fos.close();
-		    return returnValue;
-		}	
 	
 	@PostMapping("/hr/employee/modify.do")
 	public @ResponseBody void employeeModifyOk(EmployeeDto emp, HttpServletResponse resp) throws IOException {
