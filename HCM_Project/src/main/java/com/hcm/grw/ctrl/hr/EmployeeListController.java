@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,8 +61,8 @@ public class EmployeeListController {
 		return "/hr/employee/list";
 	}	
 
-	@GetMapping("/hr/employee/modify.do")
-	public String employeeModify(@RequestParam String empl_id, Model model) {
+	@GetMapping("/hr/employee/modifyAdmin.do")
+	public String employeeModifyAdmin(@RequestParam String empl_id, Model model) {
 		log.info("EmployeeController employeeModify 수정페이지 진입");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -70,7 +71,7 @@ public class EmployeeListController {
 		
 		model.addAttribute("empInfo", empInfo);
 		
-		return "/hr/employee/modify";
+		return "/hr/employee/modifyAdmin";
 	}	
 	
 	

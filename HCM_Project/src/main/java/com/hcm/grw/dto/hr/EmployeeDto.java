@@ -26,6 +26,7 @@ public class EmployeeDto {
 	private String empl_joindate;
 	private String empl_leavedate;
 	private byte[] empl_picture;
+	private String empl_picture_str;
 	private String empl_dept_cd;
 	private String empl_rank_cd;
 	private String empl_position_cd;
