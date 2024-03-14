@@ -115,7 +115,7 @@ th, td {
 										</tr>
 									</table>
 								</div>
-								기안자 사원번호: ${docDto1.sidb_doc_num}
+								 문서 번호: ${docDto1.sidb_doc_num}
 								<p>
 									결재문서기한:
 									<fmt:parseDate var="patternDate"
@@ -217,13 +217,15 @@ th, td {
 				<div class="modal-body">
 					<p>첨언</p>
 					<form id="reply" action="./approve.do" method="post">
+					<input type="hidden" value="${docDto1.sidb_doc_num}" name="docNum"/>
 						<textarea name="reply" style="width: 100%;"></textarea>
 					</form>
 				</div>
 
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary me-10"
+					<button type="button" class="btn btn-primary me-10"
 						onclick="approve()">승인</button>
+						
 				</div>
 			</div>
 		</div>
@@ -250,6 +252,7 @@ th, td {
 					<p>반려사유</p>
 					<form id="denyReply" action="./deny.do" method="post">
 						<textarea name="reply" style="width: 100%;"></textarea>
+						<input type="hidden" value="${docDto1.sidb_doc_num}" name="docNum"/>
 					</form>
 				</div>
 
@@ -262,9 +265,10 @@ th, td {
 </body>
 <script type="text/javascript">
 	function approve() {
-		alert("승인처리 되었습니다");
-		document.getElementById('reply').submit();
-	}
+	        alert("승인처리 되었습니다");
+	        document.getElementById('reply').submit();
+	    }
+	
 
 	function deny() {
 		alert("반려처리 되었습니다");

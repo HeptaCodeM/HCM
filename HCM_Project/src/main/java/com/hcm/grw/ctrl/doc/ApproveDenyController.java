@@ -28,10 +28,10 @@ public class ApproveDenyController {
 	private IDocBoxService docService;
 	
 	@PostMapping("/doc/docBox/approve.do")
-	public String approve(@RequestParam("reply") String reply, Model model) {
+	public String approve(String reply, Model model, String docNum) {
 		log.info("approve 승인 진입", reply);
 		SignBoxDto dto = new SignBoxDto();
-		dto.setSidb_doc_num("24000003");
+		dto.setSidb_doc_num(docNum);
 		dto.setAppr_reply(reply);
 		
 		String seq = "6";
@@ -44,7 +44,6 @@ public class ApproveDenyController {
 			dto.setString_index(string_index);
 			
 		
-		
 	    boolean isc= apprService.approve(dto);
 	    List<SignBoxDto> docDto= docService.getDetailDocsList(dto);
 		model.addAttribute("docDto",docDto);
@@ -53,10 +52,10 @@ public class ApproveDenyController {
 	}
 	
 	@PostMapping("/doc/docBox/deny.do")
-	public String deny(@RequestParam("reply") String reply, Model model) {
+	public String deny(@RequestParam("reply") String reply, Model model, String docNum) {
 		log.info("deny 반려 진입", reply);
 		SignBoxDto dto = new SignBoxDto();
-		dto.setSidb_doc_num("24000003");
+		dto.setSidb_doc_num(docNum);
 		dto.setAppr_reply(reply);
 		
 		//로그인세션에서 뜯어온 appr_depth

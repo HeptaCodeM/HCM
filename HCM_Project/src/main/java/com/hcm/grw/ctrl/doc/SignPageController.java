@@ -3,7 +3,6 @@ package com.hcm.grw.ctrl.doc;
 import java.util.List;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -47,12 +46,10 @@ public class SignPageController {
 	
 	@GetMapping("writeDoc.do")
 	public String writeDoc(Authentication auth, Model model) {
-		if(auth != null) {
-			String id = auth.getName();
-			List<String> list = List.of(id);
-			List<EmployeeDto> dto = service.getFav(list);
-			model.addAttribute("loginInfo", dto.get(0));
-		}
-		return "doc/writeDoc";
+		String id = auth.getName();
+		List<String> list = List.of(id);
+		List<EmployeeDto> dto = service.getFav(list);
+		model.addAttribute("loginInfo", dto.get(0));
+		return "writeDoc";
 	}
 }

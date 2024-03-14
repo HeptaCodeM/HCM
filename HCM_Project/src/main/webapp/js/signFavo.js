@@ -1,43 +1,38 @@
 onload = function() {
+	loadFavoLineList();
+	loadFavoList();
 	
-	// Make the DIV element draggable:
+	// 모달
 	var element = document.querySelector('#kt_modal_3');
 	dragElement(element);
 
 	function dragElement(elmnt) {
 		var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 		if (elmnt.querySelector('.modal-content')) {
-			// if present, the header is where you move the DIV from:
 			elmnt.querySelector('.modal-content').onmousedown = dragMouseDown;
 		} else {
-			// otherwise, move the DIV from anywhere inside the DIV:
 			elmnt.onmousedown = dragMouseDown;
 		}
 
 		function dragMouseDown(e) {
 			e = e || window.event;
-			// get the mouse cursor position at startup:
 			pos3 = e.clientX;
 			pos4 = e.clientY;
 			document.onmouseup = closeDragElement;
-			// call a function whenever the cursor moves:
 			document.onmousemove = elementDrag;
 		}
 
 		function elementDrag(e) {
 			e = e || window.event;
-			// calculate the new cursor position:
 			pos1 = pos3 - e.clientX;
 			pos2 = pos4 - e.clientY;
 			pos3 = e.clientX;
 			pos4 = e.clientY;
-			// set the element's new position:
 			elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
 			elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
 		}
 
 		function closeDragElement() {
-			// stop moving when mouse button is released:
 			document.onmouseup = null;
 			document.onmousemove = null;
 		}
@@ -45,97 +40,31 @@ onload = function() {
 	
 	// 참조 팝업창
 	document.getElementById('signRefer').addEventListener('click', function() {
-		open('./signRefer.do', '', 'width=800px height=1080px left=300')
+		open('./signRefer.do', '', 'width=640px height=960px left=300')
 	});
 	
-	// 즐겨찾기 불러오기
-	var id = document.getElementById('empl_id').value;
-	document.getElementById('apprList').addEventListener('focus', function() {
-		
-		var apprList = document.getElementById('apprList');
-		apprList.innerHTML = '';
-		var opt = document.createElement('option');
-		opt.textContent = '결재자를 선택해주세요';
-		apprList.appendChild(opt);
-		fetch('./signFavoList.do?empl_id=' + id)
-			.then(resp => {
-				return resp.json();
-			})
-			.then(data => {
-				console.log(data);
-				
-				for (let d of data) {
-					var opt = document.createElement('option');
-					opt.setAttribute('value', d.siaf_favo_cd);
-					opt.textContent = d.employee.empl_name + ' (' + d.employee.coco_name_pnm + ')'; 
-					apprList.appendChild(opt);
-				}
-
-			})
-			.catch(error => {
-				console.log(error)
-			});
-	});
-	
-	// 즐겨찾기 라인 불러오기 
-	document.getElementById('apprLineList').addEventListener('focus', function() {
-		
-		var apprLineList = document.getElementById('apprLineList');	
-		apprLineList.innerHTML = '';
-		var opt = document.createElement('option');
-		opt.textContent = '결재선을 선택해주세요';
-		apprLineList.appendChild(opt)
-		
-		fetch('./signFavoLineList.do?empl_id=' + id)
-			.then(resp => {
-				return resp.json();
-			})
-			.then(data => {
-				console.log(data);
-				var lineList = data.lineList;
-				var empList = data.resultList[0];
-				console.log(empList);
-				
-				for (let i = 0; i < lineList.length; i++) {
-					console.log(lineList[i].siaf_favo_cd, lineList[i].siaf_favo_name);
-					var opt = document.createElement('option');
-					opt.setAttribute('value', lineList[i].siaf_favo_cd);
-					opt.textContent = lineList[i].siaf_favo_name + ' ➡️ (';
-					
-					for (let j = 0; j < empList[i].length; j++) {
-						console.log(empList[i][j].empl_id, empList[i][j].empl_name);
-						if(j == empList[i].length - 1) {
-							opt.textContent += empList[i][j].empl_name;
-						} else {
-							opt.textContent += empList[i][j].empl_name + ' - ';
-						}
-					}
-					opt.textContent += ')';
-					apprLineList.appendChild(opt);
-				}
-			})
-			.catch(error => {
-				console.log(error);
-			});
-	});
 	
 	// 즐겨찾기 삭제
 	document.getElementById('delBtn').addEventListener('click', function() {
-		var selectId = document.querySelectorAll('select')[0].value;
-	 	fetch('./deleteFav.do?siaf_favo_cd=' + selectId)
-			.then(resp => {
-				return resp.text();
-			}).then(data => {
-				alert(data);
-				document.getElementById('apprList').innerHTML = '';
-				var sel = document.getElementById('apprList');
-				var opt = document.createElement('option');
-				opt.textContent = '결재자를 선택해주세요';
-				sel.appendChild(opt);
-			}).catch(err => {
-				console.log(err);
-			});
-		})
+		var select = document.getElementById('apprList').value;
+		if(select != '결재자를 선택해주세요') {
+			sweetAlertConfirm("즐겨찾기를 삭제할까요?", delFavo, '');
+		} else {
+			swalAlert('결재자를 선택해주세요', '', '', '확인')
+		}
+		
+	});
+	
+	// 즐겨찾기 라인 삭제
+	document.getElementById('delLineBtn').addEventListener('click', function() {
+		var select = document.getElementById('apprLineList').value;
+		if(select != '결재선을 선택해주세요') {
+			sweetAlertConfirm("즐겨찾기를 삭제할까요?", delLine, '')
+		} else {
+			swalAlert('라인을 선택해주세요', '', '', '확인')
+		}
+	});	
+		
 		
 	// 즐겨찾기 결재자 결재선으로 보내기
 	document.getElementsByName('insBtn')[0].addEventListener('click', function() {
@@ -263,25 +192,6 @@ onload = function() {
 		});
 	})
 	
-	// 즐겨찾기 라인 삭제
-	document.getElementById('delLineBtn').addEventListener('click', function() {
-		var select = document.querySelector('select#apprLineList');
-		var selList = select.options[select.selectedIndex].value;
-		console.log(selList);
-		fetch('./deleteFav.do?siaf_favo_cd=' + selList)
-			.then(resp => {
-				return resp.text();
-			}).then(data => {
-				alert(data);
-				document.getElementById('apprLineList').innerHTML = '';
-				var sel = document.getElementById('apprLineList');
-				var opt = document.createElement('option');
-				opt.textContent = '결재선을 선택해주세요';
-				sel.appendChild(opt);
-			}).catch(err => {
-				console.log(err);
-			});
-	})
 }
 
 // jsTree 검색창의 엔터키로 검색 가능하게 하는 함수
@@ -460,12 +370,14 @@ $().ready(function() {
 										return resp.text();
 									})
 									.then(data => {
-										alert(data);
+										loadFavoLineList();
+										loadFavoList();
+										swalAlert(data,'','','확인');
 									})
 									.catch(error => {
 										console.log(error);
-									})
-								
+									});
+									
 							}
 						}
 					}
@@ -550,7 +462,7 @@ $().ready(function() {
 	}, 1000)
 	
 	
-	// 결재자 리스트를 json형태로 저장
+	// 결재자 리스트를 json형태로 저장 (즐겨찾기 라인추가)
 	$('#addLine').on('click', function(e) {
 		e.preventDefault();
 		let approverData;
@@ -619,13 +531,16 @@ $().ready(function() {
 					return resp.text();
 				})
 				.then(data => {
-					alert(data);
+					loadFavoLineList();
+					loadFavoList();
+					swalAlert(data,'','','확인');
 					approverData = null;
 					document.getElementById('favoName').value = '';
 				})
 				.catch(err => {
 					console.log(err);
 				});
+				
 		} else {
 			console.log(appr1, appr2, appr3)
 			alert('결재자를 선택해주세요');
@@ -723,7 +638,119 @@ function pick() {
 	}, 100);
 }
 
+// 즐겨찾기 결재자 삭제
+function delFavo() {
+	var selectId = document.querySelectorAll('select')[0].value;
+	fetch('./deleteFav.do?siaf_favo_cd=' + selectId)
+		.then(resp => {
+			return resp.text();
+		}).then(data => {
+			loadFavoLineList();
+			loadFavoList();
+			swalAlert(data,'','','확인');
+			document.getElementById('apprList').innerHTML = '';
+			var sel = document.getElementById('apprList');
+			var opt = document.createElement('option');
+			opt.textContent = '결재자를 선택해주세요';
+			sel.appendChild(opt);
+		}).catch(err => {
+			console.log(err);
+		});
+	
+	
+}
 
+// 즐겨찾기 라인 삭제
+function delLine() {
+	var select = document.querySelector('select#apprLineList');
+	var selList = select.options[select.selectedIndex].value;
+	console.log(selList);
+	fetch('./deleteFav.do?siaf_favo_cd=' + selList)
+		.then(resp => {
+			return resp.text();
+		}).then(data => {
+			loadFavoLineList();
+			loadFavoList();
+			swalAlert(data,'','','확인');
+			document.getElementById('apprLineList').innerHTML = '';
+			var sel = document.getElementById('apprLineList');
+			var opt = document.createElement('option');
+			opt.textContent = '결재선을 선택해주세요';
+			sel.appendChild(opt);
+		}).catch(err => {
+			console.log(err);
+		});
+		
+}
 
+// 즐겨찾기 라인불러오기
+function loadFavoLineList() {
+	
+	var id = document.getElementById('empl_id').value;
+	var apprLineList = document.getElementById('apprLineList');
+	apprLineList.innerHTML = '';
+	var opt = document.createElement('option');
+	opt.textContent = '결재선을 선택해주세요';
+	apprLineList.appendChild(opt)
 
+	fetch('./signFavoLineList.do?empl_id=' + id)
+		.then(resp => {
+			return resp.json();
+		})
+		.then(data => {
+			console.log(data);
+			var lineList = data.lineList;
+			var empList = data.resultList[0];
+			console.log(empList);
+
+			for (let i = 0; i < lineList.length; i++) {
+				console.log(lineList[i].siaf_favo_cd, lineList[i].siaf_favo_name);
+				var opt = document.createElement('option');
+				opt.setAttribute('value', lineList[i].siaf_favo_cd);
+				opt.textContent = lineList[i].siaf_favo_name + ' ➡️ (';
+
+				for (let j = 0; j < empList[i].length; j++) {
+					console.log(empList[i][j].empl_id, empList[i][j].empl_name);
+					if (j == empList[i].length - 1) {
+						opt.textContent += empList[i][j].empl_name;
+					} else {
+						opt.textContent += empList[i][j].empl_name + ' - ';
+					}
+				}
+				opt.textContent += ')';
+				apprLineList.appendChild(opt);
+			}
+		})
+		.catch(error => {
+			console.log(error);
+		});
+}
+
+// 즐겨찾기 불러오기
+function loadFavoList() {
+	var id = document.getElementById('empl_id').value;
+	var apprList = document.getElementById('apprList');
+	apprList.innerHTML = '';
+	var opt = document.createElement('option');
+	opt.textContent = '결재자를 선택해주세요';
+	apprList.appendChild(opt);
+	fetch('./signFavoList.do?empl_id=' + id)
+		.then(resp => {
+			return resp.json();
+		})
+		.then(data => {
+			console.log(data);
+
+			for (let d of data) {
+				var opt = document.createElement('option');
+				opt.setAttribute('value', d.siaf_favo_cd);
+				opt.textContent = d.employee.empl_name + ' (' + d.employee.coco_name_pnm + ')';
+				apprList.appendChild(opt);
+			}
+
+		})
+		.catch(error => {
+			console.log(error)
+		});
+}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
