@@ -12,6 +12,8 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+<link rel="stylesheet"
+	href="../ckeditor5/sample/template.css">	
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp"%>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -51,7 +53,7 @@
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
 							
-							
+			<!-- ---------------------------- 내 용 입 력 -------------------------------- -->				
 							
 							<button id="getTemplate">[TEST] 템플릿 가져오기</button>
 							<form action="./writeTemplate.do" method="post">
@@ -68,7 +70,7 @@
 								</div>
 							</form>
 
-
+			<!-- ---------------------------- 내 용 입 력 -------------------------------- -->
 
 						</div>
 						</div>

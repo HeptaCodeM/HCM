@@ -38,6 +38,7 @@ public class RJY_JUnitTest {
 	private IDocBoxDao dao;
 	@Autowired
 	private IDocBoxService service;
+	
 
 	@Autowired
 	private IApprDenyService apprService;
@@ -137,7 +138,7 @@ public class RJY_JUnitTest {
 
 	
 	//상세조회 리스트방식
-	@Test
+	//@Test
 	public void getDetailDocsList() {
 		String sidb_doc_num = "24000003";
 		List<SignBoxDto> dto = sessionTemplate.selectList(NS + "getDetailDocsList", sidb_doc_num);
@@ -146,7 +147,7 @@ public class RJY_JUnitTest {
 	}
 
 	
-	  @Test 
+	//  @Test 
 	  public void approve1() { 
 	  
 	  SignBoxDto dto1 = new SignBoxDto();
@@ -214,5 +215,40 @@ public class RJY_JUnitTest {
 		assertTrue(result);
 	}
 
+	
+	 @Test 
+	  public void getDocs() { 
+	  
+	  SignBoxDto dto = new SignBoxDto();
+	 
+	  
+	  dto.setSidb_doc_num("24000003");
+	 
+	  List<SignBoxDto> table=dao.getAllDocsTable(dto);
+		 List<SignBoxDto> json=	dao.getAllDocsJson(dto);
+		 
+		 System.out.println("나는테이블"+table.get(0));
+		 System.out.println("나는json@@@@@"+json.get(1));
+	  boolean result = service.getDocs(dto); 
+
+	  //합치기
+	  List<SignBoxDto> fusion = new ArrayList<>();
+	  SignBoxDto table1 = table.get(0);
+	  SignBoxDto json1 = json.get(0);
+	  SignBoxDto json2 = json.get(1);
+	  
+	   SignBoxDto fusionResult = new SignBoxDto();
+	   fusionResult.setSidb_doc_num(table1.getSidb_doc_num());
+	   fusionResult.setSidb_doc_title(table1.getSidb_doc_title());
+	   fusionResult.setSidb_doc_writedt(table1.getSidb_doc_writedt());
+	   fusionResult.setEmpl_name(table1.getEmpl_name());
+	   fusionResult.setAppr_name(json1.getAppr_name());
+	   fusionResult.setAppr_name1(json2.getAppr_name());
+	    fusion.add(fusionResult);
+	    System.out.println("제발!!!!!!!!!성공!!!!!!!!!"+fusion.get(0));
+	  
+	  assertTrue(result); 
+	  
+	  }
 
 }

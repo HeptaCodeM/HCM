@@ -32,7 +32,8 @@
 	UPDATE SIGN_DOC_TEMP
 		SET SIDT_TEMP_CONTENT = #{sidt_temp_content},
 			SIDT_TEMP_NAME = #{sidt_temp_name},
-			SIDT_TEMP_MODIFYDT = CURRENT_DATE
+			SIDT_TEMP_MODIFYDT = CURRENT_DATE,
+			SICA_CD = #{sica_cd}
 			WHERE SIDT_TEMP_CD = #{sidt_temp_cd}
 </update>
 

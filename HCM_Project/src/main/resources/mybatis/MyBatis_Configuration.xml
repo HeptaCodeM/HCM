@@ -31,6 +31,7 @@
       <typeAlias type="com.hcm.grw.dto.hr.CommonCodeDto" alias="CommonCodeDto"/>
       <typeAlias type="com.hcm.grw.dto.hr.EmpSignDto" alias="EmpSignDto"/>
       <typeAlias type="com.hcm.grw.dto.hr.CompanyDto" alias="CompanyDto"/>
+      <typeAlias type="com.hcm.grw.dto.hr.SignDocBoxDto" alias="SignDocBoxDto"/>
    </typeAliases>
    
 

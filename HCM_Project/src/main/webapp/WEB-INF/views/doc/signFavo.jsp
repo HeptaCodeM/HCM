@@ -4,11 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<title>DOC메인화면</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
+<title>DOC메인화면</title>
 <style type="text/css">
 th,td {
 	text-align: center;
@@ -46,9 +45,8 @@ td>img {
 			</div>
 			
 			<!-- 로그인세션영역 -->
-			<input type="hidden" value="20230108" id="empl_id"> 
-			<input type="hidden" value="대리" id="positionFlag">
-			
+			<input type="hidden" value="${loginInfo.empl_id }" id="empl_id"> 
+			<input type="hidden" value="${loginInfo.coco_name_rnm}" id="positionFlag">
 			<!-- OJS -->	
 			<div class="app-container container-fulid">
 				<div class="row gx-5 gx-xl-10">
@@ -65,8 +63,8 @@ td>img {
 										<div class="input-group">
 										<input type="text" id="schName" spellcheck="false" class="form-control" placeholder="검색할 사원을 입력하세요"> 
 										<span class="input-group-btn">
-											<button class="btn btn-default btn-sm" type="button" id="schBtn">
-												<span class="glyphicon glyphicon-search"></span>
+											<button class="btn btn-default btn-sm" type="button" id="schBtn" style="margin-left: 1px;">
+												<span class="ki-solid ki-magnifier fs-2qx"></span>
 											</button>
 										</span>
 										</div>
@@ -94,10 +92,10 @@ td>img {
 											<thead>
 												<tr>
 													<th width="5%"></th>
-													<th width="33%">결재자</th>
-													<th>직급</th>
-													<th>소속</th>
-													<th width="15%">순서</th>
+													<th width="30%">결재자</th>
+													<th width="20%">직급</th>
+													<th width="20%">소속</th>
+													<th width="20%">순서</th>
 													<th style="display: none;" id="empl_id">20230108</th>
 												</tr>
 											</thead>
@@ -105,18 +103,18 @@ td>img {
 												<tr>
 													<td></td>
 													<td>
-														<input class="form-control form-control-solid" value="전민균">
+														<input class="form-control form-control-solid" value="${loginInfo.empl_name}">
 													</td>
 													<td>
-														<input class="form-control form-control-solid" value="인턴">
+														<input class="form-control form-control-solid" value="${loginInfo.coco_name_rnm}">
 													</td>
 													<td>
-														<input class="form-control form-control-solid" value="개발팀">
+														<input class="form-control form-control-solid" value="${loginInfo.coco_name_dnm}">
 													</td>
 													<td>
-														<input class="form-control form-control-solid" value="기안자">
+														<input class="form-control form-control-solid" value="본인">
 													</td>
-													<td style="display: none;" id="empl_id"></td>
+													<td style="display: none;"></td>
 												</tr>
 												<tr>
 													<td>
@@ -183,7 +181,8 @@ td>img {
 										<br>
 										<div style="text-align: right;">
 											<input type="text" id="favoName" placeholder="별칭 입력" maxlength="20" class="col-xs-3" style="float: none;">
-											<input type="button" class="btn btn-sm btn-primary" id="addLine" value="결재선 추가" style="margin-right: 50px; width: 100px;">
+											<input type="button" class="btn btn-primary btnMd" id="addLine" value="결재선 추가" style="width: 120px;">
+											<input type="button" class="btn btnMd btn-primary" id="initial" value="초기화" style="margin-right: 40px;">
 										</div>
 								
 									</div>
@@ -255,9 +254,34 @@ td>img {
 			<!-- OJS  -->	
 			</div>
 		</div>
-				
-			
-<%@include file="/WEB-INF/views/menu/docSideMenu.jsp" %>		
+
+	<%@include file="/WEB-INF/views/menu/docSideMenu.jsp" %>
+	<div class="modal fade" tabindex="-1" id="kt_modal_3">
+		<div class="modal-dialog">
+			<div class="modal-content position-absolute">
+				<div class="modal-header">
+					<h5 class="modal-title">즐겨찾기 결재자 삭제</h5>
+
+					<!--begin::Close-->
+					<div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
+						data-bs-dismiss="modal" aria-label="Close">
+						<i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span
+							class="path2"></span></i>
+					</div>
+					<!--end::Close-->
+				</div>
+
+				<div class="modal-body">
+					<p>선택한 항목을 삭제할까요?</p>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary me-10" data-bs-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary me-10" data-bs-dismiss="modal">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>		
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 <script type="text/javascript" src="../js/signTree.js"></script>
