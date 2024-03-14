@@ -74,8 +74,7 @@
 			</div>
 		</div>
 			
-<%@include file="/WEB-INF/views/menu/smSideMenu.jsp" %>	
-<script type="text/javascript" src="/smartEditor/js/smart.js"></script>	
+<%@include file="/WEB-INF/views/menu/smSideMenu.jsp"%>	
 </body>
 
 

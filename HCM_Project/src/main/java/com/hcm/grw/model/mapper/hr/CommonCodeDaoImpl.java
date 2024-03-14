@@ -52,13 +52,13 @@ public class CommonCodeDaoImpl implements CommonCodeDao {
 	}
 
 	@Override
-	public CommonCodeDto roleCodeDuplicateChk(Map<String, Object> map) {
+	public int roleCodeDuplicateChk(Map<String, Object> map) {
 		log.info("CommonCodeImpl roleCodeDuplicateChk 진입 // {}",map);
 		return sessionTemplate.selectOne(NS+"roleCodeDuplicateChk",map);
 	}
 
 	@Override
-	public CommonCodeDto roleNameDuplicateChk(Map<String, Object> map) {
+	public int roleNameDuplicateChk(Map<String, Object> map) {
 		log.info("CommonCodeImpl roleNameDuplicateChk 진입 // {}",map);
 		return sessionTemplate.selectOne(NS+"roleNameDuplicateChk",map);
 	}	

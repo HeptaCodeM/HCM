@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -117,9 +118,49 @@ public class CommonCodeController {
 	}
 	
 	
+//	@PostMapping(value = "/hr/commonCode/roleNameDuplicateChk.do")
+//	@ResponseBody
+//	public boolean roleDuplicateChk(@RequestParam("coco_name") String coco_name ,@RequestParam("coco_cd") String coco_cd) {
+//		System.out.println(coco_name);
+//		System.out.println(coco_cd);
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("coco_cd", coco_cd);
+//		map.put("coco_name", coco_name);
+//		int cnt = 0;
+//		cnt += codeService.roleNameDuplicateChk(map);
+//		cnt += codeService.roleCodeDuplicateChk(map);
+//		
+//		
+//		return (cnt > 0)?false:true;
+//	}
+	
 	@PostMapping(value = "/hr/commonCode/roleNameDuplicateChk.do")
-	public String roleNameDuplicateChk(@RequestParam("coco_name") String coco_name) {
+	@ResponseBody
+	public Map<String, Object> roleDuplicateChk(@RequestParam("coco_name") String coco_name ,
+												@RequestParam("coco_cd") String coco_cd ,
+												@RequestParam("role") String role) {
 		System.out.println(coco_name);
-		return coco_name;
+		System.out.println(coco_cd);
+		System.out.println(role);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("role", role);
+		map.put("coco_cd", coco_cd);
+		map.put("coco_name", coco_name);
+		int nameCnt = codeService.roleNameDuplicateChk(map);
+		int codeCnt = codeService.roleCodeDuplicateChk(map);
+		
+		if(nameCnt > 0) {
+			map.put("nameFlag", "false");
+		}else {
+			map.put("nameFlag", "true");
+		}
+		
+		if(codeCnt > 0) {
+			map.put("codeFlag", "false");
+		}else {
+			map.put("codeFlag", "true");
+		}
+		
+		return map;
 	}
 }

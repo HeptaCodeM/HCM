@@ -49,13 +49,13 @@ public class CommonCodeServiceImpl implements CommonCodeService {
 	}
 
 	@Override
-	public CommonCodeDto roleCodeDuplicateChk(Map<String, Object> map) {
+	public int roleCodeDuplicateChk(Map<String, Object> map) {
 		log.info("CommonCodeServiceImpl roleCodeDuplicateChk // {}",map);
 		return dao.roleCodeDuplicateChk(map);
 	}
 
 	@Override
-	public CommonCodeDto roleNameDuplicateChk(Map<String, Object> map) {
+	public int roleNameDuplicateChk(Map<String, Object> map) {
 		log.info("CommonCodeServiceImpl roleNameDuplicateChk // {}",map);
 		return dao.roleNameDuplicateChk(map);
 	}
