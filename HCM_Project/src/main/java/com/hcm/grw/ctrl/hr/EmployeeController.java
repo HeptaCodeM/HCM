@@ -128,12 +128,24 @@ public class EmployeeController {
 		resp.getWriter().print(sb);
 	}
 
+	@GetMapping("/hr/employee/modify.do")
+	public String employeeModify(Model model, Authentication authentication) {
+		log.info("EmployeeController employeeModify 수정페이지 진입");
+		
+		String empl_id = authentication.getName();
+		EmployeeDto empInfo = employeeService.getUserInfo(empl_id);
+		
+		model.addAttribute("empInfo", empInfo);
+		
+		return "/hr/employee/modify";
+	}	
+	
 	
 	@PostMapping("/hr/employee/modify.do")
-	public @ResponseBody void employeeModifyOk(EmployeeDto emp, HttpServletResponse resp) throws IOException {
+	public @ResponseBody void employeeModifyOk(EmployeeDto emp, HttpServletResponse resp, Authentication authentication) throws IOException {
 		log.info("EmployeeController employeeModifyOk 수정처리");
 		
-		String empl_modify_id = emp.getEmpl_id();
+		String empl_modify_id = authentication.getName();
 		emp.setEmpl_modify_id(empl_modify_id);
 
 
@@ -156,6 +168,8 @@ public class EmployeeController {
 		}
 		
 		resp.getWriter().print(msg);
-	}	
+	}
 
+	
+	
 }

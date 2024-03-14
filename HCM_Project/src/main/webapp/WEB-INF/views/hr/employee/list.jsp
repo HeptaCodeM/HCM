@@ -134,7 +134,7 @@
 									</thead>
 									<tbody>
 									<c:forEach items="${lists}" var="emp">
-										<tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6" style="cursor: pointer;" onclick="location.href='/hr/employee/modify.do?empl_id=${emp.empl_id}'">
+										<tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6" style="cursor: pointer;" onclick="location.href='/hr/employee/modifyAdmin.do?empl_id=${emp.empl_id}'">
 											<td>${emp.empl_id}</td>
 											<td>${emp.empl_name}</td>
 											<td>${emp.coco_name_dnm}</td>

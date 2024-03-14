@@ -1,9 +1,5 @@
 package com.hcm.grw.comm;
 
-import com.hcm.grw.dto.hr.EmployeeDto;
-import com.hcm.grw.model.mapper.hr.EmployeeDao;
-import com.hcm.grw.model.mapper.hr.EmployeeDaoImpl;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -59,6 +55,12 @@ public class Function {
 		sb.append("}");
 		sb.append("</script>");
 		return sb.toString();
+	}
+	
+	public static String byteToString(byte[] b) {
+		 String base64ToString = new String(b);
+		 
+		 return base64ToString;
 	}
 	
 }
