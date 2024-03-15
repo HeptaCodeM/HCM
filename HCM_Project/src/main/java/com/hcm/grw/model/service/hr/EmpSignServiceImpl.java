@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hcm.grw.dto.hr.EmpSignDto;
 import com.hcm.grw.model.mapper.hr.EmpSignDao;
@@ -60,4 +62,18 @@ public class EmpSignServiceImpl implements EmpSignService {
 		return dao.setAllDefaultSign(map);
 	}
 	
+	@Override
+	public int unSetDefaultSign(Map<String, Object> map) {
+		log.info("EmpSignServiceImpl unSetDefaultSign Service 기본서명 해제");
+		return dao.unSetDefaultSign(map);
+	}
+	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED ,rollbackFor = Exception.class)
+	public int defaultSignTransaction(Map<String, Object> map) {
+		log.info("EmpSignServiceImpl defaultSignTransaction Service 트랜잭션 처리");
+		int n1 = dao.unSetDefaultSign(map);
+		int n2 = dao.setDefaultSign(map);
+		return n1 + n2 > 1 ? 0 : 2;
+	}
 }

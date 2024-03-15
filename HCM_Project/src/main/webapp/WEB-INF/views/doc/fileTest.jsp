@@ -33,30 +33,28 @@
 			
 			<!-- OJS -->	
 			<div class="app-container container-fulid">
-				<div class="row gx-5 gx-xl-10">
-					<div class="col-xxl-4 mb-5 mb-xl-10">
-						<div class="card card-flush h-md-100 mb-xl-10">
-							<div class="card-header pt-5">
-								<h3 class="card-title text-gray-800 fw-bold">파일테스트중</h3>
-							</div> 
-							<div class="separator separator-dashed my-3"></div>	
-							<div class="card-body pt-5	" style="overflow: auto;">
-								<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
-									<div class="d-flex flex-column flex-column-fluid">
-										<div id="kt_app_content" class="app-content flex-column-fluid">
+				<div class="col-xxl-12 mb-5 mb-xl-10">
+					<div class="card card-flush h-md-100 mb-xl-10">
+						<div class="card-header pt-5">
+							<h3 class="card-title text-gray-800 fw-bold">파일테스트중</h3>
+						</div> 
+						<div class="separator separator-dashed my-3"></div>	
+						<div class="card-body pt-5	" style="overflow: auto;">
+							<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+								<div class="d-flex flex-column flex-column-fluid">
+									<div id="kt_app_content" class="app-content flex-column-fluid">
 											
-											<form action="./fileUpTest.do" method="post" enctype="multipart/form-data">
-												<input name="sidb_doc_num" value="24000003" readonly="readonly">
-												<input type="file" name="file"><br>
-												<input type="submit">
-											</form>
+										<form action="./fileUpTest.do" method="post" enctype="multipart/form-data">
+											<input name="sidb_doc_num" value="24000003" readonly="readonly">
+											<input type="file" name="file"><br>
+											<input type="submit">
+										</form>
 											
-											<br><br>
-											<select id="selectFile"></select>
-											<input type="button" value="파일 미리보기" id="getFile">
-											<input type="button" value="다운로드" id="downBtn">
-											<div id="fileView" ></div>
-										</div>
+										<br><br>
+										<select id="selectFile"></select>
+										<input type="button" value="파일 미리보기" id="getFile">
+										<input type="button" value="다운로드" id="downBtn">
+										<div id="fileView" ></div>
 									</div>
 								</div>
 							</div>
