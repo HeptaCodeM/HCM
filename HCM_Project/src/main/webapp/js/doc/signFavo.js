@@ -40,7 +40,7 @@ onload = function() {
 	
 	// 참조 팝업창
 	document.getElementById('signRefer').addEventListener('click', function() {
-		open('./signRefer.do', '', 'width=640px height=960px left=300')
+		open('/doc/writeDoc/signRefer.do', '', 'width=640px height=960px left=300')
 	});
 	
 	document.getElementById('fileTest').addEventListener('click', function() {
@@ -54,7 +54,7 @@ onload = function() {
 		if(select != '결재자를 선택해주세요') {
 			sweetAlertConfirm("즐겨찾기를 삭제할까요?", delFavo, '');
 		} else {
-			swalAlert('결재자를 선택해주세요', '', '', '확인')
+			swalAlert('결재자를 선택해주세요', '', '', '확인');
 		}
 		
 	});
@@ -65,7 +65,7 @@ onload = function() {
 		if(select != '결재선을 선택해주세요') {
 			sweetAlertConfirm("즐겨찾기를 삭제할까요?", delLine, '')
 		} else {
-			swalAlert('라인을 선택해주세요', '', '', '확인')
+			swalAlert('라인을 선택해주세요', '', '', '확인');
 		}
 	});	
 		
@@ -75,7 +75,10 @@ onload = function() {
 		
 		var select = document.querySelector('select#apprList');
 		var selValue = select.options[select.selectedIndex].value;
-		
+		if(selValue == '결재자를 선택해주세요') {
+			swalAlert('결재자를 선택해주세요', '', '', '확인');
+			return;
+		}
 		fetch('./getFavo.do?siaf_favo_cd=' + selValue)
 		.then(resp => {return resp.json();})
 		.then(data => {
@@ -143,6 +146,10 @@ onload = function() {
 	document.getElementsByName('selectApprLine')[0].addEventListener('click', function() {
 		var select = document.querySelector('select#apprLineList');
 		var selList = select.options[select.selectedIndex].value;
+		if(selList == '결재선을 선택해주세요') {
+			swalAlert('라인을 선택해주세요', '', '', '확인');
+			return;
+		}
 		console.log(selList);
 		fetch('./favoInfo.do?siaf_favo_cd=' + selList)
 		.then(resp => {return resp.json()})
@@ -475,7 +482,7 @@ $().ready(function() {
 		let appr1 = document.getElementById('id1').textContent;
 		let appr2 = document.getElementById('id2').textContent;
 		let appr3 = document.getElementById('id3').textContent;
-		if(appr3.length > 0) {
+		if(appr1.length > 0 && appr2.length > 0 && appr3.length > 0) {
 			approverData = [
 								{
 									empl_id : empl_id,
@@ -511,7 +518,7 @@ $().ready(function() {
 								}
 							];
 		}
-		if(appr3.length == 0 && appr2.length == 0 && appr1.length > 0) {
+		if(appr1.length > 0 && appr2.length == 0 && appr3.length == 0) {
 			approverData = [
 								{
 									empl_id : empl_id,

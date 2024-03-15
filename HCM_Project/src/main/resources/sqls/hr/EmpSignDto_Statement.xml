@@ -56,5 +56,11 @@
 			WHERE EMPL_ID = #{empl_id}
 			AND EMSI_DELFLAG = 'N'
 	</update>
+	
+	<update id="unSetDefaultSign" parameterType="Map">
+		UPDATE EMP_SIGN SET EMSI_SETFLAG = 'N'
+			WHERE EMSI_SEQ != #{emsi_seq}
+			AND EMPL_ID = #{empl_id}
+	</update>
 		
 </mapper>

@@ -46,8 +46,8 @@ td>img {
 			</div>
 			
 			<!-- 로그인세션영역 -->
-			<input type="hidden" value="${loginInfo.empl_id}" id="empl_id"> 
-			<input type="hidden" value="${loginInfo.coco_name_rnm}" id="positionFlag">
+			<input type="hidden" value="${userInfoVo.empl_id}" id="empl_id"> 
+			<input type="hidden" value="${userInfoVo.coco_name_rnm}" id="positionFlag">
 			<!-- OJS -->	
 			<div class="app-container container-fulid">
 				<div class="row gx-5 gx-xl-10">
@@ -104,13 +104,13 @@ td>img {
 												<tr>
 													<td></td>
 													<td>
-														<input class="form-control form-control-solid" value="${loginInfo.empl_name}">
+														<input class="form-control form-control-solid" value="${userInfoVo.empl_name}">
 													</td>
 													<td>
-														<input class="form-control form-control-solid" value="${loginInfo.coco_name_rnm}">
+														<input class="form-control form-control-solid" value="${userInfoVo.empl_rank_nm}">
 													</td>
 													<td>
-														<input class="form-control form-control-solid" value="${loginInfo.coco_name_dnm}">
+														<input class="form-control form-control-solid" value="${userInfoVo.empl_dept_nm}">
 													</td>
 													<td>
 														<input class="form-control form-control-solid" value="본인">
@@ -289,7 +289,6 @@ td>img {
 	</div>		
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-<script type="text/javascript" src="../js/signTree.js"></script>
-<script type="text/javascript" src="../js/signFavo.js"></script>
+<script type="text/javascript" src="/js/doc/signFavo.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </html>

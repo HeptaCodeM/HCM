@@ -62,4 +62,10 @@ public class EmpSignDaoImpl implements EmpSignDao {
 		return sessionTemplate.update(NS+"setAllDefaultSign",map);
 	}
 	
+	@Override
+	public int unSetDefaultSign(Map<String, Object> map) {
+		log.info("EmpSignDaoImpl unSetDefaultSign DAO Access");
+		return sessionTemplate.update(NS + "unSetDefaultSign", map);
+	}
+	
 }
