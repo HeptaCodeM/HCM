@@ -33,6 +33,7 @@
       data-kt-app-sidebar-push-footer="true"
       data-kt-app-toolbar-enabled="true" class="app-default">
 
+				${sessionScope.userInfoVo}
        <div class="app-wrapper flex-column flex-row-fluid">
         <div class="app-toolbar py-3 py-lg-6">
             <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
@@ -105,16 +106,21 @@
                              <input type="hidden" name="rebo_writer" value="윤영훈">
                              <div class="comment_inbox border border-2">
                                  <em class="comment_inbox_name">${session.empl_name}</em>
-                                 <textarea placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0"></textarea>
+                                 <textarea id="commentTextArea" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" oninput="checkInput()"></textarea>
                             <div class="d-flex justify-content-end align-items-end">
                              <div class="register_box">
-                                 <button type="button" class="btn btn-primary" onclick="insertReply(${dto.gobo_no})">등록</button>
+                                 <button id="submitButton" type="button" class="btn btn-primary" onclick="insertReply(${dto.gobo_no})" disabled>등록</button>
+
                              </div>
                              </div>
                              </div>
                              </form>
                        </div>
                      </div>
+                     	<div style="display: flex; justify-content: flex-end;">
+						<button type="button" class="btn btn-primary" onclick="location.href='/sm/getAllGobo.do'" style="margin-right: 20px">목록</button>                     	
+                     	<button type="button" class="btn btn-primary" onclick="scrollToTop()" id="scrollTopButton" title="맨 위로 이동" style="margin-right: 10px">TOP</button>
+                     	</div>
                         </div>
                     </div>
                 </div>
@@ -122,28 +128,5 @@
          
 <%@include file="/WEB-INF/views/menu/smSideMenu.jsp" %>      
 </body>
-
-<script type="text/javascript">
-function showCommentForm(commentId) {
-    // commentFormContainer 요소 찾기
-    var commentFormContainer = document.getElementById("commentFormContainer" + commentId);
-    // commentFormContainer가 존재하면 보이게 함
-    if (commentFormContainer) {
-        commentFormContainer.style.display = 'block';
-    }
-}
-function cancelReply(commentId) {
-     // commentFormContainer 요소 찾기
-    var commentFormContainer = document.getElementById("commentFormContainer" + commentId);
-    // commentFormContainer가 존재하면 보이게 함
-    if (commentFormContainer) {
-        commentFormContainer.style.display = 'none';
-    }
-}
-
-
-</script>
-
-
 
 </html>

@@ -33,6 +33,10 @@
 		width: 1500px;
 		height: 1200px;
 	}
+	.fc-header-toolbar {
+    display: flex;
+    justify-content: space-between; /* 요소들을 양 옆으로 정렬합니다. */
+}
 </style>
 
 </head>
@@ -63,10 +67,8 @@
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-body pt-5 calendarwidth" >
-							
+							<input type="hidden" value="${sessionScope.userInfoVo.empl_id}" id="empl_id">
 							<div id="calendar" ></div>
-							
-							
 							</div>
 							
 							
