@@ -38,17 +38,20 @@ public class SpecialDaySchedule {
 	@Value("#{dataSpcProperties['dataspc.enckey']}")
 	private String deckey;
 	
-	//@Scheduled(cron="0/10 * * * * ?")	//매 10초 동작
+	//@Scheduled(cron="0/30 * * * * ?")	//매 30초 동작
 	@Scheduled(cron="0 0 0 1 * ?")	// 매월1일 동작
 	@Transactional
 	public void registSpecialDay() throws IOException {
-        log.info("SpecialDaySchedule registSpecialDay 특일정보 입력/수정");
+        log.info("SpecialDaySchedule registSpecialDay 특/평/휴일정보 입력/수정");
 		
 		// 현재 날짜 가져오기
         LocalDate currentDate = LocalDate.now();
         // 현재 년도 가져오기
         String currentYear = String.valueOf(currentDate.getYear());
         
+        /*
+         * 특일(공휴일)정보 가져오기
+        */
         String urlString = "";
 		urlString += endPoint;
 		urlString += "?ServiceKey=" + enckey;
@@ -93,9 +96,9 @@ public class SpecialDaySchedule {
 
         Map<String, String> specialMap;
         int n = 0;
+        int m = 0;
         if(resultCode.equals("00") && totalCount>0) {
         	for (JsonNode itemNode : itemsNode) {
-            	specialMap = new HashMap<String, String>();
                 String locdate = itemNode.path("locdate").asText();
                 String dateName = itemNode.path("dateName").asText();
                 String isHoliday = itemNode.path("isHoliday").asText();
@@ -103,14 +106,22 @@ public class SpecialDaySchedule {
                 // Do something with the values
                 log.info("locdate: {}, dateName: {}, isHoliday: {}", locdate, dateName, isHoliday);
                 
-                specialMap.put("holi_date", locdate);
-                specialMap.put("holi_name", dateName);
-                specialMap.put("holi_flag", isHoliday);
+            	specialMap = new HashMap<String, String>(){{
+                    put("holi_date", locdate);
+                    put("holi_name", dateName);
+                    put("holi_flag", isHoliday);
+            	}};
                 n += holidayService.registSpecialDay(specialMap);
             }
         }
-        
-        log.info("최종 수행건 수 : {}", n);
-        
+        log.info("특일 수행건 수 : {}", n);
+
+        /*
+         * 평/휴일정보 가져오기
+        */
+        m += holidayService.registNomalDay();
+        log.info("평/휴일 수행건 수 : {}", n);
+
+        log.info("총 수행건 수 : {}", (n+m));
 	}
 }

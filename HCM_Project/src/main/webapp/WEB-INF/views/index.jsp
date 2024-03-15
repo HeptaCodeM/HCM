@@ -25,6 +25,8 @@
 		<a href="/doc/getDetail.do">결재문서 상세페이지</a>
 		<hr>
 		<a href="/sendMailTest.do">메일발송 테스트</a>
+		<hr>
+		<a href="/holidayTest.do">휴가정보 조회 테스트</a>
 	</div>
 </body>
 </html>

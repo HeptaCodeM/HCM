@@ -30,4 +30,19 @@ public class HolidayServiceImpl implements HolidayService {
 		return dao.registSpecialDay(map);
 	}
 
+	@Override
+	public int registNomalDay() {
+		return dao.registNomalDay();
+	}
+
+	@Override
+	public int selectHoliDayInfo(Map<String, String> map) {
+		return dao.selectHoliDayInfo(map);
+	}
+
+	@Override
+	public Map<String, Object> selectEmpTotalHoliDayInfo(String empl_id) {
+		return dao.selectEmpTotalHoliDayInfo(empl_id);
+	}
+
 }

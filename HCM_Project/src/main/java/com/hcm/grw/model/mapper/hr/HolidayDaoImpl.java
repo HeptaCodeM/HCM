@@ -32,5 +32,20 @@ public class HolidayDaoImpl implements HolidayDao {
 		return sqlSessionTemplate.insert(NS+"registSpecialDay", map);
 	}
 
+	@Override
+	public int registNomalDay() {
+		return sqlSessionTemplate.insert(NS+"registNomalDay");
+	}
+
+	@Override
+	public int selectHoliDayInfo(Map<String, String> map) {
+		return sqlSessionTemplate.selectOne(NS+"selectHoliDayInfo", map);
+	}
+
+	@Override
+	public Map<String, Object> selectEmpTotalHoliDayInfo(String empl_id) {
+		return sqlSessionTemplate.selectOne(NS+"selectEmpTotalHoliDayInfo", empl_id);
+	}
+
 	
 }
