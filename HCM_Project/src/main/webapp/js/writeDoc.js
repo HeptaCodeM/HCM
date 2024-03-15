@@ -34,30 +34,35 @@ function dragElement(elmnt) {
         document.onmousemove = null;
     }
 }
-
-
+var docData;
+// Doc_jstree
 onload = function() {
-	document.getElementById('tree').addEventListener('click', getTree)
-}
-
-/*$().ready(function() {
-	$('#jstree').jstree({
-		plugins: ['search','wholrow'],
-		core : {
-			data : {
-				url: './getTempTree.do',
-				method: 'get',
-				dataType: 'json',
-				seccess: function(data){
-					console.log(data);
-				}
-			}
+	document.getElementById('getTemplate').addEventListener('click', function(e) {
+		var selNode = $('#jstree').jstree('get_selected')
+		
+		console.log(selNode)
+		if (selNode.length == 0) {
+			alert('템플릿을 선택해주세요');
+			return;
 		}
+		if (selNode[0].startsWith("CC")) {
+			alert('템플릿을 선택해주세요');
+			return;
+		}
+
+		fetch('./getTemplate.do', {
+			method: 'post'
+		}).then(resp => {
+			return resp.text();
+		}).then(data => {
+			$("#template_div").hide();
+			$("#editor_div").show();
+			document.getElementById('closeBtn').click()
+			editor.setData(docData);
+		}).catch(error => {
+			console.log(error);
+		});
 	})
-})*/
-
-
-function getTree() {
 	$('#jstree').jstree({
 		plugins: ['search', 'wholerow'],
 		core : {
@@ -74,10 +79,30 @@ function getTree() {
 			}
 		}
 	});
+	
+	$('#jstree').on('select_node.jstree', function(e, data) {
+		var id = data.node.id;
+		if(id.startsWith("CC")){
+			return;
+		}
+		fetch('./getDoc.do?sidt_temp_cd=' + id)
+		.then(resp => {return resp.text()})
+		.then(data => {
+			docData = data;
+			console.log(data);
+			var template = document.getElementById('template')
+			template.innerHTML = data;
+		})
+		.catch(err => {console.log(err)});
+		
+	})
+	
 }
 
 
-
+function templateLoad() {
+	
+}
 
 
 

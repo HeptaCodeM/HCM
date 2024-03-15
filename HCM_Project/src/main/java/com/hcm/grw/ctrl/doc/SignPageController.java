@@ -48,10 +48,12 @@ public class SignPageController {
 	
 	@GetMapping("writeDoc.do")
 	public String writeDoc(Authentication auth, Model model) {
-		String id = auth.getName();
-		List<String> list = List.of(id);
-		List<EmployeeDto> dto = service.getFav(list);
-		model.addAttribute("loginInfo", dto.get(0));
+		if(auth != null) {
+			String id = auth.getName();
+			List<String> list = List.of(id);
+			List<EmployeeDto> dto = service.getFav(list);
+			model.addAttribute("loginInfo", dto.get(0));
+		}
 		return "doc/writeDoc";
 	}
 	
