@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.mapper.hr.EmployeeDao;
 
@@ -46,6 +47,10 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		EmployeeDto employeeDto = employeeDao.getUserInfo(authentication.getName());
 		
 		HttpSession session = request.getSession();
+		//이미지 스트링 정보로 처리
+		employeeDto.setEmpl_picture_str(Function.blobImageToString(employeeDto.getEmpl_picture()));
+		//2진정보 초기화
+		employeeDto.setEmpl_picture(null);
 		session.setAttribute("userInfoVo", employeeDto);
 
 		log.info("ROLE NAME : {}", roleNames);

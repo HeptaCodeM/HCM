@@ -20,9 +20,9 @@ public class CookiesMgr extends HttpServlet {
 
 	/**
 	* 쿠키생성
-	* @param : HttpServletResponse
-	* @param : 쿠키명
-	* @param : 쿠키값
+	* @param rep : HttpServletResponse
+	* @param cName : 쿠키명(String)
+	* @param cValue : 쿠키값(String)
 	* @return : void
 	* @author : SDJ
 	* @since : 2024.03.06
@@ -54,8 +54,8 @@ public class CookiesMgr extends HttpServlet {
 
 	/**
 	* 쿠키값 출력
-	* @param : HttpServletRequest
-	* @param : 쿠키명
+	* @param req : HttpServletRequest
+	* @param cName : 쿠키명(String)
 	* @return : String
 	* @author : SDJ
 	* @since : 2024.03.06
@@ -81,8 +81,8 @@ public class CookiesMgr extends HttpServlet {
 
 	/**
 	* 쿠키값 삭제
-	* @param : HttpServletRequest
-	* @param : HttpServletResponse
+	* @param req : HttpServletRequest
+	* @param res : HttpServletResponse
 	* @return : void
 	* @author : SDJ
 	* @since : 2024.03.06

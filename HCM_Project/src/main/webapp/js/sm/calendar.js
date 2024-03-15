@@ -1,9 +1,14 @@
 document.addEventListener('DOMContentLoaded', listAjax());
 
 function listAjax() {
+	var daygridmonth = calendar.view.title;
+	var empl_id = $("#empl_id").val();
+	console.log(empl_id);
+	console.log(daygridmonth);
 	$.ajax({
 		type: "get",
 		url: "/sm/getAllCalendar.do",
+		data: {daygridmonth:daygridmonth,empl_id:empl_id},
 		dataType: "json",
 		success: function(data) {
 			var calendarEl = document.getElementById('calendar');
@@ -15,7 +20,8 @@ function listAjax() {
 
 				headerToolbar: {
 					left: 'addEventButton',  // 왼쪽에 이벤트 버튼 추가
-					center: 'title',		//center 버튼 추가 dayGridMonth(월간),timeGridWeek(주간),timeGridDay(시간대),listWeek(리스트형태)
+					center: 'prev,title,next',	//center 버튼 추가 dayGridMonth(월간),timeGridWeek(주간),timeGridDay(시간대),listWeek(리스트형태)
+					right:'',
 				},
 				titleFormat: function(date) {
 					return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';   //달력표시 한글로 변경
@@ -176,22 +182,6 @@ $("#imagebutton2").click(function(){
 })
 
 
-$("button.fc-prev-button").click(function() {            
-var date = jQuery("#calendar").fullCalendar("getDate");            
-convertDate(date);        
-});        // 오른쪽 버튼을 클릭하였을 경우        
-$("button.fc-next-button").click(function() {            
-var date = jQuery("#calendar").fullCalendar("getDate");            
-convertDate(date);        
-});
 
-function convertDate(date) {        
-var date = new Date(date);        
-alert(date.yyyymm());    }
 
- Date.prototype.yyyymm = function() {        
- var yyyy = this.getFullYear().toString();        
- var mm = (this.getMonth() + 1).toString();        
- var dd = this.getDate().toString();        
- return yyyy + "-" + mm[1] ? mm : "0" + mm[0];    
- }
+var daygreedmonth = $(".fc-toolbar-title").val();

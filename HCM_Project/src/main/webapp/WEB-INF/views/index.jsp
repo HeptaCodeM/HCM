@@ -8,9 +8,9 @@
 <body>
 	<div>
 		Hello World!!!<br>
-		로그인 아이디 : ${getId} (/index.do로 접근)<br>
-		Session : ${sessionScope.userInfoVo}<br>
-		getUserInfo : ${empl_info}
+		로그인 아이디(security Id) : ${getId} (/index.do로 접근)<br><br>
+		Session : ${sessionScope.userInfoVo}<br><hr><br>
+		getUserInfo(model session) : ${empl_info}<hr><br>
 	</div>
 	<div>
 
@@ -25,6 +25,8 @@
 		<a href="/doc/getDetail.do">결재문서 상세페이지</a>
 		<hr>
 		<a href="/sendMailTest.do">메일발송 테스트</a>
+		<hr>
+		<a href="/holidayTest.do">휴가정보 조회 테스트</a>
 	</div>
 </body>
 </html>

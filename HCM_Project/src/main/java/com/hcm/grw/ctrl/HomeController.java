@@ -1,6 +1,8 @@
 package com.hcm.grw.ctrl;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.EmailService;
-import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.EmployeeDto;
-import com.hcm.grw.model.mapper.hr.EmployeeDao;
+import com.hcm.grw.model.service.hr.HolidayService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,14 +28,11 @@ import lombok.extern.slf4j.Slf4j;
 public class HomeController {
 
 	@Autowired
-	private PasswordEncoder passwordEncoder;
-
-	@Autowired
 	private EmailService emailService;
 	
 	@Autowired
-	private EmployeeDao employeeDao;
-
+	private HolidayService holidayService;
+	
 	
 	@GetMapping({"/index.do", "/"})
 	public String index(HttpServletRequest request, Model model, Authentication authentication, HttpSession session) {
@@ -54,10 +51,8 @@ public class HomeController {
 		if(employeeDto != null) {
 			empl_id = employeeDto.getEmpl_id();
 		}
-		log.info("empl_id : {}", empl_id);
-		EmployeeDto fnEmployeeDto = employeeDao.getUserInfo(empl_id);
-		log.info("Function Info : {}", fnEmployeeDto);
-		model.addAttribute("empl_info", fnEmployeeDto);
+		log.info("session empl_id : {}", empl_id);
+		model.addAttribute("empl_info", employeeDto);
 		
 		return "index";
 	}
@@ -153,17 +148,42 @@ public class HomeController {
 		log.info("메일발송");
 		
 		String subject = "테스트 메일 입니다.";
-		String content = "테스트 입니다.";
+		String content = "테스트 입니다.<br/>테스트 입니다.";
 		String toEmail = "hcm_0415@naver.com";
 		String fromEmail = null;
 
-		//boolean sendFlag = fn.sendMail(subject, content, toEmail, fromEmail);
-		boolean sendFlag = emailService.sendMail(subject, content, toEmail, fromEmail);
+		//boolean sendFlag = fn.sendMail(subject, content, toEmail, fromEmail, htmlFlag);
+		boolean sendFlag = emailService.sendMail(subject, content, toEmail, fromEmail, true);
 		log.info("메일발송 : {}", sendFlag);
 		
 		return "redirect:/";
 	}
 
 
+	//휴가관련 조회
+	@GetMapping("/holidayTest.do")
+	public String holidayInfo() {
+		/*
+		* 사원별 휴가정보 조회
+		*/
+		Map<String, Object> holidayTotalMap = holidayService.selectEmpTotalHoliDayInfo("20220101");
+		for(String s : holidayTotalMap.keySet()) {
+			log.info("holidayTotalMap key: {}, value : {}", s, holidayTotalMap.get(s));
+		}
+		log.info("소문자 테스트 : {}",holidayTotalMap.get("TOTAL_HOLIDAY"));
+		
+		/* 
+		* 휴가일자 조회 
+		*/
+		Map<String, String> holidayMap = new HashMap<String, String>(){{
+			put("sidb_doc_be","2024-02-29");
+			put("sidb_doc_end","2024-03-04");
+		}};
+		
+		int holiCnt = holidayService.selectHoliDayInfo(holidayMap);
+		log.info("전자결재에서 선택한 일자로 휴가일 검색 : {}", holiCnt);
+		
+		return "redirect:/";
+	}
 	
 }

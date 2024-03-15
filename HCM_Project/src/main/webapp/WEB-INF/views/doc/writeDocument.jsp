@@ -80,7 +80,7 @@
 				    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
 				</div>
 				<div class="input-group input-group-sm mb-5">
-				    <span class="input-group-text" id="inputGroup-sizing-sm">일자선택</span>
+				    <span class="input-group-text" id="inputGroup-sizing-sm">일자선택</span> 마감일
 				    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
 				</div>
 				<div class="input-group input-group-sm mb-5">
@@ -95,7 +95,7 @@
 				    <span class="input-group-text" id="inputGroup-sizing-sm">결재라인</span>
 				    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
 				</div>
-				
+				참조자, 휴가 시작일/종료일..
 			<textarea id="editor" name="sidb_doc_content"></textarea>
 			
 			<div>

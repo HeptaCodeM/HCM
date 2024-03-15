@@ -42,13 +42,23 @@
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
 
-								<form name="form1" method="post" action="/hr/employee/modify.do">
-									<table class="table table-hover">
-										<tr>
+								<form name="form1" method="post" action="/hr/employee/modifyAdmin.do">
+									<table class="table table-bordered">
+										<tr class="success">
 											<th>사번</th>
 											<td>
 												${empInfo.empl_id}
 												<input type="hidden" name="empl_id" maxlength="20" value="${empInfo.empl_id}">
+											</td>
+											<td style="width:150px;" rowspan="4">
+												<c:choose>
+													<c:when test="">
+														<img src="${empInfo.empl_picture_str}" style="width:100%;height:100%;" >
+													</c:when>
+													<c:otherwise>
+														<img src="/image/blank.png" style="width:100%;height:100%;" >
+													</c:otherwise>
+												</c:choose>
 											</td>
 										</tr>
 										<tr>
@@ -68,52 +78,56 @@
 												<c:if test="${empInfo.empl_gender eq 'M'}">
 												남성
 												</c:if>
-												<c:if test="${empInfo.empl_gender ne 'M'}">
+												<c:if test="${empInfo.empl_gender eq 'F'}">
 												여성
 												</c:if>
 											</td>
 										</tr>
 										<tr>
 											<th>이메일</th>
-											<td>${empInfo.empl_email}</td>
+											<td colspan="2">${empInfo.empl_email}</td>
 										</tr>
 
 										<tr>
-											<th>전화번호</th>
-											<td><input type="text" name="empl_phone" maxlength="15" value="${empInfo.empl_phone}" required="required"></td>
+											<th class="required">전화번호</th>
+											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_phone" maxlength="15" value="${empInfo.empl_phone}" required="required"></td>
 										</tr>
 										<tr>
 											<th>내선번호</th>
-											<td><input type="text" name="empl_tel" maxlength="3" value="${empInfo.empl_tel}"></td>
+											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_tel" maxlength="3" value="${empInfo.empl_tel}"></td>
 										</tr>
 										<tr>
 											<th>팩스번호</th>
-											<td><input type="text" name="empl_fax" maxlength="15" value="${empInfo.empl_fax}"></td>
+											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_fax" maxlength="15" value="${empInfo.empl_fax}"></td>
 										</tr>
 										<tr>
 											<th>입사년도</th>
-											<td>${empInfo.empl_joindate}</td>
+											<td colspan="2">${empInfo.empl_joindate}</td>
 										</tr>
 										<tr>
 											<th>부서</th>
-											<td>
+											<td colspan="2">
 												${empInfo.coco_name_dnm}
 											</td>
 										</tr>
 										<tr>
 											<th>직위</th>
-											<td>
+											<td colspan="2">
 												${empInfo.coco_name_rnm}
 											</td>
 										</tr>
 										<tr>
 											<th>직책</th>
-											<td>
+											<td colspan="2">
 												${empInfo.coco_name_pnm}
 											</td>
 										</tr>
 										<tr>
-											<td colspan="2" style="text-align:center;">
+											<th>증명사진</th>
+											<td colspan="2"><input type="file" class="form-control form-control-solid" name="empl_picture"></td>
+										</tr>
+										<tr>
+											<td colspan="3" style="text-align:center;">
 												<button class="btn btn-primary me-10" id="kt_button_1">
 												    <span class="indicator-label">
 												        수정
@@ -122,7 +136,7 @@
 												        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 												    </span>
 												</button>
-												<button type="button" class="btn btn-danger me-10" id="kt_button_1" onclick="location.href='/hr/employee/list.do';">
+												<button type="button" class="btn btn-success me-10" id="kt_button_1" onclick="location.href='/hr/employee/list.do';">
 												    <span class="indicator-label">
 												        리스트
 												    </span>

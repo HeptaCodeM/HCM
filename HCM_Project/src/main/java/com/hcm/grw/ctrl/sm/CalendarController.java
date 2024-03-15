@@ -45,8 +45,6 @@ public class CalendarController {
 		list.add("3");
 		list.add("4");
 		dto.setType(list);
-		dto.setScbo_empno("20220101");
-		dto.setDaygridmonth("2024-03");
 		List<ScbDto> lists = service.getAllCalendar(dto);
 		
 		JSONArray arr = new JSONArray();

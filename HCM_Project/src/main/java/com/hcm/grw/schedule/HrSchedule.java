@@ -15,12 +15,10 @@ public class HrSchedule {
 	@Autowired
 	private HolidayService holidayService;
 	
-	@Scheduled(cron="0 0 0 * * *")
+	@Scheduled(cron="0 0 0/1 * * *")
 	public void registEmployeeHoliday() {
 		log.info("HrSchedule registEmployeeHoliday 매년 휴가정보 입력처리");
-		int n = 0;
-		n += 1;
-		//int n = holidayService.registEmployeeHoliday();
+		int n = holidayService.registEmployeeHoliday();
 		log.info("처리 수 : {}", n);
 		
 		
