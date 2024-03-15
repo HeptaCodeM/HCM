@@ -20,7 +20,6 @@
 		data-kt-app-sidebar-push-toolbar="true"
 		data-kt-app-sidebar-push-footer="true"
 		data-kt-app-toolbar-enabled="true" class="app-default">
-
 		<div class="app-wrapper flex-column flex-row-fluid">
     <div class="app-toolbar py-3 py-lg-6">
         <div class="container-fluid">
@@ -57,7 +56,9 @@
                             <c:forEach var="vo" items="${lists}" varStatus="vs">
                                 <c:if test="${vo.gobo_delflag == 'N'}">
                                     <tr>
-                                        <td><a href="/sm/getDetailGobo.do?gobo_no=${vo.gobo_no}"><div>${vs.count}</div></a></td>
+                                        <td><strong class="board-tag-txt">
+											<span class="inner">공지</span>
+											</strong></td>
                                         <td><a href="/sm/getDetailGobo.do?gobo_no=${vo.gobo_no}"><div>${vo.gobo_title}</div></a></td>
                                         <td><fmt:formatDate value="${vo.gobo_regdate}" pattern="yyyy-MM-dd"/></td>
                                         <td>${vo.gobo_view}</td>
