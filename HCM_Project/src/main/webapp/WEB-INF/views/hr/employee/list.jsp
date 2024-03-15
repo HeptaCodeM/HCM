@@ -264,8 +264,8 @@ var endDate = "";
 		valueChk.append('empSearchValue', empSearchValue);
 		valueChk.append('dtArr', dtArr);
 		valueChk.append('rkArr', rkArr);
-		valueChk.append('pnArr', pnArr);
-		fetch('/hr/employee/empSearching.do',{
+ 		valueChk.append('pnArr', pnArr);
+/*		fetch('/hr/employee/empSearching.do',{
 			method: "POST",
 			headers: {
 			    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -278,20 +278,45 @@ var endDate = "";
 			startDate = "";
 			endDate = "";
 		})
-		.then(data => {
-			console.log(data);
-			/* alert(""); */
+		.then(returnData => {
+			console.log(returnData);
+			returnList(returnData);
+			
 		})
 	    .catch(err => { 
 	        console.log('에러발생', err);
 	        startDate = "";
 			endDate = "";
-	    });
+	    }); */ 
+	    var innerFr = document.getElementById("emplListTable");
+	    var frstyle = document.defaultView.getComputedStyle(innerFr);
+		$("#emplListTable").DataTable().destroy(); 
+		$.ajax({
+		    type: "POST",
+		    url: "/hr/employee/empSearching.do?"+valueChk,	
+		    success: function (searchlists) {
+		        console.log(searchlists);
+		        $('#emplListTable').DataTable({
+		        	data:searchlists,
+		        	lengthChange: false,
+			        info: false,
+		        	columns: [ { data: "empl_id" }, 
+					       { data: "empl_name" }, 
+					       { data: "coco_name_dnm" }, 
+					       { data: "coco_name_rnm" }, 
+					       { data: "coco_name_pnm" }, 
+					       { data: "empl_delflag" }]
+					       
+		        });
+		        document.getElementById("emplListTable");
+		    },
+		    error:function(err){
+				console.log(err);
+			}
+		});
 		
-		
-		
-			
 	});
+
 	
 </script>
 </html>

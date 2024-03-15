@@ -77,7 +77,7 @@
 												<c:if test="${empInfo.empl_gender eq 'M'}">
 												남성
 												</c:if>
-												<c:if test="${empInfo.empl_gender ne 'M'}">
+												<c:if test="${empInfo.empl_gender eq 'F'}">
 												여성
 												</c:if>
 											</td>

@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 // 중분류 순서
-String hrLeftMenu [] = {"조직관리", "증명서관리", "인사발령관리", "근태관리" , "메뉴이름미정","서명관리"};
+String hrLeftMenu [] = {"조직관리", "증명서관리", "인사발령관리", "근태관리" , "메뉴이름미정"};
 // 소분류 메뉴명
 String hrSubLeftMenu [][] = {
 		{"부서관리","직위관리","직책관리", "정보수정", "사원등록", "사원조회"},		//hrLeftMenu[0]
 		{"증명서리스트"},					//hrLeftMenu[1]
 		{"인사발령조회", "인사발령관리(관리자)"},	//hrLeftMenu[2]
 		{"출퇴근등록", "출퇴근현황"},			//hrLeftMenu[3]
-		{"HCMINFO"},		//hrLeftMenu[4]
-		{"서명관리"}			//hrLeftMenu[5]
+		{"HCMINFO"}		//hrLeftMenu[4]
 };
 //소분류 링크
 String hrSubLinkLeftMenu [][] = {
@@ -17,8 +16,7 @@ String hrSubLinkLeftMenu [][] = {
 		{"/hr/certificate/certificate.do"},							//hrLeftMenu[1]
 		{"#", "#"},						//hrLeftMenu[2]
 		{"#", "#"},					//hrLeftMenu[3]
-		{"/hr/company/companyInfo.do"},						//hrLeftMenu[4]
-		{"/hr/sign/signListForm.do"}						//hrLeftMenu[5]
+		{"/hr/company/companyInfo.do"}					//hrLeftMenu[4]
 };
 
 String uri = request.getRequestURI();
