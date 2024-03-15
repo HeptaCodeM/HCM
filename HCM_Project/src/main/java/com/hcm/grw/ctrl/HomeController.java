@@ -36,13 +36,14 @@ public class HomeController {
 	@Autowired
 	private EmployeeDao employeeDao;
 
-	@Value("${dataspc.endpoint}")
+	@Value("#{dataSpcProperties['dataspc.endpoint']}")
 	private String endPoint;
 
-	@Value("${dataspc.enckey}")
+	@Value("#{dataSpcProperties['dataspc.enckey']}")
 	private String encKey;
 
-	@Value("${dataspc.deckey}")
+	@Value("#{dataSpcProperties['dataspc.enckey']}")
+	//@Value("${dataspc.deckey}")
 	private String decKey;
 
 	
@@ -65,10 +66,8 @@ public class HomeController {
 		if(employeeDto != null) {
 			empl_id = employeeDto.getEmpl_id();
 		}
-		log.info("empl_id : {}", empl_id);
-		EmployeeDto fnEmployeeDto = employeeDao.getUserInfo(empl_id);
-		log.info("Function Info : {}", fnEmployeeDto);
-		model.addAttribute("empl_info", fnEmployeeDto);
+		log.info("session empl_id : {}", empl_id);
+		model.addAttribute("empl_info", employeeDto);
 
 		return "index";
 	}

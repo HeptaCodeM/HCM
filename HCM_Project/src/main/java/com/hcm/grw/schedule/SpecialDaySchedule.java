@@ -29,16 +29,17 @@ public class SpecialDaySchedule {
 	@Autowired
 	private HolidayService holidayService;
 	
-	@Value("${dataspc.endpoint}")
+	@Value("#{dataSpcProperties['dataspc.endpoint']}")
 	private String endPoint;
 	
-	@Value("${dataspc.enckey}")
+	@Value("#{dataSpcProperties['dataspc.enckey']}")
 	private String enckey;
 
-	@Value("${dataspc.deckey}")
+	@Value("#{dataSpcProperties['dataspc.enckey']}")
 	private String deckey;
 	
-	@Scheduled(cron="0 0 0 1 1/1 ?")
+	//@Scheduled(cron="0/10 * * * * ?")	//매 10초 동작
+	@Scheduled(cron="0 0 0 1 * ?")	// 매월1일 동작
 	@Transactional
 	public void registSpecialDay() throws IOException {
         log.info("SpecialDaySchedule registSpecialDay 특일정보 입력/수정");
@@ -48,13 +49,15 @@ public class SpecialDaySchedule {
         // 현재 년도 가져오기
         String currentYear = String.valueOf(currentDate.getYear());
         
-		enckey = "OlJwJ0%2BOpRU5Ypr7djRvzpeqfrFHathK%2FslkQQOuWV7iyv9GLBfraQXIMSsGc9nXfrjj1Jbp9SvO3Xbj2GJK6g%3D%3D";
-		endPoint = "http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo?solYear="+currentYear;
-		endPoint += "&numOfRows=30&_type=json&ServiceKey=";
-		endPoint += enckey;
+        String urlString = "";
+		urlString += endPoint;
+		urlString += "?ServiceKey=" + enckey;
+		urlString += "&solYear="+currentYear;
+		urlString += "&numOfRows=30&_type=json";
+		
 		//log.info("endPoint : {}", endPoint);
 
-        URL url = new URL(endPoint);
+        URL url = new URL(urlString);
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
