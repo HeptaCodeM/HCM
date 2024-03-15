@@ -27,15 +27,16 @@ public class EmailService {
 
 	/**
 	* 메일발송 Method
-	* @param : 제목
-	* @param : 내용
-	* @param : 수신자 메일주소
-	* @param : 발신자 메일주소
-	* @return : Boolean(메일발송 Flag값)
-	* @author : SDJ
-	* @since : 2024.03.12
+	* @param subject : 제목(String)
+	* @param content : 내용(String)
+	* @param toEmail : 수신자 메일주소(String)
+	* @param fromEmail : 발신자 메일주소(String)
+	* @param htmlFlag : 본문 HTML 발송여부(boolean)
+	* @return Boolean(메일발송 Flag값)
+	* @author SDJ
+	* @since 2024.03.12
 	*/
-	public Boolean sendMail(String subject, String content, String toEmail, String fromEmail) {
+	public Boolean sendMail(String subject, String content, String toEmail, String fromEmail, boolean htmlFlag) {
 		try {
 			if(fromEmail == "" || fromEmail == null) {
 				Map<String, Object> companyMap = new HashMap<String, Object>();
@@ -52,7 +53,7 @@ public class EmailService {
 			MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
             messageHelper.setSubject(subject);	// 메일제목은 생략이 가능하다			
-            messageHelper.setText(content, false);
+            messageHelper.setText(content, htmlFlag);
             messageHelper.setTo(toEmail);
             messageHelper.setFrom(fromEmail);
 			

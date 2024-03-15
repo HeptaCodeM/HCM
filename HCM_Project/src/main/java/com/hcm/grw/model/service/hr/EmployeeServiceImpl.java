@@ -70,7 +70,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		String toEmail = dto.getEmpl_email();
 		String fromEmail = "";
 		
-		boolean sendFlag = emailService.sendMail(subject, content, toEmail, fromEmail);
+		boolean sendFlag = emailService.sendMail(subject, content, toEmail, fromEmail, true);
 		log.info("메일발송 여부 : {}", sendFlag);
 		
 		return dao.registEmployee(dto);

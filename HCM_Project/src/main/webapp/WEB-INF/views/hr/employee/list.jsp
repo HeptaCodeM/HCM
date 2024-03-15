@@ -133,16 +133,34 @@
 											<th>부서명</th>
 											<th>직위</th>
 											<th>직책</th>
+											<th>재직여부</th>
 										</tr>
 									</thead>
 									<tbody>
 									<c:forEach items="${lists}" var="emp">
+									<c:choose>
+										<c:when test="${emp.empl_delflag eq 'Y'}">
+										<tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
+										</c:when>
+										<c:otherwise>
 										<tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6" style="cursor: pointer;" onclick="location.href='/hr/employee/modifyAdmin.do?empl_id=${emp.empl_id}'">
+										</c:otherwise>
+									</c:choose>										
 											<td>${emp.empl_id}</td>
 											<td>${emp.empl_name}</td>
 											<td>${emp.coco_name_dnm}</td>
 											<td>${emp.coco_name_rnm}</td>
 											<td>${emp.coco_name_pnm}</td>
+											<td>
+												<c:choose>
+													<c:when test="${emp.empl_delflag eq 'Y'}">
+														퇴사자
+													</c:when>
+													<c:otherwise>
+														재직자
+													</c:otherwise>
+												</c:choose>
+											</td>
 										</tr>
 									</c:forEach>
 									</tbody>
@@ -185,8 +203,8 @@ var endDate = "";
 	
 	  $('#empDatepicker').on('apply.daterangepicker', function(ev, picker) {
 	     	$(this).val(picker.startDate.format('YYYY년MM월DD일') + ' ~ ' + picker.endDate.format('YYYY년MM월DD일'));
-	 		startDate = picker.startDate.format('YYYY-MM-DD');
-	 		endDate = picker.endDate.format('YYYY-MM-DD');
+	     	startDate = picker.startDate.format('YYYY-MM-DD');
+	     	endDate = picker.endDate.format('YYYY-MM-DD');
 	  });
 	
 	  $('#empDatepicker').on('cancel.daterangepicker', function(ev, picker) {
@@ -246,8 +264,8 @@ var endDate = "";
 		valueChk.append('empSearchValue', empSearchValue);
 		valueChk.append('dtArr', dtArr);
 		valueChk.append('rkArr', rkArr);
-		valueChk.append('pnArr', pnArr);
-		fetch('/hr/employee/empSearching.do',{
+ 		valueChk.append('pnArr', pnArr);
+/*		fetch('/hr/employee/empSearching.do',{
 			method: "POST",
 			headers: {
 			    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -256,20 +274,49 @@ var endDate = "";
 		})
 		.then(response =>{
 			return response.json();
-			console.log(response);
+			console.log(response.json());
+			startDate = "";
+			endDate = "";
 		})
-		.then(data => {
-			console.log("");
-			/* alert(""); */
+		.then(returnData => {
+			console.log(returnData);
+			returnList(returnData);
+			
 		})
 	    .catch(err => { 
 	        console.log('에러발생', err);
-	    });
+	        startDate = "";
+			endDate = "";
+	    }); */ 
+	    var innerFr = document.getElementById("emplListTable");
+	    var frstyle = document.defaultView.getComputedStyle(innerFr);
+		$("#emplListTable").DataTable().destroy(); 
+		$.ajax({
+		    type: "POST",
+		    url: "/hr/employee/empSearching.do?"+valueChk,	
+		    success: function (searchlists) {
+		        console.log(searchlists);
+		        $('#emplListTable').DataTable({
+		        	data:searchlists,
+		        	lengthChange: false,
+			        info: false,
+		        	columns: [ { data: "empl_id" }, 
+					       { data: "empl_name" }, 
+					       { data: "coco_name_dnm" }, 
+					       { data: "coco_name_rnm" }, 
+					       { data: "coco_name_pnm" }, 
+					       { data: "empl_delflag" }]
+					       
+		        });
+		        document.getElementById("emplListTable");
+		    },
+		    error:function(err){
+				console.log(err);
+			}
+		});
 		
-		
-		
-			
 	});
+
 	
 </script>
 </html>
