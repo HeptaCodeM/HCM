@@ -38,7 +38,7 @@ public class SpecialDaySchedule {
 	@Value("${dataspc.deckey}")
 	private String deckey;
 	
-	@Scheduled(cron="0 0 0 1 1/1 ? *")
+	@Scheduled(cron="0 0 0 1 1/1 ?")
 	@Transactional
 	public void registSpecialDay() throws IOException {
         log.info("SpecialDaySchedule registSpecialDay 특일정보 입력/수정");
