@@ -8,9 +8,9 @@
 <body>
 	<div>
 		Hello World!!!<br>
-		로그인 아이디 : ${getId} (/index.do로 접근)<br><br>
+		로그인 아이디(security Id) : ${getId} (/index.do로 접근)<br><br>
 		Session : ${sessionScope.userInfoVo}<br><hr><br>
-		getUserInfo : ${empl_info}<hr><br>
+		getUserInfo(model session) : ${empl_info}<hr><br>
 	</div>
 	<div>
 

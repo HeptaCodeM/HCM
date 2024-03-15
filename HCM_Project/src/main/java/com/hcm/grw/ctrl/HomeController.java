@@ -28,29 +28,11 @@ import lombok.extern.slf4j.Slf4j;
 public class HomeController {
 
 	@Autowired
-	private PasswordEncoder passwordEncoder;
-
-	@Autowired
 	private EmailService emailService;
 	
-	@Autowired
-	private EmployeeDao employeeDao;
-
-	@Value("#{dataSpcProperties['dataspc.endpoint']}")
-	private String endPoint;
-
-	@Value("#{dataSpcProperties['dataspc.enckey']}")
-	private String encKey;
-
-	@Value("#{dataSpcProperties['dataspc.enckey']}")
-	//@Value("${dataspc.deckey}")
-	private String decKey;
-
 	
 	@GetMapping({"/index.do", "/"})
 	public String index(HttpServletRequest request, Model model, Authentication authentication, HttpSession session) {
-		
-		log.info("endPoint : {}, encKey : {}, deckey : {}", endPoint, encKey, decKey);
 		
 		String getId = "";
 		if(authentication != null) {
@@ -163,12 +145,12 @@ public class HomeController {
 		log.info("메일발송");
 		
 		String subject = "테스트 메일 입니다.";
-		String content = "테스트 입니다.";
+		String content = "테스트 입니다.<br/>테스트 입니다.";
 		String toEmail = "hcm_0415@naver.com";
 		String fromEmail = null;
 
-		//boolean sendFlag = fn.sendMail(subject, content, toEmail, fromEmail);
-		boolean sendFlag = emailService.sendMail(subject, content, toEmail, fromEmail);
+		//boolean sendFlag = fn.sendMail(subject, content, toEmail, fromEmail, htmlFlag);
+		boolean sendFlag = emailService.sendMail(subject, content, toEmail, fromEmail, true);
 		log.info("메일발송 : {}", sendFlag);
 		
 		return "redirect:/";

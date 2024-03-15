@@ -21,7 +21,7 @@ public class Cryption {
 	 * @author DJ
 	 * @version 1.0.0
 	 * @since 2024.01.13
-	 * @param String 비밀번호 일반 Text
+	 * @param encTxt : 비밀번호 일반 Text(String)
 	 * @return String  암호화된 텍스트(char 64자)
 	 * @throws Exception
 	 * @description SHA256 암호화(단방향)
@@ -61,7 +61,7 @@ public class Cryption {
 	 * @author DJ
 	 * @version 1.0.0
 	 * @since 2024.01.13
-	 * @param String 암호화할 일반 텍스트
+	 * @param encTxt : 암호화할 일반 텍스트(String)
 	 * @return String 암호화된 텍스트
 	 * @throws Exception 
 	 * @description AES256 암호화(양방향)
@@ -97,7 +97,7 @@ public class Cryption {
 	 * @author DJ
 	 * @version 1.0.0
 	 * @since 2024.01.13
-	 * @param String 암호화된 텍스트
+	 * @param decTxt : 암호화된 텍스트(String)
 	 * @return String 복호화된 텍스트
 	 * @throws Exception
 	 * @description AES256 복호화(양방향)

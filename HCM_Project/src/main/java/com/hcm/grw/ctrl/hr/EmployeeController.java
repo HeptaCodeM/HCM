@@ -1,8 +1,5 @@
 package com.hcm.grw.ctrl.hr;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -11,25 +8,19 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.CommonCodeDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
-import com.hcm.grw.model.mapper.hr.EmployeeListDao;
 import com.hcm.grw.model.service.hr.CommonCodeService;
 import com.hcm.grw.model.service.hr.EmployeeListService;
 import com.hcm.grw.model.service.hr.EmployeeService;
@@ -47,15 +38,7 @@ public class EmployeeController {
 	private EmployeeService employeeService;
 	
 	@Autowired
-	private EmployeeListDao employeeListDao;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
-	@Autowired
 	private EmployeeListService employeeListService;
-	
-	private String authRole = "HR_ADMIN";
 	
 
 	@GetMapping("/hr/employee/registAdmin.do")
@@ -97,8 +80,7 @@ public class EmployeeController {
 
         EmployeeDto emp = new EmployeeDto();
 
-		emp.setEmpl_pwd(passwordEncoder.encode(String.valueOf(randomNumber)));
-		
+		emp.setEmpl_pwd(String.valueOf(randomNumber));
         emp.setEmpl_birth(map.get("empl_birth").replace("-",""));
         emp.setEmpl_email(map.get("empl_email"));
         emp.setEmpl_name(map.get("empl_name"));
