@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,6 +80,12 @@ public class TestController {
 		SignFileDto dto = service.getDetailFile(sidf_file_num);
 		
 		FileCommonService.fileDownload(response, dto.getSidf_file_origin(), dto.getSidf_file_content());	
+	}
+	
+	@GetMapping("getFileView.do")
+	public ResponseEntity<?> getFileView(@RequestParam String sidf_file_num) {
+		SignFileDto dto = service.getDetailFile(sidf_file_num);
+		return ResponseEntity.ok(Base64Utils.encodeToString(dto.getSidf_file_content()));
 	}
 	
 }

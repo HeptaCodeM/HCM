@@ -23,7 +23,7 @@ $().ready(function() {
 		// 우클릭메뉴 정의
 		core: {
 			data : {
-				url : './signTree.do',
+				url : '/doc/signTree.do',
 				method : 'get',
 				dataType : 'json',
 				success : function(data) {
@@ -77,13 +77,8 @@ $().ready(function() {
 
 	});
 	
-	// 결재자 리스트를 json형태로 저장
-	
 	
 });
-function signFavo() {
-	location.href='./signFavo.do';
-}
 
 
 // + 버튼
@@ -95,6 +90,7 @@ function pick() {
 			var dname = $('#jstree').jstree('get_text', id);
 			dname = dname.substring(0, dname.indexOf('&'));
 			var dept = document.getElementById('ref-dept');
+			
 			var input = document.createElement('input');
 			var hiddenInput = document.createElement('input');
 			var span = document.createElement('span');
@@ -115,10 +111,13 @@ function pick() {
 			dept.append(input);
 			dept.append(hiddenInput);
 			dept.append(span);
+			
+			
+			console.log(deptNum.length)
 		} else {
 			// 참조자 추가
 			var emp = document.getElementById('ref-emp');
-			fetch('./userInfo.do?empl_id=' + id)
+			fetch('/doc/userInfo.do?empl_id=' + id)
 				.then(resp => { return resp.json(); })
 				.then(data => {
 					console.log(data);
@@ -140,8 +139,8 @@ function pick() {
 					hiddenInput.setAttribute('value', d.empl_id);
 					btn.append(inSpan);
 					span.append(btn);
-					emp.append(input);
 					emp.append(hiddenInput);
+					emp.append(input);
 					emp.append(span);
 					
 					var selNode = $('#jstree').jstree('get_selected');
@@ -162,9 +161,23 @@ function saveRefer() {
 
 function removeRefer(btn) {
 	var pa = btn.parentNode;
-	
-	console.log(pa)
-
+	console.log(pa);
+	var siblings = pa.parentNode.children;
+    
+    // pa 이전의 두 개의 input 요소를 찾아서 삭제합니다.
+    var inputsToRemove = 0;
+    for (var i = 0; i < siblings.length; i++) {
+        var sibling = siblings[i];
+        // 현재 노드가 pa인 경우 반복문을 종료합니다.
+        if (sibling === pa) break;
+        // 현재 노드가 input 요소인 경우 삭제합니다.
+        if (sibling.tagName === 'INPUT' || sibling.tagNae === 'SPAN') {
+            sibling.remove();
+            inputsToRemove++;
+            // 삭제할 input 요소가 2개 이상인 경우 반복문을 종료합니다.
+            if (inputsToRemove >= 2) break;
+        }
+    }
 }
 
 
