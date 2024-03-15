@@ -81,7 +81,7 @@
 		EMPL_PHONE = #{empl_phone},
 		EMPL_TEL = #{empl_tel},
 		EMPL_FAX = #{empl_fax},
-		<if test="!empl_picture.equals('') and empl_picture!=null">
+		<if test="empl_picture.equals('') OR empl_picture == null">
 		EMPL_PICTURE = #{empl_picture},
 		</if>
 		EMPL_MODIFY_ID = #{empl_modify_id},
