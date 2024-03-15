@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hcm.grw.model.mapper.hr.EmployeeListDaoImpl">
-	
-	
+
 	<select id="selectAllEmployee" resultType="EmployeeDto">
 	SELECT 		
 				A.EMPL_ID,
@@ -106,6 +105,7 @@
 		            C3.COCO_NAME AS COCO_NAME_PNM,
 		            A.EMPL_JOINDATE,
 		            A.EMPL_LEAVEDATE,
+		            A.EMPL_GENDER,
 		            A.EMPL_PICTURE
 		FROM          EMPLOYEE A
 		INNER JOIN      COMMON_CODE C1 ON A.EMPL_DEPT_CD = C1.COCO_CD
@@ -115,15 +115,12 @@
 	</select>
 	
 	<update id="correctionEmployee" parameterType="Map">
-		UPDATE EMPLOYEE SET EMPL_NAME = #{empl_name},
-					EMPL_BIRTH = #{empl_birth},
-					EMPL_EMAIL = #{empl_email},
-					EMPL_PHONE = #{empl_phone},
+		UPDATE EMPLOYEE SET EMPL_PHONE = #{empl_phone},
 					EMPL_TEL = #{empl_tel},
 					EMPL_FAX = #{empl_fax},
 					EMPL_MODIFY_ID = #{empl_modify_id},
 					EMPL_MODIFY_DT = CURRENT_DATE
 		WHERE EMPL_ID = #{empl_id}
 	</update>
-	
+
 </mapper>
