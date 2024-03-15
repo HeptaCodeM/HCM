@@ -22,7 +22,7 @@ public interface HolidayService {
 	/*결재 일자 선택 시 정상적인 휴가일 수 가져오기*/
 	/**
 	* @param map : <br>
-	* ==== Map정보 ====<br>
+	* ==== Map Key정보 ====<br>
 	* sidb_doc_be : 휴가시작일(2024-01-01)<br>
 	* sidb_doc_end : 휴가종료일(2024-01-05)
 	* @author SDJ
