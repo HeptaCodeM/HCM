@@ -139,7 +139,7 @@ public class EmployeeController {
 	@PostMapping("/hr/employee/modify.do")
 	public @ResponseBody void employeeModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, @RequestParam Map<String, String> map, HttpServletResponse resp, Authentication authentication) throws IOException {
 		log.info("EmployeeController employeeModifyOk 수정처리");
-		
+		resp.setContentType("text/html;charset=utf-8;");
         String empl_modify_id = authentication.getName();
         EmployeeDto emp = new EmployeeDto();
 
