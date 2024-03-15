@@ -65,9 +65,17 @@ public class Function {
 	
 	public static String blobImageToString(byte[] b) {
 		 String base64ToString = "";
-		 if(b != null) {
-			 base64ToString = "data:image/png;base64,"+Base64Utils.encodeToString(b);
+		 try {
+			 if(b != null) {
+				 base64ToString = "data:image/png;base64,"+Base64Utils.encodeToString(b);
+			 }else {
+				 base64ToString = "/images/blank.png";
+			 }
+		 }catch(Exception e) {
+			 e.printStackTrace();
+			 base64ToString = "/images/blank.png";
 		 }
+
 		 return base64ToString;
 	}
 	

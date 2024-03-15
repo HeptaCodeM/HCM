@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -35,9 +36,20 @@ public class HomeController {
 	@Autowired
 	private EmployeeDao employeeDao;
 
-		
+	@Value("${dataspc.endpoint}")
+	private String endPoint;
+
+	@Value("${dataspc.enckey}")
+	private String encKey;
+
+	@Value("${dataspc.deckey}")
+	private String decKey;
+
+	
 	@GetMapping({"/index.do", "/"})
 	public String index(HttpServletRequest request, Model model, Authentication authentication, HttpSession session) {
+		
+		log.info("endPoint : {}, encKey : {}, deckey : {}", endPoint, encKey, decKey);
 		
 		String getId = "";
 		if(authentication != null) {

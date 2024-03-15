@@ -146,11 +146,7 @@ public class EmployeeController {
 
 		EmployeeDto empInfo = employeeListService.selectOneEmployee(map);
 		byte[] empPic = empInfo.getEmpl_picture();
-		if(empPic != null) {
-			empInfo.setEmpl_picture_str(Function.blobImageToString(empPic));
-		} else {
-			empInfo.setEmpl_picture_str("/images/blank.png");
-		}
+		empInfo.setEmpl_picture_str(Function.blobImageToString(empPic));
 		
 		model.addAttribute("empInfo", empInfo);
 		
