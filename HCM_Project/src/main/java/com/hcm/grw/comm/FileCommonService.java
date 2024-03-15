@@ -14,6 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FileCommonService {
 	
+	/**
+	 * @param file Form-data MultipartFile
+	 * @return Blob 파일 데이터 리턴 (dto 객체에 set 필수)
+	 * @author JISU
+	 * @since 2024.03.15
+	 */
 	public static byte[] fileUpload(MultipartFile file) throws IOException {
 		if(file == null) {
 			log.warn("파일 없음");
@@ -44,6 +50,13 @@ public class FileCommonService {
 		
 	}
 	
+	/**
+	 * @param response 
+	 * @param fileName 다운로드 지정이름
+	 * @param fileContent 실제 파일데이터(byte[])
+	 * @author JISU
+	 * @since 2024.03.15
+	 */
 	public static void fileDownload(HttpServletResponse response, String fileName, byte[] fileContent) {
 		log.info("FileCommonService 파일 다운로드 실행 : {}", fileName);
 		String name = "";
