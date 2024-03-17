@@ -18,5 +18,6 @@ public class CommuteDto {
 	private String empl_id;
 	private Date emco_in_dt;
 	private Date emco_out_dt;
-
+	
+	private String yyyymmdd;
 }

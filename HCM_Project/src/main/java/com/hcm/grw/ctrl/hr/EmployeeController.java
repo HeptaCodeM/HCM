@@ -149,12 +149,16 @@ public class EmployeeController {
         emp.setEmpl_fax(map.get("empl_fax"));
 		emp.setEmpl_modify_id(empl_modify_id);
         emp.setEmpl_id(map.get("empl_id"));
-
-		if(!file.isEmpty()) {
+        
+        if(!file.stream().allMatch(MultipartFile::isEmpty)) {
 			for(MultipartFile f : file){
+		        log.info("f.isEmpty() : {}", f.isEmpty());
+		        log.info("f.getSize() : {}", f.getSize());
+		        log.info("f.getContentType() : {}", f.getContentType());
 				emp.setEmpl_picture(f.getBytes());
 			}
-		}else {
+		}
+        else {
 			emp.setEmpl_picture(null);
 		}
 

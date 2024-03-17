@@ -78,6 +78,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public int updateEmployee(EmployeeDto dto) {
+		//log.info("EmployeeServiceImpl updateEmployee dto : {}", dto);
 		return dao.updateEmployee(dto);
 	}
 

@@ -2,7 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hcm.grw.model.mapper.hr.CommuteDaoImpl">
 
-
+	<!-- 출근상태 확인 -->
+	<select id="selectCommuteDayInfo" parameterType="String" resultType="CommuteDto">
+		SELECT 
+				NVL(TO_CHAR(EMCO_IN_DT, 'YYYY-MM-DD HH24:MI:SS'), '') EMCO_IN_DT,
+				NVL(TO_CHAR(EMCO_OUT_DT, 'YYYY-MM-DD HH24:MI:SS'), '') EMCO_OUT_DT
+		FROM 	EMP_COMMUTE
+		WHERE	EMPL_ID = #{empl_id}
+		AND		TO_CHAR(EMP_COMMUTE.EMCO_IN_DT, 'YYYYMMDD') = TO_CHAR(CURRENT_DATE, 'YYYYMMDD')
+	</select>
+	
 	<!-- 출근 등록 -->
 	<insert id="registCommute" parameterType="CommuteDto">
 		<selectKey keyProperty="emco_seq" resultType="Integer" order="BEFORE">
@@ -13,24 +22,30 @@
 	</insert>
 
 	<!-- 퇴근 등록 -->
-	<update id="updateCommute" parameterType="CommuteDto">
-		UPDATE EMP_COMMUTE SET
+	<update id="updateCommute" parameterType="String">
+		UPDATE	EMP_COMMUTE SET
 		EMCO_OUT_DT = CURRENT_DATE
-		WHERE EMCO_SEQ = #{emco_seq}
+		WHERE 	EMPL_ID = #{empl_id}
+		AND		TO_CHAR(EMP_COMMUTE.EMCO_IN_DT, 'YYYYMMDD') = TO_CHAR(CURRENT_DATE, 'YYYYMMDD')
 	</update>
 
 	<!-- 출퇴근 현황 -->
 	<select id="commuteList" parameterType="Map" resultType="CommuteDto">
-		SELECT
-		A.EMCO_SEQ,
-		A.EMPL_ID,
-		A.EMCO_IN_DT,
-		A.EMCO_OUT_DT
-		FROM EMP_COMMUTE A
-		INNER JOIN EMPLOYEE B ON A.EMPL_ID = B.EMPL_ID
-		WHERE A.EMPL_ID = #{empl_id}
-		AND TO_CHAR(A.EMCO_IN_DT, 'YYYYMMDD') BETWEEN TO_DATE(#{searchdt}, 'YYYYMM') AND TRUNC(ADD_MONTHS(TO_DATE(#{searchdt},'YYYYMM'), 1), 'MM')
-		ORDER BY A.EMCO_SEQ DESC
+		<![CDATA[
+		SELECT 
+				TO_CHAR(TO_DATE(YYYYMMDD, 'YYYYMMDD'), 'YYYY-MM-DD') YYYYMMDD,
+				NVL(TO_CHAR(B.EMCO_IN_DT, 'YYYY-MM-DD HH24:MI:SS'),'') EMCO_IN_DT,
+				NVL(TO_CHAR(B.EMCO_OUT_DT, 'YYYY-MM-DD HH24:MI:SS'),'') EMCO_OUT_DT
+		FROM 	(
+				SELECT 
+						TO_CHAR(TO_DATE(#{searchdt}||'01', 'YYYYMMDD') + LEVEL - 1, 'YYYYMMDD') AS YYYYMMDD
+				FROM DUAL
+				CONNECT BY LEVEL <= LAST_DAY(TO_DATE(#{searchdt}||'01', 'YYYYMMDD')) - TO_DATE(#{searchdt}||'01', 'YYYYMMDD') + 1
+				) A
+		LEFT OUTER JOIN EMP_COMMUTE B ON A.YYYYMMDD = TO_CHAR(B.EMCO_IN_DT, 'YYYYMMDD')
+		WHERE B.EMPL_ID = #{empl_id}
+		ORDER BY YYYYMMDD
+		]]>
 	</select>
 
 
