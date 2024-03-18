@@ -55,15 +55,24 @@ public class CertificateController {
 	
 	@GetMapping(value = "/hr/certificate/downloadDoc.do")
 	@ResponseBody
-	public void downloadDoc(@RequestParam("emdh_type") String emdh_type ,
-							@RequestParam("emdn_id") String emdn_id) {
+	public boolean downloadDoc(@RequestParam("emdh_type") String emdh_type ,
+							@RequestParam("emdn_id") String emdn_id ,
+							Authentication authentication) {
 		Map<String, Object> docMap = new HashMap<String, Object>();
-		
+		String emdh_empl_id = authentication.getName();
+		System.out.println(emdh_empl_id);
 		System.out.println(emdh_type);
 		System.out.println(emdn_id);
 		
-//		docMap.put("", );
-//		boxService.downloadOneDoc(docMap);
+		docMap.put("emdh_empl_id", emdh_empl_id); 
+		docMap.put("emdh_type", emdh_type); 
+		docMap.put("emdn_id", emdn_id); 
+		
+		
+		int cnt = boxService.downloadOneDoc(docMap);
+		
+		return (cnt > 0)?true:false;
+		
 	}
 	
 }
