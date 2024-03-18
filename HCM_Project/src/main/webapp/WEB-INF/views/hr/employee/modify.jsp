@@ -10,7 +10,7 @@
 <title>조직관리</title>
 
 <style type="text/css">
-.table th { vertical-align:middle; }
+.table th {  width:170px;vertical-align:middle; }
 .form-check-input.radio {margin-right:10px;}
 .form-check-input.radio.last {margin-left:30px;}
 </style>
