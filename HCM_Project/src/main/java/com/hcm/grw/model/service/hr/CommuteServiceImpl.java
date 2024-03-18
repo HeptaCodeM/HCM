@@ -21,13 +21,18 @@ public class CommuteServiceImpl implements CommuteService {
 	}
 
 	@Override
-	public int updateCommute(CommuteDto dto) {
-		return dao.updateCommute(dto);
+	public int updateCommute(String empl_id) {
+		return dao.updateCommute(empl_id);
 	}
 
 	@Override
 	public List<CommuteDto> commuteList(Map<String, String> map) {
 		return dao.commuteList(map);
+	}
+
+	@Override
+	public CommuteDto selectCommuteDayInfo(String empl_id) {
+		return dao.selectCommuteDayInfo(empl_id);
 	}
 
 }

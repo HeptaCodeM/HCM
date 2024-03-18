@@ -27,8 +27,11 @@ public class CertificateController {
 		System.out.println(empl_id);
 		docMap.put("empl_id", empl_id);
 		List<SignDocBoxDto> docList = boxService.selectAllDocList(docMap);
+		List<SignDocBoxDto> docDownloadList = boxService.selectAllDownloadDocList(docMap);
 		System.out.println(docList);
+		System.out.println(docDownloadList);
 		model.addAttribute("docList" ,docList);
+		model.addAttribute("docDownloadList" ,docDownloadList);
 		return "hr/certificate/certificateMain";
 	}
 	
@@ -42,6 +45,7 @@ public class CertificateController {
 		docMap.put("sidb_doc_num", sidb_doc_num);
 		docMap.put("empl_id", empl_id);
 		SignDocBoxDto boxDto = boxService.selectOneDocList(docMap);
+		System.out.println(boxDto.getSidb_doc_json());
 		model.addAttribute("boxDto",boxDto);
 		return "hr/certificate/selectOneCertificate";
 	}

@@ -36,4 +36,10 @@ public class SignDocBoxServiceImpl implements SignDocBoxService {
 		return dao.downloadOneDoc(map);
 	}
 
+	@Override
+	public List<SignDocBoxDto> selectAllDownloadDocList(Map<String, Object> map) {
+		log.info("SignDocBoxServiceImpl selectAllDownloadDocList // {}",map);
+		return dao.selectAllDownloadDocList(map);
+	}
+	
 }

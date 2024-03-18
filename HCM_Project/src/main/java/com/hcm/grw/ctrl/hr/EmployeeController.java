@@ -139,6 +139,7 @@ public class EmployeeController {
 	@PostMapping("/hr/employee/modify.do")
 	public @ResponseBody void employeeModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, @RequestParam Map<String, String> map, HttpServletResponse resp, Authentication authentication) throws IOException {
 		log.info("EmployeeController employeeModifyOk 수정처리");
+		resp.setContentType("text/html;charset=utf-8;");
 		
         String empl_modify_id = authentication.getName();
         EmployeeDto emp = new EmployeeDto();
@@ -148,14 +149,18 @@ public class EmployeeController {
         emp.setEmpl_fax(map.get("empl_fax"));
 		emp.setEmpl_modify_id(empl_modify_id);
         emp.setEmpl_id(map.get("empl_id"));
-
-		if(file != null) {
+        
+        if(!file.stream().allMatch(MultipartFile::isEmpty)) {
 			for(MultipartFile f : file){
+		        log.info("f.isEmpty() : {}", f.isEmpty());
+		        log.info("f.getSize() : {}", f.getSize());
+		        log.info("f.getContentType() : {}", f.getContentType());
 				emp.setEmpl_picture(f.getBytes());
 			}
 		}
-        
-        
+        else {
+			emp.setEmpl_picture(null);
+		}
 
 		log.info("수정값 : {}", emp);
 		

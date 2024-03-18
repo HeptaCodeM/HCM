@@ -37,4 +37,6 @@ public class SignDocBoxDto {
 	
 	private String sica_name;
 	private String sidt_temp_name;
+	private String sidt_print_type;
+	private String sidt_print_date;
 }

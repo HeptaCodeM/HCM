@@ -185,7 +185,7 @@ public class SDJ_JUnitTest {
 		assertEquals(1, n1);
 		
 		//퇴근등록
-		int n2 = commuteService.updateCommute(dto);
+		int n2 = commuteService.updateCommute(empl_id);
 		log.info("퇴근등록 :  {}", dto);
 		assertEquals(1, n2);
 	}

@@ -12,4 +12,6 @@ public interface SignDocBoxDao {
 	public SignDocBoxDto selectOneDocList(Map<String, Object> map);
 	
 	public int downloadOneDoc(Map<String, Object> map);
+	
+	public List<SignDocBoxDto> selectAllDownloadDocList(Map<String, Object> map);
 }
