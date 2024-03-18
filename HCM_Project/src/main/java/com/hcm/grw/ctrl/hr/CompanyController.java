@@ -110,13 +110,13 @@ public class CompanyController {
 		System.out.println("동작");
 		System.out.println(file.size());
 		System.out.println(file);
+		Map<String, Object> sealMap = new HashMap<String, Object>();
 		for(MultipartFile f : file) {
-			Map<String, Object> sealMap = new HashMap<String, Object>();
 			byte[] comp_seal = f.getBytes();
 			sealMap.put("comp_seal", comp_seal);
 			sealMap.put("comp_id", "ITCOM0A1");
-			companyService.insertCompanySeal(sealMap);
 		}
+		companyService.insertCompanySeal(sealMap);
 		return "redirect:/hr/company/companyInfo.do";
 	}
 	

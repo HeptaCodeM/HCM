@@ -42,6 +42,7 @@ public class CertificateController {
 		docMap.put("sidb_doc_num", sidb_doc_num);
 		docMap.put("empl_id", empl_id);
 		SignDocBoxDto boxDto = boxService.selectOneDocList(docMap);
+		System.out.println(boxDto.getSidb_doc_json());
 		model.addAttribute("boxDto",boxDto);
 		return "hr/certificate/selectOneCertificate";
 	}

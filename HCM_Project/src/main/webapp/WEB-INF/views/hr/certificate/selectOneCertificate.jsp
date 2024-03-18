@@ -39,28 +39,8 @@
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5" >
-								${boxDto}<br>
-								<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
-									<thead>
-										<tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
-											<td>순번</td>
-											<td>제목</td>
-											<td>템플릿이름</td>
-											<td>결재완료일</td>
-										</tr>
-									</thead>
-								
-									<%-- <tbody>
-										<c:forEach var="doc" items="${boxDto}" varStatus="var">
-											<tr>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
-										</c:forEach>
-									</tbody> --%>
-								</table>
+								${boxDto}<br><br><br>
+								${boxDto.getSidb_doc_json()}
 							</div>
 						</div>
 					</div>
