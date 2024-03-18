@@ -1,7 +1,9 @@
 package com.hcm.grw.ctrl.doc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -316,6 +318,7 @@ public class DocController {
 		       }
 }
 	    Gson data = new GsonBuilder().create();
+	    System.out.println("@@@@@@뭐들었니"+table);
 	    return data.toJson(table); 
 	    
 	}
@@ -374,4 +377,124 @@ public class DocController {
 	    
 	}
 	
+	
+	
+	
+	@GetMapping(value="/doc/chamjoBox.do", produces = "application/json;")
+	@ResponseBody
+	public String chamjoBox(){
+	    log.info("참조함 아작스처리 시작");
+	    
+	      String empl_id = "20220101";
+	      String empl_dept_cd = "DT000002";
+	      Map<String, String> inMap = new HashMap<>();
+	      inMap.put("empl_id", empl_id);
+	      inMap.put("empl_dept_cd", empl_dept_cd);
+	    
+	     List<SignBoxDto> table=dao.getChamjoDocs(inMap);
+	     List<SignBoxDto> json=dao.getChamjoJson(inMap);
+	       
+	     SignBoxDto dto = new SignBoxDto();
+	     
+	     dto.setEmpl_id("20220101");
+
+	     //합치기
+	     List<SignBoxDto> fusion = new ArrayList<>();
+	     
+	       for(int i=0; i<table.size(); i++) {
+	          String apprName = "";
+	          String apprDepth= "";
+	          String apprFlag= "";
+	          for(int j=0; j<json.size(); j++) {
+	             if(table.get(i).getSidb_doc_num().equals(json.get(j).getSidb_doc_num())) {
+	                apprName += json.get(j).getAppr_name() + ",";
+	                apprFlag += json.get(j).getAppr_flag() + ",";
+	                apprDepth += json.get(j).getAppr_depth() + ",";
+	             }
+	          }
+	          table.get(i).setAppr_name(apprName);
+	          table.get(i).setAppr_depth(apprDepth);
+	          table.get(i).setAppr_flag(apprFlag);
+	          fusion.add(table.get(i));
+	       }
+
+	       
+	       for (int i=0; i<table.size(); i++) {
+		       table.get(i).setAppr_name0(fusion.get(i).getAppr_name().split(",")[0].trim());
+		       table.get(i).setAppr_depth0(fusion.get(i).getAppr_depth().split(",")[0].trim());
+		       table.get(i).setAppr_flag0(fusion.get(i).getAppr_flag().split(",")[0].trim());
+		       if (fusion.get(i).getAppr_name().split(",").length >= 2) {
+		    	   table.get(i).setAppr_name1(fusion.get(i).getAppr_name().split(",")[1].trim());
+		    	   table.get(i).setAppr_depth1(fusion.get(i).getAppr_depth().split(",")[1].trim());
+			       table.get(i).setAppr_flag1(fusion.get(i).getAppr_flag().split(",")[1].trim());
+		       }
+		       if (fusion.get(i).getAppr_name().split(",").length >= 3) {
+		    	   table.get(i).setAppr_name2(fusion.get(i).getAppr_name().split(",")[2].trim());
+		    	   table.get(i).setAppr_depth2(fusion.get(i).getAppr_depth().split(",")[2].trim());
+			       table.get(i).setAppr_flag2(fusion.get(i).getAppr_flag().split(",")[2].trim());
+		       }
+}
+	    Gson data = new GsonBuilder().create();
+	    return data.toJson(table); 
+	    
+	}
+
+
+
+
+@GetMapping(value="/doc/myTurnBox.do", produces = "application/json;")
+@ResponseBody
+public String myTurnBox(){
+    log.info("나에게 온 결재 요청함 아작스처리 시작");
+	  SignBoxDto dto = new SignBoxDto();
+
+    dto.setEmpl_id("20230102"); //결재자 사원번호
+    
+    
+     List<SignBoxDto> table=dao.getMyTurnDocs(dto);
+     
+     
+     List<SignBoxDto> json=dao.getAllDocsJson(dto);
+       
+
+     //합치기
+     List<SignBoxDto> fusion = new ArrayList<>();
+     
+       for(int i=0; i<table.size(); i++) {
+          String apprName = "";
+          String apprDepth= "";
+          String apprFlag= "";
+          for(int j=0; j<json.size(); j++) {
+             if(table.get(i).getSidb_doc_num().equals(json.get(j).getSidb_doc_num())) {
+                apprName += json.get(j).getAppr_name() + ",";
+                apprFlag += json.get(j).getAppr_flag() + ",";
+                apprDepth += json.get(j).getAppr_depth() + ",";
+             }
+          }
+          table.get(i).setAppr_name(apprName);
+          table.get(i).setAppr_depth(apprDepth);
+          table.get(i).setAppr_flag(apprFlag);
+          fusion.add(table.get(i));
+       }
+
+       
+       for (int i=0; i<table.size(); i++) {
+	       table.get(i).setAppr_name0(fusion.get(i).getAppr_name().split(",")[0].trim());
+	       table.get(i).setAppr_depth0(fusion.get(i).getAppr_depth().split(",")[0].trim());
+	       table.get(i).setAppr_flag0(fusion.get(i).getAppr_flag().split(",")[0].trim());
+	       if (fusion.get(i).getAppr_name().split(",").length >= 2) {
+	    	   table.get(i).setAppr_name1(fusion.get(i).getAppr_name().split(",")[1].trim());
+	    	   table.get(i).setAppr_depth1(fusion.get(i).getAppr_depth().split(",")[1].trim());
+		       table.get(i).setAppr_flag1(fusion.get(i).getAppr_flag().split(",")[1].trim());
+	       }
+	       if (fusion.get(i).getAppr_name().split(",").length >= 3) {
+	    	   table.get(i).setAppr_name2(fusion.get(i).getAppr_name().split(",")[2].trim());
+	    	   table.get(i).setAppr_depth2(fusion.get(i).getAppr_depth().split(",")[2].trim());
+		       table.get(i).setAppr_flag2(fusion.get(i).getAppr_flag().split(",")[2].trim());
+	       }
+}
+    Gson data = new GsonBuilder().create();
+    return data.toJson(table); 
+    
+}
 }
