@@ -57,7 +57,7 @@ public class Function {
 		sb.append("<script src='/js/common.js' defer></script>");
 		sb.append("<script>");
 		sb.append("window.onload = function(){");
-		sb.append("swalAlert('"+ msg +"','"+ className +"','"+ btnText +"');");
+		sb.append("swalHistoryBack('"+ msg +"','"+ className +"','"+ btnText +"');");
 		sb.append("}");
 		sb.append("</script>");
 		return sb.toString();
