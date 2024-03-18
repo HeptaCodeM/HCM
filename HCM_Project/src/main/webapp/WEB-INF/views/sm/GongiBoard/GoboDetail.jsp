@@ -33,7 +33,7 @@
       data-kt-app-sidebar-push-footer="true"
       data-kt-app-toolbar-enabled="true" class="app-default">
 
-				${sessionScope.userInfoVo}
+				
        <div class="app-wrapper flex-column flex-row-fluid">
         <div class="app-toolbar py-3 py-lg-6">
             <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
@@ -81,7 +81,7 @@
                                         <input type="hidden" name="rebo_writer" value="윤영훈">
                                         <input type="hidden" name="rebo_writer" value="윤영훈">
                                         <div class="comment_inbox border border-2">
-                                            <em class="comment_inbox_name">${session.empl_name}</em>
+                                            <em class="comment_inbox_name">${sessionScope.userInfoVo.empl_name}</em>
                                             <textarea placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0"></textarea>
                                             <div class="d-flex justify-content-end align-items-end">
                                                 <div class="register_box">
@@ -105,7 +105,7 @@
                              <input type="hidden" name="rebo_writer" value="윤영훈">
                              <input type="hidden" name="rebo_writer" value="윤영훈">
                              <div class="comment_inbox border border-2">
-                                 <em class="comment_inbox_name">${session.empl_name}</em>
+                                 <em class="comment_inbox_name">${sessionScope.userInfoVo.empl_name}</em>
                                  <textarea id="commentTextArea" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" oninput="checkInput()"></textarea>
                             <div class="d-flex justify-content-end align-items-end">
                              <div class="register_box">

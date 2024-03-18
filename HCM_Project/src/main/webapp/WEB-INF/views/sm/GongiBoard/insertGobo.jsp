@@ -40,8 +40,8 @@
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-body pt-5">
-										   <div class="contatiner">
-					      <form id="insertForm" method="post">
+							<div class="contatiner">
+					      <form id="insertForm">
 					      <input type="hidden" name="gobo_writer_id" id="gobo_writer_id" value="${dto.gobo_writer_id}">
 					         <div class="form-group">
 					            <label for="title">제목</label>
@@ -57,7 +57,7 @@
 					         </div>
 					         <div>
 					         </div>
-					            <input type="button" class="btn btn-success" value="글입력" onclick="insertGobo()" id="savebutton">
+					            <input type="button" class="btn btn-success" value="글입력"  id="savebutton">
 					            <input type="reset" class="btn btn-danger" value="글초기화" id="resetbutton">
 					            <input type="button" class="btn btn-info" value="뒤로가기" onclick="history.back(-1)">
 					      </form>
@@ -72,6 +72,5 @@
 			
 <%@include file="/WEB-INF/views/menu/smSideMenu.jsp"%>	
 </body>
-
 
 </html>

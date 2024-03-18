@@ -77,7 +77,25 @@ function checkInput() {
 
 
 
-
+function insertReply(data){
+	var content = $("#commentTextArea").val();
+	
+	
+	$.ajax({
+			url: "/sm/insertReply.do",
+			data: {data: gobo_no, content:rebo_content},
+			type: "post",
+			dataType: "json",
+			success: function() {
+				
+			},
+			error: function() {
+				alert("jdbc로 넘기지도 못함");
+			}
+		});
+		
+		
+}
 
 
 
