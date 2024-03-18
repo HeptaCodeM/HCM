@@ -5,8 +5,8 @@
 	<!-- 출근상태 확인 -->
 	<select id="selectCommuteDayInfo" parameterType="String" resultType="CommuteDto">
 		SELECT 
-				NVL(TO_CHAR(EMCO_IN_DT, 'YYYY-MM-DD HH24:MI:SS'), '') EMCO_IN_DT,
-				NVL(TO_CHAR(EMCO_OUT_DT, 'YYYY-MM-DD HH24:MI:SS'), '') EMCO_OUT_DT
+				EMCO_IN_DT,
+				EMCO_OUT_DT
 		FROM 	EMP_COMMUTE
 		WHERE	EMPL_ID = #{empl_id}
 		AND		TO_CHAR(EMP_COMMUTE.EMCO_IN_DT, 'YYYYMMDD') = TO_CHAR(CURRENT_DATE, 'YYYYMMDD')

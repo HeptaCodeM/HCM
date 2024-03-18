@@ -57,7 +57,7 @@ public class CommuteController {
 				commuteOutTime = cgDto.getEmco_out_dt();
 			}
 		}
-	
+
 		model.addAttribute("commuteInTime", commuteInTime);
 		model.addAttribute("commuteOutTime", commuteOutTime);
 		
