@@ -186,4 +186,41 @@ public class HomeController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("notification.do")
+	public String notification() {
+		return "notification";
+	}
+	
+	@GetMapping("fileTest.do")
+	public String fileTest() {
+		return "fileTest";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
