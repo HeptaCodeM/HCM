@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
@@ -33,6 +34,14 @@ public class DocController {
 	public String getDetailBoard(Model model, SignBoxDto dto, String docNum ) {
 		
 		dto.setSidb_doc_num(docNum);
+		
+		dto.setEmpl_id("20230102"); //세션에서 받아올 조회하는 사람의 id
+		
+		// 조회한 사람의 depth와 max_depth 조회
+		SignBoxDto depthDto = docService.getMyDepth(dto);
+		model.addAttribute("depthDto",depthDto);
+//		log.info("getMyDepth 조회 결과{},{}", depthDto.getAppr_depth(), depthDto.getMax_depth());
+		
 		List<SignBoxDto> docDto= docService.getDetailDocsList(dto);
 		model.addAttribute("docDto",docDto);
 		log.info("상세조회  데이터 리스트 결과{}", docDto);

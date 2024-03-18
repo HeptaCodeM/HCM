@@ -47,4 +47,10 @@ public interface IDocBoxService {
 		//문서 조회 테이블+json 동시 트랜잭션
 		public boolean getDocs(SignBoxDto dto);
 		
+		//참조 문서함 Json만 조회
+		public List<SignBoxDto> getChamjoJson(Map<String, String> inMap);
+		
+		//상세 조회시 자신의 depth와 max_depth 조회
+		public SignBoxDto getMyDepth(SignBoxDto dto);
+
 }
