@@ -41,6 +41,13 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>${org.springframework}</version>
 		</dependency>
+		
+		<!-- 실시간 알림을 위한 Spring-WebSocket -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>${org.springframework}</version>
+		</dependency>
 
 		<!-- Spring Security 사용을 위한 dependency 등록 Start -->
 		<!-- 인증 및 액세스 제어 기능이 포함 -->
@@ -68,7 +75,7 @@
 			<version>${org.springsecurity}</version>
 		</dependency>
 		<!-- Spring Security 사용을 위한 dependency 등록 End -->
-
+		
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ojdbc10</artifactId>

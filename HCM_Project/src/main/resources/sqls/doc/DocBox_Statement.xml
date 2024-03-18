@@ -200,6 +200,25 @@ WHERE SDB.empl_id = #{empl_id}
  		 OR SDB.EMPL_DEPT_CD = #{empl_dept_cd}
     )
 	</select>
+	
+	<!-- 참조 전용 json 데이터 가져오기 -->
+	<select id="getChamjoJson" resultType="SignBoxDto">	
+	SELECT sdb.SIDB_DOC_NUM, APPR_id, E2.EMPL_NAME AS appr_name, appr_depth, appr_flag
+	FROM SIGN_DOC_BOX sdb
+	CROSS JOIN JSON_TABLE(SDB.SIDB_DOC_JSON, '$[*]' COLUMNS (
+	APPR_ID PATH '$.APPR_ID',
+	APPR_DEPTH INT PATH '$.APPR_DEPTH',
+	APPR_SIGN PATH '$.APPR_SIGN',
+	APPR_DT PATH '$.APPR_DT',
+	APPR_FLAG PATH '$.APPR_FLAG',
+	APPR_REPLY PATH '$.APPR_REPLY'
+	)) j
+	JOIN EMPLOYEE e2 ON e2.EMPL_ID = j.appr_id
+	WHERE sdb.EMPL_REF LIKE '%' || #{empl_id} || '%' OR  sdb.EMPL_DEPT_CD LIKE '%' || #{empl_dept_cd} || '%'
+</select>	
+	
+	
+	
 
 	<!-- 상세 조회 -->
 	<select id="getDetailDocs" resultType="SignBoxDto">
@@ -246,5 +265,32 @@ LEFT JOIN COMMON_CODE cc2 ON E2.EMPL_RANK_CD = CC2.COCO_CD
 	WHERE SDB.SIDB_DOC_NUM =  #{sidb_doc_num}  
 	</select>
 
+<!--문서 상세조회할때  자신의 depth와  그리고 그 문서의 max depth 를 찾는 json 쿼리 -->
+<select id="getMyDepth" resultType="SignBoxDto">
+	SELECT sdb.SIDB_DOC_NUM,
+			j.APPR_DEPTH,
+				(SELECT MAX(SDBJ2.APPR_DEPTH)
+				FROM JSON_TABLE(
+				sdb.SIDB_DOC_JSON,
+				'$[*]'
+				COLUMNS (
+				APPR_ID PATH '$.APPR_ID',
+				APPR_FLAG PATH '$.APPR_FLAG',
+				APPR_DEPTH PATH '$.APPR_DEPTH'
+				)
+				) AS SDBJ2) AS MAX_DEPTH
+				FROM SIGN_DOC_BOX sdb
+				CROSS JOIN JSON_TABLE(SDB.SIDB_DOC_JSON, '$[*]'
+				COLUMNS (
+				APPR_ID PATH '$.APPR_ID',
+				APPR_DEPTH INT PATH '$.APPR_DEPTH',
+				APPR_SIGN PATH '$.APPR_SIGN',
+				APPR_DT PATH '$.APPR_DT',
+				APPR_FLAG PATH '$.APPR_FLAG',
+				APPR_REPLY PATH '$.APPR_REPLY'
+				)
+				) j
+				WHERE sdb.SIDB_DOC_NUM = #{sidb_doc_num} AND j.appr_id = #{empl_id}
+</select>						
 
 </mapper>
