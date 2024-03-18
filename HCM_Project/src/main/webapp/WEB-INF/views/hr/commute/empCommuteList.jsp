@@ -11,17 +11,16 @@
 <title>HCM GroupWare</title>
 
 <style type="text/css">
-.table th {
-	vertical-align: middle;
-}
-
+.table th {vertical-align: middle; text-align:center;}
 .form-check-input.radio {
 	margin-right: 10px;
 }
-
 .form-check-input.radio.last {
 	margin-left: 30px;
 }
+.top-ym {text-align:center; margin-bottom:30px;}
+.top-ym>div {display: inline-block; vertical-align: middle;}
+.top-ym .cur-month {font-size: 32px; vertical-align: middle; font-weight: 600; margin:0 50px;}
 </style>
 
 </head>
@@ -51,27 +50,50 @@
 
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-body pt-5 table-responsive">
-								<div>
-									<ul>
-										<li><a href="/hr/commute/empCommuteList.do?getYM=${preYearMonth}"><<<<</a></li>
-										<li>
-											${currentYearMonth}<br>
-											${fn:substring(currentYearMonth, 0, 4)}년 ${fn:substring(currentYearMonth, 4, 6)}월
-										</li>
-										<li><a href="/hr/commute/empCommuteList.do?getYM=${nextYearMonth}">>>></a></li>
-									</ul>
+								<div class="top-ym">
+									<div>
+										<a href="/hr/commute/empCommuteList.do?getYM=${preYearMonth}" class="btn btn-icon btn-primary">
+											<i class="ki-duotone ki-to-left fs-3x">
+												<span class="path1"></span>
+												<span class="path2"></span>
+												<span class="path3"></span>
+												<span class="path4"></span>
+											</i>
+										</a>
+									</div>
+									<div class="cur-month">
+										${fn:substring(currentYearMonth, 0, 4)}년 ${fn:substring(currentYearMonth, 4, 6)}월
+									</div>
+									<div>
+										<a href="/hr/commute/empCommuteList.do?getYM=${nextYearMonth}" class="btn btn-icon btn-primary">
+											<i class="ki-duotone ki-to-right fs-3x">
+												<span class="path1"></span>
+												<span class="path2"></span>
+												<span class="path3"></span>
+												<span class="path4"></span>
+											</i>
+										</a>
+									</div>
 								</div>
 								
 								<table id="emplListTable" class="table table-hover table-rounded table-flush">
 									<thead>
 										<tr class="fw-semibold fs-7 border-bottom border-gray-200 py-4">
-											<th>일자</th>
-											<th>출근시간</th>
-											<th>퇴근시간</th>
-											<th>비고</th>
+											<th class="center">일자</th>
+											<th class="center">출근시간</th>
+											<th class="center">퇴근시간</th>
+											<th class="center">결근/조퇴</th>
+											<th class="center">비고</th>
 										</tr>
 									</thead>
 									<tbody>
+									<colgroup>
+										<col width="200px">
+										<col width="150px">
+										<col width="150px">
+										<col width="80px">
+										<col width="*">
+									</colgroup>
 									<c:forEach items="${lists}" var="list">
 											<fmt:parseDate var="date" value="${list.yyyymmdd}" pattern="yyyy-MM-dd" />
 											<fmt:formatDate var="preWeekName" value="${date}" pattern="EEEE" />
@@ -79,17 +101,31 @@
 										<tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6" style="cursor: pointer;
 										<c:if test="${weekName eq '토요일'}">color:blue;</c:if>
 										<c:if test="${weekName eq '일요일'}">color:red;</c:if>">
-											<td>
+											<td class="center">
 												${list.yyyymmdd}
 												(${weekName})
 											</td>
-											<td>
+											<td class="center">
 												<fmt:formatDate value="${list.emco_in_dt}" pattern="HH:mm:ss" />
 											</td>
-											<td>
+											<td class="center">
 												<fmt:formatDate value="${list.emco_out_dt}" pattern="HH:mm:ss" />
 											</td>
-											<td></td>
+											<td class="center">
+												<c:if test="${list.duration_hour < 9}">
+													<c:if test="${list.duration_hour == 0}">
+														<span style="color:#B40404;">결근</span>
+													</c:if>
+													<c:if test="${list.duration_hour > 0}">
+														<span style="color:#04B404;">조퇴</span>
+													</c:if>
+												</c:if>
+												<c:if test="${list.duration_hour >= 9}">
+													<span style="color:#08088A;">조퇴</span>
+												</c:if>
+											</td>
+											<td class="left">
+											</td>
 										</tr>
 									</c:forEach>
 									</tbody>

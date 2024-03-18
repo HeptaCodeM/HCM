@@ -20,4 +20,5 @@ public class CommuteDto {
 	private Date emco_out_dt;
 	
 	private String yyyymmdd;
+	private int duration_hour;
 }
