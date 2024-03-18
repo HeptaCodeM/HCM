@@ -77,9 +77,8 @@
                              <div>
                                 <div class="CommentWriter mb-4">
                                     <form id="ReplyTwoForm">
-                                        <input type="hidden" name="rebo_writer_id" value="20240013">
-                                        <input type="hidden" name="rebo_writer" value="윤영훈">
-                                        <input type="hidden" name="rebo_writer" value="윤영훈">
+                                        <input type="hidden" name="rebo_writer_id" id="rebo_writer_id" value="${sessionScope.userInfoVo.empl_id}">
+                            			 <input type="hidden" name="rebo_writer" id="rebo_writer" value="${sessionScope.userInfoVo.empl_name}">
                                         <div class="comment_inbox border border-2">
                                             <em class="comment_inbox_name">${sessionScope.userInfoVo.empl_name}</em>
                                             <textarea placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0"></textarea>
@@ -105,6 +104,8 @@
                              <input type="hidden" name="rebo_writer" value="윤영훈">
                              <input type="hidden" name="rebo_writer" value="윤영훈">
                              <div class="comment_inbox border border-2">
+                             <input type="hidden" name="rebo_writer_id" id="rebo_writer_id" value="${sessionScope.userInfoVo.empl_id}">
+                             <input type="hidden" name="rebo_writer" id="rebo_writer" value="${sessionScope.userInfoVo.empl_name}">
                                  <em class="comment_inbox_name">${sessionScope.userInfoVo.empl_name}</em>
                                  <textarea id="commentTextArea" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" oninput="checkInput()"></textarea>
                             <div class="d-flex justify-content-end align-items-end">

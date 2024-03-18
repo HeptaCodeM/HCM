@@ -42,7 +42,8 @@
 							<div class="card-body pt-5">
 							<div class="contatiner">
 					      <form id="insertForm">
-					      <input type="hidden" name="gobo_writer_id" id="gobo_writer_id" value="${dto.gobo_writer_id}">
+					      <input type="hidden" name="gobo_writer_id" id="gobo_writer_id" value="${sessionScope.userInfoVo.empl_id}">
+					      <input type="hidden" name="gobo_writer_name" id="gobo_writer_id" value="${sessionScope.userInfoVo.empl_name}">
 					         <div class="form-group">
 					            <label for="title">제목</label>
 					            <input class="form-control" id="gobo_title"  name="gobo_title">

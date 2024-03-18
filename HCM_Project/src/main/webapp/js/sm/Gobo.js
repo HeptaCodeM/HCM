@@ -11,24 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
-function insertReply(gobo_no){
-	var data = $("#ReplyForm").serialize()
-	
-	$.ajax({
-			url: "/sm/insert.do",
-			data: {data:data , gobo_no:gobo_no},
-			type: "post",
-			dataType: "json",
-			success: function() {
-				
-			},
-			error: function() {
-				alert("jdbc로 넘기지도 못함");
-			}
-		});
-}
-
 function showCommentForm(commentId) {
     // commentFormContainer 요소 찾기
     var commentFormContainer = document.getElementById("commentFormContainer" + commentId);
@@ -45,6 +27,17 @@ function cancelReply(commentId) {
         commentFormContainer.style.display = 'none';
     }
 }
+
+document.addEventListener("click", function(event) {
+    var commentFormContainers = document.querySelectorAll("[id^='commentFormContainer']");
+    commentFormContainers.forEach(function(container) {
+        // 클릭된 요소가 replytwo 창 내부인지 확인합니다.
+        if (!container.contains(event.target)) {
+            // 클릭된 요소가 replytwo 창 내부가 아니라면 숨깁니다.
+            container.style.display = "none";
+        }
+    });
+});
 
 
 //맨 위로 스크롤하는 함수
@@ -79,8 +72,6 @@ function checkInput() {
 
 function insertReply(data){
 	var content = $("#commentTextArea").val();
-	
-	
 	$.ajax({
 			url: "/sm/insertReply.do",
 			data: {data: gobo_no, content:rebo_content},
