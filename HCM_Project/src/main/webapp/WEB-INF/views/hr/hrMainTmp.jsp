@@ -58,6 +58,8 @@
 								</script>
 								
 								<br>
+								<hr>
+								<br>
 								<a href="https://preview.keenthemes.com/html/keen/docs/index" target="_blank">Template Reference Site</a>
 								
 							</div>
