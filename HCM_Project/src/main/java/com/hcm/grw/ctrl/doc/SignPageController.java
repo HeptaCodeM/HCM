@@ -13,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.hcm.grw.dto.AlarmDto;
 import com.hcm.grw.dto.hr.EmpSignDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.model.service.AlarmService;
 import com.hcm.grw.model.service.doc.ISignFavoService;
 import com.hcm.grw.model.service.hr.EmpSignService;
 
@@ -31,15 +33,19 @@ public class SignPageController {
 	@Autowired
 	private EmpSignService signService;
 	
-	@GetMapping("write.do")
-	public String write() {
-		log.info("SignTreeController write.do GET 문서작성 페이지");
-		return "doc/write";
-	}
+	@Autowired
+	private AlarmService alarmService;
+	
 	
 	@GetMapping("signFavo.do")
-	public String signFavo() {
+	public String signFavo(Model model, HttpSession session) {
 		log.info("SignTreeController signFavo.do GET 결재선 관리 페이지");
+		EmployeeDto dto = (EmployeeDto)session.getAttribute("userInfoVo");
+		if(dto == null) {
+			return "doc/approverSet/signFavo";
+		}
+		List<AlarmDto> alarmList = alarmService.selectAllAlarm(dto.getEmpl_id());
+		model.addAttribute("alarmList", alarmList);
 		return "doc/approverSet/signFavo";
 	}
 	
@@ -76,6 +82,19 @@ public class SignPageController {
 		signMap.put("empl_id", dto.getEmpl_id());
 		List<EmpSignDto> signList = signService.selectAllSign(signMap);
 		model.addAttribute("signList",signList);
+		
+//		Map<String, List<AlarmDto>> alarmMap = alarmService.alarmTransaction(dto.getEmpl_id());
+//		List<AlarmDto> noticeList = alarmMap.get("noticeList");
+//		List<AlarmDto> approvalList = alarmMap.get("approvalList");
+//		List<AlarmDto> rejectList = alarmMap.get("rejectList");
+//		List<AlarmDto> requestList = alarmMap.get("requestList");
+//		model.addAttribute("noticeList", noticeList);
+//		model.addAttribute("approvalList", approvalList);
+//		model.addAttribute("rejectList", rejectList);
+//		model.addAttribute("requestList", requestList);
+		List<AlarmDto> alarmList = alarmService.selectAllAlarm(dto.getEmpl_id());
+		model.addAttribute("alarmList", alarmList);
+		
 		return "doc/signManagement/signListForm";
 	}
 	

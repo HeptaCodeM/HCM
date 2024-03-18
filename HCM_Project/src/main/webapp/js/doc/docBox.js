@@ -1,6 +1,12 @@
 function detailBoard(docNum) {
     var url = '/doc/docBox/getDetail.do?docNum=' + encodeURIComponent(docNum);
     window.location.href = url;
+ /*   var formData = new FormData();
+    formData.append('docNum', docNum);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/doc/docBox/getDetail.do', true);
+    xhr.send(formData);
+    window.location.href = "/doc/docBox/boardDetail/boardDetail";*/
 }
 
 $(document).ready( function () {
@@ -121,9 +127,9 @@ function allDocs(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 2 && d.appr_name2 == undefined && d.appr_flag0 == 1 && d.appr_flag1 ==0){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s2a2d2.png">'
-	    	            		+'<br> 기안 &nbsp;&nbsp; <span style="color: MediumSeaGreen;">'+d.appr_name0
-	    	            		+ ' ></span> &nbsp;&nbsp;&nbsp; &nbsp;<span style="color: DodgerBlue; font-size: larger;">'
-	    	            		+ d.appr_name1+ '&nbsp;></span>&nbsp;&nbsp;'
+	    	            		+'<br>   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:20%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">'
+	    	           			+d.appr_name0+' > </span> <span style="display:inline-block; width:24%;"></span><span style="color: DodgerBlue; font-size: large; ">'
+	    	           			+d.appr_name1+'&nbsp; &nbsp;</span>'
 	    	            }
 	    	            if(d.sidb_doc_stat == 2 && d.appr_name2 != undefined && d.appr_flag0 == 1 && d.appr_flag1 ==0){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s2a3d2.png">'
@@ -347,9 +353,9 @@ function gianBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 2 && d.appr_name2 == undefined && d.appr_flag0 == 1 && d.appr_flag1 ==0){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s2a2d2.png">'
-	    	            		+'<br> 기안 &nbsp;&nbsp; <span style="color: MediumSeaGreen;">'+d.appr_name0
-	    	            		+ ' ></span> &nbsp;&nbsp;&nbsp; &nbsp;<span style="color: DodgerBlue; font-size: larger;">'
-	    	            		+ d.appr_name1+ '&nbsp;></span>&nbsp;&nbsp;'
+	    	            		+'<br>   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:20%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">'
+	    	           			+d.appr_name0+' > </span> <span style="display:inline-block; width:24%;"></span><span style="color: DodgerBlue; font-size: large; ">'
+	    	           			+d.appr_name1+'&nbsp; &nbsp;</span>'
 	    	            }
 	    	            if(d.sidb_doc_stat == 2 && d.appr_name2 != undefined && d.appr_flag0 == 1 && d.appr_flag1 ==0){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s2a3d2.png">'
@@ -572,9 +578,9 @@ function ingBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 2 && d.appr_name2 == undefined && d.appr_flag0 == 1 && d.appr_flag1 ==0){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s2a2d2.png">'
-	    	            		+'<br> 기안 &nbsp;&nbsp; <span style="color: MediumSeaGreen;">'+d.appr_name0
-	    	            		+ ' ></span> &nbsp;&nbsp;&nbsp; &nbsp;<span style="color: DodgerBlue; font-size: larger;">'
-	    	            		+ d.appr_name1+ '&nbsp;></span>&nbsp;&nbsp;'
+	    	            		+'<br>   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:20%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">'
+	    	           			+d.appr_name0+' > </span> <span style="display:inline-block; width:24%;"></span><span style="color: DodgerBlue; font-size: large; ">'
+	    	           			+d.appr_name1+'&nbsp; &nbsp;</span>'
 	    	            }
 	    	            if(d.sidb_doc_stat == 2 && d.appr_name2 != undefined && d.appr_flag0 == 1 && d.appr_flag1 ==0){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s2a3d2.png">'
@@ -796,9 +802,9 @@ function approveBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 2 && d.appr_name2 == undefined && d.appr_flag0 == 1 && d.appr_flag1 ==0){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s2a2d2.png">'
-	    	            		+'<br> 기안 &nbsp;&nbsp; <span style="color: MediumSeaGreen;">'+d.appr_name0
-	    	            		+ ' ></span> &nbsp;&nbsp;&nbsp; &nbsp;<span style="color: DodgerBlue; font-size: larger;">'
-	    	            		+ d.appr_name1+ '&nbsp;></span>&nbsp;&nbsp;'
+	    	            		+'<br>   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:20%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">'
+	    	           			+d.appr_name0+' > </span> <span style="display:inline-block; width:24%;"></span><span style="color: DodgerBlue; font-size: large; ">'
+	    	           			+d.appr_name1+'&nbsp; &nbsp;</span>'
 	    	            }
 	    	            if(d.sidb_doc_stat == 2 && d.appr_name2 != undefined && d.appr_flag0 == 1 && d.appr_flag1 ==0){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s2a3d2.png">'
@@ -1022,9 +1028,9 @@ function denyBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 2 && d.appr_name2 == undefined && d.appr_flag0 == 1 && d.appr_flag1 ==0){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s2a2d2.png">'
-	    	            		+'<br> 기안 &nbsp;&nbsp; <span style="color: MediumSeaGreen;">'+d.appr_name0
-	    	            		+ ' ></span> &nbsp;&nbsp;&nbsp; &nbsp;<span style="color: DodgerBlue; font-size: larger;">'
-	    	            		+ d.appr_name1+ '&nbsp;></span>&nbsp;&nbsp;'
+	    	            		+'<br>   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:20%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">'
+	    	           			+d.appr_name0+' > </span> <span style="display:inline-block; width:24%;"></span><span style="color: DodgerBlue; font-size: large; ">'
+	    	           			+d.appr_name1+'&nbsp; &nbsp;</span>'
 	    	            }
 	    	            if(d.sidb_doc_stat == 2 && d.appr_name2 != undefined && d.appr_flag0 == 1 && d.appr_flag1 ==0){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s2a3d2.png">'

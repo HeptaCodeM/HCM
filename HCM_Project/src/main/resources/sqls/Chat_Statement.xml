@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcm.grw.model.mapper.ChatDaoImpl">
+
+	<insert id="sendMessage">
+		INSERT INTO CHAT (CH_NO, CH_MESSAGE, CH_SENDER, CH_TARGET)
+			VALUES ((SELECT NVL(MAX(CH_NO)+1, '1') FROM CHAT), #{ch_message}, #{ch_sender}, #{ch_target})
+	</insert>
+	
+	<select id="selectAllMessage" resultType="ChatDto">
+		SELECT c.*, e1.EMPL_NAME sender_name, e2.EMPL_NAME target_name
+			FROM CHAT c JOIN EMPLOYEE e1
+			ON c.CH_SENDER = e1.EMPL_ID
+			JOIN EMPLOYEE e2
+			ON c.CH_TARGET = e2.EMPL_ID
+			WHERE (CH_SENDER = #{ch_sender}
+			AND CH_TARGET = #{ch_target})
+			OR (CH_SENDER = #{ch_target}
+			AND CH_TARGET = #{ch_sender})
+			ORDER BY c.CH_DATE
+	</select>
+
+</mapper>

@@ -1,10 +1,12 @@
 package com.hcm.grw.ctrl.doc;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.GsonBuilder;
 import com.hcm.grw.dto.doc.SignFavoDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.doc.ISignFavoService;
@@ -30,14 +33,15 @@ public class SignFavoRestController {
 	@Autowired
 	private ISignFavoService service;
 	
-	@GetMapping("signFavoList.do")
-	public ResponseEntity<?> signFavoList(@RequestParam String empl_id) {
+	@GetMapping(value = "signFavoList.do", produces = "text/html; charset=UTF-8")
+	public ResponseEntity<?> signFavoList(@RequestParam String empl_id) throws IOException {
 		log.info("SignFavoController signFavoList.do GET 즐겨찾기 결재자 목록 불러오기 요청 아이디 : {}", empl_id);
 		List<SignFavoDto> apprList = service.getFavApprList(empl_id);
-		return ResponseEntity.ok(apprList);
+		
+		return ResponseEntity.ok(new GsonBuilder().create().toJson(apprList));
 	}
 	
-	@GetMapping("signFavoLineList.do")
+	@GetMapping(value = "signFavoLineList.do", produces = "text/html; charset=UTF-8")
 	public ResponseEntity<?> signFavoLineList(@RequestParam String empl_id) throws JsonProcessingException {
 		log.info("SignFavoController signFavoLineList.do GET 즐겨찾기 라인 목록 불러오기 요청 아이디 : {} ", empl_id);
 		
@@ -63,10 +67,10 @@ public class SignFavoRestController {
 		resultMap.put("lineList", lineList);
 		resultMap.put("resultList", resultList);
 		
-		return ResponseEntity.ok(resultMap);
+		return ResponseEntity.ok(new GsonBuilder().create().toJson(resultMap));
 	}
 	
-	@PostMapping(value = "insertFavo.do", produces = "text/html; charset=UTF-8")
+	@PostMapping(path = "insertFavo.do", produces = "text/html; charset=UTF-8")
 	public ResponseEntity<?> insertFavo(@RequestBody Map<String, Object> map) {
 		log.info("SignFavoController insertFavo.do GET 즐겨찾기 결재자 등록 요청 값 : {}", map);
 		SignFavoDto dto = service.duplicateFav(map);
@@ -111,16 +115,16 @@ public class SignFavoRestController {
 		return ResponseEntity.ok("저장 실패");
 	}
 	
-	@GetMapping("userInfo.do")
+	@GetMapping(value = "userInfo.do", produces = "text/html; charset=UTF-8")
 	public ResponseEntity<?> userInfo(@RequestParam String empl_id) {
 		log.info("SignFavoController userInfo.do GET 유저정보 조회 : {}", empl_id);
 		List<String> list = new ArrayList<String>();
 		list.add(empl_id);
 		List<EmployeeDto> user = service.getFav(list);
-		return ResponseEntity.ok(user);
+		return ResponseEntity.ok(new GsonBuilder().create().toJson(user));
 	}
 	
-	@GetMapping("favoInfo.do")
+	@GetMapping(value = "favoInfo.do", produces = "text/html; charset=UTF-8")
 	public ResponseEntity<?> favoInfo(@RequestParam String siaf_favo_cd) {
 		log.info("SignFavoController favoInfo.do GET 즐겨찾기 라인 정보 조회 : {}", siaf_favo_cd);
 		SignFavoDto dto = service.getFavApprLine(siaf_favo_cd);
@@ -131,17 +135,17 @@ public class SignFavoRestController {
 		}
 		List<EmployeeDto> result = service.getFav(Arrays.asList(newArr));
 		
-		return ResponseEntity.ok(result);
+		return ResponseEntity.ok(new GsonBuilder().create().toJson(result));
 	}
 	
-	@GetMapping("getFavo.do")
+	@GetMapping(value = "getFavo.do", produces = "text/html; charset=UTF-8")
 	public ResponseEntity<?> getFavo(@RequestParam String siaf_favo_cd) {
 		log.info("SignFavoController getFavo.do GET 즐겨찾기 정보 조회 : {}", siaf_favo_cd);
 		SignFavoDto dto = service.getFavAppr(siaf_favo_cd);
 		List<String> list = new ArrayList<String>();
 		list.add(dto.getSiaf_appr_id());
 		List<EmployeeDto> user = service.getFav(list);
-		return ResponseEntity.ok(user);
+		return ResponseEntity.ok(new GsonBuilder().create().toJson(user));
 	}
 	
 	
