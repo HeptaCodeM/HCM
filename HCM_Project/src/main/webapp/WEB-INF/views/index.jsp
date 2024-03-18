@@ -27,6 +27,10 @@
 		<a href="/sendMailTest.do">메일발송 테스트</a>
 		<hr>
 		<a href="/holidayTest.do">휴가정보 조회 테스트</a>
+		<hr>
+		<a href="/notification.do">Notification 테스트</a>
+		<hr>
+		<a href="/doc/noticeAlarmTest.do">Alarm 테스트</a>
 	</div>
 </body>
 </html>

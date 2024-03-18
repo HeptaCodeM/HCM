@@ -34,6 +34,8 @@
 		<security:intercept-url pattern="/main*.do" access="permitAll" />
 		<security:intercept-url pattern="/assets/**" access="permitAll" />
 		<security:intercept-url pattern="/images/**" access="permitAll" />
+		
+		
 		<!-- 에러페이지 접근 권한 -->
 		<security:intercept-url pattern="/error*.do" access="permitAll" />
 		<security:intercept-url pattern="/WEB-INF/error/error*.jsp" access="permitAll" />

@@ -37,6 +37,10 @@
       <typeAlias type="com.hcm.grw.dto.hr.CompanyDto" alias="CompanyDto"/>
       <typeAlias type="com.hcm.grw.dto.hr.SignDocBoxDto" alias="SignDocBoxDto"/>
       <typeAlias type="com.hcm.grw.dto.doc.SignFileDto" alias="SignFileDto"/>
+      
+      <typeAlias type="com.hcm.grw.dto.AlarmDto" alias="AlarmDto"/>
+      <typeAlias type="com.hcm.grw.dto.ChatDto" alias="ChatDto"/>
+      
    </typeAliases>
    
 
@@ -64,5 +68,7 @@
       <mapper resource="sqls/hr/CompanyDto_Statement.xml"/>
       <mapper resource="sqls/hr/SignDocBoxDto_Statement.xml"/>
       <mapper resource="sqls/hr/EmployeeList_Statement.xml"/>
+      <mapper resource="sqls/Alarm_Statement.xml"/>
+      <mapper resource="sqls/Chat_Statement.xml"/>
    </mappers>
 </configuration>

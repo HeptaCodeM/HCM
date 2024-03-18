@@ -129,6 +129,15 @@ public class DocBoxDaoImpl implements IDocBoxDao {
 	}
 
 
+	@Override
+	public List<SignBoxDto> getChamjoJson(Map<String, String> inMap) {
+		return sqlSessionTemplate.selectList(NS+"getChamjoJson",inMap);
+	}
+
+	@Override
+	public SignBoxDto getMyDepth(SignBoxDto dto) {
+		return sqlSessionTemplate.selectOne(NS+"getMyDepth",dto);
+	}
 	
 
 }
