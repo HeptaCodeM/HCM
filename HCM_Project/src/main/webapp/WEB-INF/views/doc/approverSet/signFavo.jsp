@@ -97,7 +97,7 @@ td>img {
 													<th width="20%">직급</th>
 													<th width="20%">소속</th>
 													<th width="20%">순서</th>
-													<th style="display: none;" id="empl_id">20230108</th>
+													<th style="display: none;" id="empl_id"></th>
 												</tr>
 											</thead>
 											<tbody>
@@ -290,5 +290,4 @@ td>img {
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 <script type="text/javascript" src="/js/doc/signFavo.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </html>

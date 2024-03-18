@@ -1,12 +1,37 @@
-onload = function() {
-	
-	// 닫기버튼
-	document.getElementById('closeRefer').addEventListener('click', closeRefer);
-	
-	// 저장버튼
-	document.getElementById('saveRefer').addEventListener('click', saveRefer);
-	
-}
+
+$('#schName').focus();
+
+// 검색기능
+$('#schBtn').on('click', function() {
+	$('#jstree').jstree().search($('#schName').val());
+	$('#jstree').jstree('deselect_all');
+});
+
+// jstree
+$('#jstree').jstree({
+	// 검색기능 , 우클릭메뉴, 라벨 효과
+	plugins: ['search', 'contextmenu', 'wholerow'],
+	// 우클릭메뉴 정의
+	core: {
+		data: {
+			url: '/doc/signTree.do',
+			method: 'get',
+			dataType: 'json',
+			success: function(data) {
+				data.forEach(function(node) {
+					if (node.pos_na != undefined) {
+						node.text = node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="pick()" class="btn btn-basic btn-sm addd" style="padding: 0.2px;">➕</button><span class="positionFlag" style="display: none;">' + node.pos_flag + '</span>';
+					} else {
+						node.text = node.text + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="pick()" class="btn btn-basic btn-sm addd" style="padding: 0.2px;">➕</button>'
+					}
+				});
+			},
+			error: function() {
+				alert('데이터 전송 실패');
+			}
+		}
+	}
+});
 
 // jsTree 검색창의 엔터키로 검색 가능하게 하는 함수
 $('#schName').on('keydown', function(e) {
@@ -15,70 +40,12 @@ $('#schName').on('keydown', function(e) {
 	}
 });
 
-// jstree 출력
-$().ready(function() {
-	$('#jstree').jstree({
-		// 검색기능 , 우클릭메뉴, 라벨 효과
-		plugins: ['search', 'contextmenu', 'wholerow'],
-		// 우클릭메뉴 정의
-		core: {
-			data : {
-				url : '/doc/signTree.do',
-				method : 'get',
-				dataType : 'json',
-				success : function(data) {
-					data.forEach(function(node) {
-						if(node.pos_na != undefined) {
-							node.text = node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="pick()" class="btn btn-basic btn-sm addd" style="padding: 0.2px;">➕</button><span class="positionFlag" style="display: none;">' + node.pos_flag + '</span>';
-						} else {
-							node.text = node.text + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="pick()" class="btn btn-basic btn-sm addd" style="padding: 0.2px;">➕</button>'
-						}
-					});
-				},
-				error : function() {
-					alert('데이터 전송 실패');
-				}
-			}
-		}
-	});
+// 닫기버튼
+document.getElementById('closeRefer').addEventListener('click', closeRefer);
 
-})
+// 저장버튼
+document.getElementById('saveRefer').addEventListener('click', saveRefer);
 
-$().ready(function() {
-	$('#schName').focus();
-	
-	// 검색기능
-	$('#schBtn').on('click', function() {
-		$('#jstree').jstree().search($('#schName').val());
-		$('#jstree').jstree('deselect_all');
-	});
-
-	// 결재자 취소 로직
-	$('.cancelBtn').on('click', function(e) {
-		// form태그의 기본동작 막기
-		e.preventDefault();
-		
-		var row = $(this).closest('tr');
-		
-		// json형태로 모든 노드를 불러오기..
-		var allNode = $('#jstree').jstree('get_json', '#', { flat: true });
-		var selectNode = allNode.find(function(node) {
-			return node.id == row.find('td span').text();
-		});
-		console.log(selectNode);
-		// 숨겼던 노드를 다시 보여줌
-		$('#jstree').jstree('show_node', selectNode);
-		// input창 비움
-		row.find('td input').val('');
-		row.find('td span').text('');
-		$('#de1').val(1);
-		$('#de2').val(2);
-		$('#de3').val(3);
-
-	});
-	
-	
-});
 
 
 // + 버튼
@@ -112,13 +79,11 @@ function pick() {
 			dept.append(hiddenInput);
 			dept.append(span);
 			
-			
-			console.log(deptNum.length)
 		} else {
 			// 참조자 추가
 			var emp = document.getElementById('ref-emp');
 			fetch('/doc/userInfo.do?empl_id=' + id)
-				.then(resp => { return resp.json(); })
+				.then(resp => { return resp.json() })
 				.then(data => {
 					console.log(data);
 					var d = data[0];
@@ -146,7 +111,9 @@ function pick() {
 					var selNode = $('#jstree').jstree('get_selected');
 					$('#jstree').jstree('hide_node', selNode);
 				})
-				.catch(err => { console.log(err) });
+				.catch(err => { 
+					console.log(err);
+				});
 		}
 	}, 100);
 }
@@ -159,26 +126,6 @@ function saveRefer() {
 	
 }
 
-function removeRefer(btn) {
-	var pa = btn.parentNode;
-	console.log(pa);
-	var siblings = pa.parentNode.children;
-    
-    // pa 이전의 두 개의 input 요소를 찾아서 삭제합니다.
-    var inputsToRemove = 0;
-    for (var i = 0; i < siblings.length; i++) {
-        var sibling = siblings[i];
-        // 현재 노드가 pa인 경우 반복문을 종료합니다.
-        if (sibling === pa) break;
-        // 현재 노드가 input 요소인 경우 삭제합니다.
-        if (sibling.tagName === 'INPUT' || sibling.tagNae === 'SPAN') {
-            sibling.remove();
-            inputsToRemove++;
-            // 삭제할 input 요소가 2개 이상인 경우 반복문을 종료합니다.
-            if (inputsToRemove >= 2) break;
-        }
-    }
-}
 
 
 
