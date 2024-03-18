@@ -10,7 +10,7 @@ JSON_TABLE(sdb.SIDB_DOC_JSON, '$[*]' COLUMNS(
 )) json JOIN EMPLOYEE e
 ON json.APPR_ID = e.EMPL_ID 
 WHERE APPR_ID IN (SELECT APPR_ID FROM SIGN_DOC_BOX)
-ORDER BY SIDB_DOC_NUM 
+ORDER BY SIDB_DOC_NUM
 
 
 
@@ -118,12 +118,12 @@ SET SIDB_DOC_JSON = JSON_TRANSFORM(
         '$[1].APPR_REPLY' = '휴가를 가? 안돼',
         '$[1].APPR_FLAG' = '2'
 )
-WHERE SIDB_DOC_NUM = 24000001;
+WHERE SIDB_DOC_NUM = 24000029;
 
 -- 반려시 결재문서 업데이트(트랜잭션)
 UPDATE SIGN_DOC_BOX
-SET SIDB_DOC_FLAG = '2', SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_STAT = '4'
-WHERE SIDB_DOC_NUM = 24000001;
+SET SIDB_DOC_FLAG = '2', SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_STAT = '4', SIDB_FINAL_ID = '20220101'
+WHERE SIDB_DOC_NUM = 24000029;
 
 
 -- 업데이트 후 다음 결재자
@@ -154,12 +154,12 @@ SET SIDB_DOC_JSON = JSON_TRANSFORM(
         '$[2].APPR_REPLY' = '최종승인합니다 잘 다녀오세요',
         '$[2].APPR_FLAG' = '1'
 )
-WHERE SIDB_DOC_NUM = 24000001;
+WHERE SIDB_DOC_NUM = 24000029;
 
 -- 최종승인시 문서 업데이트(트랜잭션)
 UPDATE SIGN_DOC_BOX
-SET SIDB_DOC_FLAG = '1', SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_STAT = '3'
-WHERE SIDB_DOC_NUM = 24000001;
+SET SIDB_DOC_FLAG = '1', SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_STAT = '3', SIDB_FINAL_ID = '20230105'
+WHERE SIDB_DOC_NUM = 24000029;
 
 -- 내 결재문서 조회
 SELECT D.SIDB_DOC_NUM AS 문서번호 , D.SIDB_DOC_WRITEDT AS 작성일 , E.EMPL_NAME AS 기안자 , 
@@ -181,13 +181,15 @@ INSERT INTO SIGN_DOC_BOX
 							(SIDB_DOC_NUM, EMPL_ID, SIDB_DOC_TITLE,
 							SIDB_DOC_CONTENT, SICA_CD, SIDB_DOC_EXPIREDT, 
 							SIDT_TEMP_CD, SIDB_DOC_BE, SIDB_DOC_END,
+							SIDB_CURR_ID,
 							SIDB_DOC_JSON)
-	VALUES					((SELECT NVL(MAX(SIDB_DOC_NUM) + 1, 24000001) FROM SIGN_DOC_BOX), '20230107', '[오지수]휴가 신청의 건',
+	VALUES					((SELECT NVL(MAX(SIDB_DOC_NUM) + 1, 24000001) FROM SIGN_DOC_BOX), '20230109', '출장가고싶습니다',
 							'여기에템플릿을넣어야해요', 'CC000001', '2024-03-05',
 							'TC000002', '2024-03-07', '2024-03-12',
+							'20230107',
 							'[
 								{
-									"APPR_ID":"20220101",
+									"APPR_ID":"20230107",
 									"APPR_DEPTH":"1",
 									"APPR_SIGN":"",
 									"APPR_DT":"",
@@ -195,7 +197,7 @@ INSERT INTO SIGN_DOC_BOX
 									"APPR_REPLY":""
 								},
 								{
-									"APPR_ID":"20230105",
+									"APPR_ID":"20230109",
 									"APPR_DEPTH":"2",
 									"APPR_SIGN":"",
 									"APPR_DT":"",
@@ -203,7 +205,7 @@ INSERT INTO SIGN_DOC_BOX
 									"APPR_REPLY":""
 								},
 								{
-									"APPR_ID":"20230109",
+									"APPR_ID":"20220101",
 									"APPR_DEPTH":"3",
 									"APPR_SIGN":"",
 									"APPR_DT":"",
@@ -443,3 +445,45 @@ ON E.EMPL_DEPT_CD = CC.COCO_CD
 GROUP BY cc.COCO_NAME 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+UPDATE SIGN_DOC_BOX SET SIDB_CURR_ID =
+
+
+
+(SELECT appr_data.APPR_ID
+FROM SIGN_DOC_BOX sdb
+JOIN JSON_TABLE(sdb.SIDB_DOC_JSON, '$[*]' COLUMNS (
+        APPR_ID PATH '$.APPR_ID',
+        APPR_SIGN PATH '$.APPR_SIGN',
+        APPR_DT PATH '$.APPR_DT',
+        APPR_REPLY PATH '$.APPR_REPLY',
+        APPR_FLAG PATH '$.APPR_FLAG',
+        APPR_DEPTH PATH '$.APPR_DEPTH'
+     )) appr_data ON sdb.SIDB_DOC_NUM = 24000002
+                    AND appr_data.APPR_DEPTH = (SELECT MIN(appr_data_inner.APPR_DEPTH)
+                                               FROM JSON_TABLE(sdb.SIDB_DOC_JSON, '$[*]' COLUMNS (
+                                                    APPR_DEPTH PATH '$.APPR_DEPTH',
+                                                    APPR_FLAG PATH '$.APPR_FLAG'
+                                                )) appr_data_inner
+                                               WHERE appr_data_inner.APPR_FLAG = '0')
+JOIN EMPLOYEE e ON appr_data.APPR_ID = e.EMPL_ID
+WHERE sdb.SIDB_DOC_FLAG != '2' OR sdb.SIDB_DOC_FLAG IS NULL)

@@ -58,4 +58,10 @@ public interface IDocBoxDao {
 	//전체 문서함 Json만 조회
 	public List<SignBoxDto> getAllDocsJson(SignBoxDto dto);
 	
+	//참조 문서함 Json만 조회
+	public List<SignBoxDto> getChamjoJson(Map<String, String> inMap);
+	
+	//상세 조회시 자신의 depth와 max_depth 조회
+	public SignBoxDto getMyDepth(SignBoxDto dto);
+
 }

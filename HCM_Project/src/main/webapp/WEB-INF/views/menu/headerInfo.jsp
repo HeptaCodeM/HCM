@@ -44,6 +44,20 @@
 		width: 82px;
 	}
 	
+	.slide-out-right {
+   		animation: slideOutRight 0.5s ease forwards;
+	}
+
+	@keyframes slideOutRight {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
 </style>
 <!-- 사용CSS오버라이딩 -->
 
@@ -66,11 +80,13 @@
 <!--end::Vendors Javascript-->
 <!--begin::Custom Javascript(used for this page only)-->
 <script src="/assets/js/widgets.bundle.js"></script>
-<script src="/assets/js/custom/apps/chat/chat.js"></script>
 <script src="/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
 <script src="/assets/js/custom/utilities/modals/create-campaign.js"></script>
 <script src="/assets/js/custom/utilities/modals/users-search.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="/js/common.js"></script>
+<script src="/js/alarm.js"></script>
+<script src="/js/chatting.js"></script>
 <!--end::Custom Javascript-->
 <!--end::Javascript-->
 </html>

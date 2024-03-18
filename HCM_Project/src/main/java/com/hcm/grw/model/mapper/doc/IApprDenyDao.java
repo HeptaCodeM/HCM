@@ -21,5 +21,5 @@ public interface IApprDenyDao {
 		
 		//결재 최종 승인시 문서 업데이트
 		public int finalDocApprove(SignBoxDto dto);
-
+		
 }

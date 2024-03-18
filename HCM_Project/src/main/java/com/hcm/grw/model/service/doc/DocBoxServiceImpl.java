@@ -109,4 +109,14 @@ public class DocBoxServiceImpl implements IDocBoxService {
 		
 		return (n+m)>1?true:false;
 	}
+	
+	@Override
+	public List<SignBoxDto> getChamjoJson(Map<String, String> inMap) {
+		return dao.getChamjoJson(inMap);
+	}
+	
+	@Override
+	public SignBoxDto getMyDepth(SignBoxDto dto) {
+		return dao.getMyDepth(dto);
+	}
 }	
