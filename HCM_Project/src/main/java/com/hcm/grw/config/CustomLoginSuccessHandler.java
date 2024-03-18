@@ -63,7 +63,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
 		// 롤 권한이 없다면 로그아웃 처리
 		if(!roleNames.contains("ADMIN") && !roleNames.contains("USER")) {
-			response.sendRedirect("/logout.do");
+			response.sendRedirect("/logout");
 		}
 
 	}

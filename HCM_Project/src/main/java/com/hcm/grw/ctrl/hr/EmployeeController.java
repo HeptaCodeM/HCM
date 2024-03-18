@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,8 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeListService employeeListService;
 	
+	@Autowired
+	private PasswordEncoder encoder;
 
 	@GetMapping("/hr/employee/registAdmin.do")
 	public String registEmployee(Model model) {
@@ -224,9 +227,11 @@ public class EmployeeController {
 		return empInfo;
 	}
 
-	@GetMapping("/hr/employee/chgPwd.do")
-	public String chgPwd(Authentication authentication, HttpServletResponse resp) throws IOException {
-		log.info("EmployeeController chgPwd 변경 진입");
+	@GetMapping("/hr/employee/updatePwd.do")
+	public String chgPwd(Authentication authentication, 
+						 HttpServletResponse resp) throws IOException {
+
+		log.info("EmployeeController updatePwd 변경 진입");
 		resp.setContentType("text/html; charset=utf-8");
 		
 		if(authentication == null) {
@@ -234,8 +239,46 @@ public class EmployeeController {
 			return null;
 		}
 		
-		return "hr/employee/chgPwd";
+		return "hr/employee/updatePwd";
 	}
+
 	
+	@PostMapping("/hr/employee/updatePwdOk.do")
+	public @ResponseBody void updatePwdOk(@RequestParam Map<String, Object> chgPwdMap,
+							  Authentication authentication,
+							  HttpServletResponse resp) throws IOException {
+		
+		log.info("LoginController updatePwdOk 변경 처리");
+		resp.setContentType("text/html; charset=utf-8");
+
+		if(authentication == null) {
+			resp.getWriter().print(Function.alertHistoryBack("로그인 정보가 없습니다.", "", ""));
+			return;
+		}
+
+		EmployeeDto empDto = employeeService.getLogin(authentication.getName());
+		String originPwd = empDto.getEmpl_pwd();
+		log.info("originPwd : {}", originPwd);
+		
+		chgPwdMap.put("empl_modify_id", authentication.getName());
+		chgPwdMap.put("empl_id", authentication.getName());
+
+		boolean isPwFlag = encoder.matches(chgPwdMap.get("empl_pwd").toString(), originPwd);
+		log.info("isPwFlag : {}", isPwFlag);
+		
+		if(isPwFlag) {
+			chgPwdMap.put("empl_pwd", originPwd);
+
+			int cnt = employeeService.updatePwd(chgPwdMap);
+	
+			if(cnt == 0) {
+				resp.getWriter().print(Function.alertHistoryBack("비밀번호 변경에 실패하였습니다.", "", ""));
+			}else {
+				resp.getWriter().print(Function.alertLocation("비밀번호 변경이 완료 되었습니다.", "/hr/employee/updatePwd.do", "", "", ""));
+			}
+		}else {
+			resp.getWriter().print(Function.alertHistoryBack("현재 비밀번호와 일치하지 않습니다.", "", ""));
+		}
+	}	
 	
 }

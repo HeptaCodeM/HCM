@@ -31,7 +31,7 @@ String tnk_srnd = E2ECrypto.CreateSessionRandom(session, true);
 <script type="text/javascript">
 var TNK_SR = '<%= tnk_srnd %>';
 function doSubmit(){
-	var frm = document.getElementById("testFrm");
+	var frm = document.getElementById("loginForm");
 	if(TK_makeEncData(frm)){
 		frm.submit();
 	}
@@ -48,7 +48,7 @@ function tkCallBackFinish(){
 	alert("11");
 }
 </script>
-
+<!-- 
 <script type="text/javascript" src="/raonnx/cmn/TouchEnNx.js"></script>
 <script type='text/javascript' charset='utf-8' src='/raonnx/cmn/json2.js'></script>
 <script type='text/javascript' charset='utf-8' src='/raonnx/cmn/TouchEnNx_exproto.js'></script>
@@ -58,6 +58,7 @@ function tkCallBackFinish(){
 <script type='text/javascript' charset='utf-8' src='/raonnx/nxKey/js/TouchEnNxKey_Interface.js'></script>
 <script type='text/javascript' charset='utf-8' src='/raonnx/nxKey/js/TouchEnNxKey.js'></script>
 <script type='text/javascript' charset='utf-8' src='/raonnx/cmn/TouchEnNx_loader.js'></script>
+ -->
 <!--***** 키보드 보안 종료 *****-->
 
 
@@ -106,7 +107,7 @@ function tkCallBackFinish(){
 				<!--begin::Wrapper-->
 				<div class="w-lg-500px p-10">
 					<!--begin::Form-->
-					<form class="form w-100" method="post" name="loginForm" action="/login">
+					<form class="form w-100" method="post" name="loginForm" id="loginForm" action="/login">
 						<!--begin::Heading-->
 						<div class="text-center mb-11">
 							<!--begin::Title-->
@@ -126,13 +127,15 @@ function tkCallBackFinish(){
 						<!--begin::Input group=-->
 						<div class="fv-row mb-8">
 							<!--begin::Email-->
-							<input type="text" placeholder="아이디" name="username" autocomplete="off" class="form-control bg-transparent" value="20220101" enc="on" />
+							<!-- <input type="text" placeholder="아이디" name="username" autocomplete="off" class="form-control bg-transparent" value="20220101" enc="on" /> -->
+							<input type="text" placeholder="아이디" name="username" autocomplete="off" class="form-control bg-transparent" value="20220101" />
 							<!--end::Email-->
 						</div>
 						<!--end::Input group=-->
 						<div class="fv-row mb-3">
 							<!--begin::Password-->
-							<input type="password" placeholder="비밀번호" name="password" autocomplete="off" class="form-control bg-transparent" value="20220101" enc="on" />
+							<!-- <input type="password" placeholder="비밀번호" name="password" autocomplete="off" class="form-control bg-transparent" value="20220101" enc="on" /> -->
+							<input type="password" placeholder="비밀번호" name="password" autocomplete="off" class="form-control bg-transparent" value="20220101" />
 							<!--end::Password-->
 						</div>
 						<!--end::Input group=-->
@@ -146,6 +149,7 @@ function tkCallBackFinish(){
 						<!--end::Wrapper-->
 						<!--begin::Submit button-->
 						<div class="d-grid mb-10">
+							<!-- <button type="button" class="btn btn-primary" onclick="doSubmit()"> -->
 							<button class="btn btn-primary">
 								<!--begin::Indicator label-->
 								<span class="indicator-label">로그인</span>
