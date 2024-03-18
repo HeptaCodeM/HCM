@@ -10,8 +10,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
-<script type="text/javascript" src="/smartEditor/js/service/HuskyEZCreator.js" charset="UTF-8"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -42,8 +41,6 @@
 							<div class="card-body pt-5">
 							<div class="contatiner">
 					      <form id="insertForm">
-					      <input type="hidden" name="gobo_writer_id" id="gobo_writer_id" value="${sessionScope.userInfoVo.empl_id}">
-					      <input type="hidden" name="gobo_writer_name" id="gobo_writer_id" value="${sessionScope.userInfoVo.empl_name}">
 					         <div class="form-group">
 					            <label for="title">제목</label>
 					            <input class="form-control" id="gobo_title"  name="gobo_title">
@@ -72,6 +69,9 @@
 		</div>
 			
 <%@include file="/WEB-INF/views/menu/smSideMenu.jsp"%>	
+<script type="text/javascript" src="/smartEditor/js/service/HuskyEZCreator.js" charset="UTF-8"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="/smartEditor/js/smart.js"></script>
 </body>
 
 </html>

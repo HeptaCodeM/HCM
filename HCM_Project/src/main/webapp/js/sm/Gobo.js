@@ -30,13 +30,19 @@ function cancelReply(commentId) {
 
 document.addEventListener("click", function(event) {
     var commentFormContainers = document.querySelectorAll("[id^='commentFormContainer']");
-    commentFormContainers.forEach(function(container) {
-        // 클릭된 요소가 replytwo 창 내부인지 확인합니다.
-        if (!container.contains(event.target)) {
-            // 클릭된 요소가 replytwo 창 내부가 아니라면 숨깁니다.
+    var isCommentButtonClicked = false;
+
+    // 클릭된 요소가 답글쓰기 버튼인지 확인합니다.
+    if (event.target.classList.contains("comment_info_button")) {
+        isCommentButtonClicked = true;
+    }
+
+    // 클릭된 요소가 답글쓰기 버튼이 아닌 경우 모든 댓글 작성 폼을 숨깁니다.
+    if (!isCommentButtonClicked) {
+        commentFormContainers.forEach(function(container) {
             container.style.display = "none";
-        }
-    });
+        });
+    }
 });
 
 
@@ -71,17 +77,26 @@ function checkInput() {
 
 
 function insertReply(data){
-	var content = $("#commentTextArea").val();
+ // 직렬화된 데이터를 가져옵니다.
+    var form = $("#ReplyForm").serialize();
+
+    // 추가하려는 데이터를 직렬화된 데이터에 추가합니다.
+    var additionalData = "gobo_no=" + data;
+
+    // 추가 데이터를 직렬화된 데이터에 추가합니다.
+    form += "&" + additionalData;
+
 	$.ajax({
 			url: "/sm/insertReply.do",
-			data: {data: gobo_no, content:rebo_content},
+			data: form,
 			type: "post",
 			dataType: "json",
 			success: function() {
-				
+				location.href='/sm/getDetailGobo.do?gobo_no='+data;
+				console.log("댓글 등록 성공");
 			},
 			error: function() {
-				alert("jdbc로 넘기지도 못함");
+				
 			}
 		});
 		
