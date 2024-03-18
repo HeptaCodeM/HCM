@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +48,8 @@
 				<div class="app-container container-fluid">
 					<div class="card card-flush h-md-50 mb-xl-10">
 						<div class="card-header pt-5" style="display: block; margin:100px auto 120px; text-align:center;">
-							<c:if test="${commuteInTime eq '' || commuteInTime eq null}">
+						${commuteInTime}//
+							<c:if test="${commuteInTime eq null || commuteInTime eq ''}">
 								<a href="/hr/commute/registCommuteOk.do" class="btn btn-primary fs-3x">
 									<i class="ki-duotone ki-entrance-left fs-5x">
 										<span class="path1"></span>
@@ -60,11 +62,12 @@
 							</c:if>
 							<c:if test="${commuteInTime ne null && commuteInTime ne ''}">
 								<div style="padding:20px 0;">
+									<fmt:parseDate var="dateObject" value="${commuteInTime}" pattern="EEE MMM dd HH:mm:ss zzz yyyy" />
 									<h4>출근등록 : ${commuteInTime}</h4>
 								</div>
 								<c:if test="${commuteOutTime ne null && commuteOutTime ne ''}">
 								<div style="padding:0 0 20px;">
-									<h4>출근퇴근 : ${commuteOutTime}</h4>
+									<h4>퇴근등록 : ${commuteOutTime}</h4>
 								</div>
 								</c:if>
 								<a href="/hr/commute/registCommuteOk.do" class="btn btn-primary fs-3x">
