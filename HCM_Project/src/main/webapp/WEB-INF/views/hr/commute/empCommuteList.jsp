@@ -82,6 +82,7 @@
 											<th class="center">일자</th>
 											<th class="center">출근시간</th>
 											<th class="center">퇴근시간</th>
+											<th class="center">근무시간</th>
 											<th class="center">결근/조퇴</th>
 											<th class="center">비고</th>
 										</tr>
@@ -91,6 +92,7 @@
 										<col width="200px">
 										<col width="150px">
 										<col width="150px">
+										<col width="80px">
 										<col width="80px">
 										<col width="*">
 									</colgroup>
@@ -112,16 +114,21 @@
 												<fmt:formatDate value="${list.emco_out_dt}" pattern="HH:mm:ss" />
 											</td>
 											<td class="center">
-												<c:if test="${list.duration_hour < 9}">
-													<c:if test="${list.duration_hour == 0}">
-														<span style="color:#B40404;">결근</span>
+												${list.duration_hour}
+											</td>
+											<td class="center">
+												<c:if test="${weekName ne '토요일' and weekName ne '일요일'}">
+													<c:if test="${list.duration_hour < 9}">
+														<c:if test="${list.duration_hour == 0}">
+															<span style="color:#B40404;">결근</span>
+														</c:if>
+														<c:if test="${list.duration_hour > 0}">
+															<span style="color:#04B404;">조퇴</span>
+														</c:if>
 													</c:if>
-													<c:if test="${list.duration_hour > 0}">
-														<span style="color:#04B404;">조퇴</span>
+													<c:if test="${list.duration_hour >= 9}">
+														<span style="color:#08088A;">조퇴</span>
 													</c:if>
-												</c:if>
-												<c:if test="${list.duration_hour >= 9}">
-													<span style="color:#08088A;">조퇴</span>
 												</c:if>
 											</td>
 											<td class="left">

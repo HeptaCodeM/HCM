@@ -100,7 +100,7 @@
 
 
 	<!-- HttpFirewall 빈을 등록합니다. -->
-	<security:http-firewall ref="httpFirewall"/>
+	<security:http-firewall ref="httpFirewall" />
 
 
 	<security:authentication-manager>
