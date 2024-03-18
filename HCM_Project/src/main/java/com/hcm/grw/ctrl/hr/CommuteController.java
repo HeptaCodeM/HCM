@@ -3,6 +3,7 @@ package com.hcm.grw.ctrl.hr;
 import java.io.IOException;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,14 +46,18 @@ public class CommuteController {
 		}
 		
 		String empl_id = authentication.getName();
-		String commuteInTime = "";
-		String commuteOutTime = "";
+		Date commuteInTime = null;
+		Date commuteOutTime = null;
 		CommuteDto cgDto = commuteService.selectCommuteDayInfo(empl_id);
 		if(cgDto != null) {
-			commuteInTime = StringUtils.defaultIfEmpty(cgDto.getEmco_in_dt().toString(), "");
-			commuteOutTime = StringUtils.defaultIfEmpty(cgDto.getEmco_out_dt().toString(), "");
+			if(cgDto.getEmco_in_dt() != null) {
+				commuteInTime = cgDto.getEmco_in_dt();
+			}
+			if(cgDto.getEmco_out_dt() != null) {
+				commuteOutTime = cgDto.getEmco_out_dt();
+			}
 		}
-	
+
 		model.addAttribute("commuteInTime", commuteInTime);
 		model.addAttribute("commuteOutTime", commuteOutTime);
 		
