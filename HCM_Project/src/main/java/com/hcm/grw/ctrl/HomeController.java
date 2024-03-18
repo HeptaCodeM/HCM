@@ -76,21 +76,6 @@ public class HomeController {
 		request.getRequestDispatcher("/WEB-INF/error/error500.jsp").forward(request, response);
 	}
 
-	@GetMapping("/login.do")
-	public String login(String error, String logout, Model model) {
-		log.info("error : {}", error);
-		log.info("logout : {}", logout);
-
-		if (error != null) {
-			model.addAttribute("error", "로그인 오류! 계정을 확인하세요.");
-		}
-
-		if (logout != null) {
-			model.addAttribute("logout", "로그아웃!!");
-		}
-
-		return "login";
-	}
 
 	@GetMapping("/mainTmp.do")
 	public String mainTmp() {

@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -66,7 +68,10 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/hr/employee/registAdmin.do")
-	public @ResponseBody void registEmployeeOk(@RequestParam("empl_picture") List<MultipartFile> file, @RequestParam Map<String, String> map, HttpServletResponse resp, Authentication authentication) throws IOException {
+	public @ResponseBody void registEmployeeOk(@RequestParam("empl_picture") List<MultipartFile> file, 
+												@RequestParam Map<String, String> map, 
+												HttpServletResponse resp, 
+												Authentication authentication) throws IOException {
 		log.info("EmployeeController registEmployeeOk 등록처리");
 		log.info("input map : {}", map);
 		log.info("MultipartFile : {}", file);
@@ -119,10 +124,18 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/hr/employee/modify.do")
-	public String employeeModify(Model model, Authentication authentication) {
+	public String employeeModify(Model model, Authentication authentication, HttpServletResponse resp) throws IOException {
 		log.info("EmployeeController employeeModify 수정페이지 진입");
+		resp.setContentType("text/html;charset=utf-8;");
 		
-		String empl_id = authentication.getName();
+		String empl_id = "";
+		if(authentication == null) {
+			resp.getWriter().print(Function.alertHistoryBack("로그인 정보가 없습니다.", "", ""));
+			return null;
+		}else {
+			empl_id = authentication.getName();
+		}
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empl_id", empl_id);
 
@@ -137,11 +150,21 @@ public class EmployeeController {
 	
 	
 	@PostMapping("/hr/employee/modify.do")
-	public @ResponseBody void employeeModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, @RequestParam Map<String, String> map, HttpServletResponse resp, Authentication authentication) throws IOException {
+	public @ResponseBody void employeeModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, 
+												@RequestParam Map<String, String> map, 
+												HttpServletResponse resp, 
+												Authentication authentication) throws IOException {
 		log.info("EmployeeController employeeModifyOk 수정처리");
 		resp.setContentType("text/html;charset=utf-8;");
 		
-        String empl_modify_id = authentication.getName();
+        String empl_modify_id = "";
+		if(authentication == null) {
+			resp.getWriter().print(Function.alertHistoryBack("로그인 정보가 없습니다.", "", ""));
+			return;
+		}else {
+			empl_modify_id = authentication.getName();
+		}
+
         EmployeeDto emp = new EmployeeDto();
 
         emp.setEmpl_phone(map.get("empl_phone"));
@@ -179,6 +202,40 @@ public class EmployeeController {
 		resp.getWriter().print(msg);
 	}
 
+
+	// 차후 rest로 변경, 사원 간략정보 확인용
+	@GetMapping("/hr/employee/selectEmployeeOne.do")
+	public EmployeeDto selectEmployeeOne(String empl_id, HttpServletResponse resp) throws IOException {
+		log.info("EmployeeController employeeModify 수정페이지 진입");
+		resp.setContentType("text/html; charset=utf-8");
+		
+		if(StringUtils.isEmpty(empl_id)) {
+			resp.getWriter().print(Function.alertHistoryBack("요청 사번이 없습니다.", "", ""));
+			return null;
+		}
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("empl_id", empl_id);
+
+		EmployeeDto empInfo = employeeListService.selectOneEmployee(map);
+		byte[] empPic = empInfo.getEmpl_picture();
+		empInfo.setEmpl_picture_str(Function.blobImageToString(empPic));
+		
+		return empInfo;
+	}
+
+	@GetMapping("/hr/employee/chgPwd.do")
+	public String chgPwd(Authentication authentication, HttpServletResponse resp) throws IOException {
+		log.info("EmployeeController chgPwd 변경 진입");
+		resp.setContentType("text/html; charset=utf-8");
+		
+		if(authentication == null) {
+			resp.getWriter().print(Function.alertHistoryBack("로그인 정보가 없습니다.", "", ""));
+			return null;
+		}
+		
+		return "hr/employee/chgPwd";
+	}
 	
 	
 }

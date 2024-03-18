@@ -4,7 +4,7 @@
 String hrLeftMenu [] = {"조직관리", "증명서관리", "인사발령관리", "근태관리" , "회사정보관리"};
 // 소분류 메뉴명
 String hrSubLeftMenu [][] = {
-		{"부서관리","직위관리","직책관리", "정보수정", "사원등록", "사원조회"},		//hrLeftMenu[0]
+		{"부서관리","직위관리","직책관리", "정보수정", "사원등록", "사원조회", "비밀번호변경"},		//hrLeftMenu[0]
 		{"증명서리스트"},					//hrLeftMenu[1]
 		{"인사발령조회", "인사발령관리(관리자)"},	//hrLeftMenu[2]
 		{"출퇴근등록", "출퇴근현황"},			//hrLeftMenu[3]
@@ -12,7 +12,7 @@ String hrSubLeftMenu [][] = {
 };
 //소분류 링크
 String hrSubLinkLeftMenu [][] = {
-		{"/hr/commonCode/roleList.do?role=DT","/hr/commonCode/roleList.do?role=RK","/hr/commonCode/roleList.do?role=PN", "/hr/employee/modify.do", "/hr/employee/registAdmin.do", "/hr/employee/list.do"},		//hrLeftMenu[0]
+		{"/hr/commonCode/roleList.do?role=DT","/hr/commonCode/roleList.do?role=RK","/hr/commonCode/roleList.do?role=PN", "/hr/employee/modify.do", "/hr/employee/registAdmin.do", "/hr/employee/list.do", "/hr/employee/chgPwd.do"},		//hrLeftMenu[0]
 		{"/hr/certificate/certificate.do"},									//hrLeftMenu[1]
 		{"#", "#"},															//hrLeftMenu[2]
 		{"/hr/commute/registCommute.do", "/hr/commute/empCommuteList.do"},	//hrLeftMenu[3]
