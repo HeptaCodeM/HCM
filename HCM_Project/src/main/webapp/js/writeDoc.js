@@ -34,13 +34,14 @@ function dragElement(elmnt) {
         document.onmousemove = null;
     }
 }
-var docData;
 // Doc_jstree
+var docData;
+
 onload = function() {
 	document.getElementById('getTemplate').addEventListener('click', function(e) {
 		var selNode = $('#jstree').jstree('get_selected')
 		
-		console.log(selNode)
+		console.log("selNode: "+selNode)
 		if (selNode.length == 0) {
 			alert('템플릿을 선택해주세요');
 			return;
@@ -55,6 +56,7 @@ onload = function() {
 		}).then(resp => {
 			return resp.text();
 		}).then(data => {
+			console.log("getTemplate: "+data);
 			$("#template_div").hide();
 			$("#editor_div").show();
 			document.getElementById('closeBtn').click()
@@ -100,9 +102,9 @@ onload = function() {
 }
 
 
-function templateLoad() {
+$(document).ready(function(){
 	
-}
+});
 
 
 

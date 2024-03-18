@@ -93,6 +93,7 @@
 		float: right;
 	}
 	
+	/* 에디터 내부 사이즈 조정 */
 	.ck_content_detail {
 		max-width: 600px;
 		margin: 0px auto;

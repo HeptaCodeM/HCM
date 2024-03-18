@@ -23,9 +23,7 @@ import com.hcm.grw.model.service.hr.CommonCodeService;
 public class CommonCodeController {
 
 	@Autowired
-	private CommonCodeService codeService;
-	
-	
+	private CommonCodeService codeService;		
 	
 	@GetMapping(value = "/hr/commonCode/roleList.do")
 	public String roleList(Model model, String role) {

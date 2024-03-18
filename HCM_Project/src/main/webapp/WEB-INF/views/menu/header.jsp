@@ -179,11 +179,9 @@
 					</div>
 				</div>
 			</div>
-			<!--end::Header container -->
 		</div>
 		
 		<!-- ------------------------------ 알림 영역 사작 ------------------------------ -->
-		<!--end::Header -->
 		<div id="kt_activities" class="bg-body drawer drawer-end drawer-end" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '720px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle" data-kt-drawer-close="#kt_activities_close" style="width: 600px !important;">
 			<div class="card shadow-none border-0 rounded-0">
 				<div class="card-header" id="kt_activities_header">

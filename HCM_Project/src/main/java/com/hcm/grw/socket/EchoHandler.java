@@ -77,8 +77,13 @@ public class EchoHandler extends TextWebSocketHandler {
 		chatDto.setCh_message(msg);
 		String json = new Gson().toJson(chatDto);
 		
-		userSessionsMap.get(target).sendMessage(new TextMessage(user.getEmpl_name() + "님으로 부터 메세지 도착\n" + msg));
-		userSessionsMap.get(target).sendMessage(new TextMessage(json));
+		if(userSessionsMap.get(target) != null) {
+			// 대상이 접속중인 경우
+			userSessionsMap.get(target).sendMessage(new TextMessage(user.getEmpl_name() + "님으로 부터 메세지 도착\n" + msg));
+			userSessionsMap.get(target).sendMessage(new TextMessage(json));
+		} else {	
+			// 비접속중인경우
+		}
 		
 		log.info(session.getId());
 		

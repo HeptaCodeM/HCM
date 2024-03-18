@@ -65,10 +65,8 @@ save.addEventListener("click",function(){
 	
 });
 
-onload = function() {
-	document.getElementById('delBtn').addEventListener('click', delSign);
-	document.getElementById('defaultBtn').addEventListener('click', setDefault);
-}
+document.getElementById('delBtn').addEventListener('click', delSign);
+document.getElementById('defaultBtn').addEventListener('click', setDefault);
 
 function delSign() {
 	sweetAlertConfirm("서명을 삭제할까요?", function() {

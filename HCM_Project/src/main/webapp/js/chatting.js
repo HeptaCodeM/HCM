@@ -22,8 +22,7 @@ onload = function() {
 	})
 	
 	ws.onmessage = function(e) {
-		
-		console.log(e);
+		console.log('웹소켓 서버 수신')
 
 		if (!e.data.includes('님으로 부터 메세지 도착')) {
 			console.log('유저객체');
@@ -73,14 +72,14 @@ onload = function() {
 
 	document.getElementById('send').addEventListener('click', sendMessage);
 	ws.onclose = function() {
-		
 		console.log('웹소켓 연결 해제')
+		ws = new WebSocket('ws://localhost:8080/hcmWs.do');
 	}
 
 }
 
 function sendMessage() {
-	
+	console.log(ws);
 	if(ws === null) {
 		ws = new WebSocket('ws://localhost:8080/hcmWs.do');
 		ws.onopen = function() {
@@ -302,7 +301,7 @@ function isJson(msg) {
 	return true;
 }
 
-// 상대방 목록
+// 대화상대 목록
 function chatUserList() {
 	var myId = document.getElementById('id').value;
 	fetch('/chatUserList.do')
@@ -367,11 +366,61 @@ function chatUserList() {
 
 
 
+var alDiv1 = document.createElement('div'); // 루트 레벨
+var alInput1 = document.createElement('input'); // 1 레벨
+var alDiv2 = document.createElement('div'); // 1 레벨
+var alDiv3 = document.createElement('div'); // 1 레벨
+var alDiv4 = document.createElement('div'); // 1 레벨
+var alI1 = document.createElement('i'); // 3레벨
+var alSpan1 = document.createElement('span'); // 3-1레벨
+var alSpan2 = document.createElement('span'); // 3-1레벨
+var alSpan3 = document.createElement('span'); // 3-1레벨
 
 
+var alDiv5 = document.createElement('div'); // 4 레벨
+var alDiv6 = document.createElement('div'); // 4 레벨
+var alDiv7 = document.createElement('div'); // 5 레벨
+var alDiv8 = document.createElement('div'); // 5 레벨
+var alDiv10 = document.createElement('div'); // 6 레벨
 
+var alA1 = document.createElement('a') // 7-1레벨
+var alI2 = document.createElement('i'); // 7-1레벨
+var alSpan4 = document.createElement('span'); // 7-2레벨
+var alSpan5 = document.createElement('span'); // 7-2레벨
 
+var alDiv9 = document.createElement('div'); // 8 레벨
+var alDiv11 = document.createElement('div'); // 10 레벨
+var alDiv12 = document.createElement('div'); // 10 레벨
+var alDiv13 = document.createElement('div'); // 12 레벨
+var alImg = document.createElement('img'); // 13레벨
 
+alDiv1.setAttribute('class','timeline-item');
+alInput1.setAttribute('type','hidden');
+alDiv2.setAttribute('class','timeline-line');
+alDiv3.setAttribute('class','timeline-icon');
+alDiv4.setAttribute('class','timeline-content mb-10 mt-n1');
+alDiv1.append(alInput1);
+alDiv1.append(alDiv2);
+alDiv1.append(alDiv3);
+alDiv1.append(alDiv4);
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
+alDiv1.setAttribute('class','');
 
 
 
