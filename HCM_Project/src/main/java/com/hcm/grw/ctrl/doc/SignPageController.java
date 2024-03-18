@@ -12,10 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hcm.grw.dto.doc.TemplateDto;
 import com.hcm.grw.dto.hr.EmpSignDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.doc.ISignFavoService;
+import com.hcm.grw.model.service.doc.ITemplateService;
 import com.hcm.grw.model.service.hr.EmpSignService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +33,9 @@ public class SignPageController {
 	
 	@Autowired
 	private EmpSignService signService;
+	
+	@Autowired
+	private ITemplateService temService;
 	
 	@GetMapping("write.do")
 	public String write() {
@@ -50,12 +56,15 @@ public class SignPageController {
 	}
 	
 	@GetMapping("writeDoc.do")
-	public String writeDoc(Authentication auth, Model model) {
+	public String writeDoc(Authentication auth, Model model, String sidt_temp_cd) {
+		log.info("SignTreeController writeDoc.do 기안문 작성 페이지로 로그인 정보 전달");
 		if(auth != null) {
 			String id = auth.getName();
 			List<String> list = List.of(id);
 			List<EmployeeDto> dto = service.getFav(list);
+			TemplateDto temDto = temService.getDetailTemp(sidt_temp_cd);
 			model.addAttribute("loginInfo", dto.get(0));
+			model.addAttribute("temDto", temDto);			
 		}
 		return "doc/writeDoc";
 	}
