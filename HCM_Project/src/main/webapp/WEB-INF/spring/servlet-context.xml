@@ -37,4 +37,16 @@
 		</websocket:handshake-interceptors>
 	</websocket:handlers>
 	
+	
+	
+	
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.hcm.grw.interceptor.DuplicateRequestHandler"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	
 </beans>
