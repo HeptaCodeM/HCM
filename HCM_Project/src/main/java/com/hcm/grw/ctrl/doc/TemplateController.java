@@ -130,9 +130,10 @@ public class TemplateController {
 
 	@PostMapping(value = "/getTemplate.do", produces = "text/html; charset=UTF-8")
 	@ResponseBody
-	public String getTemplate(String sidt_temp_cd) {
+	public String getTemplate(String sidt_temp_cd, Model model) {
 		log.info("TemplateController 선택한 템플릿 에디터로 가져오는 getTemplate");
 		String getTemp = service.getTemplate(sidt_temp_cd);
+		model.addAttribute("getTemp", getTemp);
 		return getTemp;
 
 	}

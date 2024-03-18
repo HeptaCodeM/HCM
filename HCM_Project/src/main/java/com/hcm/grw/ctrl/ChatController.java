@@ -28,8 +28,8 @@ public class ChatController {
 	private EmployeeListService employeeListService;
 		
 	@PostMapping(value = "sendMessage.do", produces = "text/html; charset=UTF-8")
-	public ResponseEntity<?> sendMessage(@RequestBody Map<String, Object> map) {
-		log.info("ChatController sendMessage GET 메시지 전송 : {}", map);
+	public void sendMessage(@RequestBody Map<String, Object> map) {
+		log.info("ChatController sendMessage POST 메시지 전송 : {}", map);
 		try {
 			ChatDto dto = new ChatDto();
 			dto.setCh_sender((String)map.get("ch_sender"));
@@ -39,7 +39,6 @@ public class ChatController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ResponseEntity.ok("전송 성공");
 	}
 	
 	@GetMapping(value = "loadMessage.do", produces = "text/html; charset=UTF-8")

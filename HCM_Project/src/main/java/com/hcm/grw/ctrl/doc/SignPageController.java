@@ -13,11 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.hcm.grw.dto.doc.TemplateDto;
 import com.hcm.grw.dto.AlarmDto;
 import com.hcm.grw.dto.hr.EmpSignDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.AlarmService;
 import com.hcm.grw.model.service.doc.ISignFavoService;
+import com.hcm.grw.model.service.doc.ITemplateService;
 import com.hcm.grw.model.service.hr.EmpSignService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +36,18 @@ public class SignPageController {
 	private EmpSignService signService;
 	
 	@Autowired
+
+	private ITemplateService temService;
+	
+	@GetMapping("write.do")
+	public String write() {
+		log.info("SignTreeController write.do GET 문서작성 페이지");
+		return "doc/write";
+	}
+
 	private AlarmService alarmService;
 	
+
 	
 	@GetMapping("signFavo.do")
 	public String signFavo(Model model, HttpSession session) {
@@ -56,12 +68,15 @@ public class SignPageController {
 	}
 	
 	@GetMapping("writeDoc.do")
-	public String writeDoc(Authentication auth, Model model) {
+	public String writeDoc(Authentication auth, Model model, String sidt_temp_cd) {
+		log.info("SignTreeController writeDoc.do 기안문 작성 페이지로 로그인 정보 전달");
 		if(auth != null) {
 			String id = auth.getName();
 			List<String> list = List.of(id);
 			List<EmployeeDto> dto = service.getFav(list);
+			TemplateDto temDto = temService.getDetailTemp(sidt_temp_cd);
 			model.addAttribute("loginInfo", dto.get(0));
+			model.addAttribute("temDto", temDto);			
 		}
 		return "doc/writeDoc";
 	}
