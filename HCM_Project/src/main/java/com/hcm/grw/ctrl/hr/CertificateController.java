@@ -9,6 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hcm.grw.dto.hr.SignDocBoxDto;
 import com.hcm.grw.model.service.hr.SignDocBoxService;
@@ -48,6 +50,20 @@ public class CertificateController {
 		System.out.println(boxDto.getSidb_doc_json());
 		model.addAttribute("boxDto",boxDto);
 		return "hr/certificate/selectOneCertificate";
+	}
+	
+	
+	@GetMapping(value = "/hr/certificate/downloadDoc.do")
+	@ResponseBody
+	public void downloadDoc(@RequestParam("emdh_type") String emdh_type ,
+							@RequestParam("emdn_id") String emdn_id) {
+		Map<String, Object> docMap = new HashMap<String, Object>();
+		
+		System.out.println(emdh_type);
+		System.out.println(emdn_id);
+		
+//		docMap.put("", );
+//		boxService.downloadOneDoc(docMap);
 	}
 	
 }
