@@ -5,16 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<title>조직관리</title>
-
-<style type="text/css">
-.table th {  width:170px;vertical-align:middle; }
-.form-check-input.radio {margin-right:10px;}
-.form-check-input.radio.last {margin-left:30px;}
-</style>
-
+	<meta charset="UTF-8">
+	<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
+	<title>조직관리</title>
+	
+	<style type="text/css">
+	.table th {  width:170px;vertical-align:middle; }
+	.form-check-input.radio {margin-right:10px;}
+	.form-check-input.radio.last {margin-left:30px;}
+	</style>
+	<script src="/js/hr/employee.js" type="text/javascript"></script>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -48,7 +48,7 @@
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
 
-								<form name="form1" method="post" action="/hr/employee/modify.do" enctype="multipart/form-data">
+								<form name="modifyEmpForm" method="post" action="/hr/employee/modifyOk.do" enctype="multipart/form-data">
 									<table class="table table-bordered">
 										<tr class="success">
 											<th>사번</th>
@@ -88,8 +88,8 @@
 										</tr>
 
 										<tr>
-											<th class="required">전화번호</th>
-											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_phone" maxlength="15" value="${empInfo.empl_phone}" required="required"></td>
+											<th class="required">휴대폰</th>
+											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_phone" id="empl_phone" maxlength="15" value="${empInfo.empl_phone}" required="required"></td>
 										</tr>
 										<tr>
 											<th>내선번호</th>
@@ -127,7 +127,7 @@
 										</tr>
 										<tr>
 											<td colspan="3" style="text-align:center;">
-												<button class="btn btn-primary me-10" id="kt_button_1">
+												<button type="button" class="btn btn-primary me-10" id="kt_button_1" onclick="modifyEmployee()">
 												    <span class="indicator-label">
 												        수정
 												    </span>

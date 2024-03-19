@@ -121,7 +121,8 @@ public class HomeController {
 	public String delCookiesTest(HttpServletRequest req, HttpServletResponse resp) {
 		log.info("testCk 쿠키삭제");
 		
-		CookiesMgr.delCookies(req, resp);
+		//CookiesMgr.delCookies(req, resp, "All");	//모두삭제
+		CookiesMgr.delCookies(req, resp, "testCk");	//단일삭제
 		
 		return "redirect:/";
 	}

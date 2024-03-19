@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
+@RequestMapping("/hr/employee/**")
 public class EmployeeController {
 
 	@Autowired
@@ -46,7 +48,7 @@ public class EmployeeController {
 	@Autowired
 	private PasswordEncoder encoder;
 
-	@GetMapping("/hr/employee/registAdmin.do")
+	@GetMapping("registAdmin.do")
 	public String registEmployee(Model model) {
 		log.info("EmployeeController registEmployee 진입");
 		
@@ -70,7 +72,7 @@ public class EmployeeController {
 		return "/hr/employee/registAdmin";
 	}
 
-	@PostMapping("/hr/employee/registAdmin.do")
+	@PostMapping("registAdmin.do")
 	public @ResponseBody void registEmployeeOk(@RequestParam("empl_picture") List<MultipartFile> file, 
 												@RequestParam Map<String, String> map, 
 												HttpServletResponse resp, 
@@ -126,7 +128,7 @@ public class EmployeeController {
 		resp.getWriter().print(sb);
 	}
 
-	@GetMapping("/hr/employee/modify.do")
+	@GetMapping("modify.do")
 	public String employeeModify(Model model, Authentication authentication, HttpServletResponse resp) throws IOException {
 		log.info("EmployeeController employeeModify 수정페이지 진입");
 		resp.setContentType("text/html;charset=utf-8;");
@@ -152,7 +154,7 @@ public class EmployeeController {
 	}	
 	
 	
-	@PostMapping("/hr/employee/modify.do")
+	@PostMapping("modifyOk.do")
 	public @ResponseBody void employeeModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, 
 												@RequestParam Map<String, String> map, 
 												HttpServletResponse resp, 
@@ -207,7 +209,7 @@ public class EmployeeController {
 
 
 	// 차후 rest로 변경, 사원 간략정보 확인용
-	@GetMapping("/hr/employee/selectEmployeeOne.do")
+	@GetMapping("selectEmployeeOne.do")
 	public EmployeeDto selectEmployeeOne(String empl_id, HttpServletResponse resp) throws IOException {
 		log.info("EmployeeController employeeModify 수정페이지 진입");
 		resp.setContentType("text/html; charset=utf-8");
@@ -227,7 +229,7 @@ public class EmployeeController {
 		return empInfo;
 	}
 
-	@GetMapping("/hr/employee/updatePwd.do")
+	@GetMapping("updatePwd.do")
 	public String chgPwd(Authentication authentication, 
 						 HttpServletResponse resp) throws IOException {
 
@@ -243,7 +245,7 @@ public class EmployeeController {
 	}
 
 	
-	@PostMapping("/hr/employee/updatePwdOk.do")
+	@PostMapping("updatePwdOk.do")
 	public @ResponseBody void updatePwdOk(@RequestParam Map<String, Object> chgPwdMap,
 							  Authentication authentication,
 							  HttpServletResponse resp) throws IOException {
@@ -279,6 +281,19 @@ public class EmployeeController {
 		}else {
 			resp.getWriter().print(Function.alertHistoryBack("현재 비밀번호와 일치하지 않습니다.", "", ""));
 		}
-	}	
+	}
+	
+	
+	@GetMapping("authManageList.do")
+	public String authManageList(Model model) throws IOException {
+		log.info("LoginController authManageList 권한리스트");
+	
+		List<EmployeeDto> lists = employeeService.getAuthList();
+		
+		model.addAttribute("lists", lists);
+		
+		return "hr/employee/authManageList";
+	}
+	
 	
 }

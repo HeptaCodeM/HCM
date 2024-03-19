@@ -39,7 +39,7 @@
 		AND E.EMPL_DELFLAG = 'N'
 	</select>
 
-	<!-- 인증번호 메일발송 -->
+	<!-- 인증번호 메일발송용 사원체크 -->
 	<select id="getInitPwdcheck" parameterType="Map" resultType="Integer">
 		SELECT COUNT(*)
 		FROM EMPLOYEE

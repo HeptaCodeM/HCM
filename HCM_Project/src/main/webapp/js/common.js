@@ -189,6 +189,13 @@ function checkEmail(val) {
 	return Regex.test(val);
 }
 
+/* 날짜형식 체크(0000-00-00) */
+function checkDate(val) {
+	var Regex = /^(?!0000)(?:(?:19|20)\d{2})-(?:(?:0[1-9]|1[0-2]))-(?:(?:0[1-9]|[12][0-9]|3[01]))$/;
+	return Regex.test(val);
+}
+
+
 function checkId(val) {
 	var regEx = /^[a-zA-Z0-9_]{8,12}$/;
 	return regEx.test(val);

@@ -83,21 +83,24 @@ public class CookiesMgr extends HttpServlet {
 	* 쿠키값 삭제
 	* @param req : HttpServletRequest
 	* @param res : HttpServletResponse
+	* @param cName : 쿠키명, 쿠키명 입력(단일삭제), 쿠키명에 ALL입력 시 모두 삭제
 	* @return : void
 	* @author : SDJ
 	* @since : 2024.03.06
 	*/
 	/* delCookies */
-	public static void delCookies(HttpServletRequest req, HttpServletResponse res) {
+	public static void delCookies(HttpServletRequest req, HttpServletResponse res, String cName) {
 		Cookie[] loginCookie = req.getCookies();
 		if(loginCookie != null) {
 			for(Cookie c : loginCookie) {
-				c.setPath("/");
-				c.setMaxAge(0);
-				System.out.println(c.getName());
-				System.out.println(c.getValue());
-				System.out.println(c.getMaxAge());
-				res.addCookie(c);
+				if(c.getName().equalsIgnoreCase(cName) || cName.equals("ALL")) {
+					c.setPath("/");
+					c.setMaxAge(0);
+					System.out.println(c.getName());
+					System.out.println(c.getValue());
+					System.out.println(c.getMaxAge());
+					res.addCookie(c);
+				}
 			}
 		}
 	}

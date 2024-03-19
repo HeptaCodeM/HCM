@@ -143,7 +143,7 @@ function tkCallBackFinish(){
 						<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
 							<div></div>
 							<!--begin::Link-->
-							<a href="authentication/layouts/corporate/reset-password.html" class="link-primary">비밀번호찾기</a>
+							<a href="/login/restPwd.do" class="link-primary">비밀번호찾기</a>
 							<!--end::Link-->
 						</div>
 						<!--end::Wrapper-->
