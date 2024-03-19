@@ -53,7 +53,7 @@ function pdfPrint() {
 			// 파일 저장
 			doc.save(docTitle+'.pdf');
 
-			var emdh_type = 'P';
+			var emdh_type = 'D';
 			var emdn_id = document.getElementById("docNumber").value;
 			
 			fetch('/hr/certificate/downloadDoc.do?emdh_type='+emdh_type+'&emdn_id='+emdn_id,{
@@ -92,23 +92,29 @@ window.onload = function(){
 		var orgBody = document.body.innerHTML;
 		var printBody = document.getElementById("savePdfZone").innerHTML;
 		
-		document.body.innerHTML = printBody;
-		window.print();
-		document.body.innerHTML = orgBody;
+		var emdh_type = 'P';
+		var emdn_id = document.getElementById("docNumber").value;
+		
+		fetch('/hr/certificate/downloadDoc.do?emdh_type='+emdh_type+'&emdn_id='+emdn_id,{
+		method: "GET",
+		})
+		.then(response =>{
+			return response;
+			console.log(response);
+		})
+		.then(returnData => {
+			console.log(returnData);
+			document.body.innerHTML = printBody;
+			window.print();
+			document.body.innerHTML = orgBody;
+		})
+	    .catch(err => { 
+	        console.log('에러발생', err);
+	    });
+		
+		
 	});
 	
-	var testBtn = document.querySelector("#testBtn");
-	testBtn.addEventListener("click",function(){
-		console.log("작동");
-		
-		var emdh_type = 'P';
-		console.log(emdh_type);
-		
-		var emdn_id = document.getElementById("docNumber").value;
-		console.log(emdn_id);
-		
-		
-	});
 	
 }
 </script>
@@ -168,7 +174,7 @@ window.onload = function(){
 								<div>
 									<button id="savePdf" class="btn btn-primary btnLg me-10">PDF저장하기</button>
 									<button id="printPdf" class="btn btn-primary btnLg me-10">프린트하기</button>
-									<button id="testBtn" class="btn btn-primary btnLg me-10">TEST</button>
+									<button id="toDocList" onclick="javascript:history.back(-1)" class="btn btn-primary btnLg me-10">목록으로</button>
 								</div>
 							</div>
 						</div>
