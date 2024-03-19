@@ -45,11 +45,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public int getInitPwdcheck(Map<String, Object> map) {
+		
+		
+		
 		return dao.getInitPwdcheck(map);
 	}
 
 	@Override
 	public int setInitPwd(Map<String, Object> map) {
+		String empl_pwd = map.get("empl_pwd").toString();
+		String enc_empl_pwd = passwordEncoder.encode(empl_pwd);
+		map.put("empl_pwd", enc_empl_pwd);
+
 		return dao.setInitPwd(map);
 	}
 
