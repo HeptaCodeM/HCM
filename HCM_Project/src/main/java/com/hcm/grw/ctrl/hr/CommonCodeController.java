@@ -1,13 +1,16 @@
 package com.hcm.grw.ctrl.hr;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,18 +19,36 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.CommonCodeDto;
+import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.model.mapper.hr.EmployeeDao;
 import com.hcm.grw.model.service.hr.CommonCodeService;
 
 @Controller
 public class CommonCodeController {
 
 	@Autowired
-	private CommonCodeService codeService;		
+	private CommonCodeService codeService;	
+	
+	@Autowired
+	private EmployeeDao employeeDao; 
 	
 	@GetMapping(value = "/hr/commonCode/roleList.do")
-	public String roleList(Model model, String role) {
+	public String roleList(Model model, String role, Authentication authentication, HttpServletResponse response) throws IOException {
 		System.out.println(role);
+		response.setContentType("text/html;charset=utf-8;");
+		String userId = authentication.getName();
+		System.out.println(userId);
+		EmployeeDto fnEmployeeDto = employeeDao.getUserInfo(userId);
+		String empl_auth = fnEmployeeDto.getEmpl_auth();
+		if(!empl_auth.equals("ROLE_HR_ADMIN")) {
+			System.out.println(empl_auth);
+			String msg = Function.alertHistoryBack("권한이 없습니다", "", "");
+			response.getWriter().print(msg);
+//			return "redirect:./mainTmp.do";
+		}
+		
 		
 		Map<String, Object> roleMap = new HashMap<String, Object>();
 		roleMap.put("role", role);
