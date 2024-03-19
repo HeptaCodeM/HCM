@@ -138,6 +138,17 @@ public class DocBoxDaoImpl implements IDocBoxDao {
 	public SignBoxDto getMyDepth(SignBoxDto dto) {
 		return sqlSessionTemplate.selectOne(NS+"getMyDepth",dto);
 	}
+
+
+	@Override
+	public List<SignBoxDto> getMyTurnJson(SignBoxDto dto) {
+		return sqlSessionTemplate.selectList(NS+"getMyTurnJson",dto);
+
+	}
 	
+	@Override
+	public List<SignBoxDto> getIDidDocs(SignBoxDto dto) {
+		return sqlSessionTemplate.selectList(NS+"getIDidDocs",dto);
+	}
 
 }

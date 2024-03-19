@@ -119,4 +119,14 @@ public class DocBoxServiceImpl implements IDocBoxService {
 	public SignBoxDto getMyDepth(SignBoxDto dto) {
 		return dao.getMyDepth(dto);
 	}
+
+	@Override
+	public List<SignBoxDto> getMyTurnJson(SignBoxDto dto) {
+		return dao.getMyTurnJson(dto);
+	}
+	
+	@Override
+	public List<SignBoxDto> getIDidDocs(SignBoxDto dto) {
+		return dao.getIDidDocs(dto);
+	}
 }	

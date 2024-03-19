@@ -62,4 +62,7 @@ public class SignBoxDto {
 	private String appr_depth1;
 	private String appr_depth2;
 	private String max_depth;
+	private byte[] empl_picture;
+	private String empl_pictureStr;
+	private String sidb_curr_id;
 }

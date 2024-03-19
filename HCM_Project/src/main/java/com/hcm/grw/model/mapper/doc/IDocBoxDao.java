@@ -64,4 +64,10 @@ public interface IDocBoxDao {
 	//상세 조회시 자신의 depth와 max_depth 조회
 	public SignBoxDto getMyDepth(SignBoxDto dto);
 
+	//나에게 결재 요청온 문서 Json만 조회
+	public List<SignBoxDto> getMyTurnJson(SignBoxDto dto);
+
+	//내가 결재 승인한 문서 조회
+	public List<SignBoxDto> getIDidDocs(SignBoxDto dto);
+
 }

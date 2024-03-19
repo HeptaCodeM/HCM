@@ -178,13 +178,16 @@ th, td {
 									</table>
 								</div>
 								<div style="text-align: center;">
+								
+	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.sidb_curr_id}">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_3">승인</button>
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_1">반려</button>
+	</c:if>
 
-									<button type="button" class="btn btn-primary"
-										data-bs-toggle="modal" data-bs-target="#kt_modal_3">승인
-									</button>
-									<button type="button" class="btn btn-danger"
-										data-bs-toggle="modal" data-bs-target="#kt_modal_1">반려
-									</button>
+	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.empl_id and docDto1.sidb_doc_stat == 1}">
+    <button type="button" class="btn btn-primary" onclick="docEdit()">품의수정</button>
+    <button type="button" class="btn btn-danger" onclick="docCancel()">상신취소</button>
+	</c:if>
 								</div>
 							</div>
 						</div>
@@ -202,7 +205,7 @@ th, td {
 		<div class="modal-dialog">
 			<div class="modal-content position-absolute">
 				<div class="modal-header">
-					<h5 class="modal-title">결재</h5>
+					<h5 class="modal-title">승인</h5>
 
 					<!--begin::Close-->
 					<div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
