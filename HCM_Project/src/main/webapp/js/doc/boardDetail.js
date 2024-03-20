@@ -105,7 +105,8 @@ onload = function() {
 	getFile();
 	document.getElementById('downBtn').addEventListener('click', function() {
 		var sel = document.getElementById('selectFile');
-		location.href = './fileDown.do?sidf_file_num=' + sel.value
+    location.href = './fileDown.do?sidf_file_num=' + sel.value;
+
 	});
 }
 
@@ -120,6 +121,8 @@ function getFile() {
 			console.log(data);
 			console.log("데이터들고왔니?"+data.length);
 			 if (data.length === 0) {
+				var downBtn = document.getElementById('downBtn');
+   				 downBtn.disabled = true;
                 var opt = document.createElement('option');
                 opt.textContent = "첨부된 파일이 없습니다.";
                 sel.appendChild(opt);

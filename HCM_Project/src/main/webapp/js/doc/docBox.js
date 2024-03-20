@@ -4,15 +4,17 @@ function detailBoard(docNum) {
 }
 
 /*function detailBoard(docNum) {
-    var xhr = new XMLHttpRequest();
+    fetch('/doc/docBox/getDetail.do?docNum=' + docNum, {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json' 
+        },
+    })
+    .then(response => response.text()) 
+    .catch(error => console.error('Error:', error)); // 오류 처리
+}*/
 
-    // POST 요청 설정
-    xhr.open('POST', '/doc/docBox/getDetail.do', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
 
-    var data = 'docNum=' + encodeURIComponent(docNum);
-    xhr.send(data);
-    };*/
 
 $(document).ready( function () {
 	$('#myTable').DataTable({ 

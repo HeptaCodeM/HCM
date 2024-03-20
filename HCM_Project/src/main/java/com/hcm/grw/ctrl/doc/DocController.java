@@ -49,7 +49,6 @@ public class DocController {
 		dto.setSidb_doc_num(docNum);
 
 		List<SignBoxDto> docDto = docService.getDetailDocsList(dto);
-		model.addAttribute("docDto", docDto);
 		log.info("상세조회  데이터 리스트 결과{}", docDto);
 		return "/doc/docBox/boardDetail/boardDetail";
 	}
@@ -583,4 +582,67 @@ public class DocController {
 
 		FileCommonService.fileDownload(response, dto.getSidf_file_origin(), dto.getSidf_file_content());
 	}
+	
+	
+	
+	
+	
+	@GetMapping(value = "/doc/tempDocs.do")
+	public String TempDocs(Model model, HttpSession session) {
+		log.info("임시 결재문서 보관함 진입");
+		SignBoxDto dto = new SignBoxDto();
+		EmployeeDto Edto = (EmployeeDto) session.getAttribute("userInfoVo");
+
+		dto.setEmpl_id(Edto.getEmpl_id());
+
+		model.addAttribute("Edto", Edto);
+
+		List<SignBoxDto> table = dao.getTempDocs(dto);
+//		List<SignBoxDto> json = dao.getAllDocsJson(dto);
+//
+//		// 합치기
+//		List<SignBoxDto> fusion = new ArrayList<>();
+//
+//		for (int i = 0; i < table.size(); i++) {
+//			String apprName = "";
+//			String apprDepth = "";
+//			String apprFlag = "";
+//			for (int j = 0; j < json.size(); j++) {
+//				if (table.get(i).getSidb_doc_num().equals(json.get(j).getSidb_doc_num())) {
+//					apprName += json.get(j).getAppr_name() + ",";
+//					apprFlag += json.get(j).getAppr_flag() + ",";
+//					apprDepth += json.get(j).getAppr_depth() + ",";
+//				}
+//			}
+//
+//			byte[] emplImg = table.get(i).getEmpl_picture();
+//			table.get(i).setEmpl_pictureStr(Base64Utils.encodeToString(emplImg));
+//
+//			table.get(i).setAppr_name(apprName);
+//			table.get(i).setAppr_depth(apprDepth);
+//			table.get(i).setAppr_flag(apprFlag);
+//			fusion.add(table.get(i));
+//		}
+//
+//		for (int i = 0; i < table.size(); i++) {
+//			table.get(i).setAppr_name0(fusion.get(i).getAppr_name().split(",")[0].trim());
+//			table.get(i).setAppr_depth0(fusion.get(i).getAppr_depth().split(",")[0].trim());
+//			table.get(i).setAppr_flag0(fusion.get(i).getAppr_flag().split(",")[0].trim());
+//			if (fusion.get(i).getAppr_name().split(",").length >= 2) {
+//				table.get(i).setAppr_name1(fusion.get(i).getAppr_name().split(",")[1].trim());
+//				table.get(i).setAppr_depth1(fusion.get(i).getAppr_depth().split(",")[1].trim());
+//				table.get(i).setAppr_flag1(fusion.get(i).getAppr_flag().split(",")[1].trim());
+//			}
+//			if (fusion.get(i).getAppr_name().split(",").length >= 3) {
+//				table.get(i).setAppr_name2(fusion.get(i).getAppr_name().split(",")[2].trim());
+//				table.get(i).setAppr_depth2(fusion.get(i).getAppr_depth().split(",")[2].trim());
+//				table.get(i).setAppr_flag2(fusion.get(i).getAppr_flag().split(",")[2].trim());
+//			}
+//		}
+//		System.out.println(table);
+		model.addAttribute("lists", table);
+		return "/doc/tempDocs/tempDocs";
+	}
+	
+	
 }

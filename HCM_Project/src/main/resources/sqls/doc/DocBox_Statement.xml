@@ -352,5 +352,17 @@ LEFT JOIN
    		FROM SIGN_DOC_FILE
    		WHERE SIDF_FILE_NUM = #{sidf_file_num}
    </select>
+   
+   	<!-- 임시 문서함 조회  가져오기-->
+<select id="getTempDocs" resultType="SignBoxDto">	
+SELECT SDB.SIDB_DOC_NUM,
+    SDB.SIDB_DOC_WRITEDT, SDB.SIDB_DOC_TITLE, 
+    SDB.EMPL_ID, E.EMPL_NAME, 
+    e.EMPL_PICTURE, t.SIDT_TEMP_NAME, t.SIDT_TEMP_CD
+FROM SIGN_DOC_BOX sdb
+JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
+JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD 
+WHERE SDB.empl_id = #{empl_id}
+</select>
 
 </mapper>

@@ -160,5 +160,10 @@ public class DocBoxDaoImpl implements IDocBoxDao {
 	public SignFileDto getDocsDetailFile(String sidf_file_num) {
 		return sqlSessionTemplate.selectOne(NS + "getDocsDetailFile", sidf_file_num);
 	}
+	
+	@Override
+	public List<SignBoxDto> getTempDocs(SignBoxDto dto) {
+		return sqlSessionTemplate.selectList(NS+"getTempDocs",dto);
+	}
 
 }
