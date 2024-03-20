@@ -117,14 +117,16 @@
 					</table>
 				</form>
 			</div>
-			<div>
-			<table class="table table-bordered">
+			<div class="table-responsive">
+			<table id="kt_datatable_zero_configuration" class="table table-row-bordered gy-5">
 				<thead>
-					<th>사번</th>
-					<th>성명</th>
-					<th>부서</th>
-					<th>직위</th>
-					<th>직책</th>
+					<tr class="fw-semibold fs-6 text-muted">
+						<th>사번</th>
+						<th>성명</th>
+						<th>부서</th>
+						<th>직위</th>
+						<th>직책</th>
+					</tr>
 				</thead>
 				<tbody id="empSearchList">
 				</tbody>
@@ -132,7 +134,9 @@
 			</div>
 		</div>
 		<!-- 사원검색 Layer 종료 -->
-
+<script type="text/javascript">
+	$("#kt_datatable_zero_configuration").DataTable();
+</script>
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
 </body>
 </html>
