@@ -41,7 +41,7 @@ public class DocController {
 	private IDocBoxService docService;
 
 	@Autowired
-	private IDocBoxDao dao;
+	private IDocBoxDao dao;	
 
 	@GetMapping("/doc/docBox/getDetail.do")
 	public String getDetailBoard(Model model, SignBoxDto dto, String docNum, HttpSession session) {
