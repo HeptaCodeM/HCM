@@ -36,7 +36,7 @@ public class ApprDenyServiceImpl implements IApprDenyService {
 	@Transactional(readOnly = true)
 	@Override
 	public boolean finalApprove(SignBoxDto dto) {
-		int n = dao.finalJsonApprove(dto);
+		int n = dao.approveJson(dto);
 		int m = dao.finalDocApprove(dto);
 		return (n+m)>1?true:false;
 	}

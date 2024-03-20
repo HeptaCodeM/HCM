@@ -63,10 +63,8 @@
 	<update id="denyDoc">
 
 		UPDATE SIGN_DOC_BOX
-		SET SIDB_DOC_STAT = '4',SIDB_FINAL_ID=#{empl_id}, SIDB_DOC_APPRDT = CURRENT_DATE,
-		SIDB_DOC_FLAG = '2'
-		WHERE
-		SIDB_DOC_NUM = #{sidb_doc_num}
+		SET SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_STAT = '4', SIDB_FINAL_ID=#{empl_id}, SIDB_DOC_FLAG= '2'
+		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
 
 	</update>
 
@@ -83,38 +81,12 @@
 		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
 	</update>
 
-	<update id="finalDocApprove">
+	<update id="finalDocApprove">	
 		UPDATE SIGN_DOC_BOX
-		SET SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_STAT = '3', SIDB_DOC_FLAG= '1'
+		SET SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_STAT = '3', SIDB_FINAL_ID=#{empl_id}, SIDB_DOC_FLAG= '1'
 		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
 	</update>
 	
-	
-  <!-- 결재 승인처리 후 트랜잭션으로  다음 결재권자 아이디 업데이트 하기 위해서 다음 차례 사람 찾아오는 쿼리문  -->
-<select id="getNextLine" resultType="SignBoxDto" >
- SELECT  sdb.SIDB_DOC_NUM,APPR_id
-FROM SIGN_DOC_BOX sdb
-CROSS JOIN JSON_TABLE(SDB.SIDB_DOC_JSON, '$[*]' COLUMNS (
-               APPR_ID PATH '$.APPR_ID',
-               APPR_DEPTH INT PATH '$.APPR_DEPTH',
-               APPR_SIGN PATH '$.APPR_SIGN',
-               APPR_DT PATH '$.APPR_DT',
-               APPR_FLAG PATH '$.APPR_FLAG',
-               APPR_REPLY PATH '$.APPR_REPLY'
-            )) j
-WHERE SIDB_DOC_NUM = #{sidb_doc_num} AND appr_flag = 0    
-							  AND APPR_DEPTH = (
-										        SELECT MIN(SDBJ2.APPR_DEPTH)
-										        FROM JSON_TABLE(
-										                SDB.SIDB_DOC_JSON, '$[*]' 
-										                COLUMNS (
-										                    APPR_ID  PATH '$.APPR_ID',
-										                    APPR_FLAG  PATH '$.APPR_FLAG',
-										                    APPR_DEPTH  PATH '$.APPR_DEPTH'
-										                )
-										            ) AS SDBJ2
-										        WHERE SDBJ2.APPR_FLAG='0'
-										   	   )	
-</select>										   	   
+										   	   
 	
 </mapper>
