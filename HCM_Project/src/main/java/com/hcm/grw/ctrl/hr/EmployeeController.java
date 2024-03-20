@@ -131,13 +131,13 @@ public class EmployeeController {
 	}
 
 	@GetMapping("empModify.do")
-	public String empModify(Model model, Authentication authentication, HttpServletResponse resp) throws IOException {
+	public String empModify(Model model, Authentication authentication, HttpServletResponse resp) {
 		log.info("EmployeeController empModify 수정페이지 진입");
 		resp.setContentType("text/html;charset=utf-8;");
 		
 		String empl_id = "";
 		if(authentication == null) {
-			resp.getWriter().print(Function.alertHistoryBack("로그인 정보가 없습니다.", "", ""));
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "", "");
 			return null;
 		}else {
 			empl_id = authentication.getName();
@@ -166,7 +166,7 @@ public class EmployeeController {
 		
         String empl_modify_id = "";
 		if(authentication == null) {
-			resp.getWriter().print(Function.alertHistoryBack("로그인 정보가 없습니다.", "", ""));
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
 			return;
 		}else {
 			empl_modify_id = authentication.getName();
@@ -197,27 +197,26 @@ public class EmployeeController {
 		int n = employeeService.updateEmployee(emp);
 		String msg;
 		if(n < 1) {
-			msg = Function.alertHistoryBack("수정 시 오류가 발생하였습니다.", "", "");
-
+			Function.alertHistoryBack(resp, "수정 시 오류가 발생하였습니다.", "", "");
+			return;
 			//sb.append("alert('수정 시 오류가 발생하였습니다.'); history.back();");
 		}else {
-			msg = Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/empModify.do", "","","");
+			Function.alertLocation(resp, "정상적으로 수정 되었습니다.", "/hr/employee/empModify.do", "","","");
+			return;
 			//sb.append("alert('정상적으로 수정 되었습니다.');");
 			//sb.append("location.href='/hr/employee/list.do';");
 		}
-		
-		resp.getWriter().print(msg);
 	}
 
 
 	// 차후 rest로 변경, 사원 간략정보 확인용
 	@GetMapping("selectEmployeeOne.do")
-	public EmployeeDto selectEmployeeOne(String empl_id, HttpServletResponse resp) throws IOException {
+	public EmployeeDto selectEmployeeOne(String empl_id, HttpServletResponse resp) {
 		log.info("EmployeeController employeeModify 수정페이지 진입");
 		resp.setContentType("text/html; charset=utf-8");
 		
 		if(StringUtils.isEmpty(empl_id)) {
-			resp.getWriter().print(Function.alertHistoryBack("요청 사번이 없습니다.", "", ""));
+			Function.alertHistoryBack(resp, "요청 사번이 없습니다.", "", "");
 			return null;
 		}
 		
@@ -233,13 +232,13 @@ public class EmployeeController {
 
 	@GetMapping("updatePwd.do")
 	public String chgPwd(Authentication authentication, 
-						 HttpServletResponse resp) throws IOException {
+						 HttpServletResponse resp) {
 
 		log.info("EmployeeController updatePwd 변경 진입");
 		resp.setContentType("text/html; charset=utf-8");
 		
 		if(authentication == null) {
-			resp.getWriter().print(Function.alertHistoryBack("로그인 정보가 없습니다.", "", ""));
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "", "");
 			return null;
 		}
 		
@@ -250,13 +249,13 @@ public class EmployeeController {
 	@PostMapping("updatePwdOk.do")
 	public @ResponseBody void updatePwdOk(@RequestParam Map<String, Object> chgPwdMap,
 							  Authentication authentication,
-							  HttpServletResponse resp) throws IOException {
+							  HttpServletResponse resp) {
 		
 		log.info("EmployeeController updatePwdOk 변경 처리");
 		resp.setContentType("text/html; charset=utf-8");
 
 		if(authentication == null) {
-			resp.getWriter().print(Function.alertHistoryBack("로그인 정보가 없습니다.", "", ""));
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "", "");
 			return;
 		}
 
@@ -276,18 +275,18 @@ public class EmployeeController {
 			int cnt = employeeService.updatePwd(chgPwdMap);
 	
 			if(cnt == 0) {
-				resp.getWriter().print(Function.alertHistoryBack("비밀번호 변경에 실패하였습니다.", "", ""));
+				Function.alertHistoryBack(resp, "비밀번호 변경에 실패하였습니다.", "", "");
 			}else {
-				resp.getWriter().print(Function.alertLocation("비밀번호 변경이 완료 되었습니다.", "/hr/employee/updatePwd.do", "", "", ""));
+				Function.alertLocation(resp, "비밀번호 변경이 완료 되었습니다.", "/hr/employee/updatePwd.do", "", "", "");
 			}
 		}else {
-			resp.getWriter().print(Function.alertHistoryBack("현재 비밀번호와 일치하지 않습니다.", "", ""));
+			Function.alertHistoryBack(resp, "현재 비밀번호와 일치하지 않습니다.", "", "");
 		}
 	}
 	
 	
 	@GetMapping("authManageList.do")
-	public String authManageList(Model model) throws IOException {
+	public String authManageList(Model model) {
 		log.info("EmployeeController authManageList 권한리스트");
 	
 		List<EmployeeDto> lists = employeeService.getAuthList();
@@ -298,18 +297,18 @@ public class EmployeeController {
 	}
 
 	@GetMapping("registAuth.do")
-	public String authManageDetail(Model model) throws IOException {
+	public String authManageDetail(Model model) {
 		log.info("EmployeeController registAuth 권한상세");
 	
-		List<AuthDto> AuthLists = employeeService.selectAuthAllList();
+		List<AuthDto> authLists = employeeService.selectAuthAllList();
 		
-		model.addAttribute("AuthLists", AuthLists);
+		model.addAttribute("authLists", authLists);
 		
 		return "hr/employee/registAuth";
 	}
 	
 	@PostMapping(value="getUserInfoSearch.do", produces = "application/json;")
-	public @ResponseBody String getUserInfoSearch(@RequestParam HashMap<String, String> map, HttpServletResponse resp) throws IOException {
+	public @ResponseBody String getUserInfoSearch(@RequestParam HashMap<String, String> map, HttpServletResponse resp) {
 		log.info("EmployeeController getUserInfoSearch 사원정보 검색 : {}", map);
 		resp.setContentType("text/html; charset=UTF-8;");
 		
@@ -324,5 +323,33 @@ public class EmployeeController {
             return "Failed to convert object to JSON";
         }        
 	}
+
+	@PostMapping("registAuthOk.do")
+	public @ResponseBody void registAuthOk(@RequestParam Map<String, Object> authMap,
+			  					Authentication authentication,
+			  					HttpServletResponse resp) {
+		log.info("EmployeeController registAuthOk 권한등록처리 : {}", authMap);
+		resp.setContentType("text/html; charset=UTF-8;");
+		
+		String empl_modify_id = "";
+		if(authentication != null) {
+			empl_modify_id = authentication.getName();
+		}else {
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "", "");
+			return;
+		}
+		authMap.put("empl_modify_id", empl_modify_id); 
+		
+		int cnt = employeeService.updateAuthEmployee(authMap);
+		if(cnt > 0 ) {
+			Function.alertLocation(resp, "권한등록이 완료 되었습니다.", "/hr/employee/authManageList.do", "", "", "");
+			return;
+		}else {
+			Function.alertHistoryBack(resp, "권한등록에 오류가 발생하였습니다.", "", "");
+			return;
+		}
+
+	}
+	
 	
 }

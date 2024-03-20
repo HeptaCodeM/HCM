@@ -134,39 +134,65 @@ function updatePwdOk(){
 
 
 /* 임직원 검색 */
-function empInfoSearch(){
-	var f = document.searchEmpInfo;
+function empInfoSearch(flag){
+	var f = $("#searchEmpInfo");
 	
-	/*if(!f.keyWord.value){
-		swalAlert("검색어를 입력하여 주세요.","","","","keyWord");
-		return;
-	}*/
-
-	const formData = new FormData(f);
-    const payload = new URLSearchParams(formData);
-	console.log("payload : ", payload);
-	
-	fetch('/hr/employee/getUserInfoSearch.do', {
-		method: 'post',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-		body: payload
-	})
-	.then(resp => resp.json())
-	.then(data => {
-		console.log("data", data, data.length);
-		listHtml = "";
-		for(let i=0;i<data.length;i++){
-			listHtml += "<tr>";
-			listHtml += "<td>"+data[i].empl_id+"</td>";
-			listHtml += "<td>"+data[i].empl_name+"</td>";
-			listHtml += "<td>"+data[i].empl_dept_nm+"</td>";
-			listHtml += "<td>"+data[i].empl_rank_nm+"</td>";
-			listHtml += "<td>"+data[i].empl_position_nm+"</td>";
-			listHtml += "</tr>";
+	if(flag=="F"){
+		if(!f.keyWord.value){
+			swalAlert("검색어를 입력하여 주세요.","","","","keyWord");
+			return;
 		}
-		document.getElementById("empSearchList").innerHTML = listHtml;
-	})
+	}
+
+	$("#searchEmployeeList").DataTable().destroy();
+
+	$.ajax({
+		url:"/hr/employee/getUserInfoSearch.do",
+		type:"POST",
+		data : f.serialize(),
+		success:function(data){
+			console.log(data);
+	 		$("#searchEmployeeList").dataTable({
+	 			data: data,
+				columns: [
+					{ data: 'empl_id' },
+					{ data: 'empl_name' },
+					{ data: 'empl_dept_nm' },
+					{ data: 'empl_rank_nm' },
+					{ data: 'empl_position_nm' }
+				],
+				displayLength: 5,
+				lengthChange: false,
+				info: false
+			});
+		},
+		error:function(request, status, error){
+			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	});
+
+}
+
+function openEmpInfoSearch(){
+	$("#searchEmployeeList").DataTable().destroy();
+	empInfoSearch('');
+	$('#empSearch').show();
+}
+function closeEmpInfoSearch(){
+	$('#empSearch').hide();
+}
+
+function registEmpAuth(){
+	var f = document.registAuthForm;
+	if(!f.empl_id.value || !f.empl_name.value || !f.empl_dept_nm.value || !f.empl_rank_nm.value){
+		swalAlert("사원정보가 없습니다.<br>사원을 조회하여 주세요.","","","","");
+		return;
+	}
+	if(!f.empl_auth.value){
+		swalAlert("권한을 선택하여 주세요.","","","","empl_auth");
+		return;
+	}
+	
+	f.submit();
 }
 

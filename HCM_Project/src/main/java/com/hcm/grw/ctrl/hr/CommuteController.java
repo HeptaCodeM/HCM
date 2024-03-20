@@ -37,11 +37,12 @@ public class CommuteController {
 	
 	@GetMapping("registCommute.do")
 	public String registCommute(Authentication authentication, 
-								Model model) {
+								Model model,
+								HttpServletResponse resp) {
 		log.info("CommuteController registCommute 출/퇴근 등록 페이지");
 
 		if(authentication.getName().isEmpty()) {
-			Function.alertLocation("로그인 후 이용 가능합니다.", "/login.do", "", "", "");
+			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login.do", "", "", "");
 			return null;
 		}
 		
@@ -72,7 +73,7 @@ public class CommuteController {
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		if(authentication == null) {
-			resp.getWriter().print(Function.alertLocation("로그인 후 이용 가능합니다.", "/login.do", "", "", ""));
+			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login.do", "", "", "");
 		}
 		
 		String empl_id = authentication.getName();
@@ -97,9 +98,9 @@ public class CommuteController {
 		}
 		
 		if(cnt > 0) {
-			resp.getWriter().print(Function.alertLocation(commuteMsg + "처리가 완료 되었습니다.", "/hr/commute/empCommuteList.do", "", "", ""));
+			Function.alertLocation(resp, commuteMsg + "처리가 완료 되었습니다.", "/hr/commute/empCommuteList.do", "", "", "");
 		}else {
-			resp.getWriter().print(Function.alertHistoryBack(commuteMsg + "처리 중 오류가 발생하였습니다.\n관리자에게 문의하세요.", "", ""));
+			Function.alertHistoryBack(resp, commuteMsg + "처리 중 오류가 발생하였습니다.\n관리자에게 문의하세요.", "", "");
 		}
 		
 	}
@@ -114,7 +115,7 @@ public class CommuteController {
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		if(authentication == null) {
-			resp.getWriter().print(Function.alertLocation("로그인 후 이용 가능합니다.", "/login.do", "", "", ""));
+			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login.do", "", "", "");
 			return null;
 		}
 		
