@@ -38,6 +38,10 @@ public class Function {
 		if(focus == "" || focus == null) focus = "";
 
 		StringBuffer sb = new StringBuffer();
+		sb.append("<!DOCTYPE html><html><head>");
+		//sb.append("<link href='/assets/plugins/global/plugins.bundle.css' rel='stylesheet' type='text/css' defer/>");
+		//sb.append("<link href='/assets/css/style.bundle.css' rel='stylesheet' type='text/css' />");
+		//sb.append("<script src='/assets/plugins/global/plugins.bundle.js' defer></script>");
 		sb.append("<script src='//cdn.jsdelivr.net/npm/sweetalert2@11'></script>");
 		sb.append("<script src='/js/common/common.js' defer></script>");
 		sb.append("<script>");
@@ -45,6 +49,7 @@ public class Function {
 		sb.append("swalAlert('"+ msg +"','"+ location +"','"+ className +"','"+ btnText +"','"+ focus +"');");
 		sb.append("}");
 		sb.append("</script>");
+		sb.append("</head><body></body></html>");
 		try {
 			resp.getWriter().print(sb.toString());
 		} catch (IOException e) {
@@ -69,6 +74,9 @@ public class Function {
 		if(msg == "" || msg == null) msg = "";
 
 		StringBuffer sb = new StringBuffer();
+		//sb.append("<link href='/assets/plugins/global/plugins.bundle.css' rel='stylesheet' type='text/css'/>");
+		//sb.append("<link href='/assets/css/style.bundle.css' rel='stylesheet' type='text/css' />");
+		//sb.append("<script src='/assets/plugins/global/plugins.bundle.js' defer></script>");
 		sb.append("<script src='//cdn.jsdelivr.net/npm/sweetalert2@11'></script>");
 		sb.append("<script src='/js/common/common.js' defer></script>");
 		sb.append("<script>");

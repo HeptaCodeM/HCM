@@ -1,5 +1,6 @@
 //Swal Alert
 function swalAlert(msg, movePage, className, btnName, focusid) {
+	console.log(msg, className, btnName);
 	if(btnName == "" || className == "undefined"){
 		btnName = "확인";
 	}
