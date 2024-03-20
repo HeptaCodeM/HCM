@@ -20,6 +20,7 @@ public class ChatDto {
 	private String ch_sender;
 	private String ch_target;
 	private String ch_date;
+	private String ch_set;
 	
 	private String sender_name;
 	private String target_name;
