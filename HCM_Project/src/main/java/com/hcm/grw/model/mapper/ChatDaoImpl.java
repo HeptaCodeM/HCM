@@ -29,5 +29,17 @@ public class ChatDaoImpl implements ChatDao {
 		log.info("ChatDaoImpl selectAllMessage DAO Access");
 		return template.selectList(NS + "selectAllMessage", dto);
 	}
+	
+	@Override
+	public int setReadMessage(String ch_target) {
+		log.info("ChatDaoImpl setReadMessage DAO Access");
+		return template.update(NS + "setReadMessage", ch_target);
+	}
+	
+	@Override
+	public int noReadList(String ch_target) {
+		log.info("ChatDaoImpl noReadList DAO Access");
+		return template.selectOne(NS + "noReadList", ch_target);
+	}
 
 }

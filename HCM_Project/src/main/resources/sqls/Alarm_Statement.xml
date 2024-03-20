@@ -64,8 +64,7 @@
 			ON sdb.SIDT_TEMP_CD = sdt.SIDT_TEMP_CD 
 			WHERE AL_DATE >= CURRENT_TIMESTAMP - INTERVAL '1' DAY  
 			AND AL_SET = 'Y'
-			AND (AL_TARGET = #{al_target}
-			OR AL_TARGET = 'ALL_USER')
+			AND AL_TARGET = #{al_target}
 			ORDER BY AL_DATE DESC
 	</select>
 	

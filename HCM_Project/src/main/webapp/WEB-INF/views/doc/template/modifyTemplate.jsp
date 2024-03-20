@@ -78,7 +78,7 @@
 	<%@include file="/WEB-INF/views/menu/docSideMenu.jsp"%>
 </body>
 
-<script type="text/javascript" src="../ckeditor5/build/ckeditor.js"></script>
-<script type="module" src="../ckeditor5/sample/script.js"></script>
-<script type="text/javascript" src="../js/template.js"></script>
+<script type="text/javascript" src="/ckeditor5/build/ckeditor.js"></script>
+<script type="module" src="/ckeditor5/sample/script.js"></script>
+<script type="text/javascript" src="/js/doc/template.js"></script>
 </html>
