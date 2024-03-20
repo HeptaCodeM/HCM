@@ -14,52 +14,17 @@
 <link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 <link href="/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 <!--end::Global Stylesheets Bundle-->
+
+<!-- 사용CSS오버라이딩 -->
+<link href="/css/common.css" rel="stylesheet" type="text/css" />
+<!-- 사용CSS오버라이딩 -->
+
+
 <!--begin::Global Javascript Bundle(mandatory for all pages)-->
 <script src="/assets/plugins/global/plugins.bundle.js"></script>
 <script src="/assets/js/scripts.bundle.js"></script>
 <!--end::Global Javascript Bundle-->
 
-<!-- 사용CSS오버라이딩 -->
-<style type="text/css">
-
-	.btnLg{
-		width: 130px;
-		height: 40px;
-		line-height: 19px;
-	}
-	
-	.btnMd{
-		width: 100px;
-		height: 32px;
-		line-height: 12px;
-	}
-	
-	.btnSm{
-		width: 80px;
-		height: 32px;
-		line-height: 14px;
-	}
-	
-	.sealImg{
-		width: 82px;
-	}
-	
-	.slide-out-right {
-   		animation: slideOutRight 0.5s ease forwards;
-	}
-
-	@keyframes slideOutRight {
-    0% {
-        opacity: 1;
-        transform: translateX(0);
-    }
-    100% {
-        opacity: 0;
-        transform: translateX(100%);
-    }
-}
-</style>
-<!-- 사용CSS오버라이딩 -->
 
 <!--begin::Javascript-->
 <script>var hostUrl = "/assets/";</script>

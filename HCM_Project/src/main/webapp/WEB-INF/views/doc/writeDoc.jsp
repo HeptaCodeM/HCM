@@ -10,15 +10,13 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-<link rel="stylesheet" href="../ckeditor5/sample/template.css">
+<link rel="stylesheet" href="/ckeditor5/sample/template.css">
 
 <style type="text/css">
-.modal { 
-	--bs-modal-width: 1200px;
-}
-
-
-
+	/* 모달창 사이즈 조절 */
+	.modal { 
+		--bs-modal-width: 1200px;
+	}
 </style>
 
 </head>
@@ -40,9 +38,8 @@
 				<div
 					class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<!--begin::Title-->
-					<h1
-						class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">기안서
-						작성</h1>
+					<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
+						기안서 작성</h1>
 					<!--end::Title-->
 				</div>
 				<!--end::Page title-->
@@ -77,6 +74,22 @@
 
 							<!-- 에디터 화면 -->
 							<div id="editor_div" style="display: none;">
+							<form>
+							${loginInfo }
+							${getTemp }
+							<div>사원정보 </div>
+							<div class="input-group input-group-sm mb-5">
+							    <span class="input-group-text" id="inputGroup-sizing-sm">사원정보</span>
+							    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="${loginInfo.empl_name }"/>
+							</div>
+							<div class="input-group input-group-sm mb-5">
+							    <span class="input-group-text" id="inputGroup-sizing-sm">시작일</span>
+							    <input type="date" class="form-control" name="sidb_doc_be" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
+							</div>
+							<div class="input-group input-group-sm mb-5">
+							    <span class="input-group-text" id="inputGroup-sizing-sm">종료일</span>
+							    <input type="date" class="form-control" name="sidb_doc_end" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
+							</div>
 							<div class="input-group input-group-sm mb-5">
 							    <span class="input-group-text" id="inputGroup-sizing-sm">제목</span>
 							    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
@@ -90,6 +103,7 @@
 							    기안제출
 							</button>
 							</div>
+							</form>
 							</div>
 
 							<!-- ---------------------------- 내 용 입 력 -------------------------------- -->
@@ -184,17 +198,22 @@
 	</div>
 
 <script type="text/javascript">
-
-
+/* const loginInfo = JSON.parse("${sessionScope.loginInfo}");
+CKEDITOR.replace('editor', {
+    // 세션에서 가져온 사용자 정보를 에디터에 설정
+    on: {
+        instanceReady: function(e) {
+            this.setData(JSON.stringify(loginInfo));
+        }
+    }
+}); */
 </script>
 	<%@include file="/WEB-INF/views/menu/docSideMenu.jsp"%>
 </body>
 
-
 <script type="text/javascript" src="/ckeditor5/build/ckeditor.js"></script>
-<script type="text/javascript" src="/js/writeDoc.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-<script type="module" src="../ckeditor5/sample/script.js"></script>
+<script type="text/javascript" src="/js/doc/writeDoc.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script type="module" src="/ckeditor5/sample/script.js"></script>
 <!-- <script type="text/javascript" src="../js/template.js"></script> -->
 </html>

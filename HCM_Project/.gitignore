@@ -26,7 +26,6 @@ db.properties
 email.properties
 api.properties
 
-
 # External tool builders
 .externalToolBuilders/
 

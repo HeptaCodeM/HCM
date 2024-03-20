@@ -10,8 +10,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
-<script type="text/javascript" src="/smartEditor/js/service/HuskyEZCreator.js" charset="UTF-8"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -40,9 +39,8 @@
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-body pt-5">
-										   <div class="contatiner">
-					      <form id="insertForm" method="post">
-					      <input type="hidden" name="gobo_writer_id" id="gobo_writer_id" value="${dto.gobo_writer_id}">
+							<div class="contatiner">
+					      <form id="insertForm">
 					         <div class="form-group">
 					            <label for="title">제목</label>
 					            <input class="form-control" id="gobo_title"  name="gobo_title">
@@ -57,7 +55,7 @@
 					         </div>
 					         <div>
 					         </div>
-					            <input type="button" class="btn btn-success" value="글입력" onclick="insertGobo()" id="savebutton">
+					            <input type="button" class="btn btn-success" value="글입력"  id="savebutton">
 					            <input type="reset" class="btn btn-danger" value="글초기화" id="resetbutton">
 					            <input type="button" class="btn btn-info" value="뒤로가기" onclick="history.back(-1)">
 					      </form>
@@ -71,7 +69,9 @@
 		</div>
 			
 <%@include file="/WEB-INF/views/menu/smSideMenu.jsp"%>	
+<script type="text/javascript" src="/smartEditor/js/service/HuskyEZCreator.js" charset="UTF-8"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="/smartEditor/js/smart.js"></script>
 </body>
-
 
 </html>

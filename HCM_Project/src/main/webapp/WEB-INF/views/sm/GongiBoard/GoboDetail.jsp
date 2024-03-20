@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<script type="text/javascript" src="/js/sm/Gobo.js"></script>
+
 <title>SM메인화면</title>
 <style type="text/css">
  /* 화면늘리는 버튼 숨기기 */
@@ -33,7 +33,7 @@
       data-kt-app-sidebar-push-footer="true"
       data-kt-app-toolbar-enabled="true" class="app-default">
 
-				${sessionScope.userInfoVo}
+				
        <div class="app-wrapper flex-column flex-row-fluid">
         <div class="app-toolbar py-3 py-lg-6">
             <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
@@ -77,16 +77,15 @@
                              <div>
                                 <div class="CommentWriter mb-4">
                                     <form id="ReplyTwoForm">
-                                        <input type="hidden" name="rebo_writer_id" value="20240013">
-                                        <input type="hidden" name="rebo_writer" value="윤영훈">
-                                        <input type="hidden" name="rebo_writer" value="윤영훈">
+                                        <input type="hidden" name="rebo_writer_id" id="rebo_writer_id" value="${sessionScope.userInfoVo.empl_id}">
+                            			 <input type="hidden" name="rebo_writer" id="rebo_writer" value="${sessionScope.userInfoVo.empl_name}">
                                         <div class="comment_inbox border border-2">
-                                            <em class="comment_inbox_name">${session.empl_name}</em>
+                                            <em class="comment_inbox_name">${sessionScope.userInfoVo.empl_name}</em>
                                             <textarea placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0"></textarea>
                                             <div class="d-flex justify-content-end align-items-end">
                                                 <div class="register_box">
                                                     <button type="button" class="btn btn-primary" onclick="cancelReply(${comment.rebo_no})">취소</button>
-                                                    <button type="button" class="btn btn-primary" onclick="insertReply(${dto.gobo_no})">등록</button>
+                                                    <button type="button" class="btn btn-primary" onclick="insertReplyTwo(${comment.gobo_no})">등록</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -101,12 +100,12 @@
                             <!-- 댓글 작성 폼 -->
                        <div class="CommentWriter mb-4" style="margin-top: 50px ">
                              <form id="ReplyForm">
-                             <input type="hidden" name="rebo_writer_id" value="20240013">
-                             <input type="hidden" name="rebo_writer" value="윤영훈">
-                             <input type="hidden" name="rebo_writer" value="윤영훈">
                              <div class="comment_inbox border border-2">
-                                 <em class="comment_inbox_name">${session.empl_name}</em>
-                                 <textarea id="commentTextArea" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" oninput="checkInput()"></textarea>
+                             <input type="hidden" name="rebo_writer_id" id="rebo_writer_id" value="${sessionScope.userInfoVo.empl_id}">
+                             <input type="hidden" name="rebo_modify_id" id="rebo_modify_id" value="${sessionScope.userInfoVo.empl_id}">
+                             <input type="hidden" name="rebo_writer" id="rebo_writer" value="${sessionScope.userInfoVo.empl_name}">
+                                 <em class="comment_inbox_name">${sessionScope.userInfoVo.empl_name}</em>
+                                 <textarea id="commentTextArea" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" oninput="checkInput()" name="rebo_content"></textarea>
                             <div class="d-flex justify-content-end align-items-end">
                              <div class="register_box">
                                  <button id="submitButton" type="button" class="btn btn-primary" onclick="insertReply(${dto.gobo_no})" disabled>등록</button>
@@ -126,7 +125,8 @@
                 </div>
             </div>
          
-<%@include file="/WEB-INF/views/menu/smSideMenu.jsp" %>      
+<%@include file="/WEB-INF/views/menu/smSideMenu.jsp" %>   
+<script type="text/javascript" src="/js/sm/Gobo.js"></script>   
 </body>
 
 </html>

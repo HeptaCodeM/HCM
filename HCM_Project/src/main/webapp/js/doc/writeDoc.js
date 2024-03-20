@@ -34,13 +34,15 @@ function dragElement(elmnt) {
         document.onmousemove = null;
     }
 }
-var docData;
 // Doc_jstree
+var docData;
+
 onload = function() {
 	document.getElementById('getTemplate').addEventListener('click', function(e) {
 		var selNode = $('#jstree').jstree('get_selected')
-		
-		console.log(selNode)
+		var editorVal = document.querySelector("#editor")
+
+		console.log("selNode: "+selNode);
 		if (selNode.length == 0) {
 			alert('템플릿을 선택해주세요');
 			return;
@@ -55,14 +57,18 @@ onload = function() {
 		}).then(resp => {
 			return resp.text();
 		}).then(data => {
+			console.log("getTemplate: "+data);
 			$("#template_div").hide();
 			$("#editor_div").show();
-			document.getElementById('closeBtn').click()
+			document.getElementById('closeBtn').click()			
 			editor.setData(docData);
+			
+			
 		}).catch(error => {
 			console.log(error);
 		});
 	})
+	
 	$('#jstree').jstree({
 		plugins: ['search', 'wholerow'],
 		core : {
@@ -100,9 +106,9 @@ onload = function() {
 }
 
 
-function templateLoad() {
+$(document).ready(function(){
 	
-}
+});
 
 
 

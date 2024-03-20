@@ -12,7 +12,6 @@ function listAjax() {
 		dataType: "json",
 		success: function(data) {
 			var calendarEl = document.getElementById('calendar');
-
 			var calendar = new FullCalendar.Calendar(calendarEl, {
 				googleCalendarApiKey: 'AIzaSyBBTfPVr0UjVIt-H0VGRuLFRg-ltL-YQDk',  // 구글 api 키
 				initialView: 'dayGridMonth',   //월 달력 표시
@@ -24,6 +23,7 @@ function listAjax() {
 					right:'',
 				},
 				titleFormat: function(date) {
+					1
 					return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';   //달력표시 한글로 변경
 				},
 				eventSources: [
