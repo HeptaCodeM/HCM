@@ -139,7 +139,7 @@ th, td {
 										<tr>
 											<th>기안자 ${docDto1.empl_name} ${docDto1.empl_rank}</th>
 											<td>작성일 <fmt:parseDate var="patternDate"
-													value=" ${docDto1.sidb_doc_writedt}"
+													value="${docDto1.sidb_doc_writedt}"
 													pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
 													value="${patternDate}" pattern="yyyy년 MM월 dd일" />
 											</td>

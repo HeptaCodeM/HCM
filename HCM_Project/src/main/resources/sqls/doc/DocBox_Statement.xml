@@ -355,9 +355,9 @@ LEFT JOIN
    
    	<!-- 임시 문서함 조회  가져오기-->
 <select id="getTempDocs" resultType="SignBoxDto">	
-SELECT SDB.SIDB_DOC_NUM,
-    SDB.SIDB_DOC_WRITEDT, SDB.SIDB_DOC_TITLE, 
-    SDB.EMPL_ID, E.EMPL_NAME, 
+SELECT SDB.SITB_DOC_NUM as sidb_doc_num,
+    SDB.SITB_DOC_WRITEDT as sidb_doc_writedt, SDB.SITB_DOC_TITLE as sidb_doc_title, 
+    SDB.EMPL_ID, E.EMPL_NAME, E.EMPL_PICTURE,
     e.EMPL_PICTURE, t.SIDT_TEMP_NAME, t.SIDT_TEMP_CD
 FROM SIGN_TEMP_BOX sdb
 JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID

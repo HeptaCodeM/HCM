@@ -10,7 +10,12 @@
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp"%>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />	
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
-<title>결재문서함메인화면</title>
+<title>임시보관함</title>
+<style type="text/css">
+table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {
+    text-align: center;
+}
+</style>
 </head>
 
 <%@include file="/WEB-INF/views/menu/header.jsp"%>
@@ -44,20 +49,20 @@
 				<div class="app-container container-fluid">
 					<div class="card card-flush h-md-50 mb-xl-10">
 						<div class="card-header pt-5">
-							<h3 class="card-title text-gray-800 fw-bold">결재문서</h3>
+							<h3 class="card-title text-gray-800 fw-bold">결재문서 임시 보관함</h3>
 						</div>
 						<div class="separator separator-dashed my-3"></div>
 						<div class="card-body pt-5" style="height: 80%;">
 
 
 	<div id="tableOuter">
-		<table id="myTable" class="stripe hover">
+		<table id="tempBox" class="stripe hover" style="text-align:center;">
 			<thead>
-				<tr style="">
+				<tr style="text-align:center;">
 					<th>문서구분</th>
 					<th>제목</th>
-					<th></th>
-					<th></th>
+					<th>작성자</th>
+					<th>작성일</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -67,7 +72,7 @@
 						<td>
 							 ${dto.sidt_temp_name}
 						</td>
-						<td><a href="#" onclick="detailBoard(${dto.sidb_doc_num})">${dto.sidb_doc_title}</a> <br> <br></td>
+						<td><a href="#" onclick="detailBoard(${dto.sidb_doc_num})">${dto.sidb_doc_title}</a></td>
 						
 						<td><img style="width:50px; height:50px; border-radius: 22px;"  src="data:image/png;base64,${dto.empl_pictureStr}" /> ${dto.empl_name}</td>
 						
