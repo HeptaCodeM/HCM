@@ -89,7 +89,9 @@ async function sweetAlertConfirm(msg, tFunc, fFunc){
 	if(cFlag){
 		tFunc();
 	}else{
-		fFunc;
+		if(fFunc != "" && fFunc != "undefined"){
+			fFunc();
+		}
 	}
 }
 

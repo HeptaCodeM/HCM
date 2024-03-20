@@ -5,10 +5,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<title>조직관리</title>
-
+	<meta charset="UTF-8">
+	<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
+	<title>HCM GroupWare</title>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -25,7 +24,7 @@
 					<!--begin::Page title-->
 					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 						<!--begin::Title-->
-						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">사원정보</h1>
+						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">인사관리 > 조직관리 > 사원정보</h1>
 						<!--end::Title-->
 					</div>
 					<!--end::Page title-->

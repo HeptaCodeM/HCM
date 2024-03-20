@@ -57,15 +57,19 @@ function registEmployee(){
 		return;
 	}
 
-
+	sweetAlertConfirm("현재 입력하신 정보로 등록 하시겠습니까?", registEmployeeOk, "");
+	/*
 	if(confirm("현재 입력하신 정보로 등록 하시겠습니까?")){
 		f.submit();
 	}
-
+	*/
+}
+function registEmployeeOk(){
+	var f = document.registEmpForm;
+	f.submit();
 }
 
-
-/* 임직원등록 */
+/* 임직원수정 */
 function modifyEmployee(){
 	var f = document.modifyEmpForm;
 
@@ -79,12 +83,17 @@ function modifyEmployee(){
 		return;
 	}
 
+	sweetAlertConfirm("현재 입력하신 정보로 수정 하시겠습니까?", modifyEmployeeSubmit, "");
+	/*
 	if(confirm("현재 입력하신 정보로 수정 하시겠습니까?")){
 		f.submit();
 	}
-
+	*/
 }
-
+function modifyEmployeeSubmit(){
+	var f = document.modifyEmpForm;
+	f.submit();
+}
 
 /* 비밀번호 변경 */
 function updatePwd(){
@@ -110,8 +119,54 @@ function updatePwd(){
 		return;
 	}
 
+	sweetAlertConfirm("현재 입력하신 정보로 수정 하시겠습니까?", updatePwdOk, "");
+	/*
 	if(confirm("현재 입력하신 정보로 비밀번호를 변경하시겠습니까?")){
 		f.submit();
 	}
+	*/
 
 }
+function updatePwdOk(){
+	var f = document.updatePwdForm;
+	f.submit();
+}
+
+
+/* 임직원 검색 */
+function empInfoSearch(){
+	var f = document.searchEmpInfo;
+	
+	/*if(!f.keyWord.value){
+		swalAlert("검색어를 입력하여 주세요.","","","","keyWord");
+		return;
+	}*/
+
+	const formData = new FormData(f);
+    const payload = new URLSearchParams(formData);
+	console.log("payload : ", payload);
+	
+	fetch('/hr/employee/getUserInfoSearch.do', {
+		method: 'post',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+		body: payload
+	})
+	.then(resp => resp.json())
+	.then(data => {
+		console.log("data", data, data.length);
+		listHtml = "";
+		for(let i=0;i<data.length;i++){
+			listHtml += "<tr>";
+			listHtml += "<td>"+data[i].empl_id+"</td>";
+			listHtml += "<td>"+data[i].empl_name+"</td>";
+			listHtml += "<td>"+data[i].empl_dept_nm+"</td>";
+			listHtml += "<td>"+data[i].empl_rank_nm+"</td>";
+			listHtml += "<td>"+data[i].empl_position_nm+"</td>";
+			listHtml += "</tr>";
+		}
+		document.getElementById("empSearchList").innerHTML = listHtml;
+	})
+}
+

@@ -5,16 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<title>조직관리</title>
-
-<style type="text/css">
-.table th {  width:170px;vertical-align:middle; }
-.form-check-input.radio {margin-right:10px;}
-.form-check-input.radio.last {margin-left:30px;}
-</style>
-<script type="text/javascript" src="/js/hr/employee.js"></script>
+	<meta charset="UTF-8">
+	<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
+	<title>HCM GroupWare</title>
+	
+	<style type="text/css">
+	.table th {  width:170px;vertical-align:middle; }
+	.form-check-input.radio {margin-right:10px;}
+	.form-check-input.radio.last {margin-left:30px;}
+	</style>
+	<script type="text/javascript" src="/js/hr/employee.js"></script>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -31,7 +31,7 @@
 					<!--begin::Page title-->
 					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 						<!--begin::Title-->
-						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">비밀번호 변경</h1>
+						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">인사관리 > 조직관리 > 비밀번호 변경</h1>
 						<!--end::Title-->
 					</div>
 					<!--end::Page title-->

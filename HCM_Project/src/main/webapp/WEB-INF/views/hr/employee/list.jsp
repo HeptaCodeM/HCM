@@ -4,31 +4,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<style type="text/css">
-	.searchEmpInput{
-		width: 400px;
-		height: 40px;
-	}
-	
-	.searchEmpSelect{
-		width: 130px;
-		height: 40px;
-	}
-	.searchEmpDate{
-		width: 290px;
-		height: 40px;
-	}
-	.cardFlexSearch{
-		display: flex;
-		justify-content: center;
-	}
-</style>
-<script type="text/javascript">
-	
-</script>
-<title>조직관리</title>
+	<meta charset="UTF-8">
+	<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
+	<title>HCM GroupWare</title>
+	<style type="text/css">
+		.searchEmpInput{
+			width: 400px;
+			height: 40px;
+		}
+		
+		.searchEmpSelect{
+			width: 130px;
+			height: 40px;
+		}
+		.searchEmpDate{
+			width: 290px;
+			height: 40px;
+		}
+		.cardFlexSearch{
+			display: flex;
+			justify-content: center;
+		}
+	</style>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -45,7 +42,7 @@
 					<!--begin::Page title-->
 					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 						<!--begin::Title-->
-						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">임직원 정보</h1>
+						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">인사관리 > 조직관리 > 임직원 정보</h1>
 						<!--end::Title-->
 					</div>
 					<!--end::Page title-->
