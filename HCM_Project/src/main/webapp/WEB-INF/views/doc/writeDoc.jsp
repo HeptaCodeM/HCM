@@ -198,20 +198,22 @@
 	</div>
 
 <script type="text/javascript">
-
-
+/* const loginInfo = JSON.parse("${sessionScope.loginInfo}");
+CKEDITOR.replace('editor', {
+    // 세션에서 가져온 사용자 정보를 에디터에 설정
+    on: {
+        instanceReady: function(e) {
+            this.setData(JSON.stringify(loginInfo));
+        }
+    }
+}); */
 </script>
 	<%@include file="/WEB-INF/views/menu/docSideMenu.jsp"%>
 </body>
-<script type="text/javascript">
-var loginInfo = 
-
-</script>
 
 <script type="text/javascript" src="/ckeditor5/build/ckeditor.js"></script>
-<script type="text/javascript" src="/js/writeDoc.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-<script type="module" src="../ckeditor5/sample/script.js"></script>
+<script type="text/javascript" src="/js/doc/writeDoc.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script type="module" src="/ckeditor5/sample/script.js"></script>
 <!-- <script type="text/javascript" src="../js/template.js"></script> -->
 </html>

@@ -1,7 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
 <!--begin::Wrapper-->
 				<div>
 					<!--begin::Sidebar-->
@@ -27,4 +23,3 @@
 							<!--end::Menu wrapper-->
 							</div>
 							</div>
-</html>

@@ -10,4 +10,8 @@ public interface ChatService {
 	
 	public List<ChatDto> selectAllMessage(ChatDto dto);
 	
+	public int setReadMessage(String ch_target);
+	
+	public int noReadList(String ch_target);
+	
 }

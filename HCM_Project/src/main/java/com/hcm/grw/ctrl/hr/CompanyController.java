@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Base64Utils;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hcm.grw.dto.hr.CompanyDto;
+import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.model.mapper.hr.EmployeeDao;
 import com.hcm.grw.model.service.hr.CompanyService;
 
 @Controller
@@ -27,12 +30,30 @@ public class CompanyController {
 	@Autowired
 	private CompanyService companyService; 
 	
+	@Autowired
+	private EmployeeDao employeeDao; 
+	
 	
 	@GetMapping(value = "/hr/company/companyInfo.do")
-	public String companyInfo(Model model) {
+	public String companyInfo(Model model, Authentication authentication) {
+		String userId = authentication.getName();
+		System.out.println(userId);
+		EmployeeDto fnEmployeeDto = employeeDao.getUserInfo(userId);
+		String empl_auth = fnEmployeeDto.getEmpl_auth();
+		System.out.println(empl_auth);
+		if(empl_auth.equals("ROLE_HR_ADMIN")) {
+			model.addAttribute("empl_auth",empl_auth);
+		}
 		Map<String, Object> companyMap = new HashMap<String, Object>();
 		companyMap.put("comp_id", "ITCOM0A1");
 		CompanyDto companyDto = companyService.showCompanyInfo(companyMap);
+		Map<String, Object> sealMap = new HashMap<String, Object>();
+		sealMap.put("comp_id", "ITCOM0A1");
+		CompanyDto sealDto = companyService.showCompanySeal(sealMap);
+		byte[] sealImg = sealDto.getComp_seal();
+		
+		
+		model.addAttribute("sealImg",Base64Utils.encodeToString(sealImg));
 		model.addAttribute("companyDto", companyDto);
 		return "hr/company/companyInfo";
 	}
@@ -93,8 +114,6 @@ public class CompanyController {
 		
 		System.out.println(Base64Utils.encodeToString(sealImg));
 		model.addAttribute("sealImg",Base64Utils.encodeToString(sealImg));
-		model.addAttribute("sealTest",sealDto.getComp_seal());
-		model.addAttribute("sealTest2",sealDto);
 		return "hr/company/showCompanySeal";
 	}
 	

@@ -9,9 +9,6 @@ String smUri = request.getRequestURI();
 String currentsmPageName = smUri.substring(smUri.lastIndexOf("/") + 1).replace(".jsp","");
 Boolean opensmMenuFlag = false;
 %>
-
-<!DOCTYPE html>
-<html>
 	<!-- 대분류별 영역 시작 -->
 	<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 		
@@ -60,5 +57,3 @@ Boolean opensmMenuFlag = false;
 		</div>		
 	</div>		
 	<!-- 대분류별 영역 종료 ------------------------------------------------------------------------->
-
-</html>

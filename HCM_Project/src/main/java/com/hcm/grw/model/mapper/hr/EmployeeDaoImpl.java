@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.hcm.grw.dto.hr.AuthDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.dto.hr.SnsInfoDto;
 
@@ -100,6 +101,18 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public int updatePwd(Map<String, Object> map) {
 		
 		return sqlSessionTemplate.update(NS+"updatePwd", map);
+	}
+
+	@Override
+	public List<AuthDto> selectAuthAllList() {
+
+		return sqlSessionTemplate.selectList(NS+"selectAuthAllList");
+	}
+
+	@Override
+	public List<EmployeeDto> getUserInfoSearch(Map<String, String> map) {
+
+		return sqlSessionTemplate.selectList(NS+"getUserInfoSearch", map);
 	}
 
 }

@@ -41,6 +41,7 @@ public class EmployeeDto {
 	private String empl_dept_nm;
 	private String empl_rank_nm;
 	private String empl_position_nm;
+	private String empl_auth_nm;
 	
 	private String coco_name_dnm;
 	private String coco_name_rnm;

@@ -2,8 +2,6 @@
      pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!-- <!DOCTYPE html> -->
-<html>
 <div id="kt_app_header" class="app-header">
 			<div
 				class="app-container container-fluid d-flex align-items-stretch justify-content-between"
@@ -96,9 +94,7 @@
 											<span class="path4"></span>
 											<span class="path5"></span>
 										</i>
-										<c:if test="${fn:length(alarmList) ne 0}">
-											<div class="symbol symbol-circle symbol-25px" style="background-color: #f8285a; width: 10px; height: 10px; color: white; font-size: 9px; margin-bottom: 10px; margin-left: -5px;" id="numberFlag">${fn:length(alarmList)}</div>
-										</c:if>
+											<div class="symbol symbol-circle symbol-25px" style="background-color: #f8285a; width: 12px; height: 12px; color: white; font-size: 10px; margin-bottom: 10px; margin-left: -5px; display: none;" id="numberFlag"></div>
 									</div>
 								</div>
 								
@@ -198,6 +194,10 @@
 								<span class="path2"></span>
 							</i>
 						</button>
+						<c:if test="${userInfoVo ne null}">
+							<input type="hidden" id="id" value="${userInfoVo.empl_id}">
+							<input type="hidden" id="myName" value="${userInfoVo.empl_name}">
+						</c:if>
 					</div>
 				</div>
 				<div class="card-body position-relative" id="kt_activities_body">
@@ -205,139 +205,8 @@
 						
 						
 						<div class="timeline timeline-border-dashed" id="timeLines">
-					<c:if test="${userInfoVo ne null}">
-						<input type="hidden" id="id" value="${userInfoVo.empl_id}">
-						<input type="hidden" id="myName" value="${userInfoVo.empl_name}">
-					</c:if>
-					<c:forEach var="a" items="${alarmList}">
-						<div class="timeline-item">
-							<input type="hidden" value="${a.al_no}" name="alList">
-								<div class="timeline-line"></div>
-								<div class="timeline-icon">
-									<c:if test="${a.al_flag eq '1'}">
-										<i class="ki-duotone ki-message-text-2 fs-2 text-gray-500">
-											<span class="path1"></span>
-											<span class="path2"></span>
-											<span class="path3"></span>
-										</i>
-									</c:if>
-									<c:if test="${a.al_flag eq '2'}">
-										<i class="ki-duotone ki-calendar fs-2 text-gray-500">
-										<span class="path1"></span>
-										<span class="path2"></span>
-										</i>
-									</c:if>
-									<c:if test="${a.al_flag eq '3'}">
-										<i class="ki-duotone ki-file-added fs-2 text-gray-500">
-											<span class="path1"></span>
-											<span class="path2"></span>
-										</i>
-									</c:if>
-									<c:if test="${a.al_flag eq '4'}">
-										<i class="ki-duotone ki-file-deleted fs-2 text-gray-500">
-											<span class="path1"></span>
-											<span class="path2"></span>
-										</i>
-									</c:if>
-									<c:if test="${a.al_flag eq '5'}">
-										<i class="ki-duotone ki-pencil fs-2 text-gray-500">
-											<span class="path1"></span>
-											<span class="path2"></span>
-										</i>
-									</c:if>
-								</div>
-								
-								<div class="timeline-content mb-10 mt-n1">
-									<div class="pe-3 mb-5">
-											<c:if test="${a.al_flag eq '1'}">
-												<div class="fs-5 fw-semibold mb-2"> 공지사항이 등록되었습니다</div>
-											</c:if>
-											<c:if test="${a.al_flag eq '2'}">
-												<div class="fs-5 fw-semibold mb-2"> 일정 알림</div>
-											</c:if>
-											<c:if test="${a.al_flag eq '3'}">
-												<div class="fs-5 fw-semibold mb-2"> 결재 승인 알림</div>
-											</c:if>
-											<c:if test="${a.al_flag eq '4'}">
-												<div class="fs-5 fw-semibold mb-2"> 결재 반려 알림</div>
-											</c:if>
-											<c:if test="${a.al_flag eq '5'}">
-												<div class="fs-5 fw-semibold mb-2"> 결재 요청 알림</div>
-											</c:if>
-										
-										<div class="d-flex align-items-center mt-1 fs-6">
-											<div class="text-muted me-2 fs-7">${a.al_date}</div>
-										</div>
-									</div>
-									
-									<div class="overflow-auto pb-5">
-										<div class="d-flex align-items-center border border-dashed border-gray-300 rounded min-w-600px px-7 py-3 mb-5">
-										
-											<c:if test="${a.al_flag eq '1'}">
-												<div class="min-w-120px pe-2" style="width: 70px;">
-													<span class="badge badge-light text-muted">전사공지</span>
-												</div>
-											</c:if>
-											<c:if test="${a.al_flag eq '2'}">
-												<div class="min-w-120px pe-2" style="width: 70px;">
-													<span class="badge badge-light text-muted">회의일정</span>
-												</div>
-											</c:if>
-											<c:if test="${a.al_flag eq '3' || a.al_flag eq '4' || a.al_flag eq '5'}">
-												<div class="min-w-120px pe-2" style="width: 70px;">
-													<span class="badge badge-light text-muted">${a.template}</span>
-												</div>
-											</c:if>
-											
-											<c:if test="${a.al_flag eq '1'}">
-												<a href="/sm/getDetailGobo.do?gobo_no=${a.al_key}" class="fs-5 text-gray-900 text-hover-primary fw-semibold w-300px min-w-200px">
-													${a.al_title}
-												</a>
-											</c:if>
-											<c:if test="${a.al_flag eq '2'}">
-												<a href="/sm/" class="fs-5 text-gray-900 text-hover-primary fw-semibold w-300px min-w-200px">
-													${a.al_title}
-												</a>
-											</c:if>
-											<c:if test="${a.al_flag eq '3' || a.al_flag eq '4' || a.al_flag eq '5'}">
-												<a href="/doc/docBox/getDetail.do?sidb_doc_num=${a.al_key}" class="fs-5 text-gray-900 text-hover-primary fw-semibold w-300px min-w-200px">
-													${a.al_title}
-												</a>
-											</c:if>
-											
-											<div class="symbol-group symbol-hover flex-nowrap flex-grow-1 min-w-60px pe-2">
-												<div class="symbol symbol-circle symbol-25px">
-													<img src="/assets/media/avatars/300-2.jpg" alt="img">
-													${a.producer_name}
-												</div>
-											</div>
-											<c:if test="${a.al_flag eq '3' || a.al_flag eq '4' || a.al_flag eq '5'}">
-												<div class="min-w-80px pe-2">
-												
-													<c:if test="${a.al_flag eq '3'}">
-														<span class="badge badge-light-success">승인</span>
-													</c:if>
-													<c:if test="${a.al_flag eq '4'}">
-														<span class="badge badge-light-danger">반려</span>
-													</c:if>
-													<c:if test="${a.al_flag eq '5'}">
-														<span class="badge badge-light-primary">결재요청</span>
-													</c:if>
-													
-												</div>
-											</c:if>
-											<i class="ki-duotone ki-cross-circle fs-1" style="cursor: pointer" onclick="offAlarm(this)"> 
-												<span class="path1"></span> 
-												<span class="path2"></span>
-											</i>
-										</div>
-										
-									</div>
-									
-								</div>
-						
-						</div>
-					</c:forEach>
+					
+							<!-- 알림 Ajax 삽입 영역 -->
 							
 							<div class="timeline-item">
 								<div class="timeline-line"></div>
@@ -351,7 +220,7 @@
 									<div class="pe-3 mb-5">
 										<div class="fs-5 fw-semibold mb-2">일정알림</div>
 										<div class="d-flex align-items-center mt-1 fs-6">
-											<div class="text-muted me-2 fs-7">2024-03-15 16:23</div>
+											<div class="text-muted me-2 fs-7">2024-03-15 16:23:07</div>
 										</div>
 									</div>
 									<div class="overflow-auto pb-5">
@@ -560,6 +429,3 @@
 					</div>
 				</div>
 			</div>
-
-
-</html>

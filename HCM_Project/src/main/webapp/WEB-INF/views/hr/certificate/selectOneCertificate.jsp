@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
+  
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,9 +53,23 @@ function pdfPrint() {
 			// 파일 저장
 			doc.save(docTitle+'.pdf');
 
-
-//			이미지로 표현
-//			document.write('<img src="'+imgData+'" />');
+			var emdh_type = 'D';
+			var emdn_id = document.getElementById("docNumber").value;
+			
+			fetch('/hr/certificate/downloadDoc.do?emdh_type='+emdh_type+'&emdn_id='+emdn_id,{
+			method: "GET",
+			})
+			.then(response =>{
+				return response;
+				console.log(response);
+			})
+			.then(returnData => {
+				console.log(returnData);
+			})
+		    .catch(err => { 
+		        console.log('에러발생', err);
+		    });
+			
 		}
 
 	});
@@ -77,9 +92,27 @@ window.onload = function(){
 		var orgBody = document.body.innerHTML;
 		var printBody = document.getElementById("savePdfZone").innerHTML;
 		
-		document.body.innerHTML = printBody;
-		window.print();
-		document.body.innerHTML = orgBody;
+		var emdh_type = 'P';
+		var emdn_id = document.getElementById("docNumber").value;
+		
+		fetch('/hr/certificate/downloadDoc.do?emdh_type='+emdh_type+'&emdn_id='+emdn_id,{
+		method: "GET",
+		})
+		.then(response =>{
+			return response;
+			console.log(response);
+		})
+		.then(returnData => {
+			console.log(returnData);
+			document.body.innerHTML = printBody;
+			window.print();
+			document.body.innerHTML = orgBody;
+		})
+	    .catch(err => { 
+	        console.log('에러발생', err);
+	    });
+		
+		
 	});
 	
 	
@@ -130,6 +163,7 @@ window.onload = function(){
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5" >
 								<input id="docTitle" type="hidden" value="${boxDto.getSidb_doc_title()}">
+								<input id="docNumber" type="hidden" value="${boxDto.getSidb_doc_num()}">
 								<div id="savePdfZone" class="saveZomeCss">
 									${boxDto}<br>
 									${boxDto.getSidb_doc_num()}<br>
@@ -140,6 +174,7 @@ window.onload = function(){
 								<div>
 									<button id="savePdf" class="btn btn-primary btnLg me-10">PDF저장하기</button>
 									<button id="printPdf" class="btn btn-primary btnLg me-10">프린트하기</button>
+									<button id="toDocList" onclick="javascript:history.back(-1)" class="btn btn-primary btnLg me-10">목록으로</button>
 								</div>
 							</div>
 						</div>

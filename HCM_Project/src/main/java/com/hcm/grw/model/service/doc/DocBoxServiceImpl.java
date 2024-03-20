@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hcm.grw.dto.doc.SignBoxDto;
+import com.hcm.grw.dto.doc.SignFileDto;
 import com.hcm.grw.model.mapper.doc.IDocBoxDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -118,5 +119,25 @@ public class DocBoxServiceImpl implements IDocBoxService {
 	@Override
 	public SignBoxDto getMyDepth(SignBoxDto dto) {
 		return dao.getMyDepth(dto);
+	}
+
+	@Override
+	public List<SignBoxDto> getMyTurnJson(SignBoxDto dto) {
+		return dao.getMyTurnJson(dto);
+	}
+	
+	@Override
+	public List<SignBoxDto> getIDidDocs(SignBoxDto dto) {
+		return dao.getIDidDocs(dto);
+	}
+	
+	@Override
+	public List<SignFileDto> getFileList(SignBoxDto dto) {
+		return dao.getFileList(dto);
+	}
+	
+	@Override
+	public SignFileDto getDocsDetailFile(String sidf_file_num) {
+		return dao.getDocsDetailFile(sidf_file_num);
 	}
 }	
