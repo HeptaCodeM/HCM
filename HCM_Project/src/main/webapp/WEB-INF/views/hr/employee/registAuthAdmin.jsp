@@ -29,8 +29,8 @@
 								<h3 class="card-title text-gray-800 fw-bold">인사관리 > 조직관리 > 권한관리</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>
-							<form name="registAuthForm" id="registAuthForm" method="post" action="/hr/employee/registAuthOk.do">
-								
+							<form name="registAuthForm" id="registAuthForm" method="post" action="/hr/employee/updateAuthAdminOk.do">
+									<input type="hidden" name="type" value="I">
 									<div class="table-responsive">
 										<table class="table table-bordered">
 											<tr>
@@ -79,9 +79,9 @@
 													        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 													    </span>
 													</button>
-													<button type="button" class="btn btn-primary me-10" id="kt_button_1" onclick="history.back();">
+													<button type="button" class="btn btn-success me-10" id="kt_button_1" onclick="history.back();">
 													    <span class="indicator-label">
-													        등록
+													        취소
 													    </span>
 													</button>
 												</td>
@@ -99,7 +99,7 @@
 		
 		<!-- 사원검색 Layer 시작 -->
 		<style type="text/css">
-			#empSearch { position: absolute; background-color:#fff; z-index:999; width:600px; left: 50%; transform: translateX(-50%); top: 25%; padding: 20px; border:1px solid #ccc; border-radius: 20px; display: none; }
+			#empSearch { position: absolute; background-color:#fff; z-index:999; width:600px; left: 50%; transform: translateX(-50%); top: 15%; padding: 20px; border:1px solid #ccc; border-radius: 20px; display: none; }
 		</style>
 		<div id="empSearch">
 			<div style="text-align:right;" >

@@ -196,3 +196,48 @@ function registEmpAuth(){
 	f.submit();
 }
 
+function modifyEmpAuth(){
+	var f = document.modifyAuthForm;
+	
+	f.type.value = "U";
+	
+	if(!f.empl_id.value || !f.empl_name.value || !f.empl_dept_nm.value || !f.empl_rank_nm.value){
+		swalAlert("사원정보가 없습니다.<br>사원을 조회하여 주세요.","","","","");
+		return;
+	}
+	if(!f.empl_auth.value){
+		swalAlert("권한을 선택하여 주세요.","","","","empl_auth");
+		return;
+	}
+
+	if(f.empl_auth.value == f.empl_auth1.value){
+		swalAlert("현재권한과 수정하려는 권한이 동일합니다.","","","","empl_auth");
+		return;
+	}
+	
+	sweetAlertConfirm("현재 권한정보를 수정 하시겠습니까?", modifyEmpAuthOk, "");
+}
+function modifyEmpAuthOk(){
+	var f = document.modifyAuthForm;
+
+	f.submit();
+}
+
+function deleteEmpAuth(){
+	var f = document.modifyAuthForm;
+	
+	f.type.value = "D";
+	
+	if(!f.empl_id.value || !f.empl_name.value || !f.empl_dept_nm.value || !f.empl_rank_nm.value){
+		swalAlert("사원정보가 없습니다.<br>사원을 조회하여 주세요.","","","","");
+		return;
+	}
+
+	sweetAlertConfirm("현재 권한정보를 삭제 하시겠습니까?", deleteEmpAuthOk, "");
+}
+function deleteEmpAuthOk(){
+	var f = document.modifyAuthForm;
+
+	f.submit();
+}
+

@@ -137,7 +137,7 @@ public class EmployeeController {
 		
 		String empl_id = "";
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
 			return null;
 		}else {
 			empl_id = authentication.getName();
@@ -238,7 +238,7 @@ public class EmployeeController {
 		resp.setContentType("text/html; charset=utf-8");
 		
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
 			return null;
 		}
 		
@@ -285,26 +285,26 @@ public class EmployeeController {
 	}
 	
 	
-	@GetMapping("authManageList.do")
-	public String authManageList(Model model) {
-		log.info("EmployeeController authManageList 권한리스트");
+	@GetMapping("authAdminList.do")
+	public String authAdminList(Model model) {
+		log.info("EmployeeController authAdminList 권한리스트");
 	
 		List<EmployeeDto> lists = employeeService.getAuthList();
 		
 		model.addAttribute("lists", lists);
 		
-		return "hr/employee/authManageList";
+		return "hr/employee/authAdminList";
 	}
 
-	@GetMapping("registAuth.do")
-	public String authManageDetail(Model model) {
-		log.info("EmployeeController registAuth 권한상세");
+	@GetMapping("registAuthAdmin.do")
+	public String registAuthAdmin(Model model) {
+		log.info("EmployeeController registAuthAdmin 권한등록");
 	
 		List<AuthDto> authLists = employeeService.selectAuthAllList();
 		
 		model.addAttribute("authLists", authLists);
 		
-		return "hr/employee/registAuth";
+		return "hr/employee/registAuthAdmin";
 	}
 	
 	@PostMapping(value="getUserInfoSearch.do", produces = "application/json;")
@@ -324,31 +324,64 @@ public class EmployeeController {
         }        
 	}
 
-	@PostMapping("registAuthOk.do")
-	public @ResponseBody void registAuthOk(@RequestParam Map<String, Object> authMap,
+	@PostMapping("updateAuthAdminOk.do")
+	public @ResponseBody void updateAuthAdminOk(@RequestParam Map<String, Object> authMap,
 			  					Authentication authentication,
 			  					HttpServletResponse resp) {
-		log.info("EmployeeController registAuthOk 권한등록처리 : {}", authMap);
+		log.info("EmployeeController updateAuthAdminOk 권한등록처리 : {}", authMap);
 		resp.setContentType("text/html; charset=UTF-8;");
-		
+
+		String type = authMap.get("type").toString();
 		String empl_modify_id = "";
-		if(authentication != null) {
-			empl_modify_id = authentication.getName();
-		}else {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "", "");
+		String empl_id = authMap.get("empl_id").toString();
+		if(authentication == null) {
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
 			return;
+		}else {
+			empl_modify_id = authentication.getName();
+		}
+		
+		if(type.equals("D")) {
+			authMap.put("empl_auth", "ROLE_USER");
 		}
 		authMap.put("empl_modify_id", empl_modify_id); 
 		
 		int cnt = employeeService.updateAuthEmployee(authMap);
 		if(cnt > 0 ) {
-			Function.alertLocation(resp, "권한등록이 완료 되었습니다.", "/hr/employee/authManageList.do", "", "", "");
+			if(type.equals("D")) {
+				Function.alertLocation(resp, "권한삭제가 완료 되었습니다.", "/hr/employee/authAdminList.do", "", "", "");
+			}else if(type.equals("I")) {
+				Function.alertLocation(resp, "권한등록이 완료 되었습니다.", "/hr/employee/authAdminList.do", "", "", "");
+			}else {
+				Function.alertLocation(resp, "권한수정이 완료 되었습니다.", "/hr/employee/authAdminDetail.do?empl_id="+empl_id, "btn-danger", "", "");
+			}
 			return;
 		}else {
 			Function.alertHistoryBack(resp, "권한등록에 오류가 발생하였습니다.", "", "");
 			return;
 		}
+	}
 
+	
+	@GetMapping("authAdminDetail.do")
+	public String authAdminDetail(@RequestParam(required = true) String empl_id,
+								Authentication authentication,
+								HttpServletResponse resp,
+								Model model) {
+		log.info("EmployeeController registAuth 권한상세");
+
+		if(authentication == null) {
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			return null;
+		}
+
+		EmployeeDto employeeDto = employeeService.getAuthDetail(empl_id);
+		List<AuthDto> authLists = employeeService.selectAuthAllList();
+		
+		model.addAttribute("authInfo", employeeDto);
+		model.addAttribute("authLists", authLists);
+		
+		return "hr/employee/authAdminDetail";
 	}
 	
 	
