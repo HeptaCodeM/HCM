@@ -140,7 +140,6 @@
 										<tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
 										</c:when>
 										<c:otherwise>
-										<%-- <tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6" style="cursor: pointer;" onclick="location.href='/hr/employee/modifyAdmin.do?empl_id=${emp.empl_id}'"> --%>
 										<tr style="cursor: pointer;" onclick="location.href='/hr/employee/modifyAdmin.do?empl_id=${emp.empl_id}'">
 										</c:otherwise>
 									</c:choose>										
@@ -186,10 +185,19 @@ var endDate = "";
 	        info: false
 		});
 		
-		$('#emplListTable tbody').on('click','tr',function(){
-			console.log("동작");
-		})
-		
+		$("#emplListTable tbody").on('click', 'tr', function () {
+			console.log("작동");
+			var row = $("#emplListTable").DataTable().row($(this)).data();
+			console.log($("#empl_id").val(row.empl_id));
+			$("#empl_id").val(row.empl_id);
+			$("#empl_name").val(row.empl_name);
+			$("#coco_name_dnm").val(row.coco_name_dnm);
+			$("#coco_name_rnm").val(row.coco_name_rnm);
+			$("#coco_name_pnm").val(row.coco_name_pnm);
+			$("#empl_position_nm").val(row.empl_position_nm);
+//			$("#empl_position_nm").val(row.empl_position_nm).replace("Y","퇴직").replace("N","재직");
+			
+		});
 	});
 
 	

@@ -129,7 +129,7 @@ public class EmployeeListController {
 			return;
 			//sb.append("alert('수정 시 오류가 발생하였습니다.'); history.back();");
 		}else {
-			Function.alertLocation(resp, "정상적으로 수정 되었습니다.", "/hr/employee/modifyAdmin.do", "","","");
+			Function.alertLocation(resp, "정상적으로 수정 되었습니다.", "/hr/employee/modifyAdmin.do?empl_id="+empl_id, "","","");
 			return;
 			//sb.append("alert('정상적으로 수정 되었습니다.');");
 			//sb.append("location.href='/hr/employee/list.do';");

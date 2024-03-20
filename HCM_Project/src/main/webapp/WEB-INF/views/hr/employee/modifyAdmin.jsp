@@ -120,7 +120,7 @@
 										</tr>
 										<tr>
 											<td colspan="3" style="text-align:center;">
-												<button type="button" class="btn btn-primary me-10">
+												<button type="submit" class="btn btn-primary me-10">
 												    <span class="indicator-label">
 												        수정
 												    </span>

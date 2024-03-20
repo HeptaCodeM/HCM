@@ -105,13 +105,8 @@
 								</c:choose>
 							</div>
 							<div class="card-footer">
-								<!-- 관리자만 보이게 할 예정 -->
-								<c:if test="${empl_auth eq 'ROLE_HR_ADMIN'}">
-									<button class="btn btn-primary btnLg me-10" type="button" onclick="location.href='/hr/company/companyInfoCorrection.do'">수정</button>
-									<button class="btn btn-primary btnLg me-10" type="button" onclick="location.href='/hr/company/insertCompanySealForm.do'">회사직인입력</button>
-								</c:if>
-								<button class="btn btn-primary btnLg me-10" type="button" onclick="location.href='/hr/company/showCompanySeal.do'">회사직인조회</button>
-								<button class="btn btn-primary btnLg me-10" type="button" data-bs-toggle="modal" data-bs-target="#showSealModal">회사직인조회(모달)</button>
+								<button class="btn btn-primary btnLg me-10" type="button" onclick="location.href='/hr/company/companyInfoCorrection.do'">수정</button>
+								<button class="btn btn-primary btnLg me-10" type="button" data-bs-toggle="modal" data-bs-target="#showSealModal">회사직인조회</button>
 							</div>
 						</div>
 					</div>
