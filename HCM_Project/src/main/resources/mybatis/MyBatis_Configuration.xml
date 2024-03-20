@@ -41,6 +41,7 @@
       <typeAlias type="com.hcm.grw.dto.AlarmDto" alias="AlarmDto"/>
       <typeAlias type="com.hcm.grw.dto.ChatDto" alias="ChatDto"/>
       
+      <typeAlias type="com.hcm.grw.dto.hr.AuthDto" alias="AuthDto"/>
    </typeAliases>
    
 

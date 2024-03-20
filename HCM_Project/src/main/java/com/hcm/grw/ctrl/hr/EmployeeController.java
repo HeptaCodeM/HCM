@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcm.grw.comm.Function;
+import com.hcm.grw.dto.hr.AuthDto;
 import com.hcm.grw.dto.hr.CommonCodeDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.hr.CommonCodeService;
@@ -48,9 +50,9 @@ public class EmployeeController {
 	@Autowired
 	private PasswordEncoder encoder;
 
-	@GetMapping("registAdmin.do")
+	@GetMapping("registEmpAdmin.do")
 	public String registEmployee(Model model) {
-		log.info("EmployeeController registEmployee 진입");
+		log.info("EmployeeController registEmpAdmin 진입");
 		
 		Map<String, Object> mapDept = new HashMap<String, Object>();
 		mapDept.put("role", "DT");
@@ -69,15 +71,15 @@ public class EmployeeController {
 		model.addAttribute("rankList", rankList);
 		model.addAttribute("positionList", positionList);
 		
-		return "/hr/employee/registAdmin";
+		return "/hr/employee/registEmpAdmin";
 	}
 
-	@PostMapping("registAdmin.do")
-	public @ResponseBody void registEmployeeOk(@RequestParam("empl_picture") List<MultipartFile> file, 
+	@PostMapping("registEmpAdminOk.do")
+	public @ResponseBody void registEmpAdminOk(@RequestParam("empl_picture") List<MultipartFile> file, 
 												@RequestParam Map<String, String> map, 
 												HttpServletResponse resp, 
 												Authentication authentication) throws IOException {
-		log.info("EmployeeController registEmployeeOk 등록처리");
+		log.info("EmployeeController registEmpAdminOk 등록처리");
 		log.info("input map : {}", map);
 		log.info("MultipartFile : {}", file);
 		resp.setContentType("text/html;charset=utf-8;");
@@ -128,9 +130,9 @@ public class EmployeeController {
 		resp.getWriter().print(sb);
 	}
 
-	@GetMapping("modify.do")
-	public String employeeModify(Model model, Authentication authentication, HttpServletResponse resp) throws IOException {
-		log.info("EmployeeController employeeModify 수정페이지 진입");
+	@GetMapping("empModify.do")
+	public String empModify(Model model, Authentication authentication, HttpServletResponse resp) throws IOException {
+		log.info("EmployeeController empModify 수정페이지 진입");
 		resp.setContentType("text/html;charset=utf-8;");
 		
 		String empl_id = "";
@@ -150,16 +152,16 @@ public class EmployeeController {
 		
 		model.addAttribute("empInfo", empInfo);
 		
-		return "/hr/employee/modify";
+		return "/hr/employee/empModify";
 	}	
 	
 	
-	@PostMapping("modifyOk.do")
-	public @ResponseBody void employeeModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, 
+	@PostMapping("empModifyOk.do")
+	public @ResponseBody void empModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, 
 												@RequestParam Map<String, String> map, 
 												HttpServletResponse resp, 
 												Authentication authentication) throws IOException {
-		log.info("EmployeeController employeeModifyOk 수정처리");
+		log.info("EmployeeController empModifyOk 수정처리");
 		resp.setContentType("text/html;charset=utf-8;");
 		
         String empl_modify_id = "";
@@ -199,7 +201,7 @@ public class EmployeeController {
 
 			//sb.append("alert('수정 시 오류가 발생하였습니다.'); history.back();");
 		}else {
-			msg = Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/modify.do", "","","");
+			msg = Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/empModify.do", "","","");
 			//sb.append("alert('정상적으로 수정 되었습니다.');");
 			//sb.append("location.href='/hr/employee/list.do';");
 		}
@@ -250,7 +252,7 @@ public class EmployeeController {
 							  Authentication authentication,
 							  HttpServletResponse resp) throws IOException {
 		
-		log.info("LoginController updatePwdOk 변경 처리");
+		log.info("EmployeeController updatePwdOk 변경 처리");
 		resp.setContentType("text/html; charset=utf-8");
 
 		if(authentication == null) {
@@ -286,7 +288,7 @@ public class EmployeeController {
 	
 	@GetMapping("authManageList.do")
 	public String authManageList(Model model) throws IOException {
-		log.info("LoginController authManageList 권한리스트");
+		log.info("EmployeeController authManageList 권한리스트");
 	
 		List<EmployeeDto> lists = employeeService.getAuthList();
 		
@@ -294,6 +296,33 @@ public class EmployeeController {
 		
 		return "hr/employee/authManageList";
 	}
+
+	@GetMapping("registAuth.do")
+	public String authManageDetail(Model model) throws IOException {
+		log.info("EmployeeController registAuth 권한상세");
 	
+		List<AuthDto> AuthLists = employeeService.selectAuthAllList();
+		
+		model.addAttribute("AuthLists", AuthLists);
+		
+		return "hr/employee/registAuth";
+	}
+	
+	@PostMapping(value="getUserInfoSearch.do", produces = "application/json;")
+	public @ResponseBody String getUserInfoSearch(@RequestParam HashMap<String, String> map, HttpServletResponse resp) throws IOException {
+		log.info("EmployeeController getUserInfoSearch 사원정보 검색 : {}", map);
+		resp.setContentType("text/html; charset=UTF-8;");
+		
+		List<EmployeeDto> empDto = employeeService.getUserInfoSearch(map);
+	
+		ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            return objectMapper.writeValueAsString(empDto);
+        } catch (JsonProcessingException e) {
+            log.error("JSON 변환 중 오류 발생", e);
+            return "Failed to convert object to JSON";
+        }        
+	}
 	
 }

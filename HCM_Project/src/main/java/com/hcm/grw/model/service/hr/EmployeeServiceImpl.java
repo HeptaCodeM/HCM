@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hcm.grw.comm.EmailService;
+import com.hcm.grw.dto.hr.AuthDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.dto.hr.SnsInfoDto;
 import com.hcm.grw.model.mapper.hr.EmployeeDao;
@@ -115,12 +116,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public int updatePwd(Map<String, Object> map) {
-
 		String enc_empl_new_pwd = passwordEncoder.encode(map.get("empl_new_pwd").toString());
 
 		map.put("empl_new_pwd", enc_empl_new_pwd);
 		
 		return dao.updatePwd(map);
+	}
+
+	@Override
+	public List<AuthDto> selectAuthAllList() {
+		return dao.selectAuthAllList();
+	}
+
+	@Override
+	public List<EmployeeDto> getUserInfoSearch(Map<String, String> map) {
+		return dao.getUserInfoSearch(map);
 	}
 
 }
