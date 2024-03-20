@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.hcm.grw.dto.doc.SignBoxDto;
+import com.hcm.grw.dto.doc.SignFileDto;
 
 public interface IDocBoxService {
 
@@ -58,4 +59,10 @@ public interface IDocBoxService {
 
 		//내가 결재 승인한 문서 조회
 		public List<SignBoxDto> getIDidDocs(SignBoxDto dto);
+		
+		//상세조회문서에 첨부된 파일목록 조회
+		public List<SignFileDto> getFileList(SignBoxDto dto);
+		
+		//상세조회문서에 첨부된 파일다운 조회
+		public SignFileDto getDocsDetailFile(String sidf_file_num);
 }

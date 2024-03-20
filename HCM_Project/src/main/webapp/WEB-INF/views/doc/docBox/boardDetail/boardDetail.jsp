@@ -8,6 +8,9 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp"%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
 <title>DOC메인화면</title>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp"%>
@@ -72,25 +75,31 @@ th, td {
 			</div>
 		</div>
 		<div class="app-content flex-column-fluid">
+		<c:set var="docDto1" value="${docDto[1]}" />
 			<!-- 내용 시작 -->
 			<div id="kt_app_content" class="app-content flex-column-fluid">
 				<div class="app-container container-fluid">
 					<div class="card card-flush h-md-50 mb-xl-10">
 						<div class="card-header pt-5">
-							<h3 class="card-title text-gray-800 fw-bold">결재문서</h3>
+							<h3 class="card-title text-gray-800 fw-bold">${docDto1.empl_name} ${docDto1.empl_rank} 님이 기안한 결재문서입니다.</h3>
 						</div>
 						<div class="separator separator-dashed my-3"></div>
 						<div class="card-body pt-5">
 
-							<div class="container">
+							<div id="pdfZone" class="container">
 								<div class="header">
 									<div></div>
 									<table>
 										<tr>
-											<c:set var="docDto1" value="${docDto[1]}" />
-											<th rowspan="3">결<br>재
+											
+											<th rowspan="4">결<br>재
 											</th>
-
+										<tr style="height:30px;">
+											<c:forEach items="${docDto}" var="dt" varStatus="i">
+												<td>${dt.appr_name} ${dt.appr_rank}</td>
+											</c:forEach>
+										</tr>
+										<tr style="height:80px;">
 											<c:forEach items="${docDto}" var="dt" varStatus="i">
 												<td><c:choose>
 													<%-- 	<c:when test="${empty dt.appr_sign}"> --%>
@@ -98,17 +107,13 @@ th, td {
             											    &nbsp;
          											   </c:when>
 														<c:otherwise>
-															<img style="width: 100px; height: 70px; border: none;"
+															<img style="width: 80px; height: 70px; border: none;"
 																src="${dt.appr_sign}" />
 														</c:otherwise>
 													</c:choose></td>
 											</c:forEach>
-
-											<!-- 	<td>ㅇ</td>
-											<td>ㅇ</td>
-											<td>ㅇ</td> -->
-										</tr>
-										<tr>
+										</tr>	
+										<tr style="height:30px;">
 											<c:forEach items="${docDto}" var="dt" varStatus="i">
 												<td>${dt.appr_dt}</td>
 											</c:forEach>
@@ -125,13 +130,14 @@ th, td {
 
 								</p>
 								<div class="content">
+										<input id="docTitle" type="hidden" value="${docDto1.sidb_doc_title}">
 									<table>
 										<tr>
 											<th>문서제목 ${docDto1.sidb_doc_title}</th>
 											<td>부서 ${docDto[1].writer_dt}</td>
 										</tr>
 										<tr>
-											<th>기안자 ${docDto1.empl_name}</th>
+											<th>기안자 ${docDto1.empl_name} ${docDto1.empl_rank}</th>
 											<td>작성일 <fmt:parseDate var="patternDate"
 													value=" ${docDto1.sidb_doc_writedt}"
 													pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
@@ -139,12 +145,15 @@ th, td {
 											</td>
 										</tr>
 										<tr>
-											<td colspan="2">${docDto1.sidb_doc_content}<br> <br>
+											<td colspan="2">${docDto1.sidb_doc_content}
+												<br> <br>
 												<br> <br> <br> <br> <br> <br>
 												<br> <br> <br> <br> <br>
 											</td>
 										</tr>
 									</table>
+									첨부파일:<select id="selectFile" style="min-width:100px;"></select> <button class="btn btn-primary" id="downBtn">파일다운로드</button>
+									<button class="btn btn-primary" id="savePdf">PDF 저장</button>
 								</div>
 								<div class="footer">
 									<div>첨언내역</div>
@@ -158,9 +167,9 @@ th, td {
 										<c:forEach items="${docDto}" var="dt">
 
 											<tr>
-												<td>${dt.appr_name}<br>
+												<td style="width:100px;">${dt.appr_name} ${dt.appr_rank}
 												</td>
-												<td><c:choose>
+												<td style="width:100px;"><c:choose>
 														<c:when test="${dt.appr_flag eq 1}">
 															<p>승인</p>
 														</c:when>
@@ -188,6 +197,11 @@ th, td {
     <button type="button" class="btn btn-primary" onclick="docEdit()">품의수정</button>
     <button type="button" class="btn btn-danger" onclick="docCancel()">상신취소</button>
 	</c:if>
+	
+	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.empl_id and docDto1.sidb_doc_stat == 2}">
+    <button type="button" class="btn btn-danger" onclick="denyPlease()">반려요청</button>
+	</c:if>
+
 								</div>
 							</div>
 						</div>
@@ -220,7 +234,7 @@ th, td {
 				<div class="modal-body">
 					<p>첨언</p>
 					<form id="reply" action="./approve.do" method="post">
-					<input type="hidden" value="${docDto1.sidb_doc_num}" name="docNum"/>
+					<input type="hidden" value="${docDto1.sidb_doc_num}" id="docNum" name="docNum"/>
 						<textarea name="reply" style="width: 100%;"></textarea>
 					</form>
 				</div>
@@ -266,59 +280,7 @@ th, td {
 		</div>
 	</div>
 </body>
-<script type="text/javascript">
-	function approve() {
-	        alert("승인처리 되었습니다");
-	        document.getElementById('reply').submit();
-	    }
-	
+<script type="text/javascript" src="/js/doc/boardDetail.js"></script>
 
-	function deny() {
-		alert("반려처리 되었습니다");
-		document.getElementById('denyReply').submit();
-	}
-
-	var element = document.querySelector('#kt_modal_3');
-	dragElement(element);
-
-	function dragElement(elmnt) {
-		var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-		if (elmnt.querySelector('.modal-content')) {
-			// if present, the header is where you move the DIV from:
-			elmnt.querySelector('.modal-content').onmousedown = dragMouseDown;
-		} else {
-			// otherwise, move the DIV from anywhere inside the DIV:
-			elmnt.onmousedown = dragMouseDown;
-		}
-
-		function dragMouseDown(e) {
-			e = e || window.event;
-			// get the mouse cursor position at startup:
-			pos3 = e.clientX;
-			pos4 = e.clientY;
-			document.onmouseup = closeDragElement;
-			// call a function whenever the cursor moves:
-			document.onmousemove = elementDrag;
-		}
-
-		function elementDrag(e) {
-			e = e || window.event;
-			// calculate the new cursor position:
-			pos1 = pos3 - e.clientX;
-			pos2 = pos4 - e.clientY;
-			pos3 = e.clientX;
-			pos4 = e.clientY;
-			// set the element's new position:
-			elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-			elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-		}
-
-		function closeDragElement() {
-			// stop moving when mouse button is released:
-			document.onmouseup = null;
-			document.onmousemove = null;
-		}
-	}
-</script>
 
 </html>

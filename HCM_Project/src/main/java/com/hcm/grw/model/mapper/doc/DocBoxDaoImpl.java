@@ -7,8 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.hcm.grw.dto.doc.DocBoxDto;
 import com.hcm.grw.dto.doc.SignBoxDto;
+import com.hcm.grw.dto.doc.SignFileDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -149,6 +149,16 @@ public class DocBoxDaoImpl implements IDocBoxDao {
 	@Override
 	public List<SignBoxDto> getIDidDocs(SignBoxDto dto) {
 		return sqlSessionTemplate.selectList(NS+"getIDidDocs",dto);
+	}
+	
+	@Override
+	public List<SignFileDto> getFileList(SignBoxDto dto) {
+		return sqlSessionTemplate.selectList(NS+"getFileList",dto);
+	}
+	
+	@Override
+	public SignFileDto getDocsDetailFile(String sidf_file_num) {
+		return sqlSessionTemplate.selectOne(NS + "getDocsDetailFile", sidf_file_num);
 	}
 
 }

@@ -1,13 +1,18 @@
 function detailBoard(docNum) {
     var url = '/doc/docBox/getDetail.do?docNum=' + encodeURIComponent(docNum);
     window.location.href = url;
- /*   var formData = new FormData();
-    formData.append('docNum', docNum);
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/doc/docBox/getDetail.do', true);
-    xhr.send(formData);
-    window.location.href = "/doc/docBox/boardDetail/boardDetail";*/
 }
+
+/*function detailBoard(docNum) {
+    var xhr = new XMLHttpRequest();
+
+    // POST 요청 설정
+    xhr.open('POST', '/doc/docBox/getDetail.do', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
+
+    var data = 'docNum=' + encodeURIComponent(docNum);
+    xhr.send(data);
+    };*/
 
 $(document).ready( function () {
 	$('#myTable').DataTable({ 

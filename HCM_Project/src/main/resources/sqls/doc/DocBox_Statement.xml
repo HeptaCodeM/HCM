@@ -244,7 +244,7 @@ WHERE SDB.empl_id = #{empl_id}
 	SDB.SIDB_DOC_APPRDT, SDB.SIDB_DOC_STAT, SDB.EMPL_REF,
 	SDB.EMPL_DEPT_CD, SDB.SIDB_DOC_JSON,SDB.EMPL_ID , SDB.SIDB_CURR_id,
 	E.EMPL_NAME  , APPR_ID, e2.EMPL_NAME as APPR_NAME, 
-	CC2.COCO_NAME as APPR_RANK , CC.COCO_NAME as WRITER_DT,
+	CC2.COCO_NAME as APPR_RANK , CC.COCO_NAME as WRITER_DT, CC3.COCO_NAME AS EMPL_RANK,
 	APPR_SIGN , APPR_REPLY, APPR_FLAG, APPR_DT
 	FROM SIGN_DOC_BOX sdb
 	JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
@@ -260,7 +260,8 @@ WHERE SDB.empl_id = #{empl_id}
 	]]>
 	LEFT JOIN EMPLOYEE e2 ON j.APPR_ID = e2.EMPL_ID
 	LEFT JOIN COMMON_CODE cc ON E.EMPL_DEPT_CD = CC.COCO_CD
-LEFT JOIN COMMON_CODE cc2 ON E2.EMPL_RANK_CD = CC2.COCO_CD
+	LEFT JOIN COMMON_CODE cc2 ON E2.EMPL_RANK_CD = CC2.COCO_CD
+	LEFT JOIN COMMON_CODE cc3 ON E.EMPL_RANK_CD = CC3.COCO_CD
 	WHERE SDB.SIDB_DOC_NUM =  #{sidb_doc_num}  
 	</select>
 
@@ -338,5 +339,18 @@ LEFT JOIN
     WHERE (SDBJ.APPR_FLAG = '1' OR SDBJ.APPR_FLAG = '2') AND SDBJ.APPR_ID = #{empl_id}
 </select>	
 
+<!-- 상세조회 문서에 첨부된 파일 리스트 조회 -->
+<select id="getFileList" resultType="SignFileDto">
+   		SELECT *
+   		FROM SIGN_DOC_FILE
+   		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
+   </select>
+
+<!-- 상세조회 문서에 첨부된 파일 다운 -->
+ <select id="getDocsDetailFile" resultType="SignFileDto">
+   		SELECT *
+   		FROM SIGN_DOC_FILE
+   		WHERE SIDF_FILE_NUM = #{sidf_file_num}
+   </select>
 
 </mapper>

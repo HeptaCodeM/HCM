@@ -65,4 +65,6 @@ public class SignBoxDto {
 	private byte[] empl_picture;
 	private String empl_pictureStr;
 	private String sidb_curr_id;
+	private String empl_rank;
+	
 }
