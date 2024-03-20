@@ -125,16 +125,15 @@ public class EmployeeListController {
 		int n = employeeService.updateEmployee(emp);
 		String msg;
 		if(n < 1) {
-			msg = Function.alertHistoryBack("수정 시 오류가 발생하였습니다.", "", "");
-
+			Function.alertHistoryBack(resp, "수정 시 오류가 발생하였습니다.", "", "");
+			return;
 			//sb.append("alert('수정 시 오류가 발생하였습니다.'); history.back();");
 		}else {
-			msg = Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/modifyAdmin.do", "","","");
+			Function.alertLocation(resp, "정상적으로 수정 되었습니다.", "/hr/employee/modifyAdmin.do", "","","");
+			return;
 			//sb.append("alert('정상적으로 수정 되었습니다.');");
 			//sb.append("location.href='/hr/employee/list.do';");
 		}
-		
-		resp.getWriter().print(msg);
 	}
 	
 	

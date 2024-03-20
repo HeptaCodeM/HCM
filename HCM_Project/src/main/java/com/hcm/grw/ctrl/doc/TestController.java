@@ -34,7 +34,7 @@ public class TestController {
 	private ISignBoxService service;
 
 	@PostMapping(value = "fileUpTest.do", produces = "text/html; charset=UTF-8")
-	public ResponseEntity<?> fileUpTest(MultipartFile file, @RequestParam String sidb_doc_num) {
+	public ResponseEntity<?> fileUpTest(MultipartFile file, @RequestParam String sidb_doc_num, HttpServletResponse resp) {
 		log.info("파일업로드 테스트중...");	
 		if(file != null) {
 			log.info("전달받은 파일\n{}", file.getOriginalFilename());
@@ -45,7 +45,7 @@ public class TestController {
 			dto.setSidf_file_stored(file.getOriginalFilename());
 			dto.setSidf_file_size(String.valueOf(file.getSize()));
 			try {
-				dto.setSidf_file_content(FileCommonService.fileUpload(file));
+				dto.setSidf_file_content(FileCommonService.fileUpload(file, resp));
 				if(dto.getSidf_file_content() != null) {
 					service.insertDocFile(dto);
 				} else {
