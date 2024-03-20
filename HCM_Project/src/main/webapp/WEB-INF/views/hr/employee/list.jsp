@@ -4,9 +4,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-	<title>HCM GroupWare</title>
+<meta charset="UTF-8">
+<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
+<title>HCM GroupWare</title>
 	<style type="text/css">
 		.searchEmpInput{
 			width: 400px;
@@ -122,9 +122,9 @@
 						
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-body pt-5 table-responsive">
-								<table id="emplListTable" class="table table-hover table-rounded table-flush">
+								<table id="emplListTable" class="table table-row-bordered gy-5">
 									<thead>
-										<tr class="fw-semibold fs-7 border-bottom border-gray-200 py-4">
+										<tr class="fw-semibold fs-6 text-muted">
 											<th>사번</th>
 											<th>성명</th>
 											<th>부서명</th>
@@ -140,7 +140,8 @@
 										<tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
 										</c:when>
 										<c:otherwise>
-										<tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6" style="cursor: pointer;" onclick="location.href='/hr/employee/modifyAdmin.do?empl_id=${emp.empl_id}'">
+										<%-- <tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6" style="cursor: pointer;" onclick="location.href='/hr/employee/modifyAdmin.do?empl_id=${emp.empl_id}'"> --%>
+										<tr style="cursor: pointer;" onclick="location.href='/hr/employee/modifyAdmin.do?empl_id=${emp.empl_id}'">
 										</c:otherwise>
 									</c:choose>										
 											<td>${emp.empl_id}</td>
@@ -184,6 +185,11 @@ var endDate = "";
 	        lengthChange: false,
 	        info: false
 		});
+		
+		$('#emplListTable tbody').on('click','tr',function(){
+			console.log("동작");
+		})
+		
 	});
 
 	
@@ -262,39 +268,15 @@ var endDate = "";
 		valueChk.append('dtArr', dtArr);
 		valueChk.append('rkArr', rkArr);
  		valueChk.append('pnArr', pnArr);
-/*		fetch('/hr/employee/empSearching.do',{
-			method: "POST",
-			headers: {
-			    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-			},
-			body: valueChk
-		})
-		.then(response =>{
-			return response.json();
-			console.log(response.json());
-			startDate = "";
-			endDate = "";
-		})
-		.then(returnData => {
-			console.log(returnData);
-			returnList(returnData);
-			
-		})
-	    .catch(err => { 
-	        console.log('에러발생', err);
-	        startDate = "";
-			endDate = "";
-	    }); */ 
-	    var innerFr = document.getElementById("emplListTable");
-	    var frstyle = document.defaultView.getComputedStyle(innerFr);
+ 		
 		$("#emplListTable").DataTable().destroy(); 
 		$.ajax({
 		    type: "POST",
 		    url: "/hr/employee/empSearching.do?"+valueChk,	
-		    success: function (searchlists) {
-		        console.log(searchlists);
+		    success: function (data) {
+		        console.log(data);
 		        $('#emplListTable').DataTable({
-		        	data:searchlists,
+		        	data:data,
 		        	lengthChange: false,
 			        info: false,
 		        	columns: [ { data: "empl_id" }, 
@@ -305,7 +287,6 @@ var endDate = "";
 					       { data: "empl_delflag" }]
 					       
 		        });
-		        document.getElementById("emplListTable");
 		    },
 		    error:function(err){
 				console.log(err);
