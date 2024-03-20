@@ -12,12 +12,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function showCommentForm(commentId) {
+    // 모든 댓글 작성 폼을 숨깁니다.
+    hideAllCommentForms();
+
     // commentFormContainer 요소 찾기
     var commentFormContainer = document.getElementById("commentFormContainer" + commentId);
     // commentFormContainer가 존재하면 보이게 함
     if (commentFormContainer) {
         commentFormContainer.style.display = 'block';
     }
+}
+
+function hideAllCommentForms() {
+    // 모든 댓글 작성 폼을 숨깁니다.
+    var commentFormContainers = document.querySelectorAll("[id^='commentFormContainer']");
+    commentFormContainers.forEach(function(container) {
+        container.style.display = "none";
+    });
 }
 function cancelReply(commentId) {
      // commentFormContainer 요소 찾기
@@ -28,22 +39,7 @@ function cancelReply(commentId) {
     }
 }
 
-document.addEventListener("click", function(event) {
-    var commentFormContainers = document.querySelectorAll("[id^='commentFormContainer']");
-    var isCommentButtonClicked = false;
 
-    // 클릭된 요소가 답글쓰기 버튼인지 확인합니다.
-    if (event.target.classList.contains("comment_info_button")) {
-        isCommentButtonClicked = true;
-    }
-
-    // 클릭된 요소가 답글쓰기 버튼이 아닌 경우 모든 댓글 작성 폼을 숨깁니다.
-    if (!isCommentButtonClicked) {
-        commentFormContainers.forEach(function(container) {
-            container.style.display = "none";
-        });
-    }
-});
 
 
 //맨 위로 스크롤하는 함수
@@ -74,6 +70,9 @@ function checkInput() {
     }
 }
 
+// textarea의 입력 이벤트에 checkInput 함수를 연결
+document.getElementById("commentTextArea").addEventListener("#commentTextArea", checkInput);
+
 
 
 function insertReply(data){
@@ -89,7 +88,7 @@ function insertReply(data){
 	$.ajax({
 			url: "/sm/insertReply.do",
 			data: form,
-			type: "post",
+			type: "get",
 			dataType: "json",
 			success: function() {
 				location.href='/sm/getDetailGobo.do?gobo_no='+data;
@@ -105,7 +104,30 @@ function insertReply(data){
 
 
 
+function insertReplyTwo(data){
+	 console.log(data);
+	 var form = $("#ReplyTwoForm").serialize();
 
+    // 추가하려는 데이터를 직렬화된 데이터에 추가합니다.
+    var additionalData = "gobo_no=" + data;
+
+    // 추가 데이터를 직렬화된 데이터에 추가합니다.
+    form += "&" + additionalData;
+	
+	$.ajax({
+			url: "/sm/insertReplyTwo.do",
+			data: form,
+			type: "get",
+			dataType: "json",
+			success: function() {
+				location.href='/sm/getDetailGobo.do?gobo_no='+data;
+				console.log("댓글 등록 성공");
+			},
+			error: function() {
+				
+			}
+		});
+}
 
 
 

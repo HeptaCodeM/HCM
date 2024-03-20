@@ -1,14 +1,10 @@
 document.addEventListener('DOMContentLoaded', listAjax());
 
 function listAjax() {
-	var daygridmonth = calendar.view.title;
-	var empl_id = $("#empl_id").val();
-	console.log(empl_id);
-	console.log(daygridmonth);
+
 	$.ajax({
 		type: "get",
 		url: "/sm/getAllCalendar.do",
-		data: {daygridmonth:daygridmonth,empl_id:empl_id},
 		dataType: "json",
 		success: function(data) {
 			var calendarEl = document.getElementById('calendar');
