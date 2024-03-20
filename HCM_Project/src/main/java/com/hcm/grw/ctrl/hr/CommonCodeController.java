@@ -6,13 +6,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,12 +21,12 @@ import com.hcm.grw.model.service.hr.CommonCodeService;
 public class CommonCodeController {
 
 	@Autowired
-	private CommonCodeService codeService;		
+	private CommonCodeService codeService;	
+	
 	
 	@GetMapping(value = "/hr/commonCode/roleList.do")
-	public String roleList(Model model, String role) {
+	public String roleList(Model model, String role){
 		System.out.println(role);
-		
 		Map<String, Object> roleMap = new HashMap<String, Object>();
 		roleMap.put("role", role);
 		

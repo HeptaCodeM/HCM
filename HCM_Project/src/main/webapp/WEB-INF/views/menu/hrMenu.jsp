@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 // 중분류 순서
-String hrLeftMenu [] = {"조직관리", "증명서관리", "인사발령관리", "근태관리" , "메뉴이름미정"};
+String hrLeftMenu [] = {"조직관리", "증명서관리", "인사발령관리", "근태관리" , "회사정보관리"};
 // 소분류 메뉴명
 String hrSubLeftMenu [][] = {
-		{"부서관리","직위관리","직책관리", "정보수정", "사원등록", "사원조회"},		//hrLeftMenu[0]
+		{"부서관리","직위관리","직책관리", "권한관리", "정보수정", "사원등록", "사원조회", "비밀번호변경"},		//hrLeftMenu[0]
 		{"증명서리스트"},					//hrLeftMenu[1]
 		{"인사발령조회", "인사발령관리(관리자)"},	//hrLeftMenu[2]
 		{"출퇴근등록", "출퇴근현황"},			//hrLeftMenu[3]
-		{"HCMINFO"}		//hrLeftMenu[4]
+		{"회사정보"}		//hrLeftMenu[4]
 };
 //소분류 링크
 String hrSubLinkLeftMenu [][] = {
-		{"/hr/commonCode/roleList.do?role=DT","/hr/commonCode/roleList.do?role=RK","/hr/commonCode/roleList.do?role=PN", "/hr/employee/modify.do", "/hr/employee/registAdmin.do", "/hr/employee/list.do"},		//hrLeftMenu[0]
+		{"/hr/commonCode/roleList.do?role=DT","/hr/commonCode/roleList.do?role=RK","/hr/commonCode/roleList.do?role=PN", "/hr/employee/authManageList.do", "/hr/employee/empModify.do", "/hr/employee/registEmpAdmin.do", "/hr/employee/list.do", "/hr/employee/updatePwd.do"},		//hrLeftMenu[0]
 		{"/hr/certificate/certificate.do"},									//hrLeftMenu[1]
 		{"#", "#"},															//hrLeftMenu[2]
 		{"/hr/commute/registCommute.do", "/hr/commute/empCommuteList.do"},	//hrLeftMenu[3]
@@ -27,8 +27,6 @@ String currentRootName = uri.replace("/WEB-INF/views/hr/","");
 Boolean menuFlag1 = false;
 Boolean menuFlag2 = false;
 %>
-<!DOCTYPE html>
-<html>
 	<!-- 대분류별 영역 시작 -->
 	<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 		
@@ -117,5 +115,3 @@ Boolean menuFlag2 = false;
 		</div>		
 	</div>		
 	<!-- 대분류별 영역 종료 ------------------------------------------------------------------------->
-
-</html>

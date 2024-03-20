@@ -1,20 +1,15 @@
 package com.hcm.grw.model.service.hr;
 
-import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.Printer;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hcm.grw.comm.EmailService;
-import com.hcm.grw.comm.Function;
+import com.hcm.grw.dto.hr.AuthDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.dto.hr.SnsInfoDto;
 import com.hcm.grw.model.mapper.hr.EmployeeDao;
@@ -51,11 +46,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public int getInitPwdcheck(Map<String, Object> map) {
+		
+		
+		
 		return dao.getInitPwdcheck(map);
 	}
 
 	@Override
 	public int setInitPwd(Map<String, Object> map) {
+		String empl_pwd = map.get("empl_pwd").toString();
+		String enc_empl_pwd = passwordEncoder.encode(empl_pwd);
+		map.put("empl_pwd", enc_empl_pwd);
+
 		return dao.setInitPwd(map);
 	}
 
@@ -114,14 +116,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public int updatePwd(Map<String, Object> map) {
-
 		String enc_empl_new_pwd = passwordEncoder.encode(map.get("empl_new_pwd").toString());
-		String enc_empl_pwd = passwordEncoder.encode(map.get("empl_pwd").toString());
 
 		map.put("empl_new_pwd", enc_empl_new_pwd);
-		map.put("empl_pwd", enc_empl_pwd);
 		
 		return dao.updatePwd(map);
+	}
+
+	@Override
+	public List<AuthDto> selectAuthAllList() {
+		return dao.selectAuthAllList();
+	}
+
+	@Override
+	public List<EmployeeDto> getUserInfoSearch(Map<String, String> map) {
+		return dao.getUserInfoSearch(map);
 	}
 
 }
