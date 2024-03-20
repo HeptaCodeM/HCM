@@ -37,12 +37,12 @@
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-header pt-5">
-								<h3 class="card-title text-gray-800 fw-bold">사원정보</h3>
+								<h3 class="card-title text-gray-800 fw-bold">사원수정</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
 
-								<form name="form1" method="post" action="/hr/employee/modifyAdmin.do">
+								<form method="post" action="/hr/employee/modifyAdminOk.do" enctype="multipart/form-data">
 									<table class="table table-bordered">
 										<tr class="success">
 											<th>사번</th>
@@ -51,14 +51,7 @@
 												<input type="hidden" name="empl_id" maxlength="20" value="${empInfo.empl_id}">
 											</td>
 											<td style="width:150px;" rowspan="4">
-												<c:choose>
-													<c:when test="">
-														<img src="${empInfo.empl_picture_str}" style="width:100%;height:100%;" >
-													</c:when>
-													<c:otherwise>
-														<img src="/image/blank.png" style="width:100%;height:100%;" >
-													</c:otherwise>
-												</c:choose>
+												<img src="${empInfo.empl_picture_str}" style="width:100%;height:100%;" >
 											</td>
 										</tr>
 										<tr>
@@ -89,8 +82,8 @@
 										</tr>
 
 										<tr>
-											<th class="required">전화번호</th>
-											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_phone" maxlength="15" value="${empInfo.empl_phone}" required="required"></td>
+											<th class="required">휴대폰</th>
+											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_phone" id="empl_phone" maxlength="15" value="${empInfo.empl_phone}" required="required"></td>
 										</tr>
 										<tr>
 											<th>내선번호</th>
@@ -128,7 +121,7 @@
 										</tr>
 										<tr>
 											<td colspan="3" style="text-align:center;">
-												<button class="btn btn-primary me-10" id="kt_button_1">
+												<button type="button" class="btn btn-primary me-10">
 												    <span class="indicator-label">
 												        수정
 												    </span>
