@@ -68,15 +68,14 @@ public class SignPageController {
 	}
 	
 	@GetMapping("writeDoc.do")
-	public String writeDoc(Authentication auth, Model model, String sidt_temp_cd) {
+	public String writeDoc(Authentication auth, HttpSession session, Model model) {
 		log.info("SignTreeController writeDoc.do 기안문 작성 페이지로 로그인 정보 전달");
 		if(auth != null) {
 			String id = auth.getName();
 			List<String> list = List.of(id);
 			List<EmployeeDto> dto = service.getFav(list);
-			TemplateDto temDto = temService.getDetailTemp(sidt_temp_cd);
+			session.setAttribute("loginInfo", dto.get(0));
 			model.addAttribute("loginInfo", dto.get(0));
-			model.addAttribute("temDto", temDto);			
 		}
 		return "doc/writeDoc";
 	}
