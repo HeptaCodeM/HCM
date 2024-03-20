@@ -71,6 +71,6 @@
 		</div>
 			
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
-<script src="/js/common.js"></script>
+<script src="/js/common/common.js"></script>
 </body>
 </html>

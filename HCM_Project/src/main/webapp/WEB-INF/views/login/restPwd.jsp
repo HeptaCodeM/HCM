@@ -40,7 +40,7 @@
 		}
 	</script>
 	<title>비밀번호 찾기</title>
-	<script src="/js/common.js" type="text/javascript"></script>
+	<script src="/js/common/common.js" type="text/javascript"></script>
 	<script src="/js/login/login.js" type="text/javascript"></script>
 </head>
 
