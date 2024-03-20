@@ -22,7 +22,7 @@ function offAlarm(icon) {
 			}
 		})
 		.catch(err => { console.log(err) });
-
+		
 }
 
 
@@ -49,6 +49,7 @@ function offAlarmAll() {
 			document.getElementById('numberFlag').style.display = 'none';
 		})
 		.catch(err => { console.log(err) });
+		
 }
 
    
