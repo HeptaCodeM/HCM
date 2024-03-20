@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.raonsecure.touchenkey.*"%>
-<%
-String tnk_srnd = E2ECrypto.CreateSessionRandom(session, true);
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,40 +22,6 @@ String tnk_srnd = E2ECrypto.CreateSessionRandom(session, true);
 <link href="/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 <!--end::Global Stylesheets Bundle-->
 <script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>
-
-<!--***** 키보드 보안 시작 *****-->
-<script type="text/javascript">
-var TNK_SR = '<%= tnk_srnd %>';
-function doSubmit(){
-	var frm = document.getElementById("loginForm");
-	if(TK_makeEncData(frm)){
-		frm.submit();
-	}
-}
-
-function dynamic_Submit(){
-	var frm = document.getElementById("dynamicFrm");
-	if(TK_makeEncData(frm)){
-		frm.submit();
-	}
-} 
-
-function tkCallBackFinish(){
-	alert("11");
-}
-</script>
-<!-- 
-<script type="text/javascript" src="/raonnx/cmn/TouchEnNx.js"></script>
-<script type='text/javascript' charset='utf-8' src='/raonnx/cmn/json2.js'></script>
-<script type='text/javascript' charset='utf-8' src='/raonnx/cmn/TouchEnNx_exproto.js'></script>
-<script type='text/javascript' charset='utf-8' src='/raonnx/cmn/TouchEnNx_install.js'></script>
-<script type='text/javascript' charset='utf-8' src='/raonnx/cmn/TouchEnNx_daemon.js'></script>
-<script type='text/javascript' charset='utf-8' src='/raonnx/nxKey/js/nxkey_config.js'></script>
-<script type='text/javascript' charset='utf-8' src='/raonnx/nxKey/js/TouchEnNxKey_Interface.js'></script>
-<script type='text/javascript' charset='utf-8' src='/raonnx/nxKey/js/TouchEnNxKey.js'></script>
-<script type='text/javascript' charset='utf-8' src='/raonnx/cmn/TouchEnNx_loader.js'></script>
- -->
-<!--***** 키보드 보안 종료 *****-->
 
 
 <title>Login 페이지</title>
