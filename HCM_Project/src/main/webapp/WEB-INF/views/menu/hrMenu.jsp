@@ -27,8 +27,6 @@ String currentRootName = uri.replace("/WEB-INF/views/hr/","");
 Boolean menuFlag1 = false;
 Boolean menuFlag2 = false;
 %>
-<!DOCTYPE html>
-<html>
 	<!-- 대분류별 영역 시작 -->
 	<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 		
@@ -117,5 +115,3 @@ Boolean menuFlag2 = false;
 		</div>		
 	</div>		
 	<!-- 대분류별 영역 종료 ------------------------------------------------------------------------->
-
-</html>

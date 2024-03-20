@@ -78,50 +78,47 @@ public class EmployeeListController {
 	}	
 
 	@GetMapping("/hr/employee/modifyAdmin.do")
-	public String employeeModify(Model model , Authentication authentication) {
+	public void employeeModify(Model model ,String empl_id) {
 		log.info("EmployeeListController modifyAdmin 수정페이지 진입");
-		
+		System.out.println(empl_id);
 		Map<String, Object> map = new HashMap<String, Object>();
-		String empl_modify_id = authentication.getName();
-		EmployeeDto fnEmployeeDto = employeeDao.getUserInfo(empl_modify_id);
-		String empl_auth = fnEmployeeDto.getEmpl_auth();
-		System.out.println(empl_auth);
-		System.out.println(empl_modify_id);
-		map.put("empl_id", empl_modify_id);
-		if(empl_auth.equals("ROLE_HR_ADMIN")) {
-			EmployeeDto empInfo = employeeListService.selectOneEmployee(map);
-			byte[] empPic = empInfo.getEmpl_picture();
-			empInfo.setEmpl_picture_str(Function.blobImageToString(empPic));
-			model.addAttribute("empInfo", empInfo);
-			return "/hr/employee/modifyAdmin";
-		}else {
-			System.out.println("에러처리");
-			return "/hr/employee/modifyAdmin";
-		}
+		map.put("empl_id", empl_id);
+		EmployeeDto empInfo = employeeListService.selectOneEmployee(map);
+		byte[] empPic = empInfo.getEmpl_picture();
+		empInfo.setEmpl_picture_str(Function.blobImageToString(empPic));
+		model.addAttribute("empInfo", empInfo);
+//		return "/hr/employee/modifyAdmin";
 		
 	}	
 	
 	
-	@PostMapping("/hr/employee/modifyAdmin.do")
-	public @ResponseBody void employeeModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, @RequestParam Map<String, String> map, HttpServletResponse resp, Authentication authentication) throws IOException {
+	@PostMapping("/hr/employee/modifyAdminOk.do")
+	public @ResponseBody void employeeModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, 
+												@RequestParam Map<String, String> map, 
+												HttpServletResponse resp, 
+												Authentication authentication,
+												String empl_id) throws IOException {
 		log.info("EmployeeController employeeModifyOk 수정처리");
 		
-        String empl_modify_id = authentication.getName();
-        EmployeeDto emp = new EmployeeDto();
+		EmployeeDto emp = new EmployeeDto();
 
         emp.setEmpl_phone(map.get("empl_phone"));
         emp.setEmpl_tel(map.get("empl_tel"));
         emp.setEmpl_fax(map.get("empl_fax"));
-		emp.setEmpl_modify_id(empl_modify_id);
+		emp.setEmpl_modify_id(empl_id);
         emp.setEmpl_id(map.get("empl_id"));
-
-		if(file != null) {
+        
+        if(!file.stream().allMatch(MultipartFile::isEmpty)) {
 			for(MultipartFile f : file){
+		        log.info("f.isEmpty() : {}", f.isEmpty());
+		        log.info("f.getSize() : {}", f.getSize());
+		        log.info("f.getContentType() : {}", f.getContentType());
 				emp.setEmpl_picture(f.getBytes());
 			}
 		}
-        
-        
+        else {
+			emp.setEmpl_picture(null);
+		}
 
 		log.info("수정값 : {}", emp);
 		
@@ -132,7 +129,7 @@ public class EmployeeListController {
 
 			//sb.append("alert('수정 시 오류가 발생하였습니다.'); history.back();");
 		}else {
-			msg = Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/modify.do", "","","");
+			msg = Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/modifyAdmin.do", "","","");
 			//sb.append("alert('정상적으로 수정 되었습니다.');");
 			//sb.append("location.href='/hr/employee/list.do';");
 		}
