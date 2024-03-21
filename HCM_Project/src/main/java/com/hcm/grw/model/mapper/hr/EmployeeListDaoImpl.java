@@ -43,6 +43,27 @@ public class EmployeeListDaoImpl implements EmployeeListDao {
 		log.info("EmployeeListDaoImpl correctionEmployee // {}",map);
 		return sessionTemplate.update(NS+"correctionEmployee",map);
 	}
+
+	@Override
+	public boolean chkEmpPhoneNum(String empl_phone) {
+		log.info("EmployeeListDaoImpl chkEmpPhoneNum // {}",empl_phone);
+		int cnt = sessionTemplate.selectOne(NS+"chkEmpPhoneNum",empl_phone);
+		return (cnt > 0)?false:true;
+	}
+
+	@Override
+	public boolean chkEmpTelNum(String empl_tel) {
+		log.info("EmployeeListDaoImpl chkEmpTelNum // {}",empl_tel);
+		int cnt = sessionTemplate.selectOne(NS+"chkEmpTelNum",empl_tel);
+		return (cnt > 0)?false:true;
+	}
+
+	@Override
+	public boolean chkEmpFaxNum(String empl_fax) {
+		log.info("EmployeeListDaoImpl chkEmpFaxNum // {}",empl_fax);
+		int cnt = sessionTemplate.selectOne(NS+"chkEmpFaxNum",empl_fax);
+		return (cnt > 0)?false:true;
+	}
 	
 	
 }

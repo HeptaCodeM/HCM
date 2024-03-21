@@ -9,7 +9,7 @@
 <title>HCM GroupWare</title>
 	<style type="text/css">
 		.searchEmpInput{
-			width: 400px;
+			width: 300px;
 			height: 40px;
 		}
 		
@@ -25,6 +25,7 @@
 			display: flex;
 			justify-content: center;
 		}
+		
 	</style>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
@@ -135,14 +136,7 @@
 									</thead>
 									<tbody>
 									<c:forEach items="${lists}" var="emp">
-									<c:choose>
-										<c:when test="${emp.empl_delflag eq 'Y'}">
-										<tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
-										</c:when>
-										<c:otherwise>
 										<tr style="cursor: pointer;" onclick="location.href='/hr/employee/modifyAdmin.do?empl_id=${emp.empl_id}'">
-										</c:otherwise>
-									</c:choose>										
 											<td>${emp.empl_id}</td>
 											<td>${emp.empl_name}</td>
 											<td>${emp.coco_name_dnm}</td>
@@ -159,6 +153,7 @@
 												</c:choose>
 											</td>
 										</tr>
+										<input type="hidden" id="empl_id" value="${emp.empl_id}">
 									</c:forEach>
 									</tbody>
 								</table>
@@ -174,6 +169,9 @@
 			
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
 </body>
+<<<<<<< HEAD
+<script type="text/javascript" src="/js/hr/empAdminList.js"></script>
+=======
 <script type="text/javascript">
 var startDate = "";
 var endDate = "";
@@ -311,4 +309,5 @@ var endDate = "";
 
 	
 </script>
+>>>>>>> branch 'hr' of https://github.com/HeptaCodeM/HCM.git
 </html>

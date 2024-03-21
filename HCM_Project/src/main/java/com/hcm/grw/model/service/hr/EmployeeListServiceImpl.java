@@ -41,6 +41,24 @@ public class EmployeeListServiceImpl implements EmployeeListService {
 		log.info("EmployeeListServiceImpl correctionEmployee // {}",map);
 		return dao.correctionEmployee(map);
 	}
+
+	@Override
+	public boolean chkEmpPhoneNum(String empl_phone) {
+		log.info("EmployeeListServiceImpl chkEmpPhoneNum // {}",empl_phone);
+		return dao.chkEmpPhoneNum(empl_phone);
+	}
+
+	@Override
+	public boolean chkEmpTelNum(String empl_tel) {
+		log.info("EmployeeListServiceImpl chkEmpTelNum // {}",empl_tel);
+		return dao.chkEmpTelNum(empl_tel);
+	}
+
+	@Override
+	public boolean chkEmpFaxNum(String empl_fax) {
+		log.info("EmployeeListServiceImpl chkEmpFaxNum // {}",empl_fax);
+		return dao.chkEmpFaxNum(empl_fax);
+	}
 	
 	
 	
