@@ -197,6 +197,8 @@
 						<c:if test="${userInfoVo ne null}">
 							<input type="hidden" id="id" value="${userInfoVo.empl_id}">
 							<input type="hidden" id="myName" value="${userInfoVo.empl_name}">
+							<input type="hidden" id="myDept" value="${userInfoVo.empl_dept_nm}">
+							<input type="hidden" id="myRank" value="${userInfoVo.empl_rank_nm}">
 						</c:if>
 					</div>
 				</div>

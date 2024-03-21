@@ -31,12 +31,12 @@
 	INSERT INTO SIGN_TEMP_BOX
 								(SITB_DOC_NUM, EMPL_ID, SITB_DOC_TITLE,
 								SITB_DOC_CONTENT, SICA_CD, SITB_DOC_EXPIREDT,
-								SIDT_TEMP_CD,
+								SIDT_TEMP_CD, SIDB_CURR_ID,
 								SITB_DOC_JSON)
 	VALUES ((SELECT NVL(MAX(SITB_DOC_NUM) + 1, 24000001) FROM SIGN_TEMP_BOX),
 			#{empl_id}, #{sitb_doc_title},
 			#{sitb_doc_content}, #{sica_cd}, #{sitb_doc_expiredt},
-			#{sidt_temp_cd},
+			#{sidt_temp_cd}, #{sidb_curr_id}
 			'[
 			<foreach collection="sitb_doc_json" item="json" separator=",">
 				{

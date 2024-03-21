@@ -107,6 +107,98 @@
 	
 			
 			<!-- ---------------------------- 내 용 입 력 -------------------------------- -->
+			
+			
+			<div class="app-content flex-column-fluid">
+				<!-- 내용 시작 -->
+				<div id="kt_app_content" class="app-content flex-column-fluid">
+					<div class="app-container container-fluid">
+						<div class="card card-flush h-md-50 mb-xl-10">
+							<div class="card-header pt-5">
+								<h3 class="card-title text-gray-800 fw-bold">기안문 작성</h3>
+							</div>
+							<div class="separator separator-dashed my-3"></div>	
+							<div class="card-body pt-5">
+
+								<form name="modifyEmpForm" method="post" action="/hr/employee/empModifyOk.do" enctype="multipart/form-data">
+									<table class="table table-bordered">
+										<tr class="success">
+											<th>작성일</th>
+											<td>
+												<input type="date" name="sidb_doc_writedt" maxlength="20">
+											</td>
+											<th>만료일</th>
+											<td><input type="date" name="sidb_doc_expiredt" maxlength="20"></td>
+										</tr>
+										<tr>
+											<th>결재선</th>
+											<td>
+												<div></div>
+											</td>
+										</tr>
+										<tr>
+											<th>참조</th>
+											<td>
+												<div></div>
+											</td>
+										</tr>
+										
+										<tr>
+											<th>템플릿</th>
+											<td>
+											<textarea id="editor" name="sidt_temp_content"></textarea>
+											</td>
+										</tr>
+										<tr>
+											<th>첨부파일</th>
+											<td colspan="2"><input type="file" class="form-control form-control-solid" name=""></td>
+										</tr>
+										<tr>
+											<td colspan="3" style="text-align:center;">
+											<button type="button" class="btn btn-primary btnSm" id="delBtn" style="height: 32px; line-height: 14px; width: 100px;">
+							    			<span class="indicator-label">
+												  임시저장
+											</span>
+											</button>
+											<button type="button" class="btn btn-primary btnSm" id="delBtn" style="height: 32px; line-height: 14px; width: 100px;">
+							    			<span class="indicator-label">
+												  기안제출
+											</span>
+											</button>	
+											</td>
+										</tr>
+									</table>
+								</form>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 내용 끝 -->
+			</div>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 
 						</div>
 						</div>
@@ -120,7 +212,10 @@
 	<%@include file="/WEB-INF/views/menu/docSideMenu.jsp"%>
 </body>
 
-<script type="text/javascript" src="../ckeditor5/build/ckeditor.js"></script>
-<script type="module" src="../ckeditor5/sample/script.js"></script>
-<script type="text/javascript" src="../js/template.js"></script>
+
+<script type="text/javascript" src="/ckeditor5/build/ckeditor.js"></script>
+<script type="text/javascript" src="/js/doc/writeDoc.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script type="module" src="/ckeditor5/sample/script.js"></script>
+<!-- <script type="text/javascript" src="../js/template.js"></script> -->
 </html>			

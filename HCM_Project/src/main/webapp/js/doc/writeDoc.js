@@ -52,21 +52,21 @@ onload = function() {
 			return;
 		}
 
-		fetch('./getTemplate.do', {
-			method: 'post'
-		}).then(resp => {
-			return resp.text();
-		}).then(data => {
-			console.log("getTemplate: "+data);
-			$("#template_div").hide();
-			$("#editor_div").show();
-			document.getElementById('closeBtn').click()			
-			editor.setData(docData);
+//		console.log("getTemplate: " + docData);
+		$("#template_div").hide();
+		$("#editor_div").show();
+		document.getElementById('closeBtn').click();
+		var sessionName = document.getElementById('myName');
+		var sessionDept = document.getElementById('myDept');
+		var sessionRank = document.getElementById('myRank');
+		var insertName = docData.replace("홍길동", sessionName.value)
+		var insertDept = insertName.replace("인사팀", sessionDept.value)
+		var insertRank = insertDept.replace("대리", sessionRank.value)
+		editor.setData(insertRank);
+		//editor.setData(docData);
+		
 			
 			
-		}).catch(error => {
-			console.log(error);
-		});
 	})
 	
 	$('#jstree').jstree({
@@ -95,7 +95,7 @@ onload = function() {
 		.then(resp => {return resp.text()})
 		.then(data => {
 			docData = data;
-			console.log(data);
+//			console.log(data);
 			var template = document.getElementById('template')
 			template.innerHTML = data;
 		})
