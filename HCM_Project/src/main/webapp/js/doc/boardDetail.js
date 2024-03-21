@@ -9,6 +9,14 @@ function deny() {
 	document.getElementById('denyReply').submit();
 }
 
+function gianCancel() {
+	 var really = confirm("정말 상신 취소하시겠습니까?");
+    if (really) {
+        alert("상신취소 되었습니다");
+        document.getElementById('gianCancel').submit();
+    }
+}
+
 //승인 모달창
 var element = document.querySelector('#kt_modal_3');
 dragElement(element);

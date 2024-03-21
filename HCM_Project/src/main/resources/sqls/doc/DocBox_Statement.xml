@@ -38,8 +38,7 @@
 		)
 		) AS SDBJ ON 1=1 -->
 		WHERE
-		SDB.EMPL_ID =
-		#{empl_id}
+		SDB.EMPL_ID =#{empl_id}
 	</select>
 	
 	<!-- 전체문서함 조회 수정1 본테이블만 가져오기-->
@@ -53,7 +52,7 @@ SELECT SDB.SIDB_DOC_NUM,
 FROM SIGN_DOC_BOX sdb
 JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD 
-WHERE SDB.empl_id = #{empl_id}
+WHERE SDB.empl_id = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
 </select>
 	
 	
@@ -70,7 +69,7 @@ WHERE SDB.empl_id = #{empl_id}
 	APPR_REPLY PATH '$.APPR_REPLY'
 	)) j
 	JOIN EMPLOYEE e2 ON e2.EMPL_ID = j.appr_id
-	WHERE SDB.empl_id = #{empl_id}
+	WHERE SDB.empl_id = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
 </select>	
 	
 
@@ -86,7 +85,7 @@ WHERE SDB.empl_id = #{empl_id}
 	FROM SIGN_DOC_BOX sdb
 	JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 	JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
-	WHERE SDB.empl_id = #{empl_id} AND SIDB_DOC_STAT = '1'
+	WHERE SDB.empl_id = #{empl_id} AND SIDB_DOC_STAT = '1' AND SDB.sidb_doc_delflag= 'N'
 	</select>
 
 	<!-- 진행중인 결재 문서 조회 -->
@@ -100,7 +99,7 @@ WHERE SDB.empl_id = #{empl_id}
 	FROM SIGN_DOC_BOX sdb
 	JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 	JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
-	WHERE SDB.empl_id = #{empl_id} AND SIDB_DOC_STAT ='2'
+	WHERE SDB.empl_id = #{empl_id} AND SIDB_DOC_STAT ='2' AND SDB.sidb_doc_delflag= 'N'
 	</select>
 
 	<!-- 승인된 결재 문서 조회 -->
@@ -114,7 +113,7 @@ WHERE SDB.empl_id = #{empl_id}
 	FROM SIGN_DOC_BOX sdb
 	JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 	JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
-	WHERE SDB.empl_id = #{empl_id} AND SIDB_DOC_STAT ='3'
+	WHERE SDB.empl_id = #{empl_id} AND SIDB_DOC_STAT ='3' AND SDB.sidb_doc_delflag= 'N'
 	</select>
 
 	<!-- 반려된 결재 문서 조회 -->
@@ -128,7 +127,7 @@ WHERE SDB.empl_id = #{empl_id}
 	FROM SIGN_DOC_BOX sdb
 	JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 	JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
-	WHERE SDB.empl_id = #{empl_id} AND SIDB_DOC_STAT ='4'
+	WHERE SDB.empl_id = #{empl_id} AND SIDB_DOC_STAT ='4' AND SDB.sidb_doc_delflag= 'N'
 	</select>
 
 
@@ -158,7 +157,7 @@ WHERE SDB.empl_id = #{empl_id}
 		)
 		) AS SDBJ ON 1=1
 		WHERE
-		SDBJ.APPR_FLAG='0' AND SDBJ.APPR_ID= #{empl_id} AND SDB.SIDB_DOC_STAT!='4'
+		SDBJ.APPR_FLAG='0' AND SDBJ.APPR_ID= #{empl_id} AND SDB.SIDB_DOC_STAT!='4' AND SDB.sidb_doc_delflag= 'N'
 		AND
 		SDBJ.APPR_DEPTH = (
 		SELECT MIN(SDBJ2.APPR_DEPTH)
@@ -197,7 +196,7 @@ WHERE SDB.empl_id = #{empl_id}
              CONNECT BY REGEXP_SUBSTR(SDB.EMPL_REF, '[^,]+', 1, level) IS NOT NULL) Sub
         WHERE Sub.EMPL_REF=#{empl_id}
  		 OR SDB.EMPL_DEPT_CD = #{empl_dept_cd}
-    )
+    ) AND SDB.sidb_doc_delflag= 'N'
 	</select>
 	
 	<!-- 참조 전용 json 데이터 가져오기 -->
@@ -232,7 +231,7 @@ WHERE SDB.empl_id = #{empl_id}
 		LEFT JOIN
 		EMPLOYEE E ON SDB.EMPL_ID = E.EMPL_ID
 		WHERE
-		SDB.SIDB_DOC_NUM = #{sidb_doc_num}
+		SDB.SIDB_DOC_NUM = #{sidb_doc_num} 
 	</select>
 	
 	
@@ -245,7 +244,7 @@ WHERE SDB.empl_id = #{empl_id}
 	SDB.EMPL_DEPT_CD, SDB.SIDB_DOC_JSON,SDB.EMPL_ID , SDB.SIDB_CURR_id,
 	E.EMPL_NAME  , APPR_ID, e2.EMPL_NAME as APPR_NAME, 
 	CC2.COCO_NAME as APPR_RANK , CC.COCO_NAME as WRITER_DT, CC3.COCO_NAME AS EMPL_RANK,
-	APPR_SIGN , APPR_REPLY, APPR_FLAG, APPR_DT
+	APPR_SIGN , APPR_REPLY, APPR_FLAG, APPR_DT,t.SIDT_TEMP_NAME
 	FROM SIGN_DOC_BOX sdb
 	JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 	<![CDATA[
@@ -262,6 +261,7 @@ WHERE SDB.empl_id = #{empl_id}
 	LEFT JOIN COMMON_CODE cc ON E.EMPL_DEPT_CD = CC.COCO_CD
 	LEFT JOIN COMMON_CODE cc2 ON E2.EMPL_RANK_CD = CC2.COCO_CD
 	LEFT JOIN COMMON_CODE cc3 ON E.EMPL_RANK_CD = CC3.COCO_CD
+	LEFT JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD =t.SIDT_TEMP_CD  
 	WHERE SDB.SIDB_DOC_NUM =  #{sidb_doc_num}  
 	</select>
 
@@ -336,7 +336,7 @@ LEFT JOIN
             APPR_REPLY  PATH '$.APPR_REPLY'
         )
     ) AS SDBJ ON 1=1
-    WHERE (SDBJ.APPR_FLAG = '1' OR SDBJ.APPR_FLAG = '2') AND SDBJ.APPR_ID = #{empl_id}
+    WHERE (SDBJ.APPR_FLAG = '1' OR SDBJ.APPR_FLAG = '2') AND SDBJ.APPR_ID = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
 </select>	
 
 <!-- 상세조회 문서에 첨부된 파일 리스트 조회 -->
@@ -362,7 +362,7 @@ SELECT SDB.SITB_DOC_NUM as sidb_doc_num,
 FROM SIGN_TEMP_BOX sdb
 JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD 
-WHERE SDB.empl_id = #{empl_id}
+WHERE SDB.empl_id = #{empl_id} 
 </select>
 
 </mapper>

@@ -1880,7 +1880,7 @@ $(document).ready( function () {
 	$('#tempBox').DataTable({ 
 
     	"language": { 
-            "emptyTable": "열람 가능한 결재문서가 없습니다.",
+            "emptyTable": "임시 보관중인 결재문서가 없습니다.",
             "lengthMenu": " _MENU_ 개씩 보기",
             "info": "현재 _START_ - _END_ / _TOTAL_건",
             "search": "검색: ",
