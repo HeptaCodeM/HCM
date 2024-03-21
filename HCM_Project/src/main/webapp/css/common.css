@@ -28,3 +28,17 @@
 .right {padding-right:20px !important;}
 
 table tr th {vertical-align: middle;}
+
+.slide-out-right {
+   		animation: slideOutRight 0.5s ease forwards;
+	}
+	@keyframes slideOutRight {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
