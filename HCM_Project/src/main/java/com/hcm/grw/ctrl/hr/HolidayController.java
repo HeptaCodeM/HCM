@@ -75,10 +75,10 @@ public class HolidayController {
 		Map<String, String> holidaySearchMap = new HashMap<String, String>(){{
 			put("empl_id", authentication.getName());
 			put("sdate", String.valueOf(dateMap.get("sdate")));
-			put("sdate", String.valueOf(dateMap.get("edate")));
+			put("edate", String.valueOf(dateMap.get("edate")));
 		}};
 		List<HolidayDto> holidayLists = holidayService.holidayList(holidaySearchMap);
-
+		
 	    try {
 	        // ObjectMapper를 사용하여 객체를 JSON 문자열로 변환
 	        ObjectMapper objectMapper = new ObjectMapper();

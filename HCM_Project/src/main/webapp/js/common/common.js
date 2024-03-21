@@ -215,3 +215,12 @@ function checkPw(val) {
 	return regEx.test(val);
 }
 /* check 종료 */
+
+
+// 날짜 값을 yyyy-mm-dd 형식으로 변환하는 함수
+function formatDate(date) {
+    var year = date.getFullYear();
+    var month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 2자리로 맞춤
+    var day = String(date.getDate()).padStart(2, '0'); // 일을 2자리로 맞춤
+    return year + '-' + month + '-' + day;
+}

@@ -11,6 +11,7 @@
 	<style type="text/css">
 	.table th {  vertical-align:middle; text-align:center !important; background-color:#F9F9F9; font-weight:600; }
 	.holiCntInfo { text-align:center; }
+	#searchHolidayList { text-align:center; }
 	</style>
 	<script src="/js/hr/holiday.js" type="text/javascript"></script>
 </head>
@@ -62,11 +63,11 @@
 								<div class="separator separator-dashed my-3"></div>	
 								<div class="table-responsive">
 									<form name="searchholidayDate" id="searchholidayDate" method="post">
-										<table class="table">
+										<table class="table table-bordered">
 											<tr>
 												<th>기간조회</th>
 												<td>
-													<div class="input-group" id="sdate" data-td-target-input="nearest" data-td-target-toggle="nearest" style="float:left;width:200px;">
+													<div class="input-group" id="sdate" data-td-target-input="nearest" data-td-target-toggle="nearest" style="float:left;width:200px;margin-left:20px;">
 													    <input id="sdate_input" type="text" name="sdate" class="form-control" data-td-target="#sdate" readonly />
 													    <span class="input-group-text" data-td-target="#sdate" data-td-toggle="datetimepicker">
 													    	<i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
@@ -80,6 +81,7 @@
 													    </span>
 													</div>
 													<button type="button" class="btn btn-success" style="margin-left:20px;" onclick="holidaySearchList()">조회</button>
+													<button type="button" class="btn btn-danger" style="margin-left:20px;" onclick="reset()">초기화</button>
 												</td>
 											</tr>
 										</table>
@@ -110,11 +112,7 @@
 			
 <script type="text/javascript">
 $(function(){ 
-	$("#searchHolidayList").DataTable({
-		displayLength: 5,
-		lengthChange: false,
-		info: false
-	});
+	holidaySearchList()
 });
 
 var datePicker = new tempusDominus.TempusDominus(document.getElementById("sdate"), {

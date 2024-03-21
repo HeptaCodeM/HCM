@@ -35,12 +35,12 @@
 		</if>
 		<if test="sdate != null and sdate != ''">
 		<![CDATA[
-		AND (A.SIDB_DOC_BE >= #{sdate} OR A.SIDB_DOC_END >= #{sdate})
+		AND (TO_CHAR(A.SIDB_DOC_BE, 'YYYY-MM-DD') >= #{sdate} OR TO_CHAR(A.SIDB_DOC_END, 'YYYY-MM-DD') >= #{sdate})
 		]]>
 		</if>
 		<if test="edate != null and edate != ''">
 		<![CDATA[
-		AND (A.SIDB_DOC_BE <= #{edate} OR A.SIDB_DOC_END <= #{edate})
+		AND (TO_CHAR(A.SIDB_DOC_BE, 'YYYY-MM-DD') <= #{edate} OR TO_CHAR(A.SIDB_DOC_END, 'YYYY-MM-DD') <= #{edate})
 		]]>
 		</if>
 	</select>

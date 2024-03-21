@@ -23,4 +23,5 @@ public class HolidayDto {
 	private Date sidb_doc_end;
 	private String holiday;
 
+	private String sidb_doc_date;
 }
