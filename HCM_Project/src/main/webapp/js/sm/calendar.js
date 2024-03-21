@@ -1,26 +1,20 @@
 document.addEventListener('DOMContentLoaded', listAjax());
 
 function listAjax() {
-	var daygridmonth = calendar.view.title;
-	var empl_id = $("#empl_id").val();
-	console.log(empl_id);
-	console.log(daygridmonth);
+	var daygridmonth = $(".fc-toolbar-title").text()
 	$.ajax({
 		type: "get",
 		url: "/sm/getAllCalendar.do",
-		data: {daygridmonth:daygridmonth,empl_id:empl_id},
 		dataType: "json",
 		success: function(data) {
 			var calendarEl = document.getElementById('calendar');
 			var calendar = new FullCalendar.Calendar(calendarEl, {
 				googleCalendarApiKey: 'AIzaSyBBTfPVr0UjVIt-H0VGRuLFRg-ltL-YQDk',  // 구글 api 키
 				initialView: 'dayGridMonth',   //월 달력 표시
-				
-
 				headerToolbar: {
 					left: 'addEventButton',  // 왼쪽에 이벤트 버튼 추가
 					center: 'prev,title,next',	//center 버튼 추가 dayGridMonth(월간),timeGridWeek(주간),timeGridDay(시간대),listWeek(리스트형태)
-					right:'',
+					right:'today',
 				},
 				titleFormat: function(date) {
 					1
@@ -46,7 +40,14 @@ function listAjax() {
 						click: function() { // 버튼 클릭 시 이벤트 추가
 								insert();
 						}
-					}
+						},
+					fileterButton:{
+						text: "카테고리",
+						click: function(){
+							filtermodal();
+						}
+						}
+					
 				},dateClick: function() {   //일자 클릭시 이벤트
 				    	insert();
 				 },
@@ -97,6 +98,8 @@ function detail(seq){
 }
 
 function insert(){
+	var title = $(".fc-toolbar-title").text()
+	console.log(title);
 		$("#kt_modal_scrollable_2").modal("show"); // modal 나타내기
 
 		$("#addCalendar").on("click", function() {  // modal의 추가 버튼 클릭 시
@@ -182,6 +185,11 @@ $("#imagebutton2").click(function(){
 })
 
 
+var title = $(".fc-toolbar-title").text()
 
 
-var daygreedmonth = $(".fc-toolbar-title").val();
+function filtermodal(){
+	
+}
+
+

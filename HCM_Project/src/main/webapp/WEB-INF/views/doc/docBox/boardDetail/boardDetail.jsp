@@ -11,19 +11,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
-<title>DOC메인화면</title>
+<title>결재문서 상세 페이지</title>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp"%>
 <style>
+.card .card-header {
+justify-content: center;
+ align-items: center;
+flex-direction:column;
+}
 .container {
 	width: 80%;
 	margin: 0 auto;
 }
 
 .footer {
-	border: 1px solid #000;
-	margin-top: 20%;
-	padding: 10px;
+	margin-top: 30px;
 }
 
 table {
@@ -32,9 +35,13 @@ table {
 }
 
 th, td {
-	border: 1px solid #000;
 	padding: 5px;
 	text-align: left;
+}
+.top-table, .top-table th, .top-table td, .top-table tr{
+ border: solid 1px;
+ text-align: center;
+ vertical-align: middle;
 }
 
 .header {
@@ -48,6 +55,16 @@ th, td {
 .content {
 	margin-top: 15%;
 	width: 100%;
+}
+.transparent-table, .transparent-table td, .transparent-table tr {
+    border: none;
+}
+.transparent-table {
+    margin-left : 7%;
+}
+.reply-table, .reply-table td, .reply-table tr, .reply-table th{
+ text-align: center;
+ vertical-align: middle;
 }
 </style>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -80,18 +97,50 @@ th, td {
 			<div id="kt_app_content" class="app-content flex-column-fluid">
 				<div class="app-container container-fluid">
 					<div class="card card-flush h-md-50 mb-xl-10">
-						<div class="card-header pt-5">
-							<h3 class="card-title text-gray-800 fw-bold">${docDto1.empl_name} ${docDto1.empl_rank} 님이 기안한 결재문서입니다.</h3>
+						<div style="text-align:center;"  class="card-header pt-5">
+							<h1  style="text-align:center;" class="card-title text-gray-800 fw-bold">${docDto1.empl_name} ${docDto1.empl_rank}님이 기안한 ${docDto1.sidt_temp_name}입니다.</h1>
+							 <br>
+							 <div>
+							<table class="transparent-table">
+								<tr>
+									<td style="min-width:70px;">문서번호 :</td>
+									<td style="width:300px;">${docDto1.sidb_doc_num}</td>
+									<td style="min-width:70px;">기안자 :</td>
+									<td style="width:300px;">${docDto1.empl_name}</td>
+									<td style="min-width:70px;">보존년한 :</td>
+									<td style="width:300px;">
+									<fmt:parseDate var="patternDate"
+													value="${docDto1.sidb_doc_expiredt}"
+													pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
+													value="${patternDate}" pattern="yyyy년 MM월 dd일" />
+									</td>
+								</tr>
+								<tr>
+									<td>문서분류 :</td>
+									<td>${docDto1.sidt_temp_name}</td>
+									<td>기안부서 :</td>
+									<td>${docDto1.writer_dt}</td>
+									<td>기안일자 :</td>
+									<td><fmt:parseDate var="patternDate"
+													value="${docDto1.sidb_doc_writedt}"
+													pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
+													value="${patternDate}" pattern="yyyy년 MM월 dd일" />
+									</td>
+								</tr>
+							</table>
+							참조자 : ${docDto1.empl_ref}
+							참조부서 : 
+							</div>
 						</div>
 						<div class="separator separator-dashed my-3"></div>
 						<div class="card-body pt-5">
 
-							<div id="pdfZone" class="container">
+							<div  class="container">
+							<div id="pdfZone">
 								<div class="header">
 									<div></div>
-									<table>
+									<table class="top-table">
 										<tr>
-											
 											<th rowspan="4">결<br>재
 											</th>
 										<tr style="height:30px;">
@@ -120,63 +169,44 @@ th, td {
 										</tr>
 									</table>
 								</div>
-								 문서 번호: ${docDto1.sidb_doc_num}
-								<p>
-									결재문서기한:
-									<fmt:parseDate var="patternDate"
-										value="${docDto1.sidb_doc_expiredt}"
-										pattern="yyyy-MM-dd HH:mm:ss" />
-									<fmt:formatDate value="${patternDate}" pattern="yyyy년 MM월 dd일" />
-
-								</p>
+								<div style="height: 30px;">
+								</div>
 								<div class="content">
 										<input id="docTitle" type="hidden" value="${docDto1.sidb_doc_title}">
-									<table>
-										<tr>
-											<th>문서제목 ${docDto1.sidb_doc_title}</th>
-											<td>부서 ${docDto[1].writer_dt}</td>
-										</tr>
-										<tr>
-											<th>기안자 ${docDto1.empl_name} ${docDto1.empl_rank}</th>
-											<td>작성일 <fmt:parseDate var="patternDate"
-													value=" ${docDto1.sidb_doc_writedt}"
-													pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
-													value="${patternDate}" pattern="yyyy년 MM월 dd일" />
-											</td>
-										</tr>
-										<tr>
-											<td colspan="2">${docDto1.sidb_doc_content}
-												<br> <br>
-												<br> <br> <br> <br> <br> <br>
-												<br> <br> <br> <br> <br>
-											</td>
-										</tr>
-									</table>
-									첨부파일:<select id="selectFile" style="min-width:100px;"></select> <button class="btn btn-primary" id="downBtn">파일다운로드</button>
-									<button class="btn btn-primary" id="savePdf">PDF 저장</button>
+									${docDto1.sidb_doc_content}
 								</div>
+								</div>	
+								
+									<div class="separator separator-dashed my-3"></div>
+									
+									<div style="margin-top:50px; text-align:right;">
+									첨부파일:<select id="selectFile" style="min-width:100px; margin-right:1.5%;"></select> <button class="btn btn-primary btnMd" id="downBtn" style="font-size: small;">다운로드</button>
+									<button class="btn btn-primary btnMd" id="savePdf" style="font-size: small;">PDF 저장</button>
+									</div>
 								<div class="footer">
-									<div>첨언내역</div>
-									<table>
-										<tr>
+									<div style="text-align:center; font-size:large; margin-bottom:20px;">첨언내역</div>
+									<table  class="table table-bordered reply-table" >
+										<tr >
 											<th>작성자</th>
 											<th>결재결과</th>
-											<th>내용</th>
+											<th style="margin-right: 10%;">내용</th>
 										</tr>
 
 										<c:forEach items="${docDto}" var="dt">
 
-											<tr>
+											<tr style="height:50px;">
 												<td style="width:100px;">${dt.appr_name} ${dt.appr_rank}
 												</td>
-												<td style="width:100px;"><c:choose>
+												<td style="width:100px;">
+												 <c:choose>
 														<c:when test="${dt.appr_flag eq 1}">
-															<p>승인</p>
+															승인
 														</c:when>
 														<c:when test="${dt.appr_flag eq 2}">
-															<p>반려</p>
+															반려
 														</c:when>
-													</c:choose></td>
+												 </c:choose>
+												</td>
 												<td>${dt.appr_reply}<br></td>
 											</tr>
 										</c:forEach>
@@ -186,23 +216,27 @@ th, td {
 										</tr> --%>
 									</table>
 								</div>
-								<div style="text-align: center;">
 								
+		<div style="text-align: center; margin-top: 30px;">
 	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.sidb_curr_id}">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_3">승인</button>
-    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#kt_modal_1">반려</button>
+    <button type="button" class="btn btn-primary btnLg" data-bs-toggle="modal" data-bs-target="#kt_modal_3">승인</button>
+    <span style="min-width:100px;">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" class="btn btn-danger btnLg" data-bs-toggle="modal" data-bs-target="#kt_deny">반려</button>
 	</c:if>
 
 	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.empl_id and docDto1.sidb_doc_stat == 1}">
-    <button type="button" class="btn btn-primary" onclick="docEdit()">품의수정</button>
-    <button type="button" class="btn btn-danger" onclick="docCancel()">상신취소</button>
+  <!--   <button type="button" class="btn btn-primary" onclick="docEdit()">품의수정</button> -->
+    <button type="button" class="btn btn-danger" onclick="gianCancel()">상신취소</button>
+	<form id="gianCancel" action="./gianCancel.do" method="post">
+						<input type="hidden" value="${docDto1.sidb_doc_num}" name="docNum"/>
+					</form>
 	</c:if>
 	
-	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.empl_id and docDto1.sidb_doc_stat == 2}">
+	<%-- <c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.empl_id and docDto1.sidb_doc_stat == 2}">
     <button type="button" class="btn btn-danger" onclick="denyPlease()">반려요청</button>
-	</c:if>
-
-								</div>
+	</c:if> --%>
+		</div>
+								
 							</div>
 						</div>
 					</div>
@@ -249,7 +283,7 @@ th, td {
 	</div>
 
 	<!-- 반려 모달창 -->
-	<div class="modal fade" tabindex="-1" id="kt_modal_1">
+	<div class="modal fade" tabindex="-1" id="kt_deny">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">

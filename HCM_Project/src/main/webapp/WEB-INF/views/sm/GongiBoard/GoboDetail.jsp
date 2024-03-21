@@ -22,6 +22,23 @@
    ul {
     list-style-type: none; /* 리스트 스타일을 없앰 */
 }
+
+
+  /* 화면늘리는 버튼 숨기기 */
+    textarea.comment_inbox_text {
+        resize: none; /* 사용자가 텍스트 영역 크기를 조절할 수 없도록 함 */
+        min-height: 38px; /* 최소 높이 지정 */
+    }
+    /* 댓글 사이에 수평선 추가 */
+    .list-group-item + .list-group-item {
+        border-top: 1px solid #dee2e6; /* 수평선 스타일 지정 */
+        padding-top: 10px; /* 상단 패딩 추가 */
+    }
+     .no-border {
+        border: none; /* 테두리를 없애는 스타일 */
+        padding: 0; /* 선택 사항: 있으면 패딩을 제거합니다. */
+        margin: 0; /* 선택 사항: 있으면 여백을 제거합니다. */
+    }
 </style>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
@@ -35,18 +52,27 @@
 
 				
        <div class="app-wrapper flex-column flex-row-fluid">
-        <div class="app-toolbar py-3 py-lg-6">
-            <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
-                <!--begin::Page title-->
-                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-                    <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">${dto.gobo_title}</h1>
-                    <!--end::Title-->
-                </div>
-                <!--end::Page title-->
-            </div>      
-        </div>
-        <div class="app-content flex-column-fluid">
+		<div class="app-toolbar py-3 py-lg-6">
+			<div id="kt_app_toolbar_container"
+				class="app-container container-fluid d-flex flex-stack justify-content-between">
+				<div
+					class="page-title d-flex flex-column justify-content-center flex-wrap">
+					<h1
+						class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">${dto.gobo_title}</h1>
+				</div>
+				
+				<div>
+					<button type="button" class="btn btn-primary"
+						onclick="location.href='/sm/updateGoboMove.do?gobo_no=${dto.gobo_no}'"
+						style="margin-right: 20px">수정</button>
+					<button type="button" class="btn btn-primary"
+						onclick="updateGoboDelFlag(${dto.gobo_no})"
+						style="margin-right: 20px">삭제</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="app-content flex-column-fluid">
             <!-- 내용 시작 -->
             <div id="kt_app_content" class="app-content flex-column-fluid">
                 <div class="app-container container-fluid">
@@ -54,38 +80,58 @@
                         <div class="card-body pt-5">
                             <!-- 공지사항 상세 내용 표시 -->
                             <p>작성자: ${dto.gobo_writer}</p>
-                            <p>작성일: <fmt:formatDate value="${dto.gobo_regdate}" pattern="yyyy-MM-dd"/></p>
+                            <p>작성일: <fmt:formatDate value="${dto.gobo_regdate}" pattern="yyyy-MM-dd HH:mm"/></p>
                             <p  style="font-size: 20px;">${dto.gobo_content}</p>
-
                             <!-- 댓글 표시 -->
                             <h3>댓글</h3>
                           <ul class="list-group" id="commentList">
                       <c:forEach var="comment" items="${Rlist}">
                           <li class="list-group-item">
-                              <div class="d-flex align-items-center">
+                              <div class="d-flex align-items-center no-border" style="border: none;">
                                   <img src="https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77" alt="프로필 사진" width="36" height="36" class="mr-3">
                                   <div>
                                       <strong>${comment.rebo_writer}</strong><br>
                                       <div>${comment.rebo_content}</div>
-                                      <div><small><fmt:formatDate value="${comment.rebo_regdate}" pattern="yyyy-MM-dd"/></small>
-                                      <a role="button" class="comment_info_button" onclick="showCommentForm(${comment.rebo_no})">답글쓰기</a>
+                                      <div><small><fmt:formatDate value="${comment.rebo_regdate}" pattern="yyyy-MM-dd HH:mm"/></small>
+                                      <a role="button" class="comment_info_button " onclick="showCommentForm(${comment.rebo_no})">답글쓰기</a>
                                       </div>
                                   </div>
                               </div>
                           </li>
+                           <c:forEach var="reply" items="${Dlist}" varStatus="replyStatus">
+            <!-- 현재 댓글과 depth가 1이고, rebo_parent_no가 현재 댓글의 rebo_no와 같은 경우 -->
+				            <c:if test="${comment.rebo_step == reply.rebo_step}">
+				                <li class="list-group-item" style="margin-left: 10px;">
+				                    <!-- 대댓글 내용 출력 -->
+				                    <div class="d-flex align-items-center no-border" style="border: none;">
+				                        <img src="https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77" alt="프로필 사진" width="36" height="36" class="mr-3">
+				                        <div>
+				                            <strong>${reply.rebo_writer}</strong><br>
+				                            <div>${reply.rebo_content}</div>
+				                            <div><small><fmt:formatDate value="${reply.rebo_regdate}" pattern="yyyy-MM-dd HH:mm"/></small>
+				                            <a role="button" class="comment_info_button" onclick="showCommentForm(${reply.rebo_no})">답글쓰기</a>
+				                            </div>
+				                        </div>
+				                    </div>
+				                </li>
+				            </c:if>
+				        </c:forEach>
                           <li  id="commentFormContainer${comment.rebo_no}" style="display: none;">
                              <div>
                                 <div class="CommentWriter mb-4">
                                     <form id="ReplyTwoForm">
+                                        <input type="hidden" name="rebo_step" id="rebo_step" value="${comment.rebo_step}">
                                         <input type="hidden" name="rebo_writer_id" id="rebo_writer_id" value="${sessionScope.userInfoVo.empl_id}">
-                            			 <input type="hidden" name="rebo_writer" id="rebo_writer" value="${sessionScope.userInfoVo.empl_name}">
+                             <input type="hidden" name="rebo_modify_id" id="rebo_modify_id" value="${sessionScope.userInfoVo.empl_id}">
+                             <input type="hidden" name="rebo_writer" id="rebo_writer" value="${sessionScope.userInfoVo.empl_name}">
+                             <input type="hidden" name="gobo_no" id="gobo_no" value="${comment.gobo_no}">
                                         <div class="comment_inbox border border-2">
                                             <em class="comment_inbox_name">${sessionScope.userInfoVo.empl_name}</em>
-                                            <textarea placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0"></textarea>
+                                            <textarea id="commentTextArea${comment.rebo_no}" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" name="rebo_content${comment.rebo_no}"></textarea>
                                             <div class="d-flex justify-content-end align-items-end">
                                                 <div class="register_box">
                                                     <button type="button" class="btn btn-primary" onclick="cancelReply(${comment.rebo_no})">취소</button>
-                                                    <button type="button" class="btn btn-primary" onclick="insertReplyTwo(${comment.gobo_no})">등록</button>
+                                                    <button type="button" class="btn btn-primary insertReplyTwoBtn" onclick="insertReplyTwo()">등록</button>
                                                 </div>
                                             </div>
                                         </div>

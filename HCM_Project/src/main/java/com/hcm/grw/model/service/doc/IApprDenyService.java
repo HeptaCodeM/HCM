@@ -13,5 +13,8 @@ public interface IApprDenyService {
 			
 			//최종 결재 승인 트랜잭션 처리
 			public boolean finalApprove(SignBoxDto dto);
+			
+			//상신 취소 
+			public int gianCancel(SignBoxDto dto);
 
 }
