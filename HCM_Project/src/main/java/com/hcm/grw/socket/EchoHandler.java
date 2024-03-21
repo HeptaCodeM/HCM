@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -75,6 +76,10 @@ public class EchoHandler extends TextWebSocketHandler {
 		chatDto.setCh_date(time);
 		chatDto.setSender_name(user.getEmpl_name());
 		chatDto.setCh_message(msg);
+		chatDto.setCh_sender(user.getEmpl_id());
+		if(user.getEmpl_picture() != null) {
+			chatDto.setSender_pic(Base64Utils.encodeToString(user.getEmpl_picture()));
+		}
 		String json = new Gson().toJson(chatDto);
 		
 		if(userSessionsMap.get(target) != null) {
