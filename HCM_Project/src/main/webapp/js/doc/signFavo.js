@@ -260,7 +260,6 @@ var tFlag;
 			var second = $('#second').val();
 			var third = $('#third').val();
 			var posFlag = f.coco_name_rnm;
-			var resFlag;
 			switch (posFlag) {
 				case '사원': resFlag = 1; break;
 				case '대리': resFlag = 2; break;
@@ -283,12 +282,12 @@ var tFlag;
 			}
 			
 			if(fFlag > sFlag || fFlag > tFlag || sFlag > tFlag) {
-				alert('더 높은 직급의 결재자를 선택해주세요');
+				swalAlert('높은 직급의 결재자를 선택해주세요','','','확인');
 				return;
 			}
 			console.log(fFlag, sFlag, tFlag)
 			if(f.empl_name == $('#first').val() || f.empl_name == $('#second').val() || f.empl_name == $('#third').val()) {
-				alert('중복된 결재자 입니다');
+				swalAlert('중복된 결재자 입니다','','','확인');
 				return;
 			}
 			if(first.length == 0) {
@@ -310,6 +309,14 @@ var tFlag;
 				$('#id3').text(f.empl_id);
 				$('#de3').val(3);
 			}
+			
+			var allNode = $('#jstree').jstree('get_json', '#', { flat: true });
+			var selectNode = allNode.find(function(node) {
+				return node.id == f.empl_id;
+			});
+			console.log(selectNode);
+			$('#jstree').jstree('hide_node', selectNode);
+			
 		})
 		.catch(err => {console.log(err);});
 	})
@@ -451,7 +458,7 @@ var tFlag;
 										// 결재자를 순서대로 화면에 뿌려줌
 										if (val1.length > 0 && val2.length > 0) {
 											if (second > third) {
-												alert('낮은 직급의 결재자를 지정할 수 없습니다');
+												swalAlert('높은 직급의 결재자를 선택해주세요','','','확인');
 												return;
 											}
 											$('#third').val(data[0].empl_name); // 3차결재자
@@ -464,7 +471,7 @@ var tFlag;
 											$('#jstree').jstree('deselect_all');
 										} else if (val1.length > 0 && val2.length == 0) {
 											if (first > second) {
-												alert('낮은 직급의 결재자를 지정할 수 없습니다');
+												swalAlert('높은 직급의 결재자를 선택해주세요','','','확인');
 												return;
 											}
 											$('#second').val(data[0].empl_name); // 2차결재자
@@ -477,7 +484,7 @@ var tFlag;
 											$('#jstree').jstree('deselect_all');
 										} else {
 											if (first > third || first > second) {
-												alert('높은 직급의 결재자를 지정할 수 없습니다');
+												swalAlert('높은 직급의 결재자를 선택해주세요','','','확인');
 												return;
 											}
 											$('#first').val(data[0].empl_name); // 1차결재자
@@ -539,7 +546,7 @@ var tFlag;
 				dataType: 'json',
 				success: function(data) {
 					data.forEach(function(node, idx) {
-
+						console.log(myPositionFlag);
 						if (node.pos_na != undefined) {
 							if (myPositionFlag > node.pos_flag) {
 								node.text = node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;<span class="positionFlag" style="display: none;">' + node.pos_flag + '</span>';
@@ -610,7 +617,7 @@ function pick() {
 			}
 			
 			if(fFlag > sFlag || fFlag > tFlag || sFlag > tFlag) {
-				alert('더 높은 직급의 결재자를 선택해주세요');
+				swalAlert('높은 직급의 결재자를 선택해주세요','','','확인');
 				return;
 			}
 			console.log(fFlag, sFlag, tFlag)
