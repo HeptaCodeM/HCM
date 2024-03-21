@@ -26,8 +26,8 @@ public class DuplicateRequestHandler implements HandlerInterceptor {
             return false;
             
         }
-		requestSet.add(requestURI);
-			return true;
+//		requestSet.add(requestURI);
+		return true;
 	}
 	
 }

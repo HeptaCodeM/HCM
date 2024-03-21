@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,7 +53,25 @@ public class ChatController {
 	public ResponseEntity<?> chatUserList() {
 		log.info("ChatController chatUserList 채팅 유저목록 조회");
 		List<EmployeeDto> employeeList = employeeListService.selectAllEmployee();
+		for(EmployeeDto dto : employeeList) {
+			if(dto.getEmpl_picture() != null) {
+				dto.setEmpl_picture_str(Base64Utils.encodeToString(dto.getEmpl_picture()));
+			}
+		}
 		return ResponseEntity.ok(new GsonBuilder().create().toJson(employeeList));
 	}
 
+	@GetMapping("chatCount.do")
+	public ResponseEntity<?> chatCount(ChatDto dto) {
+		log.info("ChatController chatCount 안읽은 대화수 조회");
+		int n = service.noReadList(dto);
+		return ResponseEntity.ok(n);
+	}
+	
+	@GetMapping("setReadMessage.do")
+	public void setReadMessage(ChatDto dto) {
+		log.info("ChatController setReadMessage 메세지 읽음 처리");
+		service.setReadMessage(dto);
+	}
+	
 }

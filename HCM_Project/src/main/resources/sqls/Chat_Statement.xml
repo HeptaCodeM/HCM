@@ -26,6 +26,7 @@
 	<update id="setReadMessage">
 		UPDATE CHAT SET CH_SET = 'N'
 		WHERE CH_TARGET = #{ch_target}
+		AND CH_SENDER = #{ch_sender}
 	</update>
 
 	<!-- 안읽은 대화 표시 -->
@@ -33,6 +34,7 @@
 		SELECT COUNT(*)
 			FROM CHAT c 
 			WHERE CH_TARGET = #{ch_target}
+			AND CH_SENDER = #{ch_sender}
 			AND CH_SET = 'Y'
 	</select>
 
