@@ -92,6 +92,8 @@ function detail(seq){
 }
 
 function insert(){
+	var title = $(".fc-toolbar-title").text()
+	console.log(title);
 		$("#kt_modal_scrollable_2").modal("show"); // modal 나타내기
 
 		$("#addCalendar").on("click", function() {  // modal의 추가 버튼 클릭 시
