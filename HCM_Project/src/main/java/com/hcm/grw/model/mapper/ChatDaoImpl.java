@@ -31,15 +31,15 @@ public class ChatDaoImpl implements ChatDao {
 	}
 	
 	@Override
-	public int setReadMessage(String ch_target) {
+	public int setReadMessage(ChatDto dto) {
 		log.info("ChatDaoImpl setReadMessage DAO Access");
-		return template.update(NS + "setReadMessage", ch_target);
+		return template.update(NS + "setReadMessage", dto);
 	}
 	
 	@Override
-	public int noReadList(String ch_target) {
+	public int noReadList(ChatDto dto) {
 		log.info("ChatDaoImpl noReadList DAO Access");
-		return template.selectOne(NS + "noReadList", ch_target);
+		return template.selectOne(NS + "noReadList", dto);
 	}
 
 }
