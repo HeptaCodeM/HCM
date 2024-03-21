@@ -28,7 +28,7 @@ onload = function() {
 		var myId = document.getElementById('id').value;
 		
 		// 유저객체 전달 경우
-		if (!e.data.includes('님으로 부터 메세지 도착')) {
+		if (!e.data.includes('님으로 부터 메세지 도착') && !e.data.includes('접속 해제')) {
 			var json = JSON.parse(e.data);
 			var header = document.getElementById('chatHeaderDiv');
 			var headerName = header.querySelector('a');
@@ -103,7 +103,12 @@ onload = function() {
 	
 	ws.onclose = function() {
 		console.log('웹소켓 연결 해제');
-		ws = new WebSocket('ws://localhost:8080/hcmWs.do');
+		var parent = document.getElementById('target').parentNode;
+		var dong = parent.querySelector('.badge-success')
+		var text = parent.querySelector('.text-muted')
+		dong.removeAttribute('class');
+		dong.setAttribute('class', 'badge badge-danger badge-circle w-10px h-10px me-1');
+		text.textContent = '오프라인';
 	}
 
 	document.getElementById('send').addEventListener('click', sendMessage);
@@ -189,6 +194,7 @@ function sendMessage() {
 			document.getElementById('mainDiv').append(seDiv1);
 			document.getElementById('message').value = '';
 			document.getElementById('message').focus();
+			
 			// 채팅창 스크롤 맨아래로 내리기
 			var chatContent = document.querySelector('#mainDiv');
 			var chatHeigth = chatContent.scrollHeight;

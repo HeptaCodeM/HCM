@@ -4,7 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
-import com.raonsecure.touchenkey.*;
+//import com.raonsecure.touchenkey.*;
 
 @Service
 public class E2ECryptoService {

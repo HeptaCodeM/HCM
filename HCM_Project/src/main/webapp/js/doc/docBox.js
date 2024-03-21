@@ -4,15 +4,18 @@ function detailBoard(docNum) {
 }
 
 /*function detailBoard(docNum) {
-    var xhr = new XMLHttpRequest();
+    fetch('/doc/docBox/getDetail.do?docNum=' + docNum, {
+        method: 'POST', 
+        data: {'docNum' : docNum}
+        headers: {
+            'Content-Type': 'application/json' 
+        },
+    })
+    .then(response => response.text()) 
+    .catch(error => console.error('Error:', error)); // 오류 처리
+}*/
 
-    // POST 요청 설정
-    xhr.open('POST', '/doc/docBox/getDetail.do', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
 
-    var data = 'docNum=' + encodeURIComponent(docNum);
-    xhr.send(data);
-    };*/
 
 $(document).ready( function () {
 	$('#myTable').DataTable({ 
@@ -1868,3 +1871,40 @@ function iDidBox(){
 	})
 }; 
 
+
+
+
+
+//임시보관함
+$(document).ready( function () {
+	$('#tempBox').DataTable({ 
+
+    	"language": { 
+            "emptyTable": "임시 보관중인 결재문서가 없습니다.",
+            "lengthMenu": " _MENU_ 개씩 보기",
+            "info": "현재 _START_ - _END_ / _TOTAL_건",
+            "search": "검색: ",
+            "paginate": {
+                "next": "다음",
+                "previous": "이전",
+                "first": "처음",
+                "last" : "마지막"
+            },
+          //https://datatables.net/reference/option/language   위를 더 디테일하게 수정하고싶으면 여기로~
+        },
+        
+        info: true, // 좌측하단 정보 표시 
+        searching: true, // 검색 기능 
+   	    ordering: false, // 정렬 기능
+        paging:true, // 페이징 기능 
+        lengthChange: false, //  좌상단 몇 건씩 볼지 정하는 기능
+   //   order: [ [ 3, "desc" ], [ 1, "asc"] ], //첫 화면 출력시 정렬 기준  + 안할시 첫 열을 기준으로 정렬하는듯
+   	    autoWidth: true,    //자동 열 조정
+   //  	columnDefs: [{ targets: 0, width: 30 },{ targets: 1, width: 150 },{ targets: 2, width: 30 },{ targets: 3, width: 230 },{ targets: 4, width: 30 }], //열의 너비 조절 0,1,2,3 순임
+//      displayLength: 20, //처음에 몇 건을 볼지 
+		lengthMenu: [ 5, 10, 15 ], //몇개씩 볼지(기본값 10, 25, 50, 100)
+        pagingType: "simple_numbers" 
+        // 페이징 타입 설정 : simple =이전, 다음 /simple_numbers 숫자페이징+이전 다음 , /full_numbers = 처음, 마지막 추가
+
+	});
+});

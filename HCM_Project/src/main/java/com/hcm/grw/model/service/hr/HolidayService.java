@@ -11,7 +11,7 @@ public interface HolidayService {
 	public int registEmployeeHoliday();
 	
 	/*휴가정보 조회 - 사원검색기능*/
-	public List<HolidayDto> holidayList(String empl_id);
+	public List<HolidayDto> holidayList(Map<String, String> map);
 	
 	/*특일(공휴일)정보 입력*/
 	public int registSpecialDay(Map<String, String> map);

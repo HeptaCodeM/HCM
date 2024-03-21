@@ -1,5 +1,9 @@
 package com.hcm.grw.comm;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.util.Base64Utils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +19,7 @@ public class Function {
 
 	/**
 	* alert 메시지 발생 후 url이동
+	* @param resp : HttpServletResponse
 	* @param msg : 메시지(String)
 	* @param location : 이동경로(String) - 미필수(빈값 처리 시 메시지창만 띄움)
 	* @param className : 버튼 클래스명(String) - 미필수
@@ -22,14 +27,21 @@ public class Function {
 	* @param focus : 포커스이동(String) - 미필수
 	* @return : String(메시지 발생 스크립트 호출)
 	* @author : SDJ
+	 * @throws IOException 
 	* @since : 2024.03.06
 	*/
-	public static String alertLocation(String msg, String location, String className, String btnText, String focus) {
+	public static void alertLocation(HttpServletResponse resp, String msg, String location, String className, String btnText, String focus) {
+		resp.setContentType("text/html; charset=UTF-8;");
+
 		if(msg == "" || msg == null) msg = "";
 		if(location == "" || location == null) location = "";
 		if(focus == "" || focus == null) focus = "";
 
 		StringBuffer sb = new StringBuffer();
+		sb.append("<!DOCTYPE html><html><head>");
+		//sb.append("<link href='/assets/plugins/global/plugins.bundle.css' rel='stylesheet' type='text/css' defer/>");
+		//sb.append("<link href='/assets/css/style.bundle.css' rel='stylesheet' type='text/css' />");
+		//sb.append("<script src='/assets/plugins/global/plugins.bundle.js' defer></script>");
 		sb.append("<script src='//cdn.jsdelivr.net/npm/sweetalert2@11'></script>");
 		sb.append("<script src='/js/common/common.js' defer></script>");
 		sb.append("<script>");
@@ -37,22 +49,34 @@ public class Function {
 		sb.append("swalAlert('"+ msg +"','"+ location +"','"+ className +"','"+ btnText +"','"+ focus +"');");
 		sb.append("}");
 		sb.append("</script>");
-		return sb.toString();
+		sb.append("</head><body></body></html>");
+		try {
+			resp.getWriter().print(sb.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	* alert 메시지 발생 후 history.back()
+	* @param resp : HttpServletResponse
 	* @param msg : 메시지(String)
 	* @param className : 버튼 클래스명(String) - 미필수
 	* @param btnText : 버튼 텍스트(String) - 미필수
 	* @return : String(메시지 발생 스크립트 호출)
 	* @author : SDJ
+	 * @throws IOException 
 	* @since : 2024.03.06
 	*/
-	public static String alertHistoryBack(String msg, String className, String btnText) {
+	public static void alertHistoryBack(HttpServletResponse resp, String msg, String className, String btnText) {
+		resp.setContentType("text/html; charset=UTF-8;");
+
 		if(msg == "" || msg == null) msg = "";
 
 		StringBuffer sb = new StringBuffer();
+		//sb.append("<link href='/assets/plugins/global/plugins.bundle.css' rel='stylesheet' type='text/css'/>");
+		//sb.append("<link href='/assets/css/style.bundle.css' rel='stylesheet' type='text/css' />");
+		//sb.append("<script src='/assets/plugins/global/plugins.bundle.js' defer></script>");
 		sb.append("<script src='//cdn.jsdelivr.net/npm/sweetalert2@11'></script>");
 		sb.append("<script src='/js/common/common.js' defer></script>");
 		sb.append("<script>");
@@ -60,7 +84,11 @@ public class Function {
 		sb.append("swalHistoryBack('"+ msg +"','"+ className +"','"+ btnText +"');");
 		sb.append("}");
 		sb.append("</script>");
-		return sb.toString();
+		try {
+			resp.getWriter().print(sb.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -87,5 +115,5 @@ public class Function {
 
 		 return base64ToString;
 	}
-	
+
 }

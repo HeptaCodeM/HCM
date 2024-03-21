@@ -125,16 +125,15 @@ public class EmployeeListController {
 		int n = employeeService.updateEmployee(emp);
 		String msg;
 		if(n < 1) {
-			msg = Function.alertHistoryBack("수정 시 오류가 발생하였습니다.", "", "");
-
+			Function.alertHistoryBack(resp, "수정 시 오류가 발생하였습니다.", "", "");
+			return;
 			//sb.append("alert('수정 시 오류가 발생하였습니다.'); history.back();");
 		}else {
-			msg = Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/modifyAdmin.do", "","","");
+			Function.alertLocation(resp, "정상적으로 수정 되었습니다.", "/hr/employee/modifyAdmin.do?empl_id="+empl_id, "","","");
+			return;
 			//sb.append("alert('정상적으로 수정 되었습니다.');");
 			//sb.append("location.href='/hr/employee/list.do';");
 		}
-		
-		resp.getWriter().print(msg);
 	}
 	
 	
@@ -214,6 +213,30 @@ public class EmployeeListController {
 		System.out.println(searchlists);
 		Gson returnList = new GsonBuilder().create();
 		return searchlists;
+	}
+	
+	
+	
+	@GetMapping(value = "/hr/employee/empAdminValueChk.do")
+	@ResponseBody
+	public boolean empAdminValueChk(String empl_phone, String empl_tel, String empl_fax) {
+		boolean returnBool = true;
+		if(empl_phone != null) {
+			System.out.println(empl_phone);
+			returnBool = employeeListService.chkEmpPhoneNum(empl_phone);
+		}
+		
+		if(empl_tel != null) {
+			System.out.println(empl_tel);
+			returnBool = employeeListService.chkEmpTelNum(empl_tel);
+		}
+		
+		if(empl_fax != null) {
+			System.out.println(empl_fax); 
+			returnBool = employeeListService.chkEmpFaxNum(empl_fax);
+		}
+		
+		return returnBool;
 	}
 	
 	

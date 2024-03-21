@@ -41,17 +41,6 @@
 							<div
 								data-kt-menu-trigger="{default: &#39;click&#39;, lg: &#39;hover&#39;}"
 								data-kt-menu-placement="bottom-start"
-								class="menu-item here menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
-								<a href="/mainTmp.do">
-									<span class="menu-link"> <span class="menu-title">메인템플릿화면</span>
-										<span class="menu-arrow d-lg-none"></span>
-									</span>
-								</a>
-
-							</div>
-							<div
-								data-kt-menu-trigger="{default: &#39;click&#39;, lg: &#39;hover&#39;}"
-								data-kt-menu-placement="bottom-start"
 								class="menu-item menu-lg-down-accordion me-0 me-lg-2">
 								<a href="/hr/hrMainTmp.do">
 									<span class="menu-link"> <span class="menu-title">인사관리</span>
@@ -170,13 +159,13 @@
 						<div class="cursor-pointer symbol symbol-35px symbol-md-40px"
 							data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
 							data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-							<img src="/image/300-3.jpg" alt="user">
+							<img src="${userInfoVo.empl_picture_str}" alt="user">
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<input type="hidden" value="${userInfoVo.empl_picture_str }">
+
 		<!-- ------------------------------ 알림 영역 사작 ------------------------------ -->
 		<div id="kt_activities" class="bg-body drawer drawer-end drawer-end" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '720px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle" data-kt-drawer-close="#kt_activities_close" style="width: 600px !important;">
 			<div class="card shadow-none border-0 rounded-0">
@@ -197,8 +186,8 @@
 						<c:if test="${userInfoVo ne null}">
 							<input type="hidden" id="id" value="${userInfoVo.empl_id}">
 							<input type="hidden" id="myName" value="${userInfoVo.empl_name}">
-							
-							
+							<input type="hidden" id="myDept" value="${userInfoVo.empl_dept_nm}">
+							<input type="hidden" id="myRank" value="${userInfoVo.empl_rank_nm}">
 							<input type="hidden" id="myPic" value="${userInfoVo.empl_picture_str }">
 						</c:if>
 					</div>

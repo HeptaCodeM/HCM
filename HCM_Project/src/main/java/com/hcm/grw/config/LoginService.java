@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.mapper.hr.EmployeeDao;
@@ -16,13 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 UserDetailsService를 구현한 LoginService 클래스. 
 사용자가 입력한 사용자 아이디를 기반으로 사용자 정보를 데이터베이스에서 검색하고, 해당 사용자의 권한 정보를 로드하여 UserDetails 객체로 반환처리.
 */
-//@Service("com.hcm.grw.config")
+@Service
 @Slf4j
 public class LoginService implements UserDetailsService {
 	
 	@Autowired
 	private EmployeeDao dao;
-
+	
 //	@Autowired
 //	private HttpServletRequest req;
 	
@@ -31,7 +32,7 @@ public class LoginService implements UserDetailsService {
 	*/
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		log.info("LoginService loadUserByUsername : {}", userId);
-		log.info("LoginService repository : {}", dao);
+		log.info("LoginService repository : {}, {}", dao, dao.hashCode());
 
 		String privateKey = new String("D:/raon_secure/webapp/WEB-INF/raon_config/nxkey/Private2048.key.der");	
 
@@ -69,4 +70,5 @@ public class LoginService implements UserDetailsService {
 		}
 
 	}
+
 }

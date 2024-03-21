@@ -117,12 +117,7 @@ public class CompanyController {
 		return "hr/company/showCompanySeal";
 	}
 	
-	
-	@GetMapping(value = "/hr/company/insertCompanySealForm.do")
-	public String insertCompanySeal(Model model) {
-		return "hr/company/insertCompanySealForm";
-	}
-	
+
 	
 	@PostMapping(value = "/hr/company/companySealUpload.do")
 	public String companySealUpload(HttpServletRequest request, List<MultipartFile> file)throws IOException {

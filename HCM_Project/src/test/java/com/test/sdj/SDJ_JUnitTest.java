@@ -245,7 +245,10 @@ public class SDJ_JUnitTest {
 	public void HolidayTest() {
 		//휴가정보 조회
 		String empl_id = "20230107";
-		List<HolidayDto> had = holidayService.holidayList(empl_id);
+		Map<String, String> map = new HashMap<String, String>(){{
+			put("empl_id", "20230107");
+		}};
+		List<HolidayDto> had = holidayService.holidayList(map);
 		log.info("휴가정보 리스트 : {}", had);
 		assertNotEquals(0, had.size());
 	}
