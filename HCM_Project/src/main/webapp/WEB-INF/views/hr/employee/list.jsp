@@ -59,7 +59,7 @@
 								<div class="cardFlexSearch">
 									<span>
 										<select id="empShCtg" class="form-select form-select-solid searchEmpSelect">
-											<option value="">검색분류</option>
+											<option value="empl_name">검색분류</option>
 											<option value="empl_name">성명</option>
 											<option value="empl_id">사원번호</option>
 											<option value="empl_phone">전화번호</option>

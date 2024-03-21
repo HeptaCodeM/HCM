@@ -41,7 +41,7 @@
 								<h3 class="card-title text-gray-800 fw-bold">${thisRole}입력</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
-							<form action="/hr/commonCode/insertRoleOne.do" onsubmit="return checkNameValue()" method="post">
+							<form action="/hr/commonCode/insertRoleOne.do" method="post">
 								<div class="card-body pt-5">
 									${thisRole}명<input id="coco_name" name="coco_name" class="form-control form-control-solid" type="text" maxlength="6">
 										<span id="nameSpan" class="fs-6 text-muted">한글 6글자 이내로 입력해주세요!</span><br>
@@ -52,7 +52,7 @@
 										<br>
 								</div>
 								<div class="card-footer">
-									<button class="btn btn-primary btnLg me-10" type="submit">저장</button>
+									<button id="submitBtn" disabled="disabled" class="btn btn-primary btnLg me-10" type="submit">저장</button>
 									<button class="btn btn-primary btnLg me-10" type="reset">초기화</button>
 									<a onclick="javascript:window.history.back(-1)" class="btn btn-primary me-10">취소</a>
 							    </div>
@@ -75,18 +75,33 @@
 					
 					function checkNameValue(){
 					    
-					    var coco_name = document.getElementById("coco_name").value;
+					    let coco_name = document.getElementById("coco_name").value;
 					    console.log(coco_name);
 					    
 					    var checkKor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
 
 						if(checkKor.test(coco_name)){
-						 	console.log("성공");
+							return true;
 						}else{
-							alert("한글만 입력해주세요!(swal로 바꿀예정)");
 							return false;
 						}
 					}
+					
+					function checkCodeValue(){
+					    
+					    let coco_cd = document.getElementById("coco_cd").value;
+					    console.log(coco_cd);
+					    
+					    var checkCode = /^[A-Z]{2}\d{6}$/;
+					    
+						if(checkCode.test(coco_cd)){
+							return true;
+						}else{
+							return false;
+						}
+					}
+					
+					
 					
 					var nameChk = document.querySelector("#coco_name");
 					var codeChk = document.querySelector("#coco_cd");
@@ -116,17 +131,40 @@
 							console.log('CODE중복 : ',data.codeFlag);
 							console.log('NAME중복 : ',data.nameFlag);
 							var codeSpan = document.getElementById("codeSpan");
-							
-							if(data.codeFlag == "false"){
-								/* alert("코드중복"); */
-								codeSpan.innerHTML = "코드를 확인 ㄱㄱ";
-							}else{
-								codeSpan.innerHTML = "EX)${role}000001 형식으로 입력해주세요";
-							}
+							var nameSpan = document.getElementById("nameSpan");
+							let coco_cdInput = document.getElementById("coco_cd");
+							let coco_nameInput = document.getElementById("coco_name");
+							let submitBtn = document.getElementById("submitBtn");
 							
 							if(data.nameFlag == "false"){
-								/* alert("이름중복"); */
+								nameSpan.innerHTML = "중복된 이름입니다! 다시 입력하세요";
+								coco_cdInput.disabled = true;
+							}else{
+								if(checkNameValue()){
+									nameSpan.innerHTML = "사용가능합니다";
+									coco_cdInput.disabled = false;
+								}else{
+									nameSpan.innerHTML = "사용가능합니다"
+									coco_cdInput.disabled = true;
+								}
 							}
+							if(data.codeFlag == "false" || coco_cdInput.value == "" ){
+								if(data.codeFlag == "false"){
+									codeSpan.innerHTML = "중복된 코드입니다! 다시 입력하세요";
+								}else{
+									codeSpan.innerHTML = "EX)\"${role}000001\" 형식으로 입력해주세요";
+								}
+								submitBtn.disabled = true;
+							}else{
+								if(checkCodeValue()){
+									codeSpan.innerHTML = "사용가능합니다";
+									submitBtn.disabled = false;
+								}else{
+									codeSpan.innerHTML = "코드형식을 확인해주세요! EX)\"${role}000001\""
+									submitBtn.disabled = true;
+								}
+							}
+							
 							
 						})
 					    .catch(err => { 

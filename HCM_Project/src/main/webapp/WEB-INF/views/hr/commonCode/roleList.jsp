@@ -61,6 +61,7 @@
 												<th>${thisRole}명</th>
 												<th>생성자ID</th>
 												<th>생성일자</th>
+												<th>삭제여부</th>
 											</tr>
 										</thead>	
 										<tbody>
@@ -71,6 +72,7 @@
 													<td>${codeList.getCoco_name()}</td>
 													<td>${codeList.getCoco_create_id()}</td>
 													<td>${codeList.getCoco_create_dt()}</td>
+													<td>${codeList.getCoco_delflag()}</td>
 												</tr>
 											</c:forEach>
 										</tbody>
