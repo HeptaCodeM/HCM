@@ -33,10 +33,15 @@
 		width: 1500px;
 		height: 1200px;
 	}
-	.fc-header-toolbar {
-    display: flex;
-    justify-content: space-between; /* 요소들을 양 옆으로 정렬합니다. */
-}
+	.fc-prev-button {
+    display: inline-block;
+	}
+	.fc-next-button {
+	
+	}
+	.fc-toolbar-title{
+	display: inline-block;
+	}
 </style>
 
 </head>

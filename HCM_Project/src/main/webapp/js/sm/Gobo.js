@@ -12,12 +12,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function showCommentForm(commentId) {
+    // 모든 댓글 작성 폼을 숨깁니다.
+    hideAllCommentForms();
+
     // commentFormContainer 요소 찾기
     var commentFormContainer = document.getElementById("commentFormContainer" + commentId);
     // commentFormContainer가 존재하면 보이게 함
     if (commentFormContainer) {
         commentFormContainer.style.display = 'block';
     }
+}
+
+function hideAllCommentForms() {
+    // 모든 댓글 작성 폼을 숨깁니다.
+    var commentFormContainers = document.querySelectorAll("[id^='commentFormContainer']");
+    commentFormContainers.forEach(function(container) {
+        container.style.display = "none";
+    });
 }
 function cancelReply(commentId) {
      // commentFormContainer 요소 찾기
@@ -28,22 +39,7 @@ function cancelReply(commentId) {
     }
 }
 
-document.addEventListener("click", function(event) {
-    var commentFormContainers = document.querySelectorAll("[id^='commentFormContainer']");
-    var isCommentButtonClicked = false;
 
-    // 클릭된 요소가 답글쓰기 버튼인지 확인합니다.
-    if (event.target.classList.contains("comment_info_button")) {
-        isCommentButtonClicked = true;
-    }
-
-    // 클릭된 요소가 답글쓰기 버튼이 아닌 경우 모든 댓글 작성 폼을 숨깁니다.
-    if (!isCommentButtonClicked) {
-        commentFormContainers.forEach(function(container) {
-            container.style.display = "none";
-        });
-    }
-});
 
 
 //맨 위로 스크롤하는 함수
@@ -64,7 +60,7 @@ function scrollFunction() {
 }
 
 function checkInput() {
-    var inputContent = document.getElementById("commentTextArea").value.trim();
+    var inputContent = $(".CommentWriter #commentTextArea").val().trim();
     var submitButton = document.getElementById("submitButton");
 
     if (inputContent.length > 0) {
@@ -73,6 +69,9 @@ function checkInput() {
         submitButton.disabled = true;
     }
 }
+
+// textarea의 입력 이벤트에 checkInput 함수를 연결
+document.getElementById("commentTextArea").addEventListener("#commentTextArea", checkInput);
 
 
 
@@ -89,7 +88,7 @@ function insertReply(data){
 	$.ajax({
 			url: "/sm/insertReply.do",
 			data: form,
-			type: "post",
+			type: "get",
 			dataType: "json",
 			success: function() {
 				location.href='/sm/getDetailGobo.do?gobo_no='+data;
@@ -104,6 +103,37 @@ function insertReply(data){
 }
 
 
+
+$(document).ready(function() {
+    // 등록 버튼 클릭 시 AJAX 요청을 보냅니다.
+    $(".insertReplyTwoBtn").click(function() {
+        var container = $(this).closest("li"); // 클릭한 버튼이 속한 li 요소를 찾습니다.
+        var formData = container.find("#ReplyTwoForm").serialize(); // 해당 li 요소 안의 form 데이터를 가져옵니다.
+		var gobo_no = $("#gobo_no").val();
+        // AJAX 요청을 보냅니다.
+        $.ajax({
+            url: "/sm/insertReplyTwo.do",
+            data: formData,
+            type: "GET",
+            dataType: "json",
+            success: function() {
+                location.href='/sm/getDetailGobo.do?gobo_no='+gobo_no;
+            },
+            error: function() {
+                // 에러 처리
+            }
+        });
+    });
+});
+
+
+
+function updateGoboDelFlag(gobo_no){
+	var result = confirm("글을 삭제 하시겠습니까?");
+	if(result){
+		location.href="/sm/updateGoboDelFlag.do?gobo_no="+gobo_no;
+	}
+}
 
 
 

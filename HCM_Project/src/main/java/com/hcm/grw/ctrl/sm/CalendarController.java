@@ -38,12 +38,13 @@ public class CalendarController {
 	
 	@GetMapping(value = "/getAllCalendar.do")
 	@ResponseBody
-	public JSONArray CalendarList(Model model,ScbDto dto) {
+	public JSONArray CalendarList(Model model,ScbDto dto,String daygridmonth) {
 		List<String> list = new ArrayList<String>();
 		list.add("1");
 		list.add("2");
 		list.add("3");
 		list.add("4");
+		dto.setDaygridmonth(daygridmonth);
 		dto.setType(list);
 		List<ScbDto> lists = service.getAllCalendar(dto);
 		

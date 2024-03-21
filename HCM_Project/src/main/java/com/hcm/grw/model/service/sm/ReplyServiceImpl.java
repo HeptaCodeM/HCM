@@ -23,6 +23,12 @@ public class ReplyServiceImpl implements IReplyService {
 		log.info("ReplyServiceImpl getAllReply Service 공지사항 댓글 전체 조회");
 		return dao.getAllReply(no);
 	}
+	
+	@Override
+	public List<ReplyDto> getAllReplyTwo(String no) {
+		log.info("ReplyServiceImpl getAllReply Service 공지사항 대댓글 전체 조회");
+		return dao.getAllReplyTwo(no);
+	}
 
 	@Override
 	public int insertReply(ReplyDto dto) {
