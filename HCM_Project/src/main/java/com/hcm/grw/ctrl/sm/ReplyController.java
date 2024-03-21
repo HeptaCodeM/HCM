@@ -37,4 +37,30 @@ public class ReplyController {
 		int n = service.insertReplyTwo(dto);
 		return (n>1)?true:false;
 	}
+	
+	@GetMapping("updateReply.do")
+	public int updateReply(ReplyDto dto) {
+		log.info("ReplyController insertReplyTwo 댓글 수정 :  {} ", dto);
+		int n = service.updateReply(dto);
+		return n;
+	}
+	
+	
+	@GetMapping("updateReplyDelFlag.do")
+	public int updateReplyDelFlag(String rebo_no) {
+		log.info("ReplyController insertReplyTwo 댓글 삭제 :  {} ",rebo_no);
+		int n = service.updateReplyDelFlag(rebo_no);
+		return n;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -33,9 +33,16 @@
 		width: 1500px;
 		height: 1200px;
 	}
-	.fc-header-toolbar {
+.fc-header-toolbar .fc-header-toolbar-center {
     display: flex;
-    justify-content: space-between; /* 요소들을 양 옆으로 정렬합니다. */
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fc-header-toolbar .fc-prev-button,
+.fc-header-toolbar .fc-next-button {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 </style>
 

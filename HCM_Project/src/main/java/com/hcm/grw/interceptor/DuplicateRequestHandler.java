@@ -24,6 +24,7 @@ public class DuplicateRequestHandler implements HandlerInterceptor {
 			log.info("[DuplicateRequestHandler]\t" + requestURI + " : 중복된 요청 차단");
 			requestSet.remove(requestURI);
             return false;
+            
         }
 		requestSet.add(requestURI);
 			return true;

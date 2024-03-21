@@ -60,7 +60,7 @@ function scrollFunction() {
 }
 
 function checkInput() {
-    var inputContent = document.getElementById("commentTextArea").value.trim();
+    var inputContent = $(".CommentWriter #commentTextArea").val().trim();
     var submitButton = document.getElementById("submitButton");
 
     if (inputContent.length > 0) {

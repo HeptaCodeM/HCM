@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', listAjax());
 
 function listAjax() {
-
 	$.ajax({
 		type: "get",
 		url: "/sm/getAllCalendar.do",
@@ -178,6 +177,7 @@ $("#imagebutton2").click(function(){
 })
 
 
+var title = $(".fc-toolbar-title").text()
 
 
-var daygreedmonth = $(".fc-toolbar-title").val();
+

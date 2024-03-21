@@ -34,6 +34,11 @@
         border-top: 1px solid #dee2e6; /* 수평선 스타일 지정 */
         padding-top: 10px; /* 상단 패딩 추가 */
     }
+     .no-border {
+        border: none; /* 테두리를 없애는 스타일 */
+        padding: 0; /* 선택 사항: 있으면 패딩을 제거합니다. */
+        margin: 0; /* 선택 사항: 있으면 여백을 제거합니다. */
+    }
 </style>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
@@ -70,7 +75,7 @@
                       <c:forEach var="comment" items="${Rlist}">
                       	  <c:if test="${comment.rebo_depth == 0}">
                           <li class="list-group-item">
-                              <div class="d-flex align-items-center">
+                              <div class="d-flex align-items-center no-border" style="border: none;">
                                   <img src="https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77" alt="프로필 사진" width="36" height="36" class="mr-3">
                                   <div>
                                       <strong>${comment.rebo_writer}</strong><br>
@@ -86,7 +91,7 @@
 				            <c:if test="${reply.rebo_depth == 1 && reply.rebo_step == comment.rebo_step}">
 				                <li class="list-group-item" style="margin-left: 10px;">
 				                    <!-- 대댓글 내용 출력 -->
-				                    <div class="d-flex align-items-center">
+				                    <div class="d-flex align-items-center no-border" style="border: none;">
 				                        <img src="https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77" alt="프로필 사진" width="36" height="36" class="mr-3">
 				                        <div>
 				                            <strong>${reply.rebo_writer}</strong><br>
@@ -109,7 +114,7 @@
                              <input type="hidden" name="rebo_writer" id="rebo_writer" value="${sessionScope.userInfoVo.empl_name}">
                                         <div class="comment_inbox border border-2">
                                             <em class="comment_inbox_name">${sessionScope.userInfoVo.empl_name}</em>
-                                            <textarea id="commentTextArea" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" name="rebo_content"></textarea>
+                                            <textarea id="commentTextArea${comment.rebo_no}" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" name="rebo_content"></textarea>
                                             <div class="d-flex justify-content-end align-items-end">
                                                 <div class="register_box">
                                                     <button type="button" class="btn btn-primary" onclick="cancelReply(${comment.rebo_no})">취소</button>
