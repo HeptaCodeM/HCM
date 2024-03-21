@@ -216,4 +216,28 @@ public class EmployeeListController {
 	}
 	
 	
+	
+	@GetMapping(value = "/hr/employee/empAdminValueChk.do")
+	@ResponseBody
+	public boolean empAdminValueChk(String empl_phone, String empl_tel, String empl_fax) {
+		boolean returnBool = true;
+		if(empl_phone != null) {
+			System.out.println(empl_phone);
+			returnBool = employeeListService.chkEmpPhoneNum(empl_phone);
+		}
+		
+		if(empl_tel != null) {
+			System.out.println(empl_tel);
+			returnBool = employeeListService.chkEmpTelNum(empl_tel);
+		}
+		
+		if(empl_fax != null) {
+			System.out.println(empl_fax); 
+			returnBool = employeeListService.chkEmpFaxNum(empl_fax);
+		}
+		
+		return returnBool;
+	}
+	
+	
 }

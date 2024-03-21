@@ -221,17 +221,76 @@ function valChk() {
     }
     
     
+    
     var regexTelNum = /^\d{3}$/;
     if(!regexTelNum.test(aftEmpl_tel)){
     	swalAlert("\"111\"형식으로 입력하세요!","","","","");
     }
+    
     
     var regexFaxNum = /^\d{2,3}-\d{3}-\d{4}$/;
     if(!regexFaxNum.test(aftEmpl_fax)){
     	swalAlert("\"(02)031-123-1234\"형식으로 입력하세요!","","","","");
     }
     
-    
+}
+var phoneNumChk = document.querySelector("#empl_phone");
+phoneNumChk.addEventListener("focusout",function(){ phoneChk(); });
+var telNumChk = document.querySelector("#empl_tel");
+telNumChk.addEventListener("focusout",function(){ telChk(); });
+var faxNumChk = document.querySelector("#empl_fax");
+faxNumChk.addEventListener("focusout",function(){ faxChk(); });
+
+function phoneChk() {
+	const chkNum = document.getElementById("empl_phone").value;
+	$.ajax({
+	    type: "GET",
+	    url: "/hr/employee/empAdminValueChk.do?empl_phone="+chkNum,	
+	    success: function (data) {
+	        console.log(data);
+	        if(data == false){
+	        	swalAlert("중복된 전화번호입니다.","","","","empl_phone");
+	        }
+	    },
+	    error:function(err){
+			console.log(err);
+		}
+	});
+}
+
+function telChk(){
+	const chkNum = document.getElementById("empl_tel").value;
+	$.ajax({
+	    type: "GET",
+	    url: "/hr/employee/empAdminValueChk.do?empl_tel="+chkNum,	
+	    success: function (data) {
+	        console.log(data);
+	        if(data == false){
+	        	swalAlert("중복된 내선번호입니다.","","","","empl_tel");
+	        }	        
+	        
+	    },
+	    error:function(err){
+			console.log(err);
+		}
+	});	
+}
+
+function faxChk() {
+	const chkNum = document.getElementById("empl_fax").value;
+	$.ajax({
+	    type: "GET",
+	    url: "/hr/employee/empAdminValueChk.do?empl_fax="+chkNum,	
+	    success: function (data) {
+	        console.log(data);
+	        if(data == false){
+	        	swalAlert("중복된 팩스번호입니다.","","","","empl_fax");
+	        }	 	        
+	    },
+	    error:function(err){
+			console.log(err);
+		}
+	});
 }
 
 </script>
