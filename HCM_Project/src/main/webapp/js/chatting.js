@@ -25,59 +25,89 @@ onload = function() {
 	
 	ws.onmessage = function(e) {
 		console.log('웹소켓 서버 수신')
-
+		var myId = document.getElementById('id').value;
+		
+		// 유저객체 전달 경우
 		if (!e.data.includes('님으로 부터 메세지 도착')) {
-			console.log('유저객체');
 			var json = JSON.parse(e.data);
-			var reDiv1 = document.createElement('div') // 아우터
-			var reDiv2 = document.createElement('div') // 이너
-			var reDiv3 = document.createElement('div') // 헤더아우터
-			var reDiv4 = document.createElement('div') // 헤더이미지영역
-			var reDiv5 = document.createElement('div') // 헤더텍스트영역
-			var reDiv6 = document.createElement('div') // 바디(내용)
-			var reImg = document.createElement('img'); // 이미지
-			var reA = document.createElement('a'); // 헤더이름
-			var reSpan = document.createElement('span'); // 헤더시간
-
-			reDiv1.setAttribute('class', 'd-flex justify-content-start mb-10')
-			reDiv2.setAttribute('class', 'd-flex flex-column align-items-start')
-			reDiv3.setAttribute('class', 'd-flex align-items-center mb-2')
-			reDiv4.setAttribute('class', 'symbol symbol-35px symbol-circle')
-			reDiv5.setAttribute('class', 'ms-3')
-			reDiv6.setAttribute('class', 'p-5 rounded bg-light-info text-gray-900 fw-semibold mw-lg-400px text-start')
-			reImg.setAttribute('src', 'https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77')
-			reA.setAttribute('class', 'fs-5 fw-bold text-gray-900 text-hover-primary me-1')
-			reSpan.setAttribute('class', 'text-muted fs-7 mb-1')
+			var header = document.getElementById('chatHeaderDiv');
+			var headerName = header.querySelector('a');
 			
-			reSpan.textContent = json.ch_date;
-			reA.textContent = json.sender_name;
-			reDiv6.textContent = json.ch_message;
+			// 수신자가 현재대화를 보고있는경우
+			if(headerName.textContent === json.sender_name) {
+				var reDiv1 = document.createElement('div') // 아우터
+				var reDiv2 = document.createElement('div') // 이너
+				var reDiv3 = document.createElement('div') // 헤더아우터
+				var reDiv4 = document.createElement('div') // 헤더이미지영역
+				var reDiv5 = document.createElement('div') // 헤더텍스트영역
+				var reDiv6 = document.createElement('div') // 바디(내용)
+				var reImg = document.createElement('img'); // 이미지
+				var reA = document.createElement('a'); // 헤더이름
+				var reSpan = document.createElement('span'); // 헤더시간
 
-			reDiv4.append(reImg);
-			reDiv5.append(reA);
-			reDiv5.append(reSpan);
-			reDiv3.append(reDiv4);
-			reDiv3.append(reDiv5);
-			reDiv2.append(reDiv3);
-			reDiv2.append(reDiv6);
-			reDiv1.append(reDiv2);
-			document.getElementById('mainDiv').append(reDiv1);
-			// 채팅창 스크롤 맨아래로 내리기
-			var chatContent = document.querySelector('#mainDiv');
-			var chatHeigth = chatContent.scrollHeight;
-			chatContent.scrollTop = chatHeigth;
+				reDiv1.setAttribute('class', 'd-flex justify-content-start mb-10')
+				reDiv2.setAttribute('class', 'd-flex flex-column align-items-start')
+				reDiv3.setAttribute('class', 'd-flex align-items-center mb-2')
+				reDiv4.setAttribute('class', 'symbol symbol-35px symbol-circle')
+				reDiv5.setAttribute('class', 'ms-3')
+				reDiv6.setAttribute('class', 'p-5 rounded bg-light-info text-gray-900 fw-semibold mw-lg-400px text-start')
+				if(json.sender_pic != undefined) {
+					reImg.setAttribute('src', 'data:image/png;base64,' + json.sender_pic);
+				} else {
+					reImg.setAttribute('src', 'https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77');
+				}
+				reA.setAttribute('class', 'fs-5 fw-bold text-gray-900 text-hover-primary me-1')
+				reSpan.setAttribute('class', 'text-muted fs-7 mb-1')
 
+				reSpan.textContent = json.ch_date;
+				reA.textContent = json.sender_name;
+				reDiv6.textContent = json.ch_message;
+
+				reDiv4.append(reImg);
+				reDiv5.append(reA);
+				reDiv5.append(reSpan);
+				reDiv3.append(reDiv4);
+				reDiv3.append(reDiv5);
+				reDiv2.append(reDiv3);
+				reDiv2.append(reDiv6);
+				reDiv1.append(reDiv2);
+				document.getElementById('mainDiv').append(reDiv1);
+				
+				// 채팅창 스크롤 맨아래로 내리기
+				var chatContent = document.querySelector('#mainDiv');
+				var chatHeigth = chatContent.scrollHeight;
+				chatContent.scrollTop = chatHeigth;
+				
+				fetch('/setReadMessage.do?ch_sender=' + json.ch_sender + '&ch_target=' + myId).then().then().catch();
+				
+				// 현재 대화를 안보고있는 경우
+			} else {
+				var symbol = document.getElementById(json.ch_sender);
+				fetch('/chatCount.do?ch_sender=' + json.ch_sender + '&ch_target=' + myId)
+					.then(resp => { return resp.json() })
+					.then(data => {
+						if (data != 0) {
+							symbol.style.background = '#f8285a';
+							symbol.textContent = data;
+						}
+					})
+					.catch(err => { console.log(err) });
+				notify(json.sender_name + '님으로 부터 메세지 도착');
+			}
+			
 		} else {
 			// 노티피케이션 처리 영역
-			notify(e.data);
+//			notify(e.data);
 		}
+	}
+	
+	ws.onclose = function() {
+		console.log('웹소켓 연결 해제');
+		ws = new WebSocket('ws://localhost:8080/hcmWs.do');
 	}
 
 	document.getElementById('send').addEventListener('click', sendMessage);
-	ws.onclose = function() {
-		console.log('웹소켓 연결 해제')
-		ws = new WebSocket('ws://localhost:8080/hcmWs.do');
-	}
+	
 
 }
 
@@ -134,7 +164,13 @@ function sendMessage() {
 			seDiv6.setAttribute('class', 'p-5 rounded bg-light-primary text-gray-900 fw-semibold mw-lg-400px text-end')
 			seSpan.setAttribute('class', 'text-muted fs-7 mb-1')
 			seA.setAttribute('class', 'fs-5 fw-bold text-gray-900 text-hover-primary ms-1')
-			seImg.setAttribute('src', 'https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77');
+			
+			var pic = document.getElementById('myPic').value;
+			if (pic != '/images/blank.png') {
+				seImg.setAttribute('src', pic);
+			} else {
+				seImg.setAttribute('src', 'https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77');
+			}
 
 			var date = new Date();
 			var formatDate = moment(date).format('YYYY-MM-DD HH:mm:ss');
@@ -168,9 +204,8 @@ function loadMessage(event, empl_id) {
 	var ele = event.target.text;
 	document.getElementById('mainDiv').textContent = '';
 	sender = document.getElementById('id').value;
-	target = empl_id;
 	console.log(sender, target, message);
-	fetch('/loadMessage.do?ch_sender=' + sender + '&ch_target=' + target)
+	fetch('/loadMessage.do?ch_sender=' + sender + '&ch_target=' + empl_id)
 		.then(resp => {
 			return resp.json();
 		})
@@ -218,8 +253,13 @@ function loadMessage(event, empl_id) {
 					seDiv5.setAttribute('class', 'symbol symbol-35px symbol-circle')
 					seDiv6.setAttribute('class', 'p-5 rounded bg-light-primary text-gray-900 fw-semibold mw-lg-400px text-end')
 					seSpan.setAttribute('class', 'text-muted fs-7 mb-1')
-					seA.setAttribute('class', 'fs-5 fw-bold text-gray-900 text-hover-primary ms-1')
-					seImg.setAttribute('src', 'https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77');
+					seA.setAttribute('class', 'fs-5 fw-bold text-gray-900 text-hover-primary ms-1');
+					var pic = document.getElementById('myPic').value;
+					if (pic != '/images/blank.png') {
+						seImg.setAttribute('src', pic);
+					} else {
+						seImg.setAttribute('src', 'https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77');
+					}
 					seSpan.textContent = d.ch_date;
 					seA.textContent = d.sender_name;
 					seDiv6.textContent = d.ch_message;
@@ -250,7 +290,13 @@ function loadMessage(event, empl_id) {
 					reDiv4.setAttribute('class', 'symbol symbol-35px symbol-circle')
 					reDiv5.setAttribute('class', 'ms-3')
 					reDiv6.setAttribute('class', 'p-5 rounded bg-light-info text-gray-900 fw-semibold mw-lg-400px text-start')
-					reImg.setAttribute('src', 'https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77')
+					
+//					if (pic != '/images/blank.png') {
+//						reImg.setAttribute('src', pic);
+//					} else {
+						reImg.setAttribute('src', 'https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77');
+//					}
+					
 					reA.setAttribute('class', 'fs-5 fw-bold text-gray-900 text-hover-primary me-1')
 					reSpan.setAttribute('class', 'text-muted fs-7 mb-1')
 
@@ -278,6 +324,12 @@ function loadMessage(event, empl_id) {
 		.catch(err => {
 			console.log('전송 실패', err)
 		});
+		
+		fetch('/setReadMessage.do?ch_sender=' + empl_id + '&ch_target=' + sender).then().then().catch();
+		var symbol = event.target.parentNode.querySelector('.symbol-circle');
+		if(symbol != null) {
+			symbol.style.background = 'white';
+		}
 }
 
 function notify(msg) {
@@ -326,7 +378,6 @@ function chatUserList() {
 				var img = document.createElement('img');
 				var a = document.createElement('a');
 				var span = document.createElement('span');
-
 				div1.setAttribute('class', 'rounded d-flex flex-stack bg-active-lighten p-4');
 				div1.setAttribute('onclick', '');
 				div2.setAttribute('class', 'd-flex align-items-center');
@@ -336,7 +387,11 @@ function chatUserList() {
 				div6.setAttribute('class', 'ms-2 w-100px');
 				div6.setAttribute('style', 'text-align: right;');
 				div7.setAttribute('class', 'border-bottom border-gray-300 border-bottom-dashed');
-				img.setAttribute('src', 'https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77');
+				if(d.empl_picture_str != undefined) {
+					img.setAttribute('src', 'data:image/png;base64,' + d.empl_picture_str);
+				} else {
+					img.setAttribute('src', 'https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77');
+				}
 				a.setAttribute('class', 'fs-5 fw-bold text-gray-900 text-hover-primary mb-2');
 				a.setAttribute('onclick', 'loadMessage(event,' + d.empl_id + ')');
 				a.setAttribute('style', 'cursor: pointer;');
@@ -345,18 +400,43 @@ function chatUserList() {
 				a.textContent = d.empl_name;
 				div5.textContent = d.empl_email;
 				span.textContent = d.coco_name_dnm;
+				
+				var number = document.createElement('div');
+				fetch('/chatCount.do?ch_sender=' + d.empl_id + '&ch_target=' + myId)
+				.then(resp => {return resp.json()})
+				.then(cnt => {
+					if(cnt != 0) {
+						number.setAttribute('class', 'symbol symbol-circle symbol-25px');
+						number.setAttribute('id', d.empl_id);
+						number.setAttribute('style', 'background-color: #f8285a; width: 18px; height: 12px; color: white; font-size: 10px;'
+							+ 'text-align: center; line-height: 12px; margin-left: 10px;');
+						number.textContent = cnt;
+					} else {
+						number.setAttribute('class', 'symbol symbol-circle symbol-25px');
+						number.setAttribute('id', d.empl_id);
+						number.setAttribute('style', 'background-color: white; width: 18px; height: 12px; color: white; font-size: 10px;'
+							+ 'text-align: center; line-height: 12px; margin-left: 10px;');
+						number.textContent = cnt;
+					}
+					
+				})
+				.catch(err => {console.log(err)});
 
 				div3.append(img);
 				div4.append(a);
+				div4.append(number);
 				div4.append(div5);
 				div6.append(span);
 				div2.append(div3);
 				div2.append(div4);
 				div1.append(div2);
 				div1.append(div6);
+				
 
 				document.getElementById('searchMainDiv').append(div1);
 				document.getElementById('searchMainDiv').append(div7);
+				
+				
 			}
 		});
 	})
@@ -364,176 +444,7 @@ function chatUserList() {
 	
 }
 
-// 알림목록 불러오기
-function getAlarmList() {
-	var id = document.getElementById('id').value;
-	document.getElementById('timeLines').textContent = '';
-	fetch('/getAlarmList.do?al_target=' + id)
-	.then(resp => {
-		return resp.json();
-	})
-	.then(data => {
-		if(data.length == 0) {
-			document.getElementById('timeLines').textContent = '새로운 알림이 없습니다'
-			document.getElementById('numberFlag').style.display = 'none';
-			return;
-		}
-		document.getElementById('numberFlag').textContent = data.length;
-		document.getElementById('numberFlag').style.display = 'block';
-		
-		for(let d of data) {
-			
-			var alDiv1 = document.createElement('div'); // 루트 레벨
-			var alInput1 = document.createElement('input'); // 1 레벨
-			var alDiv2 = document.createElement('div'); // 1 레벨
-			var alDiv3 = document.createElement('div'); // 1 레벨
-			var alDiv4 = document.createElement('div'); // 1 레벨
-			var alI1 = document.createElement('i'); // 3레벨
-			var alSpan1 = document.createElement('span'); // 3-1레벨
-			var alSpan2 = document.createElement('span'); // 3-1레벨
-			var alSpan3 = document.createElement('span'); // 3-1레벨
 
-			var alDiv5 = document.createElement('div'); // 4 레벨
-			var alDiv6 = document.createElement('div'); // 4 레벨
-			var alDiv7 = document.createElement('div'); // 5 레벨
-			var alDiv8 = document.createElement('div'); // 5 레벨
-			var alDiv10 = document.createElement('div'); // 6 레벨
-
-			var alA1 = document.createElement('a') // 7-1레벨
-			var alI2 = document.createElement('i'); // 7-1레벨
-			var alSpan4 = document.createElement('span'); // 7-2레벨
-			var alSpan5 = document.createElement('span'); // 7-2레벨
-			var alSpan6 = document.createElement('span'); // 7-2레벨
-			var alSpan7 = document.createElement('span'); // 7-2레벨
-
-			var alDiv9 = document.createElement('div'); // 8 레벨
-			var alDiv11 = document.createElement('div'); // 10 레벨
-			var alDiv12 = document.createElement('div'); // 10 레벨
-			var alDiv13 = document.createElement('div'); // 12 레벨
-			var alDiv14 = document.createElement('div'); // 12 레벨
-			var alImg = document.createElement('img'); // 13레벨
-
-			alDiv1.setAttribute('class', 'timeline-item');
-			alInput1.setAttribute('type', 'hidden');
-			alInput1.setAttribute('name', 'alList');
-			alInput1.value = d.al_no;
-			alDiv2.setAttribute('class', 'timeline-line');
-			alDiv3.setAttribute('class', 'timeline-icon');
-			alDiv4.setAttribute('class', 'timeline-content mb-10 mt-n1');
-			if (d.al_flag == 1) {
-				alI1.setAttribute('class', 'ki-duotone ki-message-text-2 fs-2 text-gray-500');
-			} else if (d.al_flag == 2) {
-				alI1.setAttribute('class', 'ki-duotone ki-calendar fs-2 text-gray-500');
-			} else if (d.al_flag == 3) {
-				alI1.setAttribute('class', 'ki-duotone ki-file-added fs-2 text-gray-500');
-			} else if (d.al_flag == 4) {
-				alI1.setAttribute('class', 'ki-duotone ki-file-deleted fs-2 text-gray-500');
-			} else if (d.al_flag == 5) {
-				alI1.setAttribute('class', 'ki-duotone ki-pencil fs-2 text-gray-500');
-			}
-			alDiv1.append(alInput1);
-			alDiv1.append(alDiv2);
-			alDiv1.append(alDiv3);
-			alDiv1.append(alDiv4);
-			alDiv3.append(alI1);
-			alSpan1.setAttribute('class', 'path1');
-			alSpan2.setAttribute('class', 'path2');
-			alSpan3.setAttribute('class', 'path3');
-			alI1.append(alSpan1);
-			alI1.append(alSpan2);
-			alI1.append(alSpan3);
-			alDiv4.append(alDiv5);
-			alDiv4.append(alDiv6);
-			alDiv5.setAttribute('class', 'pe-3 mb-5');
-			alDiv6.setAttribute('class', 'overflow-auto pb-5');
-			alDiv5.append(alDiv7);
-			alDiv5.append(alDiv8);
-			if (d.al_flag == 1) {
-				alDiv7.textContent = '공지사항이 등록되었습니다'; // 타이틀
-			} else if (d.al_flag == 2) {
-				alDiv7.textContent = '일정 알림'; // 타이틀
-			} else if (d.al_flag == 3) {
-				alDiv7.textContent = '결재 승인 알림'; // 타이틀
-			} else if (d.al_flag == 4) {
-				alDiv7.textContent = '결재 반려 알림'; // 타이틀
-			} else if (d.al_flag == 5) {
-				alDiv7.textContent = '결재 요청 알림'; // 타이틀
-			}
-			alDiv8.setAttribute('class', 'd-flex align-items-center mt-1 fs-6');
-			alDiv8.append(alDiv9);
-			alDiv9.setAttribute('class', 'text-muted me-2 fs-7') // 시간
-			alDiv9.textContent = d.al_date;
-			alDiv6.append(alDiv10);
-			alDiv10.setAttribute('class', 'd-flex align-items-center border border-dashed border-gray-300 rounded min-w-600px px-7 py-3 mb-5');
-			alDiv10.append(alDiv11);
-			alDiv10.append(alA1);
-			alDiv10.append(alDiv12);
-
-			if (d.al_flag == 3) {
-				alDiv10.append(alDiv14);
-				alDiv14.setAttribute('class', 'min-w-80px pe-2')
-				alSpan7.setAttribute('class', 'badge badge-light-success');
-				alSpan7.textContent = '승인'
-				alDiv14.append(alSpan7);
-			} else if (d.al_flag == 4) {
-				alDiv10.append(alDiv14);
-				alDiv14.setAttribute('class', 'min-w-80px pe-2')
-				alSpan7.setAttribute('class', 'badge badge-light-danger');
-				alSpan7.textContent = '반려'
-				alDiv14.append(alSpan7);
-			} else if (d.al_flag == 5) {
-				alDiv10.append(alDiv14);
-				alDiv14.setAttribute('class', 'min-w-80px pe-2')
-				alSpan7.setAttribute('class', 'badge badge-light-primary');
-				alSpan7.textContent = '결재요청'
-				alDiv14.append(alSpan7);
-			}
-			alDiv10.append(alI2);
-			alDiv11.setAttribute('class', 'min-w-120px pe-2');
-			alDiv11.setAttribute('style', 'width: 70px;');
-			alA1.setAttribute('class', 'fs-5 text-gray-900 text-hover-primary fw-semibold w-300px min-w-200px'); // 제목
-			if (d.al_flag == 1) {
-				alA1.textContent = d.al_title;
-				alA1.setAttribute('href', '/sm/getDetailGobo.do?gobo_no=' + d.al_key); // 공지링크
-			} else if (d.al_flag == 2) {
-				alA1.textContent = d.al_title;
-				alA1.setAttribute('href', '/sm/getDetailGobo.do?gobo_no=' + d.al_key); // 일정링크
-			} else if (d.al_flag == 3 || d.al_flag == 4 || d.al_flag == 5) {
-				alA1.textContent = d.al_title;
-				alA1.setAttribute('href', '/doc/docBox/getDetail.do?sidb_doc_num=' + d.al_key); // 결재링크
-			}
-			alDiv12.setAttribute('class', 'symbol-group symbol-hover flex-nowrap flex-grow-1 min-w-60px pe-2');
-			alI2.setAttribute('class', 'ki-duotone ki-cross-circle fs-1');
-			alI2.setAttribute('style', 'cursor: pointer;');
-			alI2.setAttribute('onclick', 'offAlarm(this)');
-			alDiv11.append(alSpan4);
-			alSpan4.setAttribute('class', 'badge badge-light text-muted') // 카테고리
-			if (d.al_flag == 1) {
-				alSpan4.textContent = '전사공지';
-			} else if (d.al_flag == 2) {
-				alSpan4.textContent = '일정';
-			} else if (d.al_flag == 3 || d.al_flag == 4 || d.al_flag == 5) {
-				alSpan4.textContent = d.template;
-			}
-			alDiv12.append(alDiv13);
-			alDiv13.setAttribute('class', 'symbol symbol-circle symbol-25px')
-			alDiv13.textContent = d.producer_name; // 제공자 이름
-			alDiv13.prepend(alImg);
-			alImg.setAttribute('src','https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77') // 사진
-			alI2.append(alSpan5);
-			alI2.append(alSpan6);
-			alSpan5.setAttribute('class', 'path1');
-			alSpan6.setAttribute('class', 'path2');
-			
-			document.getElementById('timeLines').append(alDiv1);
-		}
-		
-		
-	})
-	.catch(err => {
-		console.log(err);
-	});
-}
 
 
 
