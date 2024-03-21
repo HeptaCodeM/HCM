@@ -87,6 +87,11 @@
 		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
 	</update>
 	
-										   	   
+<!--  상신 취소 -->
+	<update id="gianCancel">	
+		UPDATE SIGN_DOC_BOX
+		SET SIDB_DOC_DELFLAG= 'Y'
+		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
+	</update>								   	   
 	
 </mapper>

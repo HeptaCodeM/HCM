@@ -9,6 +9,14 @@ function deny() {
 	document.getElementById('denyReply').submit();
 }
 
+function gianCancel() {
+	 var really = confirm("정말 상신 취소하시겠습니까?");
+    if (really) {
+        alert("상신취소 되었습니다");
+        document.getElementById('gianCancel').submit();
+    }
+}
+
 //승인 모달창
 var element = document.querySelector('#kt_modal_3');
 dragElement(element);
@@ -58,6 +66,9 @@ function dragElement(elmnt) {
 var element = document.querySelector('#kt_modal_3');
 dragElement(element);
 
+var denyModal = document.querySelector('#kt_deny');
+dragElement(denyModal);
+
 function dragElement(elmnt) {
 	var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 	if (elmnt.querySelector('.modal-content')) {
@@ -105,7 +116,8 @@ onload = function() {
 	getFile();
 	document.getElementById('downBtn').addEventListener('click', function() {
 		var sel = document.getElementById('selectFile');
-		location.href = './fileDown.do?sidf_file_num=' + sel.value
+    location.href = './fileDown.do?sidf_file_num=' + sel.value;
+
 	});
 }
 
@@ -120,6 +132,8 @@ function getFile() {
 			console.log(data);
 			console.log("데이터들고왔니?"+data.length);
 			 if (data.length === 0) {
+				var downBtn = document.getElementById('downBtn');
+   				 downBtn.disabled = true;
                 var opt = document.createElement('option');
                 opt.textContent = "첨부된 파일이 없습니다.";
                 sel.appendChild(opt);

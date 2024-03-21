@@ -90,7 +90,7 @@ public class KJW_JUnitTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void testCompany() {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -196,5 +196,20 @@ public class KJW_JUnitTest {
 //		List<EmployeeDto> lists2 = employeeListService.selectAllEmployee();
 //		System.out.println(lists2);
 		
+	}
+	
+	
+	@Test
+	public void test2() {
+		String empl_phone = "010-1234-3152";
+		String empl_tel = "999";
+		String empl_fax = "031-744-1221";
+		boolean bool1 = employeeListService.chkEmpPhoneNum(empl_phone);
+		boolean bool2 = employeeListService.chkEmpTelNum(empl_tel);
+		boolean bool3 = employeeListService.chkEmpFaxNum(empl_fax);
+		
+		System.out.println(bool1);
+		System.out.println(bool2);
+		System.out.println(bool3);
 	}
 }

@@ -15,4 +15,10 @@ public interface EmployeeListDao {
 	
 	public int correctionEmployee(Map<String, Object> map);
 	
+	public boolean chkEmpPhoneNum(String empl_phone);
+
+	public boolean chkEmpTelNum(String empl_tel);
+	
+	public boolean chkEmpFaxNum(String empl_fax);
+	
 }

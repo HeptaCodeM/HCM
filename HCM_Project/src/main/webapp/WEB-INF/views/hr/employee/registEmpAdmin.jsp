@@ -93,7 +93,14 @@
 											</tr>
 											<tr>
 												<th class="required">생년월일</th>
-												<td><input type="date" class="form-control form-control-solid" name="empl_birth" id="empl_birth" required="required"></td>
+												<td>
+													<div class="input-group" id="empl_birth" data-td-target-input="nearest" data-td-target-toggle="nearest">
+													    <input id="empl_birth_input" type="text" name="empl_birth" class="form-control" data-td-target="#empl_birth" readonly />
+													    <span class="input-group-text" data-td-target="#empl_birth" data-td-toggle="datetimepicker">
+													        <i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
+													    </span>
+													</div>
+												</td>
 											</tr>
 											<tr>
 												<th class="required">성별</th>
@@ -120,7 +127,14 @@
 											</tr>
 											<tr>
 												<th class="required">입사일자</th>
-												<td><input type="date" class="form-control form-control-solid" name="empl_joindate" name="empl_joindate" required="required"></td>
+												<td>
+													<div class="input-group" id="empl_joindate" data-td-target-input="nearest" data-td-target-toggle="nearest">
+													    <input id="empl_joindate_input" type="text" name="empl_joindate" class="form-control" data-td-target="#empl_joindate" readonly />
+													    <span class="input-group-text" data-td-target="#empl_joindate" data-td-toggle="datetimepicker">
+													        <i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
+													    </span>
+													</div>
+												</td>
 											</tr>
 											<!-- 
 											<tr>
@@ -196,7 +210,49 @@
 				<!-- 내용 끝 -->
 			</div>
 		</div>
-			
+
+<script type="text/javascript">
+var datePicker = new tempusDominus.TempusDominus(document.getElementById("empl_birth"), {
+	display: {
+		icons: {
+			close: "ki-outline ki-cross fs-1",
+		},
+		buttons: {
+			close: true,
+		},
+        components: {
+			hours: true,
+			minutes: true,
+			seconds: false
+		}
+	},
+    localization: {
+		locale: "kr",
+		startOfTheWeek: 1,
+		format: "yyyy-MM-dd"
+    }
+});
+var datePicker = new tempusDominus.TempusDominus(document.getElementById("empl_joindate"), {
+	display: {
+		icons: {
+			close: "ki-outline ki-cross fs-1",
+		},
+		buttons: {
+			close: true,
+		},
+        components: {
+			hours: true,
+			minutes: true,
+			seconds: false
+		}
+	},
+	localization: {
+		locale: "kr",
+		startOfTheWeek: 1,
+		format: "yyyy-MM-dd"
+    }
+});
+</script>
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
 </body>
 </html>

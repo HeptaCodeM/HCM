@@ -29,33 +29,42 @@
 								<h3 class="card-title text-gray-800 fw-bold">인사관리 > 조직관리 > 권한관리</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>
-							<form name="registAuthForm" method="post" action="/hr/commonCode/registAuthOk.do">
-								
+							<form name="registAuthForm" id="registAuthForm" method="post" action="/hr/employee/updateAuthAdminOk.do">
+									<input type="hidden" name="type" value="I">
 									<div class="table-responsive">
 										<table class="table table-bordered">
 											<tr>
 												<th class="required">사번</th>
-												<td><input type="text" class="form-control form-control-solid" name="empl_id" id="empl_id" maxlength="8" required="required"></td>
+												<td>
+													<input type="text" class="form-control form-control-solid" style="float:left;width:80%;" name="empl_id" id="empl_id" maxlength="8" readonly required="required">
+													<button type="button" class="btn btn-primary" style="width:15%;margin-left:5%;" onclick="openEmpInfoSearch()">사원조회</button>
+												</td>
 											</tr>
 											<tr>
 												<th class="required">성명</th>
-												<td><input type="text" class="form-control form-control-solid" name="empl_name" id="empl_name" maxlength="20" required="required"></td>
+												<td><input type="text" class="form-control form-control-solid" name="empl_name" id="empl_name" maxlength="20"  readonly required="required"></td>
 											</tr>
 											<tr>
 												<th class="required">부서</th>
-												<td><input type="text" class="form-control form-control-solid" name="empl_name" id="empl_name" maxlength="20" required="required"></td>
+												<td><input type="text" class="form-control form-control-solid" name="empl_dept_nm" id="empl_dept_nm" maxlength="20"  readonly required="required"></td>
 											</tr>
 											<tr>
 												<th class="required">직위</th>
-												<td><input type="text" class="form-control form-control-solid" name="empl_name" id="empl_name" maxlength="20" required="required"></td>
+												<td><input type="text" class="form-control form-control-solid" name="empl_rank_nm" id="empl_rank_nm" maxlength="20"  readonly required="required"></td>
+											</tr>
+											<tr>
+												<th class="required">직책</th>
+												<td><input type="text" class="form-control form-control-solid" name="empl_position_nm" id="empl_position_nm" maxlength="20"  readonly required="required"></td>
 											</tr>
 											<tr>
 												<th class="required">권한</th>
 												<td>
-													<select name="empl_auth" required="required" class="form-select">
+													<select name="empl_auth" id="empl_auth" required="required" class="form-select">
 														<option value="">==== 권한선택 ====</option>
-														<c:forEach items="${authList}" var="dept">
-														<option value="${authList.auco_cd}">${authList.auco_name}</option>
+														<c:forEach items="${authLists}" var="alist">
+															<c:if test="${alist.auco_cd ne 'ROLE_USER'}">
+														<option value="${alist.auco_cd}">${alist.auco_name}</option>
+															</c:if>
 														</c:forEach>
 													</select>
 												</td>
@@ -68,6 +77,11 @@
 													    </span>
 													    <span class="indicator-progress">
 													        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+													    </span>
+													</button>
+													<button type="button" class="btn btn-success me-10" id="kt_button_1" onclick="history.back();">
+													    <span class="indicator-label">
+													        취소
 													    </span>
 													</button>
 												</td>
@@ -85,11 +99,18 @@
 		
 		<!-- 사원검색 Layer 시작 -->
 		<style type="text/css">
-			#empSearch { position: absolute; background-color:#ccc; z-index:999; width:600px; left: 50%; transform: translateX(-50%); top: 25%; padding: 20px; }
+			#empSearch { position: absolute; background-color:#fff; z-index:999; width:600px; left: 50%; transform: translateX(-50%); top: 15%; padding: 20px; border:1px solid #ccc; border-radius: 20px; display: none; }
 		</style>
 		<div id="empSearch">
+			<div style="text-align:right;" >
+				<a href="javascript:void(0);" onclick="closeEmpInfoSearch();">
+					<i class="ki-duotone ki-cross-square fs-2x">
+					<span class="path1"></span><span class="path2"></span>
+					</i>
+				</a>
+			</div>
 			<div>
-				<form name="searchEmpInfo" method="post" action="/hr/employee/getUserInfoSearch.do">
+				<form name="searchEmpInfo" id="searchEmpInfo" method="post" action="/hr/employee/getUserInfoSearch.do">
 					<input type="hidden" name="layer" value="empSearch">
 					<table class="table">
 						<tr>
@@ -117,22 +138,41 @@
 					</table>
 				</form>
 			</div>
-			<div>
-			<table class="table table-bordered">
+			<div class="table-responsive">
+			<table id="searchEmployeeList" class="table table-row-bordered gy-5">
 				<thead>
-					<th>사번</th>
-					<th>성명</th>
-					<th>부서</th>
-					<th>직위</th>
-					<th>직책</th>
+					<tr class="fw-semibold fs-6 text-muted">
+						<th>사번</th>
+						<th>성명</th>
+						<th>부서</th>
+						<th>직위</th>
+						<th>직책</th>
+					</tr>
 				</thead>
-				<tbody id="empSearchList">
-				</tbody>
 			</table>
 			</div>
 		</div>
 		<!-- 사원검색 Layer 종료 -->
+<script type="text/javascript">
+$(function(){ 
+	$("#searchEmployeeList").DataTable({
+		displayLength: 5,
+		lengthChange: false,
+		info: false
+	});
 
+	$("#searchEmployeeList tbody").on('click', 'tr', function () {
+		var row = $("#searchEmployeeList").DataTable().row($(this)).data();
+		$("#empl_id").val(row.empl_id);
+		$("#empl_name").val(row.empl_name);
+		$("#empl_dept_nm").val(row.empl_dept_nm);
+		$("#empl_rank_nm").val(row.empl_rank_nm);
+		$("#empl_position_nm").val(row.empl_position_nm);
+		
+		closeEmpInfoSearch();
+	});
+});
+</script>
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
 </body>
 </html>

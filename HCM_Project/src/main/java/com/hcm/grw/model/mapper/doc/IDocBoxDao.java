@@ -75,4 +75,10 @@ public interface IDocBoxDao {
 	
 	//상세조회문서에 첨부된 파일다운 조회
 	public SignFileDto getDocsDetailFile(String sidf_file_num);
+
+	//임시 문서함 조회
+	public List<SignBoxDto> getTempDocs(SignBoxDto dto);
+
+	//참조자 이름 조회
+	public String findEmployeeName(String id);
 }
