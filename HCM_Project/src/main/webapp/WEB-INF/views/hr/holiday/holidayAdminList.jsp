@@ -51,7 +51,7 @@
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
 								<div class="table-responsive">
-									<form name="searchholidayAdmin" id="searchholidayAdmin" method="post">
+									<form name="searchholidayAdmin" id="searchholidayAdmin" method="post" onsubmit="return false;">
 										<table class="table table-bordered">
 											<tr>
 												<th rowspan="4">검색</th>
@@ -150,47 +150,12 @@
 <script type="text/javascript">
 $(function(){ 
 	holidaySearchAdminList()
-});
-
-var datePicker = new tempusDominus.TempusDominus(document.getElementById("sdate"), {
-	display: {
-		icons: {
-			close: "ki-outline ki-cross fs-1",
-		},
-		buttons: {
-			close: true,
-		},
-        components: {
-			hours: true,
-			minutes: true,
-			seconds: false
-		}
-	},
-    localization: {
-		locale: "kr",
-		startOfTheWeek: 1,
-		format: "yyyy-MM-dd"
-    }
-});
-var datePicker = new tempusDominus.TempusDominus(document.getElementById("edate"), {
-	display: {
-		icons: {
-			close: "ki-outline ki-cross fs-1",
-		},
-		buttons: {
-			close: true,
-		},
-        components: {
-			hours: true,
-			minutes: true,
-			seconds: false
-		}
-	},
-	localization: {
-		locale: "kr",
-		startOfTheWeek: 1,
-		format: "yyyy-MM-dd"
-    }
+	
+    $(document).on('keyup', function(event){
+        if(event.which === 13){
+        	holidaySearchAdminList();
+        }
+    });	
 });
 </script>
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		

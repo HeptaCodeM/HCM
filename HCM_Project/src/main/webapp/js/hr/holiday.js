@@ -72,7 +72,7 @@ function holidaySearchAdminList(){
 			return;
 		}
 	}
-	console.log((($("#searchType").val() && $("#keyWord").val()) || (!$("#searchType").val() && !$("#keyWord").val())));
+	//console.log((($("#searchType").val() && $("#keyWord").val()) || (!$("#searchType").val() && !$("#keyWord").val())));
 	if(!(($("#searchType").val() && $("#keyWord").val()) || (!$("#searchType").val() && !$("#keyWord").val()))){
 		swalAlert("검색조건 선택 또는 검색어를 입력하세요.","","","","");
 		return;

@@ -161,19 +161,19 @@
 		</if>
 		
 		<if test="empl_dept_cd != null and empl_dept_cd != ''">
-		    AND A.EMPL_DEPT_CD IN 
+		    AND B.EMPL_DEPT_CD IN 
 		    <foreach collection="empl_dept_cd" item="dcode" open="(" separator="," close=")">
 		        #{dcode}
 		    </foreach>
 		</if>
 		<if test="empl_rank_cd != null and empl_rank_cd != ''">
-			AND A.EMPL_RANK_CD IN
+			AND B.EMPL_RANK_CD IN
 			<foreach collection="empl_rank_cd" item="rcode" open="(" separator="," close=")">
 				#{rcode}
 			</foreach>
 		</if>
 		<if test="empl_position_cd != null and empl_position_cd != ''">
-			AND A.EMPL_POSITION_CD IN
+			AND B.EMPL_POSITION_CD IN
 			<foreach collection="empl_position_cd" item="pcode" open="(" separator="," close=")">
 				#{pcode}
 			</foreach>

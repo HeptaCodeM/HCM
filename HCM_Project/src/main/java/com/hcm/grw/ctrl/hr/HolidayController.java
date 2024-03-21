@@ -138,9 +138,9 @@ public class HolidayController {
 	
 	@PostMapping(value="holidaySearchAdminList.do", produces = "application/json;")
 	public @ResponseBody String holidaySearchAdminList(@RequestParam(required = false) Map<String, Object> holidaySearchMap, 
-														@RequestParam(name="empl_dept_cd", required = false) String[] empl_dept_cd,
-														@RequestParam(name="empl_rank_cd", required = false) String[] empl_rank_cd,
-														@RequestParam(name="empl_position_cd", required = false) String[] empl_position_cd,
+														@RequestParam(name="empl_dept_cd", required = false) String[] arr_empl_dept_cd,
+														@RequestParam(name="empl_rank_cd", required = false) String[] arr_empl_rank_cd,
+														@RequestParam(name="empl_position_cd", required = false) String[] arr_empl_position_cd,
 													  	Authentication authentication, 
 													  	Model model,
 													  	HttpServletResponse resp) {
@@ -151,12 +151,28 @@ public class HolidayController {
 		if(authentication == null) {
 			return "로그인 정보가 없습니다";
 		}
-
-		holidaySearchMap.put("empl_dept_cd", StringUtils.defaultString(Arrays.toString(empl_dept_cd), ""));
-		holidaySearchMap.put("empl_rank_cd", StringUtils.defaultString(Arrays.toString(empl_rank_cd), ""));
-		holidaySearchMap.put("empl_position_cd", StringUtils.defaultString(Arrays.toString(empl_position_cd), ""));
+		
+		if(arr_empl_dept_cd != null && arr_empl_dept_cd.toString() != "") {
+			holidaySearchMap.put("empl_dept_cd", Arrays.asList(arr_empl_dept_cd));
+		}
+		if(arr_empl_rank_cd != null && arr_empl_rank_cd.toString() != "") {
+			holidaySearchMap.put("empl_rank_cd", Arrays.asList(arr_empl_rank_cd));
+		}
+		if(arr_empl_position_cd != null && arr_empl_position_cd.toString() != "") {
+			holidaySearchMap.put("empl_position_cd", Arrays.asList(arr_empl_position_cd));
+		}
 		log.info("holidaySearchMap : {}", holidaySearchMap);
 
+		if(holidaySearchMap.get("empl_dept_cd")==null || holidaySearchMap.get("empl_dept_cd")=="") {
+			log.info("empl_dept_cd : 공백");
+		}
+		if(holidaySearchMap.get("empl_rank_cd")==null || holidaySearchMap.get("empl_rank_cd")=="") {
+			log.info("empl_rank_cd : 공백");
+		}
+		if(holidaySearchMap.get("empl_position_cd")==null || holidaySearchMap.get("empl_position_cd")=="") {
+			log.info("empl_position_cd : 공백");
+		}
+		
 		/*
 		휴가 사용현황 리스트
 		*/
