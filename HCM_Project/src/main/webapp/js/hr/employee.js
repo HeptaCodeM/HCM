@@ -163,10 +163,13 @@ function empInfoSearch(flag){
 				],
 				displayLength: 5,
 				lengthChange: false,
-				info: false
+				info: false,
+				language: {
+					emptyTable: "조회된 정보가 없습니다."
+				}
 			});
 		},
-		error:function(request, status, error){
+		error:function(request, error){
 			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		}
 	});

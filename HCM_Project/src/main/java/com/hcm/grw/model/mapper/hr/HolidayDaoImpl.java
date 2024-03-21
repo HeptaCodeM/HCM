@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.hcm.grw.dto.hr.HolidayAdminDto;
 import com.hcm.grw.dto.hr.HolidayDto;
 
 @Repository
@@ -25,6 +26,11 @@ public class HolidayDaoImpl implements HolidayDao {
 	@Override
 	public List<HolidayDto> holidayList(Map<String, String> map) {
 		return sqlSessionTemplate.selectList(NS+"holidayList", map);
+	}
+
+	@Override
+	public List<HolidayAdminDto> holidayAdminList(Map<String, Object> map) {
+		return sqlSessionTemplate.selectList(NS+"selectEmpTotalHoliDayInfoAdmin", map);
 	}
 
 	@Override

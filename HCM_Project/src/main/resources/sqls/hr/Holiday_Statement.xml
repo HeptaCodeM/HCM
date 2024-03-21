@@ -59,7 +59,7 @@
 		]]>
 	</select>
 
-	<select id="selectEmpTotalHoliDayInfo" parameterType="String" resultType="map">
+	<select id="selectEmpTotalHoliDayInfo" parameterType="String" resultType="Map">
 		<![CDATA[
 		SELECT
 				EMHO_HOLIDAY AS TOTAL_HOLIDAY,
@@ -99,6 +99,87 @@
 				AND E.EMHO_YEAR || TO_CHAR(TO_DATE(D.EMPL_JOINDATE, 'YYYY-MM-DD'), '-MM-DD') < TO_CHAR(A.SIDB_DOC_BE, 'YYYY-MM-DD')	--휴가부여년도/입사월일 기준으로 휴가정보 처리
 				)
 		GROUP BY EMHO_HOLIDAY
+		]]>
+	</select>
+
+	<select id="selectEmpTotalHoliDayInfoAdmin" parameterType="Map" resultType="HolidayAdminDto">
+		<![CDATA[
+		SELECT
+				B.EMPL_ID,
+				B.EMPL_NAME,
+				C.COCO_NAME AS EMPL_DEPT_NM,
+				D.COCO_NAME AS EMPL_RANK_NM,
+				E.COCO_NAME AS EMPL_POSITION_NM,
+				EMHO_HOLIDAY AS TOTAL_HOLIDAY,
+				USE_HOLIDAY,
+				EMHO_HOLIDAY - USE_HOLIDAY REST_HOLIDAY
+		FROM	(
+				SELECT
+						D.EMPL_ID,
+						NVL(E.EMHO_HOLIDAY, 0) AS EMHO_HOLIDAY,
+						SUM((
+							SELECT 
+									COUNT(*)
+							FROM	(
+									SELECT DISTINCT TO_CHAR(A.SIDB_DOC_BE + LEVEL - 1, 'YYYYMMDD') AS HOLI_DATE
+									FROM DUAL
+									CONNECT BY LEVEL <= (A.SIDB_DOC_END - A.SIDB_DOC_BE) + 1
+									MINUS
+									SELECT HOLI_DATE FROM HOLIDAY WHERE HOLI_FLAG = 'Y'
+									)	
+						)) AS USE_HOLIDAY
+				FROM 		SIGN_DOC_BOX A
+				INNER JOIN SIGN_CATEGORY B ON A.SICA_CD = B.SICA_CD
+				INNER JOIN SIGN_DOC_TEMP C ON A.SIDT_TEMP_CD = C.SIDT_TEMP_CD
+				INNER JOIN EMPLOYEE D ON A.EMPL_ID = D.EMPL_ID
+				LEFT OUTER JOIN (
+								SELECT EMPL_ID, EMHO_YEAR, EMHO_HOLIDAY
+								FROM EMP_HOLIDAY
+								WHERE (EMPL_ID, EMHO_YEAR) IN (
+										SELECT EMPL_ID, MAX(EMHO_YEAR) EMHO_YEAR
+										FROM EMP_HOLIDAY
+										GROUP BY EMPL_ID
+								)
+				) E ON D.EMPL_ID = E.EMPL_ID
+				WHERE A.SIDB_DOC_STAT IN ('1','2','3')
+				AND B.SICA_CD = 'CC000001' --근태
+				AND C.SIDT_TEMP_CD IN ('TC000001', 'TC000002') --TC000001(연차신청서), TC000002(휴가신청서)
+				AND E.EMHO_YEAR || TO_CHAR(TO_DATE(D.EMPL_JOINDATE, 'YYYY-MM-DD'), '-MM-DD') < TO_CHAR(A.SIDB_DOC_BE, 'YYYY-MM-DD')	--휴가부여년도/입사월일 기준으로 휴가정보 처리
+				GROUP BY D.EMPL_ID, E.EMHO_HOLIDAY
+		) A
+		INNER JOIN EMPLOYEE B ON A.EMPL_ID = B.EMPL_ID
+		INNER JOIN COMMON_CODE C ON B.EMPL_DEPT_CD = C.COCO_CD
+		INNER JOIN COMMON_CODE D ON B.EMPL_RANK_CD = D.COCO_CD
+		LEFT JOIN COMMON_CODE E ON B.EMPL_POSITION_CD = E.COCO_CD
+		WHERE 1=1
+		]]>
+		<if test="keyWord != null and keyWord != ''">
+		AND ${searchType} LIKE CONCAT(#{keyWord}, '%')
+		</if>
+		<if test="empl_delflag != null and empl_delflag != ''">
+		AND B.EMPL_DELFLAG = #{empl_delflag}
+		</if>
+		
+		<if test="empl_dept_cd != null and empl_dept_cd != ''">
+		    AND A.EMPL_DEPT_CD IN 
+		    <foreach collection="empl_dept_cd" item="dcode" open="(" separator="," close=")">
+		        #{dcode}
+		    </foreach>
+		</if>
+		<if test="empl_rank_cd != null and empl_rank_cd != ''">
+			AND A.EMPL_RANK_CD IN
+			<foreach collection="empl_rank_cd" item="rcode" open="(" separator="," close=")">
+				#{rcode}
+			</foreach>
+		</if>
+		<if test="empl_position_cd != null and empl_position_cd != ''">
+			AND A.EMPL_POSITION_CD IN
+			<foreach collection="empl_position_cd" item="pcode" open="(" separator="," close=")">
+				#{pcode}
+			</foreach>
+		</if>		
+		<![CDATA[
+		ORDER BY B.EMPL_ID ASC
 		]]>
 	</select>
 

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.hcm.grw.dto.hr.HolidayAdminDto;
 import com.hcm.grw.dto.hr.HolidayDto;
 import com.hcm.grw.model.mapper.hr.HolidayDao;
 
@@ -25,6 +26,11 @@ public class HolidayServiceImpl implements HolidayService {
 		return dao.holidayList(map);
 	}
 
+	@Override
+	public List<HolidayAdminDto> holidayAdminList(Map<String, Object> map) {
+		return dao.holidayAdminList(map);
+	}
+	
 	@Override
 	public int registSpecialDay(Map<String, String> map) {
 		return dao.registSpecialDay(map);
