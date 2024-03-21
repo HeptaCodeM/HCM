@@ -48,16 +48,28 @@ public class SMHomeController {
 		log.info("SMHomeController getDetailGobo.do 공지사항 상세조회 화면 이동");
 		GoboDto dto =  GoboService.getDetailGobo(gobo_no);
 		List<ReplyDto> Rlist = ReplyService.getAllReply(gobo_no);
+		List<ReplyDto> Dlist = ReplyService.getAllReplyTwo(gobo_no);
 		model.addAttribute("dto",dto);
 		model.addAttribute("Rlist",Rlist);
+		model.addAttribute("Dlist",Dlist);
 		return "sm/GongiBoard/GoboDetail";
 	}
 	
+	
+	
 	@PostMapping("updateGobo.do")
-	public String updateGobo(GoboDto dto) {
+	@ResponseBody
+	public Boolean updateGobo(GoboDto dto) {
 		log.info("SMHomeController updateGobo.do 공지사항 수정 ");
-		GoboService.updateGobo(dto);
-		return "sm/GongiBoard/Gobo";
+		int n = GoboService.updateGobo(dto);
+		return (n>0)?true:false;
+	}
+	@GetMapping("updateGoboMove.do")
+	public String updateGoboMove(String gobo_no,Model model) {
+		log.info("SMHomeController updateGobo.do 공지사항 수정화면 이동 ");
+		GoboDto dto =  GoboService.getDetailGobo(gobo_no);
+		model.addAttribute("dto",dto);
+		return "sm/GongiBoard/updateGobo";
 	}
 	
 	
@@ -65,6 +77,7 @@ public class SMHomeController {
 	public String updateGoboDelFlag(String gobo_no) {
 		log.info("SMHomeController updateGoboDelFlag.do 공지사항 삭제 : {} ", gobo_no);
 		int n = GoboService.updateGoboDelFlag(gobo_no);
+		
 		return "redirect:/sm/getAllGobo.do";
 	}
 	

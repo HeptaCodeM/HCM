@@ -104,30 +104,38 @@ function insertReply(data){
 
 
 
-function insertReplyTwo(data){
-	 console.log(data);
-	 var form = $("#ReplyTwoForm").serialize();
+$(document).ready(function() {
+    // 등록 버튼 클릭 시 AJAX 요청을 보냅니다.
+    $(".insertReplyTwoBtn").click(function() {
+        var container = $(this).closest("li"); // 클릭한 버튼이 속한 li 요소를 찾습니다.
+        var formData = container.find("#ReplyTwoForm").serialize(); // 해당 li 요소 안의 form 데이터를 가져옵니다.
+		var gobo_no = $("#gobo_no").val();
+        // AJAX 요청을 보냅니다.
+        $.ajax({
+            url: "/sm/insertReplyTwo.do",
+            data: formData,
+            type: "GET",
+            dataType: "json",
+            success: function() {
+                location.href='/sm/getDetailGobo.do?gobo_no='+gobo_no;
+            },
+            error: function() {
+                // 에러 처리
+            }
+        });
+    });
+});
 
-    // 추가하려는 데이터를 직렬화된 데이터에 추가합니다.
-    var additionalData = "gobo_no=" + data;
 
-    // 추가 데이터를 직렬화된 데이터에 추가합니다.
-    form += "&" + additionalData;
-	
-	$.ajax({
-			url: "/sm/insertReplyTwo.do",
-			data: form,
-			type: "get",
-			dataType: "json",
-			success: function() {
-				location.href='/sm/getDetailGobo.do?gobo_no='+data;
-				console.log("댓글 등록 성공");
-			},
-			error: function() {
-				
-			}
-		});
+
+function updateGoboDelFlag(gobo_no){
+	var result = confirm("글을 삭제 하시겠습니까?");
+	if(result){
+		location.href="/sm/updateGoboDelFlag.do?gobo_no="+gobo_no;
+	}
 }
+
+
 
 
 

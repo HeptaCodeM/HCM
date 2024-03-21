@@ -33,17 +33,15 @@
 		width: 1500px;
 		height: 1200px;
 	}
-.fc-header-toolbar .fc-header-toolbar-center {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.fc-header-toolbar .fc-prev-button,
-.fc-header-toolbar .fc-next-button {
-    margin-top: 0;
-    margin-bottom: 0;
-}
+	.fc-prev-button {
+    display: inline-block;
+	}
+	.fc-next-button {
+	
+	}
+	.fc-toolbar-title{
+	display: inline-block;
+	}
 </style>
 
 </head>

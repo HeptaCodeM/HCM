@@ -55,7 +55,7 @@
 					         </div>
 					         <div>
 					         </div>
-					            <input type="button" class="btn btn-success" value="글입력"  id="savebutton">
+					            <input type="button" class="btn btn-success" value="글수정"  id="savebutton">
 					            <input type="reset" class="btn btn-danger" value="글초기화" id="resetbutton">
 					            <input type="button" class="btn btn-info" value="뒤로가기" onclick="history.back(-1)">
 					      </form>

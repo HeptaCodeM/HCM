@@ -9,6 +9,7 @@ public interface IReplyService {
 	
 	/* 댓글 전체조회 */
 	public List<ReplyDto> getAllReply(String no);
+	public List<ReplyDto> getAllReplyTwo(String no);
 	/* 댓글등록 */
 	public int insertReply(ReplyDto dto);
 	/*대댓글등록*/
