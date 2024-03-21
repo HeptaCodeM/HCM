@@ -27,7 +27,7 @@
 	data-kt-app-sidebar-push-header="true"
 	data-kt-app-sidebar-push-toolbar="true"
 	data-kt-app-sidebar-push-footer="true"
-	data-kt-app-toolbar-enabled="true" class="app-default">
+	data-kt-app-toolbar-enabled="true" class="app-default modal-open" style="overflow: auto; padding-right: 0px;">
 	<!-- **전체페이지 감싸기** -->
 	<div class="app-wrapper flex-column flex-row-fluid">
 		<!-- 메인페이지 -->
@@ -63,57 +63,107 @@
 						<div class="card-body pt-5">
 
 							<!-- ---------------------------- 내 용 입 력 -------------------------------- -->
-							<!-- 화면 버튼 -->
+							<!-- -----기안양식 선택화면 버튼 ------------------------------------------------ -->
 							<div id="template_div" style="text-align: center;">
 								결재 진행을 위해 양식을 선택해주세요. <br/>
 								<button type="button" class="btn btn-primary"
 									data-bs-toggle="modal" data-bs-target="#kt_modal_3">
 									기안문 템플릿 선택하기</button>
 							</div>
-							<!-- 				<input type="button" id="tree" value="JSTREE나와라"> -->
-
-							<!-- 에디터 화면 -->
+							
+							<!-- 기안문 작성 화면 -->
 							<div id="editor_div" style="display: none;">
-							<form>
+							<%-- <form>
 							${loginInfo }
-							${getTemp }
-							<div>사원정보 </div>
+							<div class="row gx-5 gx-xl-10">
+							<div class="col-xxl-5 mb-5 mb-xl-10">
 							<div class="input-group input-group-sm mb-5">
-							    <span class="input-group-text" id="inputGroup-sizing-sm">사원정보</span>
-							    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="${loginInfo.empl_name }"/>
-							</div>
-							<div class="input-group input-group-sm mb-5">
-							    <span class="input-group-text" id="inputGroup-sizing-sm">시작일</span>
+							    <span class="input-group-text" id="inputGroup-sizing-sm">기안일</span>
 							    <input type="date" class="form-control" name="sidb_doc_be" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
 							</div>
+							</div>
+							<div class="col-xxl-5 mb-5 mb-xl-10">
 							<div class="input-group input-group-sm mb-5">
-							    <span class="input-group-text" id="inputGroup-sizing-sm">종료일</span>
+							    <span class="input-group-text" id="inputGroup-sizing-sm">만료일</span>
 							    <input type="date" class="form-control" name="sidb_doc_end" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
+							</div>
+							</div>
+							</div>
+							
+							<div class="input-group input-group-sm mb-5">
+							    <span class="input-group-text" id="inputGroup-sizing-sm">만료일</span>
+							    <input type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
+							</div>
+							<div class="input-group input-group-sm mb-5">
+							    <span class="input-group-text" id="inputGroup-sizing-sm">결재선</span>
+							    <input class="form-control" name="" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
+							</div>
+							<div class="input-group input-group-sm mb-5">
+							    <span class="input-group-text" id="inputGroup-sizing-sm">참조</span>
+							    <input class="form-control" name="" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
 							</div>
 							<div class="input-group input-group-sm mb-5">
 							    <span class="input-group-text" id="inputGroup-sizing-sm">제목</span>
-							    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
+							    <input type="text" class="form-control" name="sidb_doc_title" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
 							</div>
-							<textarea id="editor" name="sidt_temp_content"></textarea>							
+							<textarea id="editor" name="sidt_temp_content"></textarea>
+							알림여부 체크박스	
+							첨부파일 --%>
+							
+							<table class="table table-bordered">
+								<tr class="success">
+									<th>기안일</th>
+									<td><input type="date" id="currentDate" name="sidb_doc_writedt" maxlength="20"></td>
+									<th>만료일</th>
+									<td><input type="date" name="sidb_doc_expiredt" maxlength="20"></td>
+									<th>알림여부</th>
+									<td><input type="checkbox" name="alflag"></td>
+								</tr>
+								<tr>
+									<th>결재선</th>
+									<td colspan="5">
+										<div></div>
+									</td>
+								</tr>
+								<tr>
+									<th>참조</th>
+									<td colspan="5">
+										<div></div>
+									</td>
+								</tr>
+								<tr>
+									<th>제목</th>
+									<td colspan="5"><input type="text" name="sidb_doc_title" maxlength="20"></td>
+								</tr>
+							</table>
+							<textarea id="editor" name="sidt_doc_content"></textarea>
+							<table class="table table-bordered">
+								<tr>
+									<th>첨부파일</th>
+									<td colspan="2"><input type="file" class="form-control form-control-solid"></td>
+									
+								</tr>
+							</table>
+							
+							<!-- 제출 버튼 -->				
 							<div id="btn_div" style="margin: 10px auto; text-align: center;">
-							<button type="button" class="btn btn-primary btnSm" id="delBtn" style="height: 32px; line-height: 14px; width: 100px;">
+							<button type="button" class="btn btn-primary btnSm" id="insertTempDoc" style="height: 32px; line-height: 14px; width: 100px;">
 							    임시저장
 							</button>
-							<button type="button" class="btn btn-primary btnSm" id="delBtn" style="height: 32px; line-height: 14px; width: 100px;">
+							<button type="button" class="btn btn-primary btnSm" id="insertDoc" style="height: 32px; line-height: 14px; width: 100px;">
 							    기안제출
 							</button>
 							</div>
-							</form>
 							</div>
 
+							</div>
 							<!-- ---------------------------- 내 용 입 력 -------------------------------- -->
 
 						</div>
 					</div>
 
 				</div>
-			</div>
-			<!-- 내용 끝 -->
+			<!-- 내용 끝 --> 
 		</div>
 	</div>
 
@@ -131,16 +181,13 @@
 					</div>
 					<!--end::Close-->
 				</div>
-
+     
 				<div class="modal-body">
-					<!-- ---------------------------- 모 달 내 용 -------------------------------- -->
+					<!-- ---------------------------- [ 모달창 ] 템플릿 선택 ----------------------------------- -->
 					<div class="app-container container-fluid">
-						<div class="row gx-5 gx-xl-10">
-							<!--begin::Col-->
+					<div class="row gx-5 gx-xl-10">
 							<div class="col-xxl-4 mb-5 mb-xl-10">
-								<!--begin::Chart widget 8-->
 								<div class="card card-flush h-xl-100">
-									<!--begin::Header-->
 									<div class="card-header pt-5">
 										<!--begin::Title-->
 										<h3 class="card-title align-items-start flex-column">
@@ -149,25 +196,22 @@
 										</h3>
 										<!--end::Title-->
 									</div>
-									<!--end::Header-->
-									<!--begin::Body-->
+									
+					<!-- ----------------------- [모달창] 기안문 선택 jstree ------------------------------ -->
+									<!--begin::Tab content-->
 									<div class="card-body pt-6">
-										<!--begin::Tab content-->
-										<div class="tab-content">
-											<div id="jstree"></div>
-										</div>
-										<!--end::Tab content-->
+									<div class="tab-content">									
+										<div id="jstree"></div>
 									</div>
-									<!--end::Body-->
+									</div>
+									<!--end::Tab content-->
+									
 								</div>
-								<!--end::Chart widget 8-->
 							</div>
-							<!--end::Col-->
-							<!--begin::Col-->
+							
+					<!-- ------------------------ [모달창] 템플릿 미리보기 -------------------------------- -->		
 							<div class="col-xxl-8 mb-5 mb-xl-10">
-								<!--begin::Chart widget 36-->
 								<div class="card card-flush overflow-hidden h-xl-100">
-									<!--begin::Header-->
 									<div class="card-header pt-5">
 										<!--begin::Title-->
 										<h3 class="card-title align-items-start flex-column">
@@ -176,40 +220,29 @@
 										</h3>
 										<!--end::Title-->
 									</div>
-									<!--end::Header-->
-									<!--begin::Card body-->
 									<div id="template"></div>
-									<!--end::Card body-->
 								</div>
-								<!--end::Chart widget 36-->
 							</div>
-							<!--end::Col-->
 						</div>
 					</div>
-					<!-- ---------------------------- 모 달 내 용 -------------------------------- -->
 				</div>
-
+				<!-- ------------------------------ [ 모달창 ] 버튼 ---------------------------------- -->	
 				<div class="modal-footer">
 					<button type="button" class="btn btn-light" data-bs-dismiss="modal" id="closeBtn">닫기</button>
 					<button type="button" class="btn btn-primary" id="getTemplate">적용하기</button>
 				</div>
+				<!-- ------------------------------ 모 달 내 용 ---------------------------------- -->
 			</div>
 		</div>
 	</div>
 
-<script type="text/javascript">
-/* const loginInfo = JSON.parse("${sessionScope.loginInfo}");
-CKEDITOR.replace('editor', {
-    // 세션에서 가져온 사용자 정보를 에디터에 설정
-    on: {
-        instanceReady: function(e) {
-            this.setData(JSON.stringify(loginInfo));
-        }
-    }
-}); */
-</script>
 	<%@include file="/WEB-INF/views/menu/docSideMenu.jsp"%>
 </body>
+
+<script type="text/javascript">
+	
+</script>
+
 
 <script type="text/javascript" src="/ckeditor5/build/ckeditor.js"></script>
 <script type="text/javascript" src="/js/doc/writeDoc.js"></script>

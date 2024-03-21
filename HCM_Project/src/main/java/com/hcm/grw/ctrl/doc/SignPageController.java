@@ -63,7 +63,7 @@ public class SignPageController {
 			session.setAttribute("loginInfo", dto.get(0));
 			model.addAttribute("loginInfo", dto.get(0));
 		}
-		return "doc/writeDoc";
+		return "doc/writeDoc/writeDoc";
 	}
 	
 	@GetMapping("fileTest.do")

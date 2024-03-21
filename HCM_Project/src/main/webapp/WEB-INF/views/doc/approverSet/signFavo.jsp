@@ -47,7 +47,7 @@ td>img {
 			
 			<!-- 로그인세션영역 -->
 			<input type="hidden" value="${userInfoVo.empl_id}" id="empl_id"> 
-			<input type="hidden" value="${userInfoVo.coco_name_rnm}" id="positionFlag">
+			<input type="hidden" value="${userInfoVo.empl_rank_nm}" id="positionFlag">
 			<!-- OJS -->	
 			<div class="app-container container-fulid">
 				<div class="row gx-5 gx-xl-10">
