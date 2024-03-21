@@ -64,7 +64,8 @@
 										</tr>
 										<tr>
 											<th colspan="2">
-											<span class="required">비밀번호 규칙</span><br />
+											<span class="required"></span>
+											<span>비밀번호 규칙</span><br />
 											- 최소한 하나의 영문자가 포함되어야 합니다.<br />
 											- 최소한 하나의 숫자가 포함되어야 합니다.<br />
 											- 최소한 하나의 특수문자가 포함되어야 합니다.<br />

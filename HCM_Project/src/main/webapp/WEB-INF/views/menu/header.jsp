@@ -159,13 +159,13 @@
 						<div class="cursor-pointer symbol symbol-35px symbol-md-40px"
 							data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
 							data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-							<img src="/image/300-3.jpg" alt="user">
+							<img src="${userInfoVo.empl_picture_str}" alt="user">
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<input type="hidden" value="${userInfoVo.empl_picture_str }">
+
 		<!-- ------------------------------ 알림 영역 사작 ------------------------------ -->
 		<div id="kt_activities" class="bg-body drawer drawer-end drawer-end" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '720px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle" data-kt-drawer-close="#kt_activities_close" style="width: 600px !important;">
 			<div class="card shadow-none border-0 rounded-0">

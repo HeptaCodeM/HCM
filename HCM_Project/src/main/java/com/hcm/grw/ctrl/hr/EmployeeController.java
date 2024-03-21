@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcm.grw.comm.Function;
+import com.hcm.grw.config.CreateNewAuthService;
 import com.hcm.grw.dto.hr.AuthDto;
 import com.hcm.grw.dto.hr.CommonCodeDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
@@ -50,6 +52,9 @@ public class EmployeeController {
 	@Autowired
 	private PasswordEncoder encoder;
 
+	@Autowired
+	private CreateNewAuthService authService;
+	
 	@GetMapping("registEmpAdmin.do")
 	public String registEmployee(Model model) {
 		log.info("EmployeeController registEmpAdmin 진입");
@@ -328,7 +333,7 @@ public class EmployeeController {
 	public @ResponseBody void updateAuthAdminOk(@RequestParam Map<String, Object> authMap,
 			  					Authentication authentication,
 			  					HttpServletResponse resp) {
-		log.info("EmployeeController updateAuthAdminOk 권한등록처리 : {}", authMap);
+		log.info("EmployeeController updateAuthAdminOk 권한등록/수정/삭제처리 : {}", authMap);
 		resp.setContentType("text/html; charset=UTF-8;");
 
 		String type = authMap.get("type").toString();
@@ -355,6 +360,9 @@ public class EmployeeController {
 			}else {
 				Function.alertLocation(resp, "권한수정이 완료 되었습니다.", "/hr/employee/authAdminDetail.do?empl_id="+empl_id, "btn-danger", "", "");
 			}
+			
+			SecurityContextHolder.getContext().setAuthentication(authService.createNewAuthentication(authentication,authentication.getName()));
+			
 			return;
 		}else {
 			Function.alertHistoryBack(resp, "권한등록에 오류가 발생하였습니다.", "", "");
@@ -362,7 +370,6 @@ public class EmployeeController {
 		}
 	}
 
-	
 	@GetMapping("authAdminDetail.do")
 	public String authAdminDetail(@RequestParam(required = true) String empl_id,
 								Authentication authentication,
@@ -374,7 +381,7 @@ public class EmployeeController {
 			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
 			return null;
 		}
-
+		
 		EmployeeDto employeeDto = employeeService.getAuthDetail(empl_id);
 		List<AuthDto> authLists = employeeService.selectAuthAllList();
 		
