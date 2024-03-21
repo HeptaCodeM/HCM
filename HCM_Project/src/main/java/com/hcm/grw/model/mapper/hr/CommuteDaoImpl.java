@@ -22,13 +22,18 @@ public class CommuteDaoImpl implements CommuteDao {
 	}
 
 	@Override
-	public int updateCommute(CommuteDto dto) {
-		return sqlSessionTemplate.insert(NS+"updateCommute", dto);
+	public int updateCommute(String empl_id) {
+		return sqlSessionTemplate.insert(NS+"updateCommute", empl_id);
 	}
 
 	@Override
 	public List<CommuteDto> commuteList(Map<String, String> map) {
 		return sqlSessionTemplate.selectList(NS+"commuteList", map);
+	}
+
+	@Override
+	public CommuteDto selectCommuteDayInfo(String empl_id) {
+		return sqlSessionTemplate.selectOne(NS+"selectCommuteDayInfo", empl_id);
 	}
 
 }

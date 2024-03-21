@@ -3,6 +3,43 @@
 <mapper namespace="com.hcm.grw.model.mapper.sm.ScbDaoImpl">
 
 <!-- 일정조회 -->
+<select id="getAllCalendar" resultType="ScbDto">
+SELECT *
+FROM (
+		SELECT SCBO_NO, SCBO_EMPNO, SCBO_TITLE, 
+		SCBO_DELFLAG, SCBO_START, SCBO_END, TO_CHAR(SCBO_CGORY_NO) AS SCBO_CGORY_NO ,  4 AS TYPE
+			FROM SCHEDULE_BOARD sb
+			WHERE SCBO_EMPNO = #{scbo_empno}  AND SCBO_CGORY_NO = '200'
+		    AND (TO_CHAR(SCBO_START, 'YYYY-MM') = #{daygridmonth}
+		    OR TO_CHAR(SCBO_END, 'YYYY-MM') = #{daygridmonth})
+		UNION ALL
+		SELECT SIDB_DOC_NUM AS , EMPL_ID, SIDB_DOC_TITLE, 
+		SIDB_DOC_FLAG, SIDB_DOC_BE, SIDB_DOC_END, SIDT_TEMP_CD ,  1 AS TYPE
+			FROM ADMIN.SIGN_DOC_BOX SDB1
+			WHERE EMPL_ID = #{scbo_empno}  AND SIDB_DOC_FLAG = '1' AND SIDT_TEMP_CD = 'TC000002'
+		    AND (TO_CHAR(SIDB_DOC_BE, 'YYYY-MM') = #{daygridmonth}
+		    OR TO_CHAR(SIDB_DOC_END, 'YYYY-MM') = #{daygridmonth}) 
+		UNION ALL    
+		SELECT SIDB_DOC_NUM, EMPL_ID, SIDB_DOC_TITLE, 
+		SIDB_DOC_FLAG, SIDB_DOC_BE, SIDB_DOC_END, SIDT_TEMP_CD ,  2 AS TYPE
+			FROM ADMIN.SIGN_DOC_BOX SDB2
+			WHERE EMPL_ID = #{scbo_empno}  AND SIDB_DOC_FLAG = '1'	AND SIDT_TEMP_CD = 'TC000001'
+			AND (TO_CHAR(SIDB_DOC_BE, 'YYYY-MM') = #{daygridmonth}
+			OR TO_CHAR(SIDB_DOC_END, 'YYYY-MM') = #{daygridmonth}) 
+		UNION ALL
+		SELECT SCBO_NO, SCBO_EMPNO, SCBO_TITLE, 
+		SCBO_DELFLAG, SCBO_START, SCBO_END, TO_CHAR(SCBO_CGORY_NO) AS SCBO_CGORY_NO ,  3 AS TYPE
+			FROM SCHEDULE_BOARD sb
+			WHERE SCBO_EMPNO = #{scbo_empno}  AND SCBO_CGORY_NO = '100'
+		    AND (TO_CHAR(SCBO_START, 'YYYY-MM') = #{daygridmonth}
+		    OR TO_CHAR(SCBO_END, 'YYYY-MM') = #{daygridmonth})  
+		)
+		WHERE TYPE IN(
+						<foreach collection="type" item="type1" separator=",">
+								#{type1} 
+							</foreach>
+						)
+</select>
 
 
 <!-- 일정등록 -->

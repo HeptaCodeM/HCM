@@ -20,7 +20,6 @@
 		data-kt-app-sidebar-push-toolbar="true"
 		data-kt-app-sidebar-push-footer="true"
 		data-kt-app-toolbar-enabled="true" class="app-default">
-
 		<div class="app-wrapper flex-column flex-row-fluid">
     <div class="app-toolbar py-3 py-lg-6">
         <div class="container-fluid">
@@ -47,9 +46,8 @@
                         <table id="myTable" class="cell-border stripe hover">
                             <thead>
                             <tr>
-                                <th></th>
+                                <th>번호</th>
                                 <th>제목</th>
-                                <th>작성자</th>
                                 <th>작성일</th>
                                 <th>조회수</th>
                             </tr>
@@ -60,9 +58,8 @@
                                     <tr>
                                         <td><strong class="board-tag-txt">
 											<span class="inner">공지</span>
-										</strong></td>
-                                        <td><a href="/sm/getDetailGobo.do?gobo_no=${vo.gobo_no}" style="text-decoration: none;">${vo.gobo_title}</a></td>
-                                        <td>${vo.gobo_writer}</td>
+											</strong></td>
+                                        <td><a href="/sm/getDetailGobo.do?gobo_no=${vo.gobo_no}"><div>${vo.gobo_title}</div></a></td>
                                         <td><fmt:formatDate value="${vo.gobo_regdate}" pattern="yyyy-MM-dd"/></td>
                                         <td>${vo.gobo_view}</td>
                                     </tr>
@@ -103,9 +100,9 @@
         ordering: true, // 정렬 기능
         paging:true, // 페이징 기능 
         lengthChange: true, //  좌상단 몇 건씩 볼지 정하는 기능
-        order: [[ 3, "desc" ]], //첫 화면 출력시 정렬 기준  + 안할시 첫 열을 기준으로 정렬하는듯
-//     	 autoWidth: true,    //자동 열 조정
-//      	columnDefs: [{ targets: 3, width: 100 }], //열의 너비 조절 0,1,2,3 순임
+//         order: [ [ 1, "desc" ], //첫 화면 출력시 정렬 기준  + 안할시 첫 열을 기준으로 정렬하는듯
+    	 autoWidth: true,    //자동 열 조정
+//      	columnDefs: [{ targets: 2, width: 100 }], //열의 너비 조절 0,1,2,3 순임
 //      displayLength: 20, //처음에 몇 건을 볼지 
 		lengthMenu: [10, 15 ,20], //몇개씩 볼지(기본값 10, 25, 50, 100)
         pagingType: "simple_numbers" // 페이징 타입 설정 : simple =이전, 다음 /simple_numbers 숫자페이징+이전 다음 , /full_numbers = 처음, 마지막 추가

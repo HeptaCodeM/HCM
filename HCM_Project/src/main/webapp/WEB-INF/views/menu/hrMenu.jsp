@@ -1,24 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 // 중분류 순서
-String hrLeftMenu [] = {"조직관리", "증명서관리", "인사발령관리", "근태관리" , "메뉴이름미정","서명관리"};
+String hrLeftMenu [] = {"조직관리", "증명서관리", "인사발령관리", "근태관리" , "회사정보관리"};
 // 소분류 메뉴명
 String hrSubLeftMenu [][] = {
-		{"부서관리","직위관리","직책관리", "사원등록", "사원조회"},		//hrLeftMenu[0]
+		{"부서관리","직위관리","직책관리", "권한관리", "정보수정", "사원등록", "사원조회", "비밀번호변경"},		//hrLeftMenu[0]
 		{"증명서리스트"},					//hrLeftMenu[1]
 		{"인사발령조회", "인사발령관리(관리자)"},	//hrLeftMenu[2]
 		{"출퇴근등록", "출퇴근현황"},			//hrLeftMenu[3]
-		{"HCMINFO"},		//hrLeftMenu[4]
-		{"서명관리"}			//hrLeftMenu[5]
+		{"회사정보"}		//hrLeftMenu[4]
 };
 //소분류 링크
 String hrSubLinkLeftMenu [][] = {
-		{"/roleList.do?role=DT","/roleList.do?role=RK","/roleList.do?role=PN", "/hr/employee/regist.do", "/hr/employee/list.do"},		//hrLeftMenu[0]
-		{"/certificate.do"},							//hrLeftMenu[1]
-		{"#", "#"},						//hrLeftMenu[2]
-		{"#", "#"},					//hrLeftMenu[3]
-		{"/companyInfo.do"},						//hrLeftMenu[4]
-		{"/signListForm.do"}						//hrLeftMenu[5]
+		{"/hr/commonCode/roleList.do?role=DT","/hr/commonCode/roleList.do?role=RK","/hr/commonCode/roleList.do?role=PN", "/hr/employee/authManageList.do", "/hr/employee/empModify.do", "/hr/employee/registEmpAdmin.do", "/hr/employee/list.do", "/hr/employee/updatePwd.do"},		//hrLeftMenu[0]
+		{"/hr/certificate/certificate.do"},									//hrLeftMenu[1]
+		{"#", "#"},															//hrLeftMenu[2]
+		{"/hr/commute/registCommute.do", "/hr/commute/empCommuteList.do"},	//hrLeftMenu[3]
+		{"/hr/company/companyInfo.do"}										//hrLeftMenu[4]
 };
 
 String uri = request.getRequestURI();
@@ -29,8 +27,6 @@ String currentRootName = uri.replace("/WEB-INF/views/hr/","");
 Boolean menuFlag1 = false;
 Boolean menuFlag2 = false;
 %>
-<!DOCTYPE html>
-<html>
 	<!-- 대분류별 영역 시작 -->
 	<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 		
@@ -76,18 +72,18 @@ Boolean menuFlag2 = false;
 				<%
 				menuFlag2 = false;
 				for(int j=0;j<hrSubLeftMenu[i].length;j++){ 
-					if(hrSubLinkLeftMenu[i][j].indexOf(currentPageName)>=0){
+					if(hrSubLinkLeftMenu[i][j].indexOf(currentPageName)>=0 || currentPageName.equals("hrMainTmp")){
 						menuFlag2 = true;
 					}
 				}
 
 				if(menuFlag2 == true){
 				%>
-					<div class="menu-sub menu-sub-accordion hover show" style="">
+					<div class="menu-sub menu-sub-accordion show" style="">
 				<%
 				}else{
 				%>
-					<div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;">
+					<div class="menu-sub menu-sub-accordion" style="display: block; overflow: hidden;">
 				<%
 				}
 				%>
@@ -119,5 +115,3 @@ Boolean menuFlag2 = false;
 		</div>		
 	</div>		
 	<!-- 대분류별 영역 종료 ------------------------------------------------------------------------->
-
-</html>

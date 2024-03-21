@@ -6,6 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
+<style type="text/css">
+	.modal-body{
+		text-align: center;
+	}
+</style>
 <title>회사정보화면</title>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
@@ -63,6 +68,11 @@
 											</tr>
 											
 											<tr>
+												<td>회사메일</td>
+												<td colspan="2">${companyDto.getComp_email()}</td>
+											</tr>
+											
+											<tr>
 												<td>팩스번호</td>
 												<td colspan="2">${companyDto.getComp_fax()}</td>
 											</tr>
@@ -96,9 +106,12 @@
 							</div>
 							<div class="card-footer">
 								<!-- 관리자만 보이게 할 예정 -->
-								<button class="btn btn-primary me-10" type="button" onclick="location.href='./companyInfoCorrection.do'">수정</button>
-								<button class="btn btn-primary me-10" type="button" onclick="location.href='./insertCompanySealForm.do'">회사직인입력</button>
-								<button class="btn btn-primary me-10" type="button" onclick="location.href='./showCompanySeal.do'">회사직인조회</button>
+								<c:if test="${empl_auth eq 'ROLE_HR_ADMIN'}">
+									<button class="btn btn-primary btnLg me-10" type="button" onclick="location.href='/hr/company/companyInfoCorrection.do'">수정</button>
+									<button class="btn btn-primary btnLg me-10" type="button" onclick="location.href='/hr/company/insertCompanySealForm.do'">회사직인입력</button>
+								</c:if>
+								<button class="btn btn-primary btnLg me-10" type="button" onclick="location.href='/hr/company/showCompanySeal.do'">회사직인조회</button>
+								<button class="btn btn-primary btnLg me-10" type="button" data-bs-toggle="modal" data-bs-target="#showSealModal">회사직인조회(모달)</button>
 							</div>
 						</div>
 					</div>
@@ -109,4 +122,38 @@
 			
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
 </body>
+<div class="modal fade" tabindex="-1" id="showSealModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">회사직인조회</h3>
+
+                <!--begin::Close-->
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                </div>
+                <!--end::Close-->
+            </div>
+
+            <div class="modal-body">
+            	<c:choose>
+					<c:when test="${sealImg eq null}">
+		            	<p>도장을 입력하세요!</p>
+					</c:when>
+					<c:otherwise>
+					<c:set var="data" value="data:image/png;base64,"/>
+						<img class="sealImg" src="${data}${sealImg}">
+					</c:otherwise>
+				</c:choose>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">닫기</button>
+                <c:if test="${sealImg eq null}">
+		        	<button type="button" onclick="location.href='/hr/company/insertCompanySealForm.do'" class="btn btn-primary">입력하기</button>
+                </c:if>
+            </div>
+        </div>
+    </div>
+</div>
 </html>

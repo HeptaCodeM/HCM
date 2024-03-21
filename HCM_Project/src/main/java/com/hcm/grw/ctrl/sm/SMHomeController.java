@@ -2,6 +2,8 @@ package com.hcm.grw.ctrl.sm;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.dto.sm.GoboDto;
 import com.hcm.grw.dto.sm.ReplyDto;
 import com.hcm.grw.model.service.sm.IGoboService;
@@ -74,10 +77,12 @@ public class SMHomeController {
 	
 	@PostMapping("insertGobo.do")
 	@ResponseBody
-	public Boolean insertGobo(GoboDto dto) {
+	public Boolean insertGobo(GoboDto dto, HttpSession session) {
 	    log.info("SMHomeController insertGobo.do 공지사항 글 등록: {}", dto);
-	    dto.setGobo_writer("서종우");
-	    dto.setGobo_writer_id("whda2");
+	    
+	    EmployeeDto empldto = (EmployeeDto)session.getAttribute("userInfoVo");
+	    dto.setGobo_writer(empldto.getEmpl_name());
+	    dto.setGobo_writer_id(empldto.getEmpl_id());
 	    int n = GoboService.insertGobo(dto);
 	    return (n>0)?true:false;
 	}

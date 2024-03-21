@@ -1,26 +1,25 @@
 package com.hcm.grw.ctrl;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.authenticator.SpnegoAuthenticator.AuthenticateAction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hcm.grw.comm.CookiesMgr;
+import com.hcm.grw.comm.EmailService;
+import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.model.service.hr.HolidayService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,14 +28,31 @@ import lombok.extern.slf4j.Slf4j;
 public class HomeController {
 
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private EmailService emailService;
+	
+	@Autowired
+	private HolidayService holidayService;
+	
 	
 	@GetMapping({"/index.do", "/"})
-	public String index(Model model, Authentication authentication) {
+	public String index(HttpServletRequest request, Model model, Authentication authentication, HttpSession session) {
 		
-		String getId = authentication.getName();
+		String getId = "";
+		if(authentication != null) {
+			getId = authentication.getName();
+		}
 		log.info("getId : {}", getId);
+		
 		model.addAttribute("getId", getId);
+
+		//공통함수를 이용한 사원정보 조회
+		EmployeeDto employeeDto = (EmployeeDto)session.getAttribute("userInfoVo");
+		String empl_id = "";
+		if(employeeDto != null) {
+			empl_id = employeeDto.getEmpl_id();
+		}
+		log.info("session empl_id : {}", empl_id);
+		model.addAttribute("empl_info", employeeDto);
 		
 		return "index";
 	}
@@ -60,21 +76,6 @@ public class HomeController {
 		request.getRequestDispatcher("/WEB-INF/error/error500.jsp").forward(request, response);
 	}
 
-	@GetMapping("/login.do")
-	public String login(String error, String logout, Model model) {
-		log.info("error : {}", error);
-		log.info("logout : {}", logout);
-
-		if (error != null) {
-			model.addAttribute("error", "로그인 오류! 계정을 확인하세요.");
-		}
-
-		if (logout != null) {
-			model.addAttribute("logout", "로그아웃!!");
-		}
-
-		return "login";
-	}
 
 	@GetMapping("/mainTmp.do")
 	public String mainTmp() {
@@ -120,10 +121,92 @@ public class HomeController {
 	public String delCookiesTest(HttpServletRequest req, HttpServletResponse resp) {
 		log.info("testCk 쿠키삭제");
 		
-		CookiesMgr.delCookies(req, resp);
+		//CookiesMgr.delCookies(req, resp, "All");	//모두삭제
+		CookiesMgr.delCookies(req, resp, "testCk");	//단일삭제
 		
 		return "redirect:/";
 	}
+
+	
+	//메일발송 테스트
+	@GetMapping("/sendMailTest.do")
+	public String sendMailTest() {
+		log.info("메일발송");
+		
+		String subject = "테스트 메일 입니다.";
+		String content = "테스트 입니다.<br/>테스트 입니다.";
+		String toEmail = "hcm_0415@naver.com";
+		String fromEmail = null;
+
+		//boolean sendFlag = fn.sendMail(subject, content, toEmail, fromEmail, htmlFlag);
+		boolean sendFlag = emailService.sendMail(subject, content, toEmail, fromEmail, true);
+		log.info("메일발송 : {}", sendFlag);
+		
+		return "redirect:/";
+	}
+
+
+	//휴가관련 조회
+	@GetMapping("/holidayTest.do")
+	public String holidayInfo() {
+		/*
+		* 사원별 휴가정보 조회
+		*/
+		Map<String, Object> holidayTotalMap = holidayService.selectEmpTotalHoliDayInfo("20220101");
+		for(String s : holidayTotalMap.keySet()) {
+			log.info("holidayTotalMap key: {}, value : {}", s, holidayTotalMap.get(s));
+		}
+		log.info("소문자 테스트 : {}",holidayTotalMap.get("TOTAL_HOLIDAY"));
+		
+		/* 
+		* 휴가일자 조회 
+		*/
+		Map<String, String> holidayMap = new HashMap<String, String>(){{
+			put("sidb_doc_be","2024-02-29");
+			put("sidb_doc_end","2024-03-04");
+		}};
+		
+		int holiCnt = holidayService.selectHoliDayInfo(holidayMap);
+		log.info("전자결재에서 선택한 일자로 휴가일 검색 : {}", holiCnt);
+		
+		return "redirect:/";
+	}
+	
+	@GetMapping("notification.do")
+	public String notification() {
+		return "notification";
+	}
+	
+	@GetMapping("fileTest.do")
+	public String fileTest() {
+		return "fileTest";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

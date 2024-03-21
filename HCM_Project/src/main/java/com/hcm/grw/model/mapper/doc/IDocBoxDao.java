@@ -3,8 +3,8 @@ package com.hcm.grw.model.mapper.doc;
 import java.util.List;
 import java.util.Map;
 
-import com.hcm.grw.dto.doc.DocBoxDto;
 import com.hcm.grw.dto.doc.SignBoxDto;
+import com.hcm.grw.dto.doc.SignFileDto;
 
 public interface IDocBoxDao {
 
@@ -58,4 +58,21 @@ public interface IDocBoxDao {
 	//전체 문서함 Json만 조회
 	public List<SignBoxDto> getAllDocsJson(SignBoxDto dto);
 	
+	//참조 문서함 Json만 조회
+	public List<SignBoxDto> getChamjoJson(Map<String, String> inMap);
+	
+	//상세 조회시 자신의 depth와 max_depth 조회
+	public SignBoxDto getMyDepth(SignBoxDto dto);
+
+	//나에게 결재 요청온 문서 Json만 조회
+	public List<SignBoxDto> getMyTurnJson(SignBoxDto dto);
+
+	//내가 결재 승인한 문서 조회
+	public List<SignBoxDto> getIDidDocs(SignBoxDto dto);
+	
+	//상세조회문서에 첨부된 파일목록 조회
+	public List<SignFileDto> getFileList(SignBoxDto dto);
+	
+	//상세조회문서에 첨부된 파일다운 조회
+	public SignFileDto getDocsDetailFile(String sidf_file_num);
 }

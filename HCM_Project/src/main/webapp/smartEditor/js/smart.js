@@ -24,8 +24,8 @@ $(document).ready(function() {
 		
 		//textarea의 id를 적어줍니다.
 		oEditors.getById["smartEditor"].exec("UPDATE_CONTENTS_FIELD", []);
-		var gobo_writer_id = $("#gobo_writer_id").val("1111");
-		var gobo_writer = $("#gobo_writer").val("서종우");
+		var gobo_writer_id = $("#gobo_writer_id").val();
+		var gobo_writer = $("#gobo_writer").val();
 		var gobo_title = $("#gobo_title").val();
 		var gobo_content = $("#smartEditor").val();
 		var gobo_bigo = $("#gobo_bigo").val();

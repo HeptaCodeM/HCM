@@ -30,6 +30,7 @@
 				</div>		
 			</div>
 			<div class="app-content flex-column-fluid">
+			
 				<!-- 내용 시작 -->
 				<div id="kt_app_content" class="app-content flex-column-fluid">
 					<div class="app-container container-fluid">
@@ -45,7 +46,6 @@
 									</c:when>
 									
 									<c:otherwise>
-										${docList}<br>
 										<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
 											<thead>
 												<tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
@@ -58,7 +58,7 @@
 											
 											<c:forEach var="doc" items="${docList}" varStatus="var"> 
 												<tbody>
-													<tr style="cursor: pointer;" onclick="location.href='./selectOneCertificate.do?sidb_doc_num=${doc.getSidb_doc_num()}'">
+													<tr style="cursor: pointer;" onclick="location.href='/hr/certificate/selectOneCertificate.do?sidb_doc_num=${doc.getSidb_doc_num()}'">
 														<td>${var.count}</td>
 														<td>${doc.getSidb_doc_title()}</td>
 														<td>${doc.getSidt_temp_name()}</td>
@@ -74,6 +74,62 @@
 					</div>
 				</div>
 				<!-- 내용 끝 -->
+				
+				<!-- 내용 시작 -->
+				<div id="kt_app_content" class="app-content flex-column-fluid">
+					<div class="app-container container-fluid">
+						<div class="card card-flush h-md-50 mb-xl-10">
+							<div class="card-header pt-5">
+								<h3 class="card-title text-gray-800 fw-bold">History</h3>
+							</div>
+							<div class="separator separator-dashed my-3"></div>	
+							<div class="card-body pt-5 table-responsive">
+								<c:choose>
+									<c:when test="${docDownloadList eq '[]'}">
+										<h1>출력된 증명서가 없습니다</h1>
+									</c:when>
+									
+									<c:otherwise>
+										<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
+											<thead>
+												<tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
+													<td>순번</td>
+													<td>제목</td>
+													<td>템플릿이름</td>
+													<td>출력일</td>
+													<td>출력타입</td>
+												</tr>
+											</thead>
+											
+											<c:forEach var="down" items="${docDownloadList}" varStatus="var"> 
+												<tbody>
+													<tr>
+														<td>${var.count}</td>
+														<td>${down.getSidb_doc_title()}</td>
+														<td>${down.getSidt_temp_name()}</td>
+														<td>${down.getSidt_print_date()}</td>
+														<td>
+															<c:choose>
+																<c:when test="${down.getSidt_print_type() eq 'D'}">
+																	PDF출력
+																</c:when>
+																<c:otherwise>
+																	프린트
+																</c:otherwise>
+															</c:choose>
+														</td>
+													</tr>
+												</tbody>
+											</c:forEach>
+										</table>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 내용 끝 -->				
+				
 			</div>
 		</div>
 			

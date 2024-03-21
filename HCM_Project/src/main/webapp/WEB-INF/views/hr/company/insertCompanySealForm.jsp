@@ -134,7 +134,7 @@
 								previewNode.parentNode.removeChild(previewNode);
 
 								var myDropzone = new Dropzone(id, { // Make the whole body a dropzone
-								    url: "./companySealUpload.do", // Set the url for your upload script location
+								    url: "/hr/company/companySealUpload.do", // Set the url for your upload script location
 								    parallelUploads: 20,
 								    previewTemplate: previewTemplate,
 								    maxFilesize: 5, // Max filesize in MB

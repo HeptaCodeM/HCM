@@ -54,8 +54,33 @@
 <select id="getTemplate" resultType="java.lang.String">
 	SELECT SIDT_TEMP_CONTENT
 		FROM SIGN_DOC_TEMP
-		WHERE SIDT_TEMP_CD = 'TC000005'
+		WHERE SIDT_TEMP_CD = #{sidt_temp_cd}
 </select>
 
-
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

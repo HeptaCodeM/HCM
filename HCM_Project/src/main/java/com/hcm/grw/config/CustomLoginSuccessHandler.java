@@ -5,18 +5,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.web.bind.annotation.GetMapping;
+
+import com.hcm.grw.comm.Function;
+import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.model.mapper.hr.EmployeeDao;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
+	@Autowired
+	private EmployeeDao employeeDao;
+	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
@@ -32,6 +42,16 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		authentication.getAuthorities().forEach(authority -> {
 			roleNames.add(authority.getAuthority());
 		});
+		
+		
+		EmployeeDto employeeDto = employeeDao.getUserInfo(authentication.getName());
+		
+		HttpSession session = request.getSession();
+		//이미지 스트링 정보로 처리
+		employeeDto.setEmpl_picture_str(Function.blobImageToString(employeeDto.getEmpl_picture()));
+		//2진정보 초기화
+		employeeDto.setEmpl_picture(null);
+		session.setAttribute("userInfoVo", employeeDto);
 
 		log.info("ROLE NAME : {}", roleNames);
 
@@ -43,7 +63,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
 		// 롤 권한이 없다면 로그아웃 처리
 		if(!roleNames.contains("ADMIN") && !roleNames.contains("USER")) {
-			response.sendRedirect("/logout.do");
+			response.sendRedirect("/logout");
 		}
 
 	}

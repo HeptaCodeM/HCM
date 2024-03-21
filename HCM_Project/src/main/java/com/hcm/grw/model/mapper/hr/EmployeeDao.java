@@ -3,6 +3,7 @@ package com.hcm.grw.model.mapper.hr;
 import java.util.List;
 import java.util.Map;
 
+import com.hcm.grw.dto.hr.AuthDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.dto.hr.SnsInfoDto;
 
@@ -10,6 +11,10 @@ public interface EmployeeDao {
 
 	/*일반로그인*/
 	public EmployeeDto getLogin(String empl_id);
+	/*유저정보*/
+	public EmployeeDto getUserInfo(String empl_id);
+	/*유저검색*/
+	public List<EmployeeDto> getUserInfoSearch(Map<String, String> map);
 	/*소셜로그인*/
 	public SnsInfoDto getSnsLoginInfo(String empl_id);
 
@@ -39,5 +44,7 @@ public interface EmployeeDao {
 	public int registSnsLoginInfo(Map<String, Object> map);
 	/*비밀번호 변경*/
 	public int updatePwd(Map<String, Object> map);
+	/*권한정보 조회*/
+	public List<AuthDto> selectAuthAllList();
 	
 }

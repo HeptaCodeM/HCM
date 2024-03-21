@@ -10,6 +10,43 @@
 		AND EMPL_DELFLAG = 'N'
 	</select>
 
+	<!-- 사용저 정보 -->
+	<select id="getUserInfo" parameterType="String" resultType="EmployeeDto">
+		SELECT 
+						EMPL_ID, EMPL_NAME, 
+						EMPL_DEPT_CD, D.COCO_NAME EMPL_DEPT_NM, 
+						EMPL_RANK_CD, R.COCO_NAME EMPL_RANK_NM, 
+						EMPL_POSITION_CD, P.COCO_NAME EMPL_POSITION_NM, 
+						EMPL_PICTURE, EMPL_AUTH
+		FROM 			EMPLOYEE E
+		INNER JOIN		COMMON_CODE D ON E.EMPL_DEPT_CD = D.COCO_CD 
+		INNER JOIN		COMMON_CODE R ON E.EMPL_RANK_CD = R.COCO_CD 
+		LEFT OUTER JOIN COMMON_CODE P ON E.EMPL_POSITION_CD = P.COCO_CD 
+		WHERE 			EMPL_ID = #{empl_id}
+		AND 			EMPL_DELFLAG = 'N'
+	</select>
+
+	<!-- 사용저 정보 검색 -->
+	<select id="getUserInfoSearch" parameterType="Map" resultType="EmployeeDto">
+		SELECT 
+						EMPL_ID, EMPL_NAME, 
+						EMPL_DEPT_CD, D.COCO_NAME EMPL_DEPT_NM, 
+						EMPL_RANK_CD, R.COCO_NAME EMPL_RANK_NM, 
+						EMPL_POSITION_CD, P.COCO_NAME EMPL_POSITION_NM, 
+						EMPL_PICTURE, EMPL_AUTH, A.AUCO_NAME AS EMPL_AUTH_NM
+		FROM 			EMPLOYEE E
+		INNER JOIN		AUTH_CODE	A ON E.EMPL_AUTH = A.AUCO_CD
+		INNER JOIN		COMMON_CODE D ON E.EMPL_DEPT_CD = D.COCO_CD 
+		INNER JOIN		COMMON_CODE R ON E.EMPL_RANK_CD = R.COCO_CD 
+		LEFT OUTER JOIN COMMON_CODE P ON E.EMPL_POSITION_CD = P.COCO_CD 
+		WHERE 			EMPL_DELFLAG = 'N'
+		AND 			${searchType} LIKE CONCAT(#{keyWord}, '%')
+		<if test="layer=='empSearch'">
+		AND				EMPL_AUTH = 'ROLE_USER'
+		</if>
+		ORDER BY 		EMPL_ID
+	</select>
+
 	<!-- 소셜로그인 -->
 	<select id="getSnsLoginInfo" parameterType="String" resultType="SnsInfoDto">
 		SELECT
@@ -23,7 +60,7 @@
 		AND E.EMPL_DELFLAG = 'N'
 	</select>
 
-	<!-- 인증번호 메일발송 -->
+	<!-- 인증번호 메일발송용 사원체크 -->
 	<select id="getInitPwdcheck" parameterType="Map" resultType="Integer">
 		SELECT COUNT(*)
 		FROM EMPLOYEE
@@ -65,31 +102,58 @@
 		EMPL_PHONE = #{empl_phone},
 		EMPL_TEL = #{empl_tel},
 		EMPL_FAX = #{empl_fax},
-		EMPL_PICTURE = #{empl_picture, jdbcType=BLOB},
+		<if test="empl_picture != null and !empl_picture.equals('')">
+		EMPL_PICTURE = #{empl_picture},
+		</if>
 		EMPL_MODIFY_ID = #{empl_modify_id},
 		EMPL_MODIFY_DT = CURRENT_DATE
 		WHERE EMPL_ID = #{empl_id}
 		AND EMPL_DELFLAG = 'N'
 	</update>
 
+	<!-- 권한코드 전체조회 -->
+	<select id="selectAuthAllList" resultType="AuthDto">
+		SELECT
+					AUCO_CD, AUCO_NAME, AUCO_DELFLAG
+					AUCO_CREATE_ID, AUCO_CREATE_DT, AUCO_MODIFY_ID, AUCO_MODIFY_DT
+		FROM		AUTH_CODE
+		ORDER BY 	AUCO_CD ASC
+	</select>
+
 	<!-- 권한관리 리스트 -->
 	<select id="getAuthList" resultType="EmployeeDto">
 		SELECT
-		EMPL_ID, EMPL_NAME, EMPL_DEPT_CD, EMPL_RANK_CD, EMPL_AUTH
-		FROM EMPLOYEE
-		WHERE EMPL_DELFLAG = 'N'
-		AND EMPL_AUTH != 'ROLE_USER'
-		ORDER BY EMPL_ID ASC, EMPL_AUTH DESC
+					EMPL_ID, EMPL_NAME, 
+					EMPL_AUTH, AUCO_NAME AS EMPL_AUTH_NM,
+					EMPL_DEPT_CD, C.COCO_NAME AS EMPL_DEPT_NM, 
+					EMPL_RANK_CD, D.COCO_NAME AS EMPL_RANK_NM, 
+					EMPL_POSITION_CD, E.COCO_NAME AS EMPL_POSITION_NM
+		FROM 		EMPLOYEE A
+		INNER JOIN	AUTH_CODE B ON A.EMPL_AUTH = B.AUCO_CD 
+		INNER JOIN	COMMON_CODE C ON A.EMPL_DEPT_CD = C.COCO_CD
+		INNER JOIN	COMMON_CODE D ON A.EMPL_RANK_CD = D.COCO_CD
+		LEFT JOIN	COMMON_CODE E ON A.EMPL_POSITION_CD = E.COCO_CD
+		WHERE 		EMPL_DELFLAG = 'N'
+		AND 		EMPL_AUTH != 'ROLE_USER'
+		ORDER BY 	EMPL_ID ASC, EMPL_AUTH DESC
 	</select>
 
 	<!-- 권한관리 상세페이지 -->
 	<select id="getAuthDetail" parameterType="String" resultType="EmployeeDto">
 		SELECT
-		EMPL_ID, EMPL_NAME, EMPL_DEPT_CD, EMPL_RANK_CD, EMPL_AUTH
-		FROM EMPLOYEE
-		WHERE EMPL_DELFLAG = 'N'
-		AND EMPL_AUTH != 'ROLE_USER'
-		AND EMPL_ID = #{empl_id}
+					EMPL_ID, EMPL_NAME, 
+					EMPL_AUTH, AUCO_NAME AS EMPL_AUTH_NM,
+					EMPL_DEPT_CD, C.COCO_NAME AS EMPL_DEPT_NM, 
+					EMPL_RANK_CD, D.COCO_NAME AS EMPL_RANK_NM, 
+					EMPL_POSITION_CD, E.COCO_NAME AS EMPL_POSITION_NM
+		FROM 		EMPLOYEE A
+		INNER JOIN	AUTH_CODE B ON A.EMPL_AUTH = B.AUCO_CD 
+		INNER JOIN	COMMON_CODE C ON A.EMPL_DEPT_CD = C.COCO_CD
+		INNER JOIN	COMMON_CODE D ON A.EMPL_RANK_CD = D.COCO_CD
+		LEFT JOIN	COMMON_CODE E ON A.EMPL_POSITION_CD = E.COCO_CD
+		WHERE 		EMPL_DELFLAG = 'N'
+		AND 		EMPL_AUTH != 'ROLE_USER'
+		AND 		EMPL_ID = #{empl_id}
 	</select>
 
 	<!-- 권한관리 등록처리 및 해당 페이지 권한적용 -->

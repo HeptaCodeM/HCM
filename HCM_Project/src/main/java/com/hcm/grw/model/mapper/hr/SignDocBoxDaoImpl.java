@@ -38,5 +38,11 @@ public class SignDocBoxDaoImpl implements SignDocBoxDao {
 		log.info("SignDocBoxDaoImpl downloadOneDoc // {}",map);
 		return sqlSessionTemplate.insert(NS+"downloadOneDoc",map);
 	}
+	
+	@Override
+	public List<SignDocBoxDto> selectAllDownloadDocList(Map<String, Object> map) {
+		log.info("SignDocBoxDaoImpl selectAllDownloadDocList // {}",map);
+		return sqlSessionTemplate.selectList(NS+"selectAllDownloadDocList",map);
+	}
 
 }

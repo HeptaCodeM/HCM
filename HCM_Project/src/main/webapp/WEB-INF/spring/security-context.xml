@@ -34,27 +34,31 @@
 		<security:intercept-url pattern="/main*.do" access="permitAll" />
 		<security:intercept-url pattern="/assets/**" access="permitAll" />
 		<security:intercept-url pattern="/images/**" access="permitAll" />
+		
+		
 		<!-- 에러페이지 접근 권한 -->
 		<security:intercept-url pattern="/error*.do" access="permitAll" />
 		<security:intercept-url pattern="/WEB-INF/error/error*.jsp" access="permitAll" />
 
 		<!-- 시스템 권한 -->
+
 		<!-- <security:intercept-url pattern="/system.do" access="hasRole('SYS_ADMIN')" /> -->
-		<security:intercept-url pattern="/sys/*admin*.do" access="hasRole('SYS_ADMIN')" />
+		<security:intercept-url pattern="/system.do" access="permitAll" />
 		<!-- 인사관리자 접근 권한 -->
-		<!-- <security:intercept-url pattern="/hr/*admin*.do" access="hasAnyRole('HR_ADMIN')" /> -->
 		<security:intercept-url pattern="/hr/*admin*.do" access="hasAnyRole('HR_ADMIN')" />
+		<!-- <security:intercept-url pattern="/hr/*admin*.do" access="permitAll" /> -->
 		<!-- 일정관리자 접근 권한 -->
-		<!-- <security:intercept-url pattern="/sm/*admin*.do" access="hasAnyRole('SC_ADMIN')" /> -->
-		<security:intercept-url pattern="/sm/*admin*.do" access="hasAnyRole('SC_ADMIN')" />
+		<!-- <security:intercept-url pattern="/sm/*admin*.do" access="hasAnyRole('SM_ADMIN')" /> -->
+		<security:intercept-url pattern="/sm/*admin*.do" access="permitAll" />
 		<!-- 결재관리자 접근 권한 -->
 		<!-- <security:intercept-url pattern="/doc/*admin*.do" access="hasAnyRole('DOC_ADMIN')" /> -->
-		<security:intercept-url pattern="/doc/*admin*.do" access="hasAnyRole('DOC_ADMIN')" />
+		<security:intercept-url pattern="/doc/*admin*.do" access="permitAll" />
+
 		<!-- 일반회원 접근 권한 -->
 		<!-- <security:intercept-url pattern="/hr/*" access="isAuthenticated()" />
 		<security:intercept-url pattern="/sm/*" access="isAuthenticated()" />
 		<security:intercept-url pattern="/doc/*" access="isAuthenticated()" /> -->
-		<security:intercept-url pattern="/hr/*" access="permitAll" />
+		<security:intercept-url pattern="/hr/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/sm/*" access="permitAll" />
 		<security:intercept-url pattern="/doc/*" access="permitAll" />
 
@@ -62,7 +66,7 @@
 		login-page : 로그인 Custom Page 설정
 		authentication-success-handler-ref : 로그인 성공handler 이동, 처리 로직 
 		-->
-		<security:form-login login-page="/login.do" 
+		<security:form-login login-page="/login/login.do" 
 							 authentication-success-handler-ref="customLoginSuccess" />
 		
 		<!-- AccessDeniedHandler 등록 -->
@@ -74,8 +78,8 @@
 		logout-success-url	: 로그아웃 후 이동 Url
 		invalidate-session	: 로그아웃 시 session을 무효화할 지 선택
 		-->
-		<security:logout logout-url="/logout.do"
-						 logout-success-url="/login.do" 
+		<security:logout logout-url="/logout"
+						 logout-success-url="/login/login.do" 
 						 invalidate-session="true" />
 
 		<!-- csrf 사용여부(사이트간 위변조 방지를 위한 처리 - true : 미사용) -->
@@ -89,11 +93,14 @@
 		<security:remember-me key="HCM"
 							  token-validity-seconds="864000" 
 							  remember-me-parameter="remember-me"/>
+		<security:session-management>
+			<security:concurrency-control max-sessions="1" expired-url="/logout" />
+		</security:session-management>
 	</security:http>
 
 
 	<!-- HttpFirewall 빈을 등록합니다. -->
-	<security:http-firewall ref="httpFirewall"/>
+	<security:http-firewall ref="httpFirewall" />
 
 
 	<security:authentication-manager>

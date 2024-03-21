@@ -45,7 +45,7 @@ public class TemplateController {
 		log.info("TemplateController 템플릿 전체 값을 저장하여 이동하는 template");
 		List<TemplateDto> lst = service.getTempList();
 		model.addAttribute("lst", lst);
-		return "doc/template";
+		return "doc/template/template";
 	}
 
 	@GetMapping("/detailTemplate.do")
@@ -53,13 +53,13 @@ public class TemplateController {
 		log.info("TemplateController 템플릿 상세 내용 조회하는 detailTemplate");
 		TemplateDto temDto = service.getDetailTemp(sidt_temp_cd);
 		model.addAttribute("temDto", temDto);
-		return "doc/detailTemplate";
+		return "doc/template/detailTemplate";
 	}
 
 	@GetMapping("/writeTemplate.do")
 	public String writeTemplate() {
 		log.info("TemplateController 템플릿 등록화면으로 이동하는 writeTemplate");
-		return "doc/writeTemplate";
+		return "doc/template/writeTemplate";
 	}
 
 	@GetMapping("/selectCategory.do")
@@ -76,13 +76,25 @@ public class TemplateController {
 		int n = service.insertTemp(dto);
 		return (n == 0) ? "" : "redirect:template.do";
 	}
+	
+//  @PostMapping("/insertTemplate.do")
+//  public String insertTemplate(@RequestParam Map<String, Object> map) {
+//     log.info("TemplateController 템플릿 등록하는 insertTemplate");
+//     TemplateDto dto = new TemplateDto();
+//     dto.setSica_cd((String)map.get("sica_cd"));
+//     dto.setSidt_temp_name((String)map.get("sidt_temp_name"));
+//     dto.setSidt_temp_content((String)map.get("sidt_temp_content"));
+//     int n = service.insertTemp(dto);
+//     return (n==0)? "" : "redirect:template.do";
+//  }
+
 
 	@GetMapping("/modifyTemplate.do")
 	public String modifyTemplate(String sidt_temp_cd, Model model) {
 		log.info("TemplateController 템플릿 수정화면으로 이동하는 modifyTemplate");
 		TemplateDto temDto = service.getDetailTemp(sidt_temp_cd);
 		model.addAttribute("temDto", temDto);
-		return "doc/modifyTemplate";
+		return "doc/template/modifyTemplate";
 	}
 	
 	@PostMapping("updateTemplate.do")
@@ -118,9 +130,10 @@ public class TemplateController {
 
 	@PostMapping(value = "/getTemplate.do", produces = "text/html; charset=UTF-8")
 	@ResponseBody
-	public String getTemplate(String sidt_temp_cd) {
-		log.info("TemplateController 선택한 템플릿 에디터로 가져오는 getTemplate");
+	public String getTemplate(String sidt_temp_cd, Model model) {
+		log.info("TemplateController 선택한 템플릿 에디터로 가져오는 getTemplate: {}", sidt_temp_cd);
 		String getTemp = service.getTemplate(sidt_temp_cd);
+		log.info(getTemp);
 		return getTemp;
 
 	}

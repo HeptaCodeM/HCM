@@ -54,4 +54,17 @@ public class SignBoxDto {
 	private String sidt_temp_name;
 	private String appr_name1;
 	private String appr_name2;
+	private String appr_name0;
+	private String appr_flag0;
+	private String appr_flag1;
+	private String appr_flag2;
+	private String appr_depth0;
+	private String appr_depth1;
+	private String appr_depth2;
+	private String max_depth;
+	private byte[] empl_picture;
+	private String empl_pictureStr;
+	private String sidb_curr_id;
+	private String empl_rank;
+	
 }

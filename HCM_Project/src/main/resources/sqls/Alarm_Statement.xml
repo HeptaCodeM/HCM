@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hcm.grw.model.mapper.AlarmDaoImpl">
+
+<!--  	공지사항 알림 -->
+	<select id="selectNotice" resultType="AlarmDto">
+		SELECT a.* , e.EMPL_NAME 
+			FROM ALARM a JOIN EMPLOYEE e 
+			ON a.AL_PRODUCER = e.EMPL_ID  
+			WHERE AL_DATE >= CURRENT_TIMESTAMP - INTERVAL '1' DAY  
+			AND AL_FLAG = 1
+			ORDER BY AL_DATE DESC
+	</select>
+	
+<!-- 	결재 승인 알림 -->
+	<select id="selectApproval" resultType="AlarmDto">
+		SELECT a.*, e.EMPL_NAME AS PRODUCER_NAME, e2.EMPL_NAME AS TARGET_NAME
+			FROM ALARM a 
+			JOIN EMPLOYEE e 
+			ON a.AL_PRODUCER = e.EMPL_ID 
+			JOIN EMPLOYEE e2 
+			ON a.AL_TARGET = e2.EMPL_ID 
+			WHERE AL_DATE >= CURRENT_TIMESTAMP - INTERVAL '1' DAY  
+			AND AL_FLAG = 3
+			AND AL_TARGET = #{al_target}
+	</select>
+	
+<!-- 	결재 반려 알림 -->
+	<select id="selectReject" resultType="AlarmDto">
+		SELECT a.* , e.EMPL_NAME AS PRODUCER_NAME, e2.EMPL_NAME AS TARGET_NAME
+			FROM ALARM a 
+			JOIN EMPLOYEE e 
+			ON a.AL_PRODUCER = e.EMPL_ID
+			JOIN EMPLOYEE e2 
+			ON a.AL_TARGET = e2.EMPL_ID 
+			WHERE AL_DATE >= CURRENT_TIMESTAMP - INTERVAL '1' DAY  
+			AND AL_FLAG = 4
+			AND AL_TARGET = #{al_target}
+	</select>	
+	
+<!-- 	결재 요청 알림 -->
+	<select id="selectRequest" resultType="AlarmDto">
+		SELECT a.* , e.EMPL_NAME AS PRODUCER_NAME, e2.EMPL_NAME AS TARGET_NAME
+			FROM ALARM a 
+			JOIN EMPLOYEE e 
+			ON a.AL_PRODUCER = e.EMPL_ID
+			JOIN EMPLOYEE e2 
+			ON a.AL_TARGET = e2.EMPL_ID 
+			WHERE AL_DATE >= CURRENT_TIMESTAMP - INTERVAL '1' DAY  
+			AND AL_FLAG = 5
+			AND AL_TARGET = #{al_target}
+	</select>		
+	
+	<select id="selectAllAlarm" resultType="AlarmDto">
+		SELECT a.* , e.EMPL_NAME AS PRODUCER_NAME, e2.EMPL_NAME AS TARGET_NAME, sdt.SIDT_TEMP_NAME AS TEMPLATE
+			FROM ALARM a 
+			FULL OUTER JOIN EMPLOYEE e 
+			ON a.AL_PRODUCER = e.EMPL_ID
+			FULL OUTER JOIN EMPLOYEE e2 
+			ON a.AL_TARGET = e2.EMPL_ID
+			FULL OUTER JOIN SIGN_DOC_BOX sdb 
+			ON a.AL_KEY = sdb.SIDB_DOC_NUM
+			FULL OUTER JOIN SIGN_DOC_TEMP sdt 
+			ON sdb.SIDT_TEMP_CD = sdt.SIDT_TEMP_CD 
+			WHERE AL_DATE >= CURRENT_TIMESTAMP - INTERVAL '1' DAY  
+			AND AL_SET = 'Y'
+			AND AL_TARGET = #{al_target}
+			ORDER BY AL_DATE DESC
+	</select>
+	
+	<update id="alarmOff">
+		UPDATE ALARM SET AL_SET = 'N'
+		WHERE AL_NO IN (
+						<foreach collection="list" item="al_no" separator=",">
+							#{al_no}
+						</foreach>
+						)
+	</update>
+
+
+</mapper>

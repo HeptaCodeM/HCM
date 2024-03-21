@@ -1,29 +1,35 @@
 document.addEventListener('DOMContentLoaded', listAjax());
 
 function listAjax() {
+	var daygridmonth = calendar.view.title;
+	var empl_id = $("#empl_id").val();
+	console.log(empl_id);
+	console.log(daygridmonth);
 	$.ajax({
 		type: "get",
-		url: "./Ajax.do",
+		url: "/sm/getAllCalendar.do",
+		data: {daygridmonth:daygridmonth,empl_id:empl_id},
 		dataType: "json",
 		success: function(data) {
 			var calendarEl = document.getElementById('calendar');
-
 			var calendar = new FullCalendar.Calendar(calendarEl, {
-				googleCalendarApiKey: 'AIzaSyCbBec_oN7U_GVDunlGZ5Cq4GQkESsDV-Y',  // 구글 api 키
+				googleCalendarApiKey: 'AIzaSyBBTfPVr0UjVIt-H0VGRuLFRg-ltL-YQDk',  // 구글 api 키
 				initialView: 'dayGridMonth',   //월 달력 표시
 				
 
 				headerToolbar: {
 					left: 'addEventButton',  // 왼쪽에 이벤트 버튼 추가
-					center: 'title',		//center 버튼 추가 dayGridMonth(월간),timeGridWeek(주간),timeGridDay(시간대),listWeek(리스트형태)
+					center: 'prev,title,next',	//center 버튼 추가 dayGridMonth(월간),timeGridWeek(주간),timeGridDay(시간대),listWeek(리스트형태)
+					right:'',
 				},
 				titleFormat: function(date) {
+					1
 					return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';   //달력표시 한글로 변경
 				},
 				eventSources: [
 					{
 						// 구글 캘린더에서 가져올 이벤트의 ID 특일정보 아이디
-						googleCalendarId: "ko.south_korea.official#holiday@group.v.calendar.google.com"
+						googleCalendarId: "ko.south_korea#holiday@group.v.calendar.google.com"
 						// 클릭 이벤트를 제거하기 위해 넣은 클래스
 						, className: "koHol"
 						
@@ -64,7 +70,6 @@ function listAjax() {
 			calendar.render();
 		},
 		error: function() {
-
 		}
 	});
 }
@@ -83,7 +88,7 @@ function detail(seq){
             $("#start1").text(data.start);
             $("#end1").text(data.end);
             // 모달 창 표시
-            $("#detailModal").modal("show");	
+            $("#kt_modal_scrollable_2").modal("show");	
         },
         error: function() {
             console.log("오류임");
@@ -92,7 +97,7 @@ function detail(seq){
 }
 
 function insert(){
-		$("#calendarModal").modal("show"); // modal 나타내기
+		$("#kt_modal_scrollable_2").modal("show"); // modal 나타내기
 
 		$("#addCalendar").on("click", function() {  // modal의 추가 버튼 클릭 시
 			var groupid = $("#groupid").val();
@@ -127,7 +132,7 @@ function insert(){
 							return false;
 						} else {
 							$("#form")[0].reset(); // 폼 초기화
-							$("#calendarModal").modal("hide");
+							$("#kt_modal_scrollable_2").modal("hide");
 							listAjax();
 
 						}
@@ -175,3 +180,8 @@ $("#imagebutton2").click(function(){
 	$("#end").datetimepicker('show');
 });
 })
+
+
+
+
+var daygreedmonth = $(".fc-toolbar-title").val();

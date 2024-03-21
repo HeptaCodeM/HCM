@@ -21,6 +21,7 @@ public class CompanyDto {
 	private String comp_ceo_name;
 	private String comp_tel;
 	private String comp_fax;
+	private String comp_email;
 	private String comp_post;
 	private String comp_addr1;
 	private String comp_addr2;

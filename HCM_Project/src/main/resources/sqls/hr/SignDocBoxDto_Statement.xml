@@ -45,5 +45,24 @@
 	                                                        #{emdh_type}, CURRENT_DATE)
 	</insert>
 	
+	<select id="selectAllDownloadDocList" resultType="SignDocBoxDto" parameterType="Map">
+		SELECT
+		   A.SIDB_DOC_NUM,
+		   B.SICA_NAME AS SICA_NAME, 
+		   C.SIDT_TEMP_NAME AS SIDT_TEMP_NAME,
+		   A.SIDB_DOC_TITLE,
+		   A.SIDB_DOC_APPRDT,
+		   E.EMDH_TYPE AS sidt_print_type,
+		   E.EMDH_CREATE_DT AS sidt_print_date
+		FROM   SIGN_DOC_BOX A 
+		INNER JOIN SIGN_CATEGORY B ON A.SICA_CD = B.SICA_CD
+		INNER JOIN SIGN_DOC_TEMP C ON A.SIDT_TEMP_CD = C.SIDT_TEMP_CD 
+		INNER JOIN  EMPLOYEE D ON A.EMPL_ID = D.EMPL_ID 
+		INNER JOIN  EMP_DOC_HISTORY E ON A.SIDB_DOC_NUM = E.EMDN_ID
+		WHERE  D.EMPL_ID = #{empl_id}
+		AND   A.SIDB_DOC_STAT = '3'
+		AND   B.SICA_CD = 'CC000005'
+	</select>
+	
 
 </mapper>

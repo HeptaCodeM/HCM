@@ -10,8 +10,10 @@ public interface CommuteService {
 	/*출근 등록*/
 	public int registCommute(CommuteDto dto);
 	/*퇴근 등록*/
-	public int updateCommute(CommuteDto dto);
+	public int updateCommute(String empl_id);
 	/*출퇴근 현황*/
 	public List<CommuteDto> commuteList(Map<String, String> map);
+	/*출근상태 확인*/
+	public CommuteDto selectCommuteDayInfo(String empl_id);
 	
 }

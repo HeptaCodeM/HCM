@@ -3,34 +3,6 @@
 <mapper namespace="com.hcm.grw.model.mapper.doc.ApprDenyDaoImpl">
 
 	
-	<!-- 결재승인 json 데이터 업데이트 + 문서 업데이트 트랜잭션 -->
-
-<!-- 	<update id="approveJson">
-
-		UPDATE SIGN_DOC_BOX
-		SET SIDB_DOC_JSON =
-		JSON_TRANSFORM(
-		SIDB_DOC_JSON,
-		SET '$[0].APPR_FLAG' = '1'
-		)
-		WHERE
-		SIDB_DOC_NUM = #{sidb_doc_num}
-	</update> -->
-	
-<!-- 	<update id="approveJson">
-    UPDATE SIGN_DOC_BOX
-    SET SIDB_DOC_JSON = JSON_TRANSFORM(
-        SIDB_DOC_JSON,
-        <foreach collection="sidb_doc_json" separator="," item="json">
-        SET '$[0].APPR_DT' = '' || TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '',
-            '$[0].APPR_REPLY' = "${json.appr_reply}",
-            '$[0].APPR_FLAG' = '1',
-            '$[0].APPR_SIGN' = '' || (SELECT EMSI_SIGN_IMG FROM EMP_SIGN
-                                        WHERE EMSI_SEQ = 1) || '')
-                                        </foreach>
-    WHERE SIDB_DOC_NUM = #{sidb_doc_num}
-</update> -->
-
 	<update id="approveJson">
     UPDATE SIGN_DOC_BOX
     SET SIDB_DOC_JSON = JSON_TRANSFORM(
@@ -46,9 +18,31 @@
 	<update id="approveDoc">
 
 		UPDATE SIGN_DOC_BOX
-		SET SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_STAT = '2'
-		WHERE
-		SIDB_DOC_NUM = #{sidb_doc_num}
+		SET SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_STAT = '2', SIDB_FINAL_ID=#{empl_id},
+							 SIDB_CURR_ID = (SELECT  j.APPR_id  
+		FROM SIGN_DOC_BOX sdb
+		CROSS JOIN JSON_TABLE(SDB.SIDB_DOC_JSON, '$[*]' COLUMNS (
+               APPR_ID PATH '$.APPR_ID',
+               APPR_DEPTH INT PATH '$.APPR_DEPTH',
+               APPR_SIGN PATH '$.APPR_SIGN',
+               APPR_DT PATH '$.APPR_DT',
+               APPR_FLAG PATH '$.APPR_FLAG',
+               APPR_REPLY PATH '$.APPR_REPLY'
+            )) j
+		WHERE SIDB_DOC_NUM = #{sidb_doc_num} AND appr_flag = '0'    
+							  AND APPR_DEPTH = (
+										        SELECT MIN(SDBJ2.APPR_DEPTH)
+										        FROM JSON_TABLE(
+										                SDB.SIDB_DOC_JSON, '$[*]' 
+										                COLUMNS (
+										                    APPR_ID  PATH '$.APPR_ID',
+										                    APPR_FLAG  PATH '$.APPR_FLAG',
+										                    APPR_DEPTH  PATH '$.APPR_DEPTH'
+										                )
+										            ) AS SDBJ2
+										        WHERE SDBJ2.APPR_FLAG='0'
+										   	   ))
+		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
 
 	</update>
 
@@ -62,16 +56,15 @@
         SIDB_DOC_JSON,
         SET '$[${string_index}].APPR_DT' = '' || TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '',
             '$[${string_index}].APPR_REPLY' = #{appr_reply},
-            '$[${string_index}].APPR_FLAG' = '3')
+            '$[${string_index}].APPR_FLAG' = '2')
     WHERE SIDB_DOC_NUM = #{sidb_doc_num}
 </update>
 
 	<update id="denyDoc">
 
 		UPDATE SIGN_DOC_BOX
-		SET SIDB_DOC_STAT = '4', SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_FLAG = '2'
-		WHERE
-		SIDB_DOC_NUM = #{sidb_doc_num}
+		SET SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_STAT = '4', SIDB_FINAL_ID=#{empl_id}, SIDB_DOC_FLAG= '2'
+		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
 
 	</update>
 
@@ -88,9 +81,12 @@
 		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
 	</update>
 
-	<update id="finalDocApprove">
+	<update id="finalDocApprove">	
 		UPDATE SIGN_DOC_BOX
-		SET SIDB_DOC_STAT = '3'
+		SET SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_STAT = '3', SIDB_FINAL_ID=#{empl_id}, SIDB_DOC_FLAG= '1'
 		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
 	</update>
+	
+										   	   
+	
 </mapper>

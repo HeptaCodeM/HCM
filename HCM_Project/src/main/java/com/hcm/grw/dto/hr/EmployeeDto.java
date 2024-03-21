@@ -25,7 +25,8 @@ public class EmployeeDto {
 	private String empl_fax;
 	private String empl_joindate;
 	private String empl_leavedate;
-	private String empl_picture;
+	private byte[] empl_picture;
+	private String empl_picture_str;
 	private String empl_dept_cd;
 	private String empl_rank_cd;
 	private String empl_position_cd;
@@ -36,6 +37,11 @@ public class EmployeeDto {
 	private Date empl_create_dt;
 	private String empl_modify_id;
 	private Date empl_modify_dt;
+	
+	private String empl_dept_nm;
+	private String empl_rank_nm;
+	private String empl_position_nm;
+	private String empl_auth_nm;
 	
 	private String coco_name_dnm;
 	private String coco_name_rnm;

@@ -4,9 +4,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<title>조직관리</title>
+	<meta charset="UTF-8">
+	<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
+	<title>HCM GroupWare</title>
+	<style type="text/css">
+		.searchEmpInput{
+			width: 400px;
+			height: 40px;
+		}
+		
+		.searchEmpSelect{
+			width: 130px;
+			height: 40px;
+		}
+		.searchEmpDate{
+			width: 290px;
+			height: 40px;
+		}
+		.cardFlexSearch{
+			display: flex;
+			justify-content: center;
+		}
+	</style>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -23,7 +42,7 @@
 					<!--begin::Page title-->
 					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 						<!--begin::Title-->
-						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">임직원 정보</h1>
+						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">인사관리 > 조직관리 > 임직원 정보</h1>
 						<!--end::Title-->
 					</div>
 					<!--end::Page title-->
@@ -33,38 +52,120 @@
 				<!-- 내용 시작 -->
 				<div id="kt_app_content" class="app-content flex-column-fluid">
 					<div class="app-container container-fluid">
+					
 						<div class="card card-flush h-md-50 mb-xl-10">
-							<div class="card-header pt-5">
-								<h3 class="card-title text-gray-800 fw-bold">임직원리스트</h3>
-							</div>
-							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
-
-									<table class="table table-hover">
-										<thead>
-										<tr>
+								<div class="cardFlexSearch">
+									<span>
+										<select id="empShCtg" class="form-select form-select-solid searchEmpSelect">
+											<option value="">검색분류</option>
+											<option value="empl_name">성명</option>
+											<option value="empl_id">사원번호</option>
+											<option value="empl_phone">전화번호</option>
+										</select>
+									</span>&nbsp;&nbsp;
+									
+									<span>
+										<select id="empStaCtg" class="form-select form-select-solid searchEmpSelect">
+											<option value="">재직여부</option>
+											<option value="N">재직</option>
+											<option value="Y">퇴직</option>
+										</select>
+									</span>&nbsp;&nbsp;
+									
+									<span>
+    									<input class="form-control form-control-solid searchEmpDate" placeholder="재직기간" id="empDatepicker" />
+									</span>&nbsp;&nbsp;
+									
+									
+									
+									<span>
+										<input type="text" class="form-control form-control-solid searchEmpInput" id="empSearchValue" name="empSearchValue" placeholder="검색">
+									</span>&nbsp;&nbsp;
+								
+									<button class="btn btn-primary btnLg me-10" id="empSearchBtn">검색</button>
+								</div>
+								<div class="separator border-2 separator-dashed my-5"></div>
+								<div>
+									<div class="form-check form-check-custom form-check-solid">
+										부서&nbsp;&nbsp;
+										<span>  
+											<c:forEach var="dt" items="${deptList}">
+												<input name="dtChkVal" class="form-check-input" type="checkbox" value="${dt.getCoco_cd()}"/>&nbsp;
+												${dt.getCoco_name()}
+											</c:forEach>
+										</span>&nbsp;
+									</div>
+									<div class="separator border-2 separator-dashed my-5"></div>
+									<div class="form-check form-check-custom form-check-solid">
+										직위&nbsp;&nbsp;
+										<span>
+											<c:forEach var="rk" items="${rankList}">
+												<input name="rkChkVal" class="form-check-input" type="checkbox" value="${rk.getCoco_cd()}"/>&nbsp;
+												${rk.getCoco_name()}
+											</c:forEach>
+										</span>&nbsp;
+									</div>
+									<div class="separator border-2 separator-dashed my-5"></div>
+									<div class="form-check form-check-custom form-check-solid">
+										직책&nbsp;&nbsp;
+										<span>
+											<c:forEach var="pn" items="${positionList}">
+												<input name="pnChkVal" class="form-check-input" type="checkbox" value="${pn.getCoco_cd()}"/>&nbsp;
+												${pn.getCoco_name()}
+											</c:forEach>
+										</span>&nbsp;
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="card card-flush h-md-50 mb-xl-10">
+							<div class="card-body pt-5 table-responsive">
+								<table id="emplListTable" class="table table-hover table-rounded table-flush">
+									<thead>
+										<tr class="fw-semibold fs-7 border-bottom border-gray-200 py-4">
 											<th>사번</th>
 											<th>성명</th>
 											<th>부서명</th>
 											<th>직위</th>
 											<th>직책</th>
+											<th>재직여부</th>
 										</tr>
-										</thead>
-										<tbody>
-										<c:forEach items="${lists}" var="emp">
-										<tr>
-											<td><a href="/hr/employee/modify.do?empl_id=${emp.empl_id}">${emp.empl_id}</a></td>
+									</thead>
+									<tbody>
+									<c:forEach items="${lists}" var="emp">
+									<c:choose>
+										<c:when test="${emp.empl_delflag eq 'Y'}">
+										<tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
+										</c:when>
+										<c:otherwise>
+										<tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6" style="cursor: pointer;" onclick="location.href='/hr/employee/modifyAdmin.do?empl_id=${emp.empl_id}'">
+										</c:otherwise>
+									</c:choose>										
+											<td>${emp.empl_id}</td>
 											<td>${emp.empl_name}</td>
 											<td>${emp.coco_name_dnm}</td>
 											<td>${emp.coco_name_rnm}</td>
 											<td>${emp.coco_name_pnm}</td>
+											<td>
+												<c:choose>
+													<c:when test="${emp.empl_delflag eq 'Y'}">
+														퇴사자
+													</c:when>
+													<c:otherwise>
+														재직자
+													</c:otherwise>
+												</c:choose>
+											</td>
 										</tr>
-										</c:forEach>
-										</tbody>
-									</table>
-
+									</c:forEach>
+									</tbody>
+								</table>
 							</div>
 						</div>
+						
+						
 					</div>
 				</div>
 				<!-- 내용 끝 -->
@@ -73,4 +174,146 @@
 			
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
 </body>
+<script type="text/javascript">
+var startDate = "";
+var endDate = "";
+
+
+	$(document).ready(function(){
+		$('#emplListTable').DataTable({
+	        lengthChange: false,
+	        info: false
+		});
+	});
+
+	
+	
+	$(function() {
+
+	  $('#empDatepicker').daterangepicker({
+	      autoUpdateInput: false,
+	      locale: {
+	          cancelLabel: '초기화',
+	          applyLabel: '설정'
+	      }
+	  });
+	
+	  $('#empDatepicker').on('apply.daterangepicker', function(ev, picker) {
+	     	$(this).val(picker.startDate.format('YYYY년MM월DD일') + ' ~ ' + picker.endDate.format('YYYY년MM월DD일'));
+	     	startDate = picker.startDate.format('YYYY-MM-DD');
+	     	endDate = picker.endDate.format('YYYY-MM-DD');
+	  });
+	
+	  $('#empDatepicker').on('cancel.daterangepicker', function(ev, picker) {
+	      	$(this).val('');
+	  });
+	
+	});
+	
+	var empSearchBtn = document.getElementById("empSearchBtn");
+	empSearchBtn.addEventListener('click',function(){
+//		console.log("작동");
+		
+		var empShCtgVal = document.getElementById('empShCtg').value;
+		console.log(empShCtgVal);
+		
+		var empStaCtg = document.getElementById('empStaCtg').value;
+		console.log(empStaCtg);
+		
+		var empSearchValue = document.getElementById('empSearchValue').value;
+		console.log(empSearchValue);
+
+	   
+		var dtChkVal = document.getElementsByName('dtChkVal');
+		let dtArr = new Array();	
+			for(let i = 0; i < dtChkVal.length; i++){
+				if(dtChkVal[i].checked){
+					dtArr.push(dtChkVal[i].value);
+				}
+			}
+		console.log(dtArr);
+			
+		var rkChkVal = document.getElementsByName('rkChkVal');
+		let rkArr = new Array();
+			for(let j = 0; j < rkChkVal.length; j++){
+				if(rkChkVal[j].checked){
+					rkArr.push(rkChkVal[j].value);
+				}
+			}
+		console.log(rkArr);
+			
+		var pnChkVal = document.getElementsByName('pnChkVal');
+		let pnArr = new Array();
+		
+			for(let k = 0; k < pnChkVal.length; k++){
+				if(pnChkVal[k].checked){
+					pnArr.push(pnChkVal[k].value);
+				}
+			}
+		console.log(pnArr);	
+		
+		
+		var valueChk = new URLSearchParams();
+		valueChk.append('empShCtgVal', empShCtgVal);
+		valueChk.append('empStaCtg', empStaCtg);
+		valueChk.append('startDate', startDate);
+		valueChk.append('endDate', endDate);
+		valueChk.append('empSearchValue', empSearchValue);
+		valueChk.append('dtArr', dtArr);
+		valueChk.append('rkArr', rkArr);
+ 		valueChk.append('pnArr', pnArr);
+/*		fetch('/hr/employee/empSearching.do',{
+			method: "POST",
+			headers: {
+			    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+			},
+			body: valueChk
+		})
+		.then(response =>{
+			return response.json();
+			console.log(response.json());
+			startDate = "";
+			endDate = "";
+		})
+		.then(returnData => {
+			console.log(returnData);
+			returnList(returnData);
+			
+		})
+	    .catch(err => { 
+	        console.log('에러발생', err);
+	        startDate = "";
+			endDate = "";
+	    }); */ 
+	    var innerFr = document.getElementById("emplListTable");
+	    var frstyle = document.defaultView.getComputedStyle(innerFr);
+		$("#emplListTable").DataTable().destroy(); 
+		$.ajax({
+		    type: "POST",
+		    url: "/hr/employee/empSearching.do?"+valueChk,	
+		    success: function (searchlists) {
+		        console.log(searchlists);
+		        $('#emplListTable').DataTable({
+		        	data:searchlists,
+		        	lengthChange: false,
+			        info: false,
+		        	columns: [ { data: "empl_id" }, 
+					       { data: "empl_name" }, 
+					       { data: "coco_name_dnm" }, 
+					       { data: "coco_name_rnm" }, 
+					       { data: "coco_name_pnm" }, 
+					       { data: "empl_delflag" }]
+					       
+		        });
+		        document.getElementById("emplListTable");
+		    },
+		    error:function(err){
+				console.log(err);
+			}
+		});
+		
+	});
+
+	
+</script>
 </html>

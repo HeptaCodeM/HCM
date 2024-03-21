@@ -9,8 +9,6 @@ String docUri = request.getRequestURI();
 String currentDocPageName = docUri.substring(docUri.lastIndexOf("/") + 1).replace(".jsp","");
 Boolean openDocMenuFlag = true;
 %>
-<!DOCTYPE html>
-<html>
 	<!-- 대분류별 영역 시작 -->
 	<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 		
@@ -59,5 +57,3 @@ Boolean openDocMenuFlag = true;
 		</div>
 	</div>			
 	<!-- 대분류별 영역 종료 ------------------------------------------------------------------------->
-
-</html>

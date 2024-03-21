@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Base64Utils;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hcm.grw.dto.hr.CompanyDto;
+import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.model.mapper.hr.EmployeeDao;
 import com.hcm.grw.model.service.hr.CompanyService;
 
 @Controller
@@ -27,17 +30,35 @@ public class CompanyController {
 	@Autowired
 	private CompanyService companyService; 
 	
+	@Autowired
+	private EmployeeDao employeeDao; 
 	
-	@GetMapping(value = "/companyInfo.do")
-	public String companyInfo(Model model) {
+	
+	@GetMapping(value = "/hr/company/companyInfo.do")
+	public String companyInfo(Model model, Authentication authentication) {
+		String userId = authentication.getName();
+		System.out.println(userId);
+		EmployeeDto fnEmployeeDto = employeeDao.getUserInfo(userId);
+		String empl_auth = fnEmployeeDto.getEmpl_auth();
+		System.out.println(empl_auth);
+		if(empl_auth.equals("ROLE_HR_ADMIN")) {
+			model.addAttribute("empl_auth",empl_auth);
+		}
 		Map<String, Object> companyMap = new HashMap<String, Object>();
 		companyMap.put("comp_id", "ITCOM0A1");
 		CompanyDto companyDto = companyService.showCompanyInfo(companyMap);
+		Map<String, Object> sealMap = new HashMap<String, Object>();
+		sealMap.put("comp_id", "ITCOM0A1");
+		CompanyDto sealDto = companyService.showCompanySeal(sealMap);
+		byte[] sealImg = sealDto.getComp_seal();
+		
+		
+		model.addAttribute("sealImg",Base64Utils.encodeToString(sealImg));
 		model.addAttribute("companyDto", companyDto);
 		return "hr/company/companyInfo";
 	}
 	
-	@GetMapping(value = "/companyInfoCorrection.do")
+	@GetMapping(value = "/hr/company/companyInfoCorrection.do")
 	public String companyInfoCorrection(Model model) {
 		Map<String, Object> companyMap = new HashMap<String, Object>();
 		companyMap.put("comp_id", "ITCOM0A1");
@@ -46,13 +67,14 @@ public class CompanyController {
 		return "hr/company/companyInfoCorrection";
 	}
 	
-	@PostMapping(value = "/correctionCompanyInfo.do")
+	@PostMapping(value = "/hr/company/correctionCompanyInfo.do")
 	public String correctionCompanyInfo(HttpServletRequest request) {
 		String comp_name = request.getParameter("comp_name");
 		String comp_num = request.getParameter("comp_num");
 		String comp_ceo_name = request.getParameter("comp_ceo_name");
 		String comp_tel = request.getParameter("comp_tel");
 		String comp_fax = request.getParameter("comp_fax");
+		String comp_email = request.getParameter("comp_email");
 		String comp_addr1 = request.getParameter("comp_addr1");
 		String comp_addr2 = request.getParameter("comp_addr2");
 		String comp_post = request.getParameter("comp_post");
@@ -65,6 +87,7 @@ public class CompanyController {
 		companyDto.setComp_ceo_name(comp_ceo_name);
 		companyDto.setComp_tel(comp_tel);
 		companyDto.setComp_fax(comp_fax);
+		companyDto.setComp_email(comp_email);
 		companyDto.setComp_addr1(comp_addr1);
 		companyDto.setComp_addr2(comp_addr2);
 		companyDto.setComp_post(comp_post);
@@ -75,14 +98,14 @@ public class CompanyController {
 		
 		int cnt = companyService.correctionCompanyInfo(companyDto);
 		if(cnt == 1) {
-			return "redirect:./companyInfo.do";
+			return "redirect:/hr/company/companyInfo.do";
 		}else {
-			return "redirect:./companyInfo.do";
+			return "redirect:/hr/company/companyInfo.do";
 		}
 		
 	}
 	
-	@GetMapping(value = "/showCompanySeal.do")
+	@GetMapping(value = "/hr/company/showCompanySeal.do")
 	public String showCompanySeal(Model model) {
 		Map<String, Object> sealMap = new HashMap<String, Object>();
 		sealMap.put("comp_id", "ITCOM0A1");
@@ -90,30 +113,30 @@ public class CompanyController {
 		byte[] sealImg = sealDto.getComp_seal();
 		
 		System.out.println(Base64Utils.encodeToString(sealImg));
-		model.addAttribute("sealDto",Base64Utils.encodeToString(sealImg));
+		model.addAttribute("sealImg",Base64Utils.encodeToString(sealImg));
 		return "hr/company/showCompanySeal";
 	}
 	
 	
-	@GetMapping(value = "/insertCompanySealForm.do")
+	@GetMapping(value = "/hr/company/insertCompanySealForm.do")
 	public String insertCompanySeal(Model model) {
 		return "hr/company/insertCompanySealForm";
 	}
 	
 	
-	@PostMapping(value = "/companySealUpload.do")
+	@PostMapping(value = "/hr/company/companySealUpload.do")
 	public String companySealUpload(HttpServletRequest request, List<MultipartFile> file)throws IOException {
 		System.out.println("동작");
 		System.out.println(file.size());
 		System.out.println(file);
+		Map<String, Object> sealMap = new HashMap<String, Object>();
 		for(MultipartFile f : file) {
-			Map<String, Object> sealMap = new HashMap<String, Object>();
 			byte[] comp_seal = f.getBytes();
 			sealMap.put("comp_seal", comp_seal);
 			sealMap.put("comp_id", "ITCOM0A1");
-			companyService.insertCompanySeal(sealMap);
 		}
-		return "redirect:./companyInfo.do";
+		companyService.insertCompanySeal(sealMap);
+		return "redirect:/hr/company/companyInfo.do";
 	}
 	
 }
