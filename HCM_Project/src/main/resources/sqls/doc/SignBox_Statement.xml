@@ -62,6 +62,10 @@
    </select>
 <!-- 	첨부파일 등록(트랜잭션) -->
 	<insert id="insertDocFile">
+		<selectKey keyProperty="sidb_doc_num" order="BEFORE" resultType="String">
+			SELECT MAX(SIDB_DOC_NUM)
+			FROM SIGN_DOC_BOX
+		</selectKey>
 		INSERT INTO SIGN_DOC_FILE (SIDF_FILE_NUM, SIDB_DOC_NUM, SIDF_FILE_ORIGIN,
                                                         SIDF_FILE_STORED, SIDF_FILE_SIZE, SIDF_FILE_CONTENT)
 		VALUES ((SELECT NVL(MAX(SIDF_FILE_NUM) + 1, 24000001) FROM SIGN_DOC_FILE), #{sidb_doc_num}, #{sidf_file_origin},

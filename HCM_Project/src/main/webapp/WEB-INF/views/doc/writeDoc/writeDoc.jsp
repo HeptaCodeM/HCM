@@ -113,11 +113,12 @@
 							<table class="table table-bordered">
 								<tr class="success">
 									<th>기안일</th>
-									<td><input type="date" id="currentDate" name="sidb_doc_writedt" maxlength="20"></td>
+<!-- 									<td><input id="currentDate" name="sidb_doc_writedt" maxlength="20"></td> -->
+									<td><div id="currentDate" name="sidb_doc_writedt" maxlength="20"></div></td>
 									<th>만료일</th>
-									<td><input type="date" name="sidb_doc_expiredt" maxlength="20"></td>
+									<td><input type="date" class="" name="sidb_doc_expiredt" data-td-target-input="nearest"></td>
 									<th>알림여부</th>
-									<td><input type="checkbox" name="alflag"></td>
+									<td><input type="checkbox" class="form-check-input"name="alflag"></td>
 								</tr>
 								<tr>
 									<th>결재선</th>
@@ -140,7 +141,7 @@
 							<table class="table table-bordered">
 								<tr>
 									<th>첨부파일</th>
-									<td colspan="2"><input type="file" id="sidf_file_content" class="form-control form-control-solid"></td>
+									<td colspan="2"><input type="file" id="sidf_file_content" name="file" class="form-control form-control-solid"></td>
 									
 								</tr>
 							</table>

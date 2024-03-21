@@ -1,8 +1,14 @@
 package com.hcm.grw.ctrl.doc;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,12 +17,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hcm.grw.comm.FileCommonService;
 import com.hcm.grw.dto.doc.SignBoxDto;
+import com.hcm.grw.dto.doc.SignFileDto;
 import com.hcm.grw.dto.doc.SignJsonDto;
 import com.hcm.grw.dto.doc.TempTreeDto;
 import com.hcm.grw.dto.doc.TemplateDto;
@@ -56,9 +65,19 @@ public class TempTreeController {
 	
 	
 	@PostMapping(value = "/insertDoc.do", produces = "text/html; charset=UTF-8")
-	public ResponseEntity<?> insertDoc(@RequestBody SignBoxDto dto, MultipartFile file) {
+	public ResponseEntity<?> insertDoc(@RequestPart("file") MultipartFile file, 
+									   @RequestPart("dto") SignBoxDto dto,
+									   HttpServletResponse resp) throws IOException {
 		log.info("TempTreeController insertTempDoc.do POST 기안문 작성");
-		log.info("{}\n{}", dto, file);
+		log.info("{}\n {}", file, dto);
+		
+		SignFileDto fileDto = new SignFileDto();
+		fileDto.setSidf_file_origin(file.getName());
+		fileDto.setSidf_file_size(String.valueOf(file.getSize()));
+		fileDto.setSidf_file_content(FileCommonService.fileUpload(file, resp));
+		fileDto.setSidf_file_stored(UUID.randomUUID().toString());
+		bService.insertTransaction(dto, fileDto);
+		
 		return ResponseEntity.ok("성공");
 	}
 	

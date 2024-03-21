@@ -108,7 +108,7 @@ $('#jstree').on('select_node.jstree', function(e, data) {
 
 })
 	
-document.getElementById('currentDate').value = new Date().toDateString();
+document.getElementById('currentDate').innerHTML = Date();
 
 function insertDoc() {
 	var sidb_doc_expiredt = document.getElementsByName('sidb_doc_expiredt')[0].value;
@@ -137,67 +137,75 @@ function insertDoc() {
 	// 파일
 //	var file = document.getElementById('sidb_doc_content');
 //	var json = new FormData();
-//	json.append({
-//		sidb_doc_title : sidb_doc_title,
-//		sidb_doc_content : sidb_doc_content,
-//		empl_id : empl_id,
-//		sidb_doc_expiredt : sidb_doc_expiredt,
-//		sidb_doc_alflag : sidb_doc_alflag,
-//		sidb_doc_be : sidb_doc_be,
-//		sidb_doc_end : sidb_doc_end,
-//		sica_cd : sica_cd,
-//		sidt_temp_cd : sidt_temp_cd,
-//		sidb_curr_id : '20230109',
-//		sidb_doc_json : 
-//		[
-//			{
-//				appr_id : '20230109',
-//				appr_depth : '1'
-//			},
-//			{
-//				appr_id : '20230108',
-//				appr_depth : '2'
-//			},
-//			{
-//				appr_id : '20230107',
-//				appr_depth : '3'
-//			}
-//		]
-//	})
+	
 //	json.append(file);
 
 	var file = document.getElementById('sidf_file_content').files[0]; // 파일 가져오기
-	var json = new FormData();
+	var formData = new FormData();
 
 	// 데이터 추가
-	json.append('sidb_doc_title', sidb_doc_title);
-	json.append('sidb_doc_content', sidb_doc_content);
-	json.append('empl_id', empl_id);
-	json.append('sidb_doc_expiredt', sidb_doc_expiredt);
-	json.append('sidb_doc_alflag', sidb_doc_alflag);
-	json.append('sidb_doc_be', sidb_doc_be);
-	json.append('sidb_doc_end', sidb_doc_end);
-	json.append('sica_cd', sica_cd);
-	json.append('sidt_temp_cd', sidt_temp_cd);
-	json.append('sidb_curr_id', '20230109');
+//	json.append('sidb_doc_title', sidb_doc_title);
+//	json.append('sidb_doc_content', sidb_doc_content);
+//	json.append('empl_id', empl_id);
+//	json.append('sidb_doc_expiredt', sidb_doc_expiredt);
+//	json.append('sidb_doc_alflag', sidb_doc_alflag);
+//	json.append('sidb_doc_be', sidb_doc_be);
+//	json.append('sidb_doc_end', sidb_doc_end);
+//	json.append('sica_cd', sica_cd);
+//	json.append('sidt_temp_cd', sidt_temp_cd);
+//	json.append('sidb_curr_id', '20230109');
+//
+//	// 배열 추가
+//	json.append('sidb_doc_json[]', JSON.stringify({ appr_id: '20230109', appr_depth: '1' }));
+//	json.append('sidb_doc_json[]', JSON.stringify({ appr_id: '20230108', appr_depth: '2' }));
+//	json.append('sidb_doc_json[]', JSON.stringify({ appr_id: '20230107', appr_depth: '3' }));
 
-	// 배열 추가
-	json.append('sidb_doc_json[]', JSON.stringify({ appr_id: '20230109', appr_depth: '1' }));
-	json.append('sidb_doc_json[]', JSON.stringify({ appr_id: '20230108', appr_depth: '2' }));
-	json.append('sidb_doc_json[]', JSON.stringify({ appr_id: '20230107', appr_depth: '3' }));
-
+	var docData = {
+		sidb_doc_title : sidb_doc_title,
+		sidb_doc_content : sidb_doc_content,
+		empl_id : empl_id,
+		sidb_doc_expiredt : sidb_doc_expiredt,
+		sidb_doc_alflag : sidb_doc_alflag,
+		sidb_doc_be : sidb_doc_be,
+		sidb_doc_end : sidb_doc_end,
+		sica_cd : sica_cd,
+		sidt_temp_cd : sidt_temp_cd,
+		sidb_curr_id : '20230109',
+		sidb_doc_json : 
+		[
+			{
+				appr_id : '20230109',
+				appr_depth : '1'
+			},
+			{
+				appr_id : '20230108',
+				appr_depth : '2'
+			},
+			{
+				appr_id : '20230107',
+				appr_depth : '3'
+			}
+		]
+	}
+	
 	// 파일 추가
-	json.append('file', file);
+	formData.append('file', file);
+	formData.append('dto', new Blob([JSON.stringify(docData)], {type : 'application/json'}));
 	
 	fetch('/doc/insertDoc.do', {
 		method : 'post',
-		body : json
+		body : formData
 	})
 		.then(resp => {
 			return resp.text()
 		})
 		.then(data => {
 			console.log(data);
+			if(data == "성공") {
+				location.href = '/doc/template.do';
+			} else {
+				swalAlert('작성에 실패했습니다','','','확인','')
+			}
 			
 		})
 		.catch(err => {console.log(err)})
