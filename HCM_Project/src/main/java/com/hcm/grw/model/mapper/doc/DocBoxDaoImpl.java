@@ -166,4 +166,8 @@ public class DocBoxDaoImpl implements IDocBoxDao {
 		return sqlSessionTemplate.selectList(NS+"getTempDocs",dto);
 	}
 
+	@Override
+	public String findEmployeeName(String id) {
+		return sqlSessionTemplate.selectOne(NS+"findEmployeeName",id);
+	}
 }

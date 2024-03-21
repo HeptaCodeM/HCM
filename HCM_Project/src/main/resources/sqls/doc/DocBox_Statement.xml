@@ -365,4 +365,11 @@ JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
 WHERE SDB.empl_id = #{empl_id} 
 </select>
 
+<!-- 이름가져오기 -->
+<select id="findEmployeeName" resultType="String">
+		SELECT  EMPL_NAME		
+		FROM 	EMPLOYEE E
+		WHERE EMPL_ID = #{empl_id}	
+	</select>
+
 </mapper>

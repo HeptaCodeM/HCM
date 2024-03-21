@@ -110,19 +110,13 @@ public class ApproveDenyController {
 	
 	
 	@PostMapping("/doc/docBox/gianCancel.do")
-	public String gianCancel(Model model, String docNum, HttpSession session, HttpServletResponse response) {
+	public String gianCancel(Model model, String docNum, HttpSession session) {
 		log.info("상신취소 메소드 진입");
 		SignBoxDto dto = new SignBoxDto();
 		dto.setSidb_doc_num(docNum);
 	
-		//세션에서 가져온 결재자  사원 아이디 set
-		EmployeeDto Edto = (EmployeeDto)session.getAttribute("userInfoVo");
-		dto.setEmpl_id(Edto.getEmpl_id());
-		
 		int n=apprService.gianCancel(dto);
 		
-		
-		//return (n==1)?"/doc/docBox/docBox":"/doc/docBox/boardDetail/boardDetail";
-		return (n==1)?"redirect:/doc/docBox.do":"redirect:/doc/docBox.do";
+		return (n==1)?"redirect:/doc/docBox.do":"redirect:/error403.do";
 	}
 	}

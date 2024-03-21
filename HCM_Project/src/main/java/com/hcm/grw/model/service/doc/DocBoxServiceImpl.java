@@ -145,4 +145,9 @@ public class DocBoxServiceImpl implements IDocBoxService {
 	public List<SignBoxDto> getTempDocs(SignBoxDto dto) {
 		return dao.getTempDocs(dto);
 	}
+	
+	@Override
+	public String findEmployeeName(String id) {
+		return dao.findEmployeeName(id);
+	}
 }	

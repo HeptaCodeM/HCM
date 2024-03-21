@@ -3,6 +3,7 @@ package com.hcm.grw.ctrl.doc;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,14 +18,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hcm.grw.comm.FileCommonService;
-import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.doc.SignFileDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
@@ -47,8 +46,38 @@ public class DocController {
 	public String getDetailBoard(Model model, SignBoxDto dto, String docNum, HttpSession session) {
 
 		dto.setSidb_doc_num(docNum);
-
 		List<SignBoxDto> docDto = docService.getDetailDocsList(dto);
+
+		// EMPL_REF에서 가져온 모든 사원 번호를 저장할 ArrayList를 선언
+		List<String> allEmployeeIds = new ArrayList<>();
+
+		    String emplRef = docDto.get(0).getEmpl_ref();
+		    if (emplRef != null && !emplRef.isEmpty()) {
+		        String[] emplIds = emplRef.split(",");
+		        allEmployeeIds = Arrays.asList(emplIds);
+		}
+//		System.out.println(allEmployeeIds);
+		for (String string : allEmployeeIds) {
+			System.out.println(string);
+		}
+		String trimId = "";
+		StringBuilder employeeNamesBuilder = new StringBuilder();
+		for (String id : allEmployeeIds) {
+			trimId = id.trim();
+			System.out.println(trimId);
+		    String employeeName = docService.findEmployeeName(trimId);
+		    employeeNamesBuilder.append(employeeName).append(", ");
+		    System.out.println("뭐찍히니????????: " + employeeName);
+		}
+		
+		if (employeeNamesBuilder.length() > 0) {
+		    employeeNamesBuilder.setLength(employeeNamesBuilder.length() - 2);
+		}
+
+		String concatenatedNames = employeeNamesBuilder.toString();
+		System.out.println("사원 이름들: " + concatenatedNames);
+		docDto.get(1).setEmpl_ref(concatenatedNames);
+		 
 		model.addAttribute("docDto", docDto);
 		log.info("상세조회  데이터 리스트 결과{}", docDto);
 		return "/doc/docBox/boardDetail/boardDetail";

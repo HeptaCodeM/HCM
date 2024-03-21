@@ -66,6 +66,9 @@ function dragElement(elmnt) {
 var element = document.querySelector('#kt_modal_3');
 dragElement(element);
 
+var denyModal = document.querySelector('#kt_deny');
+dragElement(denyModal);
+
 function dragElement(elmnt) {
 	var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 	if (elmnt.querySelector('.modal-content')) {

@@ -128,6 +128,8 @@ th, td {
 									</td>
 								</tr>
 							</table>
+							참조자 : ${docDto1.empl_ref}
+							참조부서 : 
 							</div>
 						</div>
 						<div class="separator separator-dashed my-3"></div>
@@ -217,9 +219,9 @@ th, td {
 								
 		<div style="text-align: center; margin-top: 30px;">
 	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.sidb_curr_id}">
-    <button type="button" class="btn btn-primary btnSm" data-bs-toggle="modal" data-bs-target="#kt_modal_3">승인</button>
+    <button type="button" class="btn btn-primary btnLg" data-bs-toggle="modal" data-bs-target="#kt_modal_3">승인</button>
     <span style="min-width:100px;">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button type="button" class="btn btn-danger btnSm" data-bs-toggle="modal" data-bs-target="#kt_modal_1">반려</button>
+    <button type="button" class="btn btn-danger btnLg" data-bs-toggle="modal" data-bs-target="#kt_deny">반려</button>
 	</c:if>
 
 	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.empl_id and docDto1.sidb_doc_stat == 1}">
@@ -281,7 +283,7 @@ th, td {
 	</div>
 
 	<!-- 반려 모달창 -->
-	<div class="modal fade" tabindex="-1" id="kt_modal_1">
+	<div class="modal fade" tabindex="-1" id="kt_deny">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
