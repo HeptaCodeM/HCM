@@ -96,6 +96,11 @@ public class EchoHandler extends TextWebSocketHandler {
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+		for(WebSocketSession logoutUser : sessionList) {
+			if(logoutUser != session) {
+				logoutUser.sendMessage(new TextMessage(new Gson().toJson("접속 해제")));
+			}
+		}
 		
 		sessionList.remove(session);
 		
