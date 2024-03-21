@@ -94,7 +94,7 @@
 											<span class="path4"></span>
 											<span class="path5"></span>
 										</i>
-											<div class="symbol symbol-circle symbol-25px" style="background-color: #f8285a; width: 12px; height: 12px; color: white; font-size: 10px; margin-bottom: 10px; margin-left: -5px; display: none;" id="numberFlag"></div>
+										<div class="symbol symbol-circle symbol-25px" style="background-color: #f8285a; width: 12px; height: 12px; color: white; font-size: 10px; margin-bottom: 10px; margin-left: -5px; display: none;" id="numberFlag"></div>
 									</div>
 								</div>
 								
@@ -176,7 +176,7 @@
 				</div>
 			</div>
 		</div>
-		
+		<input type="hidden" value="${userInfoVo.empl_picture_str }">
 		<!-- ------------------------------ 알림 영역 사작 ------------------------------ -->
 		<div id="kt_activities" class="bg-body drawer drawer-end drawer-end" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '720px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle" data-kt-drawer-close="#kt_activities_close" style="width: 600px !important;">
 			<div class="card shadow-none border-0 rounded-0">
@@ -197,6 +197,9 @@
 						<c:if test="${userInfoVo ne null}">
 							<input type="hidden" id="id" value="${userInfoVo.empl_id}">
 							<input type="hidden" id="myName" value="${userInfoVo.empl_name}">
+							
+							
+							<input type="hidden" id="myPic" value="${userInfoVo.empl_picture_str }">
 						</c:if>
 					</div>
 				</div>
@@ -234,7 +237,6 @@
 									</div>
 								</div>
 							</div>
-							
 						</div>
 					</div>
 				</div>
@@ -272,7 +274,7 @@
 								</span>
 							</form>
 						<div data-kt-search-element="results">
-									<div class="scroll-y me-n7 pe-7" id="searchMainDiv" style="height: 100%;">
+									<div class="scroll-y me-n7 pe-7" id="searchMainDiv" style="height: 760px;">
 									
 									<!-- Ajax 유저목록 삽입 영역 -->	
 									
@@ -285,7 +287,6 @@
 					<div class="card-title">
 						<div class="d-flex justify-content-center flex-column me-3">
 							<a class="fs-4 fw-bold text-gray-900 text-hover-primary me-1 mb-2 lh-1">대화상대를 선택해주세요</a>
-							<input type="hidden" value="20240013" id="target">
 							<div class="mb-0 lh-1">
 								<span class="badge badge-success badge-circle w-10px h-10px me-1"></span>
 								<span class="fs-7 fw-semibold text-muted">접속중</span>

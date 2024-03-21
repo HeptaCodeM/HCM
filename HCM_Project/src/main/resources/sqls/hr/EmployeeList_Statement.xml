@@ -8,6 +8,7 @@
 	            A.EMPL_NAME,
 	            A.EMPL_PHONE,
 	            A.EMPL_EMAIL, 
+	            A.EMPL_PICTURE,
 	            C1.COCO_CD AS COCO_CD_DCD,
 	            C1.COCO_NAME AS COCO_NAME_DNM,
 	            C2.COCO_CD AS COCO_CD_RCD,

@@ -39,7 +39,7 @@ public class AccessLogFilter implements Filter {
 			log.debug("[AccessLogFilter]\t Client 요청주소 : {}", url + "?" + queryString);
 			log.debug("[AccessLogFilter]\t Client IP : {}" , remoteAddr);
 			log.debug("[AccessLogFilter]\t Client 소프트웨어 정보 : {}" , agent);
-			chain.doFilter(request, response);
+			
 		}
 		
 		chain.doFilter(request, response);
