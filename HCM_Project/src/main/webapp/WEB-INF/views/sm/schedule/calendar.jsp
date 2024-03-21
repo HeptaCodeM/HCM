@@ -42,6 +42,9 @@
 	.fc-toolbar-title{
 	display: inline-block;
 	}
+	.addEventButton{
+	margin-right: 20px;
+	}
 </style>
 
 </head>
