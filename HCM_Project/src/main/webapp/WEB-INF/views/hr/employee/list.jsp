@@ -288,11 +288,17 @@ var endDate = "";
 		        	lengthChange: false,
 			        info: false,
 		        	columns: [ { data: "empl_id" }, 
-					       { data: "empl_name" }, 
-					       { data: "coco_name_dnm" }, 
-					       { data: "coco_name_rnm" }, 
-					       { data: "coco_name_pnm" }, 
-					       { data: "empl_delflag" }]
+							{ data: "empl_name" }, 
+							{ data: "coco_name_dnm" }, 
+							{ data: "coco_name_rnm" }, 
+							{ data: "coco_name_pnm" }, 
+					       /* { data: "empl_delflag" } */
+							{
+								data: "empl_delflag",
+								render: function(data, type, row) {
+									return data === "Y" ? "퇴직" : "재직";
+								}
+							}]
 					       
 		        });
 		    },
