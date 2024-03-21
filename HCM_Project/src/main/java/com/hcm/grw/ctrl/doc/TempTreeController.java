@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,6 +20,7 @@ import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.doc.SignJsonDto;
 import com.hcm.grw.dto.doc.TempTreeDto;
 import com.hcm.grw.dto.doc.TemplateDto;
+import com.hcm.grw.model.service.doc.ISignBoxService;
 import com.hcm.grw.model.service.doc.ITempTreeService;
 import com.hcm.grw.model.service.doc.ITemplateService;
 
@@ -33,6 +35,8 @@ public class TempTreeController {
 	private ITempTreeService service;
 	@Autowired
 	private ITemplateService tService;
+	@Autowired
+	private ISignBoxService bService;
 	
 	@GetMapping("getTempTree.do")
 	public ResponseEntity<?> tempTree(){
@@ -52,9 +56,9 @@ public class TempTreeController {
 	
 	
 	@PostMapping(value = "/insertDoc.do", produces = "text/html; charset=UTF-8")
-	public ResponseEntity<?> insertDoc(@RequestBody SignBoxDto dto) {
+	public ResponseEntity<?> insertDoc(@RequestBody SignBoxDto dto, MultipartFile file) {
 		log.info("TempTreeController insertTempDoc.do POST 기안문 작성");
-		log.info("{}" ,dto);
+		log.info("{}\n{}", dto, file);
 		return ResponseEntity.ok("성공");
 	}
 	

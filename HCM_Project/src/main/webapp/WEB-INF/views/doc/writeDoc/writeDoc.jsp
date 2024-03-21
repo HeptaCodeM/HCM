@@ -136,11 +136,11 @@
 									<td colspan="5"><input type="text" name="sidb_doc_title" maxlength="20"></td>
 								</tr>
 							</table>
-							<textarea id="editor" name="sidt_doc_content"></textarea>
+							<textarea id="editor" name="sidb_doc_content"></textarea>
 							<table class="table table-bordered">
 								<tr>
 									<th>첨부파일</th>
-									<td colspan="2"><input type="file" class="form-control form-control-solid"></td>
+									<td colspan="2"><input type="file" id="sidf_file_content" class="form-control form-control-solid"></td>
 									
 								</tr>
 							</table>
