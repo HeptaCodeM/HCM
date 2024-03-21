@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.doc.SignJsonDto;
 import com.hcm.grw.dto.doc.TempTreeDto;
 import com.hcm.grw.dto.doc.TemplateDto;
@@ -50,11 +51,11 @@ public class TempTreeController {
 	}
 	
 	
-	@PostMapping(value = "/insertTempDoc.do")
-	@RequestBody
-	public void insertTempDoc(@ModelAttribute SignJsonDto jsonDto) {
+	@PostMapping(value = "/insertDoc.do", produces = "text/html; charset=UTF-8")
+	public ResponseEntity<?> insertDoc(@RequestBody SignBoxDto dto) {
 		log.info("TempTreeController insertTempDoc.do POST 기안문 작성");
-		
+		log.info("{}" ,dto);
+		return ResponseEntity.ok("성공");
 	}
 	
 	

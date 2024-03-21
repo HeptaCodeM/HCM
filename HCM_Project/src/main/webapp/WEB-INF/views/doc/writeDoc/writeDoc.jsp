@@ -27,7 +27,7 @@
 	data-kt-app-sidebar-push-header="true"
 	data-kt-app-sidebar-push-toolbar="true"
 	data-kt-app-sidebar-push-footer="true"
-	data-kt-app-toolbar-enabled="true" class="app-default">
+	data-kt-app-toolbar-enabled="true" class="app-default modal-open" style="overflow: auto; padding-right: 0px;">
 	<!-- **전체페이지 감싸기** -->
 	<div class="app-wrapper flex-column flex-row-fluid">
 		<!-- 메인페이지 -->
@@ -73,9 +73,9 @@
 							
 							<!-- 기안문 작성 화면 -->
 							<div id="editor_div" style="display: none;">
-							<form>
+							<%-- <form>
 							${loginInfo }
-							<!-- <div class="row gx-5 gx-xl-10">
+							<div class="row gx-5 gx-xl-10">
 							<div class="col-xxl-5 mb-5 mb-xl-10">
 							<div class="input-group input-group-sm mb-5">
 							    <span class="input-group-text" id="inputGroup-sizing-sm">기안일</span>
@@ -88,11 +88,11 @@
 							    <input type="date" class="form-control" name="sidb_doc_end" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
 							</div>
 							</div>
-							</div> -->
+							</div>
 							
 							<div class="input-group input-group-sm mb-5">
 							    <span class="input-group-text" id="inputGroup-sizing-sm">만료일</span>
-							    <input type="date" class="form-control" name="sidb_doc_expiredt" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
+							    <input type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
 							</div>
 							<div class="input-group input-group-sm mb-5">
 							    <span class="input-group-text" id="inputGroup-sizing-sm">결재선</span>
@@ -107,81 +107,63 @@
 							    <input type="text" class="form-control" name="sidb_doc_title" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
 							</div>
 							<textarea id="editor" name="sidt_temp_content"></textarea>
-							<!-- 알림여부 체크박스 -->	
-							<!-- 첨부파일 -->
+							알림여부 체크박스	
+							첨부파일 --%>
+							
+							<table class="table table-bordered">
+								<tr class="success">
+									<th>기안일</th>
+									<td><input type="date" id="currentDate" name="sidb_doc_writedt" maxlength="20"></td>
+									<th>만료일</th>
+									<td><input type="date" name="sidb_doc_expiredt" maxlength="20"></td>
+									<th>알림여부</th>
+									<td><input type="checkbox" name="alflag"></td>
+								</tr>
+								<tr>
+									<th>결재선</th>
+									<td colspan="5">
+										<div></div>
+									</td>
+								</tr>
+								<tr>
+									<th>참조</th>
+									<td colspan="5">
+										<div></div>
+									</td>
+								</tr>
+								<tr>
+									<th>제목</th>
+									<td colspan="5"><input type="text" name="sidb_doc_title" maxlength="20"></td>
+								</tr>
+							</table>
+							<textarea id="editor" name="sidt_doc_content"></textarea>
+							<table class="table table-bordered">
+								<tr>
+									<th>첨부파일</th>
+									<td colspan="2"><input type="file" class="form-control form-control-solid"></td>
+									
+								</tr>
+							</table>
 							
 							<!-- 제출 버튼 -->				
 							<div id="btn_div" style="margin: 10px auto; text-align: center;">
-							<button type="button" class="btn btn-primary btnSm" id="delBtn" style="height: 32px; line-height: 14px; width: 100px;">
+							<button type="button" class="btn btn-primary btnSm" id="insertTempDoc" style="height: 32px; line-height: 14px; width: 100px;">
 							    임시저장
 							</button>
-							<button type="button" class="btn btn-primary btnSm" id="insertTempDoc" style="height: 32px; line-height: 14px; width: 100px;">
+							<button type="button" class="btn btn-primary btnSm" id="insertDoc" style="height: 32px; line-height: 14px; width: 100px;">
 							    기안제출
 							</button>
 							</div>
-							</form>
 							</div>
-							
-							
-							
-							<form name="modifyEmpForm" method="post" action="/hr/employee/empModifyOk.do" enctype="multipart/form-data">
-									<table class="table table-bordered">
-										<tr class="success">
-											<th>작성일</th>
-											<td>
-												<input type="date" name="sidb_doc_writedt" maxlength="20">
-											</td>
-											<th>만료일</th>
-											<td><input type="date" name="sidb_doc_expiredt" maxlength="20"></td>
-										</tr>
-										<tr>
-											<th>결재선</th>
-											<td>
-												<div></div>
-											</td>
-										</tr>
-										<tr>
-											<th>참조</th>
-											<td>
-												<div></div>
-											</td>
-										</tr>
-										
-										<tr>
-											<th>템플릿</th>
-											<td>
-											<textarea id="editor" name="sidt_temp_content"></textarea>
-											</td>
-										</tr>
-										<tr>
-											<th>첨부파일</th>
-											<td colspan="2"><input type="file" class="form-control form-control-solid" name=""></td>
-										</tr>
-										<tr>
-											<td colspan="3" style="text-align:center;">
-											<button type="button" class="btn btn-primary btnSm" id="delBtn" style="height: 32px; line-height: 14px; width: 100px;">
-							    			<span class="indicator-label">
-												  임시저장
-											</span>
-											</button>
-											<button type="button" class="btn btn-primary btnSm" id="insertTempDoc" style="height: 32px; line-height: 14px; width: 100px;">
-							    			<span class="indicator-label">
-												  기안제출
-											</span>
-											</button>	
-											</td>
-										</tr>
-									</table>
-								</form>
 
+							</div>
 							<!-- ---------------------------- 내 용 입 력 -------------------------------- -->
 
 						</div>
 					</div>
 
 				</div>
-			</div>
-			<!-- 내용 끝 -->
+			<!-- 내용 끝 --> 
 		</div>
 	</div>
 
@@ -199,7 +181,7 @@
 					</div>
 					<!--end::Close-->
 				</div>
-
+     
 				<div class="modal-body">
 					<!-- ---------------------------- [ 모달창 ] 템플릿 선택 ----------------------------------- -->
 					<div class="app-container container-fluid">
