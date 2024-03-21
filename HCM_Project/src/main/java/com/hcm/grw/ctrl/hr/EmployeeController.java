@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -332,7 +334,8 @@ public class EmployeeController {
 	@PostMapping("updateAuthAdminOk.do")
 	public @ResponseBody void updateAuthAdminOk(@RequestParam Map<String, Object> authMap,
 			  					Authentication authentication,
-			  					HttpServletResponse resp) {
+			  					HttpServletResponse resp,
+			  					HttpServletRequest req) {
 		log.info("EmployeeController updateAuthAdminOk 권한등록/수정/삭제처리 : {}", authMap);
 		resp.setContentType("text/html; charset=UTF-8;");
 
@@ -358,10 +361,20 @@ public class EmployeeController {
 			}else if(type.equals("I")) {
 				Function.alertLocation(resp, "권한등록이 완료 되었습니다.", "/hr/employee/authAdminList.do", "", "", "");
 			}else {
-				Function.alertLocation(resp, "권한수정이 완료 되었습니다.", "/hr/employee/authAdminDetail.do?empl_id="+empl_id, "btn-danger", "", "");
+				Function.alertLocation(resp, "권한수정이 완료 되었습니다.", "/hr/employee/modifyAuthAdmin.do?empl_id="+empl_id, "btn-danger", "", "");
 			}
 			
+			//Role정보 Update
+			//Security Role정보 Update
 			SecurityContextHolder.getContext().setAuthentication(authService.createNewAuthentication(authentication,authentication.getName()));
+			//Session Role정보 Update
+			EmployeeDto employeeDto = employeeService.getUserInfo(authentication.getName());
+			HttpSession session = req.getSession();
+			//이미지 스트링 정보로 처리
+			employeeDto.setEmpl_picture_str(Function.blobImageToString(employeeDto.getEmpl_picture()));
+			//2진정보 초기화
+			employeeDto.setEmpl_picture(null);
+			session.setAttribute("userInfoVo", employeeDto);
 			
 			return;
 		}else {
@@ -370,12 +383,12 @@ public class EmployeeController {
 		}
 	}
 
-	@GetMapping("authAdminDetail.do")
+	@GetMapping("modifyAuthAdmin.do")
 	public String authAdminDetail(@RequestParam(required = true) String empl_id,
 								Authentication authentication,
 								HttpServletResponse resp,
 								Model model) {
-		log.info("EmployeeController registAuth 권한상세");
+		log.info("EmployeeController modifyAuthAdmin 권한수정페이지");
 
 		if(authentication == null) {
 			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
@@ -388,7 +401,7 @@ public class EmployeeController {
 		model.addAttribute("authInfo", employeeDto);
 		model.addAttribute("authLists", authLists);
 		
-		return "hr/employee/authAdminDetail";
+		return "hr/employee/modifyAuthAdmin";
 	}
 	
 	

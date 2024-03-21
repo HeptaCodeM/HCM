@@ -35,7 +35,7 @@
 										<tr>
 											<th class="required">사번</th>
 											<td>
-												<input type="text" class="form-control form-control-solid" style="float:left;width:80%;" name="empl_id" id="empl_id" maxlength="8" value="${authInfo.empl_id}" readonly required="required">
+												<input type="text" class="form-control form-control-solid" name="empl_id" id="empl_id" maxlength="8" value="${authInfo.empl_id}" readonly required="required">
 											</td>
 										</tr>
 										<tr>

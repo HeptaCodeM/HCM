@@ -172,8 +172,6 @@ $(function(){
 		closeEmpInfoSearch();
 	});
 });
-
-
 </script>
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
 </body>

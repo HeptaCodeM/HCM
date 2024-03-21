@@ -55,7 +55,7 @@
 										</thead>	
 										<tbody>
 											<c:forEach var="list" items="${lists}" varStatus="vs">
-												<tr style="cursor: pointer;" onclick="location.href='/hr/employee/authAdminDetail.do?empl_id=${list.empl_id}'" class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
+												<tr style="cursor: pointer;" onclick="location.href='/hr/employee/modifyAuthAdmin.do?empl_id=${list.empl_id}'" class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
 													<td>${fn:length(lists)-vs.index}</td>
 													<td>${list.empl_id}</td>
 													<td>${list.empl_name}</td>
