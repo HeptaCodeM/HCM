@@ -60,4 +60,10 @@ public class CommonCodeServiceImpl implements CommonCodeService {
 		return dao.roleNameDuplicateChk(map);
 	}
 	
+	@Override
+	public int delCodeChk(Map<String, Object> map) {
+		log.info("CommonCodeServiceImpl delCodeChk // {}",map);
+		return dao.delCodeChk(map);
+	}
+	
 }
