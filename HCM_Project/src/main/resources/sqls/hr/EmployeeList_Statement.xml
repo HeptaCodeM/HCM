@@ -53,15 +53,22 @@
 		</when>
 	</choose>
 	
+	
 	<choose>
 		<when test="searchCtg == 'empl_name'">
-			AND A.EMPL_NAME = #{empl_name}
+			<if test="empl_name != null">
+				AND A.EMPL_NAME = #{empl_name}
+			</if>
 		</when>
 		<when test="searchCtg == 'empl_id'">
-			AND A.EMPL_ID = #{empl_id}
+			<if test="empl_id != null">
+				AND A.EMPL_ID = #{empl_id}
+			</if>
 		</when>
 		<when test="searchCtg == 'empl_phone'">
-			AND A.EMPL_PHONE = #{empl_phone}
+			<if test="empl_phone != null">
+				AND A.EMPL_PHONE = #{empl_phone}
+			</if>
 		</when>
 	</choose>
 	
@@ -124,5 +131,25 @@
 					EMPL_MODIFY_DT = CURRENT_DATE
 		WHERE EMPL_ID = #{empl_id}
 	</update>
+	
+	
+	<select id="chkEmpPhoneNum" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) 
+			FROM EMPLOYEE e 
+			WHERE EMPL_PHONE = #{empl_phone}
+	</select>
+	
+	<select id="chkEmpTelNum" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) 
+			FROM EMPLOYEE e 
+			WHERE EMPL_TEL  = #{empl_tel}
+	</select>
+	
+	<select id="chkEmpFaxNum" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) 
+			FROM EMPLOYEE e 
+			WHERE EMPL_FAX = #{empl_fax}
+	</select>
+	
 
 </mapper>

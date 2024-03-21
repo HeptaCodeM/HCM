@@ -1,22 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 // 중분류 순서
-String hrLeftMenu [] = {"조직관리", "증명서관리", "인사발령관리", "근태관리" , "회사정보관리"};
+String hrLeftMenu [] = {"조직관리", "증명서관리", "인사발령관리", "근태관리" , "휴가관리"};
 // 소분류 메뉴명
 String hrSubLeftMenu [][] = {
-		{"부서관리","직위관리","직책관리", "권한관리", "정보수정", "사원등록", "사원조회", "비밀번호변경"},		//hrLeftMenu[0]
-		{"증명서리스트"},					//hrLeftMenu[1]
-		{"인사발령조회", "인사발령관리(관리자)"},	//hrLeftMenu[2]
-		{"출퇴근등록", "출퇴근현황"},			//hrLeftMenu[3]
-		{"회사정보"}		//hrLeftMenu[4]
+		{"정보수정", "비밀번호변경", "사원등록", "사원조회", 
+		"부서관리","직위관리", "직책관리", "권한관리", 
+		"회사정보관리"},		//hrLeftMenu[0]
+		{"출퇴근등록", "출퇴근현황"},			//hrLeftMenu[1]
+		{"증명서리스트"},					//hrLeftMenu[2]
+		{"인사발령조회", "인사발령관리(관리자)"},	//hrLeftMenu[3]
+		{"휴가현황", "휴가현황관리"}			//hrLeftMenu[4]
 };
 //소분류 링크
 String hrSubLinkLeftMenu [][] = {
-		{"/hr/commonCode/roleList.do?role=DT","/hr/commonCode/roleList.do?role=RK","/hr/commonCode/roleList.do?role=PN", "/hr/employee/authManageList.do", "/hr/employee/empModify.do", "/hr/employee/registEmpAdmin.do", "/hr/employee/list.do", "/hr/employee/updatePwd.do"},		//hrLeftMenu[0]
-		{"/hr/certificate/certificate.do"},									//hrLeftMenu[1]
-		{"#", "#"},															//hrLeftMenu[2]
-		{"/hr/commute/registCommute.do", "/hr/commute/empCommuteList.do"},	//hrLeftMenu[3]
-		{"/hr/company/companyInfo.do"}										//hrLeftMenu[4]
+		{"/hr/employee/empModify.do", "/hr/employee/updatePwd.do", "/hr/employee/registEmpAdmin.do", "/hr/employee/list.do", 
+		"/hr/commonCode/roleList.do?role=DT","/hr/commonCode/roleList.do?role=RK", "/hr/commonCode/roleList.do?role=PN", "/hr/employee/authAdminList.do", 
+		"/hr/company/companyInfo.do"},		//hrLeftMenu[0]
+		{"/hr/commute/registCommute.do", "/hr/commute/empCommuteList.do"},	//hrLeftMenu[1]
+		{"/hr/certificate/certificate.do"},									//hrLeftMenu[2]
+		{"#", "#"},															//hrLeftMenu[3]
+		{"/hr/holiday/holidayList.do","/hr/holiday/holidayAdminList.do"}	//hrLeftMenu[4]
 };
 
 String uri = request.getRequestURI();
