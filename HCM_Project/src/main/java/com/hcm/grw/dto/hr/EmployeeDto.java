@@ -49,12 +49,6 @@ public class EmployeeDto {
 	private String startdate;
 	private String enddate;
 	
-	
-	
-	
-	
-	
-	
-	
 	private CommonCodeDto comm;
+	
 }
