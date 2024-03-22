@@ -170,4 +170,9 @@ public class DocBoxDaoImpl implements IDocBoxDao {
 	public String findEmployeeName(String id) {
 		return sqlSessionTemplate.selectOne(NS+"findEmployeeName",id);
 	}
+	
+	@Override
+	public String findDeptName(String dept) {
+		return sqlSessionTemplate.selectOne(NS+"findDeptName",dept);
+	}
 }

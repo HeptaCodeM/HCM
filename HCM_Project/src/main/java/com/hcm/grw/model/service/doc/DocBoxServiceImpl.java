@@ -150,4 +150,9 @@ public class DocBoxServiceImpl implements IDocBoxService {
 	public String findEmployeeName(String id) {
 		return dao.findEmployeeName(id);
 	}
+	
+	@Override
+	public String findDeptName(String dept) {
+		return dao.findDeptName(dept);
+	}
 }	

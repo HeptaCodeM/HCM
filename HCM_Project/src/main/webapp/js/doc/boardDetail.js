@@ -134,12 +134,12 @@ function getFile() {
 			 if (data.length === 0) {
 				var downBtn = document.getElementById('downBtn');
    				 downBtn.disabled = true;
-                var opt = document.createElement('option');
-                opt.textContent = "첨부된 파일이 없습니다.";
+                var opt = document.createElement('span');
+                opt.textContent = " 첨부된 파일이 없습니다.";
                 sel.appendChild(opt);
             } else {
 			for (let d of data) {
-				var opt = document.createElement('option');
+				var opt = document.createElement('span');
 				opt.setAttribute('value', d.sidf_file_num);
 				opt.textContent = d.sidf_file_origin;
 				sel.appendChild(opt);

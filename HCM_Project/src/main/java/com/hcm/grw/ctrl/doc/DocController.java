@@ -18,12 +18,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hcm.grw.comm.FileCommonService;
+import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.doc.SignFileDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
@@ -42,7 +44,7 @@ public class DocController {
 	@Autowired
 	private IDocBoxDao dao;	
 
-	@GetMapping("/doc/docBox/getDetail.do")
+	@PostMapping("/doc/docBox/getDetail.do")
 	public String getDetailBoard(Model model, SignBoxDto dto, String docNum, HttpSession session) {
 
 		dto.setSidb_doc_num(docNum);
@@ -77,6 +79,37 @@ public class DocController {
 		String concatenatedNames = employeeNamesBuilder.toString();
 		System.out.println("사원 이름들: " + concatenatedNames);
 		docDto.get(1).setEmpl_ref(concatenatedNames);
+		
+		
+		// 참조 부서명 가져오기
+				List<String> allDeptIds = new ArrayList<>();
+
+				    String deptRef = docDto.get(0).getEmpl_dept_cd();
+				    if (deptRef != null && !deptRef.isEmpty()) {
+				        String[] deptIds = deptRef.split(",");
+				        allDeptIds = Arrays.asList(deptIds);
+				}
+				
+				String trimDeptId = "";
+				StringBuilder deptNamesBuilder = new StringBuilder();
+				for (String id : allDeptIds) {
+					trimDeptId = id.trim();
+					System.out.println(trimDeptId);
+				    String deptName = docService.findDeptName(trimDeptId);
+				    deptNamesBuilder.append(deptName).append(", ");
+				    System.out.println("뭐찍히니????????: " + deptName);
+				}
+				
+				if (deptNamesBuilder.length() > 0) {
+					deptNamesBuilder.setLength(deptNamesBuilder.length() - 2);
+				}
+
+				String concatDeptNames = deptNamesBuilder.toString();
+				System.out.println("참조부서명들: " + concatDeptNames);
+				docDto.get(1).setEmpl_dept_cd(concatDeptNames);
+		
+		
+		
 		 
 		model.addAttribute("docDto", docDto);
 		log.info("상세조회  데이터 리스트 결과{}", docDto);
@@ -110,9 +143,9 @@ public class DocController {
 					apprDepth += json.get(j).getAppr_depth() + ",";
 				}
 			}
-
-			byte[] emplImg = table.get(i).getEmpl_picture();
-			table.get(i).setEmpl_pictureStr(Base64Utils.encodeToString(emplImg));
+			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+//			byte[] emplImg = table.get(i).getEmpl_picture();
+//			table.get(i).setEmpl_pictureStr(Base64Utils.encodeToString(emplImg));
 
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);

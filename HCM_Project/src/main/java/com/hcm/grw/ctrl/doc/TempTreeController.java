@@ -1,24 +1,30 @@
 package com.hcm.grw.ctrl.doc;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hcm.grw.comm.FileCommonService;
+import com.hcm.grw.dto.doc.DocBoxDto;
 import com.hcm.grw.dto.doc.SignBoxDto;
-import com.hcm.grw.dto.doc.SignJsonDto;
+import com.hcm.grw.dto.doc.SignFileDto;
 import com.hcm.grw.dto.doc.TempTreeDto;
 import com.hcm.grw.dto.doc.TemplateDto;
+import com.hcm.grw.model.service.doc.ISignBoxService;
 import com.hcm.grw.model.service.doc.ITempTreeService;
 import com.hcm.grw.model.service.doc.ITemplateService;
 
@@ -33,6 +39,8 @@ public class TempTreeController {
 	private ITempTreeService service;
 	@Autowired
 	private ITemplateService tService;
+	@Autowired
+	private ISignBoxService bService;
 	
 	@GetMapping("getTempTree.do")
 	public ResponseEntity<?> tempTree(){
@@ -52,12 +60,29 @@ public class TempTreeController {
 	
 	
 	@PostMapping(value = "/insertDoc.do", produces = "text/html; charset=UTF-8")
-	public ResponseEntity<?> insertDoc(@RequestBody SignBoxDto dto) {
+	public ResponseEntity<?> insertDoc(@RequestPart("file") MultipartFile file, 
+									   @RequestPart("dto") SignBoxDto dto,
+									   HttpServletResponse resp) throws IOException {
 		log.info("TempTreeController insertTempDoc.do POST 기안문 작성");
-		log.info("{}" ,dto);
+		log.info("{}\n {}", file, dto);
+		
+		SignFileDto fileDto = new SignFileDto();
+		fileDto.setSidf_file_origin(file.getName());
+		fileDto.setSidf_file_size(String.valueOf(file.getSize()));
+		fileDto.setSidf_file_content(FileCommonService.fileUpload(file, resp));
+		fileDto.setSidf_file_stored(UUID.randomUUID().toString());
+		bService.insertTransaction(dto, fileDto);
+		
 		return ResponseEntity.ok("성공");
 	}
 	
-	
+	@PostMapping(value = "/insertTempDoc.do", produces = "text/html; charset=UTF-8")
+	public ResponseEntity<?> insertTempDoc(@RequestPart("file") MultipartFile file,
+											@RequestPart("dto") DocBoxDto dto,
+											HttpServletResponse resp) {
+		log.info("TempTreeController insertTempDoc.do POSt 기안문 임시저장");
+		
+		return null;
+	}
 	
 }

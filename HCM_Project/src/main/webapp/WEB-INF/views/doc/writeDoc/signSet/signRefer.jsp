@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<title>DOC메인화면</title>
+<title>참조자 등록 페이지</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <style type="text/css">
@@ -24,7 +24,6 @@ td>img {
 }
 </style>
 </head>
-<%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
 		data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true"
 		data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true"
@@ -32,8 +31,10 @@ td>img {
 		data-kt-app-sidebar-push-toolbar="true"
 		data-kt-app-sidebar-push-footer="true"
 		data-kt-app-toolbar-enabled="true" class="app-default">
+		
+		<input type="hidden" value="${userInfoVo.empl_id}" id="empl_id"> 
+		<input type="hidden" value="${userInfoVo.empl_rank_nm}" id="positionFlag">
 
-		<div class="app-wrapper flex-column flex-row-fluid">
 			<div class="app-toolbar py-3 py-lg-6">
 				<div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
 					<!--begin::Page title-->
@@ -46,16 +47,12 @@ td>img {
 				</div>		
 			</div>
 			
-			<!-- 로그인세션영역 -->
-			<input type="hidden" value="20230108" id="empl_id"> 
-			<input type="hidden" value="대리" id="positionFlag">
-			
 			<!-- OJS -->	
 			<div class="app-container container-fulid">
 				<div class="row gx-5 gx-xl-10">
 				<div class="col-xxl-4 mb-5 mb-xl-10">
 					<div class="card card-flush h-md-100 mb-xl-10">
-						<div class="card-header pt-5">
+						<div class="card-header pt-5" style="min-height: 40px;">
 							<h3 class="card-title text-gray-800 fw-bold">사원 검색</h3>
 						</div> 
 						<div class="separator separator-dashed my-3"></div>	
@@ -81,7 +78,7 @@ td>img {
 				</div>
 				<div class="col-xxl-8 mb-5 mb-xl-10">
 					<div class="card card-flush h-md-100 mb-xl-10">
-						<div class="card-header pt-5">
+						<div class="card-header pt-5" style="min-height: 40px;">
 							<h3 class="card-title text-gray-800 fw-bold">참조인 설정</h3>
 						</div> 
 						<div class="separator separator-dashed my-3"></div>	
@@ -96,7 +93,7 @@ td>img {
 								</div>
 							</div>
 						</div>
-						<div class="card-header pt-5">
+						<div class="card-header pt-5" style="min-height: 40px;">
 							<h3 class="card-title text-gray-800 fw-bold">참조부서 설정</h3>
 						</div> 
 						<div class="separator separator-dashed my-3"></div>	
@@ -109,8 +106,8 @@ td>img {
 									
 										<br><br>
 										<div style="text-align: center;">
-											<button class="btn btnMd btn-primary" id="saveRefer">저장</button>
-											<button class="btn btnMd btn-primary" id="closeRefer">닫기</button>
+											<button class="btn btnMd btn-light-primary btn-color-gray-600" id="saveRefer">저장</button>
+											<button class="btn btnMd btn-light-primary btn-color-gray-600" id="closeRefer">닫기</button>
 										</div>
 									</div>
 								</div>
@@ -123,8 +120,6 @@ td>img {
 			</div>
 				
 			<!-- OJS  -->	
-		</div>
-	<%@include file="/WEB-INF/views/menu/docSideMenu.jsp" %>		
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 <script type="text/javascript" src="/js/doc/signRefer.js"></script>
