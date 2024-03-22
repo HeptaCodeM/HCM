@@ -46,7 +46,11 @@ document.getElementById('closeRefer').addEventListener('click', closeRefer);
 // 저장버튼
 document.getElementById('saveRefer').addEventListener('click', saveRefer);
 
+var refer = '';
+var referDept = '';
 
+var idx1 = 1;
+var idx2 = 1;
 
 // + 버튼
 function pick() {
@@ -71,6 +75,7 @@ function pick() {
 			input.setAttribute('value', dname);
 			input.setAttribute('class', 'form-control');
 			input.setAttribute('readonly', 'readonly');
+			input.setAttribute('id', 'refDept' + idx1);
 			hiddenInput.setAttribute('type', 'hidden');
 			hiddenInput.setAttribute('value', id);
 			btn.append(inSpan);
@@ -78,6 +83,8 @@ function pick() {
 			dept.append(input);
 			dept.append(hiddenInput);
 			dept.append(span);
+			referDept += id + ','
+			idx1++;
 			
 		} else {
 			// 참조자 추가
@@ -100,6 +107,7 @@ function pick() {
 					input.setAttribute('value', d.empl_name);
 					input.setAttribute('class', 'form-control');
 					input.setAttribute('readonly', 'readonly');
+					input.setAttribute('id', 'ref' + idx2);
 					hiddenInput.setAttribute('type', 'hidden');
 					hiddenInput.setAttribute('value', d.empl_id);
 					btn.append(inSpan);
@@ -107,6 +115,9 @@ function pick() {
 					emp.append(hiddenInput);
 					emp.append(input);
 					emp.append(span);
+					
+					refer += d.empl_id + ','
+					idx2++;
 					
 					var selNode = $('#jstree').jstree('get_selected');
 					$('#jstree').jstree('hide_node', selNode);
@@ -123,6 +134,55 @@ function closeRefer() {
 }      
 
 function saveRefer() {
+	
+	var refName = '';
+	var refDeptName = '';
+	for(let i=0; i<idx1-1; i++) {
+		var num1 = document.getElementById('refDept' + (i+1));
+		refDeptName += num1.value + ',';
+	}
+	for(let i=0; i<idx2-1; i++) {
+		var num2 = document.getElementById('ref' + (i+1));
+		refName += num2.value + ',';
+	}
+	refName = refName.substring(0, refName.lastIndexOf(','));
+	refDeptName = refDeptName.substring(0, refDeptName.lastIndexOf(','));
+	console.log(refName);
+	console.log(refDeptName);
+	
+	refer = refer.substring(0, refer.lastIndexOf(','));
+	referDept = referDept.substring(0, referDept.lastIndexOf(','));
+	
+	var ref = {
+		empl_ref : refer,
+		empl_ref_name : refName
+	}
+	var refDept = {
+		empl_dept_cd : referDept,
+		empl_dept_name : refDeptName
+	}
+	
+	if(refer.length == 0 && referDept.length == 0) {
+		sweetAlertConfirm('참조자가 없습니다 저장할까요?',function() {
+			self.close();
+		})
+	} else if(refer.length == 0 && referDept.length > 0) {
+		sweetAlertConfirm('참조자를 저장할까요?',function() {
+			opener.postMessage(refDept, '*');
+			self.close();
+		})
+	} else if(refer.length > 0 && referDept.length == 0) {
+		sweetAlertConfirm('참조자를 저장할까요?',function() {
+			opener.postMessage(ref, '*');
+			self.close();
+		})
+	} else {
+		sweetAlertConfirm('참조자를 저장할까요?',function() {
+			opener.postMessage(ref, '*');
+			opener.postMessage(refDept, '*');
+			self.close();
+		})
+	}
 	
 }
 

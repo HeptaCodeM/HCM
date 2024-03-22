@@ -116,25 +116,30 @@
 <!-- 									<td><input id="currentDate" name="sidb_doc_writedt" maxlength="20"></td> -->
 									<td><div id="currentDate" name="sidb_doc_writedt" maxlength="20"></div></td>
 									<th>만료일</th>
-									<td><input type="date" class="" name="sidb_doc_expiredt" data-td-target-input="nearest"></td>
+									<td><input type="date" class="sitb_doc_expiredt" name="sidb_doc_expiredt" data-td-target-input="nearest"></td>
 									<th>알림여부</th>
-									<td><input type="checkbox" class="form-check-input"name="alflag"></td>
+									<td><input type="checkbox" class="form-check-input" name="alflag"></td>
 								</tr>
-								<tr>
+								<tr id="signLine">
 									<th>결재선</th>
 									<td colspan="5">
-										<div></div>
+										<div ></div>
 									</td>
 								</tr>
-								<tr>
+								<tr id="signRefer">
 									<th>참조</th>
-									<td colspan="5">
-										<div></div>
+									<td colspan="3">
+										<div ></div>
+									</td>
+									<th>참조부서</th>
+									<td colspan="2">
+										<div ></div>
 									</td>
 								</tr>
+								
 								<tr>
 									<th>제목</th>
-									<td colspan="5"><input type="text" name="sidb_doc_title" maxlength="20"></td>
+									<td colspan="5"><input type="text" class="sitb_doc_title" name="sidb_doc_title" maxlength="20"></td>
 								</tr>
 							</table>
 							<textarea id="editor" name="sidb_doc_content"></textarea>
@@ -183,8 +188,8 @@
 					<!--end::Close-->
 				</div>
      
-				<div class="modal-body">
 					<!-- ---------------------------- [ 모달창 ] 템플릿 선택 ----------------------------------- -->
+				<div class="modal-body">
 					<div class="app-container container-fluid">
 					<div class="row gx-5 gx-xl-10">
 							<div class="col-xxl-4 mb-5 mb-xl-10">

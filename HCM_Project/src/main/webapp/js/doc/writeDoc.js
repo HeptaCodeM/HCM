@@ -34,7 +34,7 @@ function dragElement(elmnt) {
         document.onmousemove = null;
     }
 }
-// Doc_jstree
+// Doc_jstree로 템플릿 선택하여 가져오기
 var docData;
 var sica_cd;
 var sidt_temp_cd;
@@ -55,7 +55,8 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 		return;
 	}
 
-	//		console.log("getTemplate: " + docData);
+// 템플릿 선택후 에디터 화면 및 로그인 정보 가져오기
+//	console.log("getTemplate: " + docData);
 	$("#template_div").hide();
 	$("#editor_div").show();
 	document.getElementById('closeBtn').click();
@@ -66,11 +67,11 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 	var insertDept = insertName.replace("인사팀", sessionDept.value)
 	var insertRank = insertDept.replace("대리", sessionRank.value)
 	editor.setData(insertRank);
-	//editor.setData(docData);
-
-
+//	editor.setData(docData);
 
 })
+
+// 
 setTimeout(function() {
 	$('#jstree').jstree({
 		plugins: ['search', 'wholerow'],
@@ -107,8 +108,90 @@ $('#jstree').on('select_node.jstree', function(e, data) {
 		.catch(err => { console.log(err) });
 
 })
+
 	
-document.getElementById('currentDate').innerHTML = Date();
+document.getElementById('currentDate').innerHTML = new Date();
+
+document.getElementById('insertTempDoc').addEventListener('click', insertTempDoc)
+
+function insertTempDoc() {
+	var empl_id = document.getElementById('id').value;
+	var sitb_doc_title = document.getElementsByClassName('sitb_doc_title')[0].value;
+	var sitb_doc_content = editor.getData();
+	var sitb_doc_expiredt = document.getElementsByClassName('sitb_doc_expiredt')[0].value;
+	var checkbox = document.getElementsByName('alflag')[0];
+	if(checkbox.checked) {
+		sitb_doc_alflag  = 'Y'
+	} else {
+		sitb_doc_alflag  = 'N'
+	}
+	var sidt_doc_event = document.getElementById('sidb_doc_event').textContent;
+	var eventArr = sidt_doc_event.split('~');
+	
+	var sitb_doc_be = eventArr[0].replace(/년|월|\s*일|\s+/g, (match) => {
+    if (match === '년' || match === '월') {
+        return '-';
+    }
+    return '';
+	});
+	var sitb_doc_end = eventArr[1].replace(/년|월|\s+/g, '-').replace(/일/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
+//	var empl_ref (참조)
+//	var empl_dept_cd
+	var file = document.getElementById('sidf_file_content').files[0]; // 파일 가져오기
+	var formData = new FormData();
+	
+	var docData = {
+		sitb_doc_title : sitb_doc_title,
+		sitb_doc_content : sitb_doc_content,
+		empl_id : empl_id,
+		sitb_doc_expiredt : sitb_doc_expiredt,
+		sitb_doc_alflag : sitb_doc_alflag,
+		sitb_doc_be : sitb_doc_be,
+		sitb_doc_end : sitb_doc_end,
+		sica_cd : sica_cd,
+		sidt_temp_cd : sidt_temp_cd,
+		sidb_curr_id : '20230109',
+		sidb_doc_json : 
+		[
+			{
+				appr_id : '20230109',
+				appr_depth : '1'
+			},
+			{
+				appr_id : '20230108',
+				appr_depth : '2'
+			},
+			{
+				appr_id : '20230107',
+				appr_depth : '3'
+			}
+		]
+	}
+	
+	// 파일 추가
+	formData.append('file', file);
+	formData.append('dto', new Blob([JSON.stringify(docData)], {type : 'application/json'}));
+	
+	fetch('/doc/insertTempDoc.do', {
+		method : 'post',
+		body : formData
+	})
+		.then(resp => {
+			return resp.text()
+		})
+		.then(data => {
+			console.log(data);
+			if(data == "성공") {
+				location.href = '/doc/template.do';
+			} else {
+				swalAlert('작성에 실패했습니다','','','확인','')
+			}
+			
+		})
+		.catch(err => {console.log(err)})
+	
+	
+}
 
 function insertDoc() {
 	var sidb_doc_expiredt = document.getElementsByName('sidb_doc_expiredt')[0].value;
@@ -215,8 +298,35 @@ function insertDoc() {
 document.getElementById('insertDoc').addEventListener('click', insertDoc);
 
 
+// 참조 팝업창
+document.getElementById('signRefer').addEventListener('click', function() {
+   open('/doc/writeDoc/signRefer.do', '', 'width=720px height=900px left=400');
+});
+// 결재선 팝업
+document.getElementById('signLine').addEventListener('click', function() {
+   open('/doc/writeDoc/signLine.do', '', 'width=1600px height=900px left=400');
+});
 
+var empl_dept_cd;
+var empl_ref;
+var sidb_doc_json;
 
+window.addEventListener('message', function(e) {
+   
+   if (typeof e.data == 'string') {
+      if (e.data.startsWith('DT')) {
+         empl_dept_cd = e.data
+      } else {
+         empl_ref = e.data;
+      }
+   } else {
+      sidb_doc_json = e.data;
+   }
+   
+   console.log('dept : ' + empl_dept_cd);
+   console.log('ref : ' + empl_ref);
+   console.log('json : ',sidb_doc_json);
+});
 
 
 
