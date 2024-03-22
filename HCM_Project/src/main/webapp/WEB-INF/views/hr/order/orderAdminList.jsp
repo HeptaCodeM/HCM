@@ -11,6 +11,7 @@
 	<style type="text/css">
 	.table th {  vertical-align:middle; text-align:center !important; background-color:#F9F9F9; font-weight:600; }
 	#searchOrderAdminList { text-align:center; }
+	#searchOrderAdminList thead th {padding-left:0; cursor:pointer;}
 	.searchLast>span, 
 	.searchLast>button { float:left; margin-right:20px; }
 	.searchEmpInput{ width: 300px; height: 40px; }
@@ -37,7 +38,7 @@
 					<!--begin::Page title-->
 					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 						<!--begin::Title-->
-						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">인사관리 > 발령관리 > 발령현황관리</h1>
+						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">인사관리 > 인사발령관리 > 인사발령 현황관리</h1>
 						<!--end::Title-->
 					</div>
 					<!--end::Page title-->
@@ -49,7 +50,7 @@
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-header pt-5">
-								<h3 class="card-title text-gray-800 fw-bold">발령현황리스트</h3>
+								<h3 class="card-title text-gray-800 fw-bold">인사발령 현황리스트</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
@@ -156,7 +157,7 @@
 								</div>
 								<div class="separator separator-dashed my-3"></div>	
 								<div class="table-responsive">
-									<table id="searchOrderAdminList" class="table table-row-bordered gy-5">
+									<table id="searchOrderAdminList" class="table table-row-bordered table-hover gy-5">
 										<thead>
 											<tr class="fw-semibold fs-6 text-muted">
 												<th>발령번호</th>
@@ -177,6 +178,9 @@
 								</div>
 								
 							</div>
+							<div class="card-footer" style="text-align:right;">
+								<a href="/hr/order/registOrderAdmin.do" class="btn btn-primary">발령정보 추가</a>
+						    </div>
 						</div>
 					</div>
 				</div>
@@ -188,6 +192,12 @@
 <script type="text/javascript">
 $(function(){ 
 	orderSearchAdminList()
+
+	$("#searchOrderAdminList tbody").on('click', 'tr', function () {
+		var row = $("#searchOrderAdminList").DataTable().row($(this)).data();
+		location.href = "/hr/order/orderAdminDetail.do?emor_id="+row.emor_id;
+	});
+
 });
 
 var datePicker = new tempusDominus.TempusDominus(document.getElementById("sdate"), {

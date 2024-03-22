@@ -70,8 +70,8 @@
 								</div>
 								
 							</div>
-							<div class="card-footer">
-								<a href="/hr/employee/registAuthAdmin.do" class="btn btn-primary me-10">권한추가</a>
+							<div class="card-footer" style="text-align:right;">
+								<a href="/hr/employee/registAuthAdmin.do" class="btn btn-primary">권한추가</a>
 						    </div>
 						</div>
 					</div>

@@ -29,7 +29,7 @@
 					<!--begin::Page title-->
 					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 						<!--begin::Title-->
-						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">인사관리 > 발령관리 > 발령현황</h1>
+						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">인사관리 > 인사발령관리 > 인사발령현황</h1>
 						<!--end::Title-->
 					</div>
 					<!--end::Page title-->
@@ -41,7 +41,7 @@
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-header pt-5">
-								<h3 class="card-title text-gray-800 fw-bold">발령현황리스트</h3>
+								<h3 class="card-title text-gray-800 fw-bold">인사발령 현황리스트</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">

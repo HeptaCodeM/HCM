@@ -172,4 +172,39 @@ public class OrderController {
 	}
 	
 	
+	@GetMapping("registOrderAdmin.do")
+	public String registOrderAdmin(Model model,
+			 					   Authentication authentication,
+			 					   HttpServletResponse resp) {
+		if(authentication == null) {
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			return null;
+		}
+		
+		//부서,직위,직책,발령구분
+		Map<String, Object> mapDept = new HashMap<String, Object>();
+		mapDept.put("role", "DT");
+		
+		Map<String, Object> mapRank = new HashMap<String, Object>();
+		mapRank.put("role", "RK");
+
+		Map<String, Object> mapPosit = new HashMap<String, Object>();
+		mapPosit.put("role", "PN");
+
+		Map<String, Object> mapOrder = new HashMap<String, Object>();
+		mapOrder.put("role", "OR");
+		
+		List<CommonCodeDto> deptList = codeService.selectAllRole(mapDept);
+		List<CommonCodeDto> rankList = codeService.selectAllRole(mapRank);
+		List<CommonCodeDto> positionList = codeService.selectAllRole(mapPosit);
+		List<CommonCodeDto> orderList = codeService.selectAllRole(mapOrder);
+
+		model.addAttribute("deptList", deptList);
+		model.addAttribute("rankList", rankList);
+		model.addAttribute("positionList", positionList);
+		model.addAttribute("orderList", orderList);
+		
+		return "hr/order/registOrderAdmin";
+	}
+	
 }

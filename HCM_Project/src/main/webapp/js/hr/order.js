@@ -130,3 +130,54 @@ function orderSearchAdminList(){
 }
 
 
+/* 임직원 검색 */
+function empInfoSearch(flag){
+	var f = $("#searchEmpInfo");
+	
+	if(flag=="F"){
+		if(!f.keyWord.value){
+			swalAlert("검색어를 입력하여 주세요.","","","","keyWord");
+			return;
+		}
+	}
+
+	$("#searchEmployeeList").DataTable().destroy();
+
+	$.ajax({
+		url:"/hr/employee/getUserInfoSearch.do",
+		type:"POST",
+		data : f.serialize(),
+		success:function(data){
+			console.log(data);
+	 		$("#searchEmployeeList").dataTable({
+	 			data: data,
+				columns: [
+					{ data: 'empl_id' },
+					{ data: 'empl_name' },
+					{ data: 'empl_dept_nm' },
+					{ data: 'empl_rank_nm' },
+					{ data: 'empl_position_nm' }
+				],
+				displayLength: 5,
+				lengthChange: false,
+				info: false,
+				language: {
+					emptyTable: "조회된 정보가 없습니다."
+				}
+			});
+		},
+		error:function(request, error){
+			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	});
+
+}
+
+function openEmpInfoSearch(){
+	$("#searchEmployeeList").DataTable().destroy();
+	empInfoSearch('');
+	$('#empSearch').show();
+}
+function closeEmpInfoSearch(){
+	$('#empSearch').hide();
+}
