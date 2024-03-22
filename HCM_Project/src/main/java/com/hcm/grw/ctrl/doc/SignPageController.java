@@ -55,6 +55,20 @@ public class SignPageController {
 		return "doc/writeDoc/signSet/signLine";
 	}
 	
+	@GetMapping("writeDoc/selectSign.do")
+	public String selectSign(Model model, HttpSession session) {
+		log.info("SignTreeController selectSign.do GET 서명 팝업 페이지");
+		EmployeeDto dto = (EmployeeDto)session.getAttribute("userInfoVo");
+		if(dto == null) {
+			return "doc/writeDoc/signSet/selectSign";
+		}
+		Map<String, Object> signMap = new HashMap<String, Object>();
+		signMap.put("empl_id", dto.getEmpl_id());
+		List<EmpSignDto> signList = signService.selectAllSign(signMap);
+		model.addAttribute("signList",signList);
+		return "doc/writeDoc/signSet/selectSign";
+	}
+	
 	@GetMapping("writeDoc.do")
 	public String writeDoc(Authentication auth, HttpSession session, Model model) {
 		log.info("SignTreeController writeDoc.do 기안문 작성 페이지로 로그인 정보 전달");

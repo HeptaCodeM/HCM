@@ -1,4 +1,3 @@
-
 var canvas = document.getElementById("signpad");
 var signature = new SignaturePad(canvas, {
 	minWidth : 2,
@@ -49,12 +48,12 @@ save.addEventListener("click",function(){
 			if(data === 'true') {
 				swalAlert('저장되었습니다', '', '', '확인');
 				setTimeout(function() {
-					location.href = '/doc/signManagement.do';
+					location.href = '/doc/writeDoc/selectSign.do';
 				}, 1000)
 			} else {
 				swalAlert('저장실패', '', '', '확인');
 				setTimeout(function() {
-					location.href = '/doc/signManagement.do';
+					location.href = '/doc/writeDoc/selectSign.do';
 				}, 1000)
 			}
 		})
@@ -65,63 +64,22 @@ save.addEventListener("click",function(){
 	
 });
 
-document.getElementById('delBtn').addEventListener('click', delSign);
-document.getElementById('defaultBtn').addEventListener('click', setDefault);
+document.getElementById('saveSign').addEventListener('click', saveSign);
+document.getElementById('closeBtn').addEventListener('click', function() {
+	self.close();
+});
 
-function delSign() {
-	var seq = '';
-	var id = document.getElementById('empl_id').value;
-	var chkbox = document.getElementsByName("signDefault");
-	for (let chk of chkbox) {
-		if (chk.checked) {
-			seq = chk.value;
-		}
-	}
-	if (seq == '') {
+function saveSign() {
+	var selCheck = document.querySelectorAll('input[type=checkbox]:checked');
+	if(selCheck.length == 0) {
 		swalAlert('서명을 선택해주세요', '', '', '확인');
-		return;
+	} else {
+		sweetAlertConfirm("선택한 서명을 저장할까요?", function() {
+			var sign = selCheck[0].value;
+			opener.postMessage(sign, '*');
+			self.close();
+		}, '');
 	}
-	sweetAlertConfirm("서명을 삭제할까요?", function() {
-
-		fetch('/doc/signManagement/deleteSign.do?emsi_seq=' + seq + '&empl_id=' + id)
-			.then(resp => { return resp.text() })
-			.then(data => {
-				console.log(data);
-				swalAlert('삭제되었습니다', '', '', '확인');
-				setTimeout(function() {
-					location.href = '/doc/signManagement.do';
-				}, 1000)
-
-			})
-			.catch(err => { console.log(err) });
-	}, '')
-}
-
-function setDefault() {
-	var seq = '';
-	var id = document.getElementById('empl_id').value;
-	var chkbox = document.getElementsByName("signDefault");
-	for(let chk of chkbox) {
-		if(chk.checked) {
-			seq = chk.value;
-		}
-	}
-	if(seq == '') {
-		swalAlert('서명을 선택해주세요', '', '', '확인');
-		return;
-	}
-	
-	fetch('/doc/signManagement/setDefault.do?emsi_seq=' + seq + '&empl_id=' + id)
-	.then(resp => {return resp.text()})
-	.then(data => {
-		console.log(data);
-		swalAlert('설정되었습니다', '', '', '확인');
-		setTimeout(function() {
-			location.href = '/doc/signManagement.do';
-		}, 1000)
-		
-	})
-	.catch(err => {console.log(err)});
 }
 
 function chkOnly(chk) {
