@@ -44,15 +44,9 @@
 	INNER JOIN      COMMON_CODE C2 ON A.EMPL_RANK_CD = C2.COCO_CD
 	LEFT OUTER JOIN   COMMON_CODE C3 ON A.EMPL_POSITION_CD  = C3.COCO_CD
 		WHERE A.EMPL_PWD IS NOT NULL
-	<choose>
-		<when test='empl_delflag == "N"'>
-			AND A.EMPL_DELFLAG = 'N'
-		</when>
-		<when test='empl_delflag == "Y"'>
-			AND A.EMPL_DELFLAG = 'Y'
-		</when>
-	</choose>
-	
+	<if test="empl_delflag != null and empl_delflag == ''">
+			AND A.EMPL_DELFLAG = #{empl_delflag}
+	</if>
 	
 	<choose>
 		<when test="searchCtg == 'empl_name'">

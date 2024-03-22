@@ -1,6 +1,7 @@
 package com.hcm.grw.model.service.hr;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderInfoListDto> getOrderAdminList() {
-		return dao.getOrderAdminList();
+	public List<OrderInfoListDto> getOrderAdminList(Map<String, Object> orderSearchMap) {
+		return dao.getOrderAdminList(orderSearchMap);
 	}
 
 	
