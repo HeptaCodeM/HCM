@@ -170,8 +170,8 @@ document.getElementById('initial').addEventListener('click', function() {
 	for (s of span) {
 		s.textContent = '';
 	}
-		
-	});
+
+});
 	
 // 참조 팝업창
 document.getElementById('signRefer').addEventListener('click', function() {
@@ -181,28 +181,33 @@ document.getElementById('signRefer').addEventListener('click', function() {
 document.getElementById('signLine').addEventListener('click', function() {
 	open('/doc/writeDoc/signLine.do', '', 'width=1600px height=900px left=400');
 });
+// 서명 팝업
+document.getElementById('selectSign').addEventListener('click', function() {
+	open('/doc/writeDoc/selectSign.do', '', 'width=1200px height=720px left=400');
+});
 
-var empl_dept_cd;
-var empl_ref;
-var sidb_doc_json;
+var ref;
+var dept;
+var json;
+var sign;
 
 window.addEventListener('message', function(e) {
+	var data = e.data;
 	
-	if (typeof e.data == 'string') {
-		if (e.data.startsWith('DT')) {
-			empl_dept_cd = e.data
-		} else {
-			empl_ref = e.data;
-		}
+	if(data.hasOwnProperty('empl_ref')) {
+		ref = data;
+	} else if(data.hasOwnProperty('empl_dept_cd')) {
+		dept = data;
+	} else if (typeof data == "string") {
+		sign = data;
 	} else {
-		sidb_doc_json = e.data;
+		json = data;
 	}
-	
-	console.log('dept : ' + empl_dept_cd);
-	console.log('ref : ' + empl_ref);
-	console.log('json : ',sidb_doc_json);
+	console.log('ref : ' , ref);
+	console.log('dept : ', dept);
+	console.log('json : ', json);
+	console.log('sign : ', sign);
 });
-	
 
 document.getElementById('fileTest').addEventListener('click', function() {
 	location.href = './fileTest.do';
@@ -224,7 +229,7 @@ document.getElementById('fileTest').addEventListener('click', function() {
 	document.getElementById('delLineBtn').addEventListener('click', function() {
 		var select = document.getElementById('apprLineList').value;
 		if(select != '결재선을 선택해주세요') {
-			sweetAlertConfirm("즐겨찾기를 삭제할까요?", delLine, '')
+			sweetAlertConfirm("즐겨찾기를 삭제할까요?", delLine, '');
 		} else {
 			swalAlert('라인을 선택해주세요', '', '', '확인');
 		}
@@ -369,8 +374,6 @@ document.getElementById('fileTest').addEventListener('click', function() {
 			console.log(err);
 		});
 	})
-	
-	
 	
 	$('#jstree').jstree({
 		// 검색기능 , 우클릭메뉴, 라벨 효과

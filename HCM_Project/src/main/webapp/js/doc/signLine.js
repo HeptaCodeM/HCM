@@ -173,15 +173,21 @@ $('#schName').focus();
 			sidb_doc_json = [
 								{
 									appr_id : appr1,
-									appr_depth : "1"
+									appr_depth : "1",
+									appr_name : document.getElementById('first').value,
+									appr_position : document.getElementById('rk1').value
 								},
 								{
 									appr_id : appr2,
-									appr_depth : "2"
+									appr_depth : "2",
+									appr_name : document.getElementById('second').value,
+									appr_position : document.getElementById('rk2').value
 								},
 								{
 									appr_id : appr3,
-									appr_depth : "3"
+									appr_depth : "3",
+									appr_name : document.getElementById('third').value,
+									appr_position : document.getElementById('rk3').value
 								}
 							];
 		}
@@ -189,11 +195,15 @@ $('#schName').focus();
 			sidb_doc_json = [
 								{
 									appr_id : appr1,
-									appr_depth : "1"
+									appr_depth : "1",
+									appr_name : document.getElementById('first').value,
+									appr_position : document.getElementById('rk1').value
 								},
 								{
 									appr_id : appr2,
-									appr_depth : "2"
+									appr_depth : "2",
+									appr_name : document.getElementById('second').value,
+									appr_position : document.getElementById('rk2').value
 								}
 							];
 		}
@@ -201,7 +211,9 @@ $('#schName').focus();
 			sidb_doc_json = [
 								{
 									appr_id : appr1,
-									appr_depth : "1"
+									appr_depth : "1",
+									appr_name : document.getElementById('first').value,
+									appr_position : document.getElementById('rk1').value
 								}
 							];
 		}

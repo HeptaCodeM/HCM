@@ -8,7 +8,6 @@
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
 <title>서명리스트화면</title>
 </head>
-<%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
 		data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true"
 		data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true"
@@ -17,7 +16,6 @@
 		data-kt-app-sidebar-push-footer="true"
 		data-kt-app-toolbar-enabled="true" class="app-default">
 
-		<div class="app-wrapper flex-column flex-row-fluid">
 			<div class="app-toolbar py-3 py-lg-6">
 				<div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
 					<!--begin::Page title-->
@@ -57,12 +55,11 @@
 					</div>
 					<!-- 내용 끝 -->
 					<div style="text-align: center;">
+						<button class="btn btn-light-primary btn-color-gray-600" id="saveSign">서명저장</button>
 						<button class="btn btn-light-primary btn-color-gray-600" data-bs-toggle="modal" data-bs-target="#kt_modal_3">서명추가</button>
-						<button class="btn btn-light-primary btn-color-gray-600" id="defaultBtn">기본서명설정</button>
-						<button class="btn btn-light-primary btn-color-gray-600" id="delBtn">삭제</button>
+						<button class="btn btn-light-primary btn-color-gray-600" id="closeBtn">닫기</button>
 					</div>
 			</div>
-		</div>
 		<div class="modal fade" tabindex="-1" id="kt_modal_3">
 		<div class="modal-dialog">
 			<div class="modal-content position-absolute">
@@ -97,8 +94,7 @@
 			</div>
 		</div>
 	</div>			
-<%@include file="/WEB-INF/views/menu/docSideMenu.jsp" %>		
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
-<script type="text/javascript" src="/js/doc/signManagement.js"></script>
+<script type="text/javascript" src="/js/doc/selectSign.js"></script>
 </html>

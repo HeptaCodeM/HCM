@@ -40,6 +40,7 @@ td>img {
 						<button type="button" id="signRefer">참조</button>
 						<button type="button" id="fileTest">파일테스트</button>
 						<button type="button" id="signLine">결재선팝업</button>
+						<button type="button" id="selectSign">서명팝업</button>
 					</div>
 				</div>		
 			</div>
