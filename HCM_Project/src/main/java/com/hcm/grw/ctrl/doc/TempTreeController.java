@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hcm.grw.comm.FileCommonService;
+import com.hcm.grw.dto.doc.DocBoxDto;
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.doc.SignFileDto;
 import com.hcm.grw.dto.doc.TempTreeDto;
@@ -75,6 +76,13 @@ public class TempTreeController {
 		return ResponseEntity.ok("성공");
 	}
 	
-	
+	@PostMapping(value = "/insertTempDoc.do", produces = "text/html; charset=UTF-8")
+	public ResponseEntity<?> insertTempDoc(@RequestPart("file") MultipartFile file,
+											@RequestPart("dto") DocBoxDto dto,
+											HttpServletResponse resp) {
+		log.info("TempTreeController insertTempDoc.do POSt 기안문 임시저장");
+		
+		return null;
+	}
 	
 }
