@@ -18,12 +18,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hcm.grw.comm.FileCommonService;
+import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.doc.SignFileDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
@@ -42,7 +44,7 @@ public class DocController {
 	@Autowired
 	private IDocBoxDao dao;	
 
-	@GetMapping("/doc/docBox/getDetail.do")
+	@PostMapping("/doc/docBox/getDetail.do")
 	public String getDetailBoard(Model model, SignBoxDto dto, String docNum, HttpSession session) {
 
 		dto.setSidb_doc_num(docNum);
@@ -141,9 +143,9 @@ public class DocController {
 					apprDepth += json.get(j).getAppr_depth() + ",";
 				}
 			}
-
-			byte[] emplImg = table.get(i).getEmpl_picture();
-			table.get(i).setEmpl_pictureStr(Base64Utils.encodeToString(emplImg));
+			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+//			byte[] emplImg = table.get(i).getEmpl_picture();
+//			table.get(i).setEmpl_pictureStr(Base64Utils.encodeToString(emplImg));
 
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);

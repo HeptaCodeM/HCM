@@ -106,11 +106,11 @@ public class Function {
 			 if(b != null) {
 				 base64ToString = "data:image/png;base64,"+Base64Utils.encodeToString(b);
 			 }else {
-				 base64ToString = "/images/blank.png";
+				 base64ToString = "/image/blank.png";
 			 }
 		 }catch(Exception e) {
 			 e.printStackTrace();
-			 base64ToString = "/images/blank.png";
+			 base64ToString = "/image/blank.png";
 		 }
 
 		 return base64ToString;

@@ -46,9 +46,9 @@ th, td {
 
 .header {
 	float: right;
-	top: 10px; /* 원하는 위치 조정 */
-	right: 10px; /* 원하는 위치 조정 */
-	width: 30%; /* 크기 조정 */
+	top: 10px; 
+	right: 10px; 
+	max-width: 40%; 
 	height: 30%;
 }
 
@@ -98,7 +98,8 @@ th, td {
 				<div class="app-container container-fluid">
 					<div class="card card-flush h-md-50 mb-xl-10">
 						<div style="text-align:center;"  class="card-header pt-5">
-							<h1  style="text-align:center;" class="card-title text-gray-800 fw-bold">${docDto1.empl_name} ${docDto1.empl_rank}님이 기안한 ${docDto1.sidt_temp_name}입니다.</h1>
+<%-- 							<h1  style="text-align:center;" class="card-title text-gray-800 fw-bold">${docDto1.empl_name} ${docDto1.empl_rank}님이 기안한 ${docDto1.sidt_temp_name}입니다.</h1>
+ --%>							<h1> ${docDto1.sidb_doc_title}</h1>
 							 <br>
 							 <div>
 							<table class="transparent-table">
@@ -107,7 +108,7 @@ th, td {
 									<td style="width:300px;">${docDto1.sidb_doc_num}</td>
 									<td style="min-width:70px;">기안자 :</td>
 									<td style="width:300px;">${docDto1.empl_name}</td>
-									<td style="min-width:70px;">보존년한 :</td>
+									<td style="min-width:70px;">결재기한 :</td>
 									<td style="width:300px;">
 									<fmt:parseDate var="patternDate"
 													value="${docDto1.sidb_doc_expiredt}"
@@ -127,9 +128,31 @@ th, td {
 													value="${patternDate}" pattern="yyyy년 MM월 dd일" />
 									</td>
 								</tr>
+								<tr>
+								<td>참조부서 :</td>
+								<td>  <c:choose>
+								        <c:when test="${not empty docDto1.empl_dept_cd}">
+								            ${docDto1.empl_dept_cd}
+								        </c:when>
+								        <c:otherwise>
+								            없음
+								        </c:otherwise>
+								       </c:choose>
+								</td>
+								</tr>
+								<tr>
+								<td>참조자 :</td>
+								<td> <c:choose>
+								        <c:when test="${not empty docDto1.empl_ref}">
+								            ${docDto1.empl_ref}
+								        </c:when>
+								        <c:otherwise>
+								            없음
+								        </c:otherwise>
+								       </c:choose>
+								</td>
+								</tr>
 							</table>
-							참조자 : ${docDto1.empl_ref} <br>
-							참조부서 :  ${docDto1.empl_dept_cd} 
 							</div>
 						</div>
 						<div class="separator separator-dashed my-3"></div>
@@ -141,14 +164,16 @@ th, td {
 									<div></div>
 									<table class="top-table">
 										<tr>
-											<th rowspan="4">결<br>재
+											<th rowspan="4" style="width:30px">결<br>재
 											</th>
 										<tr style="height:30px;">
+										    <td style="width:95px;"> ${docDto1.empl_name} ${docDto1.empl_rank}</td>
 											<c:forEach items="${docDto}" var="dt" varStatus="i">
-												<td>${dt.appr_name} ${dt.appr_rank}</td>
+												<td style="width:95px;">${dt.appr_name} ${dt.appr_rank}</td>
 											</c:forEach>
 										</tr>
 										<tr style="height:80px;">
+											<td>기안자 서명</td>
 											<c:forEach items="${docDto}" var="dt" varStatus="i">
 												<td><c:choose>
 													<%-- 	<c:when test="${empty dt.appr_sign}"> --%>
@@ -163,6 +188,10 @@ th, td {
 											</c:forEach>
 										</tr>	
 										<tr style="height:30px;">
+										<td> <fmt:parseDate var="patternDate"
+													value="${docDto1.sidb_doc_writedt}"
+													pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
+													value="${patternDate}" pattern="yyyy-MM-dd" /></td>
 											<c:forEach items="${docDto}" var="dt" varStatus="i">
 												<td>${dt.appr_dt}</td>
 											</c:forEach>
@@ -180,7 +209,7 @@ th, td {
 									<div class="separator separator-dashed my-3"></div>
 									
 									<div style="margin-top:50px; text-align:right;">
-									첨부파일:<select id="selectFile" style="min-width:100px; margin-right:1.5%;"></select> <button class="btn btn-primary btnMd" id="downBtn" style="font-size: small;">다운로드</button>
+									<span id="selectFile" style="min-width:100px; margin-right:1.5%;">첨부파일: </span> <button class="btn btn-primary btnMd" id="downBtn" style="font-size: small;">다운로드</button>
 									<button class="btn btn-primary btnMd" id="savePdf" style="font-size: small;">PDF 저장</button>
 									</div>
 								<div class="footer">
@@ -210,11 +239,57 @@ th, td {
 												<td>${dt.appr_reply}<br></td>
 											</tr>
 										</c:forEach>
-										<%-- 	<tr>
-											<td>${docDto1.appr_name} <br> <br></td>
-											<td>${docDto1.appr_reply}<br> <br></td>
-										</tr> --%>
+										<%-- <tr>
+								<td>참조부서 </td>
+								<td colspan="2">  <c:choose>
+								        <c:when test="${not empty docDto1.empl_dept_cd}">
+								            ${docDto1.empl_dept_cd}
+								        </c:when>
+								        <c:otherwise>
+								            없음
+								        </c:otherwise>
+								       </c:choose>
+								</td>
+								</tr>
+								<tr>
+								<td >참조자 </td>
+								<td colspan="2"> <c:choose>
+								        <c:when test="${not empty docDto1.empl_ref}">
+								            ${docDto1.empl_ref}
+								        </c:when>
+								        <c:otherwise>
+								            없음
+								        </c:otherwise>
+								       </c:choose>
+								</td>
+								</tr>	 --%>
 									</table>
+		<%-- 		<table class="transparent-table" style="margin-left: 1%;">
+				<tr>
+								<td>참조부서 :</td>
+								<td>  <c:choose>
+								        <c:when test="${not empty docDto1.empl_dept_cd}">
+								            ${docDto1.empl_dept_cd}
+								        </c:when>
+								        <c:otherwise>
+								            없음
+								        </c:otherwise>
+								       </c:choose>
+								</td>
+								</tr>
+								<tr>
+								<td style="width:100px;">참조자 :</td>
+								<td> <c:choose>
+								        <c:when test="${not empty docDto1.empl_ref}">
+								            ${docDto1.empl_ref}
+								        </c:when>
+								        <c:otherwise>
+								            없음
+								        </c:otherwise>
+								       </c:choose>
+								</td>
+								</tr>	
+				</table>	 --%>								
 								</div>
 								
 		<div style="text-align: center; margin-top: 30px;">
