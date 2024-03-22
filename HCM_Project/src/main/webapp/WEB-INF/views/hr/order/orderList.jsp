@@ -45,35 +45,6 @@
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5">
-								<!-- 
-								<div class="table-responsive">
-									<form name="searchOrderDate" id="searchOrderDate" method="post">
-										<table class="table table-bordered">
-											<tr>
-												<th>기간조회</th>
-												<td>
-													<div class="input-group" id="sdate" data-td-target-input="nearest" data-td-target-toggle="nearest" style="float:left;width:200px;margin-left:20px;">
-													    <input id="sdate_input" type="text" name="sdate" class="form-control" data-td-target="#sdate" readonly />
-													    <span class="input-group-text" data-td-target="#sdate" data-td-toggle="datetimepicker">
-													    	<i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
-													    </span>
-													</div>
-													<span style="float:left;vertical-align: middle;line-height:43px;padding:0 20px;">~</span>
-													<div class="input-group" id="edate" data-td-target-input="nearest" data-td-target-toggle="nearest" style="float:left;width:200px;">
-													    <input id="edate_input" type="text" name="edate" class="form-control" data-td-target="#edate" readonly />
-													    <span class="input-group-text" data-td-target="#edate" data-td-toggle="datetimepicker">
-													        <i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
-													    </span>
-													</div>
-													<button type="button" class="btn btn-success" style="margin-left:20px;" onclick="orderSearchList()">조회</button>
-													<button type="button" class="btn btn-danger" style="margin-left:20px;" onclick="reset()">초기화</button>
-												</td>
-											</tr>
-										</table>
-									</form>
-								</div>
-								<div class="separator separator-dashed my-3"></div>	
-								 -->
 								<div class="table-responsive">
 									<table id="searchOrderList" class="table table-row-bordered gy-5">
 										<thead>
@@ -105,47 +76,6 @@
 <script type="text/javascript">
 $(function(){ 
 	orderSearchList()
-});
-
-var datePicker = new tempusDominus.TempusDominus(document.getElementById("sdate"), {
-	display: {
-		icons: {
-			close: "ki-outline ki-cross fs-1",
-		},
-		buttons: {
-			close: true,
-		},
-        components: {
-			hours: true,
-			minutes: true,
-			seconds: false
-		}
-	},
-    localization: {
-		locale: "kr",
-		startOfTheWeek: 1,
-		format: "yyyy-MM-dd"
-    }
-});
-var datePicker = new tempusDominus.TempusDominus(document.getElementById("edate"), {
-	display: {
-		icons: {
-			close: "ki-outline ki-cross fs-1",
-		},
-		buttons: {
-			close: true,
-		},
-        components: {
-			hours: true,
-			minutes: true,
-			seconds: false
-		}
-	},
-	localization: {
-		locale: "kr",
-		startOfTheWeek: 1,
-		format: "yyyy-MM-dd"
-    }
 });
 </script>
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		

@@ -10,12 +10,15 @@
 
 	<style type="text/css">
 	.table th {  vertical-align:middle; text-align:center !important; background-color:#F9F9F9; font-weight:600; }
-	#searchOrderList { text-align:center; }
+	#searchOrderAdminList { text-align:center; }
 	.searchLast>span, 
 	.searchLast>button { float:left; margin-right:20px; }
 	.searchEmpInput{ width: 300px; height: 40px; }
 	.searchEmpSelect{ width: 130px; height: 40px; }
 	.searchEmpDate{ width: 290px; height: 40px; }
+	
+	.datePic input, .datePic .input-group-text { height:30px; }
+	.datePic>span { line-height:30px; }
 	</style>
 	<script src="/js/hr/order.js" type="text/javascript"></script>
 </head>
@@ -54,7 +57,25 @@
 									<form name="searchOrderAdminForm" id="searchOrderAdminForm" method="post">
 										<table class="table table-bordered">
 											<tr>
-												<th rowspan="5">검색</th>
+												<th rowspan="6">검색</th>
+												<th>기간조회</th>
+												<td class="datePic">
+													<div class="input-group" id="sdate" data-td-target-input="nearest" data-td-target-toggle="nearest" style="float:left;width:200px;">
+													    <input id="sdate_input" type="text" name="sdate" class="form-control" data-td-target="#sdate" readonly />
+													    <span class="input-group-text" data-td-target="#sdate" data-td-toggle="datetimepicker">
+													    	<i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
+													    </span>
+													</div>
+													<span style="float:left;vertical-align: middle;padding:0 20px;">~</span>
+													<div class="input-group" id="edate" data-td-target-input="nearest" data-td-target-toggle="nearest" style="float:left;width:200px;">
+													    <input id="edate_input" type="text" name="edate" class="form-control" data-td-target="#edate" readonly />
+													    <span class="input-group-text" data-td-target="#edate" data-td-toggle="datetimepicker">
+													        <i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
+													    </span>
+													</div>
+												</td>
+											</tr>
+											<tr>
 												<th>부서</th>
 												<td>
 													<c:forEach items="${deptList}" var="dept">
@@ -119,14 +140,14 @@
 													<span>
 														<select NAME="searchType" id="searchType" class="form-select form-select-solid searchEmpSelect">
 															<option value="">검색분류</option>
-															<option value="B.EMPL_NAME">성명</option>
-															<option value="B.EMPL_ID">사원번호</option>
+															<option value="EMPL_NAME">성명</option>
+															<option value="EMPL_ID">사원번호</option>
 														</select>
 													</span>
 													<span>
 														<input type="text" class="form-control form-control-solid searchEmpInput" id="keyWord" name="keyWord" placeholder="검색">
 													</span>
-													<button type="button" class="btn btn-success" onclick="holidaySearchAdminList()">조회</button>
+													<button type="button" class="btn btn-success" onclick="orderSearchAdminList()">조회</button>
 													<button type="button" class="btn btn-danger" onclick="reset()">초기화</button>
 												</td>
 											</tr>
@@ -149,6 +170,7 @@
 												<th>발령직위</th>
 												<th>이전직책</th>
 												<th>발령직책</th>
+												<th>구분</th>
 											</tr>
 										</thead>
 									</table>

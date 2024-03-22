@@ -87,7 +87,7 @@ function orderSearchAdminList(){
 			console.log(data.holidayTotalMap.REST_HOLIDAY);
 			*/
 	 		$("#searchOrderAdminList").dataTable({
-	 			data: data.holidayLists,
+	 			data: data,
 				columns: [
 					{ data: 'emor_id' },
 					{ data: 'emod_order_dt' },
@@ -99,8 +99,21 @@ function orderSearchAdminList(){
 					{ data: 'emod_prev_rank_nm' },
 					{ data: 'emod_order_rank_nm' },
 					{ data: 'emod_prev_position_nm' },
-					{ data: 'emod_order_position_nm' }
+					{ data: 'emod_order_position_nm' },
+					{ data: 'emor_status' }
 				],
+			    columnDefs: [
+			        {
+			            targets: [11], // emor_status 열
+			            render: function(data, type, row) {
+			                if (data === 'Y') {
+			                    return '<span style="color: #1B84FF;">발령확정</span>';
+			                } else {
+			                    return '<span style="color: #B2A1B7;">발령전</span>';
+			                }
+			            }
+			        }
+			    ],
 				displayLength: 10,
 				lengthChange: false,
 				info: false,

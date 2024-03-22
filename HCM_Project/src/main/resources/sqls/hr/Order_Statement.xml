@@ -71,6 +71,41 @@
 		LEFT OUTER JOIN COMMON_CODE I ON B.EMOD_ORDER_POSITION = I.COCO_CD
 		LEFT OUTER JOIN COMMON_CODE J ON B.EMOD_TYPE = J.COCO_CD
 		WHERE 1=1
+		<if test="sdate != null and sdate != ''">
+		<![CDATA[
+		AND B.EMOD_ORDER_DT >= #{sdate}
+		]]>
+		</if>
+		<if test="edate != null and edate != ''">
+		<![CDATA[
+		AND B.EMOD_ORDER_DT <= #{edate}
+		]]>
+		</if>
+		<if test="keyWord != null and keyWord != ''">
+		AND ${searchType} LIKE CONCAT(#{keyWord}, '%')
+		</if>
+		<if test="empl_delflag != null and empl_delflag != ''">
+		AND B.EMPL_DELFLAG = #{empl_delflag}
+		</if>
+		
+		<if test="empl_dept_cd != null and empl_dept_cd != ''">
+		    AND B.EMPL_DEPT_CD IN 
+		    <foreach collection="empl_dept_cd" item="dcode" open="(" separator="," close=")">
+		        #{dcode}
+		    </foreach>
+		</if>
+		<if test="empl_rank_cd != null and empl_rank_cd != ''">
+			AND B.EMPL_RANK_CD IN
+			<foreach collection="empl_rank_cd" item="rcode" open="(" separator="," close=")">
+				#{rcode}
+			</foreach>
+		</if>
+		<if test="empl_position_cd != null and empl_position_cd != ''">
+			AND B.EMPL_POSITION_CD IN
+			<foreach collection="empl_position_cd" item="pcode" open="(" separator="," close=")">
+				#{pcode}
+			</foreach>
+		</if>				
 		ORDER BY A.EMOR_ID DESC, B.EMOD_SEQ ASC
 	</select>
 

@@ -68,9 +68,9 @@ public class LoginController {
 				empl_id = "20230107";
 			}else if(ipAddr.equals("192.168.8.3")) {	//류종윤
 				empl_id = "20230106";
-			}else if(ipAddr.equals("192.168.8.1451")) {	//김지아
+			}else if(ipAddr.equals("192.168.8.18")) {	//김지아
 				empl_id = "20230105";
-			}else if(ipAddr.equals("192.168.8.")) {	//윤영훈
+			}else if(ipAddr.equals("192.168.8.12")) {	//윤영훈
 				empl_id = "20230108";
 			}else if(ipAddr.equals("192.168.8.29")) {	//김재원
 				empl_id = "20230102";
