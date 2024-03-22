@@ -1,6 +1,7 @@
 /* 휴가현황 검색(임직원) */
-function holidaySearchList(){
-	var f = $("#searchholidayDate");
+function orderSearchList(){
+	var f = $("#searchOrderDate");
+	/*
 	if($("#sdate_input").val() && $("#edate_input").val()){
 		if($("#sdate_input").val() > $("#edate_input").val()){
 			swalAlert("기간 종료일보다 시작일이 더 클 수 없습니다.","","","","sdate_input");
@@ -9,39 +10,31 @@ function holidaySearchList(){
 			return;
 		}
 	}
-	
-	$("#searchHolidayList").DataTable().destroy();
+	*/
+	$("#searchOrderList").DataTable().destroy();
 
 	$.ajax({
-		url:"/hr/holiday/holidaySearchList.do",
+		url:"/hr/order/orderSearchList.do",
 		type:"POST",
 		data : f.serialize(),
 		success:function(data){
 			/*
 			console.log(data)
-			console.log(data.holidayLists);
-
-			console.log(data.holidayTotalMap.TOTAL_HOLIDAY);
-			console.log(data.holidayTotalMap.USE_HOLIDAY);
-			console.log(data.holidayTotalMap.REST_HOLIDAY);
+			console.log(data.orderLists);
 			*/
-			$("#totHoliday").html(data.holidayTotalMap.TOTAL_HOLIDAY);
-			$("#useHoliday").html(data.holidayTotalMap.USE_HOLIDAY);
-			$("#restHoliday").html(data.holidayTotalMap.REST_HOLIDAY);
 
-			// data 객체의 holidayLists 배열의 각 요소의 날짜 값을 변환
-			data.holidayLists.forEach(function(item) {
-				// sidb_doc_apprdt 필드를 변환하여 yyyy-mm-dd 형식으로 설정
-			    item.sidb_doc_apprdt = formatDate(new Date(item.sidb_doc_apprdt));
-			});			
-
-	 		$("#searchHolidayList").dataTable({
-	 			data: data.holidayLists,
+	 		$("#searchOrderList").dataTable({
+	 			data: data,
 				columns: [
-					{ data: 'sidt_temp_name' },
-					{ data: 'sidb_doc_date' },
-					{ data: 'holiday' },
-					{ data: 'sidb_doc_apprdt' }
+					{ data: 'emor_id' },
+					{ data: 'emod_order_dt' },
+					{ data: 'emod_type_nm' },
+					{ data: 'emod_prev_dept_nm' },
+					{ data: 'emod_order_dept_nm' },
+					{ data: 'emod_prev_rank_nm' },
+					{ data: 'emod_order_rank_nm' },
+					{ data: 'emod_prev_position_nm' },
+					{ data: 'emod_order_position_nm' }
 				],
 				displayLength: 10,
 				lengthChange: false,
@@ -61,8 +54,8 @@ function holidaySearchList(){
 
 
 /* 휴가현황 검색(관리자) */
-function holidaySearchAdminList(){
-	var f = $("#searchHolidayAdminForm");
+function orderSearchAdminList(){
+	var f = $("#searchOrderAdminForm");
 	
 	if($("#sdate_input").val() && $("#edate_input").val()){
 		if($("#sdate_input").val() > $("#edate_input").val()){
@@ -78,10 +71,10 @@ function holidaySearchAdminList(){
 		return;
 	}
 	
-	$("#searchHolidayAdminList").DataTable().destroy();
+	$("#searchOrderAdminList").DataTable().destroy();
 
 	$.ajax({
-		url:"/hr/holiday/holidaySearchAdminList.do",
+		url:"/hr/order/orderSearchAdminList.do",
 		type:"POST",
 		data : f.serialize(),
 		success:function(data){
@@ -93,17 +86,20 @@ function holidaySearchAdminList(){
 			console.log(data.holidayTotalMap.USE_HOLIDAY);
 			console.log(data.holidayTotalMap.REST_HOLIDAY);
 			*/
-	 		$("#searchHolidayAdminList").dataTable({
+	 		$("#searchOrderAdminList").dataTable({
 	 			data: data.holidayLists,
 				columns: [
+					{ data: 'emor_id' },
+					{ data: 'emod_order_dt' },
 					{ data: 'empl_id' },
 					{ data: 'empl_name' },
-					{ data: 'empl_dept_nm' },
-					{ data: 'empl_rank_nm' },
-					{ data: 'empl_position_nm' },
-					{ data: 'total_holiday' },
-					{ data: 'use_holiday' },
-					{ data: 'rest_holiday' },
+					{ data: 'emod_type_nm' },
+					{ data: 'emod_prev_dept_nm' },
+					{ data: 'emod_order_dept_nm' },
+					{ data: 'emod_prev_rank_nm' },
+					{ data: 'emod_order_rank_nm' },
+					{ data: 'emod_prev_position_nm' },
+					{ data: 'emod_order_position_nm' }
 				],
 				displayLength: 10,
 				lengthChange: false,

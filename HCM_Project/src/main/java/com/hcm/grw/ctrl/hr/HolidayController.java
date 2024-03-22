@@ -65,7 +65,7 @@ public class HolidayController {
 		
 		String empl_id = "";
 		if(authentication == null) {
-			return "로그인 정보가 없습니다";
+			return "{\"error\":\"로그인 정보가 없습니다\"}";
 		}else {
 			empl_id = authentication.getName();
 		}
@@ -149,7 +149,7 @@ public class HolidayController {
 
 		String empl_id = "";
 		if(authentication == null) {
-			return "로그인 정보가 없습니다";
+			return "{\"error\":\"로그인 정보가 없습니다\"}";
 		}
 		
 		if(arr_empl_dept_cd != null && arr_empl_dept_cd.toString() != "") {
@@ -162,16 +162,6 @@ public class HolidayController {
 			holidaySearchMap.put("empl_position_cd", Arrays.asList(arr_empl_position_cd));
 		}
 		log.info("holidaySearchMap : {}", holidaySearchMap);
-
-		if(holidaySearchMap.get("empl_dept_cd")==null || holidaySearchMap.get("empl_dept_cd")=="") {
-			log.info("empl_dept_cd : 공백");
-		}
-		if(holidaySearchMap.get("empl_rank_cd")==null || holidaySearchMap.get("empl_rank_cd")=="") {
-			log.info("empl_rank_cd : 공백");
-		}
-		if(holidaySearchMap.get("empl_position_cd")==null || holidaySearchMap.get("empl_position_cd")=="") {
-			log.info("empl_position_cd : 공백");
-		}
 		
 		/*
 		휴가 사용현황 리스트
