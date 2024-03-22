@@ -81,4 +81,7 @@ public interface IDocBoxDao {
 
 	//참조자 이름 조회
 	public String findEmployeeName(String id);
+
+	//참조부서명 조회
+	public String findDeptName(String dept);
 }

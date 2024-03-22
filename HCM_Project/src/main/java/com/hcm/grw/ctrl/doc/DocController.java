@@ -77,6 +77,37 @@ public class DocController {
 		String concatenatedNames = employeeNamesBuilder.toString();
 		System.out.println("사원 이름들: " + concatenatedNames);
 		docDto.get(1).setEmpl_ref(concatenatedNames);
+		
+		
+		// 참조 부서명 가져오기
+				List<String> allDeptIds = new ArrayList<>();
+
+				    String deptRef = docDto.get(0).getEmpl_dept_cd();
+				    if (deptRef != null && !deptRef.isEmpty()) {
+				        String[] deptIds = deptRef.split(",");
+				        allDeptIds = Arrays.asList(deptIds);
+				}
+				
+				String trimDeptId = "";
+				StringBuilder deptNamesBuilder = new StringBuilder();
+				for (String id : allDeptIds) {
+					trimDeptId = id.trim();
+					System.out.println(trimDeptId);
+				    String deptName = docService.findDeptName(trimDeptId);
+				    deptNamesBuilder.append(deptName).append(", ");
+				    System.out.println("뭐찍히니????????: " + deptName);
+				}
+				
+				if (deptNamesBuilder.length() > 0) {
+					deptNamesBuilder.setLength(deptNamesBuilder.length() - 2);
+				}
+
+				String concatDeptNames = deptNamesBuilder.toString();
+				System.out.println("참조부서명들: " + concatDeptNames);
+				docDto.get(1).setEmpl_dept_cd(concatDeptNames);
+		
+		
+		
 		 
 		model.addAttribute("docDto", docDto);
 		log.info("상세조회  데이터 리스트 결과{}", docDto);

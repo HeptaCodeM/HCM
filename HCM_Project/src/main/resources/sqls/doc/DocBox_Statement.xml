@@ -365,11 +365,17 @@ JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
 WHERE SDB.empl_id = #{empl_id} 
 </select>
 
-<!-- 이름가져오기 -->
+<!-- 참조자 이름 가져오기 -->
 <select id="findEmployeeName" resultType="String">
 		SELECT  EMPL_NAME		
 		FROM 	EMPLOYEE E
 		WHERE EMPL_ID = #{empl_id}	
 	</select>
 
+<!-- 참조부서명 가져오기 -->	
+<select id="findDeptName" resultType="String">
+		SELECT  COCO_NAME		
+		FROM 	COMMON_CODE
+		WHERE COCO_CD = #{empl_dept_cd}	
+	</select>
 </mapper>

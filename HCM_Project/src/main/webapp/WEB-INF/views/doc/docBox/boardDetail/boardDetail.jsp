@@ -128,8 +128,8 @@ th, td {
 									</td>
 								</tr>
 							</table>
-							참조자 : ${docDto1.empl_ref}
-							참조부서 : 
+							참조자 : ${docDto1.empl_ref} <br>
+							참조부서 :  ${docDto1.empl_dept_cd} 
 							</div>
 						</div>
 						<div class="separator separator-dashed my-3"></div>
