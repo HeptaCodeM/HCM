@@ -107,13 +107,37 @@
                 <!--end::Close-->
             </div>
 
-            <div class="modal-body">
-                <p>Long modal body text goes here.</p>
+             <div class="modal-body">
+               <div class="form-group">
+                     <form action="./insert.do" method="post" id="form">
+                     <div class="form-group">
+                       <label for="sel1" class="col-form-label">구분</label>
+                       <select class="form-control" id="groupid" name="groupid">
+                         <option value="100">개인일정</option>
+                         <option value="200">외근</option>
+                       </select>
+                     <label for="title" class="col-form-label">일정 제목</label>
+                     <input type="text" class="form-control" id="title" name="title">
+                     </div>
+                       <label for="content" class="col-form-label">일정 내용</label>
+                       <textarea class="form-control" rows="5" id="content" name="content"></textarea>
+                     <label for="startDate" class="col-form-label">시작 날짜</label>
+                     <div class="input-group">
+                        <input type="text" class="form-control" name="start" id="start" readonly="readonly" ondblclick="return false" id="startDate">
+                        <span class="input-group-addon" id="imagebutton"><i class="glyphicon glyphicon-calendar"></i></span>
+                       </div>
+                     <label for="endDate" class="col-form-label">종료 날짜</label>
+                     <div class="input-group">
+                        <input type="text" class="form-control" name="end" id="end" readonly="readonly">
+                        <span class="input-group-addon" id="imagebutton2"><i class="glyphicon glyphicon-calendar"></i></span>
+                     </div>
+                    </form> 
+               </div>
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="addCalendar">Save changes</button>
             </div>
         </div>
     </div>
@@ -122,6 +146,49 @@
 		
 		
 		
+		
+<style type="text/css">
+			#filter { position: absolute; background-color:#fff; z-index:999; width:600px; left: 50%; transform: translateX(-50%); top: 15%; padding: 20px; border:1px solid #ccc; border-radius: 20px; display: none; }
+		</style>
+		<div id="filter">
+			<div style="text-align:right;" >
+				<a href="javascript:void(0);" onclick="closeEmpInfoSearch();">
+					<i class="ki-duotone ki-cross-square fs-2x">
+					<span class="path1"></span><span class="path2"></span>
+					</i>
+				</a>
+			</div>
+			<div>
+				<form name="searchEmpInfo" id="searchEmpInfo" method="post" action="/hr/employee/getUserInfoSearch.do">
+					<input type="hidden" name="layer" value="empSearch">
+					<table class="table">
+						<tr>
+							<th>사원검색</th>
+							<td>
+								<select name="searchType" class="form-select">
+									<option value="empl_name">성명</option>
+									<option value="empl_id">사번</option>
+								</select>
+							</td>
+							<td>
+								<input type="text" class="form-control form-control-solid" name="keyWord" id="keyWord" maxlength="20" required="required">
+							</td>
+							<td>
+								<button type="button" class="btn btn-success" id="kt_button_1" onclick="empInfoSearch()">
+								    <span class="indicator-label">
+								        검색
+								    </span>
+								    <span class="indicator-progress">
+								        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+								    </span>
+								</button>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+	
+		</div>
 		
 			
 <%@include file="/WEB-INF/views/menu/smSideMenu.jsp" %>		

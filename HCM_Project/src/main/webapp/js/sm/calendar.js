@@ -54,7 +54,6 @@ function listAjax() {
 				 },
 				  eventClick: function(info) {  // 일정명 클릭시 이벤트
 					var seq = info.event.extendedProps.seq;
-					
 					detail(seq);
 					
 				},
@@ -186,7 +185,6 @@ $("#imagebutton2").click(function(){
 })
 
 
-var title = $(".fc-toolbar-title").text()
 
 
 function filtermodal(){
