@@ -134,12 +134,14 @@ function orderSearchAdminList(){
 function empInfoSearch(flag){
 	var f = $("#searchEmpInfo");
 	
+	/*
 	if(flag=="F"){
 		if(!f.keyWord.value){
 			swalAlert("검색어를 입력하여 주세요.","","","","keyWord");
 			return;
 		}
 	}
+	*/
 
 	$("#searchEmployeeList").DataTable().destroy();
 

@@ -7,7 +7,15 @@
 	<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
 	<title>HCM GroupWare</title>
 	<style type="text/css">
-	.table th {  vertical-align:middle; text-align:center !important; background-color:#F9F9F9; font-weight:600; }
+	.table.regiform th {  vertical-align:middle; text-align:center !important; background-color:#F9F9F9; font-weight:600; }
+	.table.regiform th:nth-child(1) { width:180px; }
+	.table.regiform th:nth-child(2) { width:100px; }
+	.table.regiform th:nth-child(3) { width:130px; }
+	.table.regiform th:nth-child(11) { width:80px; }
+	.table.regiform th:nth-child(4),
+	.table.regiform th:nth-child(6),
+	.table.regiform th:nth-child(8),
+	.table.regiform th:nth-child(10) { width:131px; }
 	</style>
 	<script type="text/javascript" src="/js/hr/order.js"></script>
 </head>
@@ -33,7 +41,7 @@
 							<div class="separator separator-dashed my-3"></div>
 							<form name="registOrderForm" id="registOrderForm" method="post" action="/hr/order/registOrderAdminOk.do">
 								<div class="table-responsive">
-									<table class="table table-bordered">
+									<table class="table table-bordered regiform">
 										<thead>
 										<tr>
 											<th>발령일자</th>
@@ -46,12 +54,13 @@
 											<th>발령직위</th>
 											<th>이전직책</th>
 											<th>발령직책</th>
+											<th>추가/삭제</th>
 										</tr>
 										</thead>
 										<tbody>
 										<tr>
 											<td>
-												<div class="input-group" id="emod_order_dt1" data-td-target-input="nearest" data-td-target-toggle="nearest" style="float:left;width:200px;">
+												<div class="input-group" id="emod_order_dt1" data-td-target-input="nearest" data-td-target-toggle="nearest" style="float:left;">
 												    <input id="emod_order_dt_input1" type="text" name="emod_order_dt" class="form-control" data-td-target="#emod_order_dt1" readonly />
 												    <span class="input-group-text picker" data-td-target="#emod_order_dt1" data-td-toggle="datetimepicker">
 												    	<i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
@@ -59,19 +68,24 @@
 												</div>
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="empl_id" id="empl_id1" maxlength="20"  readonly required="required">
+												<input type="text" class="form-control form-control-solid" name="empl_id" id="empl_id1" maxlength="20" readonly required="required" onclick="openEmpInfoSearch()">
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="empl_name" id="empl_name1" maxlength="20"  readonly>
+												<input type="text" class="form-control form-control-solid" name="empl_name" id="empl_name1" maxlength="20" readonly>
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="emod_type" id="emod_type1" maxlength="20"  readonly required="required">
+												<select NAME="emod_type" id="emod_type1" class="form-select form-select-solid searchEmpSelect">
+													<option value="">발령구분</option>
+													<c:forEach items="${orderList}" var="order">
+													<option value="${order.coco_cd}">${order.coco_name}</option>
+													</c:forEach>
+												</select>
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="emod_prev_dept" id="emod_prev_dept1" maxlength="20"  readonly>
+												<input type="text" class="form-control form-control-solid" name="emod_prev_dept" id="emod_prev_dept1" maxlength="20" readonly>
 											</td>
 											<td>
-												<select NAME="emod_order_dept" id="emod_order_dept1" class="form-select form-select-solid searchEmpSelect">
+												<select NAME="emod_order_dept" id="emod_order_dept1" class="form-select form-select-solid searchEmpSelect" disabled>
 													<option value="">부서선택</option>
 													<c:forEach items="${deptList}" var="dept">
 													<option value="${dept.coco_cd}">${dept.coco_name}</option>
@@ -79,23 +93,48 @@
 												</select>
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="emod_prev_rank" id="emod_prev_rank1" maxlength="20"  readonly>
+												<input type="text" class="form-control form-control-solid" name="emod_prev_rank" id="emod_prev_rank1" maxlength="20" readonly>
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="emod_order_rank" id="emod_order_rank1" maxlength="20"  readonly>
+												<select NAME="emod_order_rank" id="emod_order_rank1" class="form-select form-select-solid searchEmpSelect" disabled>
+													<option value="">직위선택</option>
+													<c:forEach items="${rankList}" var="rank">
+													<option value="${rank.coco_cd}">${rank.coco_name}</option>
+													</c:forEach>
+												</select>
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="emod_prev_position" id="emod_prev_position1" maxlength="20"  readonly>
+												<input type="text" class="form-control form-control-solid" name="emod_prev_position" id="emod_prev_position1" maxlength="20" readonly>
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="emod_order_position" id="emod_order_position1" maxlength="20"  readonly>
+												<select NAME="emod_order_position" id="emod_order_position1" class="form-select form-select-solid searchEmpSelect" disabled>
+													<option value="">직책선택</option>
+													<c:forEach items="${positionList}" var="position">
+													<option value="${position.coco_cd}">${position.coco_name}</option>
+													</c:forEach>
+												</select>
+											</td>
+											<td style="text-align: center; vertical-align: middle;">
+												<a>
+													<i class="ki-duotone ki-plus-square fs-1">
+														<span class="path1"></span>
+														<span class="path2"></span>
+														<span class="path3"></span>
+													</i>
+												</a>
+												<a>
+													<i class="ki-duotone ki-minus-square fs-1">
+														<span class="path1"></span>
+														<span class="path2"></span>
+													</i>
+												</a>
 											</td>
 										</tr>
 										</tbody>
 									</table>
 								</div>						
 								<div style="text-align: right;margin-bottom:20px;">
-									<button type="button" class="btn btn-primary me-10" id="kt_button_1" onclick="registEmpAuth()">
+									<button type="button" class="btn btn-primary me-4" id="kt_button_1" onclick="registEmpAuth()">
 									    <span class="indicator-label">
 									        등록
 									    </span>
@@ -103,7 +142,7 @@
 									        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 									    </span>
 									</button>
-									<button type="button" class="btn btn-success me-10" id="kt_button_1" onclick="history.back();">
+									<button type="button" class="btn btn-success me-4" id="kt_button_1" onclick="history.back();">
 									    <span class="indicator-label">
 									        취소
 									    </span>
@@ -236,6 +275,17 @@ var datePicker = new tempusDominus.TempusDominus(document.getElementById("emod_o
     }
 });
 */
+
+$("#searchEmployeeList tbody").on('click', 'tr', function () {
+	var row = $("#searchEmployeeList").DataTable().row($(this)).data();
+	$("#empl_id").val(row.empl_id);
+	$("#empl_name").val(row.empl_name);
+	$("#empl_dept_nm").val(row.empl_dept_nm);
+	$("#empl_rank_nm").val(row.empl_rank_nm);
+	$("#empl_position_nm").val(row.empl_position_nm);
+	
+	closeEmpInfoSearch();
+});
 </script>
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
 </body>
