@@ -34,7 +34,7 @@ function dragElement(elmnt) {
         document.onmousemove = null;
     }
 }
-// Doc_jstree
+// Doc_jstree로 템플릿 선택하여 가져오기
 var docData;
 var sica_cd;
 var sidt_temp_cd;
@@ -55,7 +55,8 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 		return;
 	}
 
-	//		console.log("getTemplate: " + docData);
+// 템플릿 선택후 에디터 화면 및 로그인 정보 가져오기
+//	console.log("getTemplate: " + docData);
 	$("#template_div").hide();
 	$("#editor_div").show();
 	document.getElementById('closeBtn').click();
@@ -66,11 +67,10 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 	var insertDept = insertName.replace("인사팀", sessionDept.value)
 	var insertRank = insertDept.replace("대리", sessionRank.value)
 	editor.setData(insertRank);
-	//editor.setData(docData);
-
-
+//	editor.setData(docData);
 
 })
+
 setTimeout(function() {
 	$('#jstree').jstree({
 		plugins: ['search', 'wholerow'],
@@ -107,8 +107,9 @@ $('#jstree').on('select_node.jstree', function(e, data) {
 		.catch(err => { console.log(err) });
 
 })
+
 	
-document.getElementById('currentDate').innerHTML = Date();
+document.getElementById('currentDate').innerHTML = new Date();
 
 function insertDoc() {
 	var sidb_doc_expiredt = document.getElementsByName('sidb_doc_expiredt')[0].value;
@@ -215,8 +216,35 @@ function insertDoc() {
 document.getElementById('insertDoc').addEventListener('click', insertDoc);
 
 
+// 참조 팝업창
+document.getElementById('signRefer').addEventListener('click', function() {
+   open('/doc/writeDoc/signRefer.do', '', 'width=720px height=900px left=400');
+});
+// 결재선 팝업
+document.getElementById('signLine').addEventListener('click', function() {
+   open('/doc/writeDoc/signLine.do', '', 'width=1600px height=900px left=400');
+});
 
+var empl_dept_cd;
+var empl_ref;
+var sidb_doc_json;
 
+window.addEventListener('message', function(e) {
+   
+   if (typeof e.data == 'string') {
+      if (e.data.startsWith('DT')) {
+         empl_dept_cd = e.data
+      } else {
+         empl_ref = e.data;
+      }
+   } else {
+      sidb_doc_json = e.data;
+   }
+   
+   console.log('dept : ' + empl_dept_cd);
+   console.log('ref : ' + empl_ref);
+   console.log('json : ',sidb_doc_json);
+});
 
 
 

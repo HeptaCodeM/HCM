@@ -2,19 +2,14 @@ package com.hcm.grw.ctrl.doc;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -26,7 +21,6 @@ import com.google.gson.GsonBuilder;
 import com.hcm.grw.comm.FileCommonService;
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.doc.SignFileDto;
-import com.hcm.grw.dto.doc.SignJsonDto;
 import com.hcm.grw.dto.doc.TempTreeDto;
 import com.hcm.grw.dto.doc.TemplateDto;
 import com.hcm.grw.model.service.doc.ISignBoxService;
