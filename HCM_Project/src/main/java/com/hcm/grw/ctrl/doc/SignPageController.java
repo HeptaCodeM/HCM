@@ -40,17 +40,19 @@ public class SignPageController {
 	@GetMapping("signFavo.do")
 	public String signFavo(Model model, HttpSession session) {
 		log.info("SignTreeController signFavo.do GET 결재선 관리 페이지");
-		EmployeeDto dto = (EmployeeDto)session.getAttribute("userInfoVo");
-		if(dto == null) {
-			return "doc/approverSet/signFavo";
-		}
 		return "doc/approverSet/signFavo";
 	}
 	
 	@GetMapping("writeDoc/signRefer.do")
 	public String signRefer() {
-		log.info("SignTreeController signRefer.do GET 참조 등록 페이지");
-		return "doc/writeDoc/signRefer/signRefer";
+		log.info("SignTreeController signRefer.do GET 참조 팝업 페이지");
+		return "doc/writeDoc/signSet/signRefer";
+	}
+	
+	@GetMapping("writeDoc/signLine.do")
+	public String signLine() {
+		log.info("SignTreeController signLine.do GET 결재선 팝업 페이지");
+		return "doc/writeDoc/signSet/signLine";
 	}
 	
 	@GetMapping("writeDoc.do")

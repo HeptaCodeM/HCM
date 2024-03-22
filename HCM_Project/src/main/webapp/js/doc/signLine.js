@@ -159,6 +159,64 @@ $('#schName').focus();
 		}
 	})
 	
+	document.getElementById('saveLineBtn').addEventListener('click', saveLine);
+	document.getElementById('cancelBtn').addEventListener('click', function() {
+		self.close();
+	});
+	
+	function saveLine() {
+		let sidb_doc_json;
+		let appr1 = document.getElementById('id1').textContent;
+		let appr2 = document.getElementById('id2').textContent;
+		let appr3 = document.getElementById('id3').textContent;
+		if(appr1.length > 0 && appr2.length > 0 && appr3.length > 0) {
+			sidb_doc_json = [
+								{
+									appr_id : appr1,
+									appr_depth : "1"
+								},
+								{
+									appr_id : appr2,
+									appr_depth : "2"
+								},
+								{
+									appr_id : appr3,
+									appr_depth : "3"
+								}
+							];
+		}
+		if(appr1.length > 0 && appr2.length > 0 && appr3.length == 0) {
+			sidb_doc_json = [
+								{
+									appr_id : appr1,
+									appr_depth : "1"
+								},
+								{
+									appr_id : appr2,
+									appr_depth : "2"
+								}
+							];
+		}
+		if(appr1.length > 0 && appr2.length == 0 && appr3.length == 0) {
+			sidb_doc_json = [
+								{
+									appr_id : appr1,
+									appr_depth : "1"
+								}
+							];
+		}
+		
+		opener.postMessage(sidb_doc_json, "*");
+		sweetAlertConfirm('결재선을 저장할까요?',function() {
+			if(sidb_doc_json == undefined) {
+				swalAlert('결재자를 지정해주세요','','','확인');
+			} else {
+				self.close();
+			}
+		},'');
+		
+	}
+	
 // 초기화 버튼
 document.getElementById('initial').addEventListener('click', function() {
 
@@ -172,42 +230,6 @@ document.getElementById('initial').addEventListener('click', function() {
 	}
 		
 	});
-	
-// 참조 팝업창
-document.getElementById('signRefer').addEventListener('click', function() {
-	open('/doc/writeDoc/signRefer.do', '', 'width=720px height=900px left=400');
-});
-// 결재선 팝업
-document.getElementById('signLine').addEventListener('click', function() {
-	open('/doc/writeDoc/signLine.do', '', 'width=1600px height=900px left=400');
-});
-
-var empl_dept_cd;
-var empl_ref;
-var sidb_doc_json;
-
-window.addEventListener('message', function(e) {
-	
-	if (typeof e.data == 'string') {
-		if (e.data.startsWith('DT')) {
-			empl_dept_cd = e.data
-		} else {
-			empl_ref = e.data;
-		}
-	} else {
-		sidb_doc_json = e.data;
-	}
-	
-	console.log('dept : ' + empl_dept_cd);
-	console.log('ref : ' + empl_ref);
-	console.log('json : ',sidb_doc_json);
-});
-	
-
-document.getElementById('fileTest').addEventListener('click', function() {
-	location.href = './fileTest.do';
-});
-	
 	
 	// 즐겨찾기 삭제
 	document.getElementById('delBtn').addEventListener('click', function() {
@@ -229,6 +251,7 @@ document.getElementById('fileTest').addEventListener('click', function() {
 			swalAlert('라인을 선택해주세요', '', '', '확인');
 		}
 	});	
+		
 		
 	// 즐겨찾기 결재자 결재선으로 보내기
 	document.getElementsByName('insBtn')[0].addEventListener('click', function() {

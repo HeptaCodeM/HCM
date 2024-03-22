@@ -37,7 +37,7 @@
 							<div class="card-flush h-md-50 mb-xl-10" style="background-color: white;">
 							<c:forEach var="sign" items="${signList}" varStatus="var">
 								<div class="card-body pt-5" style="display: inline-block; width: 320px; text-align: center;" >
-									<div style="border: 1px solid; height: 240px; ">
+									<div class="border border-gray-400" style="height: 240px; ">
 									<img src="${sign.emsi_sign_img}"><br>
 									 </div><br>
 									<div class="card-footer" style="margin: 0px auto;">

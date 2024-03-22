@@ -46,7 +46,8 @@ document.getElementById('closeRefer').addEventListener('click', closeRefer);
 // 저장버튼
 document.getElementById('saveRefer').addEventListener('click', saveRefer);
 
-
+var refer = '';
+var referDept = '';
 
 // + 버튼
 function pick() {
@@ -78,6 +79,7 @@ function pick() {
 			dept.append(input);
 			dept.append(hiddenInput);
 			dept.append(span);
+			referDept += id + ','
 			
 		} else {
 			// 참조자 추가
@@ -108,6 +110,8 @@ function pick() {
 					emp.append(input);
 					emp.append(span);
 					
+					refer += d.empl_id + ','
+					
 					var selNode = $('#jstree').jstree('get_selected');
 					$('#jstree').jstree('hide_node', selNode);
 				})
@@ -123,6 +127,24 @@ function closeRefer() {
 }      
 
 function saveRefer() {
+	
+	refer = refer.substring(0, refer.lastIndexOf(','));
+	referDept = referDept.substring(0, referDept.lastIndexOf(','));
+	if(refer.length == 0 && referDept.length == 0) {
+		sweetAlertConfirm('참조자가 없습니다 저장할까요?',function() {
+			self.close();
+		})
+	} else if(refer.length == 0 && referDept.length > 0) {
+		opener.postMessage(referDept, '*');
+		self.close();
+	} else if(refer.length > 0 && referDept.length == 0) {
+		opener.postMessage(refer, '*');
+		self.close();
+	} else {
+		opener.postMessage(refer, '*');
+		opener.postMessage(referDept, '*');
+		self.close();
+	}
 	
 }
 
