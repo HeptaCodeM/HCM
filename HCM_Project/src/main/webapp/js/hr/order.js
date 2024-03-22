@@ -12,7 +12,7 @@ function orderSearchList(){
 	}
 	*/
 	$("#searchOrderList").DataTable().destroy();
-
+	
 	$.ajax({
 		url:"/hr/order/orderSearchList.do",
 		type:"POST",
@@ -143,7 +143,10 @@ function empInfoSearch(flag){
 	}
 	*/
 
-	$("#searchEmployeeList").DataTable().destroy();
+	if (!$.fn.DataTable.isDataTable('#searchEmployeeList')) {
+	    // DataTable 초기화 코드 추가
+	    $('#searchEmployeeList').DataTable();
+	}
 
 	$.ajax({
 		url:"/hr/employee/getUserInfoSearch.do",

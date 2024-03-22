@@ -8,16 +8,25 @@
 	<title>HCM GroupWare</title>
 	<style type="text/css">
 	.table.regiform th {  vertical-align:middle; text-align:center !important; background-color:#F9F9F9; font-weight:600; }
-	.table.regiform th:nth-child(1) { width:180px; }
+	.table.regiform th:nth-child(1) { width:120px !important; }
 	.table.regiform th:nth-child(2) { width:100px; }
 	.table.regiform th:nth-child(3) { width:130px; }
-	.table.regiform th:nth-child(11) { width:80px; }
+	.table.regiform th:nth-child(11) { width:60px; }
 	.table.regiform th:nth-child(4),
 	.table.regiform th:nth-child(6),
 	.table.regiform th:nth-child(8),
 	.table.regiform th:nth-child(10) { width:131px; }
+	.datepicker { height: 43px; }
+	.datepicker-days { background-color: #fff; border: 1px solid #ccc; }
+	.datepicker-title { border-bottom: 1px dotted #ccc !important; padding: 10px 0 !important; }
 	</style>
 	<script type="text/javascript" src="/js/hr/order.js"></script>
+	<!-- Bootstrap Datepicker CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+	<!-- Bootstrap Datepicker JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+	<!-- Bootstrap-datepicker 한글 번역 파일 CDN -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.kr.min.js"></script>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -34,12 +43,12 @@
 				<!-- 내용 시작 -->
 				<div id="kt_app_content" class="app-content flex-column-fluid">
 					<div class="app-container container-fluid">
-						<div class="card card-flush h-md-50 mb-xl-10">
+						<div class="card card-flush h-md-50 mb-xl-10" id="kt_docs_repeater_basic">
 							<div class="card-header pt-5">
 								<h3 class="card-title text-gray-800 fw-bold">인사관리 > 인사발령관리 > 발령등록</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>
-							<form name="registOrderForm" id="registOrderForm" method="post" action="/hr/order/registOrderAdminOk.do">
+							<form name="registOrderForm" id="registOrderForm" method="post" action="/hr/order/registOrderAdminOk.do" >
 								<div class="table-responsive">
 									<table class="table table-bordered regiform">
 										<thead>
@@ -54,27 +63,22 @@
 											<th>발령직위</th>
 											<th>이전직책</th>
 											<th>발령직책</th>
-											<th>추가/삭제</th>
+											<th>삭제</th>
 										</tr>
 										</thead>
-										<tbody>
-										<tr>
+										<tbody id="repeater">
+										<tr class="item">
 											<td>
-												<div class="input-group" id="emod_order_dt1" data-td-target-input="nearest" data-td-target-toggle="nearest" style="float:left;">
-												    <input id="emod_order_dt_input1" type="text" name="emod_order_dt" class="form-control" data-td-target="#emod_order_dt1" readonly />
-												    <span class="input-group-text picker" data-td-target="#emod_order_dt1" data-td-toggle="datetimepicker">
-												    	<i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
-												    </span>
-												</div>
+						                        <input type="text" class="form-control form-control-solid datepicker" name="emod_order_dt">
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="empl_id" id="empl_id1" maxlength="20" readonly required="required" onclick="openEmpInfoSearch()">
+												<input type="text" class="form-control form-control-solid" name="empl_id" maxlength="20" readonly required="required" onclick="openEmpInfoSearch()">
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="empl_name" id="empl_name1" maxlength="20" readonly>
+												<input type="text" class="form-control form-control-solid" name="empl_name" maxlength="20" readonly>
 											</td>
 											<td>
-												<select NAME="emod_type" id="emod_type1" class="form-select form-select-solid searchEmpSelect">
+												<select NAME="emod_type" class="form-select form-select-solid searchEmpSelect">
 													<option value="">발령구분</option>
 													<c:forEach items="${orderList}" var="order">
 													<option value="${order.coco_cd}">${order.coco_name}</option>
@@ -82,7 +86,7 @@
 												</select>
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="emod_prev_dept" id="emod_prev_dept1" maxlength="20" readonly>
+												<input type="text" class="form-control form-control-solid" name="emod_prev_dept" maxlength="20" readonly>
 											</td>
 											<td>
 												<select NAME="emod_order_dept" id="emod_order_dept1" class="form-select form-select-solid searchEmpSelect" disabled>
@@ -93,7 +97,7 @@
 												</select>
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="emod_prev_rank" id="emod_prev_rank1" maxlength="20" readonly>
+												<input type="text" class="form-control form-control-solid" name="emod_prev_rank" maxlength="20" readonly>
 											</td>
 											<td>
 												<select NAME="emod_order_rank" id="emod_order_rank1" class="form-select form-select-solid searchEmpSelect" disabled>
@@ -104,10 +108,10 @@
 												</select>
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="emod_prev_position" id="emod_prev_position1" maxlength="20" readonly>
+												<input type="text" class="form-control form-control-solid" name="emod_prev_position" maxlength="20" readonly>
 											</td>
 											<td>
-												<select NAME="emod_order_position" id="emod_order_position1" class="form-select form-select-solid searchEmpSelect" disabled>
+												<select NAME="emod_order_position" class="form-select form-select-solid searchEmpSelect" disabled>
 													<option value="">직책선택</option>
 													<c:forEach items="${positionList}" var="position">
 													<option value="${position.coco_cd}">${position.coco_name}</option>
@@ -115,24 +119,13 @@
 												</select>
 											</td>
 											<td style="text-align: center; vertical-align: middle;">
-												<a>
-													<i class="ki-duotone ki-plus-square fs-1">
-														<span class="path1"></span>
-														<span class="path2"></span>
-														<span class="path3"></span>
-													</i>
-												</a>
-												<a>
-													<i class="ki-duotone ki-minus-square fs-1">
-														<span class="path1"></span>
-														<span class="path2"></span>
-													</i>
-												</a>
+												-
 											</td>
 										</tr>
 										</tbody>
 									</table>
-								</div>						
+								</div>
+
 								<div style="text-align: right;margin-bottom:20px;">
 									<button type="button" class="btn btn-primary me-4" id="kt_button_1" onclick="registEmpAuth()">
 									    <span class="indicator-label">
@@ -149,6 +142,12 @@
 									</button>
 								</div>
 							</form>
+						    <div class="form-group mt-5">
+						        <a href="javascript:;" id="add" class="btn btn-light-primary">
+						            <i class="ki-duotone ki-plus fs-3"></i>
+						            Add
+						        </a>
+						    </div>							
 						</div>
 					</div>
 				</div>
@@ -209,9 +208,73 @@
 		</div>
 		<!-- 사원검색 Layer 종료 -->
 <script type="text/javascript">
+// Add Row HandleBarJS
+var repeatHtml = "";
+repeatHtml+="<tr class='item'>"
+repeatHtml+="<td>"
+repeatHtml+="	<input type='text' class='form-control form-control-solid datepicker' name='emod_order_dt'>";
+repeatHtml+="</td>";
+repeatHtml+="<td>";
+repeatHtml+="	<input type='text' class='form-control form-control-solid' name='empl_id' maxlength='20' readonly required='required' onclick='openEmpInfoSearch(this)'>";
+repeatHtml+="</td>";
+repeatHtml+="<td>";
+repeatHtml+="	<input type='text' class='form-control form-control-solid' name='empl_name' maxlength='20' readonly>";
+repeatHtml+="</td>";
+repeatHtml+="<td>";
+repeatHtml+="	<select NAME='emod_type' class='form-select form-select-solid searchEmpSelect'>";
+repeatHtml+="		<option value=''>발령구분</option>";
+<c:forEach items="${orderList}" var="order">
+repeatHtml+="		<option value='${order.coco_cd}'>${order.coco_name}</option>";
+</c:forEach>
+repeatHtml+="	</select>";
+repeatHtml+="</td>";
+repeatHtml+="<td>";
+repeatHtml+="	<input type='text' class='form-control form-control-solid' name='emod_prev_dept' maxlength='20' readonly>";
+repeatHtml+="</td>";
+repeatHtml+="<td>";
+repeatHtml+="	<select NAME='emod_order_dept' class='form-select form-select-solid searchEmpSelect' disabled>";
+repeatHtml+="		<option value=''>부서선택</option>";
+<c:forEach items="${deptList}" var="dept">
+repeatHtml+="		<option value='${dept.coco_cd}'>${dept.coco_name}</option>";
+</c:forEach>
+repeatHtml+="	</select>";
+repeatHtml+="</td>";
+repeatHtml+="<td>";
+repeatHtml+="	<input type='text' class='form-control form-control-solid' name='emod_prev_rank' maxlength='20' readonly>";
+repeatHtml+="</td>";
+repeatHtml+="<td>";
+repeatHtml+="	<select NAME='emod_order_rank' class='form-select form-select-solid searchEmpSelect' disabled>";
+repeatHtml+="		<option value=''>직위선택</option>";
+<c:forEach items="${rankList}" var="rank">
+repeatHtml+="		<option value='${rank.coco_cd}'>${rank.coco_name}</option>";
+</c:forEach>
+repeatHtml+="	</select>";
+repeatHtml+="</td>";
+repeatHtml+="<td>";
+repeatHtml+="	<input type='text' class='form-control form-control-solid' name='emod_prev_position' maxlength='20' readonly>";
+repeatHtml+="</td>";
+repeatHtml+="<td>";
+repeatHtml+="	<select NAME='emod_order_position' id='emod_order_position1' class='form-select form-select-solid searchEmpSelect' disabled>";
+repeatHtml+="		<option value=''>직책선택</option>";
+<c:forEach items="${positionList}" var="position">
+repeatHtml+="		<option value='${position.coco_cd}'>${position.coco_name}</option>";
+</c:forEach>
+repeatHtml+="	</select>";
+repeatHtml+="</td>";
+repeatHtml+="<td style='text-align: center; vertical-align: middle;'>";
+repeatHtml+="	<a href='javascript:void(0)' class='remove'>";
+repeatHtml+="		<i class='ki-duotone ki-minus-square fs-2'>";
+repeatHtml+="			<span class='path1'></span>";
+repeatHtml+="			<span class='path2'></span>";
+repeatHtml+="		</i>";
+repeatHtml+="	</a>";
+repeatHtml+="</td>";
+repeatHtml+="</tr>";
+
+
 $(function(){ 
 	$("#searchEmployeeList").DataTable({
-		displayLength: 5,
+		displayLength: 10,
 		lengthChange: false,
 		info: false
 	});
@@ -226,55 +289,39 @@ $(function(){
 		
 		closeEmpInfoSearch();
 	});
-});
 
-$(".input-group-text.picker").on('click', function(){
-	console.log($(this).data("td-target").replace('#',''));
-	var idVal = $(this).data("td-target").replace('#','');
-	var datePicker = new tempusDominus.TempusDominus(document.getElementById(""+idVal+""), {
-		display: {
-			icons: {
-				close: "ki-outline ki-cross fs-1",
-			},
-			buttons: {
-				close: true,
-			},
-	        components: {
-				hours: true,
-				minutes: true,
-				seconds: false
-			}
-		},
-	    localization: {
-			locale: "kr",
-			startOfTheWeek: 1,
-			format: "yyyy-MM-dd"
-	    }
+    // datepicker 초기화 함수
+    function initializeDatepicker() {
+        $('.datepicker').datepicker({
+        	title: "발령일자 선택",	//캘린더 상단에 보여주는 타이틀
+        	format: 'yyyy-mm-dd',
+            autoclose: true,
+            orientation: 'bottom',
+            daysOfWeekHighlighted : [0,6], //강조 되어야 하는 요일 설정
+            todayHighlight : true,
+            viewMode: "months", 
+            language: 'kr' // 한국어 설정
+        });
+
+    }
+    
+	// 초기화
+	initializeDatepicker();
+	
+	
+	// 추가 버튼 클릭 이벤트
+	$('#add').click(function () {
+		$('#repeater').append(repeatHtml);
+		// 새로운 datepicker 초기화
+		initializeDatepicker();
 	});
 
+	// 삭제 버튼 클릭 이벤트
+	$('#repeater').on('click', '.remove', function () {
+		$(this).closest('.item').remove();
+	});
 });
-/*
-var datePicker = new tempusDominus.TempusDominus(document.getElementById("emod_order_dt1"), {
-	display: {
-		icons: {
-			close: "ki-outline ki-cross fs-1",
-		},
-		buttons: {
-			close: true,
-		},
-        components: {
-			hours: true,
-			minutes: true,
-			seconds: false
-		}
-	},
-    localization: {
-		locale: "kr",
-		startOfTheWeek: 1,
-		format: "yyyy-MM-dd"
-    }
-});
-*/
+
 
 $("#searchEmployeeList tbody").on('click', 'tr', function () {
 	var row = $("#searchEmployeeList").DataTable().row($(this)).data();
@@ -286,6 +333,7 @@ $("#searchEmployeeList tbody").on('click', 'tr', function () {
 	
 	closeEmpInfoSearch();
 });
+
 </script>
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
 </body>
