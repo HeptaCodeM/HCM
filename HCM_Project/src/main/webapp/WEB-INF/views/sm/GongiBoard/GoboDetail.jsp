@@ -172,7 +172,37 @@
             </div>
          
 <%@include file="/WEB-INF/views/menu/smSideMenu.jsp" %>   
-<script type="text/javascript" src="/js/sm/Gobo.js"></script>   
+<script type="text/javascript" src="/js/sm/Gobo.js"></script>  
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function () {
+    // Enter 키를 눌렀을 때 이벤트 처리
+    document.querySelectorAll('.comment_inbox_text').forEach(function (textarea) {
+        textarea.addEventListener('keypress', function (e) {
+            var key = e.which || e.keyCode;
+            if (key === 13 && !e.shiftKey) { // Enter 키이면서 Shift 키가 눌리지 않은 경우
+                e.preventDefault(); // 기본 동작 (엔터 키 입력) 막기
+                var form = this.closest('form'); // 해당 텍스트 영역이 속한 폼 요소 선택
+                form.querySelector('.insertReplyTwoBtn').click(); // 등록 버튼 클릭
+            }
+        });
+    });
+});
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Enter 키를 눌렀을 때 이벤트 처리
+    document.getElementById('commentTextArea').addEventListener('keypress', function (e) {
+        var key = e.which || e.keyCode;
+        if (key === 13 && !e.shiftKey) { // Enter 키이면서 Shift 키가 눌리지 않은 경우
+            e.preventDefault(); // 기본 동작 (엔터 키 입력) 막기
+            document.getElementById('submitButton').click(); // 등록 버튼 클릭
+        }
+    });
+});
+</script> 
 </body>
 
 </html>

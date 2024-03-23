@@ -42,3 +42,6 @@ table tr th {vertical-align: middle;}
         transform: translateX(100%);
     }
 }
+
+/* 사원검색 레이어 */
+#empSearch { position: absolute; background-color:#fff; z-index:999; width:600px; left: 50%; transform: translateX(-50%); top: 15%; padding: 20px; border:1px solid #ccc; border-radius: 20px; display: none; }

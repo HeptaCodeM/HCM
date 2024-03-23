@@ -15,95 +15,122 @@
 		data-kt-app-sidebar-push-toolbar="true"
 		data-kt-app-sidebar-push-footer="true"
 		data-kt-app-toolbar-enabled="true" class="app-default">
+		
+<div class="app-wrapper flex-column flex-row-fluid">
 
-		<div class="app-wrapper flex-column flex-row-fluid">
-			<div class="app-toolbar py-3 py-lg-6">
-				<div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
-					<!--begin::Page title-->
-					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-						<!--begin::Title-->
-						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">제목이 여기에 들어가요!</h1>
-						<!--end::Title-->
-					</div>
-					<!--end::Page title-->
-				</div>		
+	<div class="app-toolbar py-3 py-lg-6">
+		<div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
+			<!--begin::Page title-->
+			<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+				<!--begin::Title-->
+				<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">제목이 여기에 들어가요!</h1>
+				<!--end::Title-->
 			</div>
-			<div class="app-content flex-column-fluid">
+			<!--end::Page title-->
+		</div>		
+	</div>
+
+	<div class="app-content flex-column-fluid">
+		<div class="app-container container-fluid">
+			<div class="row gx-5 gx-xl-10">
 			
-				<!-- 내용 시작 -->
-				<div class="app-content flex-column-fluid ">
-					<div class="app-container container-fluid">
-						<div class="card card-flush h-md-50">
-							<div class="card-header pt-5">
-								<h3 class="card-title text-gray-800 fw-bold">소제목? 들어갑니다</h3>
-							</div>
-							<div class="separator separator-dashed my-3"></div>	
-							<div class="card-body pt-5">
-								대충 여기에 내용이 들어가요!<br>
-								대충 여기에 내용이 들어가요!<br>
-								대충 여기에 내용이 들어가요!<br>
-							</div>
-						</div>
+				<!--begin::Col-->
+				<div class="col-xxl-6 mb-5 mb-xl-10">
+					<div class="card shadow-sm">
+					    <div class="card-header">
+					        <h3 class="card-title">공지사항</h3>
+					        <div class="card-toolbar">
+					            <button type="button" class="btn btn-sm btn-light">
+					                Action
+					            </button>
+					        </div>
+					    </div>
+					    <div class="card-body">
+					    	공사중입니다!
+					    </div>
+					    <div class="card-footer">
+					        Footer
+					    </div>
 					</div>
 				</div>
-				<!-- 내용 끝 -->
+				<!--end::Col-->
 				
-				<div class="app-container container-fluid">
-					<div class="row gx-5 gx-xl-10">
-						<!--begin::Col-->
-						<div class="col-xxl-6 mb-5 mb-xl-10">
-							<!--begin::Chart widget 8-->
-							<div class="card card-flush h-xl-100">
-								<!--begin::Header-->
-								<div class="card-header pt-5">
-									<!--begin::Title-->
-									<h3 class="card-title align-items-start flex-column">
-										<span class="card-label fw-bold text-gray-900">Performance
-											Overview</span> <span class="text-gray-500 mt-1 fw-semibold fs-6">Users
-											from all channels</span>
-									</h3>
-									<!--end::Title-->
-								</div>
-								<!--end::Header-->
-								<!--begin::Body-->
-								<div class="card-body pt-6">
-									<!--begin::Tab content-->
-									<div class="tab-content"></div>
-									<!--end::Tab content-->
-								</div>
-								<!--end::Body-->
-							</div>
-							<!--end::Chart widget 8-->
-						</div>
-						<!--end::Col-->
-						<!--begin::Col-->
-						<div class="col-xl-6 mb-5 mb-xl-10">
-							<!--begin::Chart widget 36-->
-							<div class="card card-flush overflow-hidden h-xl-100">
-								<!--begin::Header-->
-								<div class="card-header pt-5">
-									<!--begin::Title-->
-									<h3 class="card-title align-items-start flex-column">
-										<span class="card-label fw-bold text-gray-900">Performance</span> 
-										<span class="text-gray-500 mt-1 fw-semibold fs-6">1,046 Inbound Calls today</span>
-									</h3>
-									<!--end::Title-->
-								</div>
-								<!--end::Header-->
-								<!--begin::Card body-->
-								<div class="card-body d-flex align-items-end p-0">
-	
-								</div>
-								<!--end::Card body-->
-							</div>
-							<!--end::Chart widget 36-->
-						</div>
-						<!--end::Col-->
+				<!--begin::Col-->
+				<div class="col-xl-6 mb-5 mb-xl-10">
+					<div class="card shadow-sm">
+					    <div class="card-header">
+					        <h3 class="card-title">Title</h3>
+					        <div class="card-toolbar">
+					            <button type="button" class="btn btn-sm btn-light">
+					                Action
+					            </button>
+					        </div>
+					    </div>
+					    <div class="card-body">
+					        Lorem Ipsum is simply dummy text...
+					    </div>
+					    <div class="card-footer">
+					        Footer
+					    </div>
 					</div>
 				</div>
-			</div>
-		</div>
+				<!--end::Col-->
+				
+			</div>	
 			
-<%@include file="/WEB-INF/views/menu/mainSideMenu.jsp"%>		
+			<div class="row gx-5 gx-xl-10">
+			
+				<!--begin::Col-->
+				<div class="col-xxl-6 mb-5 mb-xl-10">
+					<div class="card shadow-sm">
+					    <div class="card-header">
+					        <h3 class="card-title">Title</h3>
+					        <div class="card-toolbar">
+					            <button type="button" class="btn btn-sm btn-light">
+					                Action
+					            </button>
+					        </div>
+					    </div>
+					    <div class="card-body">
+					        Lorem Ipsum is simply dummy text...
+					    </div>
+					    <div class="card-footer">
+					        Footer
+					    </div>
+					</div>
+				</div>
+				<!--end::Col-->
+				
+				<!--begin::Col-->
+				<div class="col-xl-6 mb-5 mb-xl-10">
+					<div class="card shadow-sm">
+					    <div class="card-header">
+					        <h3 class="card-title">Title</h3>
+					        <div class="card-toolbar">
+					            <button type="button" class="btn btn-sm btn-light">
+					                Action
+					            </button>
+					        </div>
+					    </div>
+					    <div class="card-body">
+					        Lorem Ipsum is simply dummy text...
+					    </div>
+					    <div class="card-footer">
+					        Footer
+					    </div>
+					</div>
+				</div>
+				<!--end::Col-->
+				
+			</div>	
+		</div>
+	</div>
+	
+	
+	
+</div>		
+		
+		
+<%@include file="/WEB-INF/views/menu/mainSideMenu.jsp"%>	
 </body>
 </html>

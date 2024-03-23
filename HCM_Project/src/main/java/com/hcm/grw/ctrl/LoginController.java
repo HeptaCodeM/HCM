@@ -1,6 +1,7 @@
 package com.hcm.grw.ctrl;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +39,7 @@ public class LoginController {
 	private CompanyService companyService;
 	
 	@GetMapping("/login/login.do")
-	public String login(String error, String logout, Model model) {
+	public String login(String error, String logout, Model model, HttpServletRequest request) {
 		log.info("error : {}", error);
 		log.info("logout : {}", logout);
 
@@ -49,6 +49,40 @@ public class LoginController {
 
 		if (logout != null) {
 			model.addAttribute("logout", "로그아웃!!");
+		}
+
+		try {
+			String ipAddr=request.getRemoteAddr();
+			if(ipAddr.equalsIgnoreCase("0:0:0:0:0:0:0:1")){
+			    InetAddress inetAddress=InetAddress.getLocalHost();
+			    ipAddr=inetAddress.getHostAddress();
+			}
+			
+			Map<String, String> loginMap = new HashMap<String, String>();
+			
+			//ip주소 셋팅
+			String empl_id = "";
+			if(ipAddr.equals("192.168.8.145")) {		//신동준
+				empl_id = "20220101";
+			}else if(ipAddr.equals("192.168.8.28")) {	//오지수
+				empl_id = "20230107";
+			}else if(ipAddr.equals("192.168.8.3")) {	//류종윤
+				empl_id = "20230106";
+			}else if(ipAddr.equals("192.168.8.18")) {	//김지아
+				empl_id = "20230105";
+			}else if(ipAddr.equals("192.168.8.12")) {	//윤영훈
+				empl_id = "20230108";
+			}else if(ipAddr.equals("192.168.8.29")) {	//김재원
+				empl_id = "20230102";
+			}
+			
+			if(empl_id!="") {
+				loginMap.put("id", empl_id);
+				loginMap.put("pw", empl_id);
+			}
+			model.addAttribute("loginMap", loginMap);
+		}catch(Exception ex) {
+			ex.printStackTrace();
 		}
 
 		return "login/login";

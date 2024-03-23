@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', listAjax());
 
 function listAjax() {
 	var daygridmonth = $(".fc-toolbar-title").text()
+	
 	$.ajax({
 		type: "get",
 		url: "/sm/getAllCalendar.do",
@@ -12,7 +13,7 @@ function listAjax() {
 				googleCalendarApiKey: 'AIzaSyBBTfPVr0UjVIt-H0VGRuLFRg-ltL-YQDk',  // 구글 api 키
 				initialView: 'dayGridMonth',   //월 달력 표시
 				headerToolbar: {
-					left: 'addEventButton',  // 왼쪽에 이벤트 버튼 추가
+					left: 'addEventButton,fileterButton',  // 왼쪽에 이벤트 버튼 추가
 					center: 'prev,title,next',	//center 버튼 추가 dayGridMonth(월간),timeGridWeek(주간),timeGridDay(시간대),listWeek(리스트형태)
 					right:'today',
 				},
@@ -53,7 +54,6 @@ function listAjax() {
 				 },
 				  eventClick: function(info) {  // 일정명 클릭시 이벤트
 					var seq = info.event.extendedProps.seq;
-					
 					detail(seq);
 					
 				},
@@ -185,7 +185,6 @@ $("#imagebutton2").click(function(){
 })
 
 
-var title = $(".fc-toolbar-title").text()
 
 
 function filtermodal(){

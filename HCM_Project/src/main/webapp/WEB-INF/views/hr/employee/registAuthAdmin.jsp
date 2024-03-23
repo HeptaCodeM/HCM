@@ -98,9 +98,6 @@
 		</div>
 		
 		<!-- 사원검색 Layer 시작 -->
-		<style type="text/css">
-			#empSearch { position: absolute; background-color:#fff; z-index:999; width:600px; left: 50%; transform: translateX(-50%); top: 15%; padding: 20px; border:1px solid #ccc; border-radius: 20px; display: none; }
-		</style>
 		<div id="empSearch">
 			<div style="text-align:right;" >
 				<a href="javascript:void(0);" onclick="closeEmpInfoSearch();">
