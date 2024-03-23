@@ -224,3 +224,22 @@ function formatDate(date) {
     var day = String(date.getDate()).padStart(2, '0'); // 일을 2자리로 맞춤
     return year + '-' + month + '-' + day;
 }
+
+
+
+//문서 상세조회시  PostMapping form태그 생성 
+function detailBoard(docNum) {
+let f = document.createElement('form');
+    
+    let obj;
+    obj = document.createElement('input');
+    obj.setAttribute('type', 'hidden');
+    obj.setAttribute('name', 'docNum');
+    obj.setAttribute('value', docNum);
+    
+    f.appendChild(obj);
+    f.setAttribute('method', 'post');
+    f.setAttribute('action', '/doc/docBox/getDetail.do');
+    document.body.appendChild(f);
+    f.submit();
+}

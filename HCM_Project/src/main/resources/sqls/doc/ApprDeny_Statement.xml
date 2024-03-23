@@ -56,7 +56,9 @@
         SIDB_DOC_JSON,
         SET '$[${string_index}].APPR_DT' = '' || TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '',
             '$[${string_index}].APPR_REPLY' = #{appr_reply},
-            '$[${string_index}].APPR_FLAG' = '2')
+            '$[${string_index}].APPR_FLAG' = '2'
+            '$[${string_index}].APPR_SIGN' = '' || (SELECT EMSI_SIGN_IMG FROM EMP_SIGN
+                                        WHERE EMSI_SEQ = #{emsi_seq}) || '')
     WHERE SIDB_DOC_NUM = #{sidb_doc_num}
 </update>
 

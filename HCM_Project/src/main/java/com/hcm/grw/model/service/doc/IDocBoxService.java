@@ -71,5 +71,7 @@ public interface IDocBoxService {
 		
 		//참조자 조회
 		public String findEmployeeName(String id);
-
+		
+		//참조부서명 조회
+		public String findDeptName(String dept);
 }

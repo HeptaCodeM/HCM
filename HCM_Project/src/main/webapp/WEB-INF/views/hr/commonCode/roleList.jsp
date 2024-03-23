@@ -61,6 +61,7 @@
 												<th>${thisRole}명</th>
 												<th>생성자ID</th>
 												<th>생성일자</th>
+												<th>삭제여부</th>
 											</tr>
 										</thead>	
 										<tbody>
@@ -71,6 +72,16 @@
 													<td>${codeList.getCoco_name()}</td>
 													<td>${codeList.getCoco_create_id()}</td>
 													<td>${codeList.getCoco_create_dt()}</td>
+													<td>
+														<c:choose>
+															<c:when test="${codeList.getCoco_delflag() eq 'Y'}">
+																삭제
+															</c:when>
+															<c:when test="${codeList.getCoco_delflag() eq 'N'}">
+																활성화
+															</c:when>
+														</c:choose>
+													</td>
 												</tr>
 											</c:forEach>
 										</tbody>

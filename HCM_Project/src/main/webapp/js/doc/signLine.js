@@ -159,6 +159,76 @@ $('#schName').focus();
 		}
 	})
 	
+	document.getElementById('saveLineBtn').addEventListener('click', saveLine);
+	document.getElementById('cancelBtn').addEventListener('click', function() {
+		self.close();
+	});
+	
+	function saveLine() {
+		let sidb_doc_json;
+		let appr1 = document.getElementById('id1').textContent;
+		let appr2 = document.getElementById('id2').textContent;
+		let appr3 = document.getElementById('id3').textContent;
+		if(appr1.length > 0 && appr2.length > 0 && appr3.length > 0) {
+			sidb_doc_json = [
+								{
+									appr_id : appr1,
+									appr_depth : "1",
+									appr_name : document.getElementById('first').value,
+									appr_position : document.getElementById('rk1').value
+								},
+								{
+									appr_id : appr2,
+									appr_depth : "2",
+									appr_name : document.getElementById('second').value,
+									appr_position : document.getElementById('rk2').value
+								},
+								{
+									appr_id : appr3,
+									appr_depth : "3",
+									appr_name : document.getElementById('third').value,
+									appr_position : document.getElementById('rk3').value
+								}
+							];
+		}
+		if(appr1.length > 0 && appr2.length > 0 && appr3.length == 0) {
+			sidb_doc_json = [
+								{
+									appr_id : appr1,
+									appr_depth : "1",
+									appr_name : document.getElementById('first').value,
+									appr_position : document.getElementById('rk1').value
+								},
+								{
+									appr_id : appr2,
+									appr_depth : "2",
+									appr_name : document.getElementById('second').value,
+									appr_position : document.getElementById('rk2').value
+								}
+							];
+		}
+		if(appr1.length > 0 && appr2.length == 0 && appr3.length == 0) {
+			sidb_doc_json = [
+								{
+									appr_id : appr1,
+									appr_depth : "1",
+									appr_name : document.getElementById('first').value,
+									appr_position : document.getElementById('rk1').value
+								}
+							];
+		}
+		
+		opener.postMessage(sidb_doc_json, "*");
+		sweetAlertConfirm('결재선을 저장할까요?',function() {
+			if(sidb_doc_json == undefined) {
+				swalAlert('결재자를 지정해주세요','','','확인');
+			} else {
+				self.close();
+			}
+		},'');
+		
+	}
+	
 // 초기화 버튼
 document.getElementById('initial').addEventListener('click', function() {
 
@@ -170,49 +240,8 @@ document.getElementById('initial').addEventListener('click', function() {
 	for (s of span) {
 		s.textContent = '';
 	}
-
-});
-	
-// 참조 팝업창
-document.getElementById('signRefer').addEventListener('click', function() {
-	open('/doc/writeDoc/signRefer.do', '', 'width=720px height=900px left=400');
-});
-// 결재선 팝업
-document.getElementById('signLine').addEventListener('click', function() {
-	open('/doc/writeDoc/signLine.do', '', 'width=1600px height=900px left=400');
-});
-// 서명 팝업
-document.getElementById('selectSign').addEventListener('click', function() {
-	open('/doc/writeDoc/selectSign.do', '', 'width=1200px height=720px left=400');
-});
-
-var ref;
-var dept;
-var json;
-var sign;
-
-window.addEventListener('message', function(e) {
-	var data = e.data;
-	
-	if(data.hasOwnProperty('empl_ref')) {
-		ref = data;
-	} else if(data.hasOwnProperty('empl_dept_cd')) {
-		dept = data;
-	} else if (typeof data == "string") {
-		sign = data;
-	} else {
-		json = data;
-	}
-	console.log('ref : ' , ref);
-	console.log('dept : ', dept);
-	console.log('json : ', json);
-	console.log('sign : ', sign);
-});
-
-document.getElementById('fileTest').addEventListener('click', function() {
-	location.href = './fileTest.do';
-});
-	
+		
+	});
 	
 	// 즐겨찾기 삭제
 	document.getElementById('delBtn').addEventListener('click', function() {
@@ -229,11 +258,12 @@ document.getElementById('fileTest').addEventListener('click', function() {
 	document.getElementById('delLineBtn').addEventListener('click', function() {
 		var select = document.getElementById('apprLineList').value;
 		if(select != '결재선을 선택해주세요') {
-			sweetAlertConfirm("즐겨찾기를 삭제할까요?", delLine, '');
+			sweetAlertConfirm("즐겨찾기를 삭제할까요?", delLine, '')
 		} else {
 			swalAlert('라인을 선택해주세요', '', '', '확인');
 		}
 	});	
+		
 		
 	// 즐겨찾기 결재자 결재선으로 보내기
 	document.getElementsByName('insBtn')[0].addEventListener('click', function() {
@@ -374,6 +404,8 @@ document.getElementById('fileTest').addEventListener('click', function() {
 			console.log(err);
 		});
 	})
+	
+	
 	
 	$('#jstree').jstree({
 		// 검색기능 , 우클릭메뉴, 라벨 효과

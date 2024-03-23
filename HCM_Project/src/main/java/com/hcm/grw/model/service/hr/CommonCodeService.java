@@ -21,4 +21,5 @@ public interface CommonCodeService {
 	
 	public int roleNameDuplicateChk(Map<String, Object> map);
 	
+	public int delCodeChk(Map<String, Object> map);	
 }

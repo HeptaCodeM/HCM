@@ -11,6 +11,14 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />	
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 <title>결재문서함메인화면</title>
+<style>
+
+.btnSm {
+    width: 71px;
+    height: 32px;
+    line-height: 12px;
+}
+</style>
 </head>
 
 <%@include file="/WEB-INF/views/menu/header.jsp"%>
@@ -49,15 +57,57 @@
 						<div class="separator separator-dashed my-3"></div>
 						<div class="card-body pt-5" style="height: 80%;">
 
-<button class="btn btn-primary" onclick="allDocs()">전체</button>
+<!-- <button class="btn btn-primary" onclick="allDocs()">전체</button>
 <button class="btn btn-primary" onclick="gianBox()">기안</button>
 <button class="btn btn-primary" onclick="ingBox()">진행</button>
 <button class="btn btn-primary" onclick="approveBox()">완료</button>
 <button class="btn btn-primary" onclick="denyBox()">반려</button>
+<a href="#" class="btn btn-light-primary">Primary</a>
+
 <span style="display:inline-block; width:400px;"> &nbsp;</span>
 <button class="btn btn-success" onclick="chamjoBox()">참조</button>
 <button class="btn btn-success" onclick="myTurnBox()">요청</button>
 <button class="btn btn-success" onclick="iDidBox()">결재</button>
+ -->
+
+<ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
+    <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_1">작성한 문서</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_2">요청 받은 문서</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_3" onclick="chamjoBox()">참조 지정된 문서</a>
+    </li>
+</ul>
+
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="kt_tab_pane_1" role="tabpanel">
+    <div>
+        <button class="btn btn-light-primary btnSm" onclick="allDocs()">전체</button>
+		<button class="btn btn-light-primary btnSm" onclick="gianBox()">기안</button>
+		<button class="btn btn-light-primary btnSm" onclick="ingBox()">진행</button>
+		<button class="btn btn-light-primary btnSm" onclick="approveBox()">완료</button>
+		<button class="btn btn-light-primary btnSm" onclick="denyBox()">반려</button> <br>
+		
+</div>
+    </div>
+    <div class="tab-pane fade" id="kt_tab_pane_2" role="tabpanel">
+    <div>
+        <button class="btn btn-light-success btnSm" style="width:77px; padding-left:1px; padding-right:1px;" onclick="myTurnBox()">결재대기</button>
+		<span style="display:inline-block; width:10px;"> &nbsp;</span>
+		<button class="btn btn-light-success btnSm" style="width:77px; padding-left:1px; padding-right:1px;" onclick="iDidBox()">결재완료</button>
+    </div>
+    </div>
+    <div class="tab-pane fade" id="kt_tab_pane_3" role="tabpanel">
+    <div>
+        <button class="btn btn-light-dark btnSm" onclick="chamjoBox()">참조</button>
+    </div>
+    </div>
+</div>
+
+
 	<div id="tableOuter">
 		<table id="myTable" class="stripe hover">
 			<thead>
@@ -100,7 +150,7 @@
 						<td><a href="#" onclick="detailBoard(${dto.sidb_doc_num})">${dto.sidb_doc_title}</a> <br> <br>
 						기안일자 |<fmt:parseDate var="patternDate"	value="${dto.sidb_doc_writedt}"	pattern="yyyy-MM-dd HH:mm:ss" /> 
 								<fmt:formatDate value="${patternDate}" pattern="yyyy년 MM월 dd일" /></td>
-						<td><img style="width:50px; height:50px; border-radius: 22px;"  src="data:image/png;base64,${dto.empl_pictureStr}" /> ${dto.empl_name}</td>
+						<td><img style="width:50px; height:50px; border-radius: 22px;"  src="${dto.empl_pictureStr}" /> ${dto.empl_name}</td>
 						
 						<td style="text-align:center;">
 						

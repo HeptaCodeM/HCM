@@ -30,6 +30,7 @@
       <typeAlias type="com.hcm.grw.dto.hr.OrderInfoDetailDto" alias="OrderInfoDetailDto" />
       <!-- 휴가 -->
       <typeAlias type="com.hcm.grw.dto.hr.HolidayDto" alias="HolidayDto" />
+      <typeAlias type="com.hcm.grw.dto.hr.HolidayAdminDto" alias="HolidayAdminDto"/>
 
       <typeAlias type="com.hcm.grw.dto.hr.SnsInfoDto" alias="SnsInfoDto" />
       <typeAlias type="com.hcm.grw.dto.hr.CommonCodeDto" alias="CommonCodeDto"/>

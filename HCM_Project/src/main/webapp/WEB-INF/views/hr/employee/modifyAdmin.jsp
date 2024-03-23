@@ -50,7 +50,14 @@
 												<input type="hidden" name="empl_id" maxlength="20" value="${empInfo.empl_id}">
 											</td>
 											<td style="width:150px;" rowspan="4">
-												<img src="${empInfo.empl_picture_str}" style="width:100%;height:100%;" >
+											<c:choose>
+												<c:when test="${empInfo.empl_picture_str eq ''}">
+													<img src="/image/blank.png" style="width:100%;height:100%;" >
+												</c:when>
+												<c:otherwise>
+													<img src="${empInfo.empl_picture_str}" style="width:100%;height:100%;" >
+												</c:otherwise>
+											</c:choose>
 											</td>
 										</tr>
 										<tr>

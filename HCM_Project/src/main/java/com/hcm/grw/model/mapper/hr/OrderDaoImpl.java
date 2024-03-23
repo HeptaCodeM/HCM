@@ -1,6 +1,7 @@
 package com.hcm.grw.model.mapper.hr;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class OrderDaoImpl implements OrderDao {
 	}
 
 	@Override
-	public List<OrderInfoListDto> getOrderAdminList() {
-		return sqlSessionTemplate.selectList(NS+"getOrderAdminList");
+	public List<OrderInfoListDto> getOrderAdminList(Map<String, Object> orderSearchMap) {
+		return sqlSessionTemplate.selectList(NS+"getOrderAdminList", orderSearchMap);
 	}
 
 	@Override

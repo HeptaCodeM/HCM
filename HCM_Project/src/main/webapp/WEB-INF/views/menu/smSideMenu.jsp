@@ -8,8 +8,8 @@
 		<!--begin::Logo-->
 		<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
 			<!--begin::Logo image-->
-			<a href="/">
-				<img alt="HCM" src="/image/logo.jpg" class="h-30px app-sidebar-logo-default">HCM
+			<a href="/mainTmp.do">
+				<img alt="HCM" src="/image/logo.jpg" class="h-30px app-sidebar-logo-default">
 			</a>
 			<!--end::Logo image-->
 		</div>

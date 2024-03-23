@@ -1,18 +1,6 @@
-function detailBoard(docNum) {
+/*function detailBoard(docNum) {
     var url = '/doc/docBox/getDetail.do?docNum=' + encodeURIComponent(docNum);
     window.location.href = url;
-}
-
-/*function detailBoard(docNum) {
-    fetch('/doc/docBox/getDetail.do?docNum=' + docNum, {
-        method: 'POST', 
-        data: {'docNum' : docNum}
-        headers: {
-            'Content-Type': 'application/json' 
-        },
-    })
-    .then(response => response.text()) 
-    .catch(error => console.error('Error:', error)); // 오류 처리
 }*/
 
 
@@ -259,7 +247,7 @@ function allDocs(){
 	          searching: true, // 검색 기능 
 	     	    ordering: false, // 정렬 기능
 	          paging:true, // 페이징 기능 
-	     //   lengthChange: true, //  좌상단 몇 건씩 볼지 정하는 기능
+	        lengthChange: false, //  좌상단 몇 건씩 볼지 정하는 기능
 	     //   order: [ [ 3, "desc" ], [ 1, "asc"] ], //첫 화면 출력시 정렬 기준  + 안할시 첫 열을 기준으로 정렬하는듯
 	     //	    autoWidth: true,    //자동 열 조정
 	     	   columnDefs: [{ targets: 0, width: 30 },{ targets: 1, width: 150 },{ targets: 2, width: 30 },{ targets: 3, width: 230 },{ targets: 4, width: 30 }],
@@ -487,7 +475,7 @@ function gianBox(){
 	          searching: true, // 검색 기능 
 	     	    ordering: false, // 정렬 기능
 	          paging:true, // 페이징 기능 
-	     //   lengthChange: true, //  좌상단 몇 건씩 볼지 정하는 기능
+	        lengthChange: false, //  좌상단 몇 건씩 볼지 정하는 기능
 	     //   order: [ [ 3, "desc" ], [ 1, "asc"] ], //첫 화면 출력시 정렬 기준  + 안할시 첫 열을 기준으로 정렬하는듯
 	     //	    autoWidth: true,    //자동 열 조정
 	     	   columnDefs: [{ targets: 0, width: 30 },{ targets: 1, width: 150 },{ targets: 2, width: 30 },{ targets: 3, width: 230 },{ targets: 4, width: 30 }],
@@ -714,7 +702,7 @@ function ingBox(){
 	          searching: true, // 검색 기능 
 	     	    ordering: false, // 정렬 기능
 	          paging:true, // 페이징 기능 
-	     //   lengthChange: true, //  좌상단 몇 건씩 볼지 정하는 기능
+	     lengthChange: false, //  좌상단 몇 건씩 볼지 정하는 기능
 	     //   order: [ [ 3, "desc" ], [ 1, "asc"] ], //첫 화면 출력시 정렬 기준  + 안할시 첫 열을 기준으로 정렬하는듯
 	     //	    autoWidth: true,    //자동 열 조정
 	     	   columnDefs: [{ targets: 0, width: 30 },{ targets: 1, width: 150 },{ targets: 2, width: 30 },{ targets: 3, width: 230 },{ targets: 4, width: 30 }],
@@ -940,7 +928,7 @@ function approveBox(){
 	          searching: true, // 검색 기능 
 	     	    ordering: false, // 정렬 기능
 	          paging:true, // 페이징 기능 
-	     //   lengthChange: true, //  좌상단 몇 건씩 볼지 정하는 기능
+	     lengthChange: false, //  좌상단 몇 건씩 볼지 정하는 기능
 	     //   order: [ [ 3, "desc" ], [ 1, "asc"] ], //첫 화면 출력시 정렬 기준  + 안할시 첫 열을 기준으로 정렬하는듯
 	     //	    autoWidth: true,    //자동 열 조정
 	     	   columnDefs: [{ targets: 0, width: 30 },{ targets: 1, width: 150 },{ targets: 2, width: 30 },{ targets: 3, width: 230 },{ targets: 4, width: 30 }],
@@ -1168,7 +1156,7 @@ function denyBox(){
 	          searching: true, // 검색 기능 
 	     	    ordering: false, // 정렬 기능
 	          paging:true, // 페이징 기능 
-	     //   lengthChange: true, //  좌상단 몇 건씩 볼지 정하는 기능
+	     lengthChange: false, //  좌상단 몇 건씩 볼지 정하는 기능
 	     //   order: [ [ 3, "desc" ], [ 1, "asc"] ], //첫 화면 출력시 정렬 기준  + 안할시 첫 열을 기준으로 정렬하는듯
 	     //	    autoWidth: true,    //자동 열 조정
 	     	   columnDefs: [{ targets: 0, width: 30 },{ targets: 1, width: 150 },{ targets: 2, width: 30 },{ targets: 3, width: 230 },{ targets: 4, width: 30 }],
@@ -1397,7 +1385,7 @@ function chamjoBox(){
 	          searching: true, // 검색 기능 
 	     	    ordering: false, // 정렬 기능
 	          paging:true, // 페이징 기능 
-	     //   lengthChange: true, //  좌상단 몇 건씩 볼지 정하는 기능
+	     lengthChange: false, //  좌상단 몇 건씩 볼지 정하는 기능
 	     //   order: [ [ 3, "desc" ], [ 1, "asc"] ], //첫 화면 출력시 정렬 기준  + 안할시 첫 열을 기준으로 정렬하는듯
 	     //	    autoWidth: true,    //자동 열 조정
 	     	   columnDefs: [{ targets: 0, width: 30 },{ targets: 1, width: 150 },{ targets: 2, width: 30 },{ targets: 3, width: 230 },{ targets: 4, width: 30 }],
@@ -1625,7 +1613,7 @@ function myTurnBox(){
 	          searching: true, // 검색 기능 
 	     	    ordering: false, // 정렬 기능
 	          paging:true, // 페이징 기능 
-	     //   lengthChange: true, //  좌상단 몇 건씩 볼지 정하는 기능
+	     lengthChange: false, //  좌상단 몇 건씩 볼지 정하는 기능
 	     //   order: [ [ 3, "desc" ], [ 1, "asc"] ], //첫 화면 출력시 정렬 기준  + 안할시 첫 열을 기준으로 정렬하는듯
 	     //	    autoWidth: true,    //자동 열 조정
 	     	   columnDefs: [{ targets: 0, width: 30 },{ targets: 1, width: 150 },{ targets: 2, width: 30 },{ targets: 3, width: 230 },{ targets: 4, width: 30 }],
@@ -1853,7 +1841,7 @@ function iDidBox(){
 	          searching: true, // 검색 기능 
 	     	    ordering: false, // 정렬 기능
 	          paging:true, // 페이징 기능 
-	     //   lengthChange: true, //  좌상단 몇 건씩 볼지 정하는 기능
+	     lengthChange: false, //  좌상단 몇 건씩 볼지 정하는 기능
 	     //   order: [ [ 3, "desc" ], [ 1, "asc"] ], //첫 화면 출력시 정렬 기준  + 안할시 첫 열을 기준으로 정렬하는듯
 	     //	    autoWidth: true,    //자동 열 조정
 	     	   columnDefs: [{ targets: 0, width: 30 },{ targets: 1, width: 150 },{ targets: 2, width: 30 },{ targets: 3, width: 230 },{ targets: 4, width: 30 }],

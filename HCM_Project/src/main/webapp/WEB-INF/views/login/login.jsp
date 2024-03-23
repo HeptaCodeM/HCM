@@ -3,10 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-
-<meta name="description" content="The most advanced Bootstrap Admin Theme on Bootstrap Market trusted by over 4,000 beginners and professionals. Multi-demo, Dark Mode, RTL support. Grab your copy now and get life-time updates for free." />
-<meta name="keywords" content="keen, bootstrap, bootstrap 5, bootstrap 4, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="canonical" href="https://preview.keenthemes.com/keen" />
 <link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
@@ -14,15 +10,51 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 <!--end::Fonts-->
 <!--begin::Vendor Stylesheets(used for this page only)-->
-<link href="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
 <link href="/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 <!--end::Vendor Stylesheets-->
 <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
 <link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 <link href="/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 <!--end::Global Stylesheets Bundle-->
-<script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>
 
+<!-- 사용CSS오버라이딩 -->
+<link href="/css/common.css" rel="stylesheet" type="text/css" />
+<!-- 사용CSS오버라이딩 -->
+
+
+<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+<script src="/assets/plugins/global/plugins.bundle.js"></script>
+<script src="/assets/js/scripts.bundle.js"></script>
+<!--end::Global Javascript Bundle-->
+
+<!--begin::Javascript-->
+<script>var hostUrl = "/assets/";</script>
+<!--begin::Vendors Javascript(used for this page only)-->
+<!-- <script src="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script> -->
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/geodata/continentsLow.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
+<script src="/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+<!--end::Vendors Javascript-->
+<!--begin::Custom Javascript(used for this page only)-->
+<script src="/assets/js/widgets.bundle.js"></script>
+<script src="/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+<script src="/assets/js/custom/utilities/modals/create-campaign.js"></script>
+<script src="/assets/js/custom/utilities/modals/users-search.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="/js/common/common.js"></script>
+<script src="/js/alarm.js"></script>
+<script src="/js/chatting.js"></script>
+<!--end::Custom Javascript-->
+<!--end::Javascript-->
 
 <title>Login 페이지</title>
 </head>
@@ -90,14 +122,14 @@
 						<div class="fv-row mb-8">
 							<!--begin::Email-->
 							<!-- <input type="text" placeholder="아이디" name="username" autocomplete="off" class="form-control bg-transparent" value="20220101" enc="on" /> -->
-							<input type="text" placeholder="아이디" name="username" autocomplete="off" class="form-control bg-transparent" value="20220101" />
+							<input type="text" placeholder="아이디" name="username" autocomplete="off" class="form-control bg-transparent" value="${loginMap.id}" />
 							<!--end::Email-->
 						</div>
 						<!--end::Input group=-->
 						<div class="fv-row mb-3">
 							<!--begin::Password-->
 							<!-- <input type="password" placeholder="비밀번호" name="password" autocomplete="off" class="form-control bg-transparent" value="20220101" enc="on" /> -->
-							<input type="password" placeholder="비밀번호" name="password" autocomplete="off" class="form-control bg-transparent" value="20220101" />
+							<input type="password" placeholder="비밀번호" name="password" autocomplete="off" class="form-control bg-transparent" value="${loginMap.pw}" />
 							<!--end::Password-->
 						</div>
 						<!--end::Input group=-->
@@ -154,16 +186,5 @@
 	
 </body>
 <!--end::Body-->
-
-<!--begin::Javascript-->
-<script>var hostUrl = "/assets/";</script>
-<!--begin::Global Javascript Bundle(mandatory for all pages)-->
-<script src="/assets/plugins/global/plugins.bundle.js"></script>
-<script src="/assets/js/scripts.bundle.js"></script>
-<!--end::Global Javascript Bundle-->
-<!--begin::Custom Javascript(used for this page only)-->
-<script src="/assets/js/custom/authentication/sign-in/general.js"></script>
-<!--end::Custom Javascript-->
-<!--end::Javascript-->
 
 </html>
