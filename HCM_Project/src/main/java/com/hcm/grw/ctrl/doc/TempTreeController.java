@@ -22,8 +22,10 @@ import com.hcm.grw.comm.FileCommonService;
 import com.hcm.grw.dto.doc.DocBoxDto;
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.doc.SignFileDto;
+import com.hcm.grw.dto.doc.SignTempBoxDto;
 import com.hcm.grw.dto.doc.TempTreeDto;
 import com.hcm.grw.dto.doc.TemplateDto;
+import com.hcm.grw.model.service.doc.IDocBoxService;
 import com.hcm.grw.model.service.doc.ISignBoxService;
 import com.hcm.grw.model.service.doc.ITempTreeService;
 import com.hcm.grw.model.service.doc.ITemplateService;
@@ -77,12 +79,15 @@ public class TempTreeController {
 	}
 	
 	@PostMapping(value = "/insertTempDoc.do", produces = "text/html; charset=UTF-8")
-	public ResponseEntity<?> insertTempDoc(@RequestPart("file") MultipartFile file,
-											@RequestPart("dto") DocBoxDto dto,
-											HttpServletResponse resp) {
-		log.info("TempTreeController insertTempDoc.do POSt 기안문 임시저장");
-		
-		return null;
+	public ResponseEntity<?> insertTempDoc(@RequestPart("dto") SignTempBoxDto dto){
+		log.info("TempTreeController insertTempDoc.do POST 기안문 임시저장");
+		log.info("{}", dto);
+		bService.insertTempDoc(dto);
+		return ResponseEntity.ok("성공");
 	}
+	
+	
+	
+	
 	
 }

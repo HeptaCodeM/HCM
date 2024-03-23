@@ -51,4 +51,6 @@ public class EmployeeDto {
 	
 	private CommonCodeDto comm;
 	
+	private String emsi_seq;
+	
 }

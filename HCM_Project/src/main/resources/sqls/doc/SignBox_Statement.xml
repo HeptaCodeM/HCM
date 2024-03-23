@@ -8,10 +8,12 @@
 							(SIDB_DOC_NUM, EMPL_ID, SIDB_DOC_TITLE,
 							SIDB_DOC_CONTENT, SICA_CD, SIDB_DOC_EXPIREDT, 
 							SIDT_TEMP_CD, SIDB_DOC_BE, SIDB_DOC_END, SIDB_CURR_ID,
+							EMPL_REF, EMPL_DEPT_CD, EMSI_SEQ,
 							SIDB_DOC_JSON)
 	VALUES					((SELECT NVL(MAX(SIDB_DOC_NUM) + 1, 24000001) FROM SIGN_DOC_BOX), #{empl_id}, #{sidb_doc_title},
 							#{sidb_doc_content}, #{sica_cd}, #{sidb_doc_expiredt},
 							#{sidt_temp_cd}, #{sidb_doc_be}, #{sidb_doc_end}, #{sidb_curr_id},
+							#{empl_ref}, #{empl_dept_cd}, #{emsi_seq},
 							'[
 							<foreach collection="sidb_doc_json" separator="," item="json">
 								{
@@ -24,6 +26,7 @@
 								}
 							</foreach>
 							]')
+				
 	</insert>
 	
 <!-- 	임시보관함 저장 -->
