@@ -9,7 +9,7 @@
 	<style type="text/css">
 	.table.regiform th {  vertical-align:middle; text-align:center !important; background-color:#F9F9F9; font-weight:600; }
 	.table.regiform th:nth-child(1) { width:120px !important; }
-	.table.regiform th:nth-child(2) { width:100px; }
+	.table.regiform th:nth-child(2) { width:120px; }
 	.table.regiform th:nth-child(3) { width:130px; }
 	.table.regiform th:nth-child(11) { width:60px; }
 	.table.regiform th:nth-child(4),
@@ -67,12 +67,12 @@
 										</tr>
 										</thead>
 										<tbody id="repeater">
-										<tr class="item">
+										<tr class="item" id="item1" data-idnum="1">
 											<td>
 						                        <input type="text" class="form-control form-control-solid datepicker" name="emod_order_dt">
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="empl_id" maxlength="20" readonly required="required" onclick="openEmpInfoSearch()">
+												<input type="text" class="form-control form-control-solid" name="empl_id" data-val="aa" maxlength="20" readonly required="required">
 											</td>
 											<td>
 												<input type="text" class="form-control form-control-solid" name="empl_name" maxlength="20" readonly>
@@ -86,10 +86,11 @@
 												</select>
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="emod_prev_dept" maxlength="20" readonly>
+												<input type="text" class="form-control form-control-solid" name="emod_prev_dept_nm" maxlength="20" readonly>
+												<input type="hidden" name="emod_prev_dept">
 											</td>
 											<td>
-												<select NAME="emod_order_dept" id="emod_order_dept1" class="form-select form-select-solid searchEmpSelect" disabled>
+												<select NAME="emod_order_dept" class="form-select form-select-solid searchEmpSelect" disabled>
 													<option value="">부서선택</option>
 													<c:forEach items="${deptList}" var="dept">
 													<option value="${dept.coco_cd}">${dept.coco_name}</option>
@@ -97,10 +98,11 @@
 												</select>
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="emod_prev_rank" maxlength="20" readonly>
+												<input type="text" class="form-control form-control-solid" name="emod_prev_rank_nm" maxlength="20" readonly>
+												<input type="hidden" name="emod_prev_rank">
 											</td>
 											<td>
-												<select NAME="emod_order_rank" id="emod_order_rank1" class="form-select form-select-solid searchEmpSelect" disabled>
+												<select NAME="emod_order_rank" class="form-select form-select-solid searchEmpSelect" disabled>
 													<option value="">직위선택</option>
 													<c:forEach items="${rankList}" var="rank">
 													<option value="${rank.coco_cd}">${rank.coco_name}</option>
@@ -108,7 +110,8 @@
 												</select>
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="emod_prev_position" maxlength="20" readonly>
+												<input type="text" class="form-control form-control-solid" name="emod_prev_position_nm" maxlength="20" readonly>
+												<input type="hidden" name="emod_prev_position">
 											</td>
 											<td>
 												<select NAME="emod_order_position" class="form-select form-select-solid searchEmpSelect" disabled>
@@ -125,6 +128,12 @@
 										</tbody>
 									</table>
 								</div>
+							    <div class="form-group mb-5 me-4" style="text-align: right;">
+							        <a href="javascript:;" id="add" class="btn btn-light-primary">
+							            <i class="ki-duotone ki-plus fs-3"></i>
+							            Add
+							        </a>
+							    </div>							
 
 								<div style="text-align: right;margin-bottom:20px;">
 									<button type="button" class="btn btn-primary me-4" id="kt_button_1" onclick="registEmpAuth()">
@@ -142,12 +151,6 @@
 									</button>
 								</div>
 							</form>
-						    <div class="form-group mt-5">
-						        <a href="javascript:;" id="add" class="btn btn-light-primary">
-						            <i class="ki-duotone ki-plus fs-3"></i>
-						            Add
-						        </a>
-						    </div>							
 						</div>
 					</div>
 				</div>
@@ -201,6 +204,9 @@
 						<th>부서</th>
 						<th>직위</th>
 						<th>직책</th>
+						<th>부서코드</th>
+						<th>직위코드</th>
+						<th>직책코드</th>
 					</tr>
 				</thead>
 			</table>
@@ -208,14 +214,17 @@
 		</div>
 		<!-- 사원검색 Layer 종료 -->
 <script type="text/javascript">
+var thisRow = "";
+var idNum = 0;
+
 // Add Row HandleBarJS
 var repeatHtml = "";
-repeatHtml+="<tr class='item'>"
+repeatHtml+="<tr class='item' id='item_idNum' data-idnum='_idNum'>"
 repeatHtml+="<td>"
 repeatHtml+="	<input type='text' class='form-control form-control-solid datepicker' name='emod_order_dt'>";
 repeatHtml+="</td>";
 repeatHtml+="<td>";
-repeatHtml+="	<input type='text' class='form-control form-control-solid' name='empl_id' maxlength='20' readonly required='required' onclick='openEmpInfoSearch(this)'>";
+repeatHtml+="	<input type='text' class='form-control form-control-solid' name='empl_id' maxlength='20' readonly required='required'>";
 repeatHtml+="</td>";
 repeatHtml+="<td>";
 repeatHtml+="	<input type='text' class='form-control form-control-solid' name='empl_name' maxlength='20' readonly>";
@@ -229,7 +238,8 @@ repeatHtml+="		<option value='${order.coco_cd}'>${order.coco_name}</option>";
 repeatHtml+="	</select>";
 repeatHtml+="</td>";
 repeatHtml+="<td>";
-repeatHtml+="	<input type='text' class='form-control form-control-solid' name='emod_prev_dept' maxlength='20' readonly>";
+repeatHtml+="	<input type='text' class='form-control form-control-solid' name='emod_prev_dept_nm' maxlength='20' readonly>";
+repeatHtml+="	<input type='hidden' name='emod_prev_dept'>";
 repeatHtml+="</td>";
 repeatHtml+="<td>";
 repeatHtml+="	<select NAME='emod_order_dept' class='form-select form-select-solid searchEmpSelect' disabled>";
@@ -240,7 +250,8 @@ repeatHtml+="		<option value='${dept.coco_cd}'>${dept.coco_name}</option>";
 repeatHtml+="	</select>";
 repeatHtml+="</td>";
 repeatHtml+="<td>";
-repeatHtml+="	<input type='text' class='form-control form-control-solid' name='emod_prev_rank' maxlength='20' readonly>";
+repeatHtml+="	<input type='text' class='form-control form-control-solid' name='emod_prev_rank_nm' maxlength='20' readonly>";
+repeatHtml+="	<input type='hidden' name='emod_prev_rank'>";
 repeatHtml+="</td>";
 repeatHtml+="<td>";
 repeatHtml+="	<select NAME='emod_order_rank' class='form-select form-select-solid searchEmpSelect' disabled>";
@@ -251,7 +262,8 @@ repeatHtml+="		<option value='${rank.coco_cd}'>${rank.coco_name}</option>";
 repeatHtml+="	</select>";
 repeatHtml+="</td>";
 repeatHtml+="<td>";
-repeatHtml+="	<input type='text' class='form-control form-control-solid' name='emod_prev_position' maxlength='20' readonly>";
+repeatHtml+="	<input type='text' class='form-control form-control-solid' name='emod_prev_position_nm' maxlength='20' readonly>";
+repeatHtml+="	<input type='hidden' name='emod_prev_position'>";
 repeatHtml+="</td>";
 repeatHtml+="<td>";
 repeatHtml+="	<select NAME='emod_order_position' id='emod_order_position1' class='form-select form-select-solid searchEmpSelect' disabled>";
@@ -273,23 +285,23 @@ repeatHtml+="</tr>";
 
 
 $(function(){ 
-	$("#searchEmployeeList").DataTable({
-		displayLength: 10,
-		lengthChange: false,
-		info: false
-	});
-
-	$("#searchEmployeeList tbody").on('click', 'tr', function () {
+	$(document).on('click', '#searchEmployeeList tbody tr', function() {
 		var row = $("#searchEmployeeList").DataTable().row($(this)).data();
-		$("#empl_id").val(row.empl_id);
-		$("#empl_name").val(row.empl_name);
-		$("#empl_dept_nm").val(row.empl_dept_nm);
-		$("#empl_rank_nm").val(row.empl_rank_nm);
-		$("#empl_position_nm").val(row.empl_position_nm);
-		
+		console.log("row: ", row);
+		console.log("row.empl_id : ", row.empl_id);
+		console.log("this : ", $("#item"+thisRow));
+		$("#item"+thisRow).find('input[name="empl_id"]').val(row.empl_id);
+		$("#item"+thisRow).find('input[name="empl_name"]').val(row.empl_name);
+		$("#item"+thisRow).find('input[name="emod_prev_dept"]').val(row.empl_dept_cd);
+		$("#item"+thisRow).find('input[name="emod_prev_dept_nm"]').val(row.empl_dept_nm);
+		$("#item"+thisRow).find('input[name="emod_prev_rank"]').val(row.empl_rank_cd);
+		$("#item"+thisRow).find('input[name="emod_prev_rank_nm"]').val(row.empl_rank_nm);
+		$("#item"+thisRow).find('input[name="emod_prev_position"]').val(row.empl_position_cd);
+		$("#item"+thisRow).find('input[name="emod_prev_position_nm"]').val(row.empl_position_nm);
+
 		closeEmpInfoSearch();
 	});
-
+	
     // datepicker 초기화 함수
     function initializeDatepicker() {
         $('.datepicker').datepicker({
@@ -308,32 +320,34 @@ $(function(){
 	// 초기화
 	initializeDatepicker();
 	
-	
-	// 추가 버튼 클릭 이벤트
+	$(document).on('click', 'input[name="empl_id"]', function() {
+		console.log('Input 클릭됨');
+	    thisRow = $(this).parent().parent().data("idnum");
+	    console.log($(this).parent().parent().data("idnum"));
+	    openEmpInfoSearch();
+	});
+
+
+	//추가 버튼 클릭 이벤트
 	$('#add').click(function () {
-		$('#repeater').append(repeatHtml);
+		if(idNum == 0){
+			idNum = 2;	
+		}else{
+			idNum = idNum + 1;
+		}
+		var replaceRepeatHtml = repeatHtml.replace(/_idNum/g,idNum);
+		$('#repeater').append(replaceRepeatHtml);
+		//console.log(idNum);
+		//console.log(replaceRepeatHtml);
 		// 새로운 datepicker 초기화
 		initializeDatepicker();
 	});
-
+	
 	// 삭제 버튼 클릭 이벤트
 	$('#repeater').on('click', '.remove', function () {
 		$(this).closest('.item').remove();
 	});
 });
-
-
-$("#searchEmployeeList tbody").on('click', 'tr', function () {
-	var row = $("#searchEmployeeList").DataTable().row($(this)).data();
-	$("#empl_id").val(row.empl_id);
-	$("#empl_name").val(row.empl_name);
-	$("#empl_dept_nm").val(row.empl_dept_nm);
-	$("#empl_rank_nm").val(row.empl_rank_nm);
-	$("#empl_position_nm").val(row.empl_position_nm);
-	
-	closeEmpInfoSearch();
-});
-
 </script>
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
 </body>

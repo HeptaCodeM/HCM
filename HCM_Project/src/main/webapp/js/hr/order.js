@@ -71,7 +71,6 @@ function orderSearchAdminList(){
 		return;
 	}
 	
-	$("#searchOrderAdminList").DataTable().destroy();
 
 	$.ajax({
 		url:"/hr/order/orderSearchAdminList.do",
@@ -86,6 +85,7 @@ function orderSearchAdminList(){
 			console.log(data.holidayTotalMap.USE_HOLIDAY);
 			console.log(data.holidayTotalMap.REST_HOLIDAY);
 			*/
+			$("#searchOrderAdminList").dataTable().destroy();
 	 		$("#searchOrderAdminList").dataTable({
 	 			data: data,
 				columns: [
@@ -142,11 +142,11 @@ function empInfoSearch(flag){
 		}
 	}
 	*/
-
-	if (!$.fn.DataTable.isDataTable('#searchEmployeeList')) {
-	    // DataTable 초기화 코드 추가
-	    $('#searchEmployeeList').DataTable();
-	}
+	
+	console.log("empInfoSearch()");
+	
+    // DataTable 초기화 코드 추가
+    $('#searchEmployeeList').DataTable().destroy();
 
 	$.ajax({
 		url:"/hr/employee/getUserInfoSearch.do",
@@ -154,6 +154,7 @@ function empInfoSearch(flag){
 		data : f.serialize(),
 		success:function(data){
 			console.log(data);
+
 	 		$("#searchEmployeeList").dataTable({
 	 			data: data,
 				columns: [
@@ -161,7 +162,16 @@ function empInfoSearch(flag){
 					{ data: 'empl_name' },
 					{ data: 'empl_dept_nm' },
 					{ data: 'empl_rank_nm' },
-					{ data: 'empl_position_nm' }
+					{ data: 'empl_position_nm' },
+					{ data: 'empl_dept_cd' },
+					{ data: 'empl_rank_cd' },
+					{ data: 'empl_position_cd' }
+				],
+				columnDefs: [
+	                {
+	                    "targets": [5,6,7],
+	                    "visible": false
+	                }
 				],
 				displayLength: 5,
 				lengthChange: false,
@@ -179,7 +189,7 @@ function empInfoSearch(flag){
 }
 
 function openEmpInfoSearch(){
-	$("#searchEmployeeList").DataTable().destroy();
+	console.log("openEmpInfoSearch()");
 	empInfoSearch('');
 	$('#empSearch').show();
 }

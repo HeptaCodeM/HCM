@@ -176,6 +176,9 @@ public class OrderController {
 	public String registOrderAdmin(Model model,
 			 					   Authentication authentication,
 			 					   HttpServletResponse resp) {
+		log.info("HolidayController registOrderAdmin 발령현황 입력 화면");
+		resp.setContentType("text/html; charset=UTF-8;");
+
 		if(authentication == null) {
 			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
 			return null;
@@ -206,5 +209,23 @@ public class OrderController {
 		
 		return "hr/order/registOrderAdmin";
 	}
+
+	@PostMapping("registOrderAdminOk.do")
+	public @ResponseBody void registOrderAdminOk(Model model,
+							 					 Authentication authentication,
+							 					 HttpServletResponse resp) {
+		log.info("HolidayController registOrderAdmin 발령현황 입력 처리");
+		resp.setContentType("text/html; charset=UTF-8;");
+		
+		String empl_id = "";
+		if(authentication == null) {
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			return;
+		}else {
+			empl_id = authentication.getName();
+		}
+	
+	}
+	
 	
 }

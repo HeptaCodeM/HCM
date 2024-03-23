@@ -43,6 +43,7 @@
       <typeAlias type="com.hcm.grw.dto.ChatDto" alias="ChatDto"/>
       
       <typeAlias type="com.hcm.grw.dto.hr.AuthDto" alias="AuthDto"/>
+      
    </typeAliases>
    
 
