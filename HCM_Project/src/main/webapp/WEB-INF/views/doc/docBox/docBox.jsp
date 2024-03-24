@@ -156,7 +156,7 @@
 						
 							<c:if test="${dto.sidb_doc_stat == 1  and empty dto.appr_name1 and dto.appr_flag0 == 0}">
 							<img style="width:80%;" src="/image/doc/docBox/s1a1d1.png">
-							<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: DodgerBlue; font-size: large;">${dto.appr_name0} ></span> &nbsp;&nbsp;
+							<br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: DodgerBlue; font-size: large;">${dto.appr_name0} </span> &nbsp;&nbsp;
 							</c:if>
 							
 							<c:if test="${dto.sidb_doc_stat == 1  and !empty dto.appr_name1 and empty dto.appr_name2 and  dto.appr_flag0 == 0}">
@@ -192,10 +192,10 @@
 							
 							<c:if test="${dto.sidb_doc_stat == 3  and empty dto.appr_name1 and dto.appr_flag0 == 1 }">
 							<img style="width:80%;" src="/image/doc/docBox/s3a1d1.png">
-							<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: MediumSeaGreen; font-size: large;">${dto.appr_name0} ></span> &nbsp;&nbsp;
+							<br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: MediumSeaGreen; font-size: large;">${dto.appr_name0} </span> &nbsp;&nbsp;
 							</c:if>
 							
-							<c:if test="${dto.sidb_doc_stat == 3  and empty dto.appr_name2 and dto.appr_flag1 == 1 }">
+							<c:if test="${dto.sidb_doc_stat == 3 and !empty dto.appr_name1 and empty dto.appr_name2 and dto.appr_flag1 == 1 }">
 							<img style="width:80%;" src="/image/doc/docBox/s3a2d2.png">
 							<br>   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:20%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">
 							${dto.appr_name0} > </span> <span style="display:inline-block; width:24%;"></span><span style="color: MediumSeaGreen; font-size: large; ">${dto.appr_name1} &nbsp; &nbsp;</span> 
@@ -211,10 +211,10 @@
 							
 							<c:if test="${dto.sidb_doc_stat == 4  and empty dto.appr_name1 and dto.appr_flag0 == 2 }">
 							<img style="width:80%;" src="/image/doc/docBox/s4a1d1.png">
-							<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: red; font-size: large;">${dto.appr_name0} ></span> &nbsp;&nbsp;
+							<br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: red; font-size: large;">${dto.appr_name0} </span> &nbsp;&nbsp;
 							</c:if>
 							
-							<c:if test="${dto.sidb_doc_stat == 4  and empty dto.appr_name2 and dto.appr_flag0 == 2 }">
+							<c:if test="${dto.sidb_doc_stat == 4  and !empty dto.appr_name1 and empty dto.appr_name2 and dto.appr_flag0 == 2 }">
 							<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">
 							<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">
 							${dto.appr_name0} > </span> <span style="display:inline-block; width:22%;"></span>${dto.appr_name1}

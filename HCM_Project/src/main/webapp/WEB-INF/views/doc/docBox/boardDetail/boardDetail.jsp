@@ -102,7 +102,7 @@ th, td {
 			</div>
 		</div>
 		<div class="app-content flex-column-fluid">
-		<c:set var="docDto1" value="${docDto[1]}" />
+		<c:set var="docDto1" value="${docDto[0]}" />
 			<!-- 내용 시작 -->
 			<div id="kt_app_content" class="app-content flex-column-fluid">
 				<div class="app-container container-fluid">
