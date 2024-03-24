@@ -1,11 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
 <title>HCM메인화면</title>
+<style type="text/css">
+	
+	.exitBtn{
+		width: 100%;
+	}
+	
+	.sideWidth{
+		padding: 10px;
+	}
+	
+</style>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -133,4 +145,33 @@
 		
 <%@include file="/WEB-INF/views/menu/mainSideMenu.jsp"%>	
 </body>
+<script type="text/javascript">
+
+var clockTarget = document.getElementById("nowTime");
+
+
+function clock() {
+    var date = new Date();
+    var month = date.getMonth();
+    var clockDate = date.getDate();
+    var day = date.getDay();
+    var week = ['일', '월', '화', '수', '목', '금', '토'];
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+    clockTarget.innerText = month+1+"월 "+clockDate+"일 "+week[day]+"요일 "+hours+"시 "+minutes+"분 "+seconds+"초"
+}
+
+
+
+function init() {
+	clock();
+	setInterval(clock, 1000);
+}
+
+window.onload = function(){
+	init();
+}
+
+</script>
 </html>

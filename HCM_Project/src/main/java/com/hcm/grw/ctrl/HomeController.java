@@ -1,7 +1,9 @@
 package com.hcm.grw.ctrl;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -16,9 +19,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.EmailService;
+import com.hcm.grw.comm.Function;
+import com.hcm.grw.dto.doc.SignBoxDto;
+import com.hcm.grw.dto.hr.CommuteDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.dto.hr.HolidayDto;
+import com.hcm.grw.dto.hr.SignDocBoxDto;
+import com.hcm.grw.model.service.doc.IDocBoxService;
+import com.hcm.grw.model.service.hr.CommuteService;
 import com.hcm.grw.model.service.hr.HolidayService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +44,12 @@ public class HomeController {
 	
 	@Autowired
 	private HolidayService holidayService;
+	
+	@Autowired
+	private IDocBoxService docService;
+	
+	@Autowired
+	private CommuteService commuteService;
 	
 	
 	@GetMapping({"/index.do", "/"})
@@ -77,10 +95,6 @@ public class HomeController {
 	}
 
 
-	@GetMapping("/mainTmp.do")
-	public String mainTmp() {
-		return "mainTmp";
-	}
 
 	@GetMapping("/hr/hrMainTmp.do")
 	public String hrMainTmp() {
@@ -184,11 +198,91 @@ public class HomeController {
 	
 	
 	
+	@GetMapping("/mainTmp.do")
+	public String mainTmp(Authentication authentication, Model model, HttpServletResponse resp) throws JsonProcessingException {
+		
+		String empl_id = authentication.getName();
+		
+		
+		
+		Map<String, Object> holidayTotalMap = holidayService.selectEmpTotalHoliDayInfo(empl_id);
+		if(holidayTotalMap != null) {
+			model.addAttribute("rest_holiday",holidayTotalMap.get("REST_HOLIDAY"));
+		}else {
+			model.addAttribute("rest_holiday","남은연차가 없습니다");
+		}
+		
+		SignBoxDto dto = new SignBoxDto();
+		dto.setEmpl_id(empl_id);
+		List<SignBoxDto> table = docService.getIngDocs(dto);
+		System.out.println(table.size());
+		if(table.size() != 0) {
+			model.addAttribute("ingDoc",table.size());
+		}else {
+			model.addAttribute("ingDoc","진행중인 결재가 없습니다");
+		}
+		
+		
+		Date commuteInTime = null;
+		Date commuteOutTime = null;
+		CommuteDto cgDto = commuteService.selectCommuteDayInfo(empl_id);
+		if(cgDto != null) {
+			if(cgDto.getEmco_in_dt() != null) {
+				commuteInTime = cgDto.getEmco_in_dt();
+			}
+			if(cgDto.getEmco_out_dt() != null) {
+				commuteOutTime = cgDto.getEmco_out_dt();
+			}
+		}
+
+		model.addAttribute("commuteInTime", commuteInTime);
+		model.addAttribute("commuteOutTime", commuteOutTime);
+		
+		
+		return "mainTmp";
+	}
 	
 	
 	
-	
-	
+	@GetMapping("/hr/home/registCommuteOkMain.do")
+	public @ResponseBody void registCommuteOk(Authentication authentication, 
+												Model model, 
+												HttpServletResponse resp) throws IOException {
+		log.info("CommuteController registCommute 출/퇴근 처리 페이지");
+		resp.setContentType("text/html; charset=UTF-8");
+		
+		if(authentication == null) {
+			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login.do", "", "", "");
+		}
+		
+		String empl_id = authentication.getName();
+		String commuteInTime = "";
+		CommuteDto cgDto = commuteService.selectCommuteDayInfo(empl_id);
+		if(cgDto != null) {
+			commuteInTime = cgDto.getEmco_in_dt().toString();
+		}
+		
+		int cnt = 0;
+		String commuteMsg = "";
+		if(StringUtils.isEmpty(commuteInTime)) {
+			CommuteDto cDto = new CommuteDto() {{
+				setEmpl_id(empl_id);
+			}};
+			
+			cnt += commuteService.registCommute(cDto);
+			commuteMsg = "출근";
+		}else {
+			cnt += commuteService.updateCommute(empl_id);
+			commuteMsg = "퇴근";
+		}
+		
+		if(cnt > 0) {
+			Function.alertLocation(resp, commuteMsg + "처리가 완료 되었습니다.", "/hr/commute/empCommuteList.do", "", "", "");
+		}else {
+			Function.alertHistoryBack(resp, commuteMsg + "처리 중 오류가 발생하였습니다.\n관리자에게 문의하세요.", "", "");
+		}
+		
+	}	
 	
 	
 	
