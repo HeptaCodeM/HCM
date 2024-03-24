@@ -18,21 +18,19 @@
 
 			<div class="app-toolbar py-3 py-lg-6">
 				<div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
-					<!--begin::Page title-->
 					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-						<!--begin::Title-->
 						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">서명관리</h1>
-						<!--end::Title-->
 					</div>
-					<!--end::Page title-->
 				</div>		
 			</div>
 			<div class="app-content flex-column-fluid">
 			
-					<!-- 내용 시작 -->
 					<div id="kt_app_content" class="app-content flex-column-fluid">
 						<div class="app-container container-fluid">
-							<div class="card-flush h-md-50 mb-xl-10" style="background-color: white;">
+							<div class="card-flush h-md-50 mb-xl-10" style="background-color: white; text-align: center;"><br>
+							<div>
+								<span class="select2-selection__rendered">사용하실 서명을 선택 후 저장버튼을 눌러주세요</span>
+							</div>
 							<c:forEach var="sign" items="${signList}" varStatus="var">
 								<div class="card-body pt-5" style="display: inline-block; width: 320px; text-align: center;" >
 									<div class="border border-gray-400" style="height: 240px; ">
@@ -52,12 +50,11 @@
 							<br><br>
 							</div>
 						</div>
-					</div>
-					<!-- 내용 끝 -->
 					<div style="text-align: center;">
 						<button class="btn btn-light-primary btn-color-gray-600" id="saveSign">서명저장</button>
 						<button class="btn btn-light-primary btn-color-gray-600" data-bs-toggle="modal" data-bs-target="#kt_modal_3">서명추가</button>
 						<button class="btn btn-light-primary btn-color-gray-600" id="closeBtn">닫기</button>
+					</div>
 					</div>
 			</div>
 		<div class="modal fade" tabindex="-1" id="kt_modal_3">
@@ -66,13 +63,11 @@
 				<div class="modal-header">
 					<h5 class="modal-title">서명 추가</h5>
 
-					<!--begin::Close-->
 					<div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
 						data-bs-dismiss="modal" aria-label="Close">
 						<i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span
 							class="path2"></span></i>
 					</div>
-					<!--end::Close-->
 				</div>
 
 				<div class="modal-body" style="margin: 0px auto;">

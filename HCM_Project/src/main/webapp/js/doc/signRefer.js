@@ -1,4 +1,3 @@
-
 $('#schName').focus();
 
 // 검색기능
@@ -20,9 +19,9 @@ $('#jstree').jstree({
 			success: function(data) {
 				data.forEach(function(node) {
 					if (node.pos_na != undefined) {
-						node.text = node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="pick()" class="btn btn-basic btn-sm addd" style="padding: 0.2px;">➕</button><span class="positionFlag" style="display: none;">' + node.pos_flag + '</span>';
+						node.text = node.text + ' (' + node.pos_na + ')';
 					} else {
-						node.text = node.text + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="pick()" class="btn btn-basic btn-sm addd" style="padding: 0.2px;">➕</button>'
+						node.text = node.text;
 					}
 				});
 			},
@@ -40,6 +39,41 @@ $('#schName').on('keydown', function(e) {
 	}
 });
 
+setTimeout(function() {
+	var empl_id = document.getElementById('empl_id').value;
+	var allNode = $('#jstree').jstree('get_json', '#', { flat: true });
+	var sel = allNode.find(function(node) {
+		return node.id == empl_id;
+	})
+	$('#jstree').jstree('hide_node', sel);
+}, 1000)
+
+// x버튼
+function removeRefer(btn) {
+	var span = btn.parentNode.parentNode;
+	var refId = span.querySelector('input[type=hidden]').value;
+	refer = refer.replace(refId + ",", "");
+	span.remove();
+	idx1--;
+	var allNode = $('#jstree').jstree('get_json', '#', { flat: true });
+	var sel = allNode.find(function(node) {
+		return node.id == refId;
+	})
+	$('#jstree').jstree('show_node', sel);
+}
+function removeReferDept(btn) {
+	var span = btn.parentNode.parentNode;
+	var refId = span.querySelector('input[type=hidden]').value;
+	referDept = referDept.replace(refId + ",", '');
+	span.remove();
+	idx2--;
+	var allNode = $('#jstree').jstree('get_json', '#', { flat: true });
+	var sel = allNode.find(function(node) {
+		return node.id == refId;
+	})
+	$('#jstree').jstree('show_node', sel);
+}
+
 // 닫기버튼
 document.getElementById('closeRefer').addEventListener('click', closeRefer);
 
@@ -52,85 +86,97 @@ var referDept = '';
 var idx1 = 1;
 var idx2 = 1;
 
-// + 버튼
-function pick() {
-	setTimeout(function() {
-		var id = $('#jstree').jstree('get_selected')[0];
-		if(id.includes('DT')) {
+$('#jstree').on('select_node.jstree', function(e, data) {
+	var id = data.node.id
+	var searchDiv = document.getElementById('ref-dept');
+	var searchInput = searchDiv.querySelectorAll('input[type=hidden]');
+	
+	if(id.includes('DT')) {
 			// 참조부서 추가
-			var dname = $('#jstree').jstree('get_text', id);
-			dname = dname.substring(0, dname.indexOf('&'));
-			var dept = document.getElementById('ref-dept');
-			
-			var input = document.createElement('input');
-			var hiddenInput = document.createElement('input');
-			var span = document.createElement('span');
-			var inSpan = document.createElement('span');
-			var btn = document.createElement('button');
-			span.setAttribute('class', 'input-group-btn');
-			inSpan.setAttribute('class', 'ki-solid ki-cross-square fs-1');
-			inSpan.setAttribute('style', 'margin-left: -10px;');
-			btn.setAttribute('class', 'btn btn-default');
-			btn.setAttribute('onclick', 'removeRefer(this)');
-			input.setAttribute('value', dname);
-			input.setAttribute('class', 'form-control');
-			input.setAttribute('readonly', 'readonly');
-			input.setAttribute('id', 'refDept' + idx1);
-			hiddenInput.setAttribute('type', 'hidden');
-			hiddenInput.setAttribute('value', id);
-			btn.append(inSpan);
-			span.append(btn);
-			dept.append(input);
-			dept.append(hiddenInput);
-			dept.append(span);
-			referDept += id + ','
-			idx1++;
-			
-		} else {
-			// 참조자 추가
-			var emp = document.getElementById('ref-emp');
-			fetch('/doc/userInfo.do?empl_id=' + id)
-				.then(resp => { return resp.json() })
-				.then(data => {
-					console.log(data);
-					var d = data[0];
-					var input = document.createElement('input');
-					var hiddenInput = document.createElement('input');
-					var span = document.createElement('span');
-					var inSpan = document.createElement('span');
-					var btn = document.createElement('button');
-					span.setAttribute('class', 'input-group-btn');
-					inSpan.setAttribute('class', 'ki-solid ki-cross-square fs-1');
-					inSpan.setAttribute('style', 'margin-left: -10px;');
-					btn.setAttribute('class', 'btn btn-default');
-					btn.setAttribute('onclick', 'removeRefer(this)');
-					input.setAttribute('value', d.empl_name);
-					input.setAttribute('class', 'form-control');
-					input.setAttribute('readonly', 'readonly');
-					input.setAttribute('id', 'ref' + idx2);
-					hiddenInput.setAttribute('type', 'hidden');
-					hiddenInput.setAttribute('value', d.empl_id);
-					btn.append(inSpan);
-					span.append(btn);
-					emp.append(hiddenInput);
-					emp.append(input);
-					emp.append(span);
-					
-					refer += d.empl_id + ','
-					idx2++;
-					
-					var selNode = $('#jstree').jstree('get_selected');
-					$('#jstree').jstree('hide_node', selNode);
-				})
-				.catch(err => { 
-					console.log(err);
-				});
+		for(let i=0; i<searchInput.length; i++) {
+			if(searchInput[i].value === id) {
+				swalAlert('중복된 부서입니다', '', '', '확인');
+				return;
+			} 
 		}
-	}, 100);
-}
+		var dname = $('#jstree').jstree('get_text', id);
+		var dept = document.getElementById('ref-dept');
+		var input = document.createElement('input');
+		var hiddenInput = document.createElement('input');
+		var outSpan = document.createElement('span');
+		var span = document.createElement('span');
+		var inSpan = document.createElement('span');
+		var btn = document.createElement('button');
+		span.setAttribute('class', 'input-group-btn');
+		span.setAttribute('style', 'margin-left: -30px;');
+		inSpan.setAttribute('class', 'ki-solid ki-cross-square fs-1');
+		inSpan.setAttribute('style', 'margin-left: -10px;');
+		btn.setAttribute('class', 'btn btn-default');
+		btn.setAttribute('onclick', 'removeReferDept(this)');
+		input.setAttribute('value', dname);
+		input.setAttribute('class', 'form-control');
+		input.setAttribute('style', 'width: 90%; display: inline;');
+		input.setAttribute('readonly', 'readonly');
+		input.setAttribute('id', 'refDept' + idx1);
+		hiddenInput.setAttribute('type', 'hidden');
+		hiddenInput.setAttribute('value', id);
+		btn.append(inSpan);
+		span.append(btn);
+		outSpan.append(input);
+		outSpan.append(hiddenInput);
+		outSpan.append(span);
+		dept.append(outSpan);
+		referDept += id + ','
+		idx1++;
+			
+	} else {
+		// 참조자 추가
+		var emp = document.getElementById('ref-emp');
+		fetch('/doc/userInfo.do?empl_id=' + id)
+			.then(resp => { return resp.json() })
+			.then(data => {
+				console.log(data);
+				var d = data[0];
+				var input = document.createElement('input');
+				var hiddenInput = document.createElement('input');
+				var span = document.createElement('span');
+				var inSpan = document.createElement('span');
+				var outSpan = document.createElement('span');
+				var btn = document.createElement('button');
+				span.setAttribute('class', 'input-group-btn');
+				span.setAttribute('style', 'margin-left: -30px;');
+				inSpan.setAttribute('class', 'ki-solid ki-cross-square fs-1');
+				inSpan.setAttribute('style', 'margin-left: -10px;');
+				btn.setAttribute('class', 'btn btn-default');
+				btn.setAttribute('onclick', 'removeRefer(this)');
+				input.setAttribute('value', d.empl_name);
+				input.setAttribute('class', 'form-control');
+				input.setAttribute('style', 'width: 90%; display: inline;');
+				input.setAttribute('readonly', 'readonly');
+				input.setAttribute('id', 'ref' + idx2);
+				hiddenInput.setAttribute('type', 'hidden');
+				hiddenInput.setAttribute('value', d.empl_id);
+				btn.append(inSpan);
+				span.append(btn);
+				outSpan.append(hiddenInput);
+				outSpan.append(input);
+				outSpan.append(span);
+				emp.append(outSpan);
+
+				refer += d.empl_id + ','
+				idx2++;
+
+				var selNode = $('#jstree').jstree('get_selected');
+				$('#jstree').jstree('hide_node', selNode);
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	}
+})
 
 function closeRefer() {
-	window.close();
+	self.close();
 }      
 
 function saveRefer() {
@@ -139,11 +185,15 @@ function saveRefer() {
 	var refDeptName = '';
 	for(let i=0; i<idx1-1; i++) {
 		var num1 = document.getElementById('refDept' + (i+1));
-		refDeptName += num1.value + ',';
+		if(num1 != null) {
+			refDeptName += num1.value + ',';
+		}
 	}
 	for(let i=0; i<idx2-1; i++) {
 		var num2 = document.getElementById('ref' + (i+1));
-		refName += num2.value + ',';
+		if(num2 != null) {
+			refName += num2.value + ',';
+		}
 	}
 	refName = refName.substring(0, refName.lastIndexOf(','));
 	refDeptName = refDeptName.substring(0, refDeptName.lastIndexOf(','));
