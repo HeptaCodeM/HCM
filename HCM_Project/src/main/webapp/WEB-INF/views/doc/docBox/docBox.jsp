@@ -159,7 +159,7 @@
 							<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: DodgerBlue; font-size: large;">${dto.appr_name0} ></span> &nbsp;&nbsp;
 							</c:if>
 							
-							<c:if test="${dto.sidb_doc_stat == 1  and empty dto.appr_name2 and dto.appr_flag0 == 0}">
+							<c:if test="${dto.sidb_doc_stat == 1  and !empty dto.appr_name1 and empty dto.appr_name2 and  dto.appr_flag0 == 0}">
 							<img style="width:80%;" src="/image/doc/docBox/s1a2d1.png">
 							<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: DodgerBlue;  font-size: large;">
 							${dto.appr_name0} ></span> <span style="display:inline-block; width:22%;"></span>${dto.appr_name1}

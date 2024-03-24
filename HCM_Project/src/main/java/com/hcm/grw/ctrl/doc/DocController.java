@@ -44,7 +44,7 @@ public class DocController {
 	@Autowired
 	private IDocBoxDao dao;	
 
-	@PostMapping("/doc/docBox/getDetail.do")
+	@GetMapping("/doc/docBox/getDetail.do")
 	public String getDetailBoard(Model model, SignBoxDto dto, String docNum, HttpSession session) {
 
 		dto.setSidb_doc_num(docNum);
