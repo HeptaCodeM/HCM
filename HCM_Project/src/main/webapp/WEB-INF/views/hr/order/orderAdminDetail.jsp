@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +46,7 @@
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10" id="kt_docs_repeater_basic">
 							<div class="card-header pt-5">
-								<h3 class="card-title text-gray-800 fw-bold">인사관리 > 인사발령관리 > 발령등록</h3>
+								<h3 class="card-title text-gray-800 fw-bold">인사관리 > 인사발령관리 > 발령수정</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>
 							<form name="registOrderForm" id="registOrderForm" method="post" action="/hr/order/registOrderAdminOk.do" >
@@ -68,86 +69,119 @@
 										</tr>
 										</thead>
 										<tbody id="repeater">
-										<tr class="item" id="item1" data-idnum="1">
+										<c:set value="${detailLists[0].emor_status}" var="emor_status" />
+										<c:forEach items="${detailLists}" var="detail" varStatus="vs">
+										<tr class="item" id="item${vs.index+1}" data-idnum="${vs.index+1}">
 											<td>
-						                        <input type="text" class="form-control form-control-solid datepicker" name="emod_order_dt">
+						                        <input type="text" class="form-control form-control-solid datepicker" name="emod_order_dt" value="${detail.emod_order_dt}">
+												<input type="hidden" name="emod_seq" value="${detail.emod_seq}">
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="empl_id" maxlength="20" readonly required="required">
+												<input type="text" class="form-control form-control-solid" name="empl_id" maxlength="20" readonly required="required" value="${detail.empl_id}">
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="empl_name" maxlength="20" readonly>
+												<input type="text" class="form-control form-control-solid" name="empl_name" maxlength="20" readonly value="${detail.empl_name}">
 											</td>
 											<td>
 												<select NAME="emod_type" class="form-select form-select-solid searchEmpSelect">
 													<option value="">발령구분</option>
 													<c:forEach items="${orderList}" var="order">
-													<option value="${order.coco_cd}">${order.coco_name}</option>
+													<option value="${order.coco_cd}" <c:if test="${detail.emod_type eq order.coco_cd}">selected</c:if>>${order.coco_name}</option>
 													</c:forEach>
 												</select>
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="emod_prev_dept_nm" maxlength="20" readonly>
-												<input type="hidden" name="emod_prev_dept">
+												<input type="text" class="form-control form-control-solid" name="emod_prev_dept_nm" maxlength="20" readonly value="${detail.emod_prev_dept_nm}">
+												<input type="hidden" name="emod_prev_dept" value="${detail.emod_prev_dept}">
 											</td>
 											<td>
-												<select NAME="emod_order_dept" class="form-select form-select-solid searchEmpSelect" style="display:none;">
+												<select NAME="emod_order_dept" class="form-select form-select-solid searchEmpSelect" <c:if test="${detail.emod_order_dept eq null or detail.emod_order_dept eq ''}">style="display:none;"</c:if>>
 													<option value="">부서선택</option>
 													<c:forEach items="${deptList}" var="dept">
-													<option value="${dept.coco_cd}">${dept.coco_name}</option>
+													<option value="${dept.coco_cd}" <c:if test="${detail.emod_order_dept eq dept.coco_cd}">selected</c:if>>${dept.coco_name}</option>
 													</c:forEach>
 												</select>
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="emod_prev_rank_nm" maxlength="20" readonly>
-												<input type="hidden" name="emod_prev_rank">
+												<input type="text" class="form-control form-control-solid" name="emod_prev_rank_nm" maxlength="20" readonly value="${detail.emod_prev_rank_nm}">
+												<input type="hidden" name="emod_prev_rank" value="${detail.emod_prev_rank}">
 											</td>
 											<td>
-												<select NAME="emod_order_rank" class="form-select form-select-solid searchEmpSelect" style="display:none;">
+												<select NAME="emod_order_rank" class="form-select form-select-solid searchEmpSelect" <c:if test="${detail.emod_order_rank eq null or detail.emod_order_rank eq ''}">style="display:none;"</c:if>>
 													<option value="">직위선택</option>
 													<c:forEach items="${rankList}" var="rank">
-													<option value="${rank.coco_cd}">${rank.coco_name}</option>
+													<option value="${rank.coco_cd}" <c:if test="${detail.emod_order_rank eq rank.coco_cd}">selected</c:if>>${rank.coco_name}</option>
 													</c:forEach>
 												</select>
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="emod_prev_position_nm" maxlength="20" readonly>
-												<input type="hidden" name="emod_prev_position">
+												<input type="text" class="form-control form-control-solid" name="emod_prev_position_nm" maxlength="20" readonly value="${detail.emod_prev_position_nm}">
+												<input type="hidden" name="emod_prev_position" value="${detail.emod_prev_position}">
 											</td>
 											<td>
-												<select NAME="emod_order_position" class="form-select form-select-solid searchEmpSelect" style="display:none;">
+												<select NAME="emod_order_position" class="form-select form-select-solid searchEmpSelect" <c:if test="${detail.emod_order_position eq null or detail.emod_order_position eq ''}">style="display:none;"</c:if>>
 													<option value="">직책선택</option>
 													<c:forEach items="${positionList}" var="position">
-													<option value="${position.coco_cd}">${position.coco_name}</option>
+													<option value="${position.coco_cd}" <c:if test="${detail.emod_order_position eq position.coco_cd}">selected</c:if>>${position.coco_name}</option>
 													</c:forEach>
 												</select>
 											</td>
 											<td style="text-align: center; vertical-align: middle;">
+												<c:if test="${emor_status ne 'Y'}">
+													<c:if test="${vs.index eq 0}">
+													-
+													</c:if>
+													<c:if test="${vs.index ne 0}">
+												<a href='javascript:void(0)' data-emor_id="${emor_id}" data-emod_seq="${detail.emod_seq}" class='remove'>
+													<i class='ki-duotone ki-minus-square fs-2'>
+														<span class='path1'></span>
+														<span class='path2'></span>
+													</i>
+												</a>
+													</c:if>
+												</c:if>
+												<c:if test="${emor_status eq 'Y'}">
 												-
+												</c:if>
 											</td>
 										</tr>
+										</c:forEach>
 										</tbody>
 									</table>
 								</div>
+								<c:if test="${emor_status ne 'Y'}">
 							    <div class="form-group mb-5 me-4" style="text-align: right;">
 							        <a href="javascript:;" id="add" class="btn btn-light-primary">
 							            <i class="ki-duotone ki-plus fs-3"></i>
 							            Add
 							        </a>
-							    </div>							
+							    </div>
+							    </c:if>
 
 								<div style="text-align: right;margin-bottom:20px;">
+									<c:if test="${emor_status ne 'Y'}">
 									<button type="button" class="btn btn-primary me-4" id="kt_button_1" onclick="registOrderAdmin()">
 									    <span class="indicator-label">
-									        등록
+									        수정
 									    </span>
 									    <span class="indicator-progress">
 									        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 									    </span>
 									</button>
-									<button type="button" class="btn btn-success me-4" id="kt_button_1" onclick="history.back();">
+									<button type="button" class="btn btn-danger me-4" id="kt_button_1" onclick="delelteOrderAdmin('${emor_id}');">
 									    <span class="indicator-label">
-									        취소
+									        삭제
+									    </span>
+									</button>
+									<button type="button" class="btn btn-info me-4" id="kt_button_1" onclick="confirmOrderAdmin('${emor_id}');">
+									    <span class="indicator-label">
+									        확정
+									    </span>
+									</button>
+									</c:if>
+									<button type="button" class="btn btn-success me-4" id="kt_button_1" onclick="location.href='/hr/order/orderAdminList.do';">
+									    <span class="indicator-label">
+									        리스트
 									    </span>
 									</button>
 								</div>
@@ -216,12 +250,12 @@
 		<!-- 사원검색 Layer 종료 -->
 <script type="text/javascript">
 var thisRow = "";
-var idNum = 0;
+var idNum = ${fn:length(detailLists)};
 
 // Add Row HandleBarJS
 var repeatHtml = "";
-repeatHtml+="<tr class='item' id='item_idNum' data-idnum='_idNum'>"
-repeatHtml+="<td>"
+repeatHtml+="<tr class='item' id='item_idNum' data-idnum='_idNum'>";
+repeatHtml+="<td>";
 repeatHtml+="	<input type='text' class='form-control form-control-solid datepicker' name='emod_order_dt'>";
 repeatHtml+="</td>";
 repeatHtml+="<td>";
@@ -275,7 +309,7 @@ repeatHtml+="		<option value='${position.coco_cd}'>${position.coco_name}</option
 repeatHtml+="	</select>";
 repeatHtml+="</td>";
 repeatHtml+="<td style='text-align: center; vertical-align: middle;'>";
-repeatHtml+="	<a href='javascript:void(0)' class='remove'>";
+repeatHtml+="	<a href='javascript:void(0)' data-emor_id='' data-emod_seq='' class='remove'>";
 repeatHtml+="		<i class='ki-duotone ki-minus-square fs-2'>";
 repeatHtml+="			<span class='path1'></span>";
 repeatHtml+="			<span class='path2'></span>";
@@ -332,7 +366,7 @@ $(function(){
 	//추가 버튼 클릭 이벤트
 	$('#add').click(function () {
 		if(idNum == 0){
-			idNum = 2;	
+			idNum = 1;
 		}else{
 			idNum = idNum + 1;
 		}
@@ -346,9 +380,45 @@ $(function(){
 	
 	// 삭제 버튼 클릭 이벤트
 	$('#repeater').on('click', '.remove', function () {
-		$(this).closest('.item').remove();
+		console.log("emor_id, emod_seq : ", $(this).data("emor_id"), $(this).data("emod_seq"));
+		var emor_id = $(this).data("emor_id");
+		var emod_seq = $(this).data("emod_seq");
+		console.log("emor_id, emod_seq : ", emor_id, emod_seq);
+		if(emor_id != '' && emod_seq != ''){
+			if(!confirm("현재 저장된 정보를 삭제하시겠습니까?")){
+				return;
+			}
+			//삭제처리
+			fetch('/hr/order/deleteOrderAdminDetail.do', {
+				method: 'post',
+		        headers: {
+		          'Content-Type': 'application/x-www-form-urlencoded'
+		        },
+				body: "emor_id="+emor_id+"&emod_seq="+emod_seq
+			})
+			.then(resp=>{
+				if (!resp.ok){
+				      throw new Error(resp)
+				}
+				return resp.text()
+			})
+			.then(result => {
+				console.log("result : ", result);
+				if(result == "false"){
+					swalAlert("삭제에 실패 하였습니다.","","","","");
+				}else{
+					$(this).closest('.item').remove();
+				}
+			})
+			.catch((error)=>{
+				console.log("에러", error);
+			})
+		}else{
+			$(this).closest('.item').remove();
+		}
 	});
 
+	
 	// 발령구분 선택 시 처리
 	$(document).on('change', 'select[name="emod_type"]', function() {
 		console.log("this : ", $(this).val());
@@ -373,7 +443,12 @@ $(function(){
 		$(this).closest('tr').find('select[name="emod_order_rank"]').val('');
 		$(this).closest('tr').find('select[name="emod_order_position"]').val('');
 	});
+
+	if("${emor_status}"=="Y"){
+		disableFormInputs('registOrderForm');
+	}
 });
+
 </script>
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
 </body>

@@ -16,6 +16,7 @@ public class OrderInfoListDto {
 	private String emor_status;
 	private String empl_id;
 	private String empl_name;
+	private int emod_seq;
 	private String emod_order_dt;
 	private String emod_type;
 	private String emod_type_nm;

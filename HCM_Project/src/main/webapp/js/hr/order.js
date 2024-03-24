@@ -71,6 +71,7 @@ function orderSearchAdminList(){
 		return;
 	}
 	
+	$("#searchOrderAdminList").DataTable().destroy();
 
 	$.ajax({
 		url:"/hr/order/orderSearchAdminList.do",
@@ -85,7 +86,6 @@ function orderSearchAdminList(){
 			console.log(data.holidayTotalMap.USE_HOLIDAY);
 			console.log(data.holidayTotalMap.REST_HOLIDAY);
 			*/
-			$("#searchOrderAdminList").dataTable().destroy();
 	 		$("#searchOrderAdminList").dataTable({
 	 			data: data,
 				columns: [
@@ -195,4 +195,164 @@ function openEmpInfoSearch(){
 }
 function closeEmpInfoSearch(){
 	$('#empSearch').hide();
+}
+
+/* 발령정보 등록 */
+function registOrderAdmin(){
+   var rows = document.getElementsByClassName('item');
+
+    for (var i = 0; i < rows.length; i++) {
+		var emod_order_dt = rows[i].querySelector('input[name="emod_order_dt"]').value.trim();
+		var empl_id = rows[i].querySelector('input[name="empl_id"]').value.trim();
+		var empl_name = rows[i].querySelector('input[name="empl_name"]').value.trim();
+		var emod_type = rows[i].querySelector('select[name="emod_type"]').value.trim();
+
+		var emod_prev_dept = rows[i].querySelector('input[name="emod_prev_dept"]').value.trim();
+		var emod_prev_dept_nm = rows[i].querySelector('input[name="emod_prev_dept_nm"]').value.trim();
+		var emod_order_dept = rows[i].querySelector('select[name="emod_order_dept"]').value.trim();
+
+		var emod_prev_rank = rows[i].querySelector('input[name="emod_prev_rank"]').value.trim();
+		var emod_prev_rank_nm = rows[i].querySelector('input[name="emod_prev_rank_nm"]').value.trim();
+		var emod_order_rank = rows[i].querySelector('select[name="emod_order_rank"]').value.trim();
+
+		var emod_prev_position = rows[i].querySelector('input[name="emod_prev_position"]').value.trim();
+		var emod_prev_position_nm = rows[i].querySelector('input[name="emod_prev_position_nm"]').value.trim();
+		var emod_order_position = rows[i].querySelector('select[name="emod_order_position"]').value.trim();
+		
+		console.log(i+"번째 발령정보", emod_order_dt, empl_id, empl_name, emod_type);
+		console.log(i+"번째 인사기본정보", emod_prev_dept, emod_prev_dept_nm, emod_prev_rank, emod_prev_rank_nm, emod_prev_position, emod_prev_position_nm);
+		console.log(i+"번째 발령정보", emod_order_dept, emod_order_rank, emod_order_position);
+		
+		// 0번째 index 필수처리		
+		var firstFlag = true;
+		if(i===0){
+			if(emod_order_dt && empl_id && empl_name && emod_type && emod_prev_dept && emod_prev_dept_nm && emod_prev_rank && emod_prev_rank_nm){
+		        if(emod_type==='OR000002'){
+			        if (emod_order_dept === '') {
+			        	firstFlag = false;
+			        }
+		        }else if(emod_type==='OR000003'){
+			        if (emod_order_rank === '') {
+			        	firstFlag = false;
+			        }
+		        }else if(emod_type==='OR000004'){
+			        if (emod_order_position === '') {
+			        	firstFlag = false;
+			        }
+				}
+			}else{
+				firstFlag = false;
+			}
+			
+			if(!firstFlag){
+				swalAlert("첫번째 줄은 발령정보 값이 필수로 등록되어야 합니다.","","","","");
+				return;
+			}
+		}else{
+			if(!emod_order_dt || !empl_id || !empl_name || !emod_type || !emod_prev_dept || !emod_prev_dept_nm || !emod_prev_rank || !emod_prev_rank_nm){
+		        
+		        if (emod_order_dt === '') {
+					swalAlert((i+1)+"번째 줄 발령일자가 없습니다.","","","","");
+					return;
+		        }
+		        if (empl_id === '') {
+					swalAlert((i+1)+"번째 줄 사번이 없습니다.","","","","");
+					return;
+		        }
+		        if (empl_name === '') {
+					swalAlert((i+1)+"번째 줄 성명이 없습니다.","","","","");
+					return;
+		        }
+		        if (emod_type === '') {
+					swalAlert((i+1)+"번째 줄 발령구분이 없습니다.","","","","");
+					return;
+		        }
+		        if (emod_prev_dept === '') {
+					swalAlert((i+1)+"번째 줄 이전 부서코드가 없습니다.","","","","");
+					return;
+		        }
+		        if (emod_prev_dept_nm === '') {
+					swalAlert((i+1)+"번째 줄 이전 부서명이 없습니다.","","","","");
+					return;
+		        }
+		        if (emod_prev_rank === '') {
+					swalAlert((i+1)+"번째 줄 이전 직위코드가 없습니다.","","","","");
+					return;
+		        }
+		        if (emod_prev_dept_nm === '') {
+					swalAlert((i+1)+"번째 줄 이전 직위명이 없습니다.","","","","");
+					return;
+		        }
+			}else{
+		        if(emod_type==='OR000002'){
+			        if (emod_order_dept === '') {
+						swalAlert(i+"번째 줄 발령 부서정보가 없습니다.","","","","");
+						return;
+			        }
+		        }else if(emod_type==='OR000003'){
+			        if (emod_order_rank === '') {
+						swalAlert(i+"번째 줄 발령 직위정보가 없습니다.","","","","");
+						return;
+			        }
+		        }else if(emod_type==='OR000004'){
+			        if (emod_order_position === '') {
+						swalAlert(i+"번째 줄 발령 직책정보가 없습니다.","","","","");
+						return;
+			        }
+				}
+				
+			}
+		}
+		
+    }
+    
+    $("#orderRows").val(rows.length);
+
+	$("#registOrderForm").submit();
+}
+
+var del_emor_id="";
+function delelteOrderAdmin(emor_id){
+	del_emor_id = emor_id;
+	
+	sweetAlertConfirm("현재 발령정보를 모두 삭제 하시겠습니까?", delelteOrderAdminOk,"");
+}
+function delelteOrderAdminOk(){
+	console.log("del_emor_id : ", del_emor_id);
+	if(del_emor_id != ""){
+		location.href = "/hr/order/deleteOrderAdminOk.do?emor_id="+del_emor_id;
+	}else{
+		swalAlert("발령 삭제정보가 없습니다.","","","","");
+	}
+}
+
+var confirm_emor_id="";
+function confirmOrderAdmin(emor_id){
+	confirm_emor_id = emor_id;
+	
+	sweetAlertConfirm("현재 발령정보를 확정 하시겠습니까?", confirmOrderAdminOk,"");
+}
+function confirmOrderAdminOk(){
+	console.log("confirm_emor_id : ", confirm_emor_id);
+	if(confirm_emor_id != ""){
+		location.href = "/hr/order/confirmOrderAdminOk.do?emor_id="+confirm_emor_id;
+	}else{
+		swalAlert("발령 확정정보가 없습니다.","","","","");
+	}
+}
+
+// 확정 시 모든 input, select disabled 처리
+function disableFormInputs(formId) {
+    // 폼 내의 모든 input 요소 선택
+    var inputs = document.getElementById(formId).getElementsByTagName('input');
+    var selects = document.getElementById(formId).getElementsByTagName('select');
+    
+    // 모든 input 요소에 대해 반복하여 disabled 속성 설정
+    for (var i = 0; i < inputs.length; i++) {
+        inputs[i].disabled = true;
+    }
+    // 모든 select 요소에 대해 반복하여 disabled 속성 설정
+    for (var i = 0; i < selects.length; i++) {
+    	selects[i].disabled = true;
+    }
 }
