@@ -39,6 +39,7 @@
 		) AS SDBJ ON 1=1 -->
 		WHERE
 		SDB.EMPL_ID =#{empl_id}
+		AND SDB.SIDB_DOC_DELFLAG = 'N'
 	</select>
 	
 	<!-- 전체문서함 조회 수정1 본테이블만 가져오기-->

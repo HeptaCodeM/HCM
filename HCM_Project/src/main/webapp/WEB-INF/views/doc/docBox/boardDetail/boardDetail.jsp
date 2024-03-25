@@ -168,6 +168,7 @@ th, td {
 						<div class="card-body pt-5">
 
 							<div  class="container" id="container">
+							<div id="pdfDiv">
 							<div id="pdfZone">
 								<div class="flex">
 								<div style="max-width:40%;">
@@ -216,7 +217,7 @@ th, td {
 									${docDto1.sidb_doc_content}
 								</div>
 								</div>	
-								
+								</div>
 									<div class="separator separator-dashed my-3"></div>
 									
 									<div style="margin-top:50px; text-align:right;">

@@ -98,10 +98,33 @@
                                   </div>
                               </div>
                           </li>
+                           <li  id="commentFormContainer${comment.rebo_no}" style="display: none;">
+                             <div>
+                                <div class="CommentWriter mb-4">
+                                    <form id="ReplyTwoForm">
+                                        <input type="hidden" name="rebo_step" id="rebo_step" value="${comment.rebo_step}">
+                                        <input type="hidden" name="rebo_writer_id" id="rebo_writer_id" value="${sessionScope.userInfoVo.empl_id}">
+                             <input type="hidden" name="rebo_modify_id" id="rebo_modify_id" value="${sessionScope.userInfoVo.empl_id}">
+                             <input type="hidden" name="rebo_writer" id="rebo_writer" value="${sessionScope.userInfoVo.empl_name}">
+                             <input type="hidden" name="gobo_no" id="gobo_no" value="${comment.gobo_no}">
+                                        <div class="comment_inbox border border-2">
+                                            <em class="comment_inbox_name">${sessionScope.userInfoVo.empl_name}</em>
+                                            <textarea id="commentTextArea${comment.rebo_no}" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" name="rebo_content"></textarea>
+                                            <div class="d-flex justify-content-end align-items-end">
+                                                <div class="register_box">
+                                                    <button type="button" class="btn btn-primary" onclick="cancelReply(${comment.rebo_no})">취소</button>
+                                                    <button type="button" class="btn btn-primary insertReplyTwoBtn" onclick="insertReplyTwo()">등록</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                             </div>
+                          </li>
                            <c:forEach var="reply" items="${Dlist}" varStatus="replyStatus">
             <!-- 현재 댓글과 depth가 1이고, rebo_parent_no가 현재 댓글의 rebo_no와 같은 경우 -->
 				            <c:if test="${comment.rebo_step == reply.rebo_step}">
-				                <li class="list-group-item" style="margin-left: 10px;">
+				                <li class="list-group-item" style="margin-left: 50px;">
 				                    <!-- 대댓글 내용 출력 -->
 				                    <div class="d-flex align-items-center no-border" style="border: none;">
 				                        <img src="https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77" alt="프로필 사진" width="36" height="36" class="mr-3">
@@ -114,23 +137,22 @@
 				                        </div>
 				                    </div>
 				                </li>
-				            </c:if>
-				        </c:forEach>
-                          <li  id="commentFormContainer${comment.rebo_no}" style="display: none;">
+				                
+				                   <li  id="commentFormContainer${reply.rebo_no}" style="display: none;">
                              <div>
                                 <div class="CommentWriter mb-4">
                                     <form id="ReplyTwoForm">
-                                        <input type="hidden" name="rebo_step" id="rebo_step" value="${comment.rebo_step}">
+                                        <input type="hidden" name="rebo_step" id="rebo_step" value="${reply.rebo_step}">
                                         <input type="hidden" name="rebo_writer_id" id="rebo_writer_id" value="${sessionScope.userInfoVo.empl_id}">
                              <input type="hidden" name="rebo_modify_id" id="rebo_modify_id" value="${sessionScope.userInfoVo.empl_id}">
                              <input type="hidden" name="rebo_writer" id="rebo_writer" value="${sessionScope.userInfoVo.empl_name}">
                              <input type="hidden" name="gobo_no" id="gobo_no" value="${comment.gobo_no}">
                                         <div class="comment_inbox border border-2">
                                             <em class="comment_inbox_name">${sessionScope.userInfoVo.empl_name}</em>
-                                            <textarea id="commentTextArea${comment.rebo_no}" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" name="rebo_content${comment.rebo_no}"></textarea>
+                                            <textarea id="commentTextArea${reply.rebo_no}" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" name="rebo_content"></textarea>
                                             <div class="d-flex justify-content-end align-items-end">
                                                 <div class="register_box">
-                                                    <button type="button" class="btn btn-primary" onclick="cancelReply(${comment.rebo_no})">취소</button>
+                                                    <button type="button" class="btn btn-primary" onclick="cancelReply(${reply.rebo_no})">취소</button>
                                                     <button type="button" class="btn btn-primary insertReplyTwoBtn" onclick="insertReplyTwo()">등록</button>
                                                 </div>
                                             </div>
@@ -139,6 +161,9 @@
                                 </div>
                              </div>
                           </li>
+				            </c:if>
+				        </c:forEach>
+                         
                       </c:forEach>
                   </ul>
                   

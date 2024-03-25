@@ -206,12 +206,11 @@ function getFile() {
 
 
 
-//html to pdf
+/*//html to pdf
 
 function pdfPrint() {
 
-	// 현재 document.body의 html을 A4 크기에 맞춰 PDF로 변환
-	html2canvas(document.getElementById("previewContent"), {
+	html2canvas(document.getElementById("pdfZone"), {
 		onrendered: function(canvas) {
 			console.log("작동");
 
@@ -257,31 +256,42 @@ var saveBtn = document.querySelector("#openWindow");
 	saveBtn.addEventListener("click", function() {
 		console.log("작동");
 		pdfPrint();
-	});
+	});*/
 	
-//모달버튼클릭시 내용 복제
+/*//모달버튼클릭시 내용 복제
 function preview(){
 	var pdfZoneContent = document.getElementById('pdfZone').innerHTML;
     document.getElementById('previewContent').innerHTML = pdfZoneContent;
 }
-	
+	*/
 	
 
 //윈도우 오픈시 생성시킬 html 코드들 
    function openPreview() {
-		const options = 'width=1100, height=800, top=50, left=50, right=100, scrollbars=yes'
-            var previewContent = document.getElementById('pdfZone').innerHTML;
+		 const width = 1100;
+    	 const height = 800;
+  	     const left =  Math.ceil((window.screen.width - width)/2);
+ 	     const top = Math.ceil((window.screen.height - height)/2);
+ 	     const options = 'width=' + width + ', height=' + height + ', top=' + top + ', left=' + left + ', scrollbars=yes';
+            
+            var previewContent = document.getElementById('pdfDiv').innerHTML;
             var previewWindow = window.open('', '_blank', options);
-            previewWindow.document.write('<html><head><title>미리보기</title></head><body>' + previewContent 
-            							+  '<button id="modalPdf">PDF로 변환</button>'+
-            							'</body></html>');
+            previewWindow.document.write('<html><head><title>미리보기</title></head><body>' + previewContent + '</body>'
+            							+  '<button class="btn btn-primary btnMd" style="font-size: small;" id="makePdf">PDF 저장</button>'+
+            							'</html>');
             previewWindow.document.close();
             
     var cssLink = previewWindow.document.createElement("link");
 		cssLink.href = "/css/doc/preview.css";
 		cssLink.rel = "stylesheet";
 		cssLink.type = "text/css";
-		previewWindow.document.head.appendChild(cssLink);        
+		previewWindow.document.head.appendChild(cssLink);    
+		
+/*	var templateLink = previewWindow.document.createElement("link");
+		templateLink.href = "/assets/css/style.bundle.css"; // 새로운 스타일 시트의 경로
+		templateLink.rel = "stylesheet";
+		templateLink.type = "text/css";
+		previewWindow.document.head.appendChild(templateLink);	*/    
             
     var script1 = previewWindow.document.createElement('script');
     script1.src = "https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js";
