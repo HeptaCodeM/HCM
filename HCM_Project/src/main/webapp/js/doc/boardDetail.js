@@ -198,7 +198,7 @@ function pdfPrint() {
 }
 
 
-var saveBtn = document.querySelector("#modalPdf");
+var saveBtn = document.querySelector("#openWindow");
 	saveBtn.addEventListener("click", function() {
 		console.log("작동");
 		pdfPrint();
