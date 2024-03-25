@@ -74,32 +74,6 @@ document.getElementById("commentTextArea").addEventListener("#commentTextArea", 
 
 
 
-function insertReply(data){
- // 직렬화된 데이터를 가져옵니다.
-    var form = $("#ReplyForm").serialize();
-
-    // 추가하려는 데이터를 직렬화된 데이터에 추가합니다.
-    var additionalData = "gobo_no=" + data;
-
-    // 추가 데이터를 직렬화된 데이터에 추가합니다.
-    form += "&" + additionalData;
-
-	$.ajax({
-			url: "/sm/insertReply.do",
-			data: form,
-			type: "get",
-			dataType: "json",
-			success: function() {
-				location.href='/sm/getDetailGobo.do?gobo_no='+data;
-				console.log("댓글 등록 성공");
-			},
-			error: function() {
-				
-			}
-		});
-		
-		
-}
 
 
 

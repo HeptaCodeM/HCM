@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hcm.grw.dto.sm.ReplyDto;
+import com.hcm.grw.model.service.sm.IGoboService;
 import com.hcm.grw.model.service.sm.IReplyService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,8 @@ public class ReplyController {
 
 	@Autowired
 	private IReplyService service;
-	
+	@Autowired
+	private IGoboService GoboService;
 	
 	@GetMapping("insertReply.do")
 	@ResponseBody

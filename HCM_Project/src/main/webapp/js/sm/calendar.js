@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             },
             addEventButton: { // 추가한 버튼 설정
+            	id: 'addEventButton',
                 text: "일정 추가",  // 버튼 내용
                 click: function() { // 버튼 클릭 시 이벤트 추가
                     insert();
@@ -56,9 +57,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             },
             fileterButton:{
+	 			id: 'fileterButton',
                 text: "분류",
                 click: function(){
-                    filterModal();
+                    filterLayer();
                     
                 }
             }
@@ -306,8 +308,11 @@ function updateCalendar(){
 		
 }
 
-function filterModal(){
-	
+function filterLayer(){
+
+    // 레이어를 표시합니다.
+    $("#filterLayer").show();
+    
 }
 
 
