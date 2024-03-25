@@ -32,7 +32,7 @@
 					class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<!--begin::Title-->
 					<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
-						기안서 작성</h1>
+						임시보관 문서 상세페이지</h1>
 					<!--end::Title-->
 				</div>
 				<!--end::Page title-->
@@ -59,7 +59,7 @@
 					<!-- col -->
 					<div class="card card-flush h-md-50 mb-xl-10">
 						<div class="card-header pt-5">
-							<h3 class="card-title text-gray-800 fw-bold">기안서 작성</h3>
+							<h3 class="card-title text-gray-800 fw-bold">작성중인 문서</h3>
 						</div>
 						<div class="separator separator-dashed my-3"></div>
 						<div class="card-body pt-5">
@@ -84,16 +84,14 @@
 								<tr id="signLine">
 									<th>결재선</th>
 									<td colspan="5">
-										<div id="apprName1"></div>
-										<div id="apprName2"></div>
-										<div id="apprName3"></div>
+										<div id="apprName"></div>
 									</td>
 								</tr>
 								<tr id="signRefer">
 									<th>참조 및 참조부서</th>
 									<td colspan="5">
-										<div id="empl_ref_name"></div>
-										<div id="empl_dept_name"></div>
+										<div id="refName"></div>
+										<div id="deptName"></div>
 									</td>
 								</tr>
 								<tr id="signLine">
@@ -103,7 +101,7 @@
 									</td>
 									<th>기본서명사용</th>
 									<td>
-										<input type="checkbox" id="chk"  class="form-check-input" onclick="defaultSign()">
+										<input type="checkbox" id="chk"  class="form-check-input" name="defaultSign" onclick="defaultSign()">
 									</td>
 								</tr>
 								

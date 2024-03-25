@@ -23,6 +23,9 @@ function insertTempDoc() {
 	} else {
 		sitb_doc_alflag  = 'N'
 	}
+	/*if(sitb_doc_alflag  = 'Y') {
+		checkbox.checked
+	}*/
 	// 이벤트 날짜
 	var sidt_doc_event = document.getElementById('sidb_doc_event').textContent;
 	var eventArr = sidt_doc_event.split('~');	
@@ -175,21 +178,25 @@ window.addEventListener('message', function(e) {
 	var data = e.data;
 	if(data.hasOwnProperty('empl_ref')) {
 		ref = data;
-//		document.getElementById('refName').innerText = ref.empl_ref_name;
+		document.getElementById('refName').textContent = ref.empl_ref_name;
 		console.log("값: ", ref.empl_ref_name);
 		
 	} else if(data.hasOwnProperty('empl_dept_cd')) {
 		dept = data;
+		document.getElementById('deptName').textContent = dept.empl_dept_name;
 	} else if (typeof data == "string") {
 		sign = data;
 	} else {
 		json = data;
 //		document.getElementById('json').textContent = JSON.stringify(data);
-		if (Array.isArray(data) && data.length >= 0) {
-            document.getElementById('apprName1').textContent = data[0].appr_name;
-            document.getElementById('apprName2').textContent = data[1].appr_name;
-            document.getElementById('apprName3').textContent = data[2].appr_name;
-        }
+		if (data.length == 3) {
+            document.getElementById('apprName1').textContent = data[0].appr_name + "(" + data[0].appr_position +")" + "," + data[1].appr_name + "," + data[2].appr_name;
+        } else if (data.length == 2) {
+			document.getElementById('apprName1').textContent = data[0].appr_name + "(" + data[0].appr_position +")"+ "," + data[1].appr_name ;
+		} else {
+			document.getElementById('apprName1').textContent = data[0].appr_name + "(" + data[0].appr_position +")";
+		}
+	
 	}
 	console.log('ref : ' , ref);
 	console.log('참조자: ', data.empl_ref_name);
@@ -204,9 +211,11 @@ function defaultSign() {
 	var btn = document.getElementById('selectSign');
 	if (chk.checked) {
 		console.log('체크')
+		sign = 'Y';
 		btn.setAttribute('disabled', '');
 	} else {
-		console.log('해제')
+		console.log('해제');
+		sign = 'N';
 		btn.removeAttribute('disabled');
 	}
 }
@@ -227,10 +236,15 @@ setTimeout(function() {
 	
 	document.getElementsByName('sidb_doc_title')[0].value = tempTitle;
 	document.getElementsByClassName('sitb_doc_expiredt')[0].value = tempExpiredt;
-	var checkBox = document.getElementsByName('alflag')[0];
-	if(tempAlflag == 'Y') {
-		checkBox.checked;
+	if(tempAlflag == 'N') {
+//		document.getElementsByName('alflag').checked;
+		document.querySelector('input[name="alflag"]').checked = true;
 	}
+	console.log(sign)
+	if(sign == 'Y') {
+		document.querySelector('input[name="defaultSign"]').checked = true;
+	}
+	
 },1000);
 
 

@@ -88,7 +88,7 @@
 								<tr id="signLine">
 									<th>결재선</th>
 									<td colspan="5">
-										<div id="apprName1"></div>
+										<div id="apprName"></div>
 									</td>
 								</tr>
 								<tr id="signRefer">
