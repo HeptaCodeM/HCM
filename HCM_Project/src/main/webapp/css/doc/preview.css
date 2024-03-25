@@ -1,9 +1,27 @@
 @charset "UTF-8";
 
+.btnMd {
+    width: 100px;
+    height: 32px;
+    line-height: 12px;
+    border-radius: 8px;
+    border: none;
+    background-color:#1B84FF;
+    color:white;
+    position: fixed;
+    bottom: 10px; 
+    right: 10px; 
+    cursor: pointer;
+}
+
+.btnMd:hover{
+	background-color: #056EE9;
+}
 
 .flex {
   display: flex;
   justify-content: flex-end; 
+  max-width: 1000px;
 }
 
 .card .card-header {
@@ -13,6 +31,7 @@ flex-direction:column;
 }
 .container {
 	width: 80%;
+	max-width: 1000px;
 	margin: 0 auto;
 }
 
@@ -45,7 +64,7 @@ th, td {
 
 .content {
 	margin-top: 50px;
-	width: 100%;
+	max-width: 1000px;
 }
 .transparent-table, .transparent-table td, .transparent-table tr {
     border: none;

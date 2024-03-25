@@ -1,7 +1,7 @@
 function pdfPrint() {
 
 	// 현재 document.body의 html을 A4 크기에 맞춰 PDF로 변환
-	html2canvas(document.querySelector('html'), {
+	html2canvas(document.getElementById("pdfZone"), {
 		onrendered: function(canvas) {
 			console.log("작동");
 
@@ -9,19 +9,19 @@ function pdfPrint() {
 			var imgData = canvas.toDataURL('image/jpg');
 
 
-			var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+			var imgWidth = 190; // 이미지 가로 길이(mm) A4 기준
 			var pageHeight = imgWidth *1;  // 출력 페이지 세로 길이 계산 A4 기준
 			var imgHeight = canvas.height * imgWidth / canvas.width;//이미지의 세로길이
 			var heightLeft = imgHeight; //출력해야할 이미지의 높이
 
-			var doc = new jsPDF('p', 'mm');	//PDF를 생성하고 조작하기 위한 객체 생성
+			var doc = new jsPDF('p', 'mm', 'a4');	//PDF를 생성하고 조작하기 위한 객체 생성
 			//매개변수는 PDF의 생성되는 방향과 단위를 의미한다 ,'p'는 세로'l'은 가로방향 'mm'단위로 페이지의 크기 단위
 
 			var position = 0;
 
 			// 첫 페이지 출력
 			//			저장할이미지, 저장타입, 시작x좌표, 시작y좌표, PDF의 크기(가로,세로)	
-			doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+			doc.addImage(imgData, 'PNG', 8, 20, imgWidth, imgHeight);
 			heightLeft -= pageHeight;
 			//전체 이미지의 높이에서 PDF 한페이지의 높이를 -
 
@@ -43,24 +43,8 @@ function pdfPrint() {
 }
 
 
-/*const pdfPrint = () => {
-    var element = document.querySelector('body');
-    console.log(element);
-	var opt = {
-		margin: 0,
-		filename: 'myfile.pdf',
-		image: { type: 'png', quality: 0.98 },
-		html2canvas: { scale: 0.5 },
-		jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-	};
 
-html2pdf().set(opt).from(element).save();
-//  html2pdf(element);
-}*/
-
-
-
-var saveBtn = document.querySelector("#modalPdf");
+var saveBtn = document.querySelector("#makePdf");
 	saveBtn.addEventListener("click", function() {
 		console.log("작동");
 		pdfPrint();
