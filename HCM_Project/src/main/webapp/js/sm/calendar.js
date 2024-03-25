@@ -1,11 +1,11 @@
 var daygridmonth = $(".fc-toolbar-title").text();
-
+ var calendar = "";
 
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var currentMonth = null; // 현재 월을 저장할 변수
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+     	calendar = new FullCalendar.Calendar(calendarEl, {
         googleCalendarApiKey:  'AIzaSyBBTfPVr0UjVIt-H0VGRuLFRg-ltL-YQDk',
         initialView: 'dayGridMonth',
         headerToolbar: {
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 click: function() {
                     calendar.prev(); // 이전 달로 이동
                     currentMonth = calendar.view.title; // 현재 월 값 업데이트
-                    listAjax(currentMonth, calendar); // AJAX 호출
+                    listAjax(currentMonth); // AJAX 호출
                 }
             },
             customNextButton: {
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 click: function() {
                     calendar.next(); // 다음 달로 이동
                     currentMonth = calendar.view.title; // 현재 월 값 업데이트
-                    listAjax(currentMonth, calendar); // AJAX 호출
+                    listAjax(currentMonth); // AJAX 호출
                 }
             },
             addEventButton: { // 추가한 버튼 설정
@@ -56,9 +56,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             },
             fileterButton:{
-                text: "카테고리",
+                text: "분류",
                 click: function(){
-                    filtermodal();
+                    filterModal();
                     
                 }
             }
@@ -78,12 +78,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 초기 렌더링 시에 AJAX 호출
     currentMonth = calendar.view.title; // 현재 월 값 업데이트
-    listAjax(currentMonth, calendar);
+    
+    listAjax(currentMonth);
 
     calendar.render();
 });
 
-function listAjax(daygridmonth, calendar) {
+function listAjax(daygridmonth) {
+	 calendar.getEventSources().forEach(function(source) {
+                source.remove();
+            });
     // AJAX 호출 및 데이터 처리
     $.ajax({
         type: "get",
@@ -148,17 +152,7 @@ function detail(scbo_no){
             $("#scbo_bigo1").val(data.scbo_bigo);
             $("#scbo_no").val(data.scbo_no);
             // 모달 창 표시
-            if(data.scbo_cgory_no == 100 || data.scbo_cgory_no == 200){
-			$("#updateButton").show();
-			$("#scbo_cgory_no_update").show();
-			$("#scbo_cgory_no1").hide();
             $("#detailModal").modal("show");
-            	
-			}else{
-			$("#detailModal").modal("show");
-			$("#scbo_cgory_no_update").hide();	
-			$("#updateButton").hide();
-			}
         },
         error: function() {
             console.log("오류임");
@@ -312,6 +306,8 @@ function updateCalendar(){
 		
 }
 
-
+function filterModal(){
+	
+}
 
 

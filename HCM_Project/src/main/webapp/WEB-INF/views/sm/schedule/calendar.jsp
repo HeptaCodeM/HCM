@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
 <title>SM메인화면</title>
-<link rel="stylesheet" href="/css/sm/calendar.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
@@ -50,6 +49,21 @@
      max-width: 100%; /* 이미지의 최대 너비를 부모 요소에 맞게 조정 */
     max-height: 100%; /
 	}
+	#filterModal { position: absolute; background-color:#fff; 
+	z-index:999; width:600px; left: 50%; transform: translateX(-50%); 
+	top: 15%; padding: 20px; border:1px solid #ccc; 
+	border-radius: 20px; display: none; 
+	}
+	.fc-button-group > .fc-addEventButton-button {
+    margin-right: 10px; 
+	}
+   .fc-scrollgrid-sync-table tr td:first-child .fc-daygrid-day-number{
+   color:red;
+   }
+   .fc-scrollgrid-sync-table tr td:last-child .fc-daygrid-day-number{
+   color:blue;
+   }
+	
 </style>
 
 </head>
@@ -180,7 +194,6 @@
                          <option value="100">개인일정</option>
                          <option value="200">외근</option>
                        </select>
-                       <input type="text" class="form-control" id="scbo_cgory_no1"  readonly="readonly">
                      <label for="title" class="col-form-label">일정 제목</label>
                      <input type="text" class="form-control" id="scbo_title1" name="scbo_title">
                      </div>
@@ -210,14 +223,59 @@
             </div>
 
             <div class="modal-footer">
+            	<button type="button" class="btn btn-primary" id="deleteButton" onclick="deleteCalendar()">삭제</button>
             	<button type="button" class="btn btn-primary" id="updateButton" onclick="updateCalendar()">수정</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
             </div>
         </div>
     </div>
 </div>
 				
-			
+				
+				
+		<div id="filterModal">
+					<div>
+						<form name="filter" id="filter" method="post">
+							<input type="hidden" name="layer" value="empSearch">
+							<table class="table">
+								<tr>
+									<th>Filter</th>
+									<td>
+										<select name="searchType" class="form-select">
+											<option value="empl_name">성명</option>
+											<option value="empl_id">사번</option>
+										</select>
+									</td>
+									<td>
+										<input type="text" class="form-control form-control-solid" name="keyWord" id="keyWord" maxlength="20" required="required">
+									</td>
+									<td>
+										<button type="button" class="btn btn-success" id="kt_button_1" onclick="empInfoSearch()">
+										    <span class="indicator-label">
+										        검색
+										    </span>
+										    <span class="indicator-progress">
+										        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+										    </span>
+										</button>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					<div class="table-responsive">
+					<table id="searchEmployeeList" class="table table-row-bordered gy-5">
+						<thead>
+							<tr class="fw-semibold fs-6 text-muted">
+								<th>사번</th>
+								<th>성명</th>
+								<th>부서</th>
+								<th>직위</th>
+								<th>직책</th>
+							</tr>
+						</thead>
+					</table>
+					</div>
+				</div>		
 <%@include file="/WEB-INF/views/menu/smSideMenu.jsp" %>		
 </body>
 <script type="text/javascript">
