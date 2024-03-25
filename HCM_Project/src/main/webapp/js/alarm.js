@@ -57,12 +57,15 @@ function offAlarmAll() {
 
 // 알림목록 불러오기
 function getAlarmList() {
-	var id = document.getElementById('id').value;
+	var id = document.getElementById('id');
+	if(id == null) {
+		return;
+	} 
 	var timeLines = document.getElementsByClassName('timeline-item');
 	timeLines.forEach(function(time) {
 		time.textContent = '';
 	})
-	fetch('/getAlarmList.do?al_target=' + id)
+	fetch('/getAlarmList.do?al_target=' + id.value)
 	.then(resp => {
 		return resp.json();
 	})

@@ -200,32 +200,32 @@
 					
 							<!-- 알림 Ajax 삽입 영역 -->
 							
-							<div class="timeline-item">
-								<div class="timeline-line"></div>
-								<div class="timeline-icon">
-									<i class="ki-duotone ki-calendar fs-2 text-gray-500">
-										<span class="path1"></span>
-										<span class="path2"></span>
-									</i>
-								</div>
-								<div class="timeline-content mb-10 mt-n1">
-									<div class="pe-3 mb-5">
-										<div class="fs-5 fw-semibold mb-2">일정알림</div>
-										<div class="d-flex align-items-center mt-1 fs-6">
-											<div class="text-muted me-2 fs-7">2024-03-15 16:23:07</div>
-										</div>
-									</div>
-									<div class="overflow-auto pb-5">
-										<div class="d-flex align-items-center border border-dashed border-gray-300 rounded min-w-600px p-7">
+<!-- 							<div class="timeline-item"> -->
+<!-- 								<div class="timeline-line"></div> -->
+<!-- 								<div class="timeline-icon"> -->
+<!-- 									<i class="ki-duotone ki-calendar fs-2 text-gray-500"> -->
+<!-- 										<span class="path1"></span> -->
+<!-- 										<span class="path2"></span> -->
+<!-- 									</i> -->
+<!-- 								</div> -->
+<!-- 								<div class="timeline-content mb-10 mt-n1"> -->
+<!-- 									<div class="pe-3 mb-5"> -->
+<!-- 										<div class="fs-5 fw-semibold mb-2">일정알림</div> -->
+<!-- 										<div class="d-flex align-items-center mt-1 fs-6"> -->
+<!-- 											<div class="text-muted me-2 fs-7">2024-03-15 16:23:07</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 									<div class="overflow-auto pb-5"> -->
+<!-- 										<div class="d-flex align-items-center border border-dashed border-gray-300 rounded min-w-600px p-7"> -->
 										
-											<a href="apps/projects/project.html" class="fs-5 text-gray-900 text-hover-primary fw-semibold w-300px min-w-200px">
-											AM 10:00 - 프로젝트 일정 중간 회의
-											</a>
+<!-- 											<a href="apps/projects/project.html" class="fs-5 text-gray-900 text-hover-primary fw-semibold w-300px min-w-200px"> -->
+<!-- 											AM 10:00 - 프로젝트 일정 중간 회의 -->
+<!-- 											</a> -->
 										
-										</div>
-									</div>
-								</div>
-							</div>
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 						</div>
 					</div>
 				</div>
@@ -262,24 +262,23 @@
 									</i>
 								</span>
 							</form>
-						<div data-kt-search-element="results">
-									<div class="scroll-y me-n7 pe-7" id="searchMainDiv" style="height: 760px;">
+							<div class="py-5" style="height: 760px; overflow: auto;" id="searchMainDiv">
 									
-									<!-- Ajax 유저목록 삽입 영역 -->	
+									<!-- ------------------------------ 유저목록 Ajax 삽입 영역 ------------------------------ -->	
 									
-									</div>
-								</div>
+								<div class="border-bottom border-gray-300 border-bottom-dashed"></div>
 							</div>
+						</div>
 			</div>
 			<div class="card w-100 border-0 rounded-0" id="kt_drawer_chat_messenger">
 				<div class="card-header pe-5" id="chatHeaderDiv">
 					<div class="card-title">
 						<div class="d-flex justify-content-center flex-column me-3">
 							<a class="fs-4 fw-bold text-gray-900 text-hover-primary me-1 mb-2 lh-1">대화상대를 선택해주세요</a>
-							<div class="mb-0 lh-1">
-								<span class="badge badge-success badge-circle w-10px h-10px me-1"></span>
-								<span class="fs-7 fw-semibold text-muted">접속중</span>
-							</div>
+<!-- 							<div class="mb-0 lh-1"> -->
+<!-- 								<span class="badge badge-success badge-circle w-10px h-10px me-1"></span> -->
+<!-- 								<span class="fs-7 fw-semibold text-muted">접속중</span> -->
+<!-- 							</div> -->
 						</div>
 					</div>
 					<div class="card-toolbar">
@@ -294,44 +293,9 @@
 				<div class="card-body" id="kt_drawer_chat_messenger_body">
 					<div id="mainDiv" class="scroll-y me-n5 pe-5" data-kt-element="messages" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_drawer_chat_messenger_header, #kt_drawer_chat_messenger_footer" data-kt-scroll-wrappers="#kt_drawer_chat_messenger_body" data-kt-scroll-offset="0px" style="height: 1009px;">
 					
-						<div class="d-flex justify-content-start mb-10">
-							<div class="d-flex flex-column align-items-start">
-								<div class="d-flex align-items-center mb-2">
-									<div class="symbol symbol-35px symbol-circle">
-									상대방 이미지
-										<img alt="Pic" src="/assets/media/avatars/300-25.jpg">
-									</div>
-									<div class="ms-3">
-										<a class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">상대방이름</a>
-										<span class="text-muted fs-7 mb-1">메시지받은시간</span>
-									</div>
-								</div>
-								<div class="p-5 rounded bg-light-info text-gray-900 fw-semibold mw-lg-400px text-start" data-kt-element="message-text">
-									받은내용 출력
-								</div>
-							</div>
-						</div>
-						
-						<div class="d-flex justify-content-end mb-10">
-							<div class="d-flex flex-column align-items-end">
-								<div class="d-flex align-items-center mb-2">
-									<div class="me-3">
-										<span class="text-muted fs-7 mb-1">메시지보낸시간</span>
-										<a class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">${userInfoVo.empl_name }</a>
-									</div>
-									<div class="symbol symbol-35px symbol-circle">
-									본인사진
-										<img alt="Pic" src="/assets/media/avatars/300-1.jpg">
-									</div>
-								</div>
-								<div class="p-5 rounded bg-light-primary text-gray-900 fw-semibold mw-lg-400px text-end" data-kt-element="message-text">
-									보내는내용 출력
-								</div>
-							</div>
-						</div>
-						
-					<div class="d-flex justify-content-start mb-10" data-kt-element="template-in">
-						</div></div>
+					<!-- ------------------------------ 대화 Ajax 삽입 영역 ------------------------------ -->
+					
+					</div>
 				</div>
 				<div class="card-footer pt-4" id="kt_drawer_chat_messenger_footer">
 					<textarea class="form-control form-control-flush mb-3" rows="1" data-kt-element="input" id="message"

@@ -37,7 +37,34 @@
 			AND CH_SENDER = #{ch_sender}
 			AND CH_SET = 'Y'
 	</select>
-
+	
+	<!-- 유저 목록 정렬을 위한 모든유저 불러오기 -->
+	<select id="chatUserList" resultType="ChatDto">
+		<foreach collection="userList" item="empl" separator=" UNION ALL ">
+			SELECT c.CH_NO , c.CH_MESSAGE , c.CH_SENDER , c.CH_TARGET , c.CH_DATE, c.CH_SET , e1.EMPL_NAME AS sender_name, e2.EMPL_NAME AS target_name,
+					e1.EMPL_EMAIL , e1.EMPL_PICTURE AS sender_pic , cc.COCO_NAME
+			FROM CHAT c
+			JOIN EMPLOYEE e1 ON c.CH_SENDER = e1.EMPL_ID
+			JOIN EMPLOYEE e2 ON c.CH_TARGET = e2.EMPL_ID
+			JOIN COMMON_CODE cc ON e1.EMPL_DEPT_CD = cc.COCO_CD
+			WHERE ((CH_SENDER =  #{ch_sender} AND CH_TARGET = #{empl.empl_id})
+			OR (CH_SENDER = #{empl.empl_id} AND CH_TARGET =  #{ch_sender}))
+			AND c.CH_DATE = (
+							SELECT MAX(CH_DATE)
+							FROM CHAT
+							WHERE ((CH_SENDER =  #{ch_sender} AND CH_TARGET = #{empl.empl_id})
+							OR (CH_SENDER = #{empl.empl_id} AND CH_TARGET =  #{ch_sender}))
+							)
+			ORDER BY c.CH_DATE DESC
+		</foreach>
+	</select>
+	
+	<!-- 나를 제외한 모든 유저목록 -->
+	<select id="userList" resultType="String">
+		SELECT EMPL_ID
+			FROM EMPLOYEE
+			WHERE EMPL_ID != #{empl_id}
+	</select>
 
 
 </mapper>
