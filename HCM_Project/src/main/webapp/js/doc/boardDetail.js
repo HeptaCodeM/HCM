@@ -211,34 +211,22 @@ function preview(){
 }
 	
 	
-/*const pdfPrint = () => {
-    var element = document.querySelector('body');
-    console.log(element);
-	var opt = {
-		margin: 0,
-		filename: 'myfile.pdf',
-		image: { type: 'png', quality: 0.98 },
-		html2canvas: { scale: 0.5 },
-		jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-	};
-
-html2pdf().set(opt).from(element).save();
-//  html2pdf(element);
-}	*/
-
-
-
-
-
 
 //윈도우 오픈시 생성시킬 html 코드들 
    function openPreview() {
+		const options = 'width=1100, height=800, top=50, left=50, right=100, scrollbars=yes'
             var previewContent = document.getElementById('pdfZone').innerHTML;
-            var previewWindow = window.open('', '_blank');
+            var previewWindow = window.open('', '_blank', options);
             previewWindow.document.write('<html><head><title>미리보기</title></head><body>' + previewContent 
             							+  '<button id="modalPdf">PDF로 변환</button>'+
             							'</body></html>');
             previewWindow.document.close();
+            
+    var cssLink = previewWindow.document.createElement("link");
+		cssLink.href = "/css/doc/preview.css";
+		cssLink.rel = "stylesheet";
+		cssLink.type = "text/css";
+		previewWindow.document.head.appendChild(cssLink);        
             
     var script1 = previewWindow.document.createElement('script');
     script1.src = "https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js";
@@ -259,6 +247,8 @@ html2pdf().set(opt).from(element).save();
     var script5 = previewWindow.document.createElement('script');
     script5.src = "/js/doc/previewPdf.js";
     previewWindow.document.body.appendChild(script5);
+    
+    
             
         }
 
