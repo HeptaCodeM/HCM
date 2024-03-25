@@ -332,10 +332,10 @@ public class OrderController {
 		
 		boolean flag = orderService.registOrderAdmin(adminDto);
 		if(flag) {
-			Function.alertLocation(resp, "등록처리가 완료 되었습니다.", "/hr/order/orderAdminList.do", "", "", "");
+			Function.alertLocation(resp, "등록처리가 완료 되었습니다.", "/hr/order/orderAdminDetail.do?emor_id="+adminDto.getEmor_id(), "", "", "");
 			return;
 		}else {
-			Function.alertHistoryBack(resp, "등록중 오류가 발생하였습니다.", "", "");
+			Function.alertHistoryBack(resp, "등록 중 오류가 발생하였습니다.", "", "");
 			return;
 		}
 		
@@ -386,7 +386,7 @@ public class OrderController {
 		return "hr/order/orderAdminDetail";
 	}
 	
-	/* 발령상세 삭제 */
+	/* 발령 세부정보 삭제 */
 	@PostMapping(value="deleteOrderAdminDetail.do", produces = "application/json;")
 	public @ResponseBody String deleteOrderAdminDetail(@RequestParam(name="emor_id", required = false) String emor_id,
 													 @RequestParam(name="emod_seq", required = false) String emod_seq,
@@ -417,7 +417,7 @@ public class OrderController {
 
 	}
 
-	
+	//발령 삭제처리
 	@GetMapping("deleteOrderAdminOk.do")
 	public @ResponseBody void deleteOrderAdminOk(@RequestParam(required = true) String emor_id,
 													Model model,
@@ -444,6 +444,7 @@ public class OrderController {
 		}
 	}
 	
+	// 발령확정 처리
 	@GetMapping("confirmOrderAdminOk.do")
 	public @ResponseBody void confirmOrderAdminOk(@RequestParam(required = true) String emor_id,
 			Model model,
@@ -473,4 +474,165 @@ public class OrderController {
 			return;
 		}
 	}	
+
+
+	@PostMapping("modifyOrderAdminOk.do")
+	public @ResponseBody void modifyOrderAdminOk(Model model,
+												 Authentication authentication,
+												 HttpServletResponse resp,
+												 @RequestParam(name="orderRows", required = true) int orderRows,
+												 @RequestParam(name="emor_id", required = true) String emor_id,
+												 @RequestParam(name="emod_seq", required = true) int[] arr_emod_seq,
+												 @RequestParam(name="emod_order_dt", required = true) String[] arr_emod_order_dt,
+												 @RequestParam(name="empl_id", required = true) String[] arr_empl_id,
+												 @RequestParam(name="emod_type", required = true) String[] arr_emod_type,
+												 @RequestParam(name="emod_prev_dept", required = true) String[] arr_emod_prev_dept,
+												 @RequestParam(name="emod_order_dept", required = false) String[] arr_emod_order_dept,
+												 @RequestParam(name="emod_prev_rank", required = true) String[] arr_emod_prev_rank,
+												 @RequestParam(name="emod_order_rank", required = false) String[] arr_emod_order_rank,
+												 @RequestParam(name="emod_prev_position", required = false) String[] arr_emod_prev_position,
+												 @RequestParam(name="emod_order_position", required = false) String[] arr_emod_order_position
+												 ) {
+		log.info("HolidayController modifyOrderAdminOk 발령현황 수정 처리");
+		resp.setContentType("text/html; charset=UTF-8;");
+
+
+		String emod_modify_id = "";
+		if(authentication == null) {
+		Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+		return;
+		}else {
+			emod_modify_id = authentication.getName();
+		}
+
+
+		OrderInfoDetailDto detailInsertDto;
+		OrderInfoDetailDto detailUpdateDto;
+		
+		List<OrderInfoDetailDto> detailInsertListDto = new ArrayList<OrderInfoDetailDto>();
+		List<OrderInfoDetailDto> detailUpdateListDto = new ArrayList<OrderInfoDetailDto>();
+		
+		
+		//log.info("orderRows : {}", orderRows);
+		if(orderRows < 1) {
+			Function.alertHistoryBack(resp, "발령데이터 정보가 없습니다.", "", "");
+			return;
+		}else {
+			int emod_seq = 0;
+			String emod_order_dt = "";
+			String empl_id = "";
+			String emod_type = "";
+			String emod_prev_dept = "";
+			String emod_prev_rank = "";
+			String emod_prev_position = "";
+			String emod_order_dept = "";
+			String emod_order_rank = "";
+			String emod_order_position = "";
+			
+			for(int i=0;i<orderRows;i++) {
+				emod_seq = Integer.parseInt(StringUtils.defaultIfEmpty(String.valueOf(arr_emod_seq[i]), "0"));
+				emod_order_dt = StringUtils.defaultIfEmpty(arr_emod_order_dt[i], "");
+				empl_id = StringUtils.defaultIfEmpty(arr_empl_id[i], "");
+				emod_type = StringUtils.defaultIfEmpty(arr_emod_type[i], "");
+				emod_prev_dept = StringUtils.defaultIfEmpty(arr_emod_prev_dept[i], "");
+				emod_prev_rank = StringUtils.defaultIfEmpty(arr_emod_prev_rank[i], "");
+				emod_prev_position = StringUtils.defaultIfEmpty(arr_emod_prev_position[i], "");
+				if(arr_emod_order_dept == null) {
+					emod_order_dept = "";
+				}else {
+					emod_order_dept = StringUtils.defaultIfEmpty(arr_emod_order_dept[i], "");
+				}
+				if(arr_emod_order_rank == null) {
+					emod_order_rank = "";
+				}else {
+					emod_order_rank = StringUtils.defaultIfEmpty(arr_emod_order_rank[i], "");
+				}
+				if(arr_emod_order_position == null) {
+					emod_order_position = "";
+				}else {
+					emod_order_position = StringUtils.defaultIfEmpty(arr_emod_order_position[i], "");
+				}
+				// 데이터가 모두 유효한 것만 입력 처리
+				if(
+					(emod_order_dt != "" && empl_id != "" && emod_type != "" && emod_prev_dept != "" && emod_prev_rank != "")
+					&&
+					(
+						(emod_type.equals("OR000002") && emod_order_dept != "") ||
+						(emod_type.equals("OR000003") && emod_order_rank != "") ||
+						(emod_type.equals("OR000004") && emod_order_position != "")
+					)
+				) {
+					if(emod_seq > 0) {	// 기존 있는 데이터 수정처리
+						log.info("detailUpdateDto 시작==================");
+						detailUpdateDto = new OrderInfoDetailDto();
+						detailUpdateDto.setEmor_id(emor_id);
+						detailUpdateDto.setEmod_seq(emod_seq);
+						detailUpdateDto.setEmod_order_dt(emod_order_dt);
+						detailUpdateDto.setEmpl_id(empl_id);
+						detailUpdateDto.setEmod_type(emod_type);
+						detailUpdateDto.setEmod_prev_dept(emod_prev_dept);
+						detailUpdateDto.setEmod_prev_rank(emod_prev_rank);
+						detailUpdateDto.setEmod_prev_position(emod_prev_position);
+						if(emod_type.equals("OR000002")) {
+							detailUpdateDto.setEmod_order_dept(emod_order_dept);
+						} else if(emod_type.equals("OR000003")) {
+							detailUpdateDto.setEmod_order_rank(emod_order_rank);
+						} else if(emod_type.equals("OR000004")) {
+							detailUpdateDto.setEmod_order_position(emod_order_position);
+						} else {
+							Function.alertHistoryBack(resp, "발령구분에 대한 입력정보가 없습니다.", "", "");
+							return;
+						}
+						detailUpdateDto.setEmod_modify_id(emod_modify_id);
+						detailUpdateListDto.add(detailUpdateDto);
+						
+					} else {				// 신규 입력 데이터 입력처리
+						log.info("detailInsertDto 시작==================");
+						detailInsertDto = new OrderInfoDetailDto();
+						detailInsertDto.setEmor_id(emor_id);
+						detailInsertDto.setEmod_seq(emod_seq);
+						detailInsertDto.setEmod_order_dt(emod_order_dt);
+						detailInsertDto.setEmpl_id(empl_id);
+						detailInsertDto.setEmod_type(emod_type);
+						detailInsertDto.setEmod_prev_dept(emod_prev_dept);
+						detailInsertDto.setEmod_prev_rank(emod_prev_rank);
+						detailInsertDto.setEmod_prev_position(emod_prev_position);
+						if(emod_type.equals("OR000002")) {
+							detailInsertDto.setEmod_order_dept(emod_order_dept);
+						} else if(emod_type.equals("OR000003")) {
+							detailInsertDto.setEmod_order_rank(emod_order_rank);
+						} else if(emod_type.equals("OR000004")) {
+							detailInsertDto.setEmod_order_position(emod_order_position);
+						} else {
+							Function.alertHistoryBack(resp, "발령구분에 대한 입력정보가 없습니다.", "", "");
+							return;
+						}
+						detailInsertDto.setEmod_create_id(emod_modify_id);
+						detailInsertListDto.add(detailInsertDto);
+					}
+
+
+				}
+				log.info("***** detailInsertListDto 개별데이터 : {}", detailInsertListDto);
+				log.info("***** detailUpdateListDto 개별데이터 : {}", detailUpdateListDto);
+			}
+			
+			boolean flag = orderService.updateOrderAdminDetail(detailInsertListDto, detailUpdateListDto, orderRows);
+			if(flag) {
+				Function.alertLocation(resp, "수정처리가 완료 되었습니다.", "/hr/order/orderAdminDetail.do?emor_id="+emor_id, "", "", "");
+				return;
+			}else {
+				Function.alertHistoryBack(resp, "수정 중 오류가 발생하였습니다.", "", "");
+				return;
+			}
+			
+		}
+				
+		
+		
+		
+		
+	}
+
+
 }

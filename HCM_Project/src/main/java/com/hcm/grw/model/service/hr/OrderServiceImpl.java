@@ -67,14 +67,27 @@ public class OrderServiceImpl implements OrderService {
 
 
 	@Override
-	public boolean updateOrderAdminDetail(List<OrderInfoDetailDto> dtoDetails) {
-		int m = 0;
-		for(OrderInfoDetailDto dtoDetail : dtoDetails) {
-			log.info("상세값 : {}", dtoDetail);
-			m += dao.updateOrderAdminDetail(dtoDetail);
+	public boolean updateOrderAdminDetail(List<OrderInfoDetailDto> detailInsertListDto, List<OrderInfoDetailDto> detailUpdateListDto, int orderRows) {
+		int iCnt = 0;
+		int uCnt = 0;
+
+		// 수정처리
+		if(detailInsertListDto != null) {
+			for(OrderInfoDetailDto detailInsertDto : detailInsertListDto) {
+				log.info("Insert 상세값 : {}", detailInsertDto);
+				uCnt += dao.registOrderAdminDetail(detailInsertDto);
+			}
 		}
+		// 입력처리
+		if(detailUpdateListDto != null) {
+			for(OrderInfoDetailDto detailUpdateDto : detailUpdateListDto) {
+				log.info("Update 상세값 : {}", detailUpdateDto);
+				iCnt += dao.updateOrderAdminDetail(detailUpdateDto);
+			}
+		}
+		log.info("uCnt : {}, iCnt : {}",uCnt, iCnt);
 		
-		return (m>0)?true:false;
+		return ((uCnt+iCnt) == orderRows)?true:false;
 	}
 
 	@Override

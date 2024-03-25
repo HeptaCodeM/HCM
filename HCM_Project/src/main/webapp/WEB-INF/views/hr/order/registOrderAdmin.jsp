@@ -70,7 +70,7 @@
 										<tbody id="repeater">
 										<tr class="item" id="item1" data-idnum="1">
 											<td>
-						                        <input type="text" class="form-control form-control-solid datepicker" name="emod_order_dt">
+						                        <input type="text" class="form-control form-control-solid datepicker" name="emod_order_dt" readonly>
 											</td>
 											<td>
 												<input type="text" class="form-control form-control-solid" name="empl_id" maxlength="20" readonly required="required">

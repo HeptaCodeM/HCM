@@ -49,8 +49,10 @@
 								<h3 class="card-title text-gray-800 fw-bold">인사관리 > 인사발령관리 > 발령수정</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>
-							<form name="registOrderForm" id="registOrderForm" method="post" action="/hr/order/registOrderAdminOk.do" >
+							<form name="modifyOrderForm" id="modifyOrderForm" method="post" action="/hr/order/modifyOrderAdminOk.do" >
 								<input type="hidden" name="orderRows" id="orderRows" value="0">
+								<input type="hidden" name="emor_id" id="emor_id" value="${emor_id}">
+								<c:set value="${detailLists[0].emor_status}" var="emor_status" />
 								<div class="table-responsive">
 									<table class="table table-bordered regiform">
 										<thead>
@@ -69,15 +71,15 @@
 										</tr>
 										</thead>
 										<tbody id="repeater">
-										<c:set value="${detailLists[0].emor_status}" var="emor_status" />
 										<c:forEach items="${detailLists}" var="detail" varStatus="vs">
 										<tr class="item" id="item${vs.index+1}" data-idnum="${vs.index+1}">
 											<td>
-						                        <input type="text" class="form-control form-control-solid datepicker" name="emod_order_dt" value="${detail.emod_order_dt}">
+						                        <input type="text" class="form-control form-control-solid datepicker" name="emod_order_dt" value="${detail.emod_order_dt}" readonly>
 												<input type="hidden" name="emod_seq" value="${detail.emod_seq}">
 											</td>
 											<td>
-												<input type="text" class="form-control form-control-solid" name="empl_id" maxlength="20" readonly required="required" value="${detail.empl_id}">
+												<span class="form-control form-control-solid">${detail.empl_id}</span>
+												<input type="hidden" name="empl_id" required="required" value="${detail.empl_id}">
 											</td>
 											<td>
 												<input type="text" class="form-control form-control-solid" name="empl_name" maxlength="20" readonly value="${detail.empl_name}">
@@ -160,7 +162,7 @@
 
 								<div style="text-align: right;margin-bottom:20px;">
 									<c:if test="${emor_status ne 'Y'}">
-									<button type="button" class="btn btn-primary me-4" id="kt_button_1" onclick="registOrderAdmin()">
+									<button type="button" class="btn btn-primary me-4" id="kt_button_1" onclick="modifyOrderAdmin()">
 									    <span class="indicator-label">
 									        수정
 									    </span>
@@ -257,6 +259,7 @@ var repeatHtml = "";
 repeatHtml+="<tr class='item' id='item_idNum' data-idnum='_idNum'>";
 repeatHtml+="<td>";
 repeatHtml+="	<input type='text' class='form-control form-control-solid datepicker' name='emod_order_dt'>";
+repeatHtml+="	<input type='hidden' name='emod_seq' value='0'>";
 repeatHtml+="</td>";
 repeatHtml+="<td>";
 repeatHtml+="	<input type='text' class='form-control form-control-solid' name='empl_id' maxlength='20' readonly required='required'>";
@@ -320,6 +323,15 @@ repeatHtml+="</tr>";
 
 
 $(function(){ 
+	//Employee Info Search
+	$(document).on('click', 'input[name="empl_id"]', function() {
+		console.log('Input 클릭됨');
+	    thisRow = $(this).parent().parent().data("idnum");
+	    console.log($(this).parent().parent().data("idnum"));
+	    openEmpInfoSearch();
+	});
+
+	//Employee Info Apply
 	$(document).on('click', '#searchEmployeeList tbody tr', function() {
 		var row = $("#searchEmployeeList").DataTable().row($(this)).data();
 		console.log("row: ", row);
@@ -355,14 +367,6 @@ $(function(){
 	// 초기화
 	initializeDatepicker();
 	
-	$(document).on('click', 'input[name="empl_id"]', function() {
-		console.log('Input 클릭됨');
-	    thisRow = $(this).parent().parent().data("idnum");
-	    console.log($(this).parent().parent().data("idnum"));
-	    openEmpInfoSearch();
-	});
-
-
 	//추가 버튼 클릭 이벤트
 	$('#add').click(function () {
 		if(idNum == 0){
@@ -444,8 +448,9 @@ $(function(){
 		$(this).closest('tr').find('select[name="emod_order_position"]').val('');
 	});
 
+	// 확정이라면 모든 form내 input,select element disabled
 	if("${emor_status}"=="Y"){
-		disableFormInputs('registOrderForm');
+		disableFormInputs('modifyOrderForm');
 	}
 });
 

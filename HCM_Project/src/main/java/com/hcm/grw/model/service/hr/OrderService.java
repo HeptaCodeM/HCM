@@ -21,7 +21,7 @@ public interface OrderService {
 	/*발령정보 등록_마스터_상세*/
 	public boolean registOrderAdmin(OrderInfoAdminDto orderInfoDto);
 	/*정보수정 처리*/
-	public boolean updateOrderAdminDetail(List<OrderInfoDetailDto> dtoDetails);
+	public boolean updateOrderAdminDetail(List<OrderInfoDetailDto> detailInsertListDto, List<OrderInfoDetailDto> detailUpdateListDto, int orderRows);
 
 	/*발령정보 삭제*/
 	public int deleteOrderAdmin(OrderInfoDetailDto dto);

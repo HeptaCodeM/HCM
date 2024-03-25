@@ -230,7 +230,7 @@ public class SDJ_JUnitTest {
 		odDtoDetail.setEmod_modify_id(createId);
 		odDtoDetails.add(odDtoDetail);
 		
-		boolean flag = orderService.updateOrderAdminDetail(odDtoDetails);
+		boolean flag = orderService.updateOrderAdminDetail(odDtoDetails, null, odDtoDetails.size());
 		assertEquals(true, flag);
 		
 		// 발령 리스트

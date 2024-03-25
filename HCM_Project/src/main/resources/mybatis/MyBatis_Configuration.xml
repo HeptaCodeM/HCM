@@ -74,5 +74,6 @@
       <mapper resource="sqls/hr/EmployeeList_Statement.xml"/>
       <mapper resource="sqls/Alarm_Statement.xml"/>
       <mapper resource="sqls/Chat_Statement.xml"/>
+      <mapper resource="sqls/schedule/Schedule_Statement.xml"/>
    </mappers>
 </configuration>
