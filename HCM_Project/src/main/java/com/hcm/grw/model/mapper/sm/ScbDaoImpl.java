@@ -1,6 +1,7 @@
 package com.hcm.grw.model.mapper.sm;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,11 @@ public class ScbDaoImpl implements IScbDao {
 		return session.selectList(NS+"getAllCalendar", dto);
 	}
 	
-	
+	@Override
+	public ScbDto detailScbo(Map<String, Object> map) {
+		log.info("ScbDaoImpl getAllCalendar Dao Access");
+		return session.selectOne(NS+"detailScbo", map);
+	}
 	@Override
 	public int insertScbo(ScbDto dto) {
 		log.info("ScbDaoImpl getAllReply Dao Access");
