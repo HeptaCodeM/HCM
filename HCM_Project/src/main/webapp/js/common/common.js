@@ -225,5 +225,14 @@ function formatDate(date) {
     return year + '-' + month + '-' + day;
 }
 
-
+//레이어창 뒤 DIMED 클릭 시 처리
+document.addEventListener("DOMContentLoaded", function() {
+	document.getElementById("overlay").addEventListener("click", function() {
+		const layer = this.nextElementSibling;
+		this.style.display = "none";
+		if(layer != '' && layer != 'undefined'){
+	        layer.style.display = "none";
+		}
+	});
+});
 

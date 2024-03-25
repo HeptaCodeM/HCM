@@ -51,3 +51,19 @@
 <script src="/js/chatting.js"></script>
 <!--end::Custom Javascript-->
 <!--end::Javascript-->
+
+<div id="empInfoLayer" style="position:absolute; top:100px;left:100px;z-index:500;display:none;">
+	<div class="menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px" style="background: #fff; border-radius: 15px; border: 1px solid #ccc;">
+		<div style="position: absolute; right: 15px;">
+			<a href="javascript:void(0);" onclick="document.getElementById('empInfoLayer').style.display='none';">
+				<i class="ki-duotone ki-cross-square fs-2x">
+				<span class="path1"></span><span class="path2"></span>
+				</i>
+			</a>
+		</div>
+		<div class="menu-item px-3">
+			<div class="menu-content d-flex align-items-center px-3 emp-info-layer">
+			</div>
+		</div>
+	</div>
+</div>

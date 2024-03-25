@@ -3,9 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<title>HR메인화면</title>
+	<meta charset="UTF-8">
+	<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
+	<title>HR메인화면</title>
+	<script src="/js/hr/empInfoLayer.js" type="text/javascript"></script>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -61,6 +62,21 @@
 								<hr>
 								<br>
 								<a href="https://preview.keenthemes.com/html/keen/docs/index" target="_blank">Template Reference Site</a>
+								<br>
+								<hr>
+								<br>
+								<a href="javascript:void(0);" onclick="empInfoLayer('20220101', this)">테스트1</a>
+								<br>
+								<hr>
+								<br>
+								<a href="javascript:void(0);" onclick="empInfoLayer('20230102', this)">테스트2</a>
+								<br>
+								<hr>
+								<br>
+								<a href="javascript:void(0);" onclick="empInfoLayer('20230103', this)">테스트3</a>
+								<br>
+								<hr>
+								<br>
 								
 							</div>
 						</div>

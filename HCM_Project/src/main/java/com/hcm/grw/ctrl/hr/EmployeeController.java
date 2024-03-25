@@ -229,7 +229,7 @@ public class EmployeeController {
 
 	// 차후 rest로 변경, 사원 간략정보 확인용
 	@GetMapping("selectEmployeeOne.do")
-	public EmployeeDto selectEmployeeOne(String empl_id, HttpServletResponse resp) {
+	public @ResponseBody EmployeeDto selectEmployeeOne(@RequestParam(required = true) String empl_id, HttpServletResponse resp) {
 		log.info("EmployeeController employeeModify 수정페이지 진입");
 		resp.setContentType("text/html; charset=utf-8");
 		

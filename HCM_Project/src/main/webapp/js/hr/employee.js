@@ -180,9 +180,12 @@ function openEmpInfoSearch(){
 	$("#searchEmployeeList").DataTable().destroy();
 	empInfoSearch('');
 	$('#empSearch').show();
+	$(".overlay").show();
+	
 }
 function closeEmpInfoSearch(){
 	$('#empSearch').hide();
+	$(".overlay").hide();
 }
 
 function registEmpAuth(){
