@@ -121,7 +121,7 @@
                                             <div class="d-flex justify-content-end align-items-end">
                                                 <div class="register_box">
                                                     <button type="button" class="btn btn-primary" onclick="cancelReply(${comment.rebo_no})">취소</button>
-                                                    <button type="button" class="btn btn-primary insertReplyTwoBtn" onclick="insertReplyTwo()">등록</button>
+                                                    <button type="button" class="btn btn-primary insertReplyTwoBtn" onclick="insertReplyTwo(${comment.rebo_no})">등록</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -168,7 +168,7 @@
                                             <div class="d-flex justify-content-end align-items-end">
                                                 <div class="register_box">
                                                     <button type="button" class="btn btn-primary" onclick="cancelReply(${reply.rebo_no})">취소</button>
-                                                    <button type="button" class="btn btn-primary insertReplyTwoBtn" onclick="insertReplyTwo()">등록</button>
+                                                    <button type="button" class="btn btn-primary insertReplyTwoBtn" onclick="insertReplyTwo(${reply.rebo_no})">등록</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -191,7 +191,7 @@
                              <input type="hidden" name="rebo_modify_id" id="rebo_modify_id" value="${sessionScope.userInfoVo.empl_id}">
                              <input type="hidden" name="rebo_writer" id="rebo_writer" value="${sessionScope.userInfoVo.empl_name}">
                                  <em class="comment_inbox_name">${sessionScope.userInfoVo.empl_name}</em>
-                                 <textarea id="commentTextArea rebo_content" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" oninput="checkInput()" name="rebo_content"></textarea>
+                                 <textarea id="rebo_content" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" oninput="checkInput()" name="rebo_content"></textarea>
                             <div class="d-flex justify-content-end align-items-end">
                              <div class="register_box">
                                  <button id="submitButton" type="button" class="btn btn-primary" onclick="insertReply(${dto.gobo_no})" disabled>등록</button>
@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', function () {
     // Enter 키를 눌렀을 때 이벤트 처리
-    document.getElementById('commentTextArea').addEventListener('keypress', function (e) {
+    document.getElementById('rebo_content').addEventListener('keypress', function (e) {
         var key = e.which || e.keyCode;
         if (key === 13 && !e.shiftKey) { // Enter 키이면서 Shift 키가 눌리지 않은 경우
             e.preventDefault(); // 기본 동작 (엔터 키 입력) 막기
@@ -268,7 +268,18 @@ function insertReply(data){
 				type: "get",
 				dataType: "json",
 				success: function() {
-					var commentHtml = '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
+					$("#ReplyForm")[0].reset();
+					var currentDate = new Date();
+					var formattedDate = currentDate.getFullYear() + '-' + 
+					                    ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' + 
+					                    ('0' + currentDate.getDate()).slice(-2) + ' ' + 
+					                    ('0' + currentDate.getHours()).slice(-2) + ':' + 
+					                    ('0' + currentDate.getMinutes()).slice(-2);
+					var commentHtml = '';
+					if ($("#commentList > li").length > 0) {
+					    // 상위에 형제 노드가 있는 경우
+					    commentHtml += '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
+					}
 					commentHtml += '<li>';
 					commentHtml += '<div class="d-flex align-items-center no-border" style="border: none;">';
 
@@ -277,12 +288,13 @@ function insertReply(data){
 					commentHtml += '<div style="margin-left: 10px;">';
 					commentHtml += '<strong>'+rebo_writer+'</strong><br>';
 					commentHtml += '<div>'+rebo_content+'</div>';
-					commentHtml += '<div><small><fmt:formatDate value="${comment.rebo_regdate}" pattern="yyyy-MM-dd HH:mm"/></small>';
+					commentHtml += '<div><small>'+formattedDate+'</small>';
 					commentHtml += '<a role="button" class="comment_info_button " onclick="showCommentForm(${comment.rebo_no})">답글쓰기</a>';
 					commentHtml += '</div>';
 					commentHtml += '</div>';
 					commentHtml += '</div>';
 					commentHtml += '</li>';
+					
 					
 					$("#commentList").append(commentHtml);
 				},
@@ -293,6 +305,54 @@ function insertReply(data){
 			
 			
 	}
+
+function insertReplyTwo(rebo_no){
+    var container = $("#commentFormContainer"+rebo_no); // #commentFormContainer 요소를 선택합니다.
+    var formData = container.find("#ReplyTwoForm").serialize(); // 해당 요소 안의 form 데이터를 가져옵니다.
+    
+    var rebo_writer = $("#ReplyTwoForm #rebo_writer").val();
+    var rebo_content = $("#commentTextArea" + rebo_no).val();
+    
+    $.ajax({
+        url: "/sm/insertReplyTwo.do",
+        data: formData,
+        type: "GET",
+        dataType: "json",
+        success: function() {
+            var currentDate = new Date();
+            var formattedDate = currentDate.getFullYear() + '-' + 
+                                ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' + 
+                                ('0' + currentDate.getDate()).slice(-2) + ' ' + 
+                                ('0' + currentDate.getHours()).slice(-2) + ':' + 
+                                ('0' + currentDate.getMinutes()).slice(-2);
+            
+            var commentHtml = '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
+            commentHtml += '<li style="margin-left: 50px;">';
+            commentHtml += '<div class="d-flex align-items-center no-border" style="border: none;">';
+            commentHtml += '<img src="${sessionScope.userInfoVo.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">';
+            commentHtml += '<div style="margin-left: 10px;">';
+            commentHtml += '<strong>'+rebo_writer+'</strong><br>';
+            commentHtml += '<div>'+rebo_content+'</div>';
+            commentHtml += '<div><small>'+formattedDate+'</small>';
+            commentHtml += '<a role="button" class="comment_info_button " onclick="showCommentForm(${comment.rebo_no})">답글쓰기</a>';
+            commentHtml += '</div>';
+            commentHtml += '</div>';
+            commentHtml += '</div>';
+            commentHtml += '</li>';
+            
+            if (!container.find("ul").length) {
+                commentHtml += '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
+            }
+
+            container.append(commentHtml); // #commentFormContainer 바로 아래에 추가합니다.
+            container.find("#ReplyTwoForm")[0].reset();
+        },
+        error: function() {
+            // 에러 처리
+        }
+    });
+}
+
 
 
 </script> 
