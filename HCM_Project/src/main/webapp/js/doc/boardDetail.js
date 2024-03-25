@@ -1,12 +1,69 @@
-function approve() {
-	alert("승인처리 되었습니다");
-	document.getElementById('reply').submit();
+function chkOnly(chk) {
+	const checkboxes = document.getElementsByName("signDefault");
+	checkboxes.forEach((cb) => {
+		cb.checked = false;
+	})
+	chk.checked = true;
 }
 
+function approve() {
+	var signs = document.querySelectorAll('input[type=checkbox]');
+	var sign;
+	signs.forEach(function(d) {
+		if(d.checked) {
+			sign = d.value;
+		}
+	})
+	var num = document.getElementById('docNum').value;
+	var reply = document.getElementById('approvalReply').value;
+	var dto = {
+		sidb_doc_num : num,
+		appr_reply : reply,
+		emsi_seq : sign
+	}
+	
+	fetch('/doc/docBox/approve.do', {
+		method : 'post',
+		headers : {
+			'Content-Type' : 'application/json'
+		},
+		body : JSON.stringify(dto)
+	})
+		.then(resp => { return resp.text()})
+		.then(data => {
+			console.log(data);
+			swalAlert('승인처리 되었습니다','','','확인');
+			setTimeout(function() {
+				location.href = '/doc/docBox/getDetail.do?docNum=' + data;
+			}, 1500);
+		})
+		.catch(err => (console.log(err)));
+}
 
 function deny() {
-	alert("반려처리 되었습니다");
-	document.getElementById('denyReply').submit();
+	var num = document.getElementById('docNum').value;
+	var reply = document.getElementById('rejectReply').value;
+	var dto = {
+		sidb_doc_num : num,
+		appr_reply : reply
+	}
+	
+	fetch('/doc/docBox/deny.do', {
+		method : 'post',
+		headers : {
+			'Content-Type' : 'application/json'
+		},
+		body : JSON.stringify(dto)
+	})
+		.then(resp => { return resp.text()})
+		.then(data => {
+			console.log(data);
+			swalAlert('반려처리 되었습니다', '', '', '확인');
+			setTimeout(function() {
+				location.href = '/doc/docBox/getDetail.do?docNum=' + data;
+			}, 1500);
+		})
+		.catch(err => (console.log(err)));
 }
 
 function gianCancel() {
@@ -110,16 +167,14 @@ function dragElement(elmnt) {
 
 //파일 다운로드
 var docNum = "";
-onload = function() {
-	docNum = document.getElementById('docNum').value;
-	console.log(docNum)
-	getFile();
-	document.getElementById('downBtn').addEventListener('click', function() {
-		var sel = document.getElementById('selectFile');
-    location.href = './fileDown.do?sidf_file_num=' + sel.value;
+docNum = document.getElementById('docNum').value;
+console.log(docNum)
+getFile();
+document.getElementById('downBtn').addEventListener('click', function() {
+	var sel = document.getElementById('selectFile');
+	location.href = './fileDown.do?sidf_file_num=' + sel.value;
 
-	});
-}
+});
 
 
 function getFile() {
