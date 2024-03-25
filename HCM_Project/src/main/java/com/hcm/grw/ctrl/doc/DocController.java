@@ -44,7 +44,7 @@ public class DocController {
 	@Autowired
 	private IDocBoxDao dao;	
 
-	@PostMapping("/doc/docBox/getDetail.do")
+	@GetMapping("/doc/docBox/getDetail.do")
 	public String getDetailBoard(Model model, SignBoxDto dto, String docNum, HttpSession session) {
 
 		dto.setSidb_doc_num(docNum);
@@ -78,7 +78,7 @@ public class DocController {
 
 		String concatenatedNames = employeeNamesBuilder.toString();
 		System.out.println("사원 이름들: " + concatenatedNames);
-		docDto.get(1).setEmpl_ref(concatenatedNames);
+		docDto.get(0).setEmpl_ref(concatenatedNames);
 		
 		
 		// 참조 부서명 가져오기
@@ -106,7 +106,7 @@ public class DocController {
 
 				String concatDeptNames = deptNamesBuilder.toString();
 				System.out.println("참조부서명들: " + concatDeptNames);
-				docDto.get(1).setEmpl_dept_cd(concatDeptNames);
+				docDto.get(0).setEmpl_dept_cd(concatDeptNames);
 		
 		
 		
