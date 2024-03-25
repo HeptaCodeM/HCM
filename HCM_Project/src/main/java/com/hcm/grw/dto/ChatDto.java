@@ -1,5 +1,7 @@
 package com.hcm.grw.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -25,5 +27,9 @@ public class ChatDto {
 	private String sender_name;
 	private String target_name;
 	private String sender_pic;
+	
+	private String coco_name;
+	private String empl_email;
+	private List<String> userList;
 
 }

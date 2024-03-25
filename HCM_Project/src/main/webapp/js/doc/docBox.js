@@ -1,7 +1,30 @@
-/*function detailBoard(docNum) {
+function detailBoard(docNum) {
     var url = '/doc/docBox/getDetail.do?docNum=' + encodeURIComponent(docNum);
     window.location.href = url;
+}
+
+/*//문서 상세조회시  PostMapping form태그 생성 
+function detailBoard(docNum) {
+let f = document.createElement('form');
+    
+    let obj;
+    obj = document.createElement('input');
+    obj.setAttribute('type', 'hidden');
+    obj.setAttribute('name', 'docNum');
+    obj.setAttribute('value', docNum);
+    
+    f.appendChild(obj);
+    f.setAttribute('method', 'post');
+    f.setAttribute('action', '/doc/docBox/getDetail.do');
+    document.body.appendChild(f);
+    f.submit();
 }*/
+
+//미리보기창 도전
+function openWindow () {
+  const options = 'width=700, height=600, top=50, left=50, scrollbars=yes'
+  window.open('http://www.naver.com','_blank',options)
+}
 
 
 

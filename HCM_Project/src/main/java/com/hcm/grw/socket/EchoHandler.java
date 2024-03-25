@@ -49,9 +49,7 @@ public class EchoHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
 		String fullMsg = message.getPayload();
-		String msgTostring = message.toString();
-		log.info("전달된 TextMessage getPayload : {}", fullMsg);
-		log.info("전달된 TextMessage toString : {}", msgTostring);
+		log.info("WebSocket TextMessage : {}", fullMsg);
 		
 		for (WebSocketSession clientSession : sessionList) {
 			if (clientSession.isOpen() && !clientSession.equals(session)) {
@@ -62,6 +60,18 @@ public class EchoHandler extends TextWebSocketHandler {
 					e.printStackTrace();
 				}
 			}
+		}
+		// 접속여부 상태 판단하고 리턴
+		if(fullMsg.endsWith(",접속여부판단")) {
+			String[] selectArr = fullMsg.split(",");
+			String sender = selectArr[0];
+			String target = selectArr[1];
+			if(userSessionsMap.get(target) != null) {
+				userSessionsMap.get(sender).sendMessage(new TextMessage("접속여부판단:온라인"));
+			} else {
+				userSessionsMap.get(sender).sendMessage(new TextMessage("접속여부판단:오프라인"));
+			}
+			return;
 		}
 		String[] msgArr = fullMsg.split(",");
 		String sender = msgArr[0];
@@ -101,8 +111,9 @@ public class EchoHandler extends TextWebSocketHandler {
 				logoutUser.sendMessage(new TextMessage(new Gson().toJson("접속 해제")));
 			}
 		}
-		
+		String empl_id = userInfo(session);
 		sessionList.remove(session);
+		userSessionsMap.remove(empl_id);
 		
 	}
 	
