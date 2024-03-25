@@ -16,10 +16,6 @@ public class HolidayServiceImpl implements HolidayService {
 	@Autowired
 	private HolidayDao dao;
 	
-	@Override
-	public int registEmployeeHoliday() {
-		return dao.registEmployeeHoliday();
-	}
 
 	@Override
 	public List<HolidayDto> holidayList(Map<String, String> map) {
@@ -31,16 +27,6 @@ public class HolidayServiceImpl implements HolidayService {
 		return dao.holidayAdminList(map);
 	}
 	
-	@Override
-	public int registSpecialDay(Map<String, String> map) {
-		return dao.registSpecialDay(map);
-	}
-
-	@Override
-	public int registNomalDay() {
-		return dao.registNomalDay();
-	}
-
 	@Override
 	public int selectHoliDayInfo(Map<String, String> map) {
 		return dao.selectHoliDayInfo(map);

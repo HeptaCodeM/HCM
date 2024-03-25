@@ -17,18 +17,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hcm.grw.model.service.hr.EmployeeService;
-import com.hcm.grw.model.service.hr.HolidayService;
+import com.hcm.grw.model.service.schedule.ScheduleService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class SpecialDaySchedule {
+public class TotalSchedule {
 
 	@Autowired
-	private HolidayService holidayService;
+	private ScheduleService scheduleService;
 	
+	
+	/* 휴가일 발생 스케쥴 처리 */
+	@Scheduled(cron="0 0 0/1 * * *")	// 매시정각 동작
+	public void registEmployeeHoliday() {
+		log.info("HrSchedule registEmployeeHoliday 매년 휴가정보 입력처리");
+		int n = scheduleService.registEmployeeHoliday();
+		log.info("처리 수 : {}", n);
+	}
+
+
 	@Value("#{dataSpcProperties['dataspc.endpoint']}")
 	private String endPoint;
 	
@@ -38,6 +47,8 @@ public class SpecialDaySchedule {
 	@Value("#{dataSpcProperties['dataspc.enckey']}")
 	private String deckey;
 	
+	/*특일(공휴일)정보 입력*/
+	/*평/휴일(특일제외)정보 입력*/
 	//@Scheduled(cron="0/30 * * * * ?")	//매 30초 동작
 	@Scheduled(cron="0 0 0 1 * ?")	// 매월1일 동작
 	@Transactional
@@ -111,7 +122,7 @@ public class SpecialDaySchedule {
                     put("holi_name", dateName);
                     put("holi_flag", isHoliday);
             	}};
-                n += holidayService.registSpecialDay(specialMap);
+                n += scheduleService.registSpecialDay(specialMap);
             }
         }
         log.info("특일 수행건 수 : {}", n);
@@ -119,9 +130,17 @@ public class SpecialDaySchedule {
         /*
          * 평/휴일정보 가져오기
         */
-        m += holidayService.registNomalDay();
+        m += scheduleService.registNomalDay();
         log.info("평/휴일 수행건 수 : {}", n);
 
         log.info("총 수행건 수 : {}", (n+m));
 	}
+	
+	
+	/* 인사발령정보 적용 스케쥴 처리 */
+	@Scheduled(cron="0 0 0 * * ?")	// 매일 0시 동작
+	public void orderApplySchedule() {
+		int cnt = scheduleService.updateOrderSchedule();
+	}
+	
 }
