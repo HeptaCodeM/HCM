@@ -32,14 +32,14 @@ public class EchoHandler extends TextWebSocketHandler {
 	private EmployeeService service;
 	
 	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
-	private Map<String, WebSocketSession> userSessionsMap = new HashMap<String, WebSocketSession>();
+	private Map<String, WebSocketSession> userSessionMap = new HashMap<String, WebSocketSession>();
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		
 		sessionList.add(session);
 		String empl_id = userInfo(session);
-		userSessionsMap.put(empl_id, session);
+		userSessionMap.put(empl_id, session);
 		log.info("접속한 사원 : {}", userInfo(session));
 		log.info("접속중인 사원 수 : {}", sessionList.size());
 		
@@ -66,10 +66,10 @@ public class EchoHandler extends TextWebSocketHandler {
 			String[] selectArr = fullMsg.split(",");
 			String sender = selectArr[0];
 			String target = selectArr[1];
-			if(userSessionsMap.get(target) != null) {
-				userSessionsMap.get(sender).sendMessage(new TextMessage("접속여부판단:온라인"));
+			if(userSessionMap.get(target) != null) {
+				userSessionMap.get(sender).sendMessage(new TextMessage("접속여부판단:온라인"));
 			} else {
-				userSessionsMap.get(sender).sendMessage(new TextMessage("접속여부판단:오프라인"));
+				userSessionMap.get(sender).sendMessage(new TextMessage("접속여부판단:오프라인"));
 			}
 			return;
 		}
@@ -92,10 +92,10 @@ public class EchoHandler extends TextWebSocketHandler {
 		}
 		String json = new Gson().toJson(chatDto);
 		
-		if(userSessionsMap.get(target) != null) {
+		if(userSessionMap.get(target) != null) {
 			// 대상이 접속중인 경우
-			userSessionsMap.get(target).sendMessage(new TextMessage(user.getEmpl_name() + "님으로 부터 메세지 도착\n" + msg));
-			userSessionsMap.get(target).sendMessage(new TextMessage(json));
+			userSessionMap.get(target).sendMessage(new TextMessage(user.getEmpl_name() + "님으로 부터 메세지 도착\n" + msg));
+			userSessionMap.get(target).sendMessage(new TextMessage(json));
 		} else {	
 			// 비접속중인경우
 		}
@@ -113,7 +113,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		}
 		String empl_id = userInfo(session);
 		sessionList.remove(session);
-		userSessionsMap.remove(empl_id);
+		userSessionMap.remove(empl_id);
 		
 	}
 	

@@ -18,7 +18,7 @@
 <style>
 .modal {
     --bs-modal-zindex: 1055;
-    --bs-modal-width: 1100px;
+    --bs-modal-width: 1080px;
     }
 .flex {
   display: flex;
@@ -354,11 +354,34 @@ th, td {
 
 				<!-- 승인 첨언 입력 form -->
 				<div class="modal-body">
+				
+				<div id="kt_app_content" class="app-content flex-column-fluid">
+						<div class="app-container container-fluid">
+							<div class="card-flush h-md-50 mb-xl-10" style="background-color: white; text-align: center;">
+							<c:forEach var="sign" items="${signList}" varStatus="var">
+								<div class="card-body pt-5" style="display: inline-block; width: 320px;" >
+									<div class="border border-gray-400" style="height: 240px;">
+									<img src="${sign.emsi_sign_img}"><br>
+									 </div><br>
+									<div class="card-footer" style="margin: 0px auto;">
+										<c:if test="${sign.emsi_setflag eq 'Y'}">
+											<span class="badge badge-info">대표</span>
+										</c:if>
+										<input id="seq" type="hidden" value="${sign.emsi_seq}">
+										<input name="signDefault" type="checkbox" class="form-check-input" onclick="chkOnly(this)" value="${sign.emsi_seq}">
+										<span class="badge ">${sign.emsi_title}</span>
+							    	</div>
+								</div>
+								
+							</c:forEach>
+							<br><br>
+							</div>
+						</div>
+					</div>
+				
 					<p>첨언</p>
-					<form id="reply" action="./approve.do" method="post">
 					<input type="hidden" value="${docDto1.sidb_doc_num}" id="docNum" name="docNum"/>
-						<textarea name="reply" style="width: 100%;"></textarea>
-					</form>
+						<textarea id="approvalReply" class="form-control" style="width: 100%;"></textarea>
 				</div>
 
 				<div class="modal-footer">
@@ -388,11 +411,10 @@ th, td {
 
 				<!-- 반려사유 입력 form -->
 				<div class="modal-body">
+				
 					<p>반려사유</p>
-					<form id="denyReply" action="./deny.do" method="post">
-						<textarea name="reply" style="width: 100%;"></textarea>
+						<textarea id="rejectReply" class="form-control" style="width: 100%;"></textarea>
 						<input type="hidden" value="${docDto1.sidb_doc_num}" name="docNum"/>
-					</form>
 				</div>
 
 				<div class="modal-footer">
@@ -435,6 +457,5 @@ th, td {
 	
 </body>
 <script type="text/javascript" src="/js/doc/boardDetail.js"></script>
-
 
 </html>
