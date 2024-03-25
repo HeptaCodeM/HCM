@@ -13,7 +13,7 @@
 	<!-- 사용저 정보 -->
 	<select id="getUserInfo" parameterType="String" resultType="EmployeeDto">
 		SELECT 
-						EMPL_ID, EMPL_NAME, 
+						EMPL_ID, EMPL_NAME, EMPL_EMAIL,
 						EMPL_DEPT_CD, D.COCO_NAME EMPL_DEPT_NM, 
 						EMPL_RANK_CD, R.COCO_NAME EMPL_RANK_NM, 
 						EMPL_POSITION_CD, P.COCO_NAME EMPL_POSITION_NM, 
