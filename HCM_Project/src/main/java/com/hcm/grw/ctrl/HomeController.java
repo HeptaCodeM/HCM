@@ -29,9 +29,11 @@ import com.hcm.grw.dto.hr.CommuteDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.dto.hr.HolidayDto;
 import com.hcm.grw.dto.hr.SignDocBoxDto;
+import com.hcm.grw.dto.sm.GoboDto;
 import com.hcm.grw.model.service.doc.IDocBoxService;
 import com.hcm.grw.model.service.hr.CommuteService;
 import com.hcm.grw.model.service.hr.HolidayService;
+import com.hcm.grw.model.service.sm.IGoboService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,6 +52,9 @@ public class HomeController {
 	
 	@Autowired
 	private CommuteService commuteService;
+	
+	@Autowired
+	private IGoboService GoboService;
 	
 	
 	@GetMapping({"/index.do", "/"})
@@ -203,25 +208,25 @@ public class HomeController {
 		
 		String empl_id = authentication.getName();
 		
-		
-		
+		List<GoboDto> gbLists = GoboService.getAllGobo();
+		model.addAttribute("gbLists",gbLists);
+		model.addAttribute("gbListsSize",gbLists.size());
+
 		Map<String, Object> holidayTotalMap = holidayService.selectEmpTotalHoliDayInfo(empl_id);
 		if(holidayTotalMap != null) {
 			model.addAttribute("rest_holiday",holidayTotalMap.get("REST_HOLIDAY"));
 		}else {
-			model.addAttribute("rest_holiday","남은연차가 없습니다");
+			model.addAttribute("rest_holiday","0");
 		}
 		
 		SignBoxDto dto = new SignBoxDto();
 		dto.setEmpl_id(empl_id);
 		List<SignBoxDto> table = docService.getIngDocs(dto);
-		System.out.println(table.size());
-		if(table.size() != 0) {
-			model.addAttribute("ingDoc",table.size());
-		}else {
-			model.addAttribute("ingDoc","진행중인 결재가 없습니다");
-		}
+		List<SignBoxDto> allDoc = docService.getAllDocs(dto);
+		model.addAttribute("ingDoc",table.size());
 		
+		model.addAttribute("allDoc",allDoc);
+		model.addAttribute("docSize",allDoc.size()-1);
 		
 		Date commuteInTime = null;
 		Date commuteOutTime = null;

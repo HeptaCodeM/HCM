@@ -55,7 +55,7 @@
 												
 													<!--begin::Nav item-->
 													<li class="nav-item mt-5">
-														<a class="nav-link text-muted text-active-primary ms-0 py-0 me-10 ps-5 border-0"> 
+														<a class="nav-link text-muted text-active-primary ms-0 py-0 border-0"> 
 															남은연차 : ${rest_holiday}
 														</a>
 													</li>
@@ -63,7 +63,7 @@
 													
 													<!--begin::Nav item-->
 													<li class="nav-item mt-5">
-														<a class="nav-link text-muted text-active-primary ms-0 py-0 me-10 ps-5 border-0"> 
+														<a class="nav-link text-muted text-active-primary ms-0 py-0 border-0"> 
 															진행중인 결재건수 : ${ingDoc}
 														</a>
 													</li>
@@ -71,7 +71,7 @@
 													
 													<!--begin::Nav item-->
 													<li class="nav-item mt-5">
-														<a class="nav-link text-muted text-active-primary ms-0 py-0 me-10 ps-5 border-0"> 
+														<a class="nav-link text-muted text-active-primary ms-0 py-0 border-0"> 
 															여긴 뭘 넣을까요 ? : (사이즈 조절중) 
 														</a>
 													</li>
@@ -86,7 +86,7 @@
 									</div>
 									
 									<div class="card mb-5 mb-xl-8 sideWidth">
-										<div id="nowTime" style="text-align: center;">
+										<div id="nowTime" class="text-gray-700" style="text-align: center;">
 											시간
 										</div>
 									</div>
@@ -95,7 +95,7 @@
 										<div style="padding: 10px;">
 											<c:if test="${commuteInTime eq null || commuteInTime eq ''}">
 												<a href="/hr/home/registCommuteOkMain.do" class="btn btn-primary exitBtn">
-													<i class="ki-duotone ki-entrance-left fs-5x">
+													<i class="ki-duotone ki-entrance-left fs-2x">
 														<span class="path1"></span>
 														<span class="path2"></span>
 														<span class="path3"></span>
@@ -106,7 +106,7 @@
 											</c:if>
 											<c:if test="${commuteInTime ne null && commuteInTime ne ''}">
 												<a href="/hr/home/registCommuteOkMain.do" class="btn btn-primary exitBtn">
-													<i class="ki-duotone ki-exit-right fs-5">
+													<i class="ki-duotone ki-exit-right fs-2x">
 														<span class="path1"></span>
 														<span class="path2"></span>
 														<span class="path3"></span>
