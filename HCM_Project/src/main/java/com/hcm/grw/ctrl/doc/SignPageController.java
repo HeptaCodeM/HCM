@@ -12,9 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.hcm.grw.dto.doc.SignTempBoxDto;
 import com.hcm.grw.dto.hr.EmpSignDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.model.service.doc.ISignBoxService;
 import com.hcm.grw.model.service.doc.ISignFavoService;
 import com.hcm.grw.model.service.hr.EmpSignService;
 
@@ -30,6 +33,9 @@ public class SignPageController {
 	
 	@Autowired
 	private EmpSignService signService;
+	
+	@Autowired
+	private ISignBoxService bService;
 	
 	@GetMapping("write.do")
 	public String write() {
@@ -71,7 +77,7 @@ public class SignPageController {
 	
 	@GetMapping("writeDoc.do")
 	public String writeDoc(Authentication auth, HttpSession session, Model model) {
-		log.info("SignTreeController writeDoc.do 기안문 작성 페이지로 로그인 정보 전달");
+		log.info("SignPageController writeDoc.do 기안문 작성 페이지로 로그인 정보 전달");
 		if(auth != null) {
 			String id = auth.getName();
 			List<String> list = List.of(id);
@@ -80,6 +86,14 @@ public class SignPageController {
 			model.addAttribute("loginInfo", dto.get(0));
 		}
 		return "doc/writeDoc/writeDoc";
+	}
+	
+	@GetMapping(value = "getTempDoc.do")
+	public String getTempDoc(@RequestParam String sitb_doc_num, Model model) {
+		log.info("SignPageController getTempDoc.do 임시보관함 문서 불러오기");
+		SignTempBoxDto dto = bService.getTempDoc(sitb_doc_num);
+		model.addAttribute("dto", dto);
+		return "/doc/writeDoc/getTempDoc";
 	}
 	
 	@GetMapping("fileTest.do")

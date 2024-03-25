@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -62,19 +64,21 @@ public class TempTreeController {
 	
 	
 	@PostMapping(value = "/insertDoc.do", produces = "text/html; charset=UTF-8")
-	public ResponseEntity<?> insertDoc(@RequestPart("file") MultipartFile file, 
+	public ResponseEntity<?> insertDoc(@RequestPart(value = "file", required = false) MultipartFile file, 
 									   @RequestPart("dto") SignBoxDto dto,
 									   HttpServletResponse resp) throws IOException {
 		log.info("TempTreeController insertTempDoc.do POST 기안문 작성");
 		log.info("{}\n {}", file, dto);
-		
-		SignFileDto fileDto = new SignFileDto();
-		fileDto.setSidf_file_origin(file.getName());
-		fileDto.setSidf_file_size(String.valueOf(file.getSize()));
-		fileDto.setSidf_file_content(FileCommonService.fileUpload(file, resp));
-		fileDto.setSidf_file_stored(UUID.randomUUID().toString());
-		bService.insertTransaction(dto, fileDto);
-		
+		if(file != null) {
+			SignFileDto fileDto = new SignFileDto();
+			fileDto.setSidf_file_origin(file.getName());
+			fileDto.setSidf_file_size(String.valueOf(file.getSize()));
+			fileDto.setSidf_file_content(FileCommonService.fileUpload(file, resp));
+			fileDto.setSidf_file_stored(UUID.randomUUID().toString());
+			bService.insertTransaction(dto, fileDto);
+		} else {
+			bService.insertDoc(dto);
+		}
 		return ResponseEntity.ok("성공");
 	}
 	

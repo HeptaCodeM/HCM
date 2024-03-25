@@ -31,6 +31,7 @@ import com.hcm.grw.dto.doc.SignFileDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.mapper.doc.IDocBoxDao;
 import com.hcm.grw.model.service.doc.IDocBoxService;
+import com.hcm.grw.model.service.doc.ISignBoxService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,6 +44,7 @@ public class DocController {
 
 	@Autowired
 	private IDocBoxDao dao;	
+	
 
 	@GetMapping("/doc/docBox/getDetail.do")
 	public String getDetailBoard(Model model, SignBoxDto dto, String docNum, HttpSession session) {

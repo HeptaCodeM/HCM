@@ -12,13 +12,6 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <link rel="stylesheet" href="/ckeditor5/sample/template.css">
 
-<style type="text/css">
-	/* 모달창 사이즈 조절 */
-	.modal { 
-		--bs-modal-width: 1200px;
-	}
-</style>
-
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp"%>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -39,13 +32,22 @@
 					class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<!--begin::Title-->
 					<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
-						기안서 작성</h1>
+						임시보관 문서 상세페이지</h1>
 					<!--end::Title-->
 				</div>
 				<!--end::Page title-->
 			</div>
 		</div>
-
+		<input id="tempTitle" type="hidden" value="${dto.sitb_doc_title }">
+		<div id="tempContent" style="display: none;">${dto.sitb_doc_content}</div>
+		<input id="tempSicaCd" type="hidden" value="${dto.sica_cd }">
+		<input id="tempExpiredt" type="hidden" value="${dto.sitb_doc_expiredt }">
+		<input id="tempAlflag" type="hidden" value="${dto.sitb_doc_alflag }">
+		<input id="tempCd" type="hidden" value="${dto.sidt_temp_cd }">
+		<input id="tempJson" type="hidden" value="${dto.sitb_doc_json }">
+		<input id="tempRef" type="hidden" value="${dto.empl_ref }">
+		<input id="tempDept" type="hidden" value="${dto.empl_dept_cd }">
+		<input id="tempSign" type="hidden" value="${dto.emsi_seq }">
 		<div class="app-content flex-column-fluid">
 			<!-- 내용 시작 -->
 			<div id="kt_app_content" class="app-content flex-column-fluid">
@@ -57,22 +59,16 @@
 					<!-- col -->
 					<div class="card card-flush h-md-50 mb-xl-10">
 						<div class="card-header pt-5">
-							<h3 class="card-title text-gray-800 fw-bold">기안서 작성</h3>
+							<h3 class="card-title text-gray-800 fw-bold">작성중인 문서</h3>
 						</div>
 						<div class="separator separator-dashed my-3"></div>
 						<div class="card-body pt-5">
 
 							<!-- ---------------------------- 내 용 입 력 -------------------------------- -->
-							<!-- 기안양식 선택화면 버튼 -->
-							<div id="template_div" style="text-align: center;">
-								결재 진행을 위해 양식을 선택해주세요. <br/>
-								<button type="button" class="btn btn-primary"
-									data-bs-toggle="modal" data-bs-target="#kt_modal_3">
-									기안문 템플릿 선택하기</button>
-							</div>
+							
 							
 							<!-- 기안문 작성 화면 -->
-							<div id="editor_div" style="display: none;">
+							<div id="editor_div">
 							
 							<input type="hidden" value="${userInfoVo.emsi_seq }" id="emsi_seq">
 							<table class="table table-bordered">
@@ -105,7 +101,7 @@
 									</td>
 									<th>기본서명사용</th>
 									<td>
-										<input type="checkbox" id="chk"  class="form-check-input" onclick="defaultSign()">
+										<input type="checkbox" id="chk"  class="form-check-input" name="defaultSign" onclick="defaultSign()">
 									</td>
 								</tr>
 								
@@ -146,74 +142,6 @@
 		</div>
 	</div>
 
-	<div class="modal fade" tabindex="-1" id="kt_modal_3">
-		<div class="modal-dialog">
-			<div class="modal-content position-absolute">
-				<div class="modal-header">
-					<h5 class="modal-title">양식 선택</h5>
-
-					<!--begin::Close-->
-					<div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
-						data-bs-dismiss="modal" aria-label="Close">
-						<i class="ki-duotone ki-cross fs-2x"><span class="path1"></span>
-						<span class="path2"></span></i>
-					</div>
-					<!--end::Close-->
-				</div>
-     
-					<!-- ---------------------------- [ 모달창 ] 템플릿 선택 ----------------------------------- -->
-				<div class="modal-body">
-					<div class="app-container container-fluid">
-					<div class="row gx-5 gx-xl-10">
-							<div class="col-xxl-4 mb-5 mb-xl-10">
-								<div class="card card-flush h-xl-100">
-									<div class="card-header pt-5">
-										<!--begin::Title-->
-										<h3 class="card-title align-items-start flex-column">
-											<span class="card-label fw-bold text-gray-900">문서 선택</span> <span
-												class="text-gray-500 mt-1 fw-semibold fs-6">사용하실 템플릿을 선택하세요</span>
-										</h3>
-										<!--end::Title-->
-									</div>
-									
-					<!-- ----------------------- [모달창] 기안문 선택 jstree ------------------------------ -->
-									<!--begin::Tab content-->
-									<div class="card-body pt-6">
-									<div class="tab-content">									
-										<div id="jstree"></div>
-									</div>
-									</div>
-									<!--end::Tab content-->
-									
-								</div>
-							</div>
-							
-					<!-- ------------------------ [모달창] 템플릿 미리보기 -------------------------------- -->		
-							<div class="col-xxl-8 mb-5 mb-xl-10">
-								<div class="card card-flush overflow-hidden h-xl-100">
-									<div class="card-header pt-5">
-										<!--begin::Title-->
-										<h3 class="card-title align-items-start flex-column">
-											<span class="card-label fw-bold text-gray-900">템플릿 미리보기</span>
-											<span class="text-gray-500 mt-1 fw-semibold fs-6"></span>
-										</h3>
-										<!--end::Title-->
-									</div>
-									<div id="template"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- ------------------------------ [ 모달창 ] 버튼 ---------------------------------- -->	
-				<div class="modal-footer">
-					<button type="button" class="btn btn-light" data-bs-dismiss="modal" id="closeBtn">닫기</button>
-					<button type="button" class="btn btn-primary" id="getTemplate">적용하기</button>
-				</div>
-				<!-- ------------------------------ 모 달 내 용 ---------------------------------- -->
-			</div>
-		</div>
-	</div>
 
 	<%@include file="/WEB-INF/views/menu/docSideMenu.jsp"%>
 </body>
@@ -224,7 +152,7 @@
 
 
 <script type="text/javascript" src="/ckeditor5/build/ckeditor.js"></script>
-<script type="text/javascript" src="/js/doc/writeDoc.js"></script>
+<script type="text/javascript" src="/js/doc/getTempDoc.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 <script type="module" src="/ckeditor5/sample/script.js"></script>
 <!-- <script type="text/javascript" src="../js/template.js"></script> -->

@@ -188,6 +188,27 @@
 		    <version>1.1.1</version>
 		</dependency>
 		
+		<!-- redis dependency start -->
+		<!-- Spring Project에서 Redis를 효율적으로 사용할 수 있게 만들어주는 라이브러리 -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>2.6.0</version>
+		</dependency>
+		<!-- Spring Sesion의 확장기능으로 세션 정보를 Redis를 사용하여 관리하게 해줌  -->
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-data-redis</artifactId>
+			<version>2.6.0</version>
+		</dependency>
+		<!-- Spring과 Redis의 상호작용을 위한 라이브러리 -->
+		<dependency>
+			<groupId>io.lettuce</groupId>
+			<artifactId>lettuce-core</artifactId>
+			<version>6.1.8.RELEASE</version>
+		</dependency>
+		<!-- redis dependency end -->
+		
 		<!-- 라온시큐어 키보드보안으로 인한 추가 -->
 		<dependency>
 		    <groupId>javax.servlet</groupId>

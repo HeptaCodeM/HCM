@@ -1,121 +1,4 @@
 
-
-// -----------------------------------> [ 모달창 ] 드래그형 모달 설정
-var element = document.querySelector('#kt_modal_3');
-dragElement(element);
-
-function dragElement(elmnt) {
-    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    if (elmnt.querySelector('.modal-content')) {
-        elmnt.querySelector('.modal-content').onmousedown = dragMouseDown;
-    } else {
-        elmnt.onmousedown = dragMouseDown;
-    }
-
-    function dragMouseDown(e) {
-        e = e || window.event;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
-    }
-
-    function elementDrag(e) {
-        e = e || window.event;
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-    }
-
-    function closeDragElement() {
-        document.onmouseup = null;
-        document.onmousemove = null;
-    }
-}
-
-
-// -----------------------------------> [ 모달창 ] 템플릿 jstree 정보 가져오기
-setTimeout(function() {
-	$('#jstree').jstree({
-		plugins: ['search', 'wholerow'],
-		core: {
-			data: {
-				url: './getTempTree.do',
-				method: 'get',
-				dataType: 'json',
-				success: function(data) {
-					console.log(data)
-				},
-				error: function() {
-					alert('데이터 전송 실패');
-				}
-			}
-		}
-	});
-},1000)
-
-
-// -----------------------------------> [ 모달창 ] 템플릿 미리보기
-$('#jstree').on('select_node.jstree', function(e, data) {
-	var id = data.node.id;
-	if (id.startsWith("CC")) {
-		return;
-	}
-	fetch('./getDoc.do?sidt_temp_cd=' + id)
-		.then(resp => { return resp.text() })
-		.then(data => {
-			docData = data;
-			//			console.log(data);
-			var template = document.getElementById('template')
-			template.innerHTML = data;
-		})
-		.catch(err => { console.log(err) });
-
-})
-
-
-// -----------------------------------> [ 모달창 ] 데이터 전역변수 설정
-var docData;
-var sica_cd;
-var sidt_temp_cd;
-
-// -----------------------------------> [ 모달창 ] jstree를 통해 템플릿 불러오기
-document.getElementById('getTemplate').addEventListener('click', function(e) {
-	var selNode = $('#jstree').jstree('get_selected');
-	var parentNode = $('#jstree').jstree('get_parent', selNode);
-	sica_cd = parentNode;
-	sidt_temp_cd = selNode[0];
-	// 템플릿 선택 유효성 검사
-	if (selNode.length == 0) {
-		alert('템플릿을 선택해주세요');
-		return;
-	}
-	if (selNode[0].startsWith("CC")) {
-		alert('템플릿을 선택해주세요');
-		return;
-	}
-
-
-// -----------------------------------> [ 모달창 ] 로그인 정보를 포함한 에디터 화면으로 변경
-	$("#template_div").hide();
-	$("#editor_div").show();
-	document.getElementById('closeBtn').click();
-	var sessionName = document.getElementById('myName');
-	var sessionDept = document.getElementById('myDept');
-	var sessionRank = document.getElementById('myRank');
-	var insertName = docData.replace("홍길동", sessionName.value)
-	var insertDept = insertName.replace("인사팀", sessionDept.value)
-	var insertRank = insertDept.replace("대리", sessionRank.value)
-	editor.setData(insertRank);
-//	editor.setData(docData);
-
-})
-
-
-
 // -----------------------------------> [ 작성화면 ] 현재 작성일 설정	
 var currentDate = new Date();
 var formatDate =currentDate.getFullYear()+'-'+ ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' + ('0' + currentDate.getDate()).slice(-2);
@@ -140,17 +23,9 @@ function insertTempDoc() {
 	} else {
 		sitb_doc_alflag  = 'N'
 	}
-	
-	// -----------------------------------> 유효성검사
-	if(sitb_doc_title.length == 0) {
-		swalAlert('제목을 입력해주세요','','','확인');
-		return;
-	} else if(sitb_doc_title.length < 6) {
-		swalAlert('제목을 6글자 이상 입력해주세요','','','확인');
-		return;
-	}
-	
-	
+	/*if(sitb_doc_alflag  = 'Y') {
+		checkbox.checked
+	}*/
 	// 이벤트 날짜
 	var sidt_doc_event = document.getElementById('sidb_doc_event').textContent;
 	var eventArr = sidt_doc_event.split('~');	
@@ -199,7 +74,8 @@ function insertTempDoc() {
 	
 }
 
-
+var sica_cd;
+var sidt_temp_cd;
 // -----------------------------------> [ 작성화면 ] 기안문 제출하기 정보
 function insertDoc() {
 	var sidb_doc_expiredt = document.getElementsByName('sidb_doc_expiredt')[0].value;
@@ -227,13 +103,7 @@ function insertDoc() {
 	
 	var file = document.getElementById('sidf_file_content').files[0]; // 파일 가져오기
 	var formData = new FormData();
-	
-	if(ref == undefined) {
-		ref = {empl_ref : ''}
-	}
-	if(dept == undefined) {
-		dept = {empl_dept_cd : ''}
-	}
+
 	var docData = {
 		sidb_doc_title : sidb_doc_title,
 		sidb_doc_content : sidb_doc_content,
@@ -253,7 +123,6 @@ function insertDoc() {
 	if(sign == undefined) {
 		docData.emsi_seq = document.getElementById('emsi_seq').value;
 	}
-	
 	console.log(docData);
 	
 	// 파일 추가
@@ -307,12 +176,14 @@ var sign;
 
 window.addEventListener('message', function(e) {
 	var data = e.data;
-	
 	if(data.hasOwnProperty('empl_ref')) {
 		ref = data;
-//		document.getElementById('refName').textContent = data[0].empl_ref_name;
+		document.getElementById('refName').textContent = ref.empl_ref_name;
+		console.log("값: ", ref.empl_ref_name);
+		
 	} else if(data.hasOwnProperty('empl_dept_cd')) {
 		dept = data;
+		document.getElementById('deptName').textContent = dept.empl_dept_name;
 	} else if (typeof data == "string") {
 		sign = data;
 	} else {
@@ -325,9 +196,10 @@ window.addEventListener('message', function(e) {
 		} else {
 			document.getElementById('apprName1').textContent = data[0].appr_name + "(" + data[0].appr_position +")";
 		}
+	
 	}
 	console.log('ref : ' , ref);
-	console.log('참조자: ', ref[0].empl_ref_name );
+	console.log('참조자: ', data.empl_ref_name);
 	console.log('dept : ', dept);
 	console.log('json : ', json);
 	console.log('sign : ', sign);
@@ -339,14 +211,41 @@ function defaultSign() {
 	var btn = document.getElementById('selectSign');
 	if (chk.checked) {
 		console.log('체크')
+		sign = 'Y';
 		btn.setAttribute('disabled', '');
 	} else {
-		console.log('해제')
+		console.log('해제');
+		sign = 'N';
 		btn.removeAttribute('disabled');
 	}
 }
 
-
+setTimeout(function() {
+	var tempContent = document.getElementById('tempContent').innerHTML;
+	console.log(tempContent)
+	editor.setData(tempContent);
+	var tempTitle = document.getElementById('tempTitle').value;
+	sica_cd = document.getElementById('tempSicaCd').value;
+	var tempExpiredt = document.getElementById('tempExpiredt').value;
+	var tempAlflag = document.getElementById('tempAlflag').value;
+	sidt_temp_cd = document.getElementById('tempCd').value;
+	ref = document.getElementById('tempRef').value;
+	dept = document.getElementById('tempDept').value;
+	json = document.getElementById('tempJson').value;
+	sign = document.getElementById('tempSign').value;
+	
+	document.getElementsByName('sidb_doc_title')[0].value = tempTitle;
+	document.getElementsByClassName('sitb_doc_expiredt')[0].value = tempExpiredt;
+	if(tempAlflag == 'N') {
+//		document.getElementsByName('alflag').checked;
+		document.querySelector('input[name="alflag"]').checked = true;
+	}
+	console.log(sign)
+	if(sign == 'Y') {
+		document.querySelector('input[name="defaultSign"]').checked = true;
+	}
+	
+},1000);
 
 
 

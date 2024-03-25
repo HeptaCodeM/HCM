@@ -72,7 +72,7 @@ table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, ta
 						<td>
 							 ${dto.sidt_temp_name}
 						</td>
-						<td><a href="#" onclick="detailBoard(${dto.sidb_doc_num})">${dto.sidb_doc_title}</a></td>
+						<td><a href="/doc/getTempDoc.do?sitb_doc_num=${dto.sidb_doc_num}">${dto.sidb_doc_title}</a></td>
 						
 						<td><img style="width:50px; height:50px; border-radius: 22px;"  src="data:image/png;base64,${dto.empl_pictureStr}" /> ${dto.empl_name}</td>
 						
