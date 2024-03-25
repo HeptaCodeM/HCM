@@ -92,6 +92,7 @@ public class SignPageController {
 	public String getTempDoc(@RequestParam String sitb_doc_num, Model model) {
 		log.info("SignPageController getTempDoc.do 임시보관함 문서 불러오기");
 		SignTempBoxDto dto = bService.getTempDoc(sitb_doc_num);
+		log.info(dto.getSitb_doc_json() + "");
 		model.addAttribute("dto", dto);
 		return "/doc/writeDoc/getTempDoc";
 	}

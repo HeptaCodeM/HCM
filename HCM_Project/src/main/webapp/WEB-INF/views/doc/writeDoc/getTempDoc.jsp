@@ -44,6 +44,7 @@
 		<input id="tempExpiredt" type="hidden" value="${dto.sitb_doc_expiredt }">
 		<input id="tempAlflag" type="hidden" value="${dto.sitb_doc_alflag }">
 		<input id="tempCd" type="hidden" value="${dto.sidt_temp_cd }">
+		${dto }
 		<input id="tempJson" type="hidden" value="${dto.sitb_doc_json }">
 		<input id="tempRef" type="hidden" value="${dto.empl_ref }">
 		<input id="tempDept" type="hidden" value="${dto.empl_dept_cd }">
