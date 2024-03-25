@@ -34,10 +34,10 @@
 					<!-- 내용 시작 -->
 					<div id="kt_app_content" class="app-content flex-column-fluid">
 						<div class="app-container container-fluid">
-							<div class="card-flush h-md-50 mb-xl-10" style="background-color: white;">
+							<div class="card-flush h-md-50 mb-xl-10" style="background-color: white; text-align: center;">
 							<c:forEach var="sign" items="${signList}" varStatus="var">
-								<div class="card-body pt-5" style="display: inline-block; width: 320px; text-align: center;" >
-									<div class="border border-gray-400" style="height: 240px; ">
+								<div class="card-body pt-5" style="display: inline-block; width: 320px;" >
+									<div class="border border-gray-400" style="height: 240px;">
 									<img src="${sign.emsi_sign_img}"><br>
 									 </div><br>
 									<div class="card-footer" style="margin: 0px auto;">
@@ -54,12 +54,11 @@
 							<br><br>
 							</div>
 						</div>
-					</div>
-					<!-- 내용 끝 -->
 					<div style="text-align: center;">
 						<button class="btn btn-light-primary btn-color-gray-600" data-bs-toggle="modal" data-bs-target="#kt_modal_3">서명추가</button>
 						<button class="btn btn-light-primary btn-color-gray-600" id="defaultBtn">기본서명설정</button>
 						<button class="btn btn-light-primary btn-color-gray-600" id="delBtn">삭제</button>
+					</div>
 					</div>
 			</div>
 		</div>
@@ -69,13 +68,11 @@
 				<div class="modal-header">
 					<h5 class="modal-title">서명 추가</h5>
 
-					<!--begin::Close-->
 					<div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
 						data-bs-dismiss="modal" aria-label="Close">
 						<i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span
 							class="path2"></span></i>
 					</div>
-					<!--end::Close-->
 				</div>
 
 				<div class="modal-body" style="margin: 0px auto;">

@@ -28,9 +28,12 @@ import com.hcm.grw.comm.FileCommonService;
 import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.doc.SignFileDto;
+import com.hcm.grw.dto.hr.EmpSignDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.mapper.doc.IDocBoxDao;
 import com.hcm.grw.model.service.doc.IDocBoxService;
+import com.hcm.grw.model.service.doc.ISignBoxService;
+import com.hcm.grw.model.service.hr.EmpSignService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,8 +46,12 @@ public class DocController {
 
 	@Autowired
 	private IDocBoxDao dao;	
+	
+	@Autowired
+	private EmpSignService signService;
+	
 
-	@PostMapping("/doc/docBox/getDetail.do")
+	@GetMapping("/doc/docBox/getDetail.do")
 	public String getDetailBoard(Model model, SignBoxDto dto, String docNum, HttpSession session) {
 
 		dto.setSidb_doc_num(docNum);
@@ -78,7 +85,7 @@ public class DocController {
 
 		String concatenatedNames = employeeNamesBuilder.toString();
 		System.out.println("사원 이름들: " + concatenatedNames);
-		docDto.get(1).setEmpl_ref(concatenatedNames);
+		docDto.get(0).setEmpl_ref(concatenatedNames);
 		
 		
 		// 참조 부서명 가져오기
@@ -106,9 +113,16 @@ public class DocController {
 
 				String concatDeptNames = deptNamesBuilder.toString();
 				System.out.println("참조부서명들: " + concatDeptNames);
-				docDto.get(1).setEmpl_dept_cd(concatDeptNames);
+				docDto.get(0).setEmpl_dept_cd(concatDeptNames);
 		
-		
+				
+				EmployeeDto sessionDto = (EmployeeDto)session.getAttribute("userInfoVo");
+				
+				Map<String, Object> signMap = new HashMap<String, Object>();
+				signMap.put("empl_id", sessionDto.getEmpl_id());
+				List<EmpSignDto> signList = signService.selectAllSign(signMap);
+				model.addAttribute("signList", signList);
+				
 		
 		 
 		model.addAttribute("docDto", docDto);

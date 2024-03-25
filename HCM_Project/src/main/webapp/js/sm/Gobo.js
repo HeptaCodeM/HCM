@@ -41,7 +41,6 @@ function cancelReply(commentId) {
 
 
 
-
 //맨 위로 스크롤하는 함수
 function scrollToTop() {
     document.body.scrollTop = 0; // For Safari
