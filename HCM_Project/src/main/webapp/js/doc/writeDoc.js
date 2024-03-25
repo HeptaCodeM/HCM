@@ -140,6 +140,8 @@ function insertTempDoc() {
 	} else {
 		sitb_doc_alflag  = 'N'
 	}
+	
+	// -----------------------------------> 유효성검사
 	if(sitb_doc_title.length == 0) {
 		swalAlert('제목을 입력해주세요','','','확인');
 		return;
@@ -147,6 +149,8 @@ function insertTempDoc() {
 		swalAlert('제목을 6글자 이상 입력해주세요','','','확인');
 		return;
 	}
+	
+	
 	// 이벤트 날짜
 	var sidt_doc_event = document.getElementById('sidb_doc_event').textContent;
 	var eventArr = sidt_doc_event.split('~');	
@@ -306,7 +310,7 @@ window.addEventListener('message', function(e) {
 	
 	if(data.hasOwnProperty('empl_ref')) {
 		ref = data;
-		
+//		document.getElementById('refName').textContent = data[0].empl_ref_name;
 	} else if(data.hasOwnProperty('empl_dept_cd')) {
 		dept = data;
 	} else if (typeof data == "string") {
@@ -315,14 +319,15 @@ window.addEventListener('message', function(e) {
 		json = data;
 //		document.getElementById('json').textContent = JSON.stringify(data);
 		if (data.length == 3) {
-            document.getElementById('apprName1').textContent = data[0].appr_name + "," + data[1].appr_name + "," + data[2].appr_name;
+            document.getElementById('apprName1').textContent = data[0].appr_name + "(" + data[0].appr_position +")" + "," + data[1].appr_name + "," + data[2].appr_name;
         } else if (data.length == 2) {
-			document.getElementById('apprName1').textContent = data[0].appr_name + "," + data[1].appr_name;
+			document.getElementById('apprName1').textContent = data[0].appr_name + "(" + data[0].appr_position +")"+ "," + data[1].appr_name ;
 		} else {
-			document.getElementById('apprName1').textContent = data[0].appr_name;
+			document.getElementById('apprName1').textContent = data[0].appr_name + "(" + data[0].appr_position +")";
 		}
 	}
 	console.log('ref : ' , ref);
+	console.log('참조자: ', ref[0].empl_ref_name );
 	console.log('dept : ', dept);
 	console.log('json : ', json);
 	console.log('sign : ', sign);

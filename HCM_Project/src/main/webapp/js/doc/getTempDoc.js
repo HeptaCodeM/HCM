@@ -173,9 +173,10 @@ var sign;
 
 window.addEventListener('message', function(e) {
 	var data = e.data;
-	
 	if(data.hasOwnProperty('empl_ref')) {
 		ref = data;
+//		document.getElementById('refName').innerText = ref.empl_ref_name;
+		console.log("값: ", ref.empl_ref_name);
 		
 	} else if(data.hasOwnProperty('empl_dept_cd')) {
 		dept = data;
@@ -191,6 +192,7 @@ window.addEventListener('message', function(e) {
         }
 	}
 	console.log('ref : ' , ref);
+	console.log('참조자: ', data.empl_ref_name);
 	console.log('dept : ', dept);
 	console.log('json : ', json);
 	console.log('sign : ', sign);

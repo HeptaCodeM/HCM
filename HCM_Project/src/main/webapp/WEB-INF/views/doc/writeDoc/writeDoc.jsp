@@ -89,15 +89,13 @@
 									<th>결재선</th>
 									<td colspan="5">
 										<div id="apprName1"></div>
-										<div id="apprName2"></div>
-										<div id="apprName3"></div>
 									</td>
 								</tr>
 								<tr id="signRefer">
 									<th>참조 및 참조부서</th>
 									<td colspan="5">
-										<div id="empl_ref_name"></div>
-										<div id="empl_dept_name"></div>
+										<div id="refName"></div>
+										<div id="deptName"></div>
 									</td>
 								</tr>
 								<tr id="signLine">
