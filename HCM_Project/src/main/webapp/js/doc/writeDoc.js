@@ -122,7 +122,7 @@ var formatDate =currentDate.getFullYear()+'-'+ ('0' + (currentDate.getMonth() + 
 document.getElementById('currentDate').innerHTML = formatDate;
 
 
-// -----------------------------------> [ 작성화면 ] 기안문 임시저장 정보
+// -----------------------------------> [ 작성화면 ] 기안문 임시저장
 function insertTempDoc() {
 	// 로그인 정보
 	var empl_id = document.getElementById('id').value;
@@ -156,8 +156,6 @@ function insertTempDoc() {
 	var eventArr = sidt_doc_event.split('~');	
 	var sitb_doc_be = eventArr[0].replace(/년|월|\s+/g, '-').replace(/일/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
 	var sitb_doc_end = eventArr[1].replace(/년|월|\s+/g, '-').replace(/일/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
-//	var empl_ref (참조)
-//	var empl_dept_cd
 	
 	var docData = {
 		sitb_doc_title : sitb_doc_title,
@@ -200,7 +198,7 @@ function insertTempDoc() {
 }
 
 
-// -----------------------------------> [ 작성화면 ] 기안문 제출하기 정보
+// -----------------------------------> [ 작성화면 ] 기안문 제출하기
 function insertDoc() {
 	var sidb_doc_expiredt = document.getElementsByName('sidb_doc_expiredt')[0].value;
 	var sidb_doc_title = document.getElementsByName('sidb_doc_title')[0].value;
@@ -305,43 +303,49 @@ var dept;
 var json;
 var sign;
 
+
+// -----------------------------------> [ 작성화면 ] 기안문 기본 정보 load
 window.addEventListener('message', function(e) {
 	var data = e.data;
 	
 	if(data.hasOwnProperty('empl_ref')) {
 		ref = data;
-//		document.getElementById('refName').textContent = data[0].empl_ref_name;
+		document.getElementById('refName').textContent = ref.empl_ref_name;
 	} else if(data.hasOwnProperty('empl_dept_cd')) {
 		dept = data;
+		document.getElementById('deptName').textContent = dept.empl_dept_name;
 	} else if (typeof data == "string") {
 		sign = data;
 	} else {
 		json = data;
 //		document.getElementById('json').textContent = JSON.stringify(data);
 		if (data.length == 3) {
-            document.getElementById('apprName1').textContent = data[0].appr_name + "(" + data[0].appr_position +")" + "," + data[1].appr_name + "," + data[2].appr_name;
+            document.getElementById('apprName').textContent = data[0].appr_name + "(" + data[0].appr_position +")" + "," + data[1].appr_name + "," + data[2].appr_name;
         } else if (data.length == 2) {
-			document.getElementById('apprName1').textContent = data[0].appr_name + "(" + data[0].appr_position +")"+ "," + data[1].appr_name ;
+			document.getElementById('apprName').textContent = data[0].appr_name + "(" + data[0].appr_position +")"+ "," + data[1].appr_name ;
 		} else {
-			document.getElementById('apprName1').textContent = data[0].appr_name + "(" + data[0].appr_position +")";
+			document.getElementById('apprName').textContent = data[0].appr_name + "(" + data[0].appr_position +")";
 		}
 	}
 	console.log('ref : ' , ref);
-	console.log('참조자: ', ref[0].empl_ref_name );
 	console.log('dept : ', dept);
 	console.log('json : ', json);
 	console.log('sign : ', sign);
 	
 });
 
+// -----------------------------------> [ 작성화면 ] 기본서명 check 설정
 function defaultSign() {
 	var chk = document.getElementById('chk');
 	var btn = document.getElementById('selectSign');
 	if (chk.checked) {
-		console.log('체크')
+		sign = 'Y';
+		console.log('체크', sign)
 		btn.setAttribute('disabled', '');
+		
 	} else {
-		console.log('해제')
+		sign = 'N';
+		console.log('해제', sign)
 		btn.removeAttribute('disabled');
 	}
 }

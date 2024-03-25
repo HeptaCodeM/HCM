@@ -5,7 +5,7 @@ var formatDate =currentDate.getFullYear()+'-'+ ('0' + (currentDate.getMonth() + 
 document.getElementById('currentDate').innerHTML = formatDate;
 
 
-// -----------------------------------> [ 작성화면 ] 기안문 임시저장 정보
+// -----------------------------------> [ 작성화면 ] 기안문 임시저장
 function insertTempDoc() {
 	// 로그인 정보
 	var empl_id = document.getElementById('id').value;
@@ -15,7 +15,7 @@ function insertTempDoc() {
 	var sitb_doc_content = editor.getData();
 	// 기안 만료일
 	var sitb_doc_expiredt = document.getElementsByClassName('sitb_doc_expiredt')[0].value;
-	// 알림 여부 설정
+	// 알림 여부 및 값 설정
 	var checkbox = document.getElementsByName('alflag')[0];
 	var sitb_doc_alflag;
 	if(checkbox.checked) {
@@ -23,16 +23,11 @@ function insertTempDoc() {
 	} else {
 		sitb_doc_alflag  = 'N'
 	}
-	/*if(sitb_doc_alflag  = 'Y') {
-		checkbox.checked
-	}*/
 	// 이벤트 날짜
 	var sidt_doc_event = document.getElementById('sidb_doc_event').textContent;
 	var eventArr = sidt_doc_event.split('~');	
 	var sitb_doc_be = eventArr[0].replace(/년|월|\s+/g, '-').replace(/일/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
 	var sitb_doc_end = eventArr[1].replace(/년|월|\s+/g, '-').replace(/일/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
-//	var empl_ref (참조)
-//	var empl_dept_cd
 	
 	var docData = {
 		sitb_doc_title : sitb_doc_title,
@@ -76,7 +71,7 @@ function insertTempDoc() {
 
 var sica_cd;
 var sidt_temp_cd;
-// -----------------------------------> [ 작성화면 ] 기안문 제출하기 정보
+// -----------------------------------> [ 작성화면 ] 기안문 제출하기
 function insertDoc() {
 	var sidb_doc_expiredt = document.getElementsByName('sidb_doc_expiredt')[0].value;
 	var sidb_doc_title = document.getElementsByName('sidb_doc_title')[0].value;
@@ -179,68 +174,80 @@ window.addEventListener('message', function(e) {
 	if(data.hasOwnProperty('empl_ref')) {
 		ref = data;
 		document.getElementById('refName').textContent = ref.empl_ref_name;
-		console.log("값: ", ref.empl_ref_name);
-		
 	} else if(data.hasOwnProperty('empl_dept_cd')) {
 		dept = data;
 		document.getElementById('deptName').textContent = dept.empl_dept_name;
 	} else if (typeof data == "string") {
 		sign = data;
+		
 	} else {
 		json = data;
 //		document.getElementById('json').textContent = JSON.stringify(data);
 		if (data.length == 3) {
-            document.getElementById('apprName1').textContent = data[0].appr_name + "(" + data[0].appr_position +")" + "," + data[1].appr_name + "," + data[2].appr_name;
+            document.getElementById('apprName').textContent = data[0].appr_name + "(" + data[0].appr_position +")" + "," + data[1].appr_name + "," + data[2].appr_name;
         } else if (data.length == 2) {
-			document.getElementById('apprName1').textContent = data[0].appr_name + "(" + data[0].appr_position +")"+ "," + data[1].appr_name ;
+			document.getElementById('apprName').textContent = data[0].appr_name + "(" + data[0].appr_position +")"+ "," + data[1].appr_name ;
 		} else {
-			document.getElementById('apprName1').textContent = data[0].appr_name + "(" + data[0].appr_position +")";
+			document.getElementById('apprName').textContent = data[0].appr_name + "(" + data[0].appr_position +")";
 		}
 	
 	}
 	console.log('ref : ' , ref);
-	console.log('참조자: ', data.empl_ref_name);
 	console.log('dept : ', dept);
 	console.log('json : ', json);
 	console.log('sign : ', sign);
 	
 });
 
+// -----------------------------------> [ 작성화면 ] 기본서명 설정
 function defaultSign() {
 	var chk = document.getElementById('chk');
 	var btn = document.getElementById('selectSign');
 	if (chk.checked) {
-		console.log('체크')
 		sign = 'Y';
+		console.log('체크: ', sign)
 		btn.setAttribute('disabled', '');
 	} else {
-		console.log('해제');
 		sign = 'N';
+		console.log('해제: ', sign);
 		btn.removeAttribute('disabled');
 	}
 }
 
+
+// -----------------------------------> [ 작성화면 ] 임시저장 문서 정보 load
 setTimeout(function() {
+	// 에디터 템플릿 정보
 	var tempContent = document.getElementById('tempContent').innerHTML;
-	console.log(tempContent)
 	editor.setData(tempContent);
+	// 문서 제목
 	var tempTitle = document.getElementById('tempTitle').value;
+	// 문서 카테고리
 	sica_cd = document.getElementById('tempSicaCd').value;
+	// 기한 만료일
 	var tempExpiredt = document.getElementById('tempExpiredt').value;
+	// 알림 설정
 	var tempAlflag = document.getElementById('tempAlflag').value;
+	// 문서 번호
 	sidt_temp_cd = document.getElementById('tempCd').value;
+	// 참조
 	ref = document.getElementById('tempRef').value;
+	// 참조부서
 	dept = document.getElementById('tempDept').value;
+	// 결재선
 	json = document.getElementById('tempJson').value;
+	// 서명
 	sign = document.getElementById('tempSign').value;
 	
+	console.log(json)
 	document.getElementsByName('sidb_doc_title')[0].value = tempTitle;
 	document.getElementsByClassName('sitb_doc_expiredt')[0].value = tempExpiredt;
-	if(tempAlflag == 'N') {
-//		document.getElementsByName('alflag').checked;
+	if(tempAlflag == 'Y') {
 		document.querySelector('input[name="alflag"]').checked = true;
+	} 
+	if(ref != null) {
+		document.getElementById('refName').textContent = ref.empl_ref_name;
 	}
-	console.log(sign)
 	if(sign == 'Y') {
 		document.querySelector('input[name="defaultSign"]').checked = true;
 	}
