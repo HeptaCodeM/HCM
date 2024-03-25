@@ -63,7 +63,7 @@
 						<div class="card-body pt-5">
 
 							<!-- ---------------------------- 내 용 입 력 -------------------------------- -->
-							<!-- -----기안양식 선택화면 버튼 ------------------------------------------------ -->
+							<!-- 기안양식 선택화면 버튼 -->
 							<div id="template_div" style="text-align: center;">
 								결재 진행을 위해 양식을 선택해주세요. <br/>
 								<button type="button" class="btn btn-primary"
@@ -73,43 +73,8 @@
 							
 							<!-- 기안문 작성 화면 -->
 							<div id="editor_div" style="display: none;">
-							<%-- <form>
-							${loginInfo }
-							<div class="row gx-5 gx-xl-10">
-							<div class="col-xxl-5 mb-5 mb-xl-10">
-							<div class="input-group input-group-sm mb-5">
-							    <span class="input-group-text" id="inputGroup-sizing-sm">기안일</span>
-							    <input type="date" class="form-control" name="sidb_doc_be" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
-							</div>
-							</div>
-							<div class="col-xxl-5 mb-5 mb-xl-10">
-							<div class="input-group input-group-sm mb-5">
-							    <span class="input-group-text" id="inputGroup-sizing-sm">만료일</span>
-							    <input type="date" class="form-control" name="sidb_doc_end" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
-							</div>
-							</div>
-							</div>
 							
-							<div class="input-group input-group-sm mb-5">
-							    <span class="input-group-text" id="inputGroup-sizing-sm">만료일</span>
-							    <input type="date" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
-							</div>
-							<div class="input-group input-group-sm mb-5">
-							    <span class="input-group-text" id="inputGroup-sizing-sm">결재선</span>
-							    <input class="form-control" name="" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
-							</div>
-							<div class="input-group input-group-sm mb-5">
-							    <span class="input-group-text" id="inputGroup-sizing-sm">참조</span>
-							    <input class="form-control" name="" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
-							</div>
-							<div class="input-group input-group-sm mb-5">
-							    <span class="input-group-text" id="inputGroup-sizing-sm">제목</span>
-							    <input type="text" class="form-control" name="sidb_doc_title" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"/>
-							</div>
-							<textarea id="editor" name="sidt_temp_content"></textarea>
-							알림여부 체크박스	
-							첨부파일 --%>
-							
+							<input type="hidden" value="${userInfoVo.emsi_seq }" id="emsi_seq">
 							<table class="table table-bordered">
 								<tr class="success">
 									<th>기안일</th>
@@ -123,23 +88,31 @@
 								<tr id="signLine">
 									<th>결재선</th>
 									<td colspan="5">
-										<div ></div>
+										<div id="apprName"></div>
 									</td>
 								</tr>
 								<tr id="signRefer">
-									<th>참조</th>
-									<td colspan="3">
-										<div ></div>
+									<th>참조 및 참조부서</th>
+									<td colspan="5">
+										<div id="refName"></div>
+										<div id="deptName"></div>
 									</td>
-									<th>참조부서</th>
-									<td colspan="2">
-										<div ></div>
+								</tr>
+								<tr id="signLine">
+									<th>서명선택</th>
+									<td colspan="3">
+										<button id="selectSign">서명관리</button>
+									</td>
+									<th>기본서명사용</th>
+									<td>
+										<input type="checkbox" id="chk"  class="form-check-input" onclick="defaultSign()">
 									</td>
 								</tr>
 								
 								<tr>
 									<th>제목</th>
 									<td colspan="5"><input type="text" class="sitb_doc_title" name="sidb_doc_title" maxlength="20"></td>
+									
 								</tr>
 							</table>
 							<textarea id="editor" name="sidb_doc_content"></textarea>

@@ -68,5 +68,6 @@ public class SignBoxDto implements Serializable {
 	private String empl_pictureStr;
 	private String sidb_curr_id;
 	private String empl_rank;
+	private String empl_sign;
 	
 }

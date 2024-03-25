@@ -39,6 +39,7 @@
 		) AS SDBJ ON 1=1 -->
 		WHERE
 		SDB.EMPL_ID =#{empl_id}
+		AND SDB.SIDB_DOC_DELFLAG = 'N'
 	</select>
 	
 	<!-- 전체문서함 조회 수정1 본테이블만 가져오기-->
@@ -53,6 +54,8 @@ FROM SIGN_DOC_BOX sdb
 JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD 
 WHERE SDB.empl_id = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
+ORDER BY 
+    SDB.SIDB_DOC_WRITEDT ASC
 </select>
 	
 	
@@ -86,6 +89,8 @@ WHERE SDB.empl_id = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
 	JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 	JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
 	WHERE SDB.empl_id = #{empl_id} AND SIDB_DOC_STAT = '1' AND SDB.sidb_doc_delflag= 'N'
+	ORDER BY 
+    SDB.SIDB_DOC_WRITEDT ASC
 	</select>
 
 	<!-- 진행중인 결재 문서 조회 -->
@@ -100,6 +105,8 @@ WHERE SDB.empl_id = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
 	JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 	JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
 	WHERE SDB.empl_id = #{empl_id} AND SIDB_DOC_STAT ='2' AND SDB.sidb_doc_delflag= 'N'
+	ORDER BY 
+    SDB.SIDB_DOC_WRITEDT ASC
 	</select>
 
 	<!-- 승인된 결재 문서 조회 -->
@@ -114,6 +121,8 @@ WHERE SDB.empl_id = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
 	JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 	JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
 	WHERE SDB.empl_id = #{empl_id} AND SIDB_DOC_STAT ='3' AND SDB.sidb_doc_delflag= 'N'
+	ORDER BY 
+    SDB.SIDB_DOC_WRITEDT ASC
 	</select>
 
 	<!-- 반려된 결재 문서 조회 -->
@@ -128,6 +137,8 @@ WHERE SDB.empl_id = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
 	JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 	JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
 	WHERE SDB.empl_id = #{empl_id} AND SIDB_DOC_STAT ='4' AND SDB.sidb_doc_delflag= 'N'
+	ORDER BY 
+    SDB.SIDB_DOC_WRITEDT ASC
 	</select>
 
 
@@ -171,6 +182,8 @@ WHERE SDB.empl_id = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
 		) AS SDBJ2
 		WHERE SDBJ2.APPR_FLAG='0'
 		)
+		ORDER BY 
+    SDB.SIDB_DOC_WRITEDT ASC
 	</select>
 
 	<!-- 참조자로 지정된 결재 문서 조회 -->
@@ -196,7 +209,9 @@ WHERE SDB.empl_id = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
              CONNECT BY REGEXP_SUBSTR(SDB.EMPL_REF, '[^,]+', 1, level) IS NOT NULL) Sub
         WHERE Sub.EMPL_REF=#{empl_id}
  		 OR SDB.EMPL_DEPT_CD = #{empl_dept_cd}
-    ) AND SDB.sidb_doc_delflag= 'N'
+    ) AND SDB.sidb_doc_delflag= 'N'  AND  (SDB.sidb_doc_stat= 3 OR SDB.sidb_doc_stat =4)
+    ORDER BY 
+    SDB.SIDB_DOC_WRITEDT ASC
 	</select>
 	
 	<!-- 참조 전용 json 데이터 가져오기 -->
@@ -244,7 +259,8 @@ WHERE SDB.empl_id = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
 	SDB.EMPL_DEPT_CD, SDB.SIDB_DOC_JSON,SDB.EMPL_ID , SDB.SIDB_CURR_id,
 	E.EMPL_NAME  , APPR_ID, e2.EMPL_NAME as APPR_NAME, 
 	CC2.COCO_NAME as APPR_RANK , CC.COCO_NAME as WRITER_DT, CC3.COCO_NAME AS EMPL_RANK,
-	APPR_SIGN , APPR_REPLY, APPR_FLAG, APPR_DT,t.SIDT_TEMP_NAME
+	APPR_SIGN , APPR_REPLY, APPR_FLAG, APPR_DT,t.SIDT_TEMP_NAME,(SELECT EMSI_SIGN_IMG FROM EMP_SIGN
+                                        WHERE EMSI_SEQ = sdb.emsi_seq)as empl_sign
 	FROM SIGN_DOC_BOX sdb
 	JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 	<![CDATA[
@@ -337,6 +353,8 @@ LEFT JOIN
         )
     ) AS SDBJ ON 1=1
     WHERE (SDBJ.APPR_FLAG = '1' OR SDBJ.APPR_FLAG = '2') AND SDBJ.APPR_ID = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
+	ORDER BY 
+    SDB.SIDB_DOC_WRITEDT ASC
 </select>	
 
 <!-- 상세조회 문서에 첨부된 파일 리스트 조회 -->
@@ -363,6 +381,8 @@ FROM SIGN_TEMP_BOX sdb
 JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD 
 WHERE SDB.empl_id = #{empl_id} 
+ORDER BY 
+    SDB.SITB_DOC_WRITEDT ASC
 </select>
 
 <!-- 참조자 이름 가져오기 -->

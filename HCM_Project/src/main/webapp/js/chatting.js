@@ -6,6 +6,12 @@ var message = null;
 onload = function() {
 	getAlarmList();
 	
+	setInterval(function() {
+	if (sender != null && target != null) {
+		ws.send(sender + ',' + target + ',접속여부판단');
+	}
+}, 5000);
+	
 	if (ws === null) {
 		ws = new WebSocket('ws://localhost:8080/hcmWs.do');
 		ws.onopen = function() {
@@ -20,12 +26,30 @@ onload = function() {
 	
 	document.getElementById('chatMain').addEventListener('click', function() {
 		chatUserList();
-		loadMessage();
 	})
 	
 	ws.onmessage = function(e) {
 		console.log('웹소켓 서버 수신')
 		var myId = document.getElementById('id').value;
+		if(e.data === '접속여부판단:온라인') {
+			console.log(e.data);
+			var parent = document.getElementById('target').parentNode;
+			var dong = parent.querySelector('.badge-circle');
+			var text = parent.querySelector('.text-muted');
+			dong.removeAttribute('class');
+			dong.setAttribute('class', 'badge badge-success badge-circle w-10px h-10px me-1');
+			text.textContent = '접속중';
+			return;
+		} else if (e.data === '접속여부판단:오프라인') {
+			console.log(e.data);
+			var parent = document.getElementById('target').parentNode;
+			var dong = parent.querySelector('.badge-circle');
+			var text = parent.querySelector('.text-muted');
+			dong.removeAttribute('class');
+			dong.setAttribute('class', 'badge badge-danger badge-circle w-10px h-10px me-1');
+			text.textContent = '오프라인';
+			return;
+		}
 		
 		// 유저객체 전달 경우
 		if (!e.data.includes('님으로 부터 메세지 도착') && !e.data.includes('접속 해제')) {
@@ -101,11 +125,12 @@ onload = function() {
 		}
 	}
 	
+	// 웹소켓 연결해제
 	ws.onclose = function() {
 		console.log('웹소켓 연결 해제');
 		var parent = document.getElementById('target').parentNode;
-		var dong = parent.querySelector('.badge-success')
-		var text = parent.querySelector('.text-muted')
+		var dong = parent.querySelector('.badge-success');
+		var text = parent.querySelector('.text-muted');
 		dong.removeAttribute('class');
 		dong.setAttribute('class', 'badge badge-danger badge-circle w-10px h-10px me-1');
 		text.textContent = '오프라인';
@@ -116,6 +141,7 @@ onload = function() {
 
 }
 
+// 메세지 보내기
 function sendMessage() {
 	console.log(ws);
 	if(ws === null) {
@@ -206,12 +232,14 @@ function sendMessage() {
 		ws.send(sender + ',' + target + ',' + message);
 }
 
+// 대화내용 불러오기
 function loadMessage(event, empl_id) {
+	sender = document.getElementById('id').value;
+	target = empl_id;
 	var ele = event.target.text;
 	document.getElementById('mainDiv').textContent = '';
-	sender = document.getElementById('id').value;
 	console.log(sender, target, message);
-	fetch('/loadMessage.do?ch_sender=' + sender + '&ch_target=' + empl_id)
+	fetch('/loadMessage.do?ch_sender=' + sender + '&ch_target=' + target)
 		.then(resp => {
 			return resp.json();
 		})
@@ -224,10 +252,10 @@ function loadMessage(event, empl_id) {
 			headerDiv.innerHTML = '	<div class="card-title">                                                           '
 				+'		<div class="d-flex justify-content-center flex-column me-3">                                   '
 				+'			<a class="fs-4 fw-bold text-gray-900 text-hover-primary me-1 mb-2 lh-1">' + ele + '</a>'
-				+'			<input type="hidden" value="' + empl_id + '" id="target">                           '
+				+'			<input type="hidden" value="' + target + '" id="target">                           '
 				+'			<div class="mb-0 lh-1">                                                                    '
-				+'				<span class="badge badge-success badge-circle w-10px h-10px me-1"></span>              '
-				+'				<span class="fs-7 fw-semibold text-muted">접속중</span>                                '
+				+'				<span class="badge badge-circle w-10px h-10px me-1"></span>              '
+				+'				<span class="fs-7 fw-semibold text-muted"></span>                                '
 				+'			</div>                                                                                     '
 				+'		</div>                                                                                         '
 				+'	</div>                                                                                             '
@@ -331,11 +359,15 @@ function loadMessage(event, empl_id) {
 			console.log('전송 실패', err)
 		});
 		
-		fetch('/setReadMessage.do?ch_sender=' + empl_id + '&ch_target=' + sender).then().then().catch();
+		fetch('/setReadMessage.do?ch_sender=' + target + '&ch_target=' + sender).then().then().catch();
 		var symbol = event.target.parentNode.querySelector('.symbol-circle');
 		if(symbol != null) {
 			symbol.style.background = 'white';
 		}
+		
+		setTimeout(function() {
+			ws.send(sender + ',' + target + ',접속여부판단');
+		}, 100);
 }
 
 function notify(msg) {
@@ -385,7 +417,7 @@ function chatUserList() {
 				var a = document.createElement('a');
 				var span = document.createElement('span');
 				div1.setAttribute('class', 'rounded d-flex flex-stack bg-active-lighten p-4');
-				div1.setAttribute('onclick', '');
+				div1.setAttribute('data-user-id', idx);
 				div2.setAttribute('class', 'd-flex align-items-center');
 				div3.setAttribute('class', 'symbol symbol-35px symbol-circle');
 				div4.setAttribute('class', 'ms-5');
@@ -445,6 +477,8 @@ function chatUserList() {
 				
 			}
 		});
+		// 대화순으로 정렬...
+		
 	})
 	.catch(err => {console.log(err)})
 	

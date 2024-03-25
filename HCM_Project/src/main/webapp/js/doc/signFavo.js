@@ -63,15 +63,15 @@ $('#schName').focus();
 
 	});
 	
-	// 로그인한 본인 아이디 숨김
-	setTimeout(function () {
-		var empl_id = document.getElementById('empl_id').value;
-		var allNode = $('#jstree').jstree('get_json', '#', { flat: true });
-		var sel = allNode.find(function(node) {
-			return node.id == empl_id;
-		})
-		$('#jstree').jstree('hide_node', sel);
-	}, 1000)
+// 로그인한 본인 아이디 숨김
+setTimeout(function() {
+	var empl_id = document.getElementById('empl_id').value;
+	var allNode = $('#jstree').jstree('get_json', '#', { flat: true });
+	var sel = allNode.find(function(node) {
+		return node.id == empl_id;
+	})
+	$('#jstree').jstree('hide_node', sel);
+}, 1000)
 	
 	
 	// 결재자 리스트를 json형태로 저장 (즐겨찾기 라인추가)
@@ -175,7 +175,7 @@ document.getElementById('initial').addEventListener('click', function() {
 	
 // 참조 팝업창
 document.getElementById('signRefer').addEventListener('click', function() {
-	open('/doc/writeDoc/signRefer.do', '', 'width=720px height=900px left=400');
+	open('/doc/writeDoc/signRefer.do', '', 'width=800px height=900px left=400');
 });
 // 결재선 팝업
 document.getElementById('signLine').addEventListener('click', function() {

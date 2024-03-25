@@ -18,10 +18,6 @@ public class HolidayDaoImpl implements HolidayDao {
 	
 	private String NS = "com.hcm.grw.model.mapper.hr.HolidayDaoImpl.";
 
-	@Override
-	public int registEmployeeHoliday() {
-		return sqlSessionTemplate.insert(NS+"registEmployeeHoliday");
-	}
 
 	@Override
 	public List<HolidayDto> holidayList(Map<String, String> map) {
@@ -31,16 +27,6 @@ public class HolidayDaoImpl implements HolidayDao {
 	@Override
 	public List<HolidayAdminDto> holidayAdminList(Map<String, Object> map) {
 		return sqlSessionTemplate.selectList(NS+"selectEmpTotalHoliDayInfoAdmin", map);
-	}
-
-	@Override
-	public int registSpecialDay(Map<String, String> map) {
-		return sqlSessionTemplate.insert(NS+"registSpecialDay", map);
-	}
-
-	@Override
-	public int registNomalDay() {
-		return sqlSessionTemplate.insert(NS+"registNomalDay");
 	}
 
 	@Override

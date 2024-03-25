@@ -1,7 +1,30 @@
-/*function detailBoard(docNum) {
+function detailBoard(docNum) {
     var url = '/doc/docBox/getDetail.do?docNum=' + encodeURIComponent(docNum);
     window.location.href = url;
+}
+
+/*//문서 상세조회시  PostMapping form태그 생성 
+function detailBoard(docNum) {
+let f = document.createElement('form');
+    
+    let obj;
+    obj = document.createElement('input');
+    obj.setAttribute('type', 'hidden');
+    obj.setAttribute('name', 'docNum');
+    obj.setAttribute('value', docNum);
+    
+    f.appendChild(obj);
+    f.setAttribute('method', 'post');
+    f.setAttribute('action', '/doc/docBox/getDetail.do');
+    document.body.appendChild(f);
+    f.submit();
 }*/
+
+//미리보기창 도전
+function openWindow () {
+  const options = 'width=700, height=600, top=50, left=50, scrollbars=yes'
+  window.open('http://www.naver.com','_blank',options)
+}
 
 
 
@@ -114,10 +137,10 @@ function allDocs(){
 	    	            if (d.sidb_doc_stat == 1 && d.appr_name1 == undefined && d.appr_flag0 == 0 ) {
 	    	            	  
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s1a1d1.png">'
-	    	                    + ' <br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: DodgerBlue; font-size: large;"> ' + d.appr_name0 + ' </span>';
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: DodgerBlue; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            	    }  
 	    	          
-	    	            if (d.sidb_doc_stat == 1 && d.appr_name2 == undefined && d.appr_flag0 == 0) {
+	    	            if (d.sidb_doc_stat == 1 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 0) {
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s1a2d1.png">'
 	    	                    + '<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: DodgerBlue;  font-size: large;">' + d.appr_name0 +' >&nbsp; </span> <span style="display:inline-block; width:22%;"></span>' + d.appr_name1 + ' </span> ' 
 	    	            }
@@ -148,10 +171,9 @@ function allDocs(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 3 && d.appr_name1 == undefined && d.appr_flag0 == 1){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s3a1d1.png">'
-	    	            		+'<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: MediumSeaGreen; font-size: large;">'
-	    	            		+d.appr_name0+' ></span> &nbsp;&nbsp;'
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: MediumSeaGreen; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            }
-	    	            if(d.sidb_doc_stat == 3 && d.appr_name2 == undefined && d.appr_flag1 == 1){
+	    	            if(d.sidb_doc_stat == 3 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag1 == 1){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s3a2d2.png">'
 	    	            		+'<br>   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:20%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">'
 	    	           			+d.appr_name0+' > </span> <span style="display:inline-block; width:24%;"></span><span style="color: MediumSeaGreen; font-size: large; ">'
@@ -166,11 +188,10 @@ function allDocs(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 == undefined && d.appr_flag0 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a1d1.png">'
-	    	            		+'<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: red; font-size: large;">'
-	    	            		+d.appr_name0+' ></span> &nbsp;&nbsp;'
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:58%;"> </span>&nbsp;&nbsp;<span style="color: red; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            }
-	    	            if(d.sidb_doc_stat == 4 && d.appr_name2 == undefined && d.appr_flag0 == 2){
-	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">'
+	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 2){
+	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">'
 	    	            		+'<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">'
 	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:22%;"></span>'+d.appr_name1
 	    	            }
@@ -342,10 +363,10 @@ function gianBox(){
 	    	            if (d.sidb_doc_stat == 1 && d.appr_name1 == undefined && d.appr_flag0 == 0 ) {
 	    	            	  
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s1a1d1.png">'
-	    	                    + ' <br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: DodgerBlue; font-size: large;"> ' + d.appr_name0 + ' </span>';
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: DodgerBlue; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            	    }  
 	    	          
-	    	            if (d.sidb_doc_stat == 1 && d.appr_name2 == undefined && d.appr_flag0 == 0) {
+	    	            if (d.sidb_doc_stat == 1 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 0) {
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s1a2d1.png">'
 	    	                    + '<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: DodgerBlue;  font-size: large;">' + d.appr_name0 +' >&nbsp; </span> <span style="display:inline-block; width:22%;"></span>' + d.appr_name1 + ' </span> ' 
 	    	            }
@@ -376,10 +397,9 @@ function gianBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 3 && d.appr_name1 == undefined && d.appr_flag0 == 1){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s3a1d1.png">'
-	    	            		+'<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: MediumSeaGreen; font-size: large;">'
-	    	            		+d.appr_name0+' ></span> &nbsp;&nbsp;'
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: MediumSeaGreen; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            }
-	    	            if(d.sidb_doc_stat == 3 && d.appr_name2 == undefined && d.appr_flag1 == 1){
+	    	            if(d.sidb_doc_stat == 3 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag1 == 1){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s3a2d2.png">'
 	    	            		+'<br>   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:20%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">'
 	    	           			+d.appr_name0+' > </span> <span style="display:inline-block; width:24%;"></span><span style="color: MediumSeaGreen; font-size: large; ">'
@@ -394,11 +414,10 @@ function gianBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 == undefined && d.appr_flag0 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a1d1.png">'
-	    	            		+'<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: red; font-size: large;">'
-	    	            		+d.appr_name0+' ></span> &nbsp;&nbsp;'
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:58%;"> </span>&nbsp;&nbsp;<span style="color: red; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            }
-	    	            if(d.sidb_doc_stat == 4 && d.appr_name2 == undefined && d.appr_flag0 == 2){
-	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">'
+	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 2){
+	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">'
 	    	            		+'<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">'
 	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:22%;"></span>'+d.appr_name1
 	    	            }
@@ -569,10 +588,10 @@ function ingBox(){
 	    	            if (d.sidb_doc_stat == 1 && d.appr_name1 == undefined && d.appr_flag0 == 0 ) {
 	    	            	  
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s1a1d1.png">'
-	    	                    + ' <br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: DodgerBlue; font-size: large;"> ' + d.appr_name0 + ' </span>';
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: DodgerBlue; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            	    }  
 	    	          
-	    	            if (d.sidb_doc_stat == 1 && d.appr_name2 == undefined && d.appr_flag0 == 0) {
+	    	            if (d.sidb_doc_stat == 1 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 0) {
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s1a2d1.png">'
 	    	                    + '<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: DodgerBlue;  font-size: large;">' + d.appr_name0 +' >&nbsp; </span> <span style="display:inline-block; width:22%;"></span>' + d.appr_name1 + ' </span> ' 
 	    	            }
@@ -603,10 +622,9 @@ function ingBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 3 && d.appr_name1 == undefined && d.appr_flag0 == 1){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s3a1d1.png">'
-	    	            		+'<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: MediumSeaGreen; font-size: large;">'
-	    	            		+d.appr_name0+' ></span> &nbsp;&nbsp;'
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: MediumSeaGreen; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            }
-	    	            if(d.sidb_doc_stat == 3 && d.appr_name2 == undefined && d.appr_flag1 == 1){
+	    	            if(d.sidb_doc_stat == 3 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag1 == 1){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s3a2d2.png">'
 	    	            		+'<br>   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:20%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">'
 	    	           			+d.appr_name0+' > </span> <span style="display:inline-block; width:24%;"></span><span style="color: MediumSeaGreen; font-size: large; ">'
@@ -621,11 +639,10 @@ function ingBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 == undefined && d.appr_flag0 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a1d1.png">'
-	    	            		+'<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: red; font-size: large;">'
-	    	            		+d.appr_name0+' ></span> &nbsp;&nbsp;'
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:58%;"> </span>&nbsp;&nbsp;<span style="color: red; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            }
-	    	            if(d.sidb_doc_stat == 4 && d.appr_name2 == undefined && d.appr_flag0 == 2){
-	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">'
+	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 2){
+	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">'
 	    	            		+'<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">'
 	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:22%;"></span>'+d.appr_name1
 	    	            }
@@ -795,10 +812,10 @@ function approveBox(){
 	    	            if (d.sidb_doc_stat == 1 && d.appr_name1 == undefined && d.appr_flag0 == 0 ) {
 	    	            	  
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s1a1d1.png">'
-	    	                    + ' <br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: DodgerBlue; font-size: large;"> ' + d.appr_name0 + ' </span>';
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: DodgerBlue; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            	    }  
 	    	          
-	    	            if (d.sidb_doc_stat == 1 && d.appr_name2 == undefined && d.appr_flag0 == 0) {
+	    	            if (d.sidb_doc_stat == 1 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 0) {
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s1a2d1.png">'
 	    	                    + '<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: DodgerBlue;  font-size: large;">' + d.appr_name0 +' >&nbsp; </span> <span style="display:inline-block; width:22%;"></span>' + d.appr_name1 + ' </span> ' 
 	    	            }
@@ -829,10 +846,9 @@ function approveBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 3 && d.appr_name1 == undefined && d.appr_flag0 == 1){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s3a1d1.png">'
-	    	            		+'<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: MediumSeaGreen; font-size: large;">'
-	    	            		+d.appr_name0+' ></span> &nbsp;&nbsp;'
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: MediumSeaGreen; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            }
-	    	            if(d.sidb_doc_stat == 3 && d.appr_name2 == undefined && d.appr_flag1 == 1){
+	    	            if(d.sidb_doc_stat == 3 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag1 == 1){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s3a2d2.png">'
 	    	            		+'<br>   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:20%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">'
 	    	           			+d.appr_name0+' > </span> <span style="display:inline-block; width:24%;"></span><span style="color: MediumSeaGreen; font-size: large; ">'
@@ -847,11 +863,10 @@ function approveBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 == undefined && d.appr_flag0 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a1d1.png">'
-	    	            		+'<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: red; font-size: large;">'
-	    	            		+d.appr_name0+' ></span> &nbsp;&nbsp;'
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:58%;"> </span>&nbsp;&nbsp;<span style="color: red; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            }
-	    	            if(d.sidb_doc_stat == 4 && d.appr_name2 == undefined && d.appr_flag0 == 2){
-	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">'
+	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 2){
+	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">'
 	    	            		+'<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">'
 	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:22%;"></span>'+d.appr_name1
 	    	            }
@@ -1023,10 +1038,10 @@ function denyBox(){
 	    	            if (d.sidb_doc_stat == 1 && d.appr_name1 == undefined && d.appr_flag0 == 0 ) {
 	    	            	  
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s1a1d1.png">'
-	    	                    + ' <br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: DodgerBlue; font-size: large;"> ' + d.appr_name0 + ' </span>';
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: DodgerBlue; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            	    }  
 	    	          
-	    	            if (d.sidb_doc_stat == 1 && d.appr_name2 == undefined && d.appr_flag0 == 0) {
+	    	            if (d.sidb_doc_stat == 1 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 0) {
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s1a2d1.png">'
 	    	                    + '<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: DodgerBlue;  font-size: large;">' + d.appr_name0 +' >&nbsp; </span> <span style="display:inline-block; width:22%;"></span>' + d.appr_name1 + ' </span> ' 
 	    	            }
@@ -1057,10 +1072,9 @@ function denyBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 3 && d.appr_name1 == undefined && d.appr_flag0 == 1){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s3a1d1.png">'
-	    	            		+'<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: MediumSeaGreen; font-size: large;">'
-	    	            		+d.appr_name0+' ></span> &nbsp;&nbsp;'
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: MediumSeaGreen; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            }
-	    	            if(d.sidb_doc_stat == 3 && d.appr_name2 == undefined && d.appr_flag1 == 1){
+	    	            if(d.sidb_doc_stat == 3 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag1 == 1){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s3a2d2.png">'
 	    	            		+'<br>   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:20%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">'
 	    	           			+d.appr_name0+' > </span> <span style="display:inline-block; width:24%;"></span><span style="color: MediumSeaGreen; font-size: large; ">'
@@ -1075,11 +1089,10 @@ function denyBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 == undefined && d.appr_flag0 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a1d1.png">'
-	    	            		+'<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: red; font-size: large;">'
-	    	            		+d.appr_name0+' ></span> &nbsp;&nbsp;'
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:58%;"> </span>&nbsp;&nbsp;<span style="color: red; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            }
-	    	            if(d.sidb_doc_stat == 4 && d.appr_name2 == undefined && d.appr_flag0 == 2){
-	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">'
+	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 2){
+	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">'
 	    	            		+'<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">'
 	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:22%;"></span>'+d.appr_name1
 	    	            }
@@ -1252,10 +1265,10 @@ function chamjoBox(){
 	    	            if (d.sidb_doc_stat == 1 && d.appr_name1 == undefined && d.appr_flag0 == 0 ) {
 	    	            	  
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s1a1d1.png">'
-	    	                    + ' <br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: DodgerBlue; font-size: large;"> ' + d.appr_name0 + ' </span>';
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: DodgerBlue; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            	    }  
 	    	          
-	    	            if (d.sidb_doc_stat == 1 && d.appr_name2 == undefined && d.appr_flag0 == 0) {
+	    	            if (d.sidb_doc_stat == 1 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 0) {
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s1a2d1.png">'
 	    	                    + '<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: DodgerBlue;  font-size: large;">' + d.appr_name0 +' >&nbsp; </span> <span style="display:inline-block; width:22%;"></span>' + d.appr_name1 + ' </span> ' 
 	    	            }
@@ -1286,10 +1299,9 @@ function chamjoBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 3 && d.appr_name1 == undefined && d.appr_flag0 == 1){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s3a1d1.png">'
-	    	            		+'<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: MediumSeaGreen; font-size: large;">'
-	    	            		+d.appr_name0+' ></span> &nbsp;&nbsp;'
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: MediumSeaGreen; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            }
-	    	            if(d.sidb_doc_stat == 3 && d.appr_name2 == undefined && d.appr_flag1 == 1){
+	    	            if(d.sidb_doc_stat == 3 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag1 == 1){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s3a2d2.png">'
 	    	            		+'<br>   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:20%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">'
 	    	           			+d.appr_name0+' > </span> <span style="display:inline-block; width:24%;"></span><span style="color: MediumSeaGreen; font-size: large; ">'
@@ -1304,11 +1316,10 @@ function chamjoBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 == undefined && d.appr_flag0 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a1d1.png">'
-	    	            		+'<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: red; font-size: large;">'
-	    	            		+d.appr_name0+' ></span> &nbsp;&nbsp;'
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:58%;"> </span>&nbsp;&nbsp;<span style="color: red; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            }
-	    	            if(d.sidb_doc_stat == 4 && d.appr_name2 == undefined && d.appr_flag0 == 2){
-	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">'
+	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 2){
+	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">'
 	    	            		+'<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">'
 	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:22%;"></span>'+d.appr_name1
 	    	            }
@@ -1480,10 +1491,10 @@ function myTurnBox(){
 	    	            if (d.sidb_doc_stat == 1 && d.appr_name1 == undefined && d.appr_flag0 == 0 ) {
 	    	            	  
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s1a1d1.png">'
-	    	                    + ' <br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: DodgerBlue; font-size: large;"> ' + d.appr_name0 + ' </span>';
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: DodgerBlue; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            	    }  
 	    	          
-	    	            if (d.sidb_doc_stat == 1 && d.appr_name2 == undefined && d.appr_flag0 == 0) {
+	    	            if (d.sidb_doc_stat == 1 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 0) {
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s1a2d1.png">'
 	    	                    + '<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: DodgerBlue;  font-size: large;">' + d.appr_name0 +' >&nbsp; </span> <span style="display:inline-block; width:22%;"></span>' + d.appr_name1 + ' </span> ' 
 	    	            }
@@ -1514,10 +1525,9 @@ function myTurnBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 3 && d.appr_name1 == undefined && d.appr_flag0 == 1){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s3a1d1.png">'
-	    	            		+'<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: MediumSeaGreen; font-size: large;">'
-	    	            		+d.appr_name0+' ></span> &nbsp;&nbsp;'
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: MediumSeaGreen; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            }
-	    	            if(d.sidb_doc_stat == 3 && d.appr_name2 == undefined && d.appr_flag1 == 1){
+	    	            if(d.sidb_doc_stat == 3 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag1 == 1){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s3a2d2.png">'
 	    	            		+'<br>   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:20%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">'
 	    	           			+d.appr_name0+' > </span> <span style="display:inline-block; width:24%;"></span><span style="color: MediumSeaGreen; font-size: large; ">'
@@ -1532,11 +1542,10 @@ function myTurnBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 == undefined && d.appr_flag0 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a1d1.png">'
-	    	            		+'<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: red; font-size: large;">'
-	    	            		+d.appr_name0+' ></span> &nbsp;&nbsp;'
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:58%;"> </span>&nbsp;&nbsp;<span style="color: red; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            }
-	    	            if(d.sidb_doc_stat == 4 && d.appr_name2 == undefined && d.appr_flag0 == 2){
-	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">'
+	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 2){
+	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">'
 	    	            		+'<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">'
 	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:22%;"></span>'+d.appr_name1
 	    	            }
@@ -1708,10 +1717,10 @@ function iDidBox(){
 	    	            if (d.sidb_doc_stat == 1 && d.appr_name1 == undefined && d.appr_flag0 == 0 ) {
 	    	            	  
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s1a1d1.png">'
-	    	                    + ' <br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: DodgerBlue; font-size: large;"> ' + d.appr_name0 + ' </span>';
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: DodgerBlue; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            	    }  
 	    	          
-	    	            if (d.sidb_doc_stat == 1 && d.appr_name2 == undefined && d.appr_flag0 == 0) {
+	    	            if (d.sidb_doc_stat == 1 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 0) {
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s1a2d1.png">'
 	    	                    + '<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: DodgerBlue;  font-size: large;">' + d.appr_name0 +' >&nbsp; </span> <span style="display:inline-block; width:22%;"></span>' + d.appr_name1 + ' </span> ' 
 	    	            }
@@ -1742,10 +1751,9 @@ function iDidBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 3 && d.appr_name1 == undefined && d.appr_flag0 == 1){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s3a1d1.png">'
-	    	            		+'<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: MediumSeaGreen; font-size: large;">'
-	    	            		+d.appr_name0+' ></span> &nbsp;&nbsp;'
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:60%;"> </span>&nbsp;&nbsp;<span style="color: MediumSeaGreen; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            }
-	    	            if(d.sidb_doc_stat == 3 && d.appr_name2 == undefined && d.appr_flag1 == 1){
+	    	            if(d.sidb_doc_stat == 3 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag1 == 1){
 	    	            	in2 += ' <img style="width:80%;" src="/image/doc/docBox/s3a2d2.png">'
 	    	            		+'<br>   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:20%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">'
 	    	           			+d.appr_name0+' > </span> <span style="display:inline-block; width:24%;"></span><span style="color: MediumSeaGreen; font-size: large; ">'
@@ -1760,11 +1768,10 @@ function iDidBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 == undefined && d.appr_flag0 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a1d1.png">'
-	    	            		+'<br> &nbsp;&nbsp;기안  <span style="display:inline-block; width:50%;"> </span><span style="color: red; font-size: large;">'
-	    	            		+d.appr_name0+' ></span> &nbsp;&nbsp;'
+	    	                    + ' <br> &nbsp;&nbsp;&nbsp;&nbsp;기안  <span style="display:inline-block; width:58%;"> </span>&nbsp;&nbsp;<span style="color: red; font-size: large;"> ' + d.appr_name0 + ' </span> &nbsp;&nbsp;';
 	    	            }
-	    	            if(d.sidb_doc_stat == 4 && d.appr_name2 == undefined && d.appr_flag0 == 2){
-	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">'
+	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 2){
+	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">'
 	    	            		+'<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">'
 	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:22%;"></span>'+d.appr_name1
 	    	            }
