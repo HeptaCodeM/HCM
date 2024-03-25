@@ -1,5 +1,6 @@
 package com.hcm.grw.dto.hr;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +14,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeDto {
+public class EmployeeDto implements Serializable {
+	
+	private static final long serialVersionUID = 8178535326061438451L;
+	
 	private String empl_id;
 	private String empl_pwd;
 	private String empl_name;
@@ -50,5 +54,7 @@ public class EmployeeDto {
 	private String enddate;
 	
 	private CommonCodeDto comm;
+	
+	private String emsi_seq;
 	
 }

@@ -11,10 +11,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script> 
 <title>결재문서 상세 페이지</title>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp"%>
 <style>
+.modal {
+    --bs-modal-zindex: 1055;
+    --bs-modal-width: 1080px;
+    }
+.flex {
+  display: flex;
+  justify-content: flex-end; 
+}
+
 .card .card-header {
 justify-content: center;
  align-items: center;
@@ -53,7 +63,7 @@ th, td {
 }
 
 .content {
-	margin-top: 15%;
+	margin-top: 50px;
 	width: 100%;
 }
 .transparent-table, .transparent-table td, .transparent-table tr {
@@ -92,14 +102,13 @@ th, td {
 			</div>
 		</div>
 		<div class="app-content flex-column-fluid">
-		<c:set var="docDto1" value="${docDto[1]}" />
+		<c:set var="docDto1" value="${docDto[0]}" />
 			<!-- 내용 시작 -->
 			<div id="kt_app_content" class="app-content flex-column-fluid">
 				<div class="app-container container-fluid">
 					<div class="card card-flush h-md-50 mb-xl-10">
 						<div style="text-align:center;"  class="card-header pt-5">
-<%-- 							<h1  style="text-align:center;" class="card-title text-gray-800 fw-bold">${docDto1.empl_name} ${docDto1.empl_rank}님이 기안한 ${docDto1.sidt_temp_name}입니다.</h1>
- --%>							<h1> ${docDto1.sidb_doc_title}</h1>
+							<h1> ${docDto1.sidb_doc_title}</h1>
 							 <br>
 							 <div>
 							<table class="transparent-table">
@@ -158,10 +167,11 @@ th, td {
 						<div class="separator separator-dashed my-3"></div>
 						<div class="card-body pt-5">
 
-							<div  class="container">
+							<div  class="container" id="container">
+							<div id="pdfDiv">
 							<div id="pdfZone">
-								<div class="header">
-									<div></div>
+								<div class="flex">
+								<div style="max-width:40%;">
 									<table class="top-table">
 										<tr>
 											<th rowspan="4" style="width:30px">결<br>재
@@ -173,10 +183,13 @@ th, td {
 											</c:forEach>
 										</tr>
 										<tr style="height:80px;">
-											<td>기안자 서명</td>
+											<td><img style="width: 80px; height: 70px; border: none;"
+																src="${docDto1.empl_sign}" /></td>
 											<c:forEach items="${docDto}" var="dt" varStatus="i">
 												<td><c:choose>
-													<%-- 	<c:when test="${empty dt.appr_sign}"> --%>
+													 <c:when test="${dt.appr_flag == 2}">
+         											   <img style="width: 80px; height: 70px; border: none;"src="/image/doc/docBox/deny.png"/>
+         											   </c:when>
 														<c:when test="${dt.appr_sign == null || dt.appr_sign ==' '|| dt.appr_sign ==''}">
             											    &nbsp;
          											   </c:when>
@@ -198,19 +211,19 @@ th, td {
 										</tr>
 									</table>
 								</div>
-								<div style="height: 30px;">
 								</div>
 								<div class="content">
 										<input id="docTitle" type="hidden" value="${docDto1.sidb_doc_title}">
 									${docDto1.sidb_doc_content}
 								</div>
 								</div>	
-								
+								</div>
 									<div class="separator separator-dashed my-3"></div>
 									
 									<div style="margin-top:50px; text-align:right;">
 									<span id="selectFile" style="min-width:100px; margin-right:1.5%;">첨부파일: </span> <button class="btn btn-primary btnMd" id="downBtn" style="font-size: small;">다운로드</button>
 									<button class="btn btn-primary btnMd" id="savePdf" style="font-size: small;">PDF 저장</button>
+									  <button  class="btn btn-primary btnMd"  id="openWindow">미리보기</button>
 									</div>
 								<div class="footer">
 									<div style="text-align:center; font-size:large; margin-bottom:20px;">첨언내역</div>
@@ -341,11 +354,34 @@ th, td {
 
 				<!-- 승인 첨언 입력 form -->
 				<div class="modal-body">
+				
+				<div id="kt_app_content" class="app-content flex-column-fluid">
+						<div class="app-container container-fluid">
+							<div class="card-flush h-md-50 mb-xl-10" style="background-color: white; text-align: center;">
+							<c:forEach var="sign" items="${signList}" varStatus="var">
+								<div class="card-body pt-5" style="display: inline-block; width: 320px;" >
+									<div class="border border-gray-400" style="height: 240px;">
+									<img src="${sign.emsi_sign_img}"><br>
+									 </div><br>
+									<div class="card-footer" style="margin: 0px auto;">
+										<c:if test="${sign.emsi_setflag eq 'Y'}">
+											<span class="badge badge-info">대표</span>
+										</c:if>
+										<input id="seq" type="hidden" value="${sign.emsi_seq}">
+										<input name="signDefault" type="checkbox" class="form-check-input" onclick="chkOnly(this)" value="${sign.emsi_seq}">
+										<span class="badge ">${sign.emsi_title}</span>
+							    	</div>
+								</div>
+								
+							</c:forEach>
+							<br><br>
+							</div>
+						</div>
+					</div>
+				
 					<p>첨언</p>
-					<form id="reply" action="./approve.do" method="post">
 					<input type="hidden" value="${docDto1.sidb_doc_num}" id="docNum" name="docNum"/>
-						<textarea name="reply" style="width: 100%;"></textarea>
-					</form>
+						<textarea id="approvalReply" class="form-control" style="width: 100%;"></textarea>
 				</div>
 
 				<div class="modal-footer">
@@ -375,11 +411,10 @@ th, td {
 
 				<!-- 반려사유 입력 form -->
 				<div class="modal-body">
+				
 					<p>반려사유</p>
-					<form id="denyReply" action="./deny.do" method="post">
-						<textarea name="reply" style="width: 100%;"></textarea>
+						<textarea id="rejectReply" class="form-control" style="width: 100%;"></textarea>
 						<input type="hidden" value="${docDto1.sidb_doc_num}" name="docNum"/>
-					</form>
 				</div>
 
 				<div class="modal-footer">
@@ -388,8 +423,39 @@ th, td {
 			</div>
 		</div>
 	</div>
+	
+   
+	<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable_1" onclick="preview()">
+    pdf용 모달</button>
+
+<div class="modal fade" tabindex="-1" id="kt_modal_scrollable_1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+
+                begin::Close
+                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal">
+                    <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                </div>
+                end::Close
+            </div>
+
+            <div class="modal-body" >
+                <div id="previewContent">
+    			</div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="modalPdf">pdf가즈앙</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+	
+	
 </body>
 <script type="text/javascript" src="/js/doc/boardDetail.js"></script>
-
 
 </html>
