@@ -74,7 +74,7 @@ table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, ta
 						</td>
 						<td><a href="/doc/getTempDoc.do?sitb_doc_num=${dto.sidb_doc_num}">${dto.sidb_doc_title}</a></td>
 						
-						<td><img style="width:50px; height:50px; border-radius: 22px;"  src="data:image/png;base64,${dto.empl_pictureStr}" /> ${dto.empl_name}</td>
+						<td><img style="width:50px; height:50px; border-radius: 22px;"  src="${dto.empl_pictureStr}" /> ${dto.empl_name}</td>
 						
 						<td style="text-align:center;">
 						<fmt:parseDate var="patternDate"	value="${dto.sidb_doc_writedt}"	pattern="yyyy-MM-dd HH:mm:ss" /> 

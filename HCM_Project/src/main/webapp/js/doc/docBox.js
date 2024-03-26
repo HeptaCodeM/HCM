@@ -3,30 +3,6 @@ function detailBoard(docNum) {
     window.location.href = url;
 }
 
-/*//문서 상세조회시  PostMapping form태그 생성 
-function detailBoard(docNum) {
-let f = document.createElement('form');
-    
-    let obj;
-    obj = document.createElement('input');
-    obj.setAttribute('type', 'hidden');
-    obj.setAttribute('name', 'docNum');
-    obj.setAttribute('value', docNum);
-    
-    f.appendChild(obj);
-    f.setAttribute('method', 'post');
-    f.setAttribute('action', '/doc/docBox/getDetail.do');
-    document.body.appendChild(f);
-    f.submit();
-}*/
-
-//미리보기창 도전
-function openWindow () {
-  const options = 'width=700, height=600, top=50, left=50, scrollbars=yes'
-  window.open('http://www.naver.com','_blank',options)
-}
-
-
 
 $(document).ready( function () {
 	$('#myTable').DataTable({ 
@@ -129,7 +105,7 @@ function allDocs(){
 	    	            + '                     기안일자| ' + formattedDate
 	    	       
 	    	    //사진 + 사원이름        
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="data:image/png;base64,'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
 
 	    	    //프로그래스바 시작         
 	    	            + '                    <td style="text-align:center;"> ';
@@ -355,7 +331,7 @@ function gianBox(){
 	    	            + '                     기안일자| ' + formattedDate
 	    	       
 	    	    //사진 + 사원이름        
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="data:image/png;base64,'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
 
 	    	    //프로그래스바 시작         
 	    	            + '                    <td style="text-align:center;"> ';
@@ -580,7 +556,7 @@ function ingBox(){
 	    	            + '                     기안일자| ' + formattedDate
 	    	       
 	    	    //사진 + 사원이름        
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="data:image/png;base64,'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
 
 	    	    //프로그래스바 시작         
 	    	            + '                    <td style="text-align:center;"> ';
@@ -804,7 +780,7 @@ function approveBox(){
 	    	            + '                     기안일자| ' + formattedDate
 	    	       
 	    	    //사진 + 사원이름        
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="data:image/png;base64,'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
 
 	    	    //프로그래스바 시작         
 	    	            + '                    <td style="text-align:center;"> ';
@@ -1030,7 +1006,7 @@ function denyBox(){
 	    	            + '                     기안일자| ' + formattedDate
 	    	       
 	    	    //사진 + 사원이름        
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="data:image/png;base64,'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
 
 	    	    //프로그래스바 시작         
 	    	            + '                    <td style="text-align:center;"> ';
@@ -1257,7 +1233,7 @@ function chamjoBox(){
 	    	            + '                     기안일자| ' + formattedDate
 	    	       
 	    	    //사진 + 사원이름        
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="data:image/png;base64,'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
 
 	    	    //프로그래스바 시작         
 	    	            + '                    <td style="text-align:center;"> ';
@@ -1483,7 +1459,7 @@ function myTurnBox(){
 	    	            + '                     기안일자| ' + formattedDate
 	    	       
 	    	    //사진 + 사원이름        
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="data:image/png;base64,'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
 
 	    	    //프로그래스바 시작         
 	    	            + '                    <td style="text-align:center;"> ';
@@ -1709,7 +1685,7 @@ function iDidBox(){
 	    	            + '                     기안일자| ' + formattedDate
 	    	       
 	    	    //사진 + 사원이름        
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="data:image/png;base64,'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
 
 	    	    //프로그래스바 시작         
 	    	            + '                    <td style="text-align:center;"> ';

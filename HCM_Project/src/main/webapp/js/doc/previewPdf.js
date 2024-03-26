@@ -21,17 +21,17 @@ function pdfPrint() {
 
 			// 첫 페이지 출력
 			//			저장할이미지, 저장타입, 시작x좌표, 시작y좌표, PDF의 크기(가로,세로)	
-			doc.addImage(imgData, 'PNG', 8, 20, imgWidth, imgHeight);
+			doc.addImage(imgData, 'PNG', 9, 20, imgWidth, imgHeight);
 			heightLeft -= pageHeight;
 			//전체 이미지의 높이에서 PDF 한페이지의 높이를 -
 
 			// 한 페이지 이상일 경우 루프 돌면서 출력
-			while (heightLeft >= 20) {
+		/*	while (heightLeft >= 20) {
 				position = heightLeft - imgHeight;
 				doc.addPage();
 				doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
 				heightLeft -= pageHeight;
-			}
+			}*/
 
 			var docTitle = document.getElementById("docTitle").value;
 			// 파일 저장

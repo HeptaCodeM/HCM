@@ -173,19 +173,6 @@ document.getElementById('initial').addEventListener('click', function() {
 
 });
 	
-// 참조 팝업창
-document.getElementById('signRefer').addEventListener('click', function() {
-	open('/doc/writeDoc/signRefer.do', '', 'width=800px height=900px left=400');
-});
-// 결재선 팝업
-document.getElementById('signLine').addEventListener('click', function() {
-	open('/doc/writeDoc/signLine.do', '', 'width=1600px height=900px left=400');
-});
-// 서명 팝업
-document.getElementById('selectSign').addEventListener('click', function() {
-	open('/doc/writeDoc/selectSign.do', '', 'width=1200px height=720px left=400');
-});
-
 var ref;
 var dept;
 var json;
@@ -209,11 +196,6 @@ window.addEventListener('message', function(e) {
 	console.log('sign : ', sign);
 });
 
-document.getElementById('fileTest').addEventListener('click', function() {
-	location.href = './fileTest.do';
-});
-	
-	
 	// 즐겨찾기 삭제
 	document.getElementById('delBtn').addEventListener('click', function() {
 		var select = document.getElementById('apprList').value;
@@ -540,15 +522,15 @@ document.getElementById('fileTest').addEventListener('click', function() {
 						console.log(myPositionFlag);
 						if (node.pos_na != undefined) {
 							if (myPositionFlag > node.pos_flag) {
-								node.text = node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;<span class="positionFlag" style="display: none;">' + node.pos_flag + '</span>';
+								node.text = '<span onclick="empInfoLayer(' + node.id + ', this)">' + node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;<span class="positionFlag" style="display: none;">' + node.pos_flag + '</span></span>';
 							} else {
-								node.text = node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="pick()" class="btn btn-basic btn-sm addd" style="padding: 0.2px;">➕</button><span class="positionFlag" style="display: none;">' + node.pos_flag + '</span>';
+								node.text = '<span onclick="empInfoLayer(' + node.id + ', this)">' + node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="pick()" class="btn btn-basic btn-sm addd" style="padding: 0.2px;">➕</button><span class="positionFlag" style="display: none;">' + node.pos_flag + '</span></span>';
 							}
 						}
 
-						if (myPositionFlag > parseInt(node.pos_flag) && node.pos_na != null) {
-							node.state = { disabled: true };
-						}
+//						if (myPositionFlag > parseInt(node.pos_flag) && node.pos_na != null) {
+//							node.state = { disabled: true };
+//						}
 
 					});
 
@@ -567,9 +549,14 @@ document.getElementById('fileTest').addEventListener('click', function() {
 			$('#schBtn').click();
 		}
 	});
-	
-	
 
+//$('#jstree').on('select_node.jstree', function(e, data) {
+//	var id = data.node.id
+//	if(id.startsWith == 'DT') {
+//		return;
+//	}
+//	empInfoLayer(id, this);
+//});	
 
 
 // + 버튼으로 라인 보내기
@@ -657,7 +644,6 @@ function delFavo() {
 		}).catch(err => {
 			console.log(err);
 		});
-	
 	
 }
 

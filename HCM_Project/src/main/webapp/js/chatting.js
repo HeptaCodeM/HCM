@@ -10,7 +10,7 @@ onload = function() {
 	if (sender != null && target != null) {
 		ws.send(sender + ',' + target + ',접속여부판단');
 	}
-}, 5000);
+}, 1000);
 	
 	if (ws === null) {
 		ws = new WebSocket('ws://localhost:8080/hcmWs.do');
@@ -29,10 +29,10 @@ onload = function() {
 	})
 	
 	ws.onmessage = function(e) {
-		console.log('웹소켓 서버 수신')
+//		console.log('웹소켓 서버 수신')
 		var myId = document.getElementById('id').value;
 		if(e.data === '접속여부판단:온라인') {
-			console.log(e.data);
+//			console.log(e.data);
 			var parent = document.getElementById('target').parentNode;
 			var dong = parent.querySelector('.badge-circle');
 			var text = parent.querySelector('.text-muted');
@@ -41,7 +41,6 @@ onload = function() {
 			text.textContent = '접속중';
 			return;
 		} else if (e.data === '접속여부판단:오프라인') {
-			console.log(e.data);
 			var parent = document.getElementById('target').parentNode;
 			var dong = parent.querySelector('.badge-circle');
 			var text = parent.querySelector('.text-muted');
@@ -103,7 +102,7 @@ onload = function() {
 				chatContent.scrollTop = chatHeigth;
 				
 				fetch('/setReadMessage.do?ch_sender=' + json.ch_sender + '&ch_target=' + myId).then().then().catch();
-				
+				chatUserList();
 				// 현재 대화를 안보고있는 경우
 			} else {
 				var symbol = document.getElementById(json.ch_sender);
@@ -117,12 +116,14 @@ onload = function() {
 					})
 					.catch(err => { console.log(err) });
 				notify(json.sender_name + '님으로 부터 메세지 도착');
+				chatUserList();
 			}
 			
 		} else {
 			// 노티피케이션 처리 영역
 //			notify(e.data);
 		}
+		
 	}
 	
 	// 웹소켓 연결해제
@@ -230,6 +231,7 @@ function sendMessage() {
 			console.log('전송 실패', err)
 		});
 		ws.send(sender + ',' + target + ',' + message);
+		chatUserList();
 }
 
 // 대화내용 불러오기
@@ -325,11 +327,11 @@ function loadMessage(event, empl_id) {
 					reDiv5.setAttribute('class', 'ms-3')
 					reDiv6.setAttribute('class', 'p-5 rounded bg-light-info text-gray-900 fw-semibold mw-lg-400px text-start')
 					
-//					if (pic != '/images/blank.png') {
-//						reImg.setAttribute('src', pic);
-//					} else {
+					if (d.sender_pic_str != undefined) {
+						reImg.setAttribute('src', 'data:image/png;base64,' + d.sender_pic_str);
+					} else {
 						reImg.setAttribute('src', 'https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77');
-//					}
+					}
 					
 					reA.setAttribute('class', 'fs-5 fw-bold text-gray-900 text-hover-primary me-1')
 					reSpan.setAttribute('class', 'text-muted fs-7 mb-1')
@@ -398,13 +400,13 @@ function isJson(msg) {
 // 대화상대 목록
 function chatUserList() {
 	var myId = document.getElementById('id').value;
-	fetch('/chatUserList.do')
+	fetch('/chatUserList.do?ch_target=' + myId)
 	.then(resp => {return resp.json()})
 	.then(data => {
 		document.getElementById('searchMainDiv').textContent = '';
 		console.log(data)
 		data.forEach(function(d, idx) {
-			if(d.empl_id != myId) {
+			if(d.ch_sender != myId) {
 			
 				var div1 = document.createElement('div');
 				var div2 = document.createElement('div');
@@ -425,33 +427,33 @@ function chatUserList() {
 				div6.setAttribute('class', 'ms-2 w-100px');
 				div6.setAttribute('style', 'text-align: right;');
 				div7.setAttribute('class', 'border-bottom border-gray-300 border-bottom-dashed');
-				if(d.empl_picture_str != undefined) {
-					img.setAttribute('src', 'data:image/png;base64,' + d.empl_picture_str);
+				if(d.sender_pic_str != undefined) {
+					img.setAttribute('src', 'data:image/png;base64,' + d.sender_pic_str);
 				} else {
 					img.setAttribute('src', 'https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77');
 				}
 				a.setAttribute('class', 'fs-5 fw-bold text-gray-900 text-hover-primary mb-2');
-				a.setAttribute('onclick', 'loadMessage(event,' + d.empl_id + ')');
+				a.setAttribute('onclick', 'loadMessage(event,' + d.ch_sender + ')');
 				a.setAttribute('style', 'cursor: pointer;');
 				span.setAttribute('class', 'badge badge-light');
 
 				a.textContent = d.empl_name;
 				div5.textContent = d.empl_email;
-				span.textContent = d.coco_name_dnm;
+				span.textContent = d.dept_name;
 				
 				var number = document.createElement('div');
-				fetch('/chatCount.do?ch_sender=' + d.empl_id + '&ch_target=' + myId)
+				fetch('/chatCount.do?ch_sender=' + d.ch_sender + '&ch_target=' + myId)
 				.then(resp => {return resp.json()})
 				.then(cnt => {
 					if(cnt != 0) {
 						number.setAttribute('class', 'symbol symbol-circle symbol-25px');
-						number.setAttribute('id', d.empl_id);
+						number.setAttribute('id', d.ch_sender);
 						number.setAttribute('style', 'background-color: #f8285a; width: 18px; height: 12px; color: white; font-size: 10px;'
 							+ 'text-align: center; line-height: 12px; margin-left: 10px;');
 						number.textContent = cnt;
 					} else {
 						number.setAttribute('class', 'symbol symbol-circle symbol-25px');
-						number.setAttribute('id', d.empl_id);
+						number.setAttribute('id', d.ch_sender);
 						number.setAttribute('style', 'background-color: white; width: 18px; height: 12px; color: white; font-size: 10px;'
 							+ 'text-align: center; line-height: 12px; margin-left: 10px;');
 						number.textContent = cnt;
