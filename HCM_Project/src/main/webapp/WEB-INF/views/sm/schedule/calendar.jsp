@@ -230,10 +230,38 @@
 				
 				
 		<div id="filterLayer">
+		
 					<div>
 						<form name="filter" id="filter" method="post">
 							<table class="table">
-								
+								<thead>
+								</thead>
+								<tbody>
+								<tr>
+									<th>개인</th>
+									<td>
+										<input class="form-check-input" type="checkbox" name="type" value="100">
+									</td>
+								</tr>	
+								<tr>
+									<th>외근</th>
+									<td>
+										<input class="form-check-input" type="checkbox" name="type" value="200">
+									</td>
+								</tr>	
+								<tr>
+									<th>연차</th>
+									<td>
+										<input class="form-check-input" type="checkbox" name="type" value="TC000001">
+									</td>
+								</tr>	
+								<tr>
+									<th>휴가</th>
+									<td>
+										<input class="form-check-input" type="checkbox" name="type" value="TC000002">
+									</td>
+								</tr>	
+								</tbody>
 							</table>
 						</form>
 					</div>
@@ -253,5 +281,4 @@ $(document).ready(function(){
 
 
 </script>
-
 </html>

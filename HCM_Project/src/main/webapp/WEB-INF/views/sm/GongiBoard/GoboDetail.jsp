@@ -21,7 +21,7 @@
    }
    ul {
     list-style-type: none; /* 리스트 스타일을 없앰 */
-}
+	}
 
 
   /* 화면늘리는 버튼 숨기기 */
@@ -86,7 +86,7 @@
                             <h3>댓글</h3>
                           <ul class="list-group" id="commentList">
                       <c:forEach var="comment" items="${Rlist}">
-                          <li>
+                          <li >
                               <div class="d-flex align-items-center no-border" style="border: none;">
                                 <c:choose>
 							    <c:when test="${sessionScope.userInfoVo.empl_picture_str != null}">
@@ -132,7 +132,7 @@
                            <c:forEach var="reply" items="${Dlist}" varStatus="replyStatus">
             <!-- 현재 댓글과 depth가 1이고, rebo_parent_no가 현재 댓글의 rebo_no와 같은 경우 -->
 				            <c:if test="${comment.rebo_step == reply.rebo_step}">
-				                <li style="margin-left: 50px;">
+				                <li id="childReply" style="margin-left: 50px;">
 				                    <!-- 대댓글 내용 출력 -->
 				                    <div class="d-flex align-items-center no-border" style="border: none;">
 				                         <c:choose>
@@ -195,7 +195,6 @@
                             <div class="d-flex justify-content-end align-items-end">
                              <div class="register_box">
                                  <button id="submitButton" type="button" class="btn btn-primary" onclick="insertReply(${dto.gobo_no})" disabled>등록</button>
-
                              </div>
                              </div>
                              </div>
@@ -306,54 +305,64 @@ function insertReply(data){
 			
 	}
 
-function insertReplyTwo(rebo_no){
-    var container = $("#commentFormContainer"+rebo_no); // #commentFormContainer 요소를 선택합니다.
+
+function insertReplyTwo(rebo_no) {
+	
+    var container = $("#commentFormContainer" + rebo_no); // #commentFormContainer 요소를 선택합니다.
     var formData = container.find("#ReplyTwoForm").serialize(); // 해당 요소 안의 form 데이터를 가져옵니다.
-    
     var rebo_writer = $("#ReplyTwoForm #rebo_writer").val();
     var rebo_content = $("#commentTextArea" + rebo_no).val();
-    
+
     $.ajax({
         url: "/sm/insertReplyTwo.do",
         data: formData,
         type: "GET",
         dataType: "json",
-        success: function() {
+        success: function () {
             var currentDate = new Date();
-            var formattedDate = currentDate.getFullYear() + '-' + 
-                                ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' + 
-                                ('0' + currentDate.getDate()).slice(-2) + ' ' + 
-                                ('0' + currentDate.getHours()).slice(-2) + ':' + 
-                                ('0' + currentDate.getMinutes()).slice(-2);
-            
-            var commentHtml = '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
+            var formattedDate = currentDate.getFullYear() + '-' +
+                ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' +
+                ('0' + currentDate.getDate()).slice(-2) + ' ' +
+                ('0' + currentDate.getHours()).slice(-2) + ':' +
+                ('0' + currentDate.getMinutes()).slice(-2);
+
+                
+                var commentHtml = ''; // commentHtml 변수 초기화
+
+                if ($("#commentList > li").length > 0) {
+				    // 상위에 형제 노드가 있는 경우
+				    commentHtml += '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
+				}
             commentHtml += '<li style="margin-left: 50px;">';
             commentHtml += '<div class="d-flex align-items-center no-border" style="border: none;">';
             commentHtml += '<img src="${sessionScope.userInfoVo.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">';
             commentHtml += '<div style="margin-left: 10px;">';
-            commentHtml += '<strong>'+rebo_writer+'</strong><br>';
-            commentHtml += '<div>'+rebo_content+'</div>';
-            commentHtml += '<div><small>'+formattedDate+'</small>';
-            commentHtml += '<a role="button" class="comment_info_button " onclick="showCommentForm(${comment.rebo_no})">답글쓰기</a>';
+            commentHtml += '<strong>' + rebo_writer + '</strong><br>';
+            commentHtml += '<div>' + rebo_content + '</div>';
+            commentHtml += '<div><small>' + formattedDate + '</small>';
+            commentHtml += '<a role="button" class="comment_info_button " onclick="showCommentForm('+rebo_no+')">답글쓰기</a>';
             commentHtml += '</div>';
             commentHtml += '</div>';
             commentHtml += '</div>';
             commentHtml += '</li>';
-            
+
             if (!container.find("ul").length) {
                 commentHtml += '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
             }
+            
+            
+			
+                container.append(commentHtml);
+            // 대댓글 작성 폼 숨기기
 
-            container.append(commentHtml); // #commentFormContainer 바로 아래에 추가합니다.
-            container.find("#ReplyTwoForm")[0].reset();
+            // 대댓글 작성 폼 초기화
+                hideAllCommentForms();
         },
-        error: function() {
+        error: function () {
             // 에러 처리
         }
     });
 }
-
-
 
 </script> 
 
