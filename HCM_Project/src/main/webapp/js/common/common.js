@@ -225,5 +225,63 @@ function formatDate(date) {
     return year + '-' + month + '-' + day;
 }
 
+//레이어창 뒤 DIMED 클릭 시 처리
+document.addEventListener("DOMContentLoaded", function() {
+	document.getElementById("overlay").addEventListener("click", function() {
+		const layer = this.nextElementSibling;
+		this.style.display = "none";
+		if(layer != '' && layer != 'undefined'){
+	        layer.style.display = "none";
+		}
+	});
+});
 
+/* 임직원 정보 확인 Layer */
+function empInfoLayer(empl_id, element){
+	/*
+	if(typeof xVal == 'undefined'){
+		xVal = 0;
+	}
+	if(typeof yVal == 'undefined'){
+		yVal = 0;
+	}
+	*/
+	
+	fetch('/hr/employee/selectEmployeeOne.do?empl_id='+empl_id, {
+		method: 'GET',
+	})
+	.then(resp=>{
+		if (!resp.ok){
+		      throw new Error(resp)
+		}
+		return resp.json();
+	})
+	.then(data => {
+		var htmlBody = "";	
+		htmlBody += "<div class='symbol symbol-50px me-5'>";
+		htmlBody += "	<img alt='Logo' src='"+ data.empl_picture_str +"' />";
+		htmlBody += "</div>";
+		htmlBody += "<div class='d-flex flex-column'>";
+		htmlBody += "	<div class='fw-bold d-flex align-items-center fs-5'>"+data.empl_name;
+		htmlBody += "		<span class='badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2'>"+data.empl_rank_nm+"</span>";
+		htmlBody += "	</div>";
+		htmlBody += "	<div class='fw-semibold text-muted fs-7'>"+data.empl_dept_nm+"</div>";
+		htmlBody += "	<a href='mailto:${userInfoVo.empl_email}' class='fw-semibold text-muted text-hover-primary fs-7'>"+data.empl_email+"</a>";
+		htmlBody += "</div>";
+
+		var empInfoId = document.querySelector('#empInfoLayer');
+		var empInfoElement = document.querySelector('.emp-info-layer');
+		// 선택한 요소의 innerHTML 속성을 설정하여 내용 추가
+		empInfoElement.innerHTML = htmlBody;
+		empInfoId.style.display='block';
+
+		//console.log(element.offsetLeft, element.offsetWidth, empInfoId.offsetWidth)
+		
+		empInfoId.style.top = (element.offsetTop+empInfoId.offsetHeight-20)+"px";
+		empInfoId.style.left = (element.offsetLeft+(element.offsetWidth*1.5)+empInfoId.offsetWidth+15)+"px";
+	})
+	.catch((error)=>{
+		console.log("에러", error);
+	})
+}
 

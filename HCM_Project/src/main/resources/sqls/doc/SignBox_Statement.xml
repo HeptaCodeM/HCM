@@ -32,14 +32,15 @@
 <!-- 	임시보관함 저장 -->
 	<insert id="insertTempDoc">
 	INSERT INTO SIGN_TEMP_BOX
-								(SITB_DOC_NUM, EMPL_ID, SITB_DOC_TITLE,
-								SITB_DOC_CONTENT, SICA_CD, SITB_DOC_EXPIREDT,
-								SIDT_TEMP_CD, SITB_DOC_BE, SITB_DOC_END, SITB_CURR_ID, EMSI_SEQ,
-								SITB_DOC_JSON)
-	VALUES ((SELECT NVL(MAX(SITB_DOC_NUM) + 1, 24000001) FROM SIGN_TEMP_BOX),
-			#{empl_id}, #{sitb_doc_title},
-			#{sitb_doc_content}, #{sica_cd}, #{sitb_doc_expiredt},
-			#{sidt_temp_cd}, #{sitb_doc_be}, #{sitb_doc_end},  #{sitb_curr_id}, #{emsi_seq},
+								(SIDB_DOC_NUM, EMPL_ID, SIDB_DOC_TITLE,
+							SIDB_DOC_CONTENT, SICA_CD, SIDB_DOC_EXPIREDT, 
+							SIDT_TEMP_CD, SIDB_DOC_BE, SIDB_DOC_END, SIDB_CURR_ID,
+							EMPL_REF, EMPL_DEPT_CD, EMSI_SEQ,
+							SIDB_DOC_JSON)
+	VALUES ((SELECT NVL(MAX(SIDB_DOC_NUM) + 1, 24000001) FROM SIGN_DOC_BOX), #{empl_id}, #{sidb_doc_title},
+							#{sidb_doc_content}, #{sica_cd}, #{sidb_doc_expiredt},
+							#{sidt_temp_cd}, #{sidb_doc_be}, #{sidb_doc_end}, #{sidb_curr_id},
+							#{empl_ref}, #{empl_dept_cd}, #{emsi_seq},
 			'[
 			<foreach collection="sitb_doc_json" item="json" separator=",">
 				{

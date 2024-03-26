@@ -1,5 +1,7 @@
 package com.hcm.grw.comm;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -116,4 +118,35 @@ public class Function {
 		 return base64ToString;
 	}
 
+	
+	/**
+	* html 템플릿 처리
+	* @param templateName : 템플릿명(String)
+	* @return : String(이미지 String)
+	* #{content} 메일발송내용으로 replace처리
+	* @author : SDJ
+	* @since : 2024.03.25
+	*/	
+	public static String getHtmlTemplate(String templateName) {
+		
+		String content = "";
+
+        // 현재 클래스의 클래스 로더를 통해 리소스 폴더의 절대 경로를 가져옵니다.
+        String resourcesPath = Function.class.getClassLoader().getResource("").getPath();
+        // 파일의 상대 경로를 지정합니다.
+        String relativePath = "template/"+templateName+".html";
+        // 리소스 폴더 경로와 상대 경로를 합쳐서 파일 객체를 생성합니다.
+        File file = new File(resourcesPath + relativePath);
+
+        try (FileReader reader = new FileReader(file)) {
+            char[] buffer = new char[(int) file.length()];
+            reader.read(buffer);
+            content = new String(buffer);
+            System.out.println(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return content;
+	}
+	
 }

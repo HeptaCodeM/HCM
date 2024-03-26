@@ -163,7 +163,7 @@
 					    	<tfoot>
 								<tr>
 									<td colspan="3" style="text-align: center;">
-										<button onclick="location.href='sm/getAllGobo.do'" class="btn btn-primary btnMd">더보기</button>
+										<button onclick="location.href='/doc/docBox.do'" class="btn btn-primary btnMd">더보기</button>
 									</td>
 								</tr>					    	
 					    	</tfoot>
@@ -181,7 +181,7 @@
 				<div class="col-xxl-6 mb-5 mb-xl-10">
 					<div class="card shadow-sm fixheightCard">
 					    <div class="card-header">
-					        <h3 class="card-title">최근결재문서</h3>
+					        <h3 class="card-title">캘린더</h3>
 					    </div>
 					    <div class="card-body">
 					    	공사중입니다!
