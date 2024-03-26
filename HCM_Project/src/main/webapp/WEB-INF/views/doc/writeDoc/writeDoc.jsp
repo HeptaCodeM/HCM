@@ -6,10 +6,8 @@
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp"%>
 <title>DOC메인화면</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <link rel="stylesheet" href="/ckeditor5/sample/template.css">
 
 <style type="text/css">
@@ -28,7 +26,7 @@
 	data-kt-app-sidebar-push-toolbar="true"
 	data-kt-app-sidebar-push-footer="true"
 	data-kt-app-toolbar-enabled="true" class="app-default modal-open" style="overflow: auto; padding-right: 0px;">
-	<!-- **전체페이지 감싸기** -->
+	<!-- 전체페이지 감싸기 -->
 	<div class="app-wrapper flex-column flex-row-fluid">
 		<!-- 메인페이지 -->
 		<div class="app-toolbar py-3 py-lg-6">
@@ -63,7 +61,7 @@
 						<div class="card-body pt-5">
 
 							<!-- ---------------------------- 내 용 입 력 -------------------------------- -->
-							<!-- 기안양식 선택화면 버튼 -->
+							<!-- 템플릿양식 선택화면 버튼 -->
 							<div id="template_div" style="text-align: center;">
 								결재 진행을 위해 양식을 선택해주세요. <br/>
 								<button type="button" class="btn btn-primary"
@@ -75,34 +73,50 @@
 							<div id="editor_div" style="display: none;">
 							
 							<input type="hidden" value="${userInfoVo.emsi_seq }" id="emsi_seq">
+							<input type="hidden" value="${userInfoVo.empl_birth }" id="empl_birth">
+							<input type="hidden" value="${userInfo.empl_joindate }" id="empl_joindate">
+							<input type="hidden" value="${com.comp_name }" id="comp_name">
+							<input type="hidden" value="${com.comp_num }" id=" comp_num">
+							<input type="hidden" value="${com.comp_ceo_name }" id="comp_ceo_name">
+							<input type="hidden" value="${com.comp_tel }" id=" comp_tel">
+							<input type="hidden" value="${com.comp_num }" id=" comp_num">
+							<input type="hidden" value="${com.comp_addr1 }" id="comp_addr1">
+							<input type="hidden" value="${com.comp_addr2 }" id="comp_addr2">
 							<table class="table table-bordered">
 								<tr class="success">
 									<th>기안일</th>
 <!-- 									<td><input id="currentDate" name="sidb_doc_writedt" maxlength="20"></td> -->
 									<td><div id="currentDate" name="sidb_doc_writedt" maxlength="20"></div></td>
 									<th>만료일</th>
-									<td><input type="date" class="sitb_doc_expiredt" name="sidb_doc_expiredt" data-td-target-input="nearest"></td>
+									<td style="width: 25%;">
+									<div class="input-group" id="kt_td_picker_localization" data-td-target-input="nearest" data-td-target-toggle="nearest">
+									    <input type="text" class="form-control sitb_doc_expiredt" name="sidb_doc_expiredt" data-td-target="#kt_td_picker_localization"/>
+									    <span class="input-group-text" data-td-target="#kt_td_picker_localization" data-td-toggle="datetimepicker">
+									        <i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
+									    </span>
+									</div>
+									</td>
+<!-- 									<td><input type="date" class="sitb_doc_expiredt" name="sidb_doc_expiredt" data-td-target-input="nearest"></td> -->
 									<th>알림여부</th>
 									<td><input type="checkbox" class="form-check-input" name="alflag"></td>
 								</tr>
-								<tr id="signLine">
-									<th>결재선</th>
+								<tr>
+									<th id="signLine">결재선</th>
 									<td colspan="5">
 										<div id="apprName"></div>
 									</td>
 								</tr>
-								<tr id="signRefer">
-									<th>참조 및 참조부서</th>
+								<tr>
+									<th id="signRefer">참조 및 참조부서</th>
 									<td colspan="5">
 										<div id="refName"></div>
 										<div id="deptName"></div>
 									</td>
 								</tr>
 								<tr id="signLine">
-									<th>서명선택</th>
+									<th id="selectSign">서명선택</th>
 									<td colspan="3">
-										<button id="selectSign">서명관리</button>
-										<input id="signMsg" type="hidden" value="사용자 서명이 등록되었습니다">
+										<input id="signMsg" class="form-control form-solid" readonly="readonly" value="서명을 선택해주세요">
 									</td>
 									<th>기본서명사용</th>
 									<td>
@@ -112,7 +126,7 @@
 								
 								<tr>
 									<th>제목</th>
-									<td colspan="5"><input type="text" class="sitb_doc_title" name="sidb_doc_title" maxlength="20"></td>
+									<td colspan="5"><input type="text" class="form-control form-solid" id="sitb_doc_title" name="sidb_doc_title" maxlength="20"></td>
 									
 								</tr>
 							</table>

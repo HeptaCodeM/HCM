@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hcm.grw.dto.doc.TempTreeDto;
+import com.hcm.grw.dto.hr.CompanyDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +24,12 @@ public class TempTreeDaoImpl implements ITempTreeDao {
 	public List<TempTreeDto> getTempTree() {
 		log.info("TempTreeDaoImpl getTempTree DAO Access");
 		return session.selectList(NS+"getTempTree");
+	}
+
+	@Override
+	public CompanyDto getCompInfo() {
+		log.info("TempTreeDaoImpl getCompInfo DAO Access");
+		return session.selectOne(NS + "getCompInfo");
 	}
 
 }
