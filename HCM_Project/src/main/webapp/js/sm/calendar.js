@@ -314,5 +314,19 @@ function filterLayer(){
     $("#filterLayer").show();
     
 }
+$(document).ready(function () {
+    // x 버튼 클릭 시 레이어 닫기
+    $("#closeButton").click(function () {
+        $("#filterLayer").hide(); // 레이어 숨기기
+    });
 
+    // 레이어 외부를 클릭하여 레이어 닫기
+    $(document).click(function (event) {
+        if (!$(event.target).closest("#filterLayer").length) { // 레이어 외부를 클릭했는지 확인
+            if ($("#filterLayer").is(":visible")) { // 레이어가 표시 중인지 확인
+                $("#filterLayer").hide(); // 레이어 숨기기
+            }
+        }
+    });
+});
 

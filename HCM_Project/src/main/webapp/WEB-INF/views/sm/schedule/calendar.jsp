@@ -230,7 +230,9 @@
 				
 				
 		<div id="filterLayer">
-		
+		 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="filterLayer" aria-label="Close">
+                    <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
+                </div>
 					<div>
 						<form name="filter" id="filter" method="post">
 							<table class="table">
@@ -262,6 +264,16 @@
 									</td>
 								</tr>	
 								</tbody>
+								<tfoot>
+								<tr>
+									<th>
+										<button>조회</button>
+									</th>
+									<th>
+										<button></button>
+									</th>
+								</tr>
+								</tfoot>
 							</table>
 						</form>
 					</div>
