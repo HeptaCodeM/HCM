@@ -23,10 +23,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hcm.grw.dto.doc.SignJsonDto;
 import com.hcm.grw.dto.doc.SignTempBoxDto;
+import com.hcm.grw.dto.hr.CompanyDto;
 import com.hcm.grw.dto.hr.EmpSignDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.doc.ISignBoxService;
 import com.hcm.grw.model.service.doc.ISignFavoService;
+import com.hcm.grw.model.service.doc.ITempTreeService;
 import com.hcm.grw.model.service.hr.EmpSignService;
 import com.hcm.grw.model.service.hr.EmployeeService;
 
@@ -48,6 +50,9 @@ public class SignPageController {
 	
 	@Autowired
 	private EmployeeService empService;
+	
+	@Autowired
+	private ITempTreeService tService;
 	
 	@GetMapping("write.do")
 	public String write() {
@@ -97,6 +102,8 @@ public class SignPageController {
 			session.setAttribute("loginInfo", dto.get(0));
 			model.addAttribute("loginInfo", dto.get(0));
 		}
+		CompanyDto cDto = tService.getCompInfo();
+		model.addAttribute("com", cDto);
 		return "doc/writeDoc/writeDoc";
 	}
 	
