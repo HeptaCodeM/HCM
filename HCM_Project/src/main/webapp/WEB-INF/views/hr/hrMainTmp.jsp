@@ -6,7 +6,6 @@
 	<meta charset="UTF-8">
 	<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
 	<title>HR메인화면</title>
-	<script src="/js/hr/empInfoLayer.js" type="text/javascript"></script>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
