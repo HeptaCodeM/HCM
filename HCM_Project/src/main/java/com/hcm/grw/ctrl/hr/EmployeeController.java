@@ -375,17 +375,19 @@ public class EmployeeController {
 				Function.alertLocation(resp, "권한수정이 완료 되었습니다.", "/hr/employee/modifyAuthAdmin.do?empl_id="+empl_id, "btn-danger", "", "");
 			}
 			
-			//Role정보 Update
-			//Security Role정보 Update
-			SecurityContextHolder.getContext().setAuthentication(authService.createNewAuthentication(authentication,authentication.getName()));
-			//Session Role정보 Update
-			EmployeeDto employeeDto = employeeService.getUserInfo(authentication.getName());
-			HttpSession session = req.getSession();
-			//이미지 스트링 정보로 처리
-			employeeDto.setEmpl_picture_str(Function.blobImageToString(employeeDto.getEmpl_picture()));
-			//2진정보 초기화
-			employeeDto.setEmpl_picture(null);
-			session.setAttribute("userInfoVo", employeeDto);
+			if(empl_id.equals(empl_modify_id)) {
+				//Role정보 Update
+				//Security Role정보 Update
+				SecurityContextHolder.getContext().setAuthentication(authService.createNewAuthentication(authentication,authentication.getName()));
+				//Session Role정보 Update
+				EmployeeDto employeeDto = employeeService.getUserInfo(authentication.getName());
+				HttpSession session = req.getSession();
+				//이미지 스트링 정보로 처리
+				employeeDto.setEmpl_picture_str(Function.blobImageToString(employeeDto.getEmpl_picture()));
+				//2진정보 초기화
+				employeeDto.setEmpl_picture(null);
+				session.setAttribute("userInfoVo", employeeDto);
+			}
 			
 			return;
 		}else {

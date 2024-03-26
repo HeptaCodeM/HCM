@@ -285,7 +285,7 @@ function empInfoLayer(empl_id, element){
 		console.log(element.getBoundingClientRect());
 		console.log(elementPosTop, elementPosLeft, elementPosWidth, elementPosHeight)
 		
-		empInfoId.style.top = (elementPosTop+elementPosHeight-40)+"px";
+		empInfoId.style.top = (elementPosTop+elementPosHeight-45)+"px";
 		empInfoId.style.left = (elementPosLeft+elementPosWidth+20)+"px";
 	})
 	.catch((error)=>{

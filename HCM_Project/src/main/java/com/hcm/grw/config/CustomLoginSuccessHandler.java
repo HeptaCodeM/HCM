@@ -50,7 +50,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		//2진정보 초기화
 		employeeDto.setEmpl_picture(null);
 		session.setAttribute("userInfoVo", employeeDto);
-
+		
 		log.info("ROLE NAME : {}", roleNames);
 
 		// 로그인 성공 시 메인화면 이동
