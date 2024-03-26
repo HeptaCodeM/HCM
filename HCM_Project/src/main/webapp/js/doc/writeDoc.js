@@ -354,6 +354,7 @@ function defaultSign() {
 	if (chk.checked) {
 		console.log('체크', sign)
 		btn.setAttribute('disabled', '');
+		
 		document.getElementById('signMsg').setAttribute('type', 'text');
 		
 	} else {
