@@ -65,10 +65,8 @@
 								<br>
 								<hr>
 								ex) empInfoLayer(사번, this)<br>
-								ex) empInfoLayer(사번, this, x축이동값, y축이동값)<br>
-								x축이동값, y축이동값 없으면 기본값으로 설정<br>
 								<br>
-								<a href="javascript:void(0);" onclick="empInfoLayer('20220101', this, 0, 0)">테스트1</a>
+								<a href="javascript:void(0);" onclick="empInfoLayer('20220101', this)">테스트1</a>
 								<br>
 								<hr>
 								<br>
