@@ -2,21 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hcm.grw.model.mapper.doc.ApprDenyDaoImpl">
 
-	
+	<!-- 결재승인 json 데이터 업데이트 + 문서 업데이트 트랜잭션 -->
 	<update id="approveJson">
-    UPDATE SIGN_DOC_BOX
-    SET SIDB_DOC_JSON = JSON_TRANSFORM(
-        SIDB_DOC_JSON,
-        SET '$[${string_index}].APPR_DT' = '' || TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '',
-            '$[${string_index}].APPR_REPLY' = #{appr_reply},
-            '$[${string_index}].APPR_FLAG' = '1',
-            '$[${string_index}].APPR_SIGN' = '' || (SELECT EMSI_SIGN_IMG FROM EMP_SIGN
-                                        WHERE EMSI_SEQ = #{emsi_seq}) || '')
-    WHERE SIDB_DOC_NUM = #{sidb_doc_num}
-</update>
+	    UPDATE SIGN_DOC_BOX
+	    SET SIDB_DOC_JSON = JSON_TRANSFORM(
+	        SIDB_DOC_JSON,
+	        SET '$[${string_index}].APPR_DT' = '' || TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '',
+	            '$[${string_index}].APPR_REPLY' = #{appr_reply},
+	            '$[${string_index}].APPR_FLAG' = '1',
+	            '$[${string_index}].APPR_SIGN' = '' || (SELECT EMSI_SIGN_IMG FROM EMP_SIGN
+	             WHERE EMSI_SEQ = #{emsi_seq}) || '')
+	    WHERE SIDB_DOC_NUM = #{sidb_doc_num}
+	</update>
 
 	<update id="approveDoc">
-
 		UPDATE SIGN_DOC_BOX
 		SET SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_STAT = '2', SIDB_FINAL_ID=#{empl_id},
 							 SIDB_CURR_ID = (SELECT  j.APPR_id  
@@ -43,43 +42,25 @@
 										        WHERE SDBJ2.APPR_FLAG='0'
 										   	   ))
 		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
-
 	</update>
 
-<!-- 결재반려 json 데이터 업데이트 + 문서 업데이트 트랜잭션 -->
-	
-  
-<update id="denyJson" >
-  
-    UPDATE SIGN_DOC_BOX
-    SET SIDB_DOC_JSON = JSON_TRANSFORM(
-        SIDB_DOC_JSON,
-        SET '$[${string_index}].APPR_DT' = '' || TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '',
-            '$[${string_index}].APPR_REPLY' = #{appr_reply},
-            '$[${string_index}].APPR_FLAG' = '2')
-    WHERE SIDB_DOC_NUM = #{sidb_doc_num}
-</update>
+	<!-- 결재반려 json 데이터 업데이트 + 문서 업데이트 트랜잭션 -->
+	<update id="denyJson" >
+	    UPDATE SIGN_DOC_BOX
+	    SET SIDB_DOC_JSON = JSON_TRANSFORM(
+	        SIDB_DOC_JSON,
+	        SET '$[${string_index}].APPR_DT' = '' || TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') || '',
+	            '$[${string_index}].APPR_REPLY' = #{appr_reply},
+	            '$[${string_index}].APPR_FLAG' = '2')
+	    WHERE SIDB_DOC_NUM = #{sidb_doc_num}
+	</update>
 
 	<update id="denyDoc">
-
 		UPDATE SIGN_DOC_BOX
 		SET SIDB_DOC_APPRDT = CURRENT_DATE, SIDB_DOC_STAT = '4', SIDB_FINAL_ID=#{empl_id}, SIDB_DOC_FLAG= '2'
 		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
-
 	</update>
 
-
-<!-- 최종승인 json 데이터 업데이트 + 문서 업데이트 트랜잭션 -->
-	<update id="finalJsonApprove">
-		UPDATE SIGN_DOC_BOX
-		SET
-		SIDB_DOC_JSON = JSON_TRANSFORM(
-		SIDB_DOC_JSON,
-		SET '$[2].APPR_FLAG' =
-		'1'
-		)
-		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
-	</update>
 
 	<update id="finalDocApprove">	
 		UPDATE SIGN_DOC_BOX
@@ -87,7 +68,7 @@
 		WHERE SIDB_DOC_NUM = #{sidb_doc_num}
 	</update>
 	
-<!--  상신 취소 -->
+	<!--  상신 취소 -->
 	<update id="gianCancel">	
 		UPDATE SIGN_DOC_BOX
 		SET SIDB_DOC_DELFLAG= 'Y'

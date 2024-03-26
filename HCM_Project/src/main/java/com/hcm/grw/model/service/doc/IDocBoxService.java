@@ -45,8 +45,6 @@ public interface IDocBoxService {
 		//최종 결재 승인 트랜잭션 처리
 		public boolean finalApprove(SignBoxDto dto);
 		
-		//문서 조회 테이블+json 동시 트랜잭션
-		public boolean getDocs(SignBoxDto dto);
 		
 		//참조 문서함 Json만 조회
 		public List<SignBoxDto> getChamjoJson(Map<String, String> inMap);
