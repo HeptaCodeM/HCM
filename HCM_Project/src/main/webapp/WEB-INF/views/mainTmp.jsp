@@ -138,7 +138,7 @@
 					    			</c:when>
 					    			<c:when test="${docSize > 2}">
 									    <c:forEach var="idx" begin="0" end="2">
-							    		<tr style="cursor: pointer;" onclick="">
+							    		<tr style="cursor: pointer;" onclick="location.href='/doc/docBox/getDetail.do?docNum=${allDoc.get(idx).getSidb_doc_num()}'">
 							    			<td>${idx+1}</td>
 							    			<td>${allDoc.get(idx).getSidb_doc_title()}</td>
 							    			<td>
@@ -149,7 +149,7 @@
 					    			</c:when>
 					    			<c:otherwise>
 									    <c:forEach var="idx" begin="0" end="${docSize}">
-							    		<tr style="cursor: pointer;" onclick="">
+							    		<tr style="cursor: pointer;" onclick="location.href='/doc/docBox/getDetail.do?docNum=${allDoc.get(idx).getSidb_doc_num()}'">
 							    			<td>${idx+1}</td>
 							    			<td>${allDoc.get(idx).getSidb_doc_title()}</td>
 							    			<td>

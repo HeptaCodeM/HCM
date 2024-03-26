@@ -133,4 +133,44 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return dao.getUserInfoSearch(map);
 	}
 
+	
+//	======================= 구분선 ===================================		
+	
+	
+	@Override
+	public List<EmployeeDto> selectAllEmployee() {
+		return dao.selectAllEmployee();
+	}
+
+	@Override
+	public List<EmployeeDto> searchAllEmployee(Map<String, Object> map) {
+		return dao.searchAllEmployee(map);
+	}
+
+	@Override
+	public EmployeeDto selectOneEmployee(Map<String, Object> map) {
+		return dao.selectOneEmployee(map);
+	}
+
+	@Override
+	public int correctionEmployee(Map<String, Object> map) {
+		return dao.correctionEmployee(map);
+	}
+
+	@Override
+	public boolean chkEmpPhoneNum(String empl_phone) {
+		return dao.chkEmpPhoneNum(empl_phone);
+	}
+
+	@Override
+	public boolean chkEmpTelNum(String empl_tel) {
+		return dao.chkEmpTelNum(empl_tel);
+	}
+
+	@Override
+	public boolean chkEmpFaxNum(String empl_fax) {
+		return dao.chkEmpFaxNum(empl_fax);
+	}
+	
+	
 }

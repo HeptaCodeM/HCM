@@ -15,7 +15,7 @@ import com.google.gson.GsonBuilder;
 import com.hcm.grw.dto.ChatDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.ChatService;
-import com.hcm.grw.model.service.hr.EmployeeListService;
+import com.hcm.grw.model.service.hr.EmployeeService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +26,7 @@ public class ChatController {
 	@Autowired
 	private ChatService service;
 	@Autowired
-	private EmployeeListService employeeListService;
+	private EmployeeService employeeService;
 		
 	@PostMapping(value = "sendMessage.do", produces = "text/html; charset=UTF-8")
 	public void sendMessage(@RequestBody Map<String, Object> map) {
@@ -52,7 +52,7 @@ public class ChatController {
 	@GetMapping(value = "chatUserList.do", produces = "text/html; charset=UTF-8")
 	public ResponseEntity<?> chatUserList() {
 		log.info("ChatController chatUserList 채팅 유저목록 조회");
-		List<EmployeeDto> employeeList = employeeListService.selectAllEmployee();
+		List<EmployeeDto> employeeList = employeeService.selectAllEmployee();
 		for(EmployeeDto dto : employeeList) {
 			if(dto.getEmpl_picture() != null) {
 				dto.setEmpl_picture_str(Base64Utils.encodeToString(dto.getEmpl_picture()));

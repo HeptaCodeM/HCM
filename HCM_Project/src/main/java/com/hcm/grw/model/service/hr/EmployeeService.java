@@ -47,4 +47,23 @@ public interface EmployeeService {
 	/*권한정보 조회*/
 	public List<AuthDto> selectAuthAllList();
 	
+	
+	
+//	========================= 작업구분선 ==================================
+	
+	public List<EmployeeDto> selectAllEmployee();
+	
+	public List<EmployeeDto> searchAllEmployee(Map<String, Object> map);
+	
+	public EmployeeDto selectOneEmployee(Map<String, Object> map);
+	
+	public int correctionEmployee(Map<String, Object> map);
+	
+	public boolean chkEmpPhoneNum(String empl_phone);
+
+	public boolean chkEmpTelNum(String empl_tel);
+	
+	public boolean chkEmpFaxNum(String empl_fax);
+	
+	
 }

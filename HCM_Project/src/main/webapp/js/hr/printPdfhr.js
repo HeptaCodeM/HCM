@@ -1,7 +1,7 @@
 
 //윈도우 오픈시 생성시킬 html 코드들 
 function openPreview() {
-		 const width = 1100;
+		 const width = 1200;
  	 const height = 800;
 	     const left =  Math.ceil((window.screen.width - width)/2);
 	     const top = Math.ceil((window.screen.height - height)/2);
