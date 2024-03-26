@@ -151,12 +151,15 @@ function insertTempDoc() {
 	}
 	
 	
+	
+	
 	// 이벤트 날짜
 	var sidt_doc_event = document.getElementById('sidb_doc_event').textContent;
 	var eventArr = sidt_doc_event.split('~');	
 	var sitb_doc_be = eventArr[0].replace(/년|월|\s+/g, '-').replace(/일/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
 	var sitb_doc_end = eventArr[1].replace(/년|월|\s+/g, '-').replace(/일/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
-	
+	console.log(sitb_doc_be)
+	console.log(sitb_doc_end)
 	var docData = {
 		sitb_doc_title : sitb_doc_title,
 		sitb_doc_content : sitb_doc_content,
@@ -177,7 +180,7 @@ function insertTempDoc() {
 		var formData = new FormData();
 		formData.append('dto', new Blob([JSON.stringify(docData)], {type : 'application/json'}));
 		
-		fetch('/doc/insertTempDoc.do', {
+		/*fetch('/doc/insertTempDoc.do', {
 		method : 'post',
 		body : formData
 	})
@@ -193,7 +196,7 @@ function insertTempDoc() {
 			}
 			
 		})
-		.catch(err => {console.log(err)})
+		.catch(err => {console.log(err)})*/
 	
 }
 
@@ -232,6 +235,14 @@ function insertDoc() {
 	if(dept == undefined) {
 		dept = {empl_dept_cd : ''}
 	}
+	
+	if (sidb_doc_be == '2024-00-00' || sidb_doc_be == '--' || sidb_doc_be == '') {
+		sidb_doc_be = '2024-01-01';
+	}
+	if (sidb_doc_end == '2024-00-00' || sidb_doc_end == '--' || sidb_doc_end == '') {
+		sidb_doc_end = '2024-01-01';
+	}
+	
 	var docData = {
 		sidb_doc_title : sidb_doc_title,
 		sidb_doc_content : sidb_doc_content,
@@ -251,6 +262,8 @@ function insertDoc() {
 	if(sign == undefined) {
 		docData.emsi_seq = document.getElementById('emsi_seq').value;
 	}
+	
+
 	
 	console.log(docData);
 	
@@ -339,14 +352,15 @@ function defaultSign() {
 	var chk = document.getElementById('chk');
 	var btn = document.getElementById('selectSign');
 	if (chk.checked) {
-		sign = 'Y';
 		console.log('체크', sign)
 		btn.setAttribute('disabled', '');
 		
+		document.getElementById('signMsg').setAttribute('type', 'text');
+		
 	} else {
-		sign = 'N';
 		console.log('해제', sign)
 		btn.removeAttribute('disabled');
+		document.getElementById('signMsg').setAttribute('type', 'hidden');
 	}
 }
 
