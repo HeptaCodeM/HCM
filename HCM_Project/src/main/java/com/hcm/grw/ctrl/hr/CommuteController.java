@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.CommuteDto;
 import com.hcm.grw.model.service.hr.CommuteService;
@@ -38,6 +40,7 @@ public class CommuteController {
 	@GetMapping("registCommute.do")
 	public String registCommute(Authentication authentication, 
 								Model model,
+								HttpServletRequest req,
 								HttpServletResponse resp) {
 		log.info("CommuteController registCommute 출/퇴근 등록 페이지");
 
@@ -61,14 +64,18 @@ public class CommuteController {
 
 		model.addAttribute("commuteInTime", commuteInTime);
 		model.addAttribute("commuteOutTime", commuteOutTime);
+
+		//ViewPage Device 정보 전달
+		model.addAttribute("mobile", StringUtils.defaultIfEmpty(CookiesMgr.getCookies(req, "ckMobile"), ""));
 		
 		return "hr/commute/registCommute";
 	}
 
 	@GetMapping("registCommuteOk.do")
 	public @ResponseBody void registCommuteOk(Authentication authentication, 
-												Model model, 
-												HttpServletResponse resp) throws IOException {
+											  Model model, 
+											  HttpServletRequest req,
+											  HttpServletResponse resp) throws IOException {
 		log.info("CommuteController registCommute 출/퇴근 처리 페이지");
 		resp.setContentType("text/html; charset=UTF-8");
 		
@@ -98,7 +105,7 @@ public class CommuteController {
 		}
 		
 		if(cnt > 0) {
-			Function.alertLocation(resp, commuteMsg + "처리가 완료 되었습니다.", "/hr/commute/empCommuteList.do", "", "", "");
+			Function.alertLocation(resp, commuteMsg + "처리가 완료 되었습니다.", "/hr/commute/registCommute.do", "", "", "");
 		}else {
 			Function.alertHistoryBack(resp, commuteMsg + "처리 중 오류가 발생하였습니다.\n관리자에게 문의하세요.", "", "");
 		}
