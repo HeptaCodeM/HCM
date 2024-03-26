@@ -36,11 +36,16 @@ function checkNameValue(){
 }
 
 function deleteRole(){
-    console.log("동작");
+    sweetAlertConfirm("삭제하시겠습니까?",delOk,returnFlase);
+}
+
+function delOk(){
     var coco_cd = document.getElementById("coco_cd").value;
     var role = document.getElementById("role").value;
-    
     location.href="/hr/commonCode/deleteRoleOne.do?coco_cd="+coco_cd+"&role="+role;
+}
+function returnFlase(){
+	return false;
 }
 
 </script>
@@ -93,7 +98,7 @@ function deleteRole(){
 											<button disabled="disabled" class="btn btn-primary btnMd me-10">삭제</button>
 										</c:when>
 										<c:otherwise>
-											<button class="btn btn-primary btnMd me-10" onclick="deleteRole()s">삭제</button>
+											<button class="btn btn-primary btnMd me-10" type="button" onclick="deleteRole()">삭제</button>
 										</c:otherwise>
 									</c:choose>
 									<button class="btn btn-primary btnMd me-10" type="reset">초기화</button>
