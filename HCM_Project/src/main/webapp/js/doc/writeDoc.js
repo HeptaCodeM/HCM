@@ -117,11 +117,15 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 	var sessionDept = document.getElementById('myDept');
 	var sessionRank = document.getElementById('myRank');
 	var sessionBirth = document.getElementById('empl_birth')
+	var sessionJoinDate = document.getElementById('empl_joindate')
+	var sessioncompName = document.getElementById('comp_name')
 	var insertName = docData.replace("홍길동", sessionName.value)
 	var insertDept = insertName.replace("인사팀", sessionDept.value)
 	var insertRank = insertDept.replace("대리", sessionRank.value)
 	var insertBirth = insertRank.replace("900101", sessionBirth.value)
-	editor.setData(insertBirth);
+//	var insertJoinDate = insertBirth.replace("2024년 00월 00일", sessionJoinDate.value)
+	var insertcompName = insertBirth.replace("　", sessioncompName)
+	editor.setData(insertcompName);
 	
 	
 	// -----------------------------------> [작성화면] 사원정보 유효성검사
