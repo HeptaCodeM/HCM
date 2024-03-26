@@ -226,7 +226,7 @@ function formatDate(date) {
 }
 
 //레이어창 뒤 DIMED 클릭 시 처리
-document.addEventListener("DOMContentLoaded", function() {
+document.onload = function() {
 	document.getElementById("overlay").addEventListener("click", function() {
 		const layer = this.nextElementSibling;
 		this.style.display = "none";
@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	        layer.style.display = "none";
 		}
 	});
-});
+}
 
 /* 임직원 정보 확인 Layer */
 function empInfoLayer(empl_id, element){
@@ -274,14 +274,21 @@ function empInfoLayer(empl_id, element){
 		// 선택한 요소의 innerHTML 속성을 설정하여 내용 추가
 		empInfoElement.innerHTML = htmlBody;
 		empInfoId.style.display='block';
-
-		//console.log(element.offsetLeft, element.offsetWidth, empInfoId.offsetWidth)
 		
-		empInfoId.style.top = (element.offsetTop+empInfoId.offsetHeight-20)+"px";
-		empInfoId.style.left = (element.offsetLeft+(element.offsetWidth*1.5)+empInfoId.offsetWidth+15)+"px";
+		console.log($("#jstree").clientTop);
+		var elementPos = element.getBoundingClientRect();
+		var elementPosTop = elementPos.y;
+		var elementPosLeft = elementPos.x;
+		var elementPosWidth = elementPos.width;
+		var elementPosHeight = elementPos.height;
+
+		console.log(element.getBoundingClientRect());
+		console.log(elementPosTop, elementPosLeft, elementPosWidth, elementPosHeight)
+		
+		empInfoId.style.top = (elementPosTop+elementPosHeight-45)+"px";
+		empInfoId.style.left = (elementPosLeft+elementPosWidth+20)+"px";
 	})
 	.catch((error)=>{
 		console.log("에러", error);
 	})
 }
-

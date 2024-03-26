@@ -120,7 +120,7 @@ public class HomeController {
 	@GetMapping("/setCookies.do")
 	public String setCookiesTest(HttpServletResponse resp) {
 		log.info("testCk 쿠키생성");
-		CookiesMgr.setCookies(resp, "testCk", "1111");
+		CookiesMgr.setCookies(resp, "testCk", "1111", 20);
 		
 		return "redirect:/";
 	}

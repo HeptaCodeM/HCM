@@ -48,6 +48,13 @@
 		    <artifactId>spring-websocket</artifactId>
 		    <version>${org.springframework}</version>
 		</dependency>
+		<!-- Mobile Device 확인 -->
+		<dependency>
+			<groupId>org.springframework.mobile</groupId>
+			<artifactId>spring-mobile-device</artifactId>
+			<version>1.1.5.RELEASE</version>
+		</dependency>
+
 
 		<!-- Spring Security 사용을 위한 dependency 등록 Start -->
 		<!-- 인증 및 액세스 제어 기능이 포함 -->

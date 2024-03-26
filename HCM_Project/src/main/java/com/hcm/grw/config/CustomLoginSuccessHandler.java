@@ -10,9 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.ui.Model;
 
+import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.mapper.hr.EmployeeDao;
@@ -50,12 +54,22 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		//2진정보 초기화
 		employeeDto.setEmpl_picture(null);
 		session.setAttribute("userInfoVo", employeeDto);
-
+		
 		log.info("ROLE NAME : {}", roleNames);
 
 		// 로그인 성공 시 메인화면 이동
 		if(authentication.isAuthenticated()) {
-			response.sendRedirect("/mainTmp.do");
+			Device device = DeviceUtils.getCurrentDevice(request);
+			if(device == null) {
+				response.sendRedirect("/mainTmp.do");
+			}else {
+				if(device.isMobile()) {
+					CookiesMgr.setCookies(response, "ckMobile", "Y", 0);
+					response.sendRedirect("/hr/commute/registCommute.do");
+				}else {
+					response.sendRedirect("/mainTmp.do");
+				}
+			}
 			return;
 		}
 

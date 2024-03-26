@@ -23,13 +23,22 @@ public class CookiesMgr extends HttpServlet {
 	* @param rep : HttpServletResponse
 	* @param cName : 쿠키명(String)
 	* @param cValue : 쿠키값(String)
+	* @param expireTime : 쿠키유지시간[분](int)
 	* @return : void
 	* @author : SDJ
 	* @since : 2024.03.06
 	*/
 	/* setCookies */
-	public static void setCookies(HttpServletResponse rep, String cName, String cValue) {
+	public static void setCookies(HttpServletResponse rep, String cName, String cValue, int expireTime) {
 		rep.setContentType("text/html;charset=UTF-8");
+		
+		try {
+			if(expireTime == 0) {
+				expireTime = 20;
+			}
+		}catch(Exception e) {
+			expireTime = 20;
+		}
 		
 		// 쿠키생성
 		String encValue="";
@@ -47,7 +56,7 @@ public class CookiesMgr extends HttpServlet {
 		// setSecure : 쿠키 연결시 보안인증된 도메인 접속만 // true => https
 		hcmCookies.setDomain("localhost");
 		hcmCookies.setPath("/");
-		hcmCookies.setMaxAge(60*20);
+		hcmCookies.setMaxAge(60*expireTime);
 		hcmCookies.setSecure(false);
 		rep.addCookie(hcmCookies);
 	}

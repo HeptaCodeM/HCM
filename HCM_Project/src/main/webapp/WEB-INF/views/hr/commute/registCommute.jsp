@@ -49,7 +49,7 @@
 					<div class="card card-flush h-md-50 mb-xl-10">
 						<div class="card-header pt-5" style="display: block; margin:100px auto 120px; text-align:center;">
 							<c:if test="${commuteInTime eq null || commuteInTime eq ''}">
-								<a href="/hr/commute/registCommuteOk.do" class="btn btn-primary fs-3x">
+								<a href="/hr/commute/registCommuteOk.do?mobile=${mobile}" class="btn btn-primary fs-3x">
 									<i class="ki-duotone ki-entrance-left fs-5x">
 										<span class="path1"></span>
 										<span class="path2"></span>
