@@ -25,7 +25,8 @@ public class ChatDto {
 	
 	private String sender_name;
 	private String target_name;
-	private String sender_pic;
+	private byte[] sender_pic;
+	private String sender_pic_str;
 	
 	private String empl_email;
 	private String empl_name;

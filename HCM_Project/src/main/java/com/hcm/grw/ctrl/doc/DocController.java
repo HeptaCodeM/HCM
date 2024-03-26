@@ -51,12 +51,15 @@ public class DocController {
 
 	@GetMapping("/doc/docBox/getDetail.do")
 	public String getDetailBoard(Model model, SignBoxDto dto, String docNum, HttpSession session, HttpServletResponse response) throws IOException {
-
-		dto.setSidb_doc_num(docNum);
-		List<SignBoxDto> docDto = docService.getDetailDocsList(dto);
-		EmployeeDto sessionDto = (EmployeeDto)session.getAttribute("userInfoVo");
 		
-		//세션정보와 비교해서 문서조회권한 확인 
+		log.info("getDetailBoard getDetail.do GET 글상세 조회 문서번호 : {}", docNum);
+		dto.setSidb_doc_num(docNum);
+
+		List<SignBoxDto> docDto = docService.getDetailDocsList(dto);
+
+		EmployeeDto sessionDto = (EmployeeDto) session.getAttribute("userInfoVo");
+
+		// 세션정보와 비교해서 문서조회권한 확인
 		String empl_Id = docDto.get(0).getEmpl_id();
 		String empl_Ref = docDto.get(0).getEmpl_ref();
 		String empl_DeptCd = docDto.get(0).getEmpl_dept_cd();
@@ -64,108 +67,95 @@ public class DocController {
 		String appr_Id2 = null;
 		String appr_Id3 = null;
 		String doc_Stat = docDto.get(0).getSidb_doc_stat();
-				
+
 		int n = 0;
-		
+
 		if (docDto.size() > 1) {
-		    appr_Id2 = docDto.get(1).getAppr_id();
+			appr_Id2 = docDto.get(1).getAppr_id();
 		}
 
 		if (docDto.size() > 2) {
-		    appr_Id3 = docDto.get(2).getAppr_id();
+			appr_Id3 = docDto.get(2).getAppr_id();
 		}
 
-		if ((empl_Ref != null && empl_Ref.contains(sessionDto.getEmpl_id()) && (doc_Stat.equals('3') || doc_Stat.equals('4'))) ||
-		    (empl_DeptCd != null && empl_DeptCd.contains(sessionDto.getEmpl_dept_cd())&& (doc_Stat.equals('3') || doc_Stat.equals('4')))  ||
-		    (appr_Id1 != null && appr_Id1.contains(sessionDto.getEmpl_id())) || 
-		    (appr_Id2 != null && appr_Id2.contains(sessionDto.getEmpl_id())) ||
-		    (appr_Id3 != null && appr_Id3.contains(sessionDto.getEmpl_id())) ||
-		    (empl_Id != null && empl_Id.contains(sessionDto.getEmpl_id()))) {
-		    
-			 n+= 1;
+		if ((empl_Ref != null && empl_Ref.contains(sessionDto.getEmpl_id()) && (doc_Stat.equals("3") || doc_Stat.equals("4")))
+			|| (empl_DeptCd != null && empl_DeptCd.contains(sessionDto.getEmpl_dept_cd()) && (doc_Stat.equals("3") || doc_Stat.equals("4")))
+			|| (appr_Id1 != null && appr_Id1.contains(sessionDto.getEmpl_id()))
+			|| (appr_Id2 != null && appr_Id2.contains(sessionDto.getEmpl_id()))
+			|| (appr_Id3 != null && appr_Id3.contains(sessionDto.getEmpl_id()))
+			|| (empl_Id != null && empl_Id.contains(sessionDto.getEmpl_id()))) {
+
+			n += 1;
 		}
 
 		// EMPL_REF에서 가져온 모든 사원 번호를 저장할 ArrayList를 선언
 		List<String> allEmployeeIds = new ArrayList<>();
 
-		    String emplRef = docDto.get(0).getEmpl_ref();
-		    if (emplRef != null && !emplRef.isEmpty()) {
-		        String[] emplIds = emplRef.split(",");
-		        allEmployeeIds = Arrays.asList(emplIds);
+		String emplRef = docDto.get(0).getEmpl_ref();
+		if (emplRef != null && !emplRef.isEmpty()) {
+			String[] emplIds = emplRef.split(",");
+			allEmployeeIds = Arrays.asList(emplIds);
 		}
-//		System.out.println(allEmployeeIds);
-		for (String string : allEmployeeIds) {
-			System.out.println(string);
-		}
+		
 		String trimId = "";
 		StringBuilder employeeNamesBuilder = new StringBuilder();
 		for (String id : allEmployeeIds) {
 			trimId = id.trim();
-			System.out.println(trimId);
-		    String employeeName = docService.findEmployeeName(trimId);
-		    employeeNamesBuilder.append(employeeName).append(", ");
+			String employeeName = docService.findEmployeeName(trimId);
+			employeeNamesBuilder.append(employeeName).append(", ");
 		}
-		
+
 		if (employeeNamesBuilder.length() > 0) {
-		    employeeNamesBuilder.setLength(employeeNamesBuilder.length() - 2);
+			employeeNamesBuilder.setLength(employeeNamesBuilder.length() - 2);
 		}
 
 		String concatenatedNames = employeeNamesBuilder.toString();
 		docDto.get(0).setEmpl_ref(concatenatedNames);
-		
-		
+
 		// 참조 부서명 가져오기
-				List<String> allDeptIds = new ArrayList<>();
+		List<String> allDeptIds = new ArrayList<>();
 
-				    String deptRef = docDto.get(0).getEmpl_dept_cd();
-				    if (deptRef != null && !deptRef.isEmpty()) {
-				        String[] deptIds = deptRef.split(",");
-				        allDeptIds = Arrays.asList(deptIds);
-				}
-				
-				String trimDeptId = "";
-				StringBuilder deptNamesBuilder = new StringBuilder();
-				for (String id : allDeptIds) {
-					trimDeptId = id.trim();
-					System.out.println(trimDeptId);
-				    String deptName = docService.findDeptName(trimDeptId);
-				    deptNamesBuilder.append(deptName).append(", ");
-				}
-				
-				if (deptNamesBuilder.length() > 0) {
-					deptNamesBuilder.setLength(deptNamesBuilder.length() - 2);
-				}
+		String deptRef = docDto.get(0).getEmpl_dept_cd();
+		if (deptRef != null && !deptRef.isEmpty()) {
+			String[] deptIds = deptRef.split(",");
+			allDeptIds = Arrays.asList(deptIds);
+		}
 
-				String concatDeptNames = deptNamesBuilder.toString();
-				docDto.get(0).setEmpl_dept_cd(concatDeptNames);
-		
-				
-				
-				
-				Map<String, Object> signMap = new HashMap<String, Object>();
-				signMap.put("empl_id", sessionDto.getEmpl_id());
-				List<EmpSignDto> signList = signService.selectAllSign(signMap);
-				model.addAttribute("signList", signList);
-				
-				
-		 
+		String trimDeptId = "";
+		StringBuilder deptNamesBuilder = new StringBuilder();
+		for (String id : allDeptIds) {
+			trimDeptId = id.trim();
+			String deptName = docService.findDeptName(trimDeptId);
+			deptNamesBuilder.append(deptName).append(", ");
+		}
+
+		if (deptNamesBuilder.length() > 0) {
+			deptNamesBuilder.setLength(deptNamesBuilder.length() - 2);
+		}
+
+		String concatDeptNames = deptNamesBuilder.toString();
+		docDto.get(0).setEmpl_dept_cd(concatDeptNames);
+
+		Map<String, Object> signMap = new HashMap<String, Object>();
+		signMap.put("empl_id", sessionDto.getEmpl_id());
+		List<EmpSignDto> signList = signService.selectAllSign(signMap);
+		model.addAttribute("signList", signList);
+
 		model.addAttribute("docDto", docDto);
-		log.info("상세조회  데이터 리스트 결과{}", docDto);
-		if(n!=1) {
-			System.out.println("@@@@문서권한없음@@@@@@@@@@@@@@@@@");
+		log.info("getDetailBoard getDetail.do 상세조회 리스트 결과 : {}", docDto);
+
+		if (n != 1) {
 			response.setContentType("text/html; charset=UTF-8");
-			response.getWriter().print("<script>alert('접근권한이 없는 결재 문서입니다'); location/href='/doc/docBox.do'</script>");
+			response.getWriter().print("<script>alert('접근권한이 없는 결재 문서입니다'); location.href='/doc/docBox.do'</script>");
 		} else {
-			System.out.println("@@@@문서볼수있음@@@@@@@@@@");
 			return "/doc/docBox/boardDetail/boardDetail";
 		}
-	
-		return (n == 1) ? "/doc/docBox/boardDetail/boardDetail" : "redirect:/doc/docBox.do";
+
+		return null;
 	}
 
 	@GetMapping(value = "/doc/docBox.do")
 	public String allDocs(Model model, HttpSession session) {
-		log.info("결재함 진입");
 		SignBoxDto dto = new SignBoxDto();
 		EmployeeDto Edto = (EmployeeDto) session.getAttribute("userInfoVo");
 
@@ -191,8 +181,6 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
-//			byte[] emplImg = table.get(i).getEmpl_picture();
-//			table.get(i).setEmpl_pictureStr(Base64Utils.encodeToString(emplImg));
 
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
@@ -215,7 +203,6 @@ public class DocController {
 				table.get(i).setAppr_flag2(fusion.get(i).getAppr_flag().split(",")[2].trim());
 			}
 		}
-		System.out.println(table);
 		model.addAttribute("lists", table);
 		return "/doc/docBox/docBox";
 	}
@@ -223,18 +210,15 @@ public class DocController {
 	@GetMapping(value = "/doc/allDocs.do", produces = "application/json;")
 	@ResponseBody
 	public String allDocsAjax(HttpSession session) {
-		log.info("HomeController createAjax 아작스처리 시작");
-		// List<JobsVo> lists = dao.ajax();
 		SignBoxDto dto = new SignBoxDto();
 		EmployeeDto Edto = (EmployeeDto) session.getAttribute("userInfoVo");
 
 		dto.setEmpl_id(Edto.getEmpl_id());
-		// dto.setEmpl_id("20220101");
 
 		List<SignBoxDto> table = dao.getAllDocsTable(dto);
 		List<SignBoxDto> json = dao.getAllDocsJson(dto);
 
-		// 합치기
+		// 본테이블과 json 데이터 합치기
 		List<SignBoxDto> fusion = new ArrayList<>();
 
 		for (int i = 0; i < table.size(); i++) {
@@ -248,8 +232,7 @@ public class DocController {
 					apprDepth += json.get(j).getAppr_depth() + ",";
 				}
 			}
-			byte[] emplImg = table.get(i).getEmpl_picture();
-			table.get(i).setEmpl_pictureStr(Base64Utils.encodeToString(emplImg));
+			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -279,17 +262,14 @@ public class DocController {
 	@GetMapping(value = "/doc/gianBox.do", produces = "application/json;")
 	@ResponseBody
 	public String gianDocsAjax(HttpSession session) {
-		log.info("HomeController 기안함 아작스처리 시작");
 		SignBoxDto dto = new SignBoxDto();
 		EmployeeDto Edto = (EmployeeDto) session.getAttribute("userInfoVo");
 
 		dto.setEmpl_id(Edto.getEmpl_id());
-		// dto.setEmpl_id("20220101");
 
 		List<SignBoxDto> table = dao.getMyGian(dto);
 		List<SignBoxDto> json = dao.getAllDocsJson(dto);
 
-		// 합치기
 		List<SignBoxDto> fusion = new ArrayList<>();
 
 		for (int i = 0; i < table.size(); i++) {
@@ -303,8 +283,7 @@ public class DocController {
 					apprDepth += json.get(j).getAppr_depth() + ",";
 				}
 			}
-			byte[] emplImg = table.get(i).getEmpl_picture();
-			table.get(i).setEmpl_pictureStr(Base64Utils.encodeToString(emplImg));
+			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -334,12 +313,10 @@ public class DocController {
 	@GetMapping(value = "/doc/ingBox.do", produces = "application/json;")
 	@ResponseBody
 	public String ingDocsAjax(HttpSession session) {
-		log.info("HomeController 진행함 아작스처리 시작");
 		SignBoxDto dto = new SignBoxDto();
 		EmployeeDto Edto = (EmployeeDto) session.getAttribute("userInfoVo");
 
 		dto.setEmpl_id(Edto.getEmpl_id());
-		// dto.setEmpl_id("20220101");
 
 		List<SignBoxDto> table = dao.getIngDocs(dto);
 		List<SignBoxDto> json = dao.getAllDocsJson(dto);
@@ -358,8 +335,7 @@ public class DocController {
 					apprDepth += json.get(j).getAppr_depth() + ",";
 				}
 			}
-			byte[] emplImg = table.get(i).getEmpl_picture();
-			table.get(i).setEmpl_pictureStr(Base64Utils.encodeToString(emplImg));
+			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -389,12 +365,10 @@ public class DocController {
 	@GetMapping(value = "/doc/approveBox.do", produces = "application/json;")
 	@ResponseBody
 	public String apprDocsAjax(HttpSession session) {
-		log.info(" 결재완료함 아작스처리 시작");
 		SignBoxDto dto = new SignBoxDto();
 		EmployeeDto Edto = (EmployeeDto) session.getAttribute("userInfoVo");
 
 		dto.setEmpl_id(Edto.getEmpl_id());
-		// dto.setEmpl_id("20220101");
 
 		List<SignBoxDto> table = dao.getApprovedDocs(dto);
 		List<SignBoxDto> json = dao.getAllDocsJson(dto);
@@ -413,8 +387,7 @@ public class DocController {
 					apprDepth += json.get(j).getAppr_depth() + ",";
 				}
 			}
-			byte[] emplImg = table.get(i).getEmpl_picture();
-			table.get(i).setEmpl_pictureStr(Base64Utils.encodeToString(emplImg));
+			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -437,7 +410,6 @@ public class DocController {
 			}
 		}
 		Gson data = new GsonBuilder().create();
-		System.out.println("@@@@@@뭐들었니" + table);
 		return data.toJson(table);
 
 	}
@@ -445,12 +417,10 @@ public class DocController {
 	@GetMapping(value = "/doc/denyBox.do", produces = "application/json;")
 	@ResponseBody
 	public String denyDocsAjax(HttpSession session) {
-		log.info("반려함 아작스처리 시작");
 		SignBoxDto dto = new SignBoxDto();
 		EmployeeDto Edto = (EmployeeDto) session.getAttribute("userInfoVo");
 
 		dto.setEmpl_id(Edto.getEmpl_id());
-		// dto.setEmpl_id("20220101");
 
 		List<SignBoxDto> table = dao.getDeniedDocs(dto);
 		List<SignBoxDto> json = dao.getAllDocsJson(dto);
@@ -469,9 +439,7 @@ public class DocController {
 					apprDepth += json.get(j).getAppr_depth() + ",";
 				}
 			}
-			byte[] emplImg = table.get(i).getEmpl_picture();
-			table.get(i).setEmpl_pictureStr(Base64Utils.encodeToString(emplImg));
-
+			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -501,12 +469,9 @@ public class DocController {
 	@GetMapping(value = "/doc/chamjoBox.do", produces = "application/json;")
 	@ResponseBody
 	public String chamjoBox(HttpSession session) {
-		log.info("참조함 아작스처리 시작");
 
 		EmployeeDto Edto = (EmployeeDto) session.getAttribute("userInfoVo");
 
-		// String empl_id = "20220101";
-		// String empl_dept_cd = "DT000002";
 		Map<String, String> inMap = new HashMap<>();
 		inMap.put("empl_id", Edto.getEmpl_id());
 		inMap.put("empl_dept_cd", Edto.getEmpl_dept_cd());
@@ -514,9 +479,6 @@ public class DocController {
 		List<SignBoxDto> table = dao.getChamjoDocs(inMap);
 		List<SignBoxDto> json = dao.getChamjoJson(inMap);
 
-		SignBoxDto dto = new SignBoxDto();
-
-		dto.setEmpl_id("20220101");
 
 		// 합치기
 		List<SignBoxDto> fusion = new ArrayList<>();
@@ -532,8 +494,7 @@ public class DocController {
 					apprDepth += json.get(j).getAppr_depth() + ",";
 				}
 			}
-			byte[] emplImg = table.get(i).getEmpl_picture();
-			table.get(i).setEmpl_pictureStr(Base64Utils.encodeToString(emplImg));
+			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -563,13 +524,11 @@ public class DocController {
 	@GetMapping(value = "/doc/myTurnBox.do", produces = "application/json;")
 	@ResponseBody
 	public String myTurnBox(HttpSession session) {
-		log.info("나에게 온 결재 요청함 아작스처리 시작");
 		SignBoxDto dto = new SignBoxDto();
 
 		EmployeeDto Edto = (EmployeeDto) session.getAttribute("userInfoVo");
 
 		dto.setEmpl_id(Edto.getEmpl_id());
-		// dto.setEmpl_id("20230107"); //결재자 사원번호
 
 		List<SignBoxDto> table = dao.getMyTurnDocs(dto);
 
@@ -589,8 +548,7 @@ public class DocController {
 					apprDepth += json.get(j).getAppr_depth() + ",";
 				}
 			}
-			byte[] emplImg = table.get(i).getEmpl_picture();
-			table.get(i).setEmpl_pictureStr(Base64Utils.encodeToString(emplImg));
+			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -617,16 +575,15 @@ public class DocController {
 
 	}
 
+	//내가 결재한 문서함
 	@GetMapping(value = "/doc/iDidBox.do", produces = "application/json;")
 	@ResponseBody
 	public String iDidBox(HttpSession session) {
-		log.info("내가 결재한 문서 조회 아작스처리 시작");
 		SignBoxDto dto = new SignBoxDto();
 
 		EmployeeDto Edto = (EmployeeDto) session.getAttribute("userInfoVo");
 
 		dto.setEmpl_id(Edto.getEmpl_id());
-		// dto.setEmpl_id("20230107"); //결재자 사원번호
 
 		List<SignBoxDto> table = dao.getIDidDocs(dto);
 
@@ -646,8 +603,7 @@ public class DocController {
 					apprDepth += json.get(j).getAppr_depth() + ",";
 				}
 			}
-			byte[] emplImg = table.get(i).getEmpl_picture();
-			table.get(i).setEmpl_pictureStr(Base64Utils.encodeToString(emplImg));
+			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -677,9 +633,7 @@ public class DocController {
 	//상세조회 문서에 첨부된 파일리스트 조회
 	@GetMapping("/doc/docBox/getDocsFileList.do")
 	public ResponseEntity<?> getFileList(String docNum, SignBoxDto dto) {
-		log.info("상세조회 파일 리스트 조회 메소드 진입");
 		dto.setSidb_doc_num(docNum);
-		System.out.println(dto);
 		List<SignFileDto> list = docService.getFileList(dto);
 		return ResponseEntity.ok(list);
 	}
@@ -693,27 +647,20 @@ public class DocController {
 		FileCommonService.fileDownload(response, dto.getSidf_file_origin(), dto.getSidf_file_content());
 	}
 	
-	
-	
-	
-	
+ 
+	 //임시보관함
 	@GetMapping(value = "/doc/tempDocs.do")
 	public String TempDocs(Model model, HttpSession session) {
-		log.info("임시 결재문서 보관함 진입");
 		SignBoxDto dto = new SignBoxDto();
 		EmployeeDto Edto = (EmployeeDto) session.getAttribute("userInfoVo");
 
 		dto.setEmpl_id(Edto.getEmpl_id());
-
 		model.addAttribute("Edto", Edto);
-
 		List<SignBoxDto> table = dao.getTempDocs(dto);
 		
 		for (int i = 0; i < table.size(); i++) {
-		byte[] emplImg = table.get(i).getEmpl_picture();
-		table.get(i).setEmpl_pictureStr(Base64Utils.encodeToString(emplImg));
+		table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
 		}
-
 		model.addAttribute("lists", table);
 		return "/doc/tempDocs/tempDocs";
 	}

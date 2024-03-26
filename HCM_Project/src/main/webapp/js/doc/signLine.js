@@ -572,9 +572,9 @@ document.getElementById('initial').addEventListener('click', function() {
 						console.log(myPositionFlag);
 						if (node.pos_na != undefined) {
 							if (myPositionFlag > node.pos_flag) {
-								node.text = node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;<span class="positionFlag" style="display: none;">' + node.pos_flag + '</span>';
+								node.text = '<span onclick="empInfoLayer(' + node.id + ', this)">' + node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;<span class="positionFlag" style="display: none;">' + node.pos_flag + '</span></span>';
 							} else {
-								node.text = node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="pick()" class="btn btn-basic btn-sm addd" style="padding: 0.2px;">➕</button><span class="positionFlag" style="display: none;">' + node.pos_flag + '</span>';
+								node.text = '<span onclick="empInfoLayer(' + node.id + ', this)">' + node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="pick()" class="btn btn-basic btn-sm addd" style="padding: 0.2px;">➕</button><span class="positionFlag" style="display: none;">' + node.pos_flag + '</span></span>';
 							}
 						}
 
