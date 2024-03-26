@@ -1,6 +1,7 @@
 package com.hcm.grw.ctrl.hr;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,13 +27,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.hcm.grw.comm.Function;
 import com.hcm.grw.config.CreateNewAuthService;
 import com.hcm.grw.dto.hr.AuthDto;
 import com.hcm.grw.dto.hr.CommonCodeDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.hr.CommonCodeService;
-import com.hcm.grw.model.service.hr.EmployeeListService;
 import com.hcm.grw.model.service.hr.EmployeeService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -47,9 +49,6 @@ public class EmployeeController {
 	
 	@Autowired
 	private EmployeeService employeeService;
-	
-	@Autowired
-	private EmployeeListService employeeListService;
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -153,7 +152,7 @@ public class EmployeeController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empl_id", empl_id);
 
-		EmployeeDto empInfo = employeeListService.selectOneEmployee(map);
+		EmployeeDto empInfo = employeeService.selectOneEmployee(map);
 		byte[] empPic = empInfo.getEmpl_picture();
 		empInfo.setEmpl_picture_str(Function.blobImageToString(empPic));
 		
@@ -241,7 +240,7 @@ public class EmployeeController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empl_id", empl_id);
 
-		EmployeeDto empInfo = employeeListService.selectOneEmployee(map);
+		EmployeeDto empInfo = employeeService.selectOneEmployee(map);
 		byte[] empPic = empInfo.getEmpl_picture();
 		empInfo.setEmpl_picture_str(Function.blobImageToString(empPic));
 		
@@ -376,17 +375,17 @@ public class EmployeeController {
 			}
 			
 			if(empl_id.equals(empl_modify_id)) {
-				//Role정보 Update
-				//Security Role정보 Update
-				SecurityContextHolder.getContext().setAuthentication(authService.createNewAuthentication(authentication,authentication.getName()));
-				//Session Role정보 Update
-				EmployeeDto employeeDto = employeeService.getUserInfo(authentication.getName());
-				HttpSession session = req.getSession();
-				//이미지 스트링 정보로 처리
-				employeeDto.setEmpl_picture_str(Function.blobImageToString(employeeDto.getEmpl_picture()));
-				//2진정보 초기화
-				employeeDto.setEmpl_picture(null);
-				session.setAttribute("userInfoVo", employeeDto);
+			    //Role정보 Update
+			    //Security Role정보 Update
+			    SecurityContextHolder.getContext().setAuthentication(authService.createNewAuthentication(authentication,authentication.getName()));
+			    //Session Role정보 Update
+			    EmployeeDto employeeDto = employeeService.getUserInfo(authentication.getName());
+			    HttpSession session = req.getSession();
+			    //이미지 스트링 정보로 처리
+			    employeeDto.setEmpl_picture_str(Function.blobImageToString(employeeDto.getEmpl_picture()));
+			    //2진정보 초기화
+			    employeeDto.setEmpl_picture(null);
+			    session.setAttribute("userInfoVo", employeeDto);
 			}
 			
 			return;
@@ -415,6 +414,199 @@ public class EmployeeController {
 		model.addAttribute("authLists", authLists);
 		
 		return "hr/employee/modifyAuthAdmin";
+	}
+	
+	
+// =========================== 구분선 =========================================	
+	
+	
+	@GetMapping("list.do")
+	public String employeeAllList(Model model) {
+		log.info("EmployeeListController employeeAllList 진입");
+		
+		List<EmployeeDto> lists = employeeService.selectAllEmployee();
+		
+		Map<String, Object> mapDept = new HashMap<String, Object>();
+		mapDept.put("role", "DT");
+		
+		Map<String, Object> mapRank = new HashMap<String, Object>();
+		mapRank.put("role", "RK");
+		
+		Map<String, Object> mapPosit = new HashMap<String, Object>();
+		mapPosit.put("role", "PN");
+		
+		List<CommonCodeDto> deptList = codeService.selectAllRole(mapDept);
+		List<CommonCodeDto> rankList = codeService.selectAllRole(mapRank);
+		List<CommonCodeDto> positionList = codeService.selectAllRole(mapPosit);
+
+		model.addAttribute("deptList", deptList);
+		model.addAttribute("rankList", rankList);
+		model.addAttribute("positionList", positionList);
+		model.addAttribute("lists", lists);
+		
+		return "/hr/employee/list";
+	}	
+
+	@GetMapping("modifyAdmin.do")
+	public void employeeModify(Model model ,String empl_id) {
+		log.info("EmployeeListController modifyAdmin 수정페이지 진입");
+		System.out.println(empl_id);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("empl_id", empl_id);
+		EmployeeDto empInfo = employeeService.selectOneEmployee(map);
+		byte[] empPic = empInfo.getEmpl_picture();
+		empInfo.setEmpl_picture_str(Function.blobImageToString(empPic));
+		model.addAttribute("empInfo", empInfo);
+//		return "/hr/employee/modifyAdmin";
+		
+	}	
+	
+	
+	@PostMapping("modifyAdminOk.do")
+	public @ResponseBody void employeeModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, 
+												@RequestParam Map<String, String> map, 
+												HttpServletResponse resp, 
+												Authentication authentication,
+												String empl_id) throws IOException {
+		log.info("EmployeeController employeeModifyOk 수정처리");
+		
+		EmployeeDto emp = new EmployeeDto();
+
+        emp.setEmpl_phone(map.get("empl_phone"));
+        emp.setEmpl_tel(map.get("empl_tel"));
+        emp.setEmpl_fax(map.get("empl_fax"));
+		emp.setEmpl_modify_id(empl_id);
+        emp.setEmpl_id(map.get("empl_id"));
+        
+        if(!file.stream().allMatch(MultipartFile::isEmpty)) {
+			for(MultipartFile f : file){
+		        log.info("f.isEmpty() : {}", f.isEmpty());
+		        log.info("f.getSize() : {}", f.getSize());
+		        log.info("f.getContentType() : {}", f.getContentType());
+				emp.setEmpl_picture(f.getBytes());
+			}
+		}
+        else {
+			emp.setEmpl_picture(null);
+		}
+
+		log.info("수정값 : {}", emp);
+		
+		int n = employeeService.updateEmployee(emp);
+		String msg;
+		if(n < 1) {
+			Function.alertHistoryBack(resp, "수정 시 오류가 발생하였습니다.", "", "");
+			return;
+			//sb.append("alert('수정 시 오류가 발생하였습니다.'); history.back();");
+		}else {
+			Function.alertLocation(resp, "정상적으로 수정 되었습니다.", "/hr/employee/modifyAdmin.do?empl_id="+empl_id, "","","");
+			return;
+			//sb.append("alert('정상적으로 수정 되었습니다.');");
+			//sb.append("location.href='/hr/employee/list.do';");
+		}
+	}
+	
+	
+	
+	@PostMapping(value = "empSearching.do")
+	@ResponseBody
+	public List<EmployeeDto> empSearching(@RequestParam("empShCtgVal") String empShCtgVal,
+								@RequestParam("empStaCtg") String empStaCtg,
+								@RequestParam("startDate") String startDate,
+								@RequestParam("endDate") String endDate,
+								@RequestParam("empSearchValue") String empSearchValue,
+								@RequestParam("dtArr") String[] dtArr,
+								@RequestParam("rkArr") String[] rkArr,
+								@RequestParam("pnArr") String[] pnArr
+							) {
+		System.out.println(empShCtgVal);
+		System.out.println(empStaCtg);
+		System.out.println(startDate);
+		System.out.println(endDate);
+		System.out.println(empSearchValue);
+		System.out.println(Arrays.toString(dtArr));
+		System.out.println(Arrays.toString(rkArr));
+		System.out.println(Arrays.toString(pnArr));
+		
+		
+		
+		
+		String searchCtg = StringUtils.defaultIfEmpty(empShCtgVal, null);
+		String delCtg = StringUtils.defaultIfEmpty(empStaCtg, null);
+		String start = StringUtils.defaultIfEmpty(startDate, null);
+		String end = StringUtils.defaultIfEmpty(endDate, null);
+		String searchVal = StringUtils.defaultIfEmpty(empSearchValue, null);
+		
+//		System.err.println(searchCtg);
+//		System.err.println(delCtg);
+//		System.err.println(start);
+//		System.err.println(end);
+//		System.err.println(searchVal);
+//		System.err.println(Arrays.toString(dtArr));
+//		System.err.println(Arrays.toString(rkArr));
+//		System.err.println(Arrays.toString(pnArr));
+		
+		
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		searchMap.put("searchCtg", searchCtg);
+		searchMap.put("empl_name", searchVal);
+		searchMap.put("empl_id", searchVal);
+		searchMap.put("empl_phone", searchVal);
+		searchMap.put("empl_delflag", delCtg);
+		searchMap.put("startdate", start);
+		searchMap.put("enddate", end);
+		
+		if(dtArr.length == 0) {
+			dtArr = null;
+		}else {
+			searchMap.put("empl_dept_cd", "work");
+		}
+		
+		if(rkArr.length == 0) {
+			rkArr = null;
+		}else{
+			searchMap.put("empl_rank_cd", "work");
+		}
+		
+		if(pnArr.length == 0) {
+			pnArr = null;
+		}else {
+			searchMap.put("empl_position_cd", "work");
+		}
+		
+		searchMap.put("dtArr", dtArr);
+		searchMap.put("rkArr", rkArr);
+		searchMap.put("pnArr", pnArr);
+		
+		
+		List<EmployeeDto> searchlists = employeeService.searchAllEmployee(searchMap);
+		System.out.println(searchlists);
+		Gson returnList = new GsonBuilder().create();
+		return searchlists;
+	}
+	
+	
+	
+	@GetMapping(value = "empAdminValueChk.do")
+	@ResponseBody
+	public boolean empAdminValueChk(String empl_phone, String empl_tel, String empl_fax) {
+		boolean returnBool = true;
+		if(empl_phone != null) {
+			System.out.println(empl_phone);
+			returnBool = employeeService.chkEmpPhoneNum(empl_phone);
+		}
+		
+		if(empl_tel != null) {
+			System.out.println(empl_tel);
+			returnBool = employeeService.chkEmpTelNum(empl_tel);
+		}
+		
+		if(empl_fax != null) {
+			System.out.println(empl_fax); 
+			returnBool = employeeService.chkEmpFaxNum(empl_fax);
+		}
+		
+		return returnBool;
 	}
 	
 	

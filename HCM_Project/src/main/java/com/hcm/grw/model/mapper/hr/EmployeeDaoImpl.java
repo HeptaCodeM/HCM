@@ -114,5 +114,45 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 		return sqlSessionTemplate.selectList(NS+"getUserInfoSearch", map);
 	}
+	
+//	======================= 구분선 ===================================	
+	
+	@Override
+	public List<EmployeeDto> selectAllEmployee() {
+		return sqlSessionTemplate.selectList(NS+"selectAllEmployee");
+	}
+
+	@Override
+	public List<EmployeeDto> searchAllEmployee(Map<String, Object> map) {
+		return sqlSessionTemplate.selectList(NS+"searchAllEmployee",map);
+	}
+
+	@Override
+	public EmployeeDto selectOneEmployee(Map<String, Object> map) {
+		return sqlSessionTemplate.selectOne(NS+"selectOneEmployee",map);
+	}
+
+	@Override
+	public int correctionEmployee(Map<String, Object> map) {
+		return sqlSessionTemplate.update(NS+"correctionEmployee",map);
+	}
+
+	@Override
+	public boolean chkEmpPhoneNum(String empl_phone) {
+		int cnt = sqlSessionTemplate.selectOne(NS+"chkEmpPhoneNum",empl_phone);
+		return (cnt > 0)?false:true;
+	}
+
+	@Override
+	public boolean chkEmpTelNum(String empl_tel) {
+		int cnt = sqlSessionTemplate.selectOne(NS+"chkEmpTelNum",empl_tel);
+		return (cnt > 0)?false:true;
+	}
+
+	@Override
+	public boolean chkEmpFaxNum(String empl_fax) {
+		int cnt = sqlSessionTemplate.selectOne(NS+"chkEmpFaxNum",empl_fax);
+		return (cnt > 0)?false:true;
+	}
 
 }
