@@ -10,18 +10,21 @@
 			ORDER BY EMSI_SEQ
 	</select>
 	
+	<!-- 처음 생성일 경우 자동으로 대표서명으로 설정 -->
 	<insert id="insertSign" parameterType="Map">
-		INSERT INTO EMP_SIGN(EMSI_SEQ, EMPL_ID, EMSI_TITLE, 
-					EMSI_SIGN_IMG, 
-					EMSI_STAMP_IMG, 
-					EMSI_DELFLAG, EMSI_CREATE_ID, EMSI_CREATE_DT, EMSI_MODIFY_ID, 
-					EMSI_MODIFY_DT, EMSI_SETFLAG)
-			VALUES((SELECT NVL(MAX(EMSI_SEQ)+1, 1) EMSI_SEQ FROM EMP_SIGN) , #{empl_id}, #{emsi_title}, 
-					#{emsi_sign_img}, 
-					'', 
-					'N' , #{emsi_create_id}, CURRENT_DATE, '', 
-					'','')
-	</insert>
+    	<selectKey keyProperty="emsi_seq" resultType="String" order="BEFORE">
+        	SELECT NVL(MAX(EMSI_SEQ)+1, 1) AS EMSI_SEQ FROM EMP_SIGN
+    	</selectKey>
+		    INSERT INTO EMP_SIGN(EMSI_SEQ, EMPL_ID, EMSI_TITLE, EMSI_SIGN_IMG, EMSI_CREATE_ID, EMSI_CREATE_DT, EMSI_SETFLAG)
+		    VALUES (
+			        #{emsi_seq}, #{empl_id},  #{emsi_title}, 
+			        #{emsi_sign_img}, #{emsi_create_id}, CURRENT_DATE, 
+			        CASE
+			            WHEN (SELECT COUNT(*) FROM EMP_SIGN WHERE EMPL_ID = #{empl_id} AND EMSI_DELFLAG = 'N') > 0 THEN 'N'
+			            ELSE 'Y'
+			        END
+	   				)
+</insert>
 	
 	<update id="setDefaultSign" parameterType="Map">
 		UPDATE EMP_SIGN SET EMSI_SETFLAG = 'Y'

@@ -85,7 +85,7 @@ public class TempTreeController {
 	@PostMapping(value = "/insertTempDoc.do", produces = "text/html; charset=UTF-8")
 	public ResponseEntity<?> insertTempDoc(@RequestPart("dto") SignTempBoxDto dto){
 		log.info("TempTreeController insertTempDoc.do POST 기안문 임시저장");
-		log.info("{}", dto);
+		log.info("\n\n{}\n\n", dto.getSitb_doc_json());
 		bService.insertTempDoc(dto);
 		return ResponseEntity.ok("성공");
 	}

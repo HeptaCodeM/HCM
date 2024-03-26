@@ -93,7 +93,7 @@ FROM SIGN_DOC_BOX sdb ,
         APPR_DEPTH PATH '$.APPR_DEPTH'
      )) appr_data JOIN EMPLOYEE e 
      ON appr_data.APPR_ID = e.EMPL_ID 
-WHERE SIDB_DOC_NUM = 24000001;
+WHERE SIDB_DOC_NUM = 24000042;
 
 -- 결재라인 업데이트 (승인)	
 UPDATE SIGN_DOC_BOX
