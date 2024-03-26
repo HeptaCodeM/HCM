@@ -47,6 +47,16 @@
 			<bean class="com.hcm.grw.interceptor.DuplicateRequestHandler"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/login/*"/>
+			<mvc:exclude-mapping path="/index.jsp"/>
+			<bean class="com.hcm.grw.interceptor.AuthCheckHandler"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
 	
 	
 </beans>
