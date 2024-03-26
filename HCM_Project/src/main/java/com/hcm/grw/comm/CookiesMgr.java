@@ -32,6 +32,14 @@ public class CookiesMgr extends HttpServlet {
 	public static void setCookies(HttpServletResponse rep, String cName, String cValue, int expireTime) {
 		rep.setContentType("text/html;charset=UTF-8");
 		
+		try {
+			if(expireTime == 0) {
+				expireTime = 20;
+			}
+		}catch(Exception e) {
+			expireTime = 20;
+		}
+		
 		// 쿠키생성
 		String encValue="";
 		try {

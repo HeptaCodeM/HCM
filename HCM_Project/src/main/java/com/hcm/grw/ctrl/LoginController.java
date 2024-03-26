@@ -126,7 +126,7 @@ public class LoginController {
 			
 			if(sendFlag) {
 				resp.getWriter().print("true");
-				CookiesMgr.setCookies(resp, "cInitPwdAuthNum", String.valueOf(randomNumber));
+				CookiesMgr.setCookies(resp, "cInitPwdAuthNum", String.valueOf(randomNumber), 3);
 			}else {
 				resp.getWriter().print("false");
 			}
