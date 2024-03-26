@@ -60,6 +60,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		// 로그인 성공 시 메인화면 이동
 		if(authentication.isAuthenticated()) {
 			Device device = DeviceUtils.getCurrentDevice(request);
+			log.info("device : {}", device);
 			if(device == null) {
 				response.sendRedirect("/mainTmp.do");
 			}else {
