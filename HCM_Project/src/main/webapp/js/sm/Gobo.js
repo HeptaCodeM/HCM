@@ -59,7 +59,7 @@ function scrollFunction() {
 }
 
 function checkInput() {
-    var inputContent = $(".CommentWriter #commentTextArea").val().trim();
+    var inputContent = $(".CommentWriter #rebo_content").val().trim();
     var submitButton = document.getElementById("submitButton");
 
     if (inputContent.length > 0) {
@@ -70,60 +70,7 @@ function checkInput() {
 }
 
 // textarea의 입력 이벤트에 checkInput 함수를 연결
-document.getElementById("commentTextArea").addEventListener("#commentTextArea", checkInput);
-
-
-
-function insertReply(data){
- // 직렬화된 데이터를 가져옵니다.
-    var form = $("#ReplyForm").serialize();
-
-    // 추가하려는 데이터를 직렬화된 데이터에 추가합니다.
-    var additionalData = "gobo_no=" + data;
-
-    // 추가 데이터를 직렬화된 데이터에 추가합니다.
-    form += "&" + additionalData;
-
-	$.ajax({
-			url: "/sm/insertReply.do",
-			data: form,
-			type: "get",
-			dataType: "json",
-			success: function() {
-				location.href='/sm/getDetailGobo.do?gobo_no='+data;
-				console.log("댓글 등록 성공");
-			},
-			error: function() {
-				
-			}
-		});
-		
-		
-}
-
-
-
-$(document).ready(function() {
-    // 등록 버튼 클릭 시 AJAX 요청을 보냅니다.
-    $(".insertReplyTwoBtn").click(function() {
-        var container = $(this).closest("li"); // 클릭한 버튼이 속한 li 요소를 찾습니다.
-        var formData = container.find("#ReplyTwoForm").serialize(); // 해당 li 요소 안의 form 데이터를 가져옵니다.
-		var gobo_no = $("#gobo_no").val();
-        // AJAX 요청을 보냅니다.
-        $.ajax({
-            url: "/sm/insertReplyTwo.do",
-            data: formData,
-            type: "GET",
-            dataType: "json",
-            success: function() {
-                location.href='/sm/getDetailGobo.do?gobo_no='+gobo_no;
-            },
-            error: function() {
-                // 에러 처리
-            }
-        });
-    });
-});
+document.getElementById("rebo_content").addEventListener("#rebo_content", checkInput);
 
 
 
