@@ -285,13 +285,7 @@ function preview(){
 		cssLink.href = "/css/doc/preview.css";
 		cssLink.rel = "stylesheet";
 		cssLink.type = "text/css";
-		previewWindow.document.head.appendChild(cssLink);    
-		
-/*	var templateLink = previewWindow.document.createElement("link");
-		templateLink.href = "/assets/css/style.bundle.css"; // 새로운 스타일 시트의 경로
-		templateLink.rel = "stylesheet";
-		templateLink.type = "text/css";
-		previewWindow.document.head.appendChild(templateLink);	*/    
+		previewWindow.document.head.appendChild(cssLink);    	
             
     var script1 = previewWindow.document.createElement('script');
     script1.src = "https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js";
@@ -324,3 +318,5 @@ function preview(){
             openPreview();
         });
     });
+    
+    

@@ -222,8 +222,7 @@ th, td {
 									
 									<div style="margin-top:50px; text-align:right;">
 									<span id="selectFile" style="min-width:100px; margin-right:1.5%;">첨부파일: </span> <button class="btn btn-primary btnMd" id="downBtn" style="font-size: small;">다운로드</button>
-									<button class="btn btn-primary btnMd" id="savePdf" style="font-size: small;">PDF 저장</button>
-									  <button  class="btn btn-primary btnMd"  id="openWindow">미리보기</button>
+									  <button  class="btn btn-primary btnMd"  id="openWindow">pdf 저장</button>
 									</div>
 								<div class="footer">
 									<div style="text-align:center; font-size:large; margin-bottom:20px;">첨언내역</div>
@@ -306,7 +305,7 @@ th, td {
 								</div>
 								
 		<div style="text-align: center; margin-top: 30px;">
-	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.sidb_curr_id}">
+	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.sidb_curr_id and docDto1.sidb_doc_stat != 3 and docDto1.sidb_doc_stat != 4 }">
     <button type="button" class="btn btn-primary btnLg" data-bs-toggle="modal" data-bs-target="#kt_modal_3">승인</button>
     <span style="min-width:100px;">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <button type="button" class="btn btn-danger btnLg" data-bs-toggle="modal" data-bs-target="#kt_deny">반려</button>
@@ -424,36 +423,7 @@ th, td {
 		</div>
 	</div>
 	
-   
-	<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_scrollable_1" onclick="preview()">
-    pdf용 모달</button>
 
-<div class="modal fade" tabindex="-1" id="kt_modal_scrollable_1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-
-                begin::Close
-                <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal">
-                    <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
-                </div>
-                end::Close
-            </div>
-
-            <div class="modal-body" >
-                <div id="previewContent">
-    			</div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="modalPdf">pdf가즈앙</button>
-            </div>
-        </div>
-    </div>
-</div> -->
-	
 	
 </body>
 <script type="text/javascript" src="/js/doc/boardDetail.js"></script>

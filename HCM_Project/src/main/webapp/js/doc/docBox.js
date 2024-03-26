@@ -1608,7 +1608,7 @@ function myTurnBox(){
 	     $('#myTable').DataTable({  
 	    	 "language": { 
 	             "lengthMenu": " _MENU_ 개씩 보기",
-	             "emptyTable": "결재 요청 중인 문서가 없습니다.",
+	             "emptyTable": "결재 요청 받은 문서가 없습니다.",
 	             "search": "검색: ",
 	             "info": "현재 _START_ - _END_ / _TOTAL_건",
 	             "paginate": {
@@ -1903,3 +1903,5 @@ $(document).ready( function () {
 
 	});
 });
+
+

@@ -1,8 +1,12 @@
 package com.hcm.grw.ctrl.hr;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -12,14 +16,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hcm.grw.dto.doc.SignBoxDto;
+import com.hcm.grw.dto.hr.EmpSignDto;
+import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.dto.hr.SignDocBoxDto;
+import com.hcm.grw.model.service.doc.IDocBoxService;
+import com.hcm.grw.model.service.hr.EmpSignService;
 import com.hcm.grw.model.service.hr.SignDocBoxService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 public class CertificateController {
 
 	@Autowired
 	private SignDocBoxService boxService;
+	
+	@Autowired
+	private IDocBoxService docService;
+	
+	@Autowired
+	private EmpSignService signService;
 	
 	
 	@GetMapping(value = "/hr/certificate/certificate.do")
@@ -39,16 +57,93 @@ public class CertificateController {
 	
 	
 	@GetMapping(value = "/hr/certificate/selectOneCertificate.do")
-	public String selectOneCertificate(String sidb_doc_num , Model model , Authentication authentication) {
-		System.out.println(sidb_doc_num);
+	public String selectOneCertificate(String sidb_doc_num, Model model, Authentication authentication, SignBoxDto dto, String docNum, HttpSession session) {
+		System.out.println(docNum);
 		String empl_id = authentication.getName();
 		System.out.println(empl_id);
 		Map<String, Object> docMap = new HashMap<String, Object>();
-		docMap.put("sidb_doc_num", sidb_doc_num);
+		docMap.put("sidb_doc_num", docNum);
 		docMap.put("empl_id", empl_id);
 		SignDocBoxDto boxDto = boxService.selectOneDocList(docMap);
 		System.out.println(boxDto.getSidb_doc_json());
 		model.addAttribute("boxDto",boxDto);
+		
+		
+//		=====================================================		
+		dto.setSidb_doc_num(docNum);
+		List<SignBoxDto> docDto = docService.getDetailDocsList(dto);
+
+		// EMPL_REF에서 가져온 모든 사원 번호를 저장할 ArrayList를 선언
+		List<String> allEmployeeIds = new ArrayList<>();
+
+		    String emplRef = docDto.get(0).getEmpl_ref();
+		    if (emplRef != null && !emplRef.isEmpty()) {
+		        String[] emplIds = emplRef.split(",");
+		        allEmployeeIds = Arrays.asList(emplIds);
+		}
+//		System.out.println(allEmployeeIds);
+		for (String string : allEmployeeIds) {
+			System.out.println(string);
+		}
+		String trimId = "";
+		StringBuilder employeeNamesBuilder = new StringBuilder();
+		for (String id : allEmployeeIds) {
+			trimId = id.trim();
+			System.out.println(trimId);
+		    String employeeName = docService.findEmployeeName(trimId);
+		    employeeNamesBuilder.append(employeeName).append(", ");
+		    System.out.println("뭐찍히니????????: " + employeeName);
+		}
+		
+		if (employeeNamesBuilder.length() > 0) {
+		    employeeNamesBuilder.setLength(employeeNamesBuilder.length() - 2);
+		}
+
+		String concatenatedNames = employeeNamesBuilder.toString();
+		System.out.println("사원 이름들: " + concatenatedNames);
+		docDto.get(0).setEmpl_ref(concatenatedNames);
+		
+		
+		// 참조 부서명 가져오기
+		List<String> allDeptIds = new ArrayList<>();
+		
+		    String deptRef = docDto.get(0).getEmpl_dept_cd();
+		    if (deptRef != null && !deptRef.isEmpty()) {
+		        String[] deptIds = deptRef.split(",");
+		        allDeptIds = Arrays.asList(deptIds);
+		}
+		
+		String trimDeptId = "";
+		StringBuilder deptNamesBuilder = new StringBuilder();
+		for (String id : allDeptIds) {
+			trimDeptId = id.trim();
+			System.out.println(trimDeptId);
+		    String deptName = docService.findDeptName(trimDeptId);
+		    deptNamesBuilder.append(deptName).append(", ");
+		    System.out.println("뭐찍히니????????: " + deptName);
+		}
+		
+		if (deptNamesBuilder.length() > 0) {
+			deptNamesBuilder.setLength(deptNamesBuilder.length() - 2);
+		}
+		
+		String concatDeptNames = deptNamesBuilder.toString();
+		System.out.println("참조부서명들: " + concatDeptNames);
+		docDto.get(0).setEmpl_dept_cd(concatDeptNames);
+		
+		
+		EmployeeDto sessionDto = (EmployeeDto)session.getAttribute("userInfoVo");
+		
+		Map<String, Object> signMap = new HashMap<String, Object>();
+		signMap.put("empl_id", sessionDto.getEmpl_id());
+		List<EmpSignDto> signList = signService.selectAllSign(signMap);
+		model.addAttribute("signList", signList);
+		
+		
+		
+		model.addAttribute("docDto", docDto);
+		log.info("상세조회  데이터 리스트 결과{}", docDto);		
+//		=====================================================		
 		return "hr/certificate/selectOneCertificate";
 	}
 	
