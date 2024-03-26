@@ -67,6 +67,8 @@ public interface IDocBoxService {
 		//임시 문서함 조회
 		public List<SignBoxDto> getTempDocs(SignBoxDto dto);
 		
+		//임시 문서함 삭제
+		public int deleteTempDocs(SignBoxDto dto);
 		//참조자 조회
 		public String findEmployeeName(String id);
 		

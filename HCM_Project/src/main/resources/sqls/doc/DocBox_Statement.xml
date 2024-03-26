@@ -336,10 +336,16 @@
 		FROM SIGN_TEMP_BOX sdb
 		JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 		JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
-		WHERE SDB.empl_id = #{empl_id}
+		WHERE SDB.empl_id = #{empl_id} 
 		ORDER BY
 		SDB.SITB_DOC_WRITEDT DESC
 	 </select>
+
+	<!-- 임시문서함 문서 삭제 -->
+	<delete id="deleteTempDocs">	
+		DELETE SIGN_TEMP_BOX
+		WHERE SITB_DOC_NUM = #{sidb_doc_num}
+	</delete>	
 
 	<!-- 참조자 이름 가져오기 -->
 	<select id="findEmployeeName" resultType="String">
