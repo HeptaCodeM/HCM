@@ -72,13 +72,20 @@ function delSign() {
 	var seq = '';
 	var id = document.getElementById('empl_id').value;
 	var chkbox = document.getElementsByName("signDefault");
+	var searchDiv;
 	for (let chk of chkbox) {
 		if (chk.checked) {
 			seq = chk.value;
+			searchDiv = chk.parentNode;
 		}
 	}
 	if (seq == '') {
 		swalAlert('서명을 선택해주세요', '', '', '확인');
+		return;
+	}
+	var defaultSign = searchDiv.querySelectorAll('span')[0].textContent;
+	if(defaultSign == '대표') {
+		swalAlert('대표 서명은 삭제할 수 없습니다', '', '', '확인');
 		return;
 	}
 	sweetAlertConfirm("서명을 삭제할까요?", function() {
