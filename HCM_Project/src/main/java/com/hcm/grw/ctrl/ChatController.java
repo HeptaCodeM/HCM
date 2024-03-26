@@ -9,13 +9,12 @@ import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.GsonBuilder;
 import com.hcm.grw.dto.ChatDto;
-import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.ChatService;
-import com.hcm.grw.model.service.hr.EmployeeService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,8 +24,6 @@ public class ChatController {
 	
 	@Autowired
 	private ChatService service;
-	@Autowired
-	private EmployeeService employeeService;
 		
 	@PostMapping(value = "sendMessage.do", produces = "text/html; charset=UTF-8")
 	public void sendMessage(@RequestBody Map<String, Object> map) {
@@ -46,19 +43,24 @@ public class ChatController {
 	public ResponseEntity<?> loadMessage(ChatDto dto) {
 		log.info("ChatController loadMessage 대화목록 불러오기 : {}", dto);
 		List<ChatDto> chatList = service.selectAllMessage(dto);
+		for (ChatDto chatDto : chatList) {
+			if(chatDto.getSender_pic() != null) {
+				chatDto.setSender_pic_str(Base64Utils.encodeToString(chatDto.getSender_pic()));
+			}
+		}
 		return ResponseEntity.ok(new GsonBuilder().create().toJson(chatList));
 	}
 	
 	@GetMapping(value = "chatUserList.do", produces = "text/html; charset=UTF-8")
-	public ResponseEntity<?> chatUserList() {
+	public ResponseEntity<?> chatUserList(@RequestParam String ch_target) {
 		log.info("ChatController chatUserList 채팅 유저목록 조회");
-		List<EmployeeDto> employeeList = employeeService.selectAllEmployee();
-		for(EmployeeDto dto : employeeList) {
-			if(dto.getEmpl_picture() != null) {
-				dto.setEmpl_picture_str(Base64Utils.encodeToString(dto.getEmpl_picture()));
+		List<ChatDto> list = service.chatUserList(ch_target);
+		for(ChatDto dto : list) {
+			if(dto.getSender_pic() != null) {
+				dto.setSender_pic_str(Base64Utils.encodeToString (dto.getSender_pic()));
 			}
 		}
-		return ResponseEntity.ok(new GsonBuilder().create().toJson(employeeList));
+		return ResponseEntity.ok(new GsonBuilder().create().toJson(list));
 	}
 
 	@GetMapping("chatCount.do")

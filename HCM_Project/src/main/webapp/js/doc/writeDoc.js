@@ -5,74 +5,83 @@ var element = document.querySelector('#kt_modal_3');
 dragElement(element);
 
 function dragElement(elmnt) {
-    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    if (elmnt.querySelector('.modal-content')) {
-        elmnt.querySelector('.modal-content').onmousedown = dragMouseDown;
-    } else {
-        elmnt.onmousedown = dragMouseDown;
-    }
+	var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+	if (elmnt.querySelector('.modal-content')) {
+		elmnt.querySelector('.modal-content').onmousedown = dragMouseDown;
+	} else {
+		elmnt.onmousedown = dragMouseDown;
+	}
 
-    function dragMouseDown(e) {
-        e = e || window.event;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
-    }
+	function dragMouseDown(e) {
+		e = e || window.event;
+		pos3 = e.clientX;
+		pos4 = e.clientY;
+		document.onmouseup = closeDragElement;
+		document.onmousemove = elementDrag;
+	}
 
-    function elementDrag(e) {
-        e = e || window.event;
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-    }
+	function elementDrag(e) {
+		e = e || window.event;
+		pos1 = pos3 - e.clientX;
+		pos2 = pos4 - e.clientY;
+		pos3 = e.clientX;
+		pos4 = e.clientY;
+		elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+		elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+	}
 
-    function closeDragElement() {
-        document.onmouseup = null;
-        document.onmousemove = null;
-    }
+	function closeDragElement() {
+		document.onmouseup = null;
+		document.onmousemove = null;
+	}
 }
+
+// -----------------------------------> [ 작성화면 ] 만료일 달력 설정
+new tempusDominus.TempusDominus(document.getElementById("kt_td_picker_localization"), {
+	localization: {
+		locale: "ko",
+		startOfTheWeek: 1,
+		format: "yyyy-MM-dd"
+	}
+});
 
 
 // -----------------------------------> [ 모달창 ] 템플릿 jstree 정보 가져오기
 setTimeout(function() {
-   $('#jstree').jstree({
-      plugins: ['search', 'wholerow'],
-      core: {
-         data: {
-            url: './getTempTree.do',
-            method: 'get',
-            dataType: 'json',
-            success: function(data) {
-               console.log(data)
-            },
-            error: function() {
-               alert('데이터 전송 실패');
-            }
-         }
-      }
-   });
-},1000)
+	$('#jstree').jstree({
+		plugins: ['search', 'wholerow'],
+		core: {
+			data: {
+				url: './getTempTree.do',
+				method: 'get',
+				dataType: 'json',
+				success: function(data) {
+					console.log(data)
+				},
+				error: function() {
+					alert('데이터 전송 실패');
+				}
+			}
+		}
+	});
+}, 1000)
 
 
 // -----------------------------------> [ 모달창 ] 템플릿 미리보기
 $('#jstree').on('select_node.jstree', function(e, data) {
-   var id = data.node.id;
-   if (id.startsWith("CC")) {
-      return;
-   }
-   fetch('./getDoc.do?sidt_temp_cd=' + id)
-      .then(resp => { return resp.text() })
-      .then(data => {
-         docData = data;
-         //         console.log(data);
-         var template = document.getElementById('template')
-         template.innerHTML = data;
-      })
-      .catch(err => { console.log(err) });
+	var id = data.node.id;
+	if (id.startsWith("CC")) {
+		return;
+	}
+	fetch('./getDoc.do?sidt_temp_cd=' + id)
+		.then(resp => { return resp.text() })
+		.then(data => {
+			docData = data;
+			//         console.log(data);
+			var template = document.getElementById('template')
+			template.innerHTML = data;
+		})
+		.catch(err => { console.log(err) });
 
 })
 
@@ -82,35 +91,47 @@ var docData;
 var sica_cd;
 var sidt_temp_cd;
 
+
 // -----------------------------------> [ 모달창 ] jstree를 통해 템플릿 불러오기
 document.getElementById('getTemplate').addEventListener('click', function(e) {
-   var selNode = $('#jstree').jstree('get_selected');
-   var parentNode = $('#jstree').jstree('get_parent', selNode);
-   sica_cd = parentNode;
-   sidt_temp_cd = selNode[0];
-   // 템플릿 선택 유효성 검사
-   if (selNode.length == 0) {
-      alert('템플릿을 선택해주세요');
-      return;
-   }
-   if (selNode[0].startsWith("CC")) {
-      alert('템플릿을 선택해주세요');
-      return;
-   }
+	var selNode = $('#jstree').jstree('get_selected');
+	var parentNode = $('#jstree').jstree('get_parent', selNode);
+	sica_cd = parentNode;
+	sidt_temp_cd = selNode[0];
+	// 템플릿 선택 유효성 검사
+	if (selNode.length == 0) {
+		alert('템플릿을 선택해주세요');
+		return;
+	}
+	if (selNode[0].startsWith("CC")) {
+		alert('템플릿을 선택해주세요');
+		return;
+	}
 
 
-// -----------------------------------> [ 모달창 ] 로그인 정보를 포함한 에디터 화면으로 변경
-   $("#template_div").hide();
-   $("#editor_div").show();
-   document.getElementById('closeBtn').click();
-   var sessionName = document.getElementById('myName');
-   var sessionDept = document.getElementById('myDept');
-   var sessionRank = document.getElementById('myRank');
-   var insertName = docData.replace("홍길동", sessionName.value)
-   var insertDept = insertName.replace("인사팀", sessionDept.value)
-   var insertRank = insertDept.replace("대리", sessionRank.value)
-   editor.setData(insertRank);
-//   editor.setData(docData);
+	// -----------------------------------> [ 모달창 ] 로그인 정보를 포함한 에디터 화면으로 변경
+	$("#template_div").hide();
+	$("#editor_div").show();
+	document.getElementById('closeBtn').click();
+	var sessionName = document.getElementById('myName');
+	var sessionDept = document.getElementById('myDept');
+	var sessionRank = document.getElementById('myRank');
+	var sessionBirth = document.getElementById('empl_birth')
+	var insertName = docData.replace("홍길동", sessionName.value)
+	var insertDept = insertName.replace("인사팀", sessionDept.value)
+	var insertRank = insertDept.replace("대리", sessionRank.value)
+	var insertBirth = insertRank.replace("900101", sessionBirth.value)
+	editor.setData(insertBirth);
+	
+	
+	// -----------------------------------> [작성화면] 사원정보 유효성검사
+	setTimeout(function() {
+		var noTouch = document.getElementById('noTouch');
+		noTouch.addEventListener('click', function() {
+			swalAlert('편집불가한 영역입니다', '', '', '확인');
+			document.getElementById('sitb_doc_title').focus();
+		})
+	}, 1500)
 
 })
 
@@ -118,177 +139,192 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 
 // -----------------------------------> [ 작성화면 ] 현재 작성일 설정   
 var currentDate = new Date();
-var formatDate =currentDate.getFullYear()+'-'+ ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' + ('0' + currentDate.getDate()).slice(-2);
+var formatDate = currentDate.getFullYear() + '-' + ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' + ('0' + currentDate.getDate()).slice(-2);
 document.getElementById('currentDate').innerHTML = formatDate;
 
 
 // -----------------------------------> [ 작성화면 ] 기안문 임시저장
 function insertTempDoc() {
-   // 로그인 정보
-   var empl_id = document.getElementById('id').value;
-   // 기안서 제목
-   var sitb_doc_title = document.getElementsByClassName('sitb_doc_title')[0].value;
-   // 기안서 내용
-   var sitb_doc_content = editor.getData();
-   // 기안 만료일
-   var sitb_doc_expiredt = document.getElementsByClassName('sitb_doc_expiredt')[0].value;
-   // 알림 여부 설정
-   var checkbox = document.getElementsByName('alflag')[0];
-   var sitb_doc_alflag;
-   if(checkbox.checked) {
-      sitb_doc_alflag  = 'Y'
-   } else {
-      sitb_doc_alflag  = 'N'
-   }
-   
-   // -----------------------------------> 유효성검사
-   if(sitb_doc_title.length == 0) {
-      swalAlert('제목을 입력해주세요','','','확인');
-      return;
-   } else if(sitb_doc_title.length < 6) {
-      swalAlert('제목을 6글자 이상 입력해주세요','','','확인');
-      return;
-   }
-   
-   
-   
-   
-   // 이벤트 날짜
-   var sidt_doc_event = document.getElementById('sidb_doc_event').textContent;
-   var eventArr = sidt_doc_event.split('~');   
-   var sitb_doc_be = eventArr[0].replace(/년|월|\s+/g, '-').replace(/일/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
-   var sitb_doc_end = eventArr[1].replace(/년|월|\s+/g, '-').replace(/일/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
-   console.log(sitb_doc_be)
-   console.log(sitb_doc_end)
-   var docData = {
-      sitb_doc_title : sitb_doc_title,
-      sitb_doc_content : sitb_doc_content,
-      empl_id : empl_id,
-      sitb_doc_expiredt : sitb_doc_expiredt,
-      sitb_doc_alflag : sitb_doc_alflag,
-      sitb_doc_be : sitb_doc_be,
-      sitb_doc_end : sitb_doc_end,
-      sica_cd : sica_cd,
-      sidt_temp_cd : sidt_temp_cd,
-      sitb_curr_id : json[0].appr_id,
-      empl_ref : ref.empl_ref,
-      empl_dept_cd : dept.empl_dept_cd,
-      emsi_seq : sign,
-      sitb_doc_json : json
-   }   
-      console.log("기안문 임시저장 정보:",docData);
-      var formData = new FormData();
-      formData.append('dto', new Blob([JSON.stringify(docData)], {type : 'application/json'}));
-      
-      /*fetch('/doc/insertTempDoc.do', {
-      method : 'post',
-      body : formData
-   })
-      .then(resp => {
-         return resp.text()
-      })
-      .then(data => {
-         console.log(data);
-         if(data == "성공") {
-            location.href = '/doc/tempDocs.do';
-         } else {
-            swalAlert('작성에 실패했습니다','','','확인','')
-         }
-         
-      })
-      .catch(err => {console.log(err)})*/
-   
+	// 로그인 정보
+	var empl_id = document.getElementById('id').value;
+	// 기안서 제목
+	var sitb_doc_title = document.getElementById('sitb_doc_title').value;
+	// 기안서 내용
+	var sitb_doc_content = editor.getData();
+	// 기안 만료일
+	var sitb_doc_expiredt = document.getElementsByClassName('sitb_doc_expiredt')[0].value;
+	// 알림 여부 설정
+	var checkbox = document.getElementsByName('alflag')[0];
+	var sitb_doc_alflag;
+	if (checkbox.checked) {
+		sitb_doc_alflag = 'Y'
+	} else {
+		sitb_doc_alflag = 'N'
+	}
+
+
+	// 이벤트 날짜
+	var sidt_doc_event = document.getElementById('sidb_doc_event').textContent;
+	var eventArr = sidt_doc_event.split('~');
+	var sitb_doc_be = eventArr[0].replace(/년|월|\s+/g, '-').replace(/일/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
+	var sitb_doc_end = eventArr[1].replace(/년|월|\s+/g, '-').replace(/일/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
+	console.log(sitb_doc_be)
+	console.log(sitb_doc_end)
+
+	var docData = {
+		sitb_doc_title: sitb_doc_title,
+		sitb_doc_content: sitb_doc_content,
+		empl_id: empl_id,
+		sitb_doc_expiredt: sitb_doc_expiredt,
+		sitb_doc_alflag: sitb_doc_alflag,
+		sitb_doc_be: sitb_doc_be,
+		sitb_doc_end: sitb_doc_end,
+		sica_cd: sica_cd,
+		sidt_temp_cd: sidt_temp_cd,
+		sitb_curr_id: json[0].appr_id,
+		empl_ref: ref.empl_ref,
+		empl_dept_cd: dept.empl_dept_cd,
+		emsi_seq: sign,
+		sitb_doc_json: json
+	}
+	console.log("기안문 임시저장 정보:", docData);
+	var formData = new FormData();
+	formData.append('dto', new Blob([JSON.stringify(docData)], { type: 'application/json' }));
+
+	fetch('/doc/insertTempDoc.do', {
+		method: 'post',
+		body: formData
+	})
+		.then(resp => {
+			return resp.text()
+		})
+		.then(data => {
+			console.log(data);
+			if (data == "성공") {
+				location.href = '/doc/tempDocs.do';
+			} else {
+				swalAlert('작성에 실패했습니다', '', '', '확인', '')
+			}
+
+		})
+		.catch(err => { console.log(err) })
+
 }
 
 
 // -----------------------------------> [ 작성화면 ] 기안문 제출하기
 function insertDoc() {
-   var sidb_doc_expiredt = document.getElementsByName('sidb_doc_expiredt')[0].value;
-   var sidb_doc_title = document.getElementsByName('sidb_doc_title')[0].value;
-   var sidb_doc_content = editor.getData();
-   var empl_id = document.getElementById('id').value;
-   var checkbox = document.getElementsByName('alflag')[0];
-   if(checkbox.checked) {
-      sidb_doc_alflag = 'Y'
-   } else {
-      sidb_doc_alflag = 'N'
-   }
-   var sidb_doc_event = document.getElementById('sidb_doc_event').textContent;
-   
-   var eventArr = sidb_doc_event.split('~');
-   const bebe = eventArr[0].replace(/\s+/g, '');
-   const enen = eventArr[1].replace(/\s+/g, '');
-   
-   result1 = bebe.substring(0, bebe.length-1);
-   result2 = enen.substring(0, enen.length-1);
-   var be = result1.replace('년','-');
-   var end = result2.replace('년','-');
-   var sidb_doc_be = be.replace('월','-')
-   var sidb_doc_end = end.replace('월','-')
-   
-   var file = document.getElementById('sidf_file_content').files[0]; // 파일 가져오기
-   var formData = new FormData();
-   
-   if(ref == undefined) {
-      ref = {empl_ref : ''}
-   }
-   if(dept == undefined) {
-      dept = {empl_dept_cd : ''}
-   }
-   
-   if (sidb_doc_be == '2024-00-00' || sidb_doc_be == '--' || sidb_doc_be == '') {
-      sidb_doc_be = '2024-01-01';
-   }
-   if (sidb_doc_end == '2024-00-00' || sidb_doc_end == '--' || sidb_doc_end == '') {
-      sidb_doc_end = '2024-01-01';
-   }
-   
-   var docData = {
-      sidb_doc_title : sidb_doc_title,
-      sidb_doc_content : sidb_doc_content,
-      empl_id : empl_id,
-      sidb_doc_expiredt : sidb_doc_expiredt,
-      sidb_doc_alflag : sidb_doc_alflag,
-      sidb_doc_be : sidb_doc_be,
-      sidb_doc_end : sidb_doc_end,
-      sica_cd : sica_cd,
-      sidt_temp_cd : sidt_temp_cd,
-      sidb_curr_id : json[0].appr_id,
-      empl_ref : ref.empl_ref,
-      empl_dept_cd : dept.empl_dept_cd,
-      emsi_seq : sign,
-      sidb_doc_json : json
-   }
-   if(sign == undefined) {
-      docData.emsi_seq = document.getElementById('emsi_seq').value;
-   }
-   
+	var sidb_doc_expiredt = document.getElementsByName('sidb_doc_expiredt')[0].value;
+	var sidb_doc_title = document.getElementsByName('sidb_doc_title')[0].value;
+	var sidb_doc_content = editor.getData();
+	var empl_id = document.getElementById('id').value;
+	var checkbox = document.getElementsByName('alflag')[0];
+	if (checkbox.checked) {
+		sidb_doc_alflag = 'Y'
+	} else {
+		sidb_doc_alflag = 'N'
+	}
+	var sidb_doc_event = document.getElementById('sidb_doc_event').textContent;
 
-   
-   console.log(docData);
-   
-   // 파일 추가
-   formData.append('file', file);
-   formData.append('dto', new Blob([JSON.stringify(docData)], {type : 'application/json'}));
-   
-   fetch('/doc/insertDoc.do', {
-      method : 'post',
-      body : formData
-   })
-      .then(resp => {
-         return resp.text()
-      })
-      .then(data => {
-         console.log(data);
-         if(data == "성공") {
-            location.href = '/doc/docBox.do';
-         } else {
-            swalAlert('작성에 실패했습니다','','','확인','')
-         }
-         
-      })
-      .catch(err => {console.log(err)})
-   
+	var eventArr = sidb_doc_event.split('~');
+	const bebe = eventArr[0].replace(/\s+/g, '');
+	const enen = eventArr[1].replace(/\s+/g, '');
+
+	result1 = bebe.substring(0, bebe.length - 1);
+	result2 = enen.substring(0, enen.length - 1);
+	var be = result1.replace('년', '-');
+	var end = result2.replace('년', '-');
+	var sidb_doc_be = be.replace('월', '-')
+	var sidb_doc_end = end.replace('월', '-')
+
+	var file = document.getElementById('sidf_file_content').files[0]; // 파일 가져오기
+	var formData = new FormData();
+
+	if (ref == undefined) {
+		ref = { empl_ref: '' }
+	}
+	if (dept == undefined) {
+		dept = { empl_dept_cd: '' }
+	}
+
+	if (sidb_doc_be == '2024-00-00' || sidb_doc_be == '--' || sidb_doc_be == '') {
+		sidb_doc_be = '2024-01-01';
+	}
+	if (sidb_doc_end == '2024-00-00' || sidb_doc_end == '--' || sidb_doc_end == '') {
+		sidb_doc_end = '2024-01-01';
+	}
+
+	// -----------------------------------> 유효성검사
+	if (sidb_doc_title.length == 0) {
+		swalAlert('제목을 입력해주세요', '', '', '확인');
+		return;
+	} else if (sidb_doc_title.length < 6) {
+		swalAlert('제목을 6글자 이상 입력해주세요', '', '', '확인');
+		return;
+	}
+
+	if (!sidb_doc_expiredt) {
+		swalAlert('만료일을 선택해주세요', '', '', '확인');
+		return;
+	}
+
+	if (!checkbox.checked) {
+		swalAlert('알림여부를 선택해주세요', '', '', '확인');
+		return;
+	}
+
+	var signMsg = document.getElementById('signMsg');
+	if (signMsg.value === "서명을 선택해주세요") {
+		swalAlert('서명 등록을 하지 않으셨습니다', '', '', '확인');
+	}
+	if (json == undefined) {
+		swalAlert('결재선을 지정하지 않으셨습니다', '', '', '확인');
+	}
+
+
+	var docData = {
+		sidb_doc_title: sidb_doc_title,
+		sidb_doc_content: sidb_doc_content,
+		empl_id: empl_id,
+		sidb_doc_expiredt: sidb_doc_expiredt,
+		sidb_doc_alflag: sidb_doc_alflag,
+		sidb_doc_be: sidb_doc_be,
+		sidb_doc_end: sidb_doc_end,
+		sica_cd: sica_cd,
+		sidt_temp_cd: sidt_temp_cd,
+		sidb_curr_id: json[0].appr_id,
+		empl_ref: ref.empl_ref,
+		empl_dept_cd: dept.empl_dept_cd,
+		emsi_seq: sign,
+		sidb_doc_json: json
+	}
+
+
+	console.log(docData);
+
+	// 파일 추가
+	formData.append('file', file);
+	formData.append('dto', new Blob([JSON.stringify(docData)], { type: 'application/json' }));
+
+
+	fetch('/doc/insertDoc.do', {
+		method: 'post',
+		body: formData
+	})
+		.then(resp => {
+			return resp.text()
+		})
+		.then(data => {
+			console.log(data);
+			if (data == "성공") {
+				location.href = '/doc/docBox.do';
+			} else {
+				swalAlert('작성에 실패했습니다', '', '', '확인', '')
+			}
+
+		})
+		.catch(err => { console.log(err) })
+
 }
 
 // -----------------------------------> [ 작성화면 ] 임시저장 insertTempDoc button
@@ -300,15 +336,15 @@ document.getElementById('insertDoc').addEventListener('click', insertDoc);
 
 // 참조 팝업창
 document.getElementById('signRefer').addEventListener('click', function() {
-   open('/doc/writeDoc/signRefer.do', '', 'width=720px height=900px left=400');
+	open('/doc/writeDoc/signRefer.do', '', 'width=720px height=900px left=400');
 });
 // 결재선 팝업
 document.getElementById('signLine').addEventListener('click', function() {
-   open('/doc/writeDoc/signLine.do', '', 'width=1600px height=900px left=400');
+	open('/doc/writeDoc/signLine.do', '', 'width=1600px height=900px left=400');
 });
 // 서명 팝업
 document.getElementById('selectSign').addEventListener('click', function() {
-   open('/doc/writeDoc/selectSign.do', '', 'width=1200px height=720px left=400');
+	open('/doc/writeDoc/selectSign.do', '', 'width=1200px height=720px left=400');
 });
 
 var ref;
@@ -319,47 +355,70 @@ var sign;
 
 // -----------------------------------> [ 작성화면 ] 기안문 기본 정보 load
 window.addEventListener('message', function(e) {
-   var data = e.data;
-   
-   if(data.hasOwnProperty('empl_ref')) {
-      ref = data;
-      document.getElementById('refName').textContent = ref.empl_ref_name;
-   } else if(data.hasOwnProperty('empl_dept_cd')) {
-      dept = data;
-      document.getElementById('deptName').textContent = dept.empl_dept_name;
-   } else if (typeof data == "string") {
-      sign = data;
-   } else {
-      json = data;
-//      document.getElementById('json').textContent = JSON.stringify(data);
-      if (data.length == 3) {
-            document.getElementById('apprName').textContent = data[0].appr_name + "(" + data[0].appr_position +")" + "," + data[1].appr_name + "," + data[2].appr_name;
-        } else if (data.length == 2) {
-         document.getElementById('apprName').textContent = data[0].appr_name + "(" + data[0].appr_position +")"+ "," + data[1].appr_name ;
-      } else {
-         document.getElementById('apprName').textContent = data[0].appr_name + "(" + data[0].appr_position +")";
-      }
-   }
-   console.log('ref : ' , ref);
-   console.log('dept : ', dept);
-   console.log('json : ', json);
-   console.log('sign : ', sign);
-   
+	var data = e.data;
+
+	if (data.hasOwnProperty('empl_ref')) {
+		ref = data;
+		document.getElementById('refName').textContent = ref.empl_ref_name;
+	} else if (data.hasOwnProperty('empl_dept_cd')) {
+		dept = data;
+		document.getElementById('deptName').textContent = dept.empl_dept_name;
+	} else if (typeof data == "string") {
+		sign = data;
+		document.getElementById('signMsg').value = "서명이 선택되었습니다"
+	} else {
+		json = data;
+		//      document.getElementById('json').textContent = JSON.stringify(data);
+		if (data.length == 3) {
+			document.getElementById('apprName').textContent = data[0].appr_name + "(" + data[0].appr_position + ")" + "," + data[1].appr_name + "," + data[2].appr_name;
+		} else if (data.length == 2) {
+			document.getElementById('apprName').textContent = data[0].appr_name + "(" + data[0].appr_position + ")" + "," + data[1].appr_name;
+		} else {
+			document.getElementById('apprName').textContent = data[0].appr_name + "(" + data[0].appr_position + ")";
+		}
+	}
+	console.log('ref : ', ref);
+	console.log('dept : ', dept);
+	console.log('json : ', json);
+	console.log('sign : ', sign);
+
 });
 
 // -----------------------------------> [ 작성화면 ] 기본서명 check 설정
 function defaultSign() {
-   var chk = document.getElementById('chk');
-   var btn = document.getElementById('selectSign');
-   if (chk.checked) {
-      console.log('체크', sign)
-      btn.setAttribute('disabled', '');
-      
-      document.getElementById('signMsg').setAttribute('type', 'text');
-      
-   } else {
-      console.log('해제', sign)
-      btn.removeAttribute('disabled');
-      document.getElementById('signMsg').setAttribute('type', 'hidden');
-   }
+	var chk = document.getElementById('chk');
+	var btn = document.getElementById('selectSign');
+	if (chk.checked) {
+		console.log('체크')
+		btn.setAttribute('disabled', '');
+		document.getElementById('signMsg').value = "기본서명이 선택되었습니다"
+		sign = document.getElementById('emsi_seq').value;
+		console.log(sign)
+
+	} else {
+		console.log('해제')
+		btn.removeAttribute('disabled');
+		document.getElementById('signMsg').value = "서명을 선택해주세요"
+		sign = undefined;
+		console.log(sign)
+	}
 }
+
+//if (typeof sign != undefined) {
+//	console.log('sign: ', sign)
+//	document.getElementById('signMsg').setAttribute('type', 'text');
+//} else {
+//	console.log('sign: ', sign)
+//	document.getElementById('signMsg').setAttribute('type', 'hidden');
+//}
+
+
+
+
+
+
+
+
+
+
+
