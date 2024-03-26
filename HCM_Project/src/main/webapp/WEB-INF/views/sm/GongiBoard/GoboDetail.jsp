@@ -288,7 +288,7 @@ function insertReply(data){
 					commentHtml += '<strong>'+rebo_writer+'</strong><br>';
 					commentHtml += '<div>'+rebo_content+'</div>';
 					commentHtml += '<div><small>'+formattedDate+'</small>';
-					commentHtml += '<a role="button" class="comment_info_button">답글쓰기</a>';
+					commentHtml += '<a role="button" class="comment_info_button" onclick="showCommentForm('++')">답글쓰기</a>';
 					commentHtml += '</div>';
 					commentHtml += '</div>';
 					commentHtml += '</div>';
@@ -333,9 +333,6 @@ function insertReplyTwo(rebo_no) {
 			    // 상위에 형제 노드가 있는 경우
 			    commentHtml += '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
 			}
-            
-            
-            if ($("#commentList > li.secondReply").length > 0) {
                 // secondReply가 있는 경우
                 commentHtml += '<li style="margin-left: 50px;">';
                 commentHtml += '<div class="d-flex align-items-center no-border" style="border: none;">';
@@ -344,37 +341,13 @@ function insertReplyTwo(rebo_no) {
                 commentHtml += '<strong>' + rebo_writer + '</strong><br>';
                 commentHtml += '<div>' + rebo_content + '</div>';
                 commentHtml += '<div><small>' + formattedDate + '</small>';
-                commentHtml += '<a role="button" class="comment_info_button">답글쓰기</a>';
+                commentHtml += '<a role="button" class="comment_info_button" onclick="showCommentForm('+rebo_no+')">답글쓰기</a>';
                 commentHtml += '</div>';
                 commentHtml += '</div>';
                 commentHtml += '</div>';
                 commentHtml += '</li>';
                 
-                if ($("#commentList > li").length > 0) {
-				    // 상위에 형제 노드가 있는 경우
-				    commentHtml += '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
-				}
-            } else {
-                // secondReply가 없는 경우
-                commentHtml += '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
-                commentHtml += '<li class="secondReply" style="margin-left: 50px;">';
-                commentHtml += '<div class="d-flex align-items-center no-border" style="border: none;">';
-                commentHtml += '<img src="${sessionScope.userInfoVo.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">';
-                commentHtml += '<div style="margin-left: 10px;">';
-                commentHtml += '<strong>' + rebo_writer + '</strong><br>';
-                commentHtml += '<div>' + rebo_content + '</div>';
-                commentHtml += '<div><small>' + formattedDate + '</small>';
-                commentHtml += '<a role="button" class="comment_info_button">답글쓰기</a>';
-                commentHtml += '</div>';
-                commentHtml += '</div>';
-                commentHtml += '</div>';
-                commentHtml += '</li>';
                 
-                if ($("#commentList > li").length > 0) {
-				    // 상위에 형제 노드가 있는 경우
-				    commentHtml += '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
-				}
-            }
 
             container.append(commentHtml);
         },
