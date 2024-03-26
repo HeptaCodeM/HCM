@@ -8,6 +8,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
@@ -41,7 +42,11 @@ public class LoginController {
 	private CompanyService companyService;
 	
 	@GetMapping("/login/login.do")
-	public String login(String error, String logout, Model model, HttpServletRequest request) {
+	public String login(String error, 
+						String logout, 
+						Model model, 
+						HttpServletRequest request, 
+						HttpServletResponse response) {
 		log.info("error : {}", error);
 		log.info("logout : {}", logout);
 
@@ -90,6 +95,7 @@ public class LoginController {
 		//모바일 처리
 		Device device = DeviceUtils.getCurrentDevice(request);
 		if(device.isMobile()) {
+			CookiesMgr.setCookies(response, "ckMobile", "Y", 0);
 			model.addAttribute("mobile", "Y");
 		}else {
 			model.addAttribute("mobile", "N");

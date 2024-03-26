@@ -23,7 +23,14 @@
 </style>
 
 </head>
+
+<c:if test="${mobileFlag eq 'Y'}">
+<%@include file="/WEB-INF/views/menu/header_mobile.jsp"%>
+</c:if>
+<c:if test="${mobileFlag ne 'Y'}">
 <%@include file="/WEB-INF/views/menu/header.jsp"%>
+</c:if>
+
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true"
 	data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true"
 	data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true"

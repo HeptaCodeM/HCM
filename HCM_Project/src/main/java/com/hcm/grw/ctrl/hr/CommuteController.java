@@ -66,7 +66,7 @@ public class CommuteController {
 		model.addAttribute("commuteOutTime", commuteOutTime);
 
 		//ViewPage Device 정보 전달
-		model.addAttribute("mobile", StringUtils.defaultIfEmpty(CookiesMgr.getCookies(req, "ckMobile"), ""));
+		model.addAttribute("mobileFlag", StringUtils.defaultIfEmpty(CookiesMgr.getCookies(req, "ckMobile"), ""));
 		
 		return "hr/commute/registCommute";
 	}

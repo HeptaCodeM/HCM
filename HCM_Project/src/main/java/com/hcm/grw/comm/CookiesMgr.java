@@ -48,13 +48,13 @@ public class CookiesMgr extends HttpServlet {
 			e.printStackTrace();
 		}
 		Cookie hcmCookies = new Cookie(cName, encValue);
-		log.info("cookies 암호화 값 : {}", encValue);
+		//log.info("cookies 암호화 값 : {}", encValue);
 
 		// setDomain : 쿠키 도메인 설정(도메인 주소 http, https)
 		// setPath : 쿠키 경로 지정
 		// setMaxAge : 쿠키 유효 시간(초*분)
 		// setSecure : 쿠키 연결시 보안인증된 도메인 접속만 // true => https
-		hcmCookies.setDomain("localhost");
+		//hcmCookies.setDomain("localhost");
 		hcmCookies.setPath("/");
 		hcmCookies.setMaxAge(60*expireTime);
 		hcmCookies.setSecure(false);
