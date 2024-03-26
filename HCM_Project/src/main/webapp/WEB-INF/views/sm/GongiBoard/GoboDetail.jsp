@@ -86,7 +86,7 @@
                             <h3>댓글</h3>
                           <ul class="list-group" id="commentList">
                       <c:forEach var="comment" items="${Rlist}">
-                          <li >
+                          <li id="firstReply">
                               <div class="d-flex align-items-center no-border" style="border: none;">
                                 <c:choose>
 							    <c:when test="${sessionScope.userInfoVo.empl_picture_str != null}">
@@ -132,7 +132,7 @@
                            <c:forEach var="reply" items="${Dlist}" varStatus="replyStatus">
             <!-- 현재 댓글과 depth가 1이고, rebo_parent_no가 현재 댓글의 rebo_no와 같은 경우 -->
 				            <c:if test="${comment.rebo_step == reply.rebo_step}">
-				                <li id="childReply" style="margin-left: 50px;">
+				                <li id="secondReply" style="margin-left: 50px;">
 				                    <!-- 대댓글 내용 출력 -->
 				                    <div class="d-flex align-items-center no-border" style="border: none;">
 				                         <c:choose>
@@ -288,7 +288,7 @@ function insertReply(data){
 					commentHtml += '<strong>'+rebo_writer+'</strong><br>';
 					commentHtml += '<div>'+rebo_content+'</div>';
 					commentHtml += '<div><small>'+formattedDate+'</small>';
-					commentHtml += '<a role="button" class="comment_info_button " onclick="showCommentForm(${comment.rebo_no})">답글쓰기</a>';
+					commentHtml += '<a role="button" class="comment_info_button">답글쓰기</a>';
 					commentHtml += '</div>';
 					commentHtml += '</div>';
 					commentHtml += '</div>';
@@ -307,7 +307,6 @@ function insertReply(data){
 
 
 function insertReplyTwo(rebo_no) {
-	
     var container = $("#commentFormContainer" + rebo_no); // #commentFormContainer 요소를 선택합니다.
     var formData = container.find("#ReplyTwoForm").serialize(); // 해당 요소 안의 form 데이터를 가져옵니다.
     var rebo_writer = $("#ReplyTwoForm #rebo_writer").val();
@@ -326,43 +325,65 @@ function insertReplyTwo(rebo_no) {
                 ('0' + currentDate.getHours()).slice(-2) + ':' +
                 ('0' + currentDate.getMinutes()).slice(-2);
 
+            var commentHtml = ''; // commentHtml 변수 초기화
+            
+            
+            
+            if ($("#commentList > li").length > 0) {
+			    // 상위에 형제 노드가 있는 경우
+			    commentHtml += '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
+			}
+            
+            
+            if ($("#commentList > li.secondReply").length > 0) {
+                // secondReply가 있는 경우
+                commentHtml += '<li style="margin-left: 50px;">';
+                commentHtml += '<div class="d-flex align-items-center no-border" style="border: none;">';
+                commentHtml += '<img src="${sessionScope.userInfoVo.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">';
+                commentHtml += '<div style="margin-left: 10px;">';
+                commentHtml += '<strong>' + rebo_writer + '</strong><br>';
+                commentHtml += '<div>' + rebo_content + '</div>';
+                commentHtml += '<div><small>' + formattedDate + '</small>';
+                commentHtml += '<a role="button" class="comment_info_button">답글쓰기</a>';
+                commentHtml += '</div>';
+                commentHtml += '</div>';
+                commentHtml += '</div>';
+                commentHtml += '</li>';
                 
-                var commentHtml = ''; // commentHtml 변수 초기화
-
                 if ($("#commentList > li").length > 0) {
 				    // 상위에 형제 노드가 있는 경우
 				    commentHtml += '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
 				}
-            commentHtml += '<li style="margin-left: 50px;">';
-            commentHtml += '<div class="d-flex align-items-center no-border" style="border: none;">';
-            commentHtml += '<img src="${sessionScope.userInfoVo.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">';
-            commentHtml += '<div style="margin-left: 10px;">';
-            commentHtml += '<strong>' + rebo_writer + '</strong><br>';
-            commentHtml += '<div>' + rebo_content + '</div>';
-            commentHtml += '<div><small>' + formattedDate + '</small>';
-            commentHtml += '<a role="button" class="comment_info_button " onclick="showCommentForm('+rebo_no+')">답글쓰기</a>';
-            commentHtml += '</div>';
-            commentHtml += '</div>';
-            commentHtml += '</div>';
-            commentHtml += '</li>';
-
-            if (!container.find("ul").length) {
+            } else {
+                // secondReply가 없는 경우
                 commentHtml += '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
+                commentHtml += '<li class="secondReply" style="margin-left: 50px;">';
+                commentHtml += '<div class="d-flex align-items-center no-border" style="border: none;">';
+                commentHtml += '<img src="${sessionScope.userInfoVo.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">';
+                commentHtml += '<div style="margin-left: 10px;">';
+                commentHtml += '<strong>' + rebo_writer + '</strong><br>';
+                commentHtml += '<div>' + rebo_content + '</div>';
+                commentHtml += '<div><small>' + formattedDate + '</small>';
+                commentHtml += '<a role="button" class="comment_info_button">답글쓰기</a>';
+                commentHtml += '</div>';
+                commentHtml += '</div>';
+                commentHtml += '</div>';
+                commentHtml += '</li>';
+                
+                if ($("#commentList > li").length > 0) {
+				    // 상위에 형제 노드가 있는 경우
+				    commentHtml += '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
+				}
             }
-            
-            
-			
-                container.append(commentHtml);
-            // 대댓글 작성 폼 숨기기
 
-            // 대댓글 작성 폼 초기화
-                hideAllCommentForms();
+            container.append(commentHtml);
         },
         error: function () {
             // 에러 처리
         }
     });
 }
+
 
 </script> 
 
