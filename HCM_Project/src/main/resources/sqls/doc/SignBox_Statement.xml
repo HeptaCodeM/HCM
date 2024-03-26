@@ -32,6 +32,7 @@
 <!-- 	임시보관함 저장 -->
 	<insert id="insertTempDoc">
 	INSERT INTO SIGN_TEMP_BOX
+
 							(SIDB_DOC_NUM, EMPL_ID, SIDB_DOC_TITLE,
 							SIDB_DOC_CONTENT, SICA_CD, SIDB_DOC_EXPIREDT, 
 							SIDT_TEMP_CD, SIDB_DOC_BE, SIDB_DOC_END, SIDB_CURR_ID,

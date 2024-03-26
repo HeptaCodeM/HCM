@@ -160,6 +160,7 @@
 		</div>
 		
 		<!-- 사원검색 Layer 시작 -->
+		<div id="overlay" class="overlay"></div>
 		<div id="empSearch">
 			<div style="text-align:right;" >
 				<a href="javascript:void(0);" onclick="closeEmpInfoSearch();">

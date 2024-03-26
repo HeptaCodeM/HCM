@@ -61,7 +61,6 @@ public class CalendarController {
         if (month.length() == 1) {
             month = "0" + month;
         }
-        System.out.println(month);
         String output = year + "-" + month;
 		log.info("CalendarController getAllCalendar.do  캘린더 데이터 로드");
 		ScbDto dto = new ScbDto();

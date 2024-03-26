@@ -192,9 +192,11 @@ function openEmpInfoSearch(){
 	console.log("openEmpInfoSearch()");
 	empInfoSearch('');
 	$('#empSearch').show();
+	$(".overlay").show();
 }
 function closeEmpInfoSearch(){
 	$('#empSearch').hide();
+	$(".overlay").hide();	
 }
 
 /* 발령정보 등록 */

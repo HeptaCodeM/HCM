@@ -167,7 +167,8 @@ public class EmployeeController {
 	public @ResponseBody void empModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, 
 												@RequestParam Map<String, String> map, 
 												HttpServletResponse resp, 
-												Authentication authentication) throws IOException {
+												Authentication authentication,
+												HttpServletRequest req) throws IOException {
 		log.info("EmployeeController empModifyOk 수정처리");
 		resp.setContentType("text/html;charset=utf-8;");
 		
@@ -208,6 +209,16 @@ public class EmployeeController {
 			return;
 			//sb.append("alert('수정 시 오류가 발생하였습니다.'); history.back();");
 		}else {
+			/* Session정보 Update */
+			EmployeeDto employeeDto = employeeService.getUserInfo(map.get("empl_id"));
+			HttpSession session = req.getSession();
+			//이미지 스트링 정보로 처리
+			employeeDto.setEmpl_picture_str(Function.blobImageToString(employeeDto.getEmpl_picture()));
+			//2진정보 초기화
+			employeeDto.setEmpl_picture(null);
+			session.setAttribute("userInfoVo", employeeDto);
+
+			
 			Function.alertLocation(resp, "정상적으로 수정 되었습니다.", "/hr/employee/empModify.do", "","","");
 			return;
 			//sb.append("alert('정상적으로 수정 되었습니다.');");
@@ -218,7 +229,7 @@ public class EmployeeController {
 
 	// 차후 rest로 변경, 사원 간략정보 확인용
 	@GetMapping("selectEmployeeOne.do")
-	public EmployeeDto selectEmployeeOne(String empl_id, HttpServletResponse resp) {
+	public @ResponseBody EmployeeDto selectEmployeeOne(@RequestParam(required = true) String empl_id, HttpServletResponse resp) {
 		log.info("EmployeeController employeeModify 수정페이지 진입");
 		resp.setContentType("text/html; charset=utf-8");
 		
