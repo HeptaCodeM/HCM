@@ -102,6 +102,7 @@
 									<th>서명선택</th>
 									<td colspan="3">
 										<button id="selectSign">서명관리</button>
+										<input id="signMsg" type="hidden" value="사용자 서명이 등록되었습니다">
 									</td>
 									<th>기본서명사용</th>
 									<td>

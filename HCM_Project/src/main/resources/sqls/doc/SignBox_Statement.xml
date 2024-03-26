@@ -59,7 +59,7 @@
       SELECT SITB_DOC_NUM , SITB_DOC_WRITEDT , EMPL_ID ,
                 SITB_DOC_TITLE , SITB_DOC_CONTENT , SICA_CD ,
                 SITB_DOC_EXPIREDT , SITB_DOC_ALFLAG , SIDT_TEMP_CD ,
-                SITB_DOC_JSON , EMPL_REF , EMPL_DEPT_CD , SITB_DOC_BE ,
+                SITB_DOC_JSON as sitb_doc_json , EMPL_REF , EMPL_DEPT_CD , SITB_DOC_BE ,
                 SITB_DOC_END , SITB_CURR_ID, EMSI_SEQ
         FROM SIGN_TEMP_BOX stb
         WHERE SITB_DOC_NUM = #{sitb_doc_num}

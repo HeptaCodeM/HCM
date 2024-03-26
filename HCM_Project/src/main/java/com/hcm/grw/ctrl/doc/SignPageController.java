@@ -1,5 +1,7 @@
 package com.hcm.grw.ctrl.doc;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,12 +16,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.hcm.grw.dto.doc.SignJsonDto;
 import com.hcm.grw.dto.doc.SignTempBoxDto;
 import com.hcm.grw.dto.hr.EmpSignDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.doc.ISignBoxService;
 import com.hcm.grw.model.service.doc.ISignFavoService;
 import com.hcm.grw.model.service.hr.EmpSignService;
+import com.hcm.grw.model.service.hr.EmployeeService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,6 +45,9 @@ public class SignPageController {
 	
 	@Autowired
 	private ISignBoxService bService;
+	
+	@Autowired
+	private EmployeeService empService;
 	
 	@GetMapping("write.do")
 	public String write() {
@@ -89,10 +101,9 @@ public class SignPageController {
 	}
 	
 	@GetMapping(value = "getTempDoc.do")
-	public String getTempDoc(@RequestParam String sitb_doc_num, Model model) {
+	public String getTempDoc(@RequestParam String sitb_doc_num, Model model) throws JsonMappingException, JsonProcessingException {
 		log.info("SignPageController getTempDoc.do 임시보관함 문서 불러오기");
 		SignTempBoxDto dto = bService.getTempDoc(sitb_doc_num);
-		log.info(dto.getSitb_doc_json() + "");
 		model.addAttribute("dto", dto);
 		return "/doc/writeDoc/getTempDoc";
 	}
