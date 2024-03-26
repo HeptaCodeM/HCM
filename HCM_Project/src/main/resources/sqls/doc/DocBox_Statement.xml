@@ -43,38 +43,38 @@
 	</select>
 	
 	<!-- 전체문서함 조회 수정1 본테이블만 가져오기-->
-<select id="getAllDocsTable" resultType="SignBoxDto">	
-SELECT SDB.SIDB_DOC_NUM,
-    SDB.SIDB_DOC_WRITEDT, SDB.SIDB_DOC_TITLE, 
-    SDB.SICA_CD, SDB.SIDB_DOC_FLAG,
-    SDB.SIDB_DOC_STAT,
-    SDB.SIDB_DOC_JSON, SDB.EMPL_ID, E.EMPL_NAME, 
-    e.EMPL_PICTURE, t.SIDT_TEMP_NAME, t.SIDT_TEMP_CD
-FROM SIGN_DOC_BOX sdb
-JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
-JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD 
-WHERE SDB.empl_id = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
-ORDER BY 
-    SDB.SIDB_DOC_WRITEDT ASC
-</select>
+	<select id="getAllDocsTable" resultType="SignBoxDto">
+		SELECT SDB.SIDB_DOC_NUM,
+		SDB.SIDB_DOC_WRITEDT, SDB.SIDB_DOC_TITLE,
+		SDB.SICA_CD, SDB.SIDB_DOC_FLAG,
+		SDB.SIDB_DOC_STAT,
+		SDB.SIDB_DOC_JSON, SDB.EMPL_ID, E.EMPL_NAME,
+		e.EMPL_PICTURE, t.SIDT_TEMP_NAME, t.SIDT_TEMP_CD
+		FROM SIGN_DOC_BOX sdb
+		JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
+		JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
+		WHERE SDB.empl_id = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
+		ORDER BY
+		SDB.SIDB_DOC_WRITEDT DESC
+	</select>
 	
 	
 	<!-- 전체문서함 조회 수정1-1 json컬럼만 가져오기 -->
-<select id="getAllDocsJson" resultType="SignBoxDto">	
-	SELECT sdb.SIDB_DOC_NUM, APPR_id, E2.EMPL_NAME AS appr_name, appr_depth, appr_flag
-	FROM SIGN_DOC_BOX sdb
-	CROSS JOIN JSON_TABLE(SDB.SIDB_DOC_JSON, '$[*]' COLUMNS (
-	APPR_ID PATH '$.APPR_ID',
-	APPR_DEPTH INT PATH '$.APPR_DEPTH',
-	APPR_SIGN PATH '$.APPR_SIGN',
-	APPR_DT PATH '$.APPR_DT',
-	APPR_FLAG PATH '$.APPR_FLAG',
-	APPR_REPLY PATH '$.APPR_REPLY'
-	)) j
-	JOIN EMPLOYEE e2 ON e2.EMPL_ID = j.appr_id
-	WHERE SDB.empl_id = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
-</select>	
-	
+	<select id="getAllDocsJson" resultType="SignBoxDto">	
+		SELECT sdb.SIDB_DOC_NUM, APPR_id, E2.EMPL_NAME AS appr_name, appr_depth, appr_flag
+		FROM SIGN_DOC_BOX sdb
+		CROSS JOIN JSON_TABLE(SDB.SIDB_DOC_JSON, '$[*]' COLUMNS (
+		APPR_ID PATH '$.APPR_ID',
+		APPR_DEPTH INT PATH '$.APPR_DEPTH',
+		APPR_SIGN PATH '$.APPR_SIGN',
+		APPR_DT PATH '$.APPR_DT',
+		APPR_FLAG PATH '$.APPR_FLAG',
+		APPR_REPLY PATH '$.APPR_REPLY'
+		)) j
+		JOIN EMPLOYEE e2 ON e2.EMPL_ID = j.appr_id
+		WHERE SDB.empl_id = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
+	</select>	
+		
 
 
 	<!-- 내가 기안한 문서 조회 -->
@@ -90,7 +90,7 @@ ORDER BY
 	JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
 	WHERE SDB.empl_id = #{empl_id} AND SIDB_DOC_STAT = '1' AND SDB.sidb_doc_delflag= 'N'
 	ORDER BY 
-    SDB.SIDB_DOC_WRITEDT ASC
+    SDB.SIDB_DOC_WRITEDT DESC
 	</select>
 
 	<!-- 진행중인 결재 문서 조회 -->
@@ -106,7 +106,7 @@ ORDER BY
 	JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
 	WHERE SDB.empl_id = #{empl_id} AND SIDB_DOC_STAT ='2' AND SDB.sidb_doc_delflag= 'N'
 	ORDER BY 
-    SDB.SIDB_DOC_WRITEDT ASC
+    SDB.SIDB_DOC_WRITEDT DESC
 	</select>
 
 	<!-- 승인된 결재 문서 조회 -->
@@ -122,7 +122,7 @@ ORDER BY
 	JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
 	WHERE SDB.empl_id = #{empl_id} AND SIDB_DOC_STAT ='3' AND SDB.sidb_doc_delflag= 'N'
 	ORDER BY 
-    SDB.SIDB_DOC_WRITEDT ASC
+    SDB.SIDB_DOC_WRITEDT DESC
 	</select>
 
 	<!-- 반려된 결재 문서 조회 -->
@@ -138,7 +138,7 @@ ORDER BY
 	JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
 	WHERE SDB.empl_id = #{empl_id} AND SIDB_DOC_STAT ='4' AND SDB.sidb_doc_delflag= 'N'
 	ORDER BY 
-    SDB.SIDB_DOC_WRITEDT ASC
+    SDB.SIDB_DOC_WRITEDT DESC
 	</select>
 
 
@@ -183,7 +183,7 @@ ORDER BY
 		WHERE SDBJ2.APPR_FLAG='0'
 		)
 		ORDER BY 
-    SDB.SIDB_DOC_WRITEDT ASC
+    SDB.SIDB_DOC_WRITEDT DESC
 	</select>
 
 	<!-- 참조자로 지정된 결재 문서 조회 -->
@@ -211,7 +211,7 @@ ORDER BY
  		 OR SDB.EMPL_DEPT_CD = #{empl_dept_cd}
     ) AND SDB.sidb_doc_delflag= 'N'  AND  (SDB.sidb_doc_stat= 3 OR SDB.sidb_doc_stat =4)
     ORDER BY 
-    SDB.SIDB_DOC_WRITEDT ASC
+    SDB.SIDB_DOC_WRITEDT DESC
 	</select>
 	
 	<!-- 참조 전용 json 데이터 가져오기 -->
@@ -354,7 +354,7 @@ LEFT JOIN
     ) AS SDBJ ON 1=1
     WHERE (SDBJ.APPR_FLAG = '1' OR SDBJ.APPR_FLAG = '2') AND SDBJ.APPR_ID = #{empl_id} AND SDB.sidb_doc_delflag= 'N'
 	ORDER BY 
-    SDB.SIDB_DOC_WRITEDT ASC
+    SDB.SIDB_DOC_WRITEDT DESC
 </select>	
 
 <!-- 상세조회 문서에 첨부된 파일 리스트 조회 -->
@@ -382,7 +382,7 @@ JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD 
 WHERE SDB.empl_id = #{empl_id} 
 ORDER BY 
-    SDB.SITB_DOC_WRITEDT ASC
+    SDB.SITB_DOC_WRITEDT DESC
 </select>
 
 <!-- 참조자 이름 가져오기 -->
