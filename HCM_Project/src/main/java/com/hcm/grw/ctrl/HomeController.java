@@ -82,21 +82,6 @@ public class HomeController {
 		return "main";
 	}
 
-	@GetMapping("/error404.do")
-	@ResponseBody
-	public void Error404(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
-		request.getRequestDispatcher("/WEB-INF/error/error404.jsp").forward(request, response);
-	}
-
-	@GetMapping("/error500.do")
-	@ResponseBody
-	public void Error500(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
-		request.getRequestDispatcher("/WEB-INF/error/error500.jsp").forward(request, response);
-	}
-
-
 
 	@GetMapping("/hr/hrMainTmp.do")
 	public String hrMainTmp() {
@@ -254,7 +239,7 @@ public class HomeController {
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		if(authentication == null) {
-			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login.do", "", "", "");
+			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login/login.do", "", "", "");
 		}
 		
 		String empl_id = authentication.getName();
@@ -279,9 +264,9 @@ public class HomeController {
 		}
 		
 		if(cnt > 0) {
-			Function.alertLocation(resp, commuteMsg + "처리가 완료 되었습니다.", "/hr/commute/empCommuteList.do", "", "", "");
+			Function.alertLocation(resp, commuteMsg + "처리가 완료 되었습니다.", "/hr/commute/registCommute.do", "", "", "");
 		}else {
-			Function.alertHistoryBack(resp, commuteMsg + "처리 중 오류가 발생하였습니다.\n관리자에게 문의하세요.", "", "");
+			Function.alertHistoryBack(resp, commuteMsg + "처리 중 오류가 발생하였습니다.<br>관리자에게 문의하세요.", "", "");
 		}
 		
 	}	

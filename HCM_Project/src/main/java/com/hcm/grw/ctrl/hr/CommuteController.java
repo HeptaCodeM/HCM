@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.CommuteDto;
+import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.hr.CommuteService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -44,8 +46,10 @@ public class CommuteController {
 								HttpServletResponse resp) {
 		log.info("CommuteController registCommute 출/퇴근 등록 페이지");
 
-		if(authentication.getName().isEmpty()) {
-			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login.do", "", "", "");
+		HttpSession session = req.getSession();
+		EmployeeDto empDto = (EmployeeDto)session.getAttribute("loginInfoVo");
+		if(authentication == null || empDto == null) {
+			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login/login.do", "", "", "");
 			return null;
 		}
 		
@@ -80,7 +84,7 @@ public class CommuteController {
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		if(authentication == null) {
-			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login.do", "", "", "");
+			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login/login.do", "", "", "");
 		}
 		
 		String empl_id = authentication.getName();
@@ -122,7 +126,7 @@ public class CommuteController {
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		if(authentication == null) {
-			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login.do", "", "", "");
+			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login/login.do", "", "", "");
 			return null;
 		}
 		

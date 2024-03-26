@@ -50,9 +50,17 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/login/*"/>
+			<mvc:exclude-mapping path="/error/*"/>
 			<mvc:exclude-mapping path="/index.jsp"/>
 			<bean class="com.hcm.grw.interceptor.AuthCheckHandler"/>
 		</mvc:interceptor>
+
+		<!-- 
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.hcm.grw.interceptor.ErrorHandler"/>
+		</mvc:interceptor>
+		 -->
 		
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>

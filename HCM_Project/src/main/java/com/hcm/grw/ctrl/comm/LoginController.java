@@ -1,4 +1,4 @@
-package com.hcm.grw.ctrl;
+package com.hcm.grw.ctrl.comm;
 
 import java.io.IOException;
 import java.net.InetAddress;
