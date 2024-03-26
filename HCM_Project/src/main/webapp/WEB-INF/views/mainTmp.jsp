@@ -245,9 +245,7 @@ function init() {
 	setInterval(clock, 1000);
 }
 
-window.onload = function(){
 	init();
-}
 
 </script>
 </html>

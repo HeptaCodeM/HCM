@@ -37,10 +37,6 @@ td>img {
 				<div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
 					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">결재선 관리</h1>
-						<button type="button" id="signRefer">참조</button>
-						<button type="button" id="fileTest">파일테스트</button>
-						<button type="button" id="signLine">결재선팝업</button>
-						<button type="button" id="selectSign">서명팝업</button>
 					</div>
 				</div>		
 			</div>
