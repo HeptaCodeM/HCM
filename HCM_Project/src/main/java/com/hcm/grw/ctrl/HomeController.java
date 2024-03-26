@@ -20,15 +20,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.EmailService;
 import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.hr.CommuteDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
-import com.hcm.grw.dto.hr.HolidayDto;
-import com.hcm.grw.dto.hr.SignDocBoxDto;
 import com.hcm.grw.dto.sm.GoboDto;
 import com.hcm.grw.model.service.doc.IDocBoxService;
 import com.hcm.grw.model.service.hr.CommuteService;
