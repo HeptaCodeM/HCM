@@ -49,17 +49,29 @@
      max-width: 100%; /* 이미지의 최대 너비를 부모 요소에 맞게 조정 */
     max-height: 100%; /
 	}
-	#filterLayer { position: absolute; background-color:#fff; 
-	z-index:999; width:140px; height:300px; left: 34%; transform: translateX(-50%); 
-	top: 20%; padding: 20px; border:1px solid #ccc; 
-	border-radius: 20px; display: none; 
-	}
+	
    .fc-scrollgrid-sync-table tr td:first-child .fc-daygrid-day-number{
    color:red;
    }
    .fc-scrollgrid-sync-table tr td:last-child .fc-daygrid-day-number{
    color:blue;
    }
+   #filterLayer { position: absolute; background-color:#fff; 
+	z-index:999; width:140px; height:300px; left: 34%; transform: translateX(-50%); 
+	top: 20%; padding: 20px; border:1px solid #ccc; 
+	border-radius: 20px; display: none; 
+	}
+	
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    th, td {
+        padding: 5px; /* 적절한 값으로 조절 */
+        margin: 0;
+    }
+</style>
 	
 </style>
 
@@ -184,7 +196,7 @@
              <div class="modal-body">
                <div class="form-group">
                      <form id="updateform">
-                      <input type="hidden" name="scbo_no" id="scbo_no">
+                      <input type="hidden" name="scbo_no" id="scbo_no1">
                      <div class="form-group">
                        <label for="sel1" class="col-form-label">구분</label>
                        <select class="form-select" id="scbo_cgory_no_update" name="scbo_cgory_no" required="required">
@@ -229,55 +241,56 @@
 				
 				
 				
-		<div id="filterLayer">
-		 <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="filterLayer" aria-label="Close">
-                    <i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span class="path2"></span></i>
-                </div>
-					<div>
-						<form name="filter" id="filter" method="post">
-							<table class="table">
-								<thead>
-								</thead>
-								<tbody>
-								<tr>
-									<th>개인</th>
-									<td>
-										<input class="form-check-input" type="checkbox" name="type" value="100">
-									</td>
-								</tr>	
-								<tr>
-									<th>외근</th>
-									<td>
-										<input class="form-check-input" type="checkbox" name="type" value="200">
-									</td>
-								</tr>	
-								<tr>
-									<th>연차</th>
-									<td>
-										<input class="form-check-input" type="checkbox" name="type" value="TC000001">
-									</td>
-								</tr>	
-								<tr>
-									<th>휴가</th>
-									<td>
-										<input class="form-check-input" type="checkbox" name="type" value="TC000002">
-									</td>
-								</tr>	
-								</tbody>
-								<tfoot>
-								<tr>
-									<th>
-										<button>조회</button>
-									</th>
-									<th>
-										<button></button>
-									</th>
-								</tr>
-								</tfoot>
-							</table>
-						</form>
-					</div>
-				</div>		
+<div id="filterLayer">
+    <div style="text-align: right;">
+        <a href="javascript:void(0);" onclick="document.getElementById('filterLayer').style.display='none';">
+            <i class="ki-duotone ki-cross-square fs-2x">
+                <span class="path1"></span><span class="path2"></span>
+            </i>
+        </a>
+        <br>
+    </div>
+    <div class="menu-item px-3" style="overflow: hidden;">
+        <form name="filter" id="filter" method="post" onsubmit="return false;">
+            <table class="table">
+                <thead></thead>
+                <tbody>
+                    <tr>
+					    <th>&nbsp;&nbsp;개인 &nbsp;&nbsp;&nbsp;
+					    <input class="form-check-input" type="checkbox" name="type" value="3">
+					    </th>
+					</tr>
+					
+                    <tr>
+                        <th>&nbsp;&nbsp;외근 &nbsp;&nbsp;&nbsp;
+                        <input class="form-check-input" type="checkbox" name="type" value="4">
+                        </th>
+                    </tr>
+                       
+                    <tr>
+                        <th>&nbsp;&nbsp;연차 &nbsp;&nbsp;&nbsp;
+                        <input class="form-check-input" type="checkbox" name="type" value="2">
+                        </th>
+                    </tr> 
+                      
+                    <tr>
+                        <th>&nbsp;&nbsp;휴가 &nbsp;&nbsp;&nbsp;
+                        <input class="form-check-input" type="checkbox" name="type" value="1">
+                        </th>
+                    </tr>
+                       
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>
+                            <input type="button" class="btn btn-success" value="조회"  id="searchCalendar" onclick="searchLabel()" style="margin-left: 7px;">
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    </div>
+</div>
 <%@include file="/WEB-INF/views/menu/smSideMenu.jsp" %>		
 </body>
 <script type="text/javascript">

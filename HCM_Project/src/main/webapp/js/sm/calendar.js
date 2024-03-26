@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             fileterButton:{
 	 			id: 'fileterButton',
-                text: "분류",
+                text: "라벨",
                 click: function(){
                     filterLayer();
                     
@@ -87,14 +87,29 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function listAjax(daygridmonth) {
+	
 	 calendar.getEventSources().forEach(function(source) {
                 source.remove();
             });
+            
+    	 	var formData = $("#filter").serializeArray();
+            var selectedValues = [];
+            // 수집한 값을 배열에 넣습니다.
+            $.each(formData, function(index, element){
+                selectedValues.push(element.value);
+            });
+            // 선택된 값들을 콤마로 구분하여 문자열로 변환합니다.
+            var selectedString = selectedValues.join(',');
+            // AJAX 요청을 보냅니다.
+            if(selectedString == null){
+				selectedString = "1,2,3,4"
+			}
+			
     // AJAX 호출 및 데이터 처리
     $.ajax({
         type: "get",
         url: "/sm/getAllCalendar.do",
-        data: { daygridmonth: daygridmonth },
+        data: { daygridmonth: daygridmonth, type: selectedString},
         dataType: "json",
         success: function(data) {
             // 받아온 데이터를 FullCalendar의 이벤트 형식으로 가공
@@ -126,7 +141,6 @@ function listAjax(daygridmonth) {
 }
 
 function detail(scbo_no){
-	console.log(scbo_no);
 	$.ajax({
         url: "/sm/detailScbo.do",
         method: "POST",
@@ -147,6 +161,8 @@ function detail(scbo_no){
 			var end = new Date(data.scbo_end);
 			var formatstart = start.getFullYear() + '/' + (start.getMonth() + 1).toString().padStart(2, '0') + '/' + start.getDate().toString().padStart(2, '0') + ' ' + start.getHours().toString().padStart(2, '0') + ':' + start.getMinutes().toString().padStart(2, '0');
 			var formatend = end.getFullYear() + '/' + (end.getMonth() + 1).toString().padStart(2, '0') + '/' + end.getDate().toString().padStart(2, '0') + ' ' + end.getHours().toString().padStart(2, '0') + ':' + end.getMinutes().toString().padStart(2, '0');
+            $("#scbo_no1").val(data.scbo_no);
+            $("#scbo_title1").val(data.scbo_title);
             $("#scbo_title1").val(data.scbo_title);
             $("#scbo_content1").val(data.scbo_content);
             $("#scbo_start1").val(formatstart);
@@ -253,7 +269,6 @@ $("#scbo_start1").datetimepicker({
 });
 
 $("#scbo_end1").datetimepicker({
-	
 });
 
 
@@ -267,7 +282,7 @@ $(".imagebutton4").click(function(){
 })
 
 function updateCalendar(){
-			var daygridmonth = $(".fc-toolbar-title").text(); 
+			var daygridmonth = $(".fc-toolbar-title").text();
 			var scbo_title = $("#scbo_title1").val();
 			var scbo_content = $("#scbo_content1").val();
 			var scbo_start = $("#scbo_start1").val();
@@ -305,28 +320,41 @@ function updateCalendar(){
 					}
 				});
 			}
+}
+
+function deleteCalendar(){
+	var daygridmonth = $(".fc-toolbar-title").text();
+	var result = confirm("글을 삭제 하시겠습니까?");
+	if(result){
+	var scbo_no = $("#scbo_no1").val();
+	$.ajax({
+			url: "/sm/updateScboDelFlag.do",
+			data: {scbo_no:scbo_no},
+			type: "GET",
+			dataType: "json",
+			success: function(isc) {
+					if(isc){
+					listAjax(daygridmonth);
+					}
+					$("#detailModal").modal("hide");
+			},
+			error: function() {
+				alert("jdbc로 넘기지도 못함");
+			}
+		});
 		
+	}
 }
 
 function filterLayer(){
-
     // 레이어를 표시합니다.
     $("#filterLayer").show();
-    
 }
-$(document).ready(function () {
-    // x 버튼 클릭 시 레이어 닫기
-    $("#closeButton").click(function () {
-        $("#filterLayer").hide(); // 레이어 숨기기
-    });
 
-    // 레이어 외부를 클릭하여 레이어 닫기
-    $(document).click(function (event) {
-        if (!$(event.target).closest("#filterLayer").length) { // 레이어 외부를 클릭했는지 확인
-            if ($("#filterLayer").is(":visible")) { // 레이어가 표시 중인지 확인
-                $("#filterLayer").hide(); // 레이어 숨기기
-            }
-        }
-    });
-});
+
+function searchLabel(){
+	var daygridmonth = $(".fc-toolbar-title").text();
+	listAjax(daygridmonth);
+}
+
 
