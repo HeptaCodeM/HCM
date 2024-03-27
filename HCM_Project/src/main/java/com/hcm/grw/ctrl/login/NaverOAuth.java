@@ -1,6 +1,12 @@
 package com.hcm.grw.ctrl.login;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.security.SecureRandom;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +30,8 @@ public class NaverOAuth {
 	private String tokenUrl;
 	@Value("#{dataSpcProperties['naver.me']}")
 	private String meUrl;
+	@Value("#{dataSpcProperties['naver.redirect']}")
+	private String redirectUrl;
 	@Value("#{dataSpcProperties['naver.clientid']}")
 	private String clientId;
 	@Value("#{dataSpcProperties['naver.clientsecret']}")
@@ -39,10 +47,50 @@ public class NaverOAuth {
 	}
 	
 	//Token발급요청
-	public String getToken() {
+	public String getToken(String code, String state) {
 		log.info("{} - 토큰발급 요청", Function.getMethodName());
 		
-		return null;
+		String rtnString = "";
+	    String redirectURI;
+		try {
+			redirectURI = URLEncoder.encode(redirectUrl, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+	    	return "";
+		}
+	    String apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code"
+	        + "&client_id=" + clientId
+	        + "&client_secret=" + clientSecret
+	        + "&redirect_uri=" + redirectURI
+	        + "&code=" + code
+	        + "&state=" + state;
+	    String accessToken = "";
+	    String refresh_token = "";
+	    try {
+	      URL url = new URL(apiURL);
+	      HttpURLConnection con = (HttpURLConnection)url.openConnection();
+	      con.setRequestMethod("GET");
+	      int responseCode = con.getResponseCode();
+	      BufferedReader br;
+	      if (responseCode == 200) { // 정상 호출
+	        br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+	      } else {  // 에러 발생
+	        br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+	      }
+	      String inputLine;
+	      StringBuilder res = new StringBuilder();
+	      while ((inputLine = br.readLine()) != null) {
+	        res.append(inputLine);
+	      }
+	      br.close();
+	      if (responseCode == 200) {
+	    	  rtnString = res.toString();
+	      }
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    	return "";
+	    }		
+		return rtnString;
 	}
 
 	
@@ -50,7 +98,8 @@ public class NaverOAuth {
 	public @ResponseBody String NaverCallback(String code, String state) {
 		log.info("{} - CallBack code : {}, state : {}", Function.getMethodName(), code, state);
 		
-		
+		String strToken = this.getToken(code, state);
+		log.info("");
 		
 		return null;
 	}
