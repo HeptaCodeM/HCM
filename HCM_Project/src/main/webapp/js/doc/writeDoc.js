@@ -127,7 +127,7 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 	var insertName = docData.replace("홍길동", sessionName.value)
 	var insertDept = insertName.replace("인사팀", sessionDept.value)
 	var insertRank = insertDept.replace("대리", sessionRank.value)
-	
+
 	// 재직증명서 값 모두 넣어주기
 	var insertBirth = insertRank.replace("900101", sessionBirth.value)
 	var insertcompName = insertBirth.replace("　", sessioncompName)
@@ -145,7 +145,7 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 	editor.setData(insertToday);
 
 
-	// -----------------------------------> [작성화면] 사원정보 유효성검사
+	// -----------------------------------> [ 작성화면 ] 사원정보 유효성검사
 	setTimeout(function() {
 		var noTouch = document.getElementById('noTouch');
 		noTouch.addEventListener('click', function() {
@@ -180,7 +180,8 @@ function insertTempDoc() {
 	} else {
 		sitb_doc_alflag = 'N'
 	}
-	
+
+
 	// 특정 템플릿 외 이벤트 날짜 검사 안하도록 수정
 	var sitb_doc_be = null;
 	var sitb_doc_end = null;
@@ -192,7 +193,7 @@ function insertTempDoc() {
 		console.log(sitb_doc_be)
 		console.log(sitb_doc_end)
 	}
-	
+
 	// 이벤트 날짜
 	var docData = {
 		sitb_doc_title: sitb_doc_title,
@@ -214,7 +215,11 @@ function insertTempDoc() {
 		body: formData
 	})
 		.then(resp => {
-			return resp.text()
+			if(!resp.ok) {
+				throw new Error();
+			} else {
+				return resp.text();
+			}
 		})
 		.then(data => {
 			console.log(data);
@@ -243,23 +248,23 @@ function insertDoc() {
 	} else {
 		sidb_doc_alflag = 'N'
 	}
-	
+
 	var sidb_doc_be = null;
 	var sidb_doc_end = null;
-	
+
 	if (sidt_temp_cd == 'TC000001' || sidt_temp_cd == 'TC000002' || sidt_temp_cd == 'TC000006') {
 		var sidb_doc_event = document.getElementById('sidb_doc_event').textContent;
-			var eventArr = sidb_doc_event.split('~');
+		var eventArr = sidb_doc_event.split('~');
 		const bebe = eventArr[0].replace(/\s+/g, '');
 		const enen = eventArr[1].replace(/\s+/g, '');
-	
+
 		result1 = bebe.substring(0, bebe.length - 1);
 		result2 = enen.substring(0, enen.length - 1);
 		var be = result1.replace('년', '-');
 		var end = result2.replace('년', '-');
 		sidb_doc_be = be.replace('월', '-')
 		sidb_doc_end = end.replace('월', '-')
-		
+
 	}
 
 	var file = document.getElementById('sidf_file_content').files[0]; // 파일 가져오기
@@ -292,13 +297,13 @@ function insertDoc() {
 		swalAlert('만료일을 선택해주세요', '', '', '확인');
 		return;
 	}
-	
+
 	var signMsg = document.getElementById('signMsg');
 	if (signMsg.value == "" || signMsg.value == "서명을 선택해주세요") {
 		swalAlert('서명 등록을 하지 않으셨습니다', '', '', '확인');
 		return;
 	}
-	
+
 	if (json == undefined) {
 		swalAlert('결재선을 지정하지 않으셨습니다', '', '', '확인');
 		return;

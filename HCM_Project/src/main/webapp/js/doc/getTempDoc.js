@@ -7,6 +7,7 @@ document.getElementById('currentDate').innerHTML = formatDate;
 
 // -----------------------------------> [ 작성화면 ] 기안문 임시저장
 function insertTempDoc() {
+	
 	// 로그인 정보
 	var empl_id = document.getElementById('id').value;
 	// 기안서 제목
@@ -74,6 +75,7 @@ var sica_cd;
 var sidt_temp_cd;
 // -----------------------------------> [ 작성화면 ] 기안문 제출하기
 function insertDoc() {
+	var sitb_doc_num = document.getElementById('tempNum').value;
 	var sidb_doc_expiredt = document.getElementsByName('sidb_doc_expiredt')[0].value;
 	var sidb_doc_title = document.getElementsByName('sidb_doc_title')[0].value;
 	var sidb_doc_content = editor.getData();
@@ -164,6 +166,11 @@ function insertDoc() {
 		emsi_seq : sign,
 		sidb_doc_json : json
 	}
+	var docData2 = {
+		sitb_doc_num : sitb_doc_num
+	}
+	
+	
 	if(sign == undefined) {
 		docData.emsi_seq = document.getElementById('emsi_seq').value;
 	}
@@ -171,9 +178,10 @@ function insertDoc() {
 	
 	// 파일 추가
 	formData.append('file', file);
+	formData.append('sitb_doc_num', new Blob([JSON.stringify(docData2)], {type : 'application/json'}));
 	formData.append('dto', new Blob([JSON.stringify(docData)], {type : 'application/json'}));
 	
-	fetch('/doc/insertDoc.do', {
+	fetch('/doc/tempLoadInsertDoc.do', {
 		method : 'post',
 		body : formData
 	})

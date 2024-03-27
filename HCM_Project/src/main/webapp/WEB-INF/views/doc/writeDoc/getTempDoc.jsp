@@ -38,6 +38,7 @@
 				<!--end::Page title-->
 			</div>
 		</div>
+		<input id="tempNum" type="hidden" value="${dto.sitb_doc_num }">
 		<input id="tempTitle" type="hidden" value="${dto.sitb_doc_title }">
 		<div id="tempContent" style="display: none;">${dto.sitb_doc_content}</div>
 		<input id="tempSicaCd" type="hidden" value="${dto.sica_cd }">
