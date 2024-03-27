@@ -84,7 +84,6 @@
 							<input type="hidden" value="${com.comp_tel }" id="comp_tel">
 							<input type="hidden" value="${com.comp_addr1 }" id="comp_addr1">
 							<input type="hidden" value="${com.comp_addr2 }" id="comp_addr2">
-							<img src="data:image/png;base64,${com.comp_seal_str}">
 							<table class="table table-bordered">
 								<tr class="success">
 									<th>기안일</th>

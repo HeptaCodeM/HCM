@@ -26,4 +26,8 @@ public interface ISignBoxService {
 	
 	public SignFileDto getDetailFile(String sidf_file_num);
 	
+	public int insertTempTransaction(SignBoxDto bDto, SignFileDto fDto, String sitb_doc_num);
+	
+	public int insertTempNoFileTransaction(SignBoxDto bDto, String sitb_doc_num);
+	
 }

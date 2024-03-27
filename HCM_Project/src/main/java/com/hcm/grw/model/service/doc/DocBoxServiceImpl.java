@@ -128,8 +128,8 @@ public class DocBoxServiceImpl implements IDocBoxService {
 	}
 	
 	@Override
-	public int deleteTempDocs(SignBoxDto dto) {
-		return dao.deleteTempDocs(dto);	}
+	public int deleteTempDocs(String sitb_doc_num) {
+		return dao.deleteTempDocs(sitb_doc_num);	}
 	
 	@Override
 	public String findEmployeeName(String id) {

@@ -14,6 +14,11 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <link rel="stylesheet"
 	href="/ckeditor5/sample/template.css">	
+<style type="text/css">
+	#sealImg {
+		display: inline-block !important;
+	}
+</style>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp"%>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
