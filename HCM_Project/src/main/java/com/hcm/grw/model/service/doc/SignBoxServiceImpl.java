@@ -102,8 +102,4 @@ public class SignBoxServiceImpl implements ISignBoxService {
 		return n1 + n2 == 2 ? 1 : 0;
 	}
 	
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> branch 'hr' of https://github.com/HeptaCodeM/HCM.git
