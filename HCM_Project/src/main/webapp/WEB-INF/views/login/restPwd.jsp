@@ -122,10 +122,17 @@
 						</div>
 						<!--end::Wrapper-->
 						<!--begin::Submit button-->
-						<div class="d-grid mb-10" id="send-area">
+						<div class="d-grid mb-4" id="send-area">
 							<button type="button" class="btn btn-primary" onclick="initPwdAuthNumSend()">
 								<!--begin::Indicator label-->
 								<span class="indicator-label">인증번호 발송</span>
+								<!--end::Indicator label-->
+							</button>
+						</div>
+						<div class="d-grid mb-10">
+							<button type="button" class="btn btn-success" onclick="location.href='/login/login.do';">
+								<!--begin::Indicator label-->
+								<span class="indicator-label">돌아가기</span>
 								<!--end::Indicator label-->
 							</button>
 						</div>

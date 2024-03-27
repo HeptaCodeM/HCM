@@ -1,7 +1,8 @@
-package com.hcm.grw.ctrl;
+package com.hcm.grw.ctrl.login;
 
 import java.io.IOException;
-import java.net.InetAddress;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -10,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.EmailService;
+import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.CompanyDto;
 import com.hcm.grw.model.service.hr.CompanyService;
 import com.hcm.grw.model.service.hr.EmployeeService;
@@ -37,9 +42,22 @@ public class LoginController {
 	
 	@Autowired
 	private CompanyService companyService;
+
+	@Value("#{dataSpcProperties['naver.auth']}")
+	private String authUrl;
+	@Value("#{dataSpcProperties['naver.redirect']}")
+	private String redirectUrl;
+	@Value("#{dataSpcProperties['naver.clientid']}")
+	private String clientId;
+	
+	
 	
 	@GetMapping("/login/login.do")
-	public String login(String error, String logout, Model model, HttpServletRequest request) {
+	public String login(String error, 
+						String logout,
+						Model model, 
+						HttpServletRequest request, 
+						HttpServletResponse response) {
 		log.info("error : {}", error);
 		log.info("logout : {}", logout);
 
@@ -52,11 +70,7 @@ public class LoginController {
 		}
 
 		try {
-			String ipAddr=request.getRemoteAddr();
-			if(ipAddr.equalsIgnoreCase("0:0:0:0:0:0:0:1")){
-			    InetAddress inetAddress=InetAddress.getLocalHost();
-			    ipAddr=inetAddress.getHostAddress();
-			}
+			String ipAddr=Function.getIpAddress(request);
 			
 			Map<String, String> loginMap = new HashMap<String, String>();
 			
@@ -84,7 +98,33 @@ public class LoginController {
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
-
+		
+		//모바일 처리
+		Device device = DeviceUtils.getCurrentDevice(request);
+		if(device.isMobile()) {
+			CookiesMgr.setCookies(response, "ckMobile", "Y", 0);
+			model.addAttribute("mobile", "Y");
+		}else {
+			model.addAttribute("mobile", "N");
+		}
+		
+		String naverUrl = "";
+		naverUrl += authUrl;
+		naverUrl += "&client_id=".concat(clientId);
+		try {
+			naverUrl += "&redirect_uri=".concat(URLEncoder.encode(redirectUrl,"UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			naverUrl += "&redirect_uri=";
+		}
+		NaverOAuth naverOAuth = new NaverOAuth();
+		String rndStr = naverOAuth.generateState();
+		naverUrl += "&state=".concat(rndStr);
+		
+		request.getSession().setAttribute("state", rndStr);
+		
+		model.addAttribute("naverSnsUrl", naverUrl);
+		
 		return "login/login";
 	}
 	
@@ -126,7 +166,7 @@ public class LoginController {
 			
 			if(sendFlag) {
 				resp.getWriter().print("true");
-				CookiesMgr.setCookies(resp, "cInitPwdAuthNum", String.valueOf(randomNumber));
+				CookiesMgr.setCookies(resp, "cInitPwdAuthNum", String.valueOf(randomNumber), 3);
 			}else {
 				resp.getWriter().print("false");
 			}
