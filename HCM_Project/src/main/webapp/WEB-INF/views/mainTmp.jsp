@@ -22,10 +22,29 @@
 		height: 480px;
 	}
 	
-	.fc-button-group,.fc-today-button fc-button fc-button-primary{
+	.fc-button-group{
 		display: none !important;
 	}
 	
+	.fc-toolbar-chunk div{
+		display: flex;
+	}
+	
+	.fc-scrollgrid-sync-table tr td:first-child .fc-daygrid-day-number{
+		color:red;
+	}
+	.fc-scrollgrid-sync-table tr td:last-child .fc-daygrid-day-number{
+		color:blue;
+	}
+	
+	.newsInput{
+		width: 300px;
+	}
+	   
+	.bodyTop{
+	   	display: flex;
+	   	justify-content: center;
+	}
 	
 	
 </style>
@@ -207,10 +226,21 @@
 				<div class="col-xxl-6 mb-5 mb-xl-10">
 					<div class="card shadow-sm fixheightCard">
 					    <div class="card-header">
-					        <h3 class="card-title">뉴스?</h3>
+					        <h3 class="card-title">뉴스검색</h3>
 					    </div>
 					    <div class="card-body">
-					    	공사중입니다!
+					    
+					    	<div class="bodyTop">
+					    		<input type="text" id="newsSearch" name="newsSearch" class="form-control form-control-solid newsInput" placeholder="검색어를 입력하세요">
+					    		<button type="button" id="newsSearchBtn" class="btn btn-primary btnLg">검색</button>
+					    	</div>
+					    	
+					    	<div class="separator border-2 my-10"></div>
+					    	
+					    	<div id="resultZone" class="resultZone">
+					    		
+					    	</div>
+					    	
 					    </div>
 					</div>
 				</div>
@@ -258,7 +288,8 @@ function init() {
 	setInterval(clock, 1000);
 }
 
-	init();
+init();
 
 </script>
+<script type="text/javascript" src="/js/news.js"></script>
 </html>

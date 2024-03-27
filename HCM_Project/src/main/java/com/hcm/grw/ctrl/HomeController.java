@@ -271,6 +271,13 @@ public class HomeController {
 		
 	}	
 	
+	@GetMapping(value = "searchNews.do")
+	public void searchNews() {
+		
+		
+	}
+	
+	
 	
 	
 }

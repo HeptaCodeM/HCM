@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.hr.EmpSignDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
@@ -42,6 +43,7 @@ public class CertificateController {
 	
 	@GetMapping(value = "/hr/certificate/certificate.do")
 	public String certificate(Model model , Authentication authentication) {
+		log.info("{} 결제완료 증명서 리스트 진입", Function.getMethodName());
 		Map<String, Object> docMap = new HashMap<String, Object>();
 		String empl_id = authentication.getName();
 		System.out.println(empl_id);
@@ -58,6 +60,7 @@ public class CertificateController {
 	
 	@GetMapping(value = "/hr/certificate/selectOneCertificate.do")
 	public String selectOneCertificate(String sidb_doc_num, Model model, Authentication authentication, SignBoxDto dto, String docNum, HttpSession session) {
+		log.info("{} 결제완료 증명서 상세 진입", Function.getMethodName());
 		System.out.println(docNum);
 		String empl_id = authentication.getName();
 		System.out.println(empl_id);
