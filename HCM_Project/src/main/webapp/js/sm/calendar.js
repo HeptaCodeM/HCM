@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 , color: "red"
                 //이벤트의 텍스트 컬러
                 , textColor: "white"
-
             }
         ],
 
@@ -80,17 +79,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 초기 렌더링 시에 AJAX 호출
     currentMonth = calendar.view.title; // 현재 월 값 업데이트
-    
-    listAjax(currentMonth);
-
+    listAjax(currentMonth)
     calendar.render();
+
 });
 
 function listAjax(daygridmonth) {
-	
-	 calendar.getEventSources().forEach(function(source) {
-                source.remove();
-            });
+
             
     	 	var formData = $("#filter").serializeArray();
             var selectedValues = [];
@@ -112,6 +107,12 @@ function listAjax(daygridmonth) {
         data: { daygridmonth: daygridmonth, type: selectedString},
         dataType: "json",
         success: function(data) {
+		 // 기존의 특정 클래스 이름을 가진 이벤트 소스를 제거합니다.
+			   calendar.getEventSources().forEach(function(source) {
+            if (source.className && source.className.includes("koHol")) {
+                source.remove();
+            }
+        });
             // 받아온 데이터를 FullCalendar의 이벤트 형식으로 가공
             var events = data.map(function(item) {
                 return {
@@ -121,14 +122,10 @@ function listAjax(daygridmonth) {
                     scbo_no: item.scbo_no,
                     scbo_empno: item.scbo_empno,
                     scbo_cgory_no: item.scbo_cgory_no,
-
-                    // 기타 속성들을 필요에 따라 추가
-                    extendedProps: {
-                        // 추가 속성들...
-                    }
                 };
             });
-            // 새로운 이벤트 데이터 추가
+//             새로운 이벤트 데이터 추가
+			
             calendar.addEventSource(events);
             
             
@@ -178,53 +175,56 @@ function detail(scbo_no){
     });
 }
 
-function insert(){
-	var daygridmonth = $(".fc-toolbar-title").text()
-		$("#insertModal").modal("show"); // modal 나타내기
+function insert() {
+    var daygridmonth = $(".fc-toolbar-title").text();
+    $("#insertModal").modal("show"); // modal 나타내기
 
-		$("#addCalendar").on("click", function() {  // modal의 추가 버튼 클릭 시
-			var scbo_cgory_no = $("#scbo_cgory_no").val();
-			var scbo_title = $("#scbo_title").val();
-			var scbo_content = $("#scbo_content").val();
-			var scbo_start = $("#scbo_start").val();
-			var scbo_end = $("#scbo_end").val();
+    // 기존의 이벤트 핸들러를 제거합니다.
+    $("#addCalendar").off("click");
 
-			//내용 입력 여부 확인
-			if (scbo_title == null || scbo_title == "") {
-				alert("제목을 입력하세요.");
-			} else if (scbo_content == null || scbo_content == "") {
-				alert("내용을 입력하세요.");
-			} else if (scbo_start == "" || scbo_end == "") {
-				alert("날짜를 입력하세요.");
-			} else if (new Date(scbo_end) - new Date(scbo_start) < 0) { // date 타입으로 변경 후 확인
-				alert("종료일이 시작일보다 먼저입니다.");
-			} else { // 정상적인 입력 시
-				var data = $("#form").serialize()
+    // 추가 버튼 클릭 시 이벤트 핸들러를 설정합니다.
+    $("#addCalendar").on("click", function() {
+        var scbo_cgory_no = $("#scbo_cgory_no").val();
+        var scbo_title = $("#scbo_title").val();
+        var scbo_content = $("#scbo_content").val();
+        var scbo_start = $("#scbo_start").val();
+        var scbo_end = $("#scbo_end").val();
 
-				$.ajax({
-					url: "/sm/insertScbo.do",
-					data: data,
-					type: "post",
-					dataType: "json",
-					success: function(msg) {
-						console.log(msg);
-						if (msg != true) {
-							alert("insert 실패!!")
-							return false;
-						} else {
-							$("#form")[0].reset(); // 폼 초기화
-							$("#insertModal").modal("hide");
-							listAjax(daygridmonth);
-						}
-					},
-					error: function() {
-						alert("jdbc로 넘기지도 못함");
-					}
-				});
-			}
-		});
+        //내용 입력 여부 확인
+        if (scbo_title == null || scbo_title == "") {
+            alert("제목을 입력하세요.");
+        } else if (scbo_content == null || scbo_content == "") {
+            alert("내용을 입력하세요.");
+        } else if (scbo_start == "" || scbo_end == "") {
+            alert("날짜를 입력하세요.");
+        } else if (new Date(scbo_end) - new Date(scbo_start) < 0) { // date 타입으로 변경 후 확인
+            alert("종료일이 시작일보다 먼저입니다.");
+        } else { // 정상적인 입력 시
+            var data = $("#form").serialize()
+
+            $.ajax({
+                url: "/sm/insertScbo.do",
+                data: data,
+                type: "post",
+                dataType: "json",
+                success: function(msg) {
+                    console.log(msg);
+                    if (msg != true) {
+                        alert("insert 실패!!")
+                        return false;
+                    } else {
+                        $("#form")[0].reset(); // 폼 초기화
+                        $("#insertModal").modal("hide");
+                        listAjax(daygridmonth);
+                    }
+                },
+                error: function() {
+                    alert("jdbc로 넘기지도 못함");
+                }
+            });
+        }
+    });
 }
-
 
 
 
@@ -238,14 +238,9 @@ $(document).ready(function(){
 	// start day와 end day datetimepicker 설정
 	$("#scbo_start, #scbo_end,scbo_start1, #scbo_end1").datetimepicker({
 		disabledWeekDays: [0, 6], // 0: 일요일, 6: 토요일 // 주말 선택 불가
-		minDate: 0, // 오늘 이후 날짜만 선택 가능
 		allowTimes: ['09:00','09:30', '10:00','10:30', '11:00','11:30','12:00','12:30',
 		 '13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30',
 		 '18:00','18:30','19:00','19:30','20:00','20:30','21:00'], // 선택 가능한 시간
-		onSelectDate: function(current_time){
-			// start day 선택 시에만 end day의 최소 날짜를 변경
-			$("#scbo_end,#scbo_end1").datetimepicker('setOptions', { minDate: current_time });
-		}
 	});
 // datetimepicker 생성
 $("#scbo_start").datetimepicker({

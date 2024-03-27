@@ -22,9 +22,41 @@
 		height: 480px;
 	}
 	
+	.fc-button-group{
+		display: none !important;
+	}
+	
+	.fc-toolbar-chunk div{
+		display: flex;
+	}
+	
+	.fc-scrollgrid-sync-table tr td:first-child .fc-daygrid-day-number{
+		color:red;
+	}
+	.fc-scrollgrid-sync-table tr td:last-child .fc-daygrid-day-number{
+		color:blue;
+	}
+	
+	.newsInput{
+		width: 300px;
+	}
+	   
+	.bodyTop{
+	   	display: flex;
+	   	justify-content: center;
+	}
+	
+	
 </style>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
+<script type="text/javascript" src="/js/sm/calendar.js"></script>
+
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
 		data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true"
 		data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true"
@@ -138,7 +170,7 @@
 					    			</c:when>
 					    			<c:when test="${docSize > 2}">
 									    <c:forEach var="idx" begin="0" end="2">
-							    		<tr style="cursor: pointer;" onclick="">
+							    		<tr style="cursor: pointer;" onclick="location.href='/doc/docBox/getDetail.do?docNum=${allDoc.get(idx).getSidb_doc_num()}'">
 							    			<td>${idx+1}</td>
 							    			<td>${allDoc.get(idx).getSidb_doc_title()}</td>
 							    			<td>
@@ -149,7 +181,7 @@
 					    			</c:when>
 					    			<c:otherwise>
 									    <c:forEach var="idx" begin="0" end="${docSize}">
-							    		<tr style="cursor: pointer;" onclick="">
+							    		<tr style="cursor: pointer;" onclick="location.href='/doc/docBox/getDetail.do?docNum=${allDoc.get(idx).getSidb_doc_num()}'">
 							    			<td>${idx+1}</td>
 							    			<td>${allDoc.get(idx).getSidb_doc_title()}</td>
 							    			<td>
@@ -179,12 +211,12 @@
 			
 				<!--begin::Col-->
 				<div class="col-xxl-6 mb-5 mb-xl-10">
-					<div class="card shadow-sm fixheightCard">
+					<div class="card shadow-sm">
 					    <div class="card-header">
 					        <h3 class="card-title">캘린더</h3>
 					    </div>
-					    <div class="card-body">
-					    	공사중입니다!
+					    <div class="card-body" id="calendar">
+					    	
 					    </div>
 					</div>
 				</div>
@@ -194,10 +226,21 @@
 				<div class="col-xxl-6 mb-5 mb-xl-10">
 					<div class="card shadow-sm fixheightCard">
 					    <div class="card-header">
-					        <h3 class="card-title">뉴스?</h3>
+					        <h3 class="card-title">뉴스검색</h3>
 					    </div>
 					    <div class="card-body">
-					    	공사중입니다!
+					    
+					    	<div class="bodyTop">
+					    		<input type="text" id="newsSearch" name="newsSearch" class="form-control form-control-solid newsInput" placeholder="검색어를 입력하세요">
+					    		<button type="button" id="newsSearchBtn" class="btn btn-primary btnLg">검색</button>
+					    	</div>
+					    	
+					    	<div class="separator border-2 my-10"></div>
+					    	
+					    	<div id="resultZone" class="resultZone">
+					    		
+					    	</div>
+					    	
 					    </div>
 					</div>
 				</div>
@@ -245,7 +288,8 @@ function init() {
 	setInterval(clock, 1000);
 }
 
-	init();
+init();
 
 </script>
+<script type="text/javascript" src="/js/news.js"></script>
 </html>

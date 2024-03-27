@@ -1,9 +1,13 @@
 package com.hcm.grw.ctrl.sm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -66,8 +70,16 @@ public class ReplyController {
 	
 	
 	
-	
-	
+	@GetMapping("")
+	public List<List<ReplyDto>> ReplyList(String gobo_no) {
+		log.info("ReplyController insertReplyTwo  :  {} ",gobo_no);
+		List<List<ReplyDto>> list = new ArrayList<List<ReplyDto>>();
+		List<ReplyDto> Rlist = service.getAllReply(gobo_no);
+		List<ReplyDto> Dlist = service.getAllReplyTwo(gobo_no);
+		list.add(Rlist);
+		list.add(Dlist);
+		return list;
+	}
 	
 	
 	

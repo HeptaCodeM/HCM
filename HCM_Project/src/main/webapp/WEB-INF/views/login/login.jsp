@@ -3,60 +3,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="canonical" href="https://preview.keenthemes.com/keen" />
-<link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
-<!--begin::Fonts(mandatory for all pages)-->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
-<!--end::Fonts-->
-<!--begin::Vendor Stylesheets(used for this page only)-->
-<link href="/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
-<!--end::Vendor Stylesheets-->
-<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-<link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-<link href="/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
-<!--end::Global Stylesheets Bundle-->
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="canonical" href="https://preview.keenthemes.com/keen" />
+	<link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
+	<!--begin::Fonts(mandatory for all pages)-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+	<!--end::Fonts-->
+	<!--begin::Vendor Stylesheets(used for this page only)-->
+	<link href="/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+	<!--end::Vendor Stylesheets-->
+	<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+	<link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+	<link href="/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+	<!--end::Global Stylesheets Bundle-->
+	
+	<!-- 사용CSS오버라이딩 -->
+	<link href="/css/common.css" rel="stylesheet" type="text/css" />
+	<!-- 사용CSS오버라이딩 -->
+	
+	
+	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+	<script src="/assets/plugins/global/plugins.bundle.js"></script>
+	<script src="/assets/js/scripts.bundle.js"></script>
+	<!--end::Global Javascript Bundle-->
+	
+	<!--begin::Javascript-->
+	<script>var hostUrl = "/assets/";</script>
+	<!--begin::Vendors Javascript(used for this page only)-->
+	<!-- <script src="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script> -->
+	<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/geodata/continentsLow.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
+	<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
+	<script src="/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+	<!--end::Vendors Javascript-->
+	<!--begin::Custom Javascript(used for this page only)-->
+	<script src="/assets/js/widgets.bundle.js"></script>
+	<script src="/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+	<script src="/assets/js/custom/utilities/modals/create-campaign.js"></script>
+	<script src="/assets/js/custom/utilities/modals/users-search.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	<script src="/js/common/common.js"></script>
+	<!--end::Custom Javascript-->
+	<!--end::Javascript-->
 
-<!-- 사용CSS오버라이딩 -->
-<link href="/css/common.css" rel="stylesheet" type="text/css" />
-<!-- 사용CSS오버라이딩 -->
-
-
-<!--begin::Global Javascript Bundle(mandatory for all pages)-->
-<script src="/assets/plugins/global/plugins.bundle.js"></script>
-<script src="/assets/js/scripts.bundle.js"></script>
-<!--end::Global Javascript Bundle-->
-
-<!--begin::Javascript-->
-<script>var hostUrl = "/assets/";</script>
-<!--begin::Vendors Javascript(used for this page only)-->
-<!-- <script src="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script> -->
-<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/map.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/geodata/continentsLow.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
-<script src="/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-<!--end::Vendors Javascript-->
-<!--begin::Custom Javascript(used for this page only)-->
-<script src="/assets/js/widgets.bundle.js"></script>
-<script src="/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-<script src="/assets/js/custom/utilities/modals/create-campaign.js"></script>
-<script src="/assets/js/custom/utilities/modals/users-search.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="/js/common/common.js"></script>
-<script src="/js/alarm.js"></script>
-<script src="/js/chatting.js"></script>
-<!--end::Custom Javascript-->
-<!--end::Javascript-->
-
-<title>Login 페이지</title>
+	<title>HCM GroupWare</title>
 </head>
 
 <body id="kt_body" class="app-blank app-blank">
@@ -84,10 +82,10 @@
 				<!--end::Title-->
 				<!--begin::Text-->
 				<div class="d-none d-lg-block text-white fs-base text-center">
-					여기에는<br>
+					<!-- 여기에는<br>
 					대충<br>
 					설명이<br>
-					들어가요!
+					들어가요! -->
 				</div>
 				<!--end::Text-->
 			</div>
@@ -105,7 +103,15 @@
 						<!--begin::Heading-->
 						<div class="text-center mb-11">
 							<!--begin::Title-->
-							<h1 class="text-gray-900 fw-bolder mb-3">로그인</h1>
+							<h1 class="text-gray-900 fw-bolder mb-3">
+								<c:if test="${mobile eq 'Y'}">
+									Mobile
+								</c:if>
+								<c:if test="${mobile eq 'N'}">
+									PC
+								</c:if>
+								로그인
+							</h1>
 							<!--end::Title-->
 							<div>
 								<h2 style="color:red;"><c:out value="${error}" /></h2>
@@ -162,7 +168,7 @@
 						<!--begin::Col-->
 						<div class="col-md-6">
 							<!--begin::Google link=-->
-							<a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
+							<a href="javascript:void(0);" onclick="window.open('${naverSnsUrl}','naverLogin','width=500,height=500,toolbars=no,statebar=no')" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
 							<img alt="Logo" src="/image/miniNaver.png" class="theme-light-show h-15px me-3" />Naver 계정으로 로그인</a>
 							<!--end::Google link=-->
 						</div>

@@ -8,7 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.CommuteDto;
+import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.hr.CommuteService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,11 +42,14 @@ public class CommuteController {
 	@GetMapping("registCommute.do")
 	public String registCommute(Authentication authentication, 
 								Model model,
+								HttpServletRequest req,
 								HttpServletResponse resp) {
-		log.info("CommuteController registCommute 출/퇴근 등록 페이지");
+		log.info("{} 출/퇴근 등록 페이지", Function.getMethodName());
 
-		if(authentication.getName().isEmpty()) {
-			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login.do", "", "", "");
+		HttpSession session = req.getSession();
+		EmployeeDto empDto = (EmployeeDto)session.getAttribute("userInfoVo");
+		if(authentication == null || empDto == null) {
+			Function.alertLocation(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
 			return null;
 		}
 		
@@ -61,19 +68,23 @@ public class CommuteController {
 
 		model.addAttribute("commuteInTime", commuteInTime);
 		model.addAttribute("commuteOutTime", commuteOutTime);
+
+		//ViewPage Device 정보 전달
+		model.addAttribute("mobileFlag", StringUtils.defaultIfEmpty(CookiesMgr.getCookies(req, "ckMobile"), ""));
 		
 		return "hr/commute/registCommute";
 	}
 
 	@GetMapping("registCommuteOk.do")
 	public @ResponseBody void registCommuteOk(Authentication authentication, 
-												Model model, 
-												HttpServletResponse resp) throws IOException {
-		log.info("CommuteController registCommute 출/퇴근 처리 페이지");
+											  Model model, 
+											  HttpServletRequest req,
+											  HttpServletResponse resp) throws IOException {
+		log.info("{} 출/퇴근 처리 페이지", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		if(authentication == null) {
-			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login.do", "", "", "");
+			Function.alertLocation(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
 		}
 		
 		String empl_id = authentication.getName();
@@ -98,7 +109,7 @@ public class CommuteController {
 		}
 		
 		if(cnt > 0) {
-			Function.alertLocation(resp, commuteMsg + "처리가 완료 되었습니다.", "/hr/commute/empCommuteList.do", "", "", "");
+			Function.alertLocation(resp, commuteMsg + "처리가 완료 되었습니다.", "/hr/commute/registCommute.do", "", "", "");
 		}else {
 			Function.alertHistoryBack(resp, commuteMsg + "처리 중 오류가 발생하였습니다.\n관리자에게 문의하세요.", "", "");
 		}
@@ -111,11 +122,11 @@ public class CommuteController {
 								Authentication authentication, 
 								Model model, 
 								HttpServletResponse resp) throws IOException {
-		log.info("CommuteController registCommute 출/퇴근 처리 페이지");
+		log.info("{} 출/퇴근 처리 페이지", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		if(authentication == null) {
-			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login.do", "", "", "");
+			Function.alertLocation(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
 			return null;
 		}
 		
