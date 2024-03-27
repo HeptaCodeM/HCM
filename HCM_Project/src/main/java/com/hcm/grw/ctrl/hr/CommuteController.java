@@ -44,12 +44,12 @@ public class CommuteController {
 								Model model,
 								HttpServletRequest req,
 								HttpServletResponse resp) {
-		log.info("CommuteController registCommute 출/퇴근 등록 페이지");
+		log.info("{} 출/퇴근 등록 페이지", Function.getMethodName());
 
 		HttpSession session = req.getSession();
-		EmployeeDto empDto = (EmployeeDto)session.getAttribute("loginInfoVo");
+		EmployeeDto empDto = (EmployeeDto)session.getAttribute("userInfoVo");
 		if(authentication == null || empDto == null) {
-			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login/login.do", "", "", "");
+			Function.alertLocation(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
 			return null;
 		}
 		
@@ -80,11 +80,11 @@ public class CommuteController {
 											  Model model, 
 											  HttpServletRequest req,
 											  HttpServletResponse resp) throws IOException {
-		log.info("CommuteController registCommute 출/퇴근 처리 페이지");
+		log.info("{} 출/퇴근 처리 페이지", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		if(authentication == null) {
-			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login/login.do", "", "", "");
+			Function.alertLocation(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
 		}
 		
 		String empl_id = authentication.getName();
@@ -122,11 +122,11 @@ public class CommuteController {
 								Authentication authentication, 
 								Model model, 
 								HttpServletResponse resp) throws IOException {
-		log.info("CommuteController registCommute 출/퇴근 처리 페이지");
+		log.info("{} 출/퇴근 처리 페이지", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		if(authentication == null) {
-			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login/login.do", "", "", "");
+			Function.alertLocation(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
 			return null;
 		}
 		

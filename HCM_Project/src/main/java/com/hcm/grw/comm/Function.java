@@ -148,5 +148,16 @@ public class Function {
         }
         return content;
 	}
+
 	
+	public static String getMethodName() {
+		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+		 StackTraceElement callingMethod = stackTrace[2];
+		 String className = callingMethod.getClassName();
+		 String packageName = className.substring(0, className.lastIndexOf("."));
+	     String methodName = callingMethod.getMethodName();
+	     
+	     return className.replace(packageName.concat("."), "") + "." + methodName;
+//		 return Thread.currentThread().getStackTrace()[1].getClassName() +"."+ Thread.currentThread().getStackTrace()[1].getMethodName();
+	}	
 }

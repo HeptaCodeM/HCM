@@ -43,11 +43,11 @@ public class HolidayController {
 	@GetMapping("holidayList.do")
 	public String holidayList(Authentication authentication, 
 							  HttpServletResponse resp) {
-		log.info("HolidayController holidayList 휴가현황 조회");
+		log.info("{} 휴가현황 조회", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8;");
 		
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}
 		
@@ -59,7 +59,7 @@ public class HolidayController {
 							  Authentication authentication, 
 							  Model model,
 							  HttpServletResponse resp) {
-		log.info("HolidayController holidayList 휴가현황 조회");
+		log.info("{} 휴가현황 조회", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8;");
 		
 		String empl_id = "";
@@ -107,11 +107,11 @@ public class HolidayController {
 	public String holidayAdminList(Authentication authentication, 
 							  HttpServletResponse resp,
 							  Model model) {
-		log.info("HolidayController holidayList 휴가현황 조회(관리자)");
+		log.info("{} 휴가현황 조회(관리자)", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8;");
 		
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}
 
@@ -143,7 +143,7 @@ public class HolidayController {
 													  	Authentication authentication, 
 													  	Model model,
 													  	HttpServletResponse resp) {
-		log.info("HolidayController holidayList 휴가현황 조회");
+		log.info("{} 휴가현황 조회(관리자)", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8;");
 
 		String empl_id = "";

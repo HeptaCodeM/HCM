@@ -239,7 +239,7 @@ public class HomeController {
 		resp.setContentType("text/html; charset=UTF-8");
 		
 		if(authentication == null) {
-			Function.alertLocation(resp, "로그인 후 이용 가능합니다.", "/login/login.do", "", "", "");
+			Function.alertLocation(resp, "로그인 후 이용 가능합니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
 		}
 		
 		String empl_id = authentication.getName();
