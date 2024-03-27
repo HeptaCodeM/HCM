@@ -165,6 +165,11 @@ public class DocBoxDaoImpl implements IDocBoxDao {
 	public List<SignBoxDto> getTempDocs(SignBoxDto dto) {
 		return sqlSessionTemplate.selectList(NS+"getTempDocs",dto);
 	}
+	
+	@Override
+	public int deleteTempDocs(String sitb_doc_num) {
+		return sqlSessionTemplate.delete(NS+"deleteTempDocs",sitb_doc_num);
+	}
 
 	@Override
 	public String findEmployeeName(String id) {

@@ -43,9 +43,11 @@ function approve() {
 function deny() {
 	var num = document.getElementById('docNum').value;
 	var reply = document.getElementById('rejectReply').value;
+	var alFlag = document.getElementById('alFlag').value;
 	var dto = {
 		sidb_doc_num : num,
-		appr_reply : reply
+		appr_reply : reply,
+		sidb_doc_alflag : alFlag
 	}
 	
 	fetch('/doc/docBox/deny.do', {

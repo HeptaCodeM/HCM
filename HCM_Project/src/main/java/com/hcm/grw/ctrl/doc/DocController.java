@@ -16,8 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -30,6 +30,7 @@ import com.hcm.grw.dto.doc.SignFileDto;
 import com.hcm.grw.dto.hr.EmpSignDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.mapper.doc.IDocBoxDao;
+import com.hcm.grw.model.service.doc.IApprDenyService;
 import com.hcm.grw.model.service.doc.IDocBoxService;
 import com.hcm.grw.model.service.hr.EmpSignService;
 
@@ -47,6 +48,7 @@ public class DocController {
 	
 	@Autowired
 	private EmpSignService signService;
+	
 	
 
 	@GetMapping("/doc/docBox/getDetail.do")
@@ -666,4 +668,29 @@ public class DocController {
 	}
 	
 	
+	@PostMapping(value = "/doc/deleteTempDocs.do", produces = "application/json;")
+	@ResponseBody
+	public String deleteAjax(HttpSession session, String docNum) {
+		SignBoxDto dto = new SignBoxDto();
+       
+		dto.setSidb_doc_num(docNum);
+		
+		//문서 삭제하는 메소드 
+		int n=docService.deleteTempDocs(dto);
+		
+		EmployeeDto Edto = (EmployeeDto) session.getAttribute("userInfoVo");
+
+		dto.setEmpl_id(Edto.getEmpl_id());
+		List<SignBoxDto> table = dao.getTempDocs(dto);
+		
+		for (int i = 0; i < table.size(); i++) {
+			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			}
+		
+		if (n==1) {
+		Gson data = new GsonBuilder().create();
+		return data.toJson(table);
+		}	
+		return null;
+	}
 }

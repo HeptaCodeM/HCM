@@ -9,7 +9,7 @@
 	</select>
 	
 	<select id="getCompInfo" resultType="CompanyDto">
-	SELECT COMP_NAME , COMP_NUM , COMP_CEO_NAME, COMP_TEL, COMP_ADDR1, COMP_ADDR2
+	SELECT COMP_NAME , COMP_NUM , COMP_CEO_NAME, COMP_TEL, COMP_ADDR1, COMP_ADDR2, COMP_SEAL
 		FROM COMPANY
 	</select>
 

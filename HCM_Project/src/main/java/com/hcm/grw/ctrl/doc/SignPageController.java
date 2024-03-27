@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -103,6 +104,9 @@ public class SignPageController {
 			model.addAttribute("loginInfo", dto.get(0));
 		}
 		CompanyDto cDto = tService.getCompInfo();
+		if(cDto.getComp_seal() != null) {
+			cDto.setComp_seal_str(Base64Utils.encodeToString(cDto.getComp_seal()));
+		}
 		model.addAttribute("com", cDto);
 		return "doc/writeDoc/writeDoc";
 	}
