@@ -47,11 +47,11 @@ public class OrderController {
 	public String orderList(Model model,
 							Authentication authentication,
 							HttpServletResponse resp) {
-		log.info("OrderController orderList 발령현황 조회");
+		log.info("{} 발령현황 조회", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8;");
 		
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}
 		
@@ -63,7 +63,7 @@ public class OrderController {
 	public @ResponseBody String orderSearchList(Model model,
 												Authentication authentication,
 												HttpServletResponse resp) {
-		log.info("HolidayController orderSearchList 발령현황 조회-REST");
+		log.info("{} 발령현황 조회-REST", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8;");
 	
 		String empl_id = "";
@@ -89,11 +89,11 @@ public class OrderController {
 	public String orderAdminList(Model model,
 								 Authentication authentication,
 								 HttpServletResponse resp) {
-		log.info("OrderController orderAdminList 발령현황 조회");
+		log.info("{} 발령현황 조회", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8;");
 		
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}
 
@@ -133,7 +133,7 @@ public class OrderController {
 													 Model model,
 													 Authentication authentication,
 													 HttpServletResponse resp) {
-		log.info("HolidayController orderSearchAdminList 발령현황 조회-REST");
+		log.info("{} 발령현황 조회-REST", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8;");
 	
 		String empl_id = "";
@@ -185,11 +185,11 @@ public class OrderController {
 	public String registOrderAdmin(Model model,
 			 					   Authentication authentication,
 			 					   HttpServletResponse resp) {
-		log.info("HolidayController registOrderAdmin 발령현황 입력 화면");
+		log.info("{} 발령현황 입력 화면", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8;");
 
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}
 		
@@ -235,13 +235,13 @@ public class OrderController {
 							 					 @RequestParam(name="emod_prev_position", required = false) String[] arr_emod_prev_position,
 							 					 @RequestParam(name="emod_order_position", required = false) String[] arr_emod_order_position
 							 					 ) {
-		log.info("HolidayController registOrderAdminOk 발령현황 입력 처리");
+		log.info("{} 발령현황 입력 처리", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8;");
 		
 		
 		String emor_create_id = "";
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return;
 		}else {
 			emor_create_id = authentication.getName();
@@ -347,10 +347,10 @@ public class OrderController {
 									Model model,
 									Authentication authentication,
 									HttpServletResponse resp) {
-		log.info("HolidayController orderAdminDetail 수정페이지 진입");
+		log.info("{} 수정페이지 진입", Function.getMethodName());
 		
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}
 
@@ -393,7 +393,7 @@ public class OrderController {
 													 Model model,
 													 Authentication authentication,
 													 HttpServletResponse resp) {
-		log.info("HolidayController orderSearchAdminList 발령현황 조회-REST");
+		log.info("{} 수정페이지 진입", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8;");
 	
 		String empl_id = "";
@@ -423,11 +423,11 @@ public class OrderController {
 													Model model,
 													Authentication authentication,
 													HttpServletResponse resp) {
-		log.info("HolidayController deleteOrderAdminOk 발령현황 전체삭제 처리");
+		log.info("{} 발령현황 전체삭제 처리", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8;");
 		
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return;
 		}
 		
@@ -450,12 +450,12 @@ public class OrderController {
 			Model model,
 			Authentication authentication,
 			HttpServletResponse resp) {
-		log.info("HolidayController confirmOrderAdminOk 발령현황 확정 처리");
+		log.info("{} 발령현황 확정 처리", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8;");
 		
 		String emor_modify_id = "";
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return;
 		}else {
 			emor_modify_id = authentication.getName();
@@ -493,13 +493,13 @@ public class OrderController {
 												 @RequestParam(name="emod_prev_position", required = false) String[] arr_emod_prev_position,
 												 @RequestParam(name="emod_order_position", required = false) String[] arr_emod_order_position
 												 ) {
-		log.info("HolidayController modifyOrderAdminOk 발령현황 수정 처리");
+		log.info("{} 발령현황 수정 처리", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8;");
 
 
 		String emod_modify_id = "";
 		if(authentication == null) {
-		Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+		Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 		return;
 		}else {
 			emod_modify_id = authentication.getName();

@@ -143,7 +143,7 @@ public class EmployeeController {
 		
 		String empl_id = "";
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}else {
 			empl_id = authentication.getName();
@@ -173,7 +173,7 @@ public class EmployeeController {
 		
         String empl_modify_id = "";
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return;
 		}else {
 			empl_modify_id = authentication.getName();
@@ -255,7 +255,7 @@ public class EmployeeController {
 		resp.setContentType("text/html; charset=utf-8");
 		
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}
 		
@@ -272,7 +272,7 @@ public class EmployeeController {
 		resp.setContentType("text/html; charset=utf-8");
 
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "", "");
 			return;
 		}
 
@@ -353,7 +353,7 @@ public class EmployeeController {
 		String empl_modify_id = "";
 		String empl_id = authMap.get("empl_id").toString();
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return;
 		}else {
 			empl_modify_id = authentication.getName();
@@ -400,10 +400,10 @@ public class EmployeeController {
 								Authentication authentication,
 								HttpServletResponse resp,
 								Model model) {
-		log.info("EmployeeController modifyAuthAdmin 권한수정페이지");
+		log.info("{} 권한수정페이지", Function.getMethodName());
 
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.", "/login/login.do", "");
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}
 		
@@ -422,7 +422,7 @@ public class EmployeeController {
 	
 	@GetMapping("list.do")
 	public String employeeAllList(Model model) {
-		log.info("EmployeeListController employeeAllList 진입");
+		log.info("{} 사원정보 리스트 진입", Function.getMethodName());
 		
 		List<EmployeeDto> lists = employeeService.selectAllEmployee();
 		
@@ -469,7 +469,7 @@ public class EmployeeController {
 												HttpServletResponse resp, 
 												Authentication authentication,
 												String empl_id) throws IOException {
-		log.info("EmployeeController employeeModifyOk 수정처리");
+		log.info("{} 수정처리", Function.getMethodName());
 		
 		EmployeeDto emp = new EmployeeDto();
 
