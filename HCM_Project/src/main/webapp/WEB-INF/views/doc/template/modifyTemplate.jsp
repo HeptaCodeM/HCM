@@ -60,6 +60,7 @@
 		</div>
 			<h3>제목 <input type="text" name="sidt_temp_name" value="${temDto.sidt_temp_name }"></h3>
 			<input type="hidden" name="sidt_temp_cd" value="${temDto.sidt_temp_cd }">
+			<input type="hidden" id="sica_cd" value="${temDto.sica_cd }">
 			<textarea id="editor" name="sidt_temp_content">${temDto.sidt_temp_content}</textarea>
 		<div class="btn">
 <!-- 		<input type="button" onclick="updateTemplate()" value="수정완료"> -->

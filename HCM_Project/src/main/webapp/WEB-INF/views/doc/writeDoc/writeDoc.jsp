@@ -15,6 +15,9 @@
 	.modal { 
 		--bs-modal-width: 1200px;
 	}
+	.form-control {
+		height: 30px !important;
+	}
 </style>
 
 </head>
@@ -63,63 +66,67 @@
 							<!-- ---------------------------- 내 용 입 력 -------------------------------- -->
 							<!-- 템플릿양식 선택화면 버튼 -->
 							<div id="template_div" style="text-align: center;">
-								결재 진행을 위해 양식을 선택해주세요. <br/>
+								결재 진행을 위해 양식을 선택해주세요. <br><br>
 								<button type="button" class="btn btn-primary"
 									data-bs-toggle="modal" data-bs-target="#kt_modal_3">
 									기안문 템플릿 선택하기</button>
 							</div>
 							
 							<!-- 기안문 작성 화면 -->
-							<div id="editor_div" style="display: none;">
+							<div id="editor_div" style="display: none; max-width: 80%; margin: 0px auto;">
 							
 							<input type="hidden" value="${userInfoVo.emsi_seq }" id="emsi_seq">
 							<input type="hidden" value="${userInfoVo.empl_birth }" id="empl_birth">
-							<input type="hidden" value="${userInfo.empl_joindate }" id="empl_joindate">
+							<input type="hidden" value="${userInfoVo.empl_joindate }" id="empl_joindate">
 							<input type="hidden" value="${com.comp_name }" id="comp_name">
-							<input type="hidden" value="${com.comp_num }" id=" comp_num">
+							<input type="hidden" value="${com.comp_num }" id="comp_num">
 							<input type="hidden" value="${com.comp_ceo_name }" id="comp_ceo_name">
-							<input type="hidden" value="${com.comp_tel }" id=" comp_tel">
-							<input type="hidden" value="${com.comp_num }" id=" comp_num">
+							<input type="hidden" value="${com.comp_tel }" id="comp_tel">
 							<input type="hidden" value="${com.comp_addr1 }" id="comp_addr1">
 							<input type="hidden" value="${com.comp_addr2 }" id="comp_addr2">
+							<img src="data:image/png;base64,${com.comp_seal_str}">
 							<table class="table table-bordered">
 								<tr class="success">
 									<th>기안일</th>
 <!-- 									<td><input id="currentDate" name="sidb_doc_writedt" maxlength="20"></td> -->
-									<td><div id="currentDate" name="sidb_doc_writedt" maxlength="20"></div></td>
-									<th>만료일</th>
-									<td style="width: 25%;">
+									<td style="text-align: center; vertical-align: middle;"><div id="currentDate" name="sidb_doc_writedt" maxlength="20"></div></td>
+									<th style="text-align: center;">만료일</th>
+									<td>
 									<div class="input-group" id="kt_td_picker_localization" data-td-target-input="nearest" data-td-target-toggle="nearest">
 									    <input type="text" class="form-control sitb_doc_expiredt" name="sidb_doc_expiredt" data-td-target="#kt_td_picker_localization"/>
-									    <span class="input-group-text" data-td-target="#kt_td_picker_localization" data-td-toggle="datetimepicker">
+									    <span class="input-group-text" data-td-target="#kt_td_picker_localization" data-td-toggle="datetimepicker" style="height: 30px !important;">
 									        <i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
 									    </span>
 									</div>
 									</td>
 <!-- 									<td><input type="date" class="sitb_doc_expiredt" name="sidb_doc_expiredt" data-td-target-input="nearest"></td> -->
-									<th>알림여부</th>
-									<td><input type="checkbox" class="form-check-input" name="alflag"></td>
-								</tr>
-								<tr>
-									<th id="signLine">결재선</th>
-									<td colspan="5">
-										<div id="apprName"></div>
+									<th style="text-align: center;">결재승인 / 반려 알림</th>
+									<td style="text-align: center; vertical-align: middle;">
+										<input type="checkbox" class="form-check-input" name="alflag">
 									</td>
 								</tr>
 								<tr>
-									<th id="signRefer">참조 및 참조부서</th>
+									<th id="signLine" style="cursor: pointer;">결재선</th>
 									<td colspan="5">
-										<div id="refName"></div>
-										<div id="deptName"></div>
+										<input type="text" class="form-control form-control-solid" id="apprName" readonly placeholder="결재선을 설정해주세요">
+									</td>
+								</tr>
+								<tr>
+									<th id="signRefer" style="cursor: pointer;">참조 및 참조부서</th>
+									<td colspan="3">
+										<input type="text" class="form-control form-control-solid" id="refName" readonly placeholder="참조자 없음">
+									</td>
+									<td colspan="2">
+										<input type="text" class="form-control form-control-solid" id="deptName" readonly placeholder="참조부서 없음">
 									</td>
 								</tr>
 								<tr id="signLine">
-									<th id="selectSign">서명선택</th>
+									<th id="selectSign" style="cursor: pointer;">서명선택</th>
 									<td colspan="3">
-										<input id="signMsg" class="form-control form-solid" readonly="readonly" value="서명을 선택해주세요">
+										<input id="signMsg" class="form-control form-control-solid" readonly placeholder="서명을 선택해주세요">
 									</td>
-									<th>기본서명사용</th>
-									<td>
+									<th style="text-align: center;">대표 등록 서명사용</th>
+									<td style="text-align: center; vertical-align: middle;">
 										<input type="checkbox" id="chk"  class="form-check-input" onclick="defaultSign()">
 									</td>
 								</tr>
@@ -133,18 +140,19 @@
 							<textarea id="editor" name="sidb_doc_content"></textarea>
 							<table class="table table-bordered">
 								<tr>
-									<th>첨부파일</th>
-									<td colspan="2"><input type="file" id="sidf_file_content" name="file" class="form-control form-control-solid"></td>
-									
+									<th colspan="6">첨부파일 <span style="color: orange; margin-left: 30px;">* 10MB 미만의 이미지 / 문서 파일만 업로드 가능합니다</span></th>
+								</tr>
+								<tr>
+									<td colspan="6"><input type="file" id="sidf_file_content" name="file" class="form-control form-control-solid" style="line-height: 12px;"></td>
 								</tr>
 							</table>
 							
 							<!-- 제출 버튼 -->				
 							<div id="btn_div" style="margin: 10px auto; text-align: center;">
-							<button type="button" class="btn btn-primary btnSm" id="insertTempDoc" style="height: 32px; line-height: 14px; width: 100px;">
+							<button type="button" class="btn btn-primary btnSm" id="insertTempDoc" style="height: 32px; line-height: 12px; width: 100px;">
 							    임시저장
 							</button>
-							<button type="button" class="btn btn-primary btnSm" id="insertDoc" style="height: 32px; line-height: 14px; width: 100px;">
+							<button type="button" class="btn btn-primary btnSm" id="insertDoc" style="height: 32px; line-height: 12px; width: 100px;">
 							    기안제출
 							</button>
 							</div>
@@ -214,7 +222,7 @@
 										</h3>
 										<!--end::Title-->
 									</div>
-									<div id="template"></div>
+									<div id="template" style="margin: 0px auto;"></div>
 								</div>
 							</div>
 						</div>

@@ -21,11 +21,19 @@
 	}
 	
 	.ck-content {
-		height: 600px;
+		height: 800px;
+		max-width: 1200px;
 	}
 	
 	.ck-editor__editable {
 	    max-height: 1200px;
+	    max-width: 1200px;
+	    margin : 0px auto;
+	}
+	
+	.ck-editor {
+		max-width: 1200px;
+		margin : 0px auto !important;
 	}
 	
 	.ck-editor p {
@@ -95,7 +103,7 @@
 	
 	/* 에디터 내부 사이즈 조정 */
 	.ck_content_detail {
-		max-width: 600px;
+		max-width: 800px;
 		margin: 0px auto;
 	}
 	

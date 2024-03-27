@@ -86,5 +86,20 @@
 
 <script type="text/javascript" src="../ckeditor5/build/ckeditor.js"></script>
 <script type="module" src="../ckeditor5/sample/script.js"></script>
-<script type="text/javascript" src="../js/template.js"></script>
+<script type="text/javascript" src="/js/doc/template.js"></script>
+<script type="text/javascript">
+/* 템플릿 가져오기 */
+document.getElementById('getTemplate').addEventListener('click', function() {
+	fetch('./getTemplate.do', {
+		method: 'post'
+	}).then(resp => {
+		return resp.text();
+	}).then(data => {
+		editor.setData(data)
+	}).catch(error => {
+		console.log(error);
+	});
+});
+
+</script>
 </html>
