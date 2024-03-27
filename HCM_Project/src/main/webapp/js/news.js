@@ -4,14 +4,19 @@ newsSearch.addEventListener("click",function(){
 	
 	var newsSearch = document.getElementById("newsSearch").value;
 	console.log(newsSearch);
+
 	
-	fetch('https://openapi.naver.com/v1/search/news.json?query='+newsSearch+'&display=5&start=1&sort=sim',{
-	method: "GET",
-	headers: {'X-Naver-Client-Id':'MflzXYZnwONG5QBgICK2', 'X-Naver-Client-Secret': 'lhnOaKuzFv'}
+	fetch('https://openapi.naver.com/v1/search/news.json?query='+encodeURIComponent(newsSearch)+'&display=5&start=1&sort=sim',{
+		method: "GET",
+	    mode: 'no-cors',
+		headers: {
+			'X-Naver-Client-Id':'GOoppOh7AqFHnC2N6Cce', 
+			'X-Naver-Client-Secret': 'cmbVwmqkt5',
+	        'Content-Type': 'application/x-www-form-urlencoded'
+		}
 	})
 	.then(data => {
 		console.log(data);
-		
 	})
 	.then(response =>{
 		console.log(response);
