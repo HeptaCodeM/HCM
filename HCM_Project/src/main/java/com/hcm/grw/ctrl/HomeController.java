@@ -264,29 +264,12 @@ public class HomeController {
 		}
 		
 		if(cnt > 0) {
-			Function.alertLocation(resp, commuteMsg + "처리가 완료 되었습니다.", "/hr/commute/registCommute.do", "", "", "");
+			Function.alertLocation(resp, commuteMsg + "처리가 완료 되었습니다.", "/mainTmp.do", "", "", "");
 		}else {
 			Function.alertHistoryBack(resp, commuteMsg + "처리 중 오류가 발생하였습니다.<br>관리자에게 문의하세요.", "", "");
 		}
 		
 	}	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

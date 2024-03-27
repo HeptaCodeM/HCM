@@ -22,9 +22,22 @@
 		height: 480px;
 	}
 	
+	.fc-button-group,.fc-today-button fc-button fc-button-primary{
+		display: none !important;
+	}
+	
+	
+	
 </style>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
+<script type="text/javascript" src="/js/sm/calendar.js"></script>
+
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
 		data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true"
 		data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true"
@@ -179,12 +192,12 @@
 			
 				<!--begin::Col-->
 				<div class="col-xxl-6 mb-5 mb-xl-10">
-					<div class="card shadow-sm fixheightCard">
+					<div class="card shadow-sm">
 					    <div class="card-header">
 					        <h3 class="card-title">캘린더</h3>
 					    </div>
-					    <div class="card-body">
-					    	공사중입니다!
+					    <div class="card-body" id="calendar">
+					    	
 					    </div>
 					</div>
 				</div>

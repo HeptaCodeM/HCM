@@ -448,8 +448,9 @@ public class EmployeeController {
 	}	
 
 	@GetMapping("modifyAdmin.do")
-	public void employeeModify(Model model ,String empl_id) {
+	public void modifyAdmin(Model model ,String empl_id) {
 		log.info("EmployeeListController modifyAdmin 수정페이지 진입");
+		log.info("=========================================");
 		System.out.println(empl_id);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empl_id", empl_id);
