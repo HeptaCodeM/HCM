@@ -22,7 +22,6 @@
     <bean id="httpFirewall" class="org.springframework.security.web.firewall.StrictHttpFirewall">
         <property name="allowUrlEncodedDoubleSlash" value="true"/>
     </bean>
-	
 	<!--
 	security:http : http 요청처리를 위한 보안구성 정의 
 	auto-config="true" : Spring Security 보안설정을 자동으로 구성 적용처리
@@ -110,5 +109,35 @@
 			<security:password-encoder ref="bcryptPasswordEncoder" />
 		</security:authentication-provider>
 	</security:authentication-manager>
+
+	<!-- CORS 설정 시작 -->
+    <!-- CORS 구성 설정 -->
+    <bean id="corsConfigurationSource" class="org.springframework.web.cors.UrlBasedCorsConfigurationSource">
+        <property name="corsConfigurations">
+            <map>
+                <entry key="/**">
+                    <bean class="org.springframework.web.cors.CorsConfiguration">
+                        <property name="allowedOrigins">
+                            <list>
+                                <value>http://example.com</value> <!-- 허용할 도메인 -->
+                            </list>
+                        </property>
+                        <property name="allowedMethods">
+                            <list>
+                                <value>GET</value> <!-- 허용할 HTTP 메서드 -->
+                            </list>
+                        </property>
+                        <property name="allowedHeaders">
+                            <list>
+                                <value>Authorization</value> <!-- 허용할 헤더 -->
+                            </list>
+                        </property>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+	<security:cors configuration-source-ref="corsConfigurationSource" />
+	<!-- CORS 설정 종료 -->
 
 </beans>

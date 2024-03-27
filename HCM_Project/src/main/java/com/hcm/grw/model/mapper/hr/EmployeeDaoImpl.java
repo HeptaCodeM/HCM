@@ -21,31 +21,31 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	
 	@Override
 	public EmployeeDto getLogin(String empl_id) {
-		
 		return sqlSessionTemplate.selectOne(NS+"getLogin", empl_id);
 	}
 
 	@Override
+	public int insertLoginHistory(Map<String, String> map) {
+		return sqlSessionTemplate.insert(NS+"insertLoginHistory", map);
+	}
+	
+	@Override
 	public EmployeeDto getUserInfo(String empl_id) {
-		
 		return sqlSessionTemplate.selectOne(NS+"getUserInfo", empl_id);
 	}
 
 	@Override
 	public SnsInfoDto getSnsLoginInfo(String empl_id) {
-		
 		return sqlSessionTemplate.selectOne(NS+"getSnsLoginInfo", empl_id);
 	}
 
 	@Override
 	public int getInitPwdcheck(Map<String, Object> map) {
-		
 		return sqlSessionTemplate.selectOne(NS+"getInitPwdcheck", map);
 	}
 
 	@Override
 	public int setInitPwd(Map<String, Object> map) {
-		
 		return sqlSessionTemplate.update(NS+"setInitPwd", map);
 	}
 
@@ -57,7 +57,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public int updateEmployee(EmployeeDto dto) {
-		
 		return sqlSessionTemplate.update(NS+"updateEmployee", dto);
 	}
 
@@ -69,19 +68,16 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public EmployeeDto getAuthDetail(String empl_id) {
-		
 		return sqlSessionTemplate.selectOne(NS+"getAuthDetail", empl_id);
 	}
 
 	@Override
 	public int updateAuthEmployee(Map<String, Object> map) {
-		
 		return sqlSessionTemplate.update(NS+"updateAuthEmployee", map);
 	}
 
 	@Override
 	public SnsInfoDto getSnsInfo(String empl_id) {
-		
 		return sqlSessionTemplate.selectOne(NS+"getSnsInfo", empl_id);
 	}
 
@@ -93,27 +89,28 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public int registSnsLoginInfo(Map<String, Object> map) {
-		
 		return sqlSessionTemplate.insert(NS+"registSnsLoginInfo", map);
 	}
 
 	@Override
 	public int updatePwd(Map<String, Object> map) {
-		
 		return sqlSessionTemplate.update(NS+"updatePwd", map);
 	}
 
 	@Override
 	public List<AuthDto> selectAuthAllList() {
-
 		return sqlSessionTemplate.selectList(NS+"selectAuthAllList");
 	}
 
 	@Override
 	public List<EmployeeDto> getUserInfoSearch(Map<String, String> map) {
-
 		return sqlSessionTemplate.selectList(NS+"getUserInfoSearch", map);
 	}
+
+	public int duplicationEmpEmail(String empl_email) {
+		return sqlSessionTemplate.selectOne(NS+"duplicationEmpEmail", empl_email);
+	}
+	
 	
 //	======================= 구분선 ===================================	
 	

@@ -168,7 +168,7 @@
 						<!--begin::Col-->
 						<div class="col-md-6">
 							<!--begin::Google link=-->
-							<a href="#" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
+							<a href="javascript:void(0);" onclick="window.open('${naverSnsUrl}','naverLogin','width=500,height=500,toolbars=no,statebar=no')" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
 							<img alt="Logo" src="/image/miniNaver.png" class="theme-light-show h-15px me-3" />Naver 계정으로 로그인</a>
 							<!--end::Google link=-->
 						</div>

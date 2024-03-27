@@ -3,7 +3,9 @@ package com.hcm.grw.comm;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.InetAddress;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.util.Base64Utils;
@@ -150,6 +152,12 @@ public class Function {
 	}
 
 	
+	/**
+	* 클래스명,메소드명 확인
+	* @return : 클래스명.메소드명(String)
+	* @author : SDJ
+	* @since : 2024.03.27
+	*/	
 	public static String getMethodName() {
 		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 		 StackTraceElement callingMethod = stackTrace[2];
@@ -158,6 +166,24 @@ public class Function {
 	     String methodName = callingMethod.getMethodName();
 	     
 	     return className.replace(packageName.concat("."), "") + "." + methodName;
-//		 return Thread.currentThread().getStackTrace()[1].getClassName() +"."+ Thread.currentThread().getStackTrace()[1].getMethodName();
-	}	
+	}
+	
+	
+	/**
+	* IP주소 확인
+	* @param req : HttpServletRequest
+	* @return : IP주소IPv4(String)
+	* @author : SDJ
+	* @since : 2024.03.27
+	*/	
+	public static String getIpAddress(HttpServletRequest req) throws Exception {
+		String ipAddr=req.getRemoteAddr();
+		if(ipAddr.equalsIgnoreCase("0:0:0:0:0:0:0:1")){
+		    InetAddress inetAddress=InetAddress.getLocalHost();
+		    ipAddr=inetAddress.getHostAddress();
+		}
+		
+		return ipAddr;
+	}
+	
 }

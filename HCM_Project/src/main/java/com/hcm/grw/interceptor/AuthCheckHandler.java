@@ -30,17 +30,19 @@ public class AuthCheckHandler implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		try {
 			String requestURI = request.getRequestURI();
-			log.info("@@@@@ AuthCheck Interceptor Start - requestURI : {}", requestURI);
+			log.info("@@@@@@@@@@ AuthCheck Interceptor Start @@@@@@@@@@");
+			log.info("requestURI : {}", requestURI);
+			
 			
 			/* 사용자 로그인 정보 가져오기 시작 */
 			// Authentication Check
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	        log.info("Authentication Info : {}", authentication);
 			if(authentication == null) {
-				log.info("인증정보가 없습니다.");
+				log.info("{} - AuthError : 인증정보가 없습니다.", Function.getMethodName());
 				response.sendRedirect("/login/login.do");
 				return false;
 			}
-	
 			
 			// Authentication Role Info Get
 			String authRole = "";
@@ -48,34 +50,51 @@ public class AuthCheckHandler implements HandlerInterceptor {
 				authRole += authority.getAuthority();
 	            // 여기에 권한에 따른 추가적인 처리를 수행할 수 있습니다.
 	        }
-	        log.info("Auth_Role : {}", authRole);
-	
+	        log.info("{} - Auth_Role : {}", Function.getMethodName(), authRole);
+
+	        
+			// 세션정보 확인
+			HttpSession session = request.getSession();
+	        EmployeeDto sessionDto = (EmployeeDto)session.getAttribute("userInfoVo");
+	        log.info("Session Info : {}", sessionDto);
+			if(sessionDto == null) {
+				log.info("{} - AuthError : Session정보가 없습니다.", Function.getMethodName());
+				response.sendRedirect("/login/login.do");
+				return false;
+			}
+	        log.info("{} - Session_Role : {}", Function.getMethodName(), sessionDto.getEmpl_auth());
+	        
 	        
 	        //DB Role Info Get
 	        EmployeeDto empDto = employeeService.getUserInfo(authentication.getName());
 			// DB Check
 	        if(empDto == null) {
-				log.info("DB 사용자 정보 오류입니다.");
+				log.info("{} - DB 사용자 정보 오류입니다.", Function.getMethodName());
 				response.sendRedirect("/login/login.do");
 				return false;
 	        }
 	        String dbRole = empDto.getEmpl_auth();
-	        log.info("DB_Role : {}", dbRole);
+	        log.info("{} - DB_Role : {}", Function.getMethodName(), dbRole);
 			/* 사용자 로그인 정보 가져오기 종료 */
-			
-	        if(!authRole.equals(dbRole)) {
+
+	        
+	        // 권한변경 체크 - 변경 시 Authentication, Session 정보 변경처리
+	        if(!authRole.equals(dbRole) || !authRole.equals(sessionDto.getEmpl_auth())) {
+		        log.info("Roll정보 Update");
 				//Role정보 Update
 				//Security Role정보 Update
 				SecurityContextHolder.getContext().setAuthentication(authService.createNewAuthentication(authentication,authentication.getName()));
 				//Session Role정보 Update
 				EmployeeDto employeeDto = employeeService.getUserInfo(authentication.getName());
-				HttpSession session = request.getSession();
 				//이미지 스트링 정보로 처리
 				employeeDto.setEmpl_picture_str(Function.blobImageToString(employeeDto.getEmpl_picture()));
 				//2진정보 초기화
 				employeeDto.setEmpl_picture(null);
 				session.setAttribute("userInfoVo", employeeDto);
 	        }
+	        
+
+	        log.info("@@@@@@@@@@ AuthCheck Interceptor End @@@@@@@@@@");
 	        
 			return true;
 		}catch(Exception ex) {

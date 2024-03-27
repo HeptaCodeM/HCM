@@ -1,4 +1,4 @@
-package com.hcm.grw.ctrl.comm;
+package com.hcm.grw.comm;
 
 import java.io.IOException;
 

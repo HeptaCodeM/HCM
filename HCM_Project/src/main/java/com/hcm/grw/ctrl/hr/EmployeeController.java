@@ -58,7 +58,7 @@ public class EmployeeController {
 	
 	@GetMapping("registEmpAdmin.do")
 	public String registEmployee(Model model) {
-		log.info("EmployeeController registEmpAdmin 진입");
+		log.info("{} 임직원 등록 화면", Function.getMethodName());
 		
 		Map<String, Object> mapDept = new HashMap<String, Object>();
 		mapDept.put("role", "DT");
@@ -85,11 +85,26 @@ public class EmployeeController {
 												@RequestParam Map<String, String> map, 
 												HttpServletResponse resp, 
 												Authentication authentication) throws IOException {
-		log.info("EmployeeController registEmpAdminOk 등록처리");
+		log.info("{} 임직원 등록처리", Function.getMethodName());
 		log.info("input map : {}", map);
 		log.info("MultipartFile : {}", file);
 		resp.setContentType("text/html;charset=utf-8;");
 
+		String empl_id = "";
+		if(authentication == null) {
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			return;
+		}else {
+			empl_id = authentication.getName();
+		}
+		
+		int dupCnt = employeeService.duplicationEmpEmail(map.get("empl_email"));
+		if(dupCnt > 0) {
+			Function.alertHistoryBack(resp, "이미 등록된 이메일입니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			return;
+		}
+		
+		
         // Random 객체 생성
         Random random = new Random();
         // 8자리 숫자 생성
@@ -111,7 +126,7 @@ public class EmployeeController {
         emp.setEmpl_position_cd(map.get("empl_position_cd"));
         emp.setEmpl_joindate(map.get("empl_joindate"));
         emp.setEmpl_auth("ROLE_USER");
-        emp.setEmpl_create_id(authentication.getName());
+        emp.setEmpl_create_id(empl_id);
 		log.info("등록값1 : {}", emp);
 
 		if(file != null) {
@@ -138,7 +153,7 @@ public class EmployeeController {
 
 	@GetMapping("empModify.do")
 	public String empModify(Model model, Authentication authentication, HttpServletResponse resp) {
-		log.info("EmployeeController empModify 수정페이지 진입");
+		log.info("{} 임직원 수정페이지 진입", Function.getMethodName());
 		resp.setContentType("text/html;charset=utf-8;");
 		
 		String empl_id = "";
@@ -168,7 +183,7 @@ public class EmployeeController {
 												HttpServletResponse resp, 
 												Authentication authentication,
 												HttpServletRequest req) throws IOException {
-		log.info("EmployeeController empModifyOk 수정처리");
+		log.info("{} 임직원정보 수정처리", Function.getMethodName());
 		resp.setContentType("text/html;charset=utf-8;");
 		
         String empl_modify_id = "";
@@ -229,7 +244,7 @@ public class EmployeeController {
 	// 차후 rest로 변경, 사원 간략정보 확인용
 	@GetMapping("selectEmployeeOne.do")
 	public @ResponseBody EmployeeDto selectEmployeeOne(@RequestParam(required = true) String empl_id, HttpServletResponse resp) {
-		log.info("EmployeeController employeeModify 수정페이지 진입");
+		log.info("{} 임직원정보 수정페이지 진입", Function.getMethodName());
 		resp.setContentType("text/html; charset=utf-8");
 		
 		if(StringUtils.isEmpty(empl_id)) {
@@ -250,8 +265,7 @@ public class EmployeeController {
 	@GetMapping("updatePwd.do")
 	public String chgPwd(Authentication authentication, 
 						 HttpServletResponse resp) {
-
-		log.info("EmployeeController updatePwd 변경 진입");
+		log.info("{} 비밀번호 변경 진입", Function.getMethodName());
 		resp.setContentType("text/html; charset=utf-8");
 		
 		if(authentication == null) {
@@ -267,8 +281,7 @@ public class EmployeeController {
 	public @ResponseBody void updatePwdOk(@RequestParam Map<String, Object> chgPwdMap,
 							  Authentication authentication,
 							  HttpServletResponse resp) {
-		
-		log.info("EmployeeController updatePwdOk 변경 처리");
+		log.info("{} 비밀번호 변경 처리", Function.getMethodName());
 		resp.setContentType("text/html; charset=utf-8");
 
 		if(authentication == null) {
@@ -304,7 +317,7 @@ public class EmployeeController {
 	
 	@GetMapping("authAdminList.do")
 	public String authAdminList(Model model) {
-		log.info("EmployeeController authAdminList 권한리스트");
+		log.info("{} 권한리스트", Function.getMethodName());
 	
 		List<EmployeeDto> lists = employeeService.getAuthList();
 		
@@ -315,7 +328,7 @@ public class EmployeeController {
 
 	@GetMapping("registAuthAdmin.do")
 	public String registAuthAdmin(Model model) {
-		log.info("EmployeeController registAuthAdmin 권한등록");
+		log.info("{} 권한등록", Function.getMethodName());
 	
 		List<AuthDto> authLists = employeeService.selectAuthAllList();
 		
@@ -326,7 +339,7 @@ public class EmployeeController {
 	
 	@PostMapping(value="getUserInfoSearch.do", produces = "application/json;")
 	public @ResponseBody String getUserInfoSearch(@RequestParam HashMap<String, String> map, HttpServletResponse resp) {
-		log.info("EmployeeController getUserInfoSearch 사원정보 검색 : {}", map);
+		log.info("{}  사원정보 검색 : {}", Function.getMethodName(), map);
 		resp.setContentType("text/html; charset=UTF-8;");
 		
 		List<EmployeeDto> empDto = employeeService.getUserInfoSearch(map);
@@ -346,7 +359,7 @@ public class EmployeeController {
 			  					Authentication authentication,
 			  					HttpServletResponse resp,
 			  					HttpServletRequest req) {
-		log.info("EmployeeController updateAuthAdminOk 권한등록/수정/삭제처리 : {}", authMap);
+		log.info("{} 권한등록/수정/삭제처리 : {}", Function.getMethodName(), authMap);
 		resp.setContentType("text/html; charset=UTF-8;");
 
 		String type = authMap.get("type").toString();

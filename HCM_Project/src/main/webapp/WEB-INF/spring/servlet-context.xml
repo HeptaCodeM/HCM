@@ -51,16 +51,15 @@
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/login/*"/>
 			<mvc:exclude-mapping path="/error/*"/>
-			<mvc:exclude-mapping path="/index.jsp"/>
+			<mvc:exclude-mapping path="/api/*"/>
+			<mvc:exclude-mapping path="/"/>
 			<bean class="com.hcm.grw.interceptor.AuthCheckHandler"/>
 		</mvc:interceptor>
 
-		<!-- 
 		<mvc:interceptor>
-			<mvc:mapping path="/**"/>
+			<mvc:mapping path="*.do"/>
 			<bean class="com.hcm.grw.interceptor.ErrorHandler"/>
 		</mvc:interceptor>
-		 -->
 		
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>

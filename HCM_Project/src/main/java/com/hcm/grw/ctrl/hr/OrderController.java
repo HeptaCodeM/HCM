@@ -136,7 +136,6 @@ public class OrderController {
 		log.info("{} 발령현황 조회-REST", Function.getMethodName());
 		resp.setContentType("text/html; charset=UTF-8;");
 	
-		String empl_id = "";
 		if(authentication == null) {
 			return "{\"error\":\"로그인 정보가 없습니다\"}";
 		}

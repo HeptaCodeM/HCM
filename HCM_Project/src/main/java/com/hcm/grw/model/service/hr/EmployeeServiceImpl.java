@@ -35,6 +35,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	public int insertLoginHistory(Map<String, String> map) {
+		return dao.insertLoginHistory(map);
+	}
+	
+	@Override
 	public EmployeeDto getUserInfo(String empl_id) {
 		return dao.getUserInfo(empl_id);
 	}
@@ -133,6 +138,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return dao.getUserInfoSearch(map);
 	}
 
+	@Override
+	public int duplicationEmpEmail(String empl_email) {
+		return dao.duplicationEmpEmail(empl_email);
+	}
+	
 	
 //	======================= 구분선 ===================================		
 	

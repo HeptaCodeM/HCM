@@ -2,20 +2,9 @@ package com.hcm.grw.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.hcm.grw.comm.Function;
-import com.hcm.grw.config.CreateNewAuthService;
-import com.hcm.grw.dto.hr.EmployeeDto;
-import com.hcm.grw.model.service.hr.EmployeeService;
 
 import lombok.extern.slf4j.Slf4j;
 

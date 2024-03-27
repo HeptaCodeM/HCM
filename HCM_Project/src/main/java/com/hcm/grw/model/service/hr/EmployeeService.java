@@ -11,6 +11,8 @@ public interface EmployeeService {
 
 	/*일반로그인*/
 	public EmployeeDto getLogin(String empl_id);
+	/*로그인 History입력*/
+	public int insertLoginHistory(Map<String, String> map);
 	/*유저정보*/
 	public EmployeeDto getUserInfo(String empl_id);
 	/*유저검색*/
@@ -46,8 +48,9 @@ public interface EmployeeService {
 	public int updatePwd(Map<String, Object> map);
 	/*권한정보 조회*/
 	public List<AuthDto> selectAuthAllList();
-	
-	
+	/*임직원등록 시 이메일 중복체크*/
+	public int duplicationEmpEmail(String empl_email);	
+
 	
 //	========================= 작업구분선 ==================================
 	

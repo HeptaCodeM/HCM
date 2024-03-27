@@ -10,6 +10,15 @@
 		AND EMPL_DELFLAG = 'N'
 	</select>
 
+	<!-- 로그인 History -->
+	<insert id="insertLoginHistory" parameterType="Map">
+		<selectKey keyProperty="emlh_seq" resultType="Integer" order="BEFORE">
+			SELECT NVL(MAX(EMLH_SEQ), 0)+1 FROM EMP_LOGIN_HISTORY
+		</selectKey>
+		INSERT INTO EMP_LOGIN_HISTORY(EMLH_SEQ, EMPL_ID, EMLH_CREATE_DT, EMLH_CREATE_IP)
+		VALUES (#{emlh_seq}, #{empl_id}, CURRENT_DATE, #{emlh_create_ip})
+	</insert>
+
 	<!-- 사용저 정보 -->
 	<select id="getUserInfo" parameterType="String" resultType="EmployeeDto">
 		SELECT 
@@ -346,6 +355,12 @@
 		SELECT COUNT(*) 
 			FROM EMPLOYEE e 
 			WHERE EMPL_FAX = #{empl_fax}
+	</select>
+
+	<select id="duplicationEmpEmail" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) 
+			FROM EMPLOYEE e 
+			WHERE EMPL_EMAIL = #{empl_email}
 	</select>
 
 </mapper>

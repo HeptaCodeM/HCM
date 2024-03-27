@@ -2,7 +2,9 @@ package com.hcm.grw.config;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +18,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.EmployeeDto;
-import com.hcm.grw.model.mapper.hr.EmployeeDao;
+import com.hcm.grw.model.service.hr.EmployeeService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,12 +26,13 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Autowired
-	private EmployeeDao employeeDao;
+	private EmployeeService employeeService;
 	
 	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) throws IOException, ServletException {
-		log.info("login Success");
+	public void onAuthenticationSuccess(HttpServletRequest request, 
+										HttpServletResponse response,
+										Authentication authentication) throws IOException, ServletException {
+		log.info("{} - login Success", Function.getMethodName());
 		
 		List<String> roleNames = new ArrayList<String>();
 	
@@ -43,7 +46,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		});
 		
 		
-		EmployeeDto employeeDto = employeeDao.getUserInfo(authentication.getName());
+		EmployeeDto employeeDto = employeeService.getUserInfo(authentication.getName());
 		
 		HttpSession session = request.getSession();
 		//이미지 스트링 정보로 처리
@@ -56,6 +59,20 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
 		// 로그인 성공 시 메인화면 이동
 		if(authentication.isAuthenticated()) {
+			String ipAddr;
+			try {
+				ipAddr = Function.getIpAddress(request);
+			} catch (Exception e) {
+				e.printStackTrace();
+				ipAddr = "";
+			}
+			Map<String, String> loginHistoryMap = new HashMap<String, String>();
+			loginHistoryMap.put("empl_id", authentication.getName());
+			loginHistoryMap.put("emlh_create_ip", ipAddr);
+			
+			int historyCnt = employeeService.insertLoginHistory(loginHistoryMap);
+			log.info("{} - historyCnt : {}", Function.getMethodName(), historyCnt);
+			
 			//log.info("@@@@@@@@@@@@@@@@ ckMobile : {}",CookiesMgr.getCookies(request, "ckMobile"));
 			if(CookiesMgr.getCookies(request, "ckMobile").equals("Y")) {
 				response.sendRedirect("/hr/commute/registCommute.do");
