@@ -676,7 +676,7 @@ public class DocController {
 		dto.setSidb_doc_num(docNum);
 		
 		//문서 삭제하는 메소드 
-		int n=docService.deleteTempDocs(dto);
+		int n=docService.deleteTempDocs(docNum);
 		
 		EmployeeDto Edto = (EmployeeDto) session.getAttribute("userInfoVo");
 
