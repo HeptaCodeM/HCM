@@ -94,6 +94,37 @@ public class Function {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	* alert 메시지 발생 후 self.close() 처리
+	* @param resp : HttpServletResponse
+	* @param msg : 메시지(String)
+	* @param className : 버튼 클래스명(String) - 미필수
+	* @param btnText : 버튼 텍스트(String) - 미필수
+	* @return : String(메시지 발생 스크립트 호출)
+	* @author : SDJ
+	 * @throws IOException
+	* @since : 2024.03.27
+	*/
+	public static void alertClose(HttpServletResponse resp, String msg, String className, String btnText) {
+		resp.setContentType("text/html; charset=UTF-8;");
+
+		if(msg == "" || msg == null) msg = "";
+
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script src='//cdn.jsdelivr.net/npm/sweetalert2@11'></script>");
+		sb.append("<script src='/js/common/common.js' defer></script>");
+		sb.append("<script>");
+		sb.append("window.onload = function(){");
+		sb.append("swalClose('"+ msg +"','"+ className +"','"+ btnText +"');");
+		sb.append("}");
+		sb.append("</script>");
+		try {
+			resp.getWriter().print(sb.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	* Blob데이터 String처리

@@ -82,15 +82,13 @@ public class AuthCheckHandler implements HandlerInterceptor {
 	        if(!authRole.equals(dbRole) || !authRole.equals(sessionDto.getEmpl_auth())) {
 		        log.info("Roll정보 Update");
 				//Role정보 Update
-				//Security Role정보 Update
-				SecurityContextHolder.getContext().setAuthentication(authService.createNewAuthentication(authentication,authentication.getName()));
-				//Session Role정보 Update
-				EmployeeDto employeeDto = employeeService.getUserInfo(authentication.getName());
-				//이미지 스트링 정보로 처리
-				employeeDto.setEmpl_picture_str(Function.blobImageToString(employeeDto.getEmpl_picture()));
-				//2진정보 초기화
-				employeeDto.setEmpl_picture(null);
-				session.setAttribute("userInfoVo", employeeDto);
+				//Security Role정보 Update(Session등록 포함)
+				boolean flag = authService.createNewAuthentication(authentication, authentication.getName(), request);
+				if(!flag) {
+					log.info("{} - 인증등록 오류발생.", Function.getMethodName());
+					response.sendRedirect("/login/login.do");
+					return false;
+				}
 	        }
 	        
 

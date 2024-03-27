@@ -35,8 +35,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public SnsInfoDto getSnsLoginInfo(String empl_id) {
-		return sqlSessionTemplate.selectOne(NS+"getSnsLoginInfo", empl_id);
+	public String getSnsLoginInfo(Map<String, String> map) {
+		return sqlSessionTemplate.selectOne(NS+"getSnsLoginInfo", map);
 	}
 
 	@Override

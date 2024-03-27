@@ -59,16 +59,14 @@
 	</select>
 
 	<!-- 소셜로그인 -->
-	<select id="getSnsLoginInfo" parameterType="String" resultType="SnsInfoDto">
+	<select id="getSnsLoginInfo" parameterType="Map" resultType="String">
 		SELECT
-		ES.EMSN_ID,
-		ES.EMPL_ID,
-		ES.EMSN_EMAIL,
-		ES.EMSN_CREATE_DT
-		FROM EMPLOYEE E
-		INNER JOIN EMP_SNS ES ON E.EMPL_ID = ES.EMPL_ID
-		WHERE E.EMPL_ID = #{empl_id}
-		AND E.EMPL_DELFLAG = 'N'
+					ES.EMPL_ID
+		FROM		EMPLOYEE E
+		INNER JOIN	EMP_SNS ES ON E.EMPL_ID = ES.EMPL_ID
+		WHERE 		ES.EMSN_ID = #{emsn_id}
+		AND			ES.EMSN_EMAIL = #{emsn_email}
+		AND 		E.EMPL_DELFLAG = 'N'
 	</select>
 
 	<!-- 인증번호 메일발송용 사원체크 -->

@@ -31,17 +31,17 @@ function swalAlert(msg, movePage, className, btnName, focusid) {
             confirmButton: "btn "+className
         }
 	})
-		//document.getElementById("main").focus()	//input으로   focus 해줘야 버튼포커스 빠져나감
-		.then((result) => {
-			//console.log(result);
-			if (result.isConfirmed) {
-				if (movePage != "" && movePage != undefined) {
-					location.href = movePage;
-				} else if (focusid != "" && focusid != undefined) {
-					$("#" + focusid).focus();
-				}
+	//document.getElementById("main").focus()	//input으로   focus 해줘야 버튼포커스 빠져나감
+	.then((result) => {
+		//console.log(result);
+		if (result.isConfirmed) {
+			if (movePage != "" && movePage != undefined) {
+				location.href = movePage;
+			} else if (focusid != "" && focusid != undefined) {
+				$("#" + focusid).focus();
 			}
-		})
+		}
+	})
 }
 
 //Swal Alert History Back
@@ -76,11 +76,50 @@ function swalHistoryBack(msg, className, btnName) {
             confirmButton: "btn "+className
         }
 	})
-		.then((result) => {
-			if (result.isConfirmed) {
-				history.back();
-			}
-		})
+	.then((result) => {
+		if (result.isConfirmed) {
+			history.back();
+		}
+	})
+}
+
+//Swal Alert Close(Popup)
+function swalClose(msg, className, btnName) {
+	if(btnName == "" || btnName == "undefined"){
+		btnName = "확인";
+	}
+	if(className == "" || className == "undefined"){
+		className = "btn-primary";
+	}
+	Swal.fire({
+		width: 500,
+		html: msg,
+		allowOutsideClick: false,	// 팝업 외부 클릭하여 창닫기 금지
+		returnFocus: false,			// 팝업을 호출한 곳으로 focus 반환하지 않음
+        confirmButtonText: btnName,
+		showClass: {
+			popup: `
+		      animate__animated
+		      animate__fadeInUp
+		      animate__faster
+			`
+		},
+		hideClass: {
+			popup: `
+		      animate__animated
+		      animate__fadeOutDown
+		      animate__faster
+		    `
+		},
+        customClass: {
+            confirmButton: "btn "+className
+        }
+	})
+	.then((result) => {
+		if (result.isConfirmed) {
+			self.close();
+		}
+	})
 }
 
 //Swal Alert Confirm

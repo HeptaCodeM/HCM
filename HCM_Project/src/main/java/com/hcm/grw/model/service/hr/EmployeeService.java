@@ -18,7 +18,7 @@ public interface EmployeeService {
 	/*유저검색*/
 	public List<EmployeeDto> getUserInfoSearch(Map<String, String> map);
 	/*소셜로그인*/
-	public SnsInfoDto getSnsLoginInfo(String empl_id);
+	public String getSnsLoginInfo(Map<String, String> map);
 
 	/*인증번호 메일발송*/
 	public int getInitPwdcheck(Map<String, Object> map);
