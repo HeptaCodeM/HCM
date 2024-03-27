@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.doc.SignFileDto;
 import com.hcm.grw.dto.doc.SignTempBoxDto;
+import com.hcm.grw.model.mapper.doc.IDocBoxDao;
 import com.hcm.grw.model.mapper.doc.ISignBoxDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,8 @@ public class SignBoxServiceImpl implements ISignBoxService {
 
 	@Autowired
 	private ISignBoxDao dao;
+	@Autowired
+	private IDocBoxDao bDao;
 	
 	@Override
 	public int insertDoc(SignBoxDto dto) {
@@ -80,4 +83,23 @@ public class SignBoxServiceImpl implements ISignBoxService {
 		log.info("SignBoxServiceImpl getdetailFile Service 파일 조회");
 		return dao.getDetailFile(sidf_file_num);
 	}
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public int insertTempTransaction(SignBoxDto bDto, SignFileDto fDto, String sitb_doc_num) {
+		log.info("SignBoxServiceImpl insertTempTransaction Service 임시보관문서 불러와서 작성하는 트랜잭션");
+		int n1 = dao.insertDoc(bDto);
+		int n2 = dao.insertDocFile(fDto);
+		int n3 = bDao.deleteTempDocs(sitb_doc_num);
+		return n1 + n2 + n3 == 3 ? 1 : 0;
+	}
+	
+	@Override
+	public int insertTempNoFileTransaction(SignBoxDto bDto, String sitb_doc_num) {
+		log.info("SignBoxServiceImpl insertTempNoFileTransaction Service 임시보관문서 파일없이 기안 작성하는 트랜잭션");
+		int n1 = dao.insertDoc(bDto);
+		int n2 = bDao.deleteTempDocs(sitb_doc_num);
+		return n1 + n2 == 2 ? 1 : 0;
+	}
+	
 }

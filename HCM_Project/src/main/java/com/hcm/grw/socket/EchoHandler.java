@@ -49,7 +49,7 @@ public class EchoHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		
 		String fullMsg = message.getPayload();
-		log.info("WebSocket TextMessage : {}", fullMsg);
+//		log.info("WebSocket TextMessage : {}", fullMsg);
 		
 		for (WebSocketSession clientSession : sessionList) {
 			if (clientSession.isOpen() && !clientSession.equals(session)) {
@@ -88,7 +88,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		chatDto.setCh_message(msg);
 		chatDto.setCh_sender(user.getEmpl_id());
 		if(user.getEmpl_picture() != null) {
-			chatDto.setSender_pic(Base64Utils.encodeToString(user.getEmpl_picture()));
+			chatDto.setSender_pic_str(Base64Utils.encodeToString(user.getEmpl_picture()));
 		}
 		String json = new Gson().toJson(chatDto);
 		
