@@ -99,6 +99,7 @@ public class Function {
 	* alert 메시지 발생 후 self.close() 처리
 	* @param resp : HttpServletResponse
 	* @param msg : 메시지(String)
+	* @param location : 부모창 이동경로(String) - 미필수(빈값 처리 시 메시지창만 띄움)
 	* @param className : 버튼 클래스명(String) - 미필수
 	* @param btnText : 버튼 텍스트(String) - 미필수
 	* @return : String(메시지 발생 스크립트 호출)
@@ -106,7 +107,7 @@ public class Function {
 	 * @throws IOException
 	* @since : 2024.03.27
 	*/
-	public static void alertClose(HttpServletResponse resp, String msg, String className, String btnText) {
+	public static void alertClose(HttpServletResponse resp, String msg, String location, String className, String btnText) {
 		resp.setContentType("text/html; charset=UTF-8;");
 
 		if(msg == "" || msg == null) msg = "";
@@ -116,7 +117,7 @@ public class Function {
 		sb.append("<script src='/js/common/common.js' defer></script>");
 		sb.append("<script>");
 		sb.append("window.onload = function(){");
-		sb.append("swalClose('"+ msg +"','"+ className +"','"+ btnText +"');");
+		sb.append("swalClose('"+ msg +"','"+ location +"','"+ className +"','"+ btnText +"');");
 		sb.append("}");
 		sb.append("</script>");
 		try {

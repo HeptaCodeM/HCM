@@ -42,22 +42,17 @@ public class LoginController {
 	
 	@Autowired
 	private CompanyService companyService;
+	
+	@Autowired
+	private NaverOAuth naverOAuth;
 
-	@Value("#{dataSpcProperties['naver.auth']}")
-	private String authUrl;
-	@Value("#{dataSpcProperties['naver.redirect']}")
-	private String redirectUrl;
-	@Value("#{dataSpcProperties['naver.clientid']}")
-	private String clientId;
-	
-	
 	
 	@GetMapping("/login/login.do")
 	public String login(String error, 
 						String logout,
 						Model model, 
-						HttpServletRequest request, 
-						HttpServletResponse response) {
+						HttpServletRequest req, 
+						HttpServletResponse resp) {
 		log.info("error : {}", error);
 		log.info("logout : {}", logout);
 
@@ -70,7 +65,7 @@ public class LoginController {
 		}
 
 		try {
-			String ipAddr=Function.getIpAddress(request);
+			String ipAddr=Function.getIpAddress(req);
 			
 			Map<String, String> loginMap = new HashMap<String, String>();
 			
@@ -100,28 +95,27 @@ public class LoginController {
 		}
 		
 		//모바일 처리
-		Device device = DeviceUtils.getCurrentDevice(request);
+		Device device = DeviceUtils.getCurrentDevice(req);
 		if(device.isMobile()) {
-			CookiesMgr.setCookies(response, "ckMobile", "Y", 0);
+			CookiesMgr.setCookies(resp, "ckMobile", "Y", 0);
 			model.addAttribute("mobile", "Y");
 		}else {
 			model.addAttribute("mobile", "N");
 		}
 		
 		String naverUrl = "";
-		naverUrl += authUrl;
-		naverUrl += "&client_id=".concat(clientId);
+		naverUrl += naverOAuth.getAuthUrl();
+		naverUrl += "&client_id=".concat(naverOAuth.getClientId());
 		try {
-			naverUrl += "&redirect_uri=".concat(URLEncoder.encode(redirectUrl,"UTF-8"));
+			naverUrl += "&redirect_uri=".concat(URLEncoder.encode(naverOAuth.getRedirectUrl(),"UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 			naverUrl += "&redirect_uri=";
 		}
-		NaverOAuth naverOAuth = new NaverOAuth();
 		String rndStr = naverOAuth.generateState();
 		naverUrl += "&state=".concat(rndStr);
 		
-		request.getSession().setAttribute("state", rndStr);
+		req.getSession().setAttribute("state", rndStr);
 		
 		model.addAttribute("naverSnsUrl", naverUrl);
 		

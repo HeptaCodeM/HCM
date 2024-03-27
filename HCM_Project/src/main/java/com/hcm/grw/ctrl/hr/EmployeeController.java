@@ -1,6 +1,8 @@
 package com.hcm.grw.ctrl.hr;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,9 +32,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hcm.grw.comm.Function;
 import com.hcm.grw.config.CreateNewAuthService;
+import com.hcm.grw.ctrl.login.NaverOAuth;
 import com.hcm.grw.dto.hr.AuthDto;
 import com.hcm.grw.dto.hr.CommonCodeDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.dto.hr.SnsInfoDto;
 import com.hcm.grw.model.service.hr.CommonCodeService;
 import com.hcm.grw.model.service.hr.EmployeeService;
 
@@ -55,6 +58,10 @@ public class EmployeeController {
 
 	@Autowired
 	private CreateNewAuthService authService;
+	
+	@Autowired
+	private NaverOAuth naverOAuth;
+	
 	
 	@GetMapping("registEmpAdmin.do")
 	public String registEmployee(Model model) {
@@ -619,6 +626,84 @@ public class EmployeeController {
 		}
 		
 		return returnBool;
+	}
+	
+	
+	@GetMapping("naverSns.do")
+	public String naverSns(Model model,
+						 Authentication authentication,
+						 HttpServletRequest req,
+						 HttpServletResponse resp) {
+		log.info("{} 간편로그인 진입", Function.getMethodName());
+
+		String empl_id = "";
+		if(authentication == null) {
+			Function.alertLocation(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
+			return null;
+		}else {
+			empl_id = authentication.getName();
+		}
+		
+		SnsInfoDto snsDto = employeeService.getSnsInfo(empl_id);
+		if(snsDto != null) {
+			model.addAttribute("snsInfo", snsDto);
+		}else {
+			String naverUrl = "";
+			naverUrl += naverOAuth.getAuthUrl();
+			naverUrl += "&client_id=".concat(naverOAuth.getClientId());
+			try {
+				naverUrl += "&redirect_uri=".concat(URLEncoder.encode(naverOAuth.getRedirectUrl(),"UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+				naverUrl += "&redirect_uri=";
+			}
+			String rndStr = naverOAuth.generateState();
+			naverUrl += "&state=".concat(rndStr);
+			
+			req.getSession().setAttribute("state", rndStr);
+			
+			model.addAttribute("naverSnsUrl", naverUrl);
+			model.addAttribute("snsInfo", "");
+		}
+		
+		return "hr/employee/naverSns";
+	}
+
+
+	@GetMapping("delNaverSns.do")
+	public @ResponseBody void delNaverSns(Model model,
+										 Authentication authentication,
+										 HttpServletResponse resp) {
+		log.info("{} 간편로그인 삭제", Function.getMethodName());
+
+		
+		String empl_id = "";
+		String emsn_id = "";
+		if(authentication == null) {
+			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "", "");
+			return;
+		}else {
+			empl_id = authentication.getName();
+		}
+
+		SnsInfoDto snsDto = employeeService.getSnsInfo(empl_id);
+		if(snsDto == null) {
+			Function.alertLocation(resp, "네이버 간편로그인 조회 정보가 없습니다.", "/hr/employee/naverSns.do", "", "", "");
+			return;
+		}else {
+			emsn_id = snsDto.getEmsn_id();
+		}
+		
+		int cnt = employeeService.delSnsInfo(emsn_id);
+		if(cnt>0) {
+			Function.alertLocation(resp, "네이버 간편로그인 연결이 해제 되었습니다.", "/hr/employee/naverSns.do", "", "", "");
+			return;
+		}else {
+			Function.alertLocation(resp, "네이버 간편로그인 연결 해제 오류가 발생하였습니다.", "/hr/employee/naverSns.do", "", "", "");
+			return;
+		}
+		
+		
 	}
 	
 	

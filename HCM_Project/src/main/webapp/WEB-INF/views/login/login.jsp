@@ -148,7 +148,7 @@
 						</div>
 						<!--end::Wrapper-->
 						<!--begin::Submit button-->
-						<div class="d-grid mb-10">
+						<div class="d-grid mb-5">
 							<!-- <button type="button" class="btn btn-primary" onclick="doSubmit()"> -->
 							<button class="btn btn-primary">
 								<!--begin::Indicator label-->
@@ -166,7 +166,7 @@
 					<!--begin::Login options-->
 					<div class="row g-3 mb-9">
 						<!--begin::Col-->
-						<div class="col-md-6">
+						<div class="d-grid">
 							<!--begin::Google link=-->
 							<a href="javascript:void(0);" onclick="window.open('${naverSnsUrl}','naverLogin','width=500,height=500,toolbars=no,statebar=no')" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
 							<img alt="Logo" src="/image/miniNaver.png" class="theme-light-show h-15px me-3" />Naver 계정으로 로그인</a>
