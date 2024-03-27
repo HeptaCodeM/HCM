@@ -263,17 +263,17 @@
 	<choose>
 		<when test="searchCtg == 'empl_name'">
 			<if test="empl_name != null">
-				AND A.EMPL_NAME = #{empl_name}
+				AND A.EMPL_NAME LIKE '%'||#{empl_name}||'%'
 			</if>
 		</when>
 		<when test="searchCtg == 'empl_id'">
 			<if test="empl_id != null">
-				AND A.EMPL_ID = #{empl_id}
+				AND A.EMPL_ID LIKE '%'||#{empl_id}||'%'
 			</if>
 		</when>
 		<when test="searchCtg == 'empl_phone'">
 			<if test="empl_phone != null">
-				AND A.EMPL_PHONE = #{empl_phone}
+				AND A.EMPL_PHONE LIKE '%'||#{empl_phone}||'%'
 			</if>
 		</when>
 	</choose>
