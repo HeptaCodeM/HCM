@@ -109,6 +109,7 @@ th, td {
 					<div class="card card-flush h-md-50 mb-xl-10">
 						<div style="text-align:center;"  class="card-header pt-5">
 							<h1> ${docDto1.sidb_doc_title}</h1>
+							<input type="hidden" value="${docDto1.sidb_doc_alflag}" id="alFlag"/>
 							 <br>
 							 <div>
 							<table class="transparent-table">

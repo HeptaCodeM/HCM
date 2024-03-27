@@ -16,7 +16,7 @@
 	href="/ckeditor5/sample/template.css">	
 <style type="text/css">
 	#sealImg {
-		display: inline-block !important;
+		display : inline-block !important;
 	}
 </style>
 </head>
