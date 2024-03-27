@@ -4,20 +4,13 @@
 
 <!-- 일정조회 -->
 <select id="getAllCalendar" resultType="ScbDto">
+
 SELECT *
 FROM (
 		SELECT SCBO_NO, SCBO_EMPNO, SCBO_TITLE, SCBO_CONTENT,
 		SCBO_DELFLAG, SCBO_START, SCBO_END, TO_CHAR(SCBO_CGORY_NO) AS SCBO_CGORY_NO ,  4 AS TYPE
 			FROM SCHEDULE_BOARD sb
-			WHERE SCBO_EMPNO IN(
-			SELECT EMPL_ID 
-				FROM EMPLOYEE
-				WHERE EMPL_DEPT_CD IN (
-					SELECT EMPL_DEPT_CD 
-						FROM EMPLOYEE
-						WHERE EMPL_ID = #{scbo_empno}
-			)			
-			)  
+			WHERE SCBO_EMPNO = #{scbo_empno}
 			AND SCBO_CGORY_NO = '200' AND SCBO_DELFLAG = 'N' 
 		    AND (TO_CHAR(SCBO_START, 'YYYY-MM') = #{daygridmonth}
 		    OR TO_CHAR(SCBO_END, 'YYYY-MM') = #{daygridmonth})
@@ -57,22 +50,14 @@ FROM (
 		SELECT SCBO_NO, SCBO_EMPNO, SCBO_TITLE, SCBO_CONTENT,
 		SCBO_DELFLAG, SCBO_START, SCBO_END, TO_CHAR(SCBO_CGORY_NO) AS SCBO_CGORY_NO ,  3 AS TYPE
 			FROM SCHEDULE_BOARD sb
-			WHERE SCBO_EMPNO IN (
-			SELECT EMPL_ID 
-				FROM EMPLOYEE
-				WHERE EMPL_DEPT_CD = (
-					SELECT EMPL_DEPT_CD 
-						FROM EMPLOYEE
-						WHERE EMPL_ID = #{scbo_empno}
-			)	
-			)
+			WHERE SCBO_EMPNO = #{scbo_empno}
 			AND SCBO_CGORY_NO = '100' AND SCBO_DELFLAG = 'N'
 		    AND (TO_CHAR(SCBO_START, 'YYYY-MM') = #{daygridmonth}
 		    OR TO_CHAR(SCBO_END, 'YYYY-MM') = #{daygridmonth})  
 		)
 		WHERE TYPE IN(
 						<foreach collection="type" item="type1" separator=",">
-								#{type1} 
+								#{type1}
 							</foreach>
 						)
 </select>

@@ -30,6 +30,12 @@ public class ReplyServiceImpl implements IReplyService {
 		return dao.getAllReplyTwo(no);
 	}
 
+	
+	@Override
+	public String maxNo(String no) {
+		log.info("ReplyServiceImpl getAllReply Service 공지사항 댓글 Max SCBO_NO 조회");
+		return dao.maxNo(no);
+	}
 	@Override
 	public int insertReply(ReplyDto dto) {
 		log.info("ReplyServiceImpl insertReply Service 공지사항 댓글 등록");
