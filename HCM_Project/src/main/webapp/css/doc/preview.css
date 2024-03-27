@@ -21,7 +21,7 @@
 .flex {
   display: flex;
   justify-content: flex-end; 
-  max-width: 1000px;
+  margin-right: 4%;
 }
 
 .card .card-header {
@@ -64,7 +64,7 @@ th, td {
 
 .content {
 	margin-top: 50px;
-	max-width: 1000px;
+	max-width: 100%;
 }
 .transparent-table, .transparent-table td, .transparent-table tr {
     border: none;

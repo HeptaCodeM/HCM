@@ -3,7 +3,9 @@ package com.hcm.grw.comm;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.InetAddress;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.util.Base64Utils;
@@ -92,6 +94,38 @@ public class Function {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	* alert 메시지 발생 후 self.close() 처리
+	* @param resp : HttpServletResponse
+	* @param msg : 메시지(String)
+	* @param location : 부모창 이동경로(String) - 미필수(빈값 처리 시 메시지창만 띄움)
+	* @param className : 버튼 클래스명(String) - 미필수
+	* @param btnText : 버튼 텍스트(String) - 미필수
+	* @return : String(메시지 발생 스크립트 호출)
+	* @author : SDJ
+	 * @throws IOException
+	* @since : 2024.03.27
+	*/
+	public static void alertClose(HttpServletResponse resp, String msg, String location, String className, String btnText) {
+		resp.setContentType("text/html; charset=UTF-8;");
+
+		if(msg == "" || msg == null) msg = "";
+
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script src='//cdn.jsdelivr.net/npm/sweetalert2@11'></script>");
+		sb.append("<script src='/js/common/common.js' defer></script>");
+		sb.append("<script>");
+		sb.append("window.onload = function(){");
+		sb.append("swalClose('"+ msg +"','"+ location +"','"+ className +"','"+ btnText +"');");
+		sb.append("}");
+		sb.append("</script>");
+		try {
+			resp.getWriter().print(sb.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	* Blob데이터 String처리
@@ -147,6 +181,41 @@ public class Function {
             e.printStackTrace();
         }
         return content;
+	}
+
+	
+	/**
+	* 클래스명,메소드명 확인
+	* @return : 클래스명.메소드명(String)
+	* @author : SDJ
+	* @since : 2024.03.27
+	*/	
+	public static String getMethodName() {
+		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+		 StackTraceElement callingMethod = stackTrace[2];
+		 String className = callingMethod.getClassName();
+		 String packageName = className.substring(0, className.lastIndexOf("."));
+	     String methodName = callingMethod.getMethodName();
+	     
+	     return className.replace(packageName.concat("."), "") + "." + methodName;
+	}
+	
+	
+	/**
+	* IP주소 확인
+	* @param req : HttpServletRequest
+	* @return : IP주소IPv4(String)
+	* @author : SDJ
+	* @since : 2024.03.27
+	*/	
+	public static String getIpAddress(HttpServletRequest req) throws Exception {
+		String ipAddr=req.getRemoteAddr();
+		if(ipAddr.equalsIgnoreCase("0:0:0:0:0:0:0:1")){
+		    InetAddress inetAddress=InetAddress.getLocalHost();
+		    ipAddr=inetAddress.getHostAddress();
+		}
+		
+		return ipAddr;
 	}
 	
 }

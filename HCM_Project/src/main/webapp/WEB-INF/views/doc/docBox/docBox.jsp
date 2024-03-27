@@ -18,6 +18,7 @@
     height: 32px;
     line-height: 12px;
 }
+
 </style>
 </head>
 
@@ -57,25 +58,13 @@
 						<div class="separator separator-dashed my-3"></div>
 						<div class="card-body pt-5" style="height: 80%;">
 
-<!-- <button class="btn btn-primary" onclick="allDocs()">전체</button>
-<button class="btn btn-primary" onclick="gianBox()">기안</button>
-<button class="btn btn-primary" onclick="ingBox()">진행</button>
-<button class="btn btn-primary" onclick="approveBox()">완료</button>
-<button class="btn btn-primary" onclick="denyBox()">반려</button>
-<a href="#" class="btn btn-light-primary">Primary</a>
-
-<span style="display:inline-block; width:400px;"> &nbsp;</span>
-<button class="btn btn-success" onclick="chamjoBox()">참조</button>
-<button class="btn btn-success" onclick="myTurnBox()">요청</button>
-<button class="btn btn-success" onclick="iDidBox()">결재</button>
- -->
 
 <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
     <li class="nav-item">
-        <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_1">작성한 문서</a>
+        <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_pane_1" onclick="allDocs()">작성한 문서</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_2">요청 받은 문서</a>
+        <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_2" onclick="myTurnBox()">요청 받은 문서</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_3" onclick="chamjoBox()">참조 지정된 문서</a>

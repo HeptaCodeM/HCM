@@ -16,6 +16,13 @@ WHERE RB.GOBO_NO = #{gobo_no} AND REBO_DEPTH = '0'
 ORDER BY REBO_REGDATE ASC 
 </select>
 
+<select id="maxNo" resultType="java.lang.String">
+SELECT REBO_NO
+FROM ADMIN.REPLY_BOARD
+WHERE REBO_NO = (SELECT MAX(REBO_NO)FROM REPLY_BOARD rb)
+</select>
+
+
 <select id="getAllReplyTwo" resultType="ReplyDto">
 SELECT 
     RB.REBO_NO,RB.GOBO_NO,RB.REBO_CONTENT,RB.REBO_WRITER,

@@ -15,6 +15,10 @@
 table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {
     text-align: center;
 }
+
+.btnSm{
+width:70px;
+}
 </style>
 </head>
 
@@ -69,20 +73,21 @@ table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, ta
 			<tbody>
 				<c:forEach var="dto" items="${lists}">
 					<tr style="min-height:200px; text-align:center; ">
+					
 						<td>
+						<input type="hidden" value = "${dto.sidb_doc_title}" class="docName">
 							 ${dto.sidt_temp_name}
 						</td>
 						<td><a href="/doc/getTempDoc.do?sitb_doc_num=${dto.sidb_doc_num}">${dto.sidb_doc_title}</a></td>
 						
-						<td><img style="width:50px; height:50px; border-radius: 22px;"  src="data:image/png;base64,${dto.empl_pictureStr}" /> ${dto.empl_name}</td>
+						<td><img style="width:50px; height:50px; border-radius: 22px;"  src="${dto.empl_pictureStr}" /> ${dto.empl_name}</td>
 						
 						<td style="text-align:center;">
 						<fmt:parseDate var="patternDate"	value="${dto.sidb_doc_writedt}"	pattern="yyyy-MM-dd HH:mm:ss" /> 
 								<fmt:formatDate value="${patternDate}" pattern="yyyy년 MM월 dd일" /></td>
 							
 						<td>
-				
-						</td>
+							<button type="submit" class="btn btn-light-danger btnSm" onclick="deleteAjax(${dto.sidb_doc_num}, '${dto.sidb_doc_title}')">삭제</button>						</td>
 					</tr>
 				</c:forEach>
 			</tbody>

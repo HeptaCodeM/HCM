@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
-  
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,114 +9,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
-<script type="text/javascript">
-
-function pdfPrint() {
-
-	// 현재 document.body의 html을 A4 크기에 맞춰 PDF로 변환
-	html2canvas(document.getElementById("savePdfZone"), {
-		onrendered: function(canvas) {
-			console.log("작동");
-			
-			// (그리거나 캡쳐한)캔버스를 지정한포멧에 따라 이미지로 변환후 데이터URL로 반환하는 함수
-			var imgData = canvas.toDataURL('image/png');
-	
-
-			var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
-			var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
-			var imgHeight = canvas.height * imgWidth / canvas.width;//이미지의 세로길이
-			var heightLeft = imgHeight; //출력해야할 이미지의 높이
-
-			var doc = new jsPDF('p', 'mm');	//PDF를 생성하고 조작하기 위한 객체 생성
-			//매개변수는 PDF의 생성되는 방향과 단위를 의미한다 ,'p'는 세로'l'은 가로방향 'mm'단위로 페이지의 크기 단위
-			
-			var position = 0;
-
-			// 첫 페이지 출력
-			//			저장할이미지, 저장타입, 시작x좌표, 시작y좌표, PDF의 크기(가로,세로)	
-			doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-			heightLeft -= pageHeight;
-			//전체 이미지의 높이에서 PDF 한페이지의 높이를 -
-
-			// 한 페이지 이상일 경우 루프 돌면서 출력
-			while (heightLeft >= 20) {
-				position = heightLeft - imgHeight;
-				doc.addPage();
-				doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-				heightLeft -= pageHeight;
-			}
-
-			var docTitle = document.getElementById("docTitle").value;
-			
-			
-			// 파일 저장
-			doc.save(docTitle+'.pdf');
-
-			var emdh_type = 'D';
-			var emdn_id = document.getElementById("docNumber").value;
-			
-			fetch('/hr/certificate/downloadDoc.do?emdh_type='+emdh_type+'&emdn_id='+emdn_id,{
-			method: "GET",
-			})
-			.then(response =>{
-				return response;
-				console.log(response);
-			})
-			.then(returnData => {
-				console.log(returnData);
-			})
-		    .catch(err => { 
-		        console.log('에러발생', err);
-		    });
-			
-		}
-
-	});
-
-}
-
-
-
-window.onload = function(){
-	var saveBtn = document.querySelector("#savePdf");
-	saveBtn.addEventListener("click",function(){
-		console.log("작동");
-		pdfPrint();
-	});
-	
-	var printBtn = document.querySelector("#printPdf");
-	printBtn.addEventListener("click",function(){
-		console.log("작동");
-		
-		var orgBody = document.body.innerHTML;
-		var printBody = document.getElementById("savePdfZone").innerHTML;
-		
-		var emdh_type = 'P';
-		var emdn_id = document.getElementById("docNumber").value;
-		
-		fetch('/hr/certificate/downloadDoc.do?emdh_type='+emdh_type+'&emdn_id='+emdn_id,{
-		method: "GET",
-		})
-		.then(response =>{
-			return response;
-			console.log(response);
-		})
-		.then(returnData => {
-			console.log(returnData);
-			document.body.innerHTML = printBody;
-			window.print();
-			document.body.innerHTML = orgBody;
-		})
-	    .catch(err => { 
-	        console.log('에러발생', err);
-	    });
-		
-		
-	});
-	
-	
-}
-</script>
+<script type="text/javascript" src="/js/hr/printPdfhr.js"></script>
 <style type="text/css">
 	.saveZomeCss{
 		padding: 20px;	
@@ -162,18 +54,19 @@ window.onload = function(){
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5" >
-								<input id="docTitle" type="hidden" value="${boxDto.getSidb_doc_title()}">
-								<input id="docNumber" type="hidden" value="${boxDto.getSidb_doc_num()}">
-								<div id="savePdfZone" class="saveZomeCss">
-									${boxDto}<br>
-									${boxDto.getSidb_doc_num()}<br>
-									${boxDto.getSidb_doc_title()}<br>
-									${boxDto.getSidt_temp_name()}<br>
-									${boxDto.getSidb_doc_apprdt()}<br>
+								<div class="saveZomeCss">
+									<c:set var="docDto1" value="${docDto[0]}" />
+									<div id="savePdfZone" class="content">
+										<input id="docTitle" type="hidden" value="${docDto1.sidb_doc_title}">
+										<input id="docNumber" type="hidden" value="${boxDto.getSidb_doc_num()}">
+										<br><br><br>
+										${docDto1.sidb_doc_content}
+									</div>
 								</div>
 								<div>
 									<button id="savePdf" class="btn btn-primary btnLg me-10">PDF저장하기</button>
 									<button id="printPdf" class="btn btn-primary btnLg me-10">프린트하기</button>
+									<button onclick="test()" class="btn btn-primary btnLg me-10">TEST</button>
 									<button id="toDocList" onclick="javascript:history.back(-1)" class="btn btn-primary btnLg me-10">목록으로</button>
 								</div>
 							</div>

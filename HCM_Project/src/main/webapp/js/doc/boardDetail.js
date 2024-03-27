@@ -43,9 +43,11 @@ function approve() {
 function deny() {
 	var num = document.getElementById('docNum').value;
 	var reply = document.getElementById('rejectReply').value;
+	var alFlag = document.getElementById('alFlag').value;
 	var dto = {
 		sidb_doc_num : num,
-		appr_reply : reply
+		appr_reply : reply,
+		sidb_doc_alflag : alFlag
 	}
 	
 	fetch('/doc/docBox/deny.do', {
@@ -268,7 +270,7 @@ function preview(){
 
 //윈도우 오픈시 생성시킬 html 코드들 
    function openPreview() {
-		 const width = 1100;
+		 const width = 1200;
     	 const height = 800;
   	     const left =  Math.ceil((window.screen.width - width)/2);
  	     const top = Math.ceil((window.screen.height - height)/2);
@@ -285,13 +287,7 @@ function preview(){
 		cssLink.href = "/css/doc/preview.css";
 		cssLink.rel = "stylesheet";
 		cssLink.type = "text/css";
-		previewWindow.document.head.appendChild(cssLink);    
-		
-/*	var templateLink = previewWindow.document.createElement("link");
-		templateLink.href = "/assets/css/style.bundle.css"; // 새로운 스타일 시트의 경로
-		templateLink.rel = "stylesheet";
-		templateLink.type = "text/css";
-		previewWindow.document.head.appendChild(templateLink);	*/    
+		previewWindow.document.head.appendChild(cssLink);    	
             
     var script1 = previewWindow.document.createElement('script');
     script1.src = "https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.auto.js";
@@ -324,3 +320,5 @@ function preview(){
             openPreview();
         });
     });
+    
+    

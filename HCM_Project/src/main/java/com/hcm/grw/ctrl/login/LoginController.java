@@ -42,6 +42,7 @@ public class LoginController {
 	
 	@Autowired
 	private CompanyService companyService;
+<<<<<<< HEAD
 
 	@Value("#{dataSpcProperties['naver.auth']}")
 	private String authUrl;
@@ -122,6 +123,82 @@ public class LoginController {
 		naverUrl += "&state=".concat(rndStr);
 		
 		request.getSession().setAttribute("state", rndStr);
+=======
+	
+	@Autowired
+	private NaverOAuth naverOAuth;
+
+	
+	@GetMapping("/login/login.do")
+	public String login(String error, 
+						String logout,
+						Model model, 
+						HttpServletRequest req, 
+						HttpServletResponse resp) {
+		log.info("error : {}", error);
+		log.info("logout : {}", logout);
+
+		if (error != null) {
+			model.addAttribute("error", "로그인 오류! 계정을 확인하세요.");
+		}
+
+		if (logout != null) {
+			model.addAttribute("logout", "로그아웃!!");
+		}
+
+		try {
+			String ipAddr=Function.getIpAddress(req);
+			
+			Map<String, String> loginMap = new HashMap<String, String>();
+			
+			//ip주소 셋팅
+			String empl_id = "";
+			if(ipAddr.equals("192.168.8.145")) {		//신동준
+				empl_id = "20220101";
+			}else if(ipAddr.equals("192.168.8.28")) {	//오지수
+				empl_id = "20230107";
+			}else if(ipAddr.equals("192.168.8.3")) {	//류종윤
+				empl_id = "20230106";
+			}else if(ipAddr.equals("192.168.8.18")) {	//김지아
+				empl_id = "20230105";
+			}else if(ipAddr.equals("192.168.8.12")) {	//윤영훈
+				empl_id = "20230108";
+			}else if(ipAddr.equals("192.168.8.29")) {	//김재원
+				empl_id = "20230102";
+			}
+			
+			if(empl_id!="") {
+				loginMap.put("id", empl_id);
+				loginMap.put("pw", empl_id);
+			}
+			model.addAttribute("loginMap", loginMap);
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		//모바일 처리
+		Device device = DeviceUtils.getCurrentDevice(req);
+		if(device.isMobile()) {
+			CookiesMgr.setCookies(resp, "ckMobile", "Y", 0);
+			model.addAttribute("mobile", "Y");
+		}else {
+			model.addAttribute("mobile", "N");
+		}
+		
+		String naverUrl = "";
+		naverUrl += naverOAuth.getAuthUrl();
+		naverUrl += "&client_id=".concat(naverOAuth.getClientId());
+		try {
+			naverUrl += "&redirect_uri=".concat(URLEncoder.encode(naverOAuth.getRedirectUrl(),"UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			naverUrl += "&redirect_uri=";
+		}
+		String rndStr = naverOAuth.generateState();
+		naverUrl += "&state=".concat(rndStr);
+		
+		req.getSession().setAttribute("state", rndStr);
+>>>>>>> branch 'hr' of https://github.com/HeptaCodeM/HCM.git
 		
 		model.addAttribute("naverSnsUrl", naverUrl);
 		

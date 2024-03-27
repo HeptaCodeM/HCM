@@ -10,7 +10,7 @@
 	
 	<!-- 대화목록 불러오기 -->
 	<select id="selectAllMessage" resultType="ChatDto">
-		SELECT c.*, e1.EMPL_NAME sender_name, e2.EMPL_NAME target_name
+		SELECT c.*, e1.EMPL_NAME sender_name, e2.EMPL_NAME target_name, e1.EMPL_PICTURE AS SENDER_PIC
 			FROM CHAT c JOIN EMPLOYEE e1
 			ON c.CH_SENDER = e1.EMPL_ID
 			JOIN EMPLOYEE e2
@@ -40,31 +40,31 @@
 	
 	<!-- 유저 목록 정렬을 위한 모든유저 불러오기 -->
 	<select id="chatUserList" resultType="ChatDto">
-		<foreach collection="userList" item="empl" separator=" UNION ALL ">
-			SELECT c.CH_NO , c.CH_MESSAGE , c.CH_SENDER , c.CH_TARGET , c.CH_DATE, c.CH_SET , e1.EMPL_NAME AS sender_name, e2.EMPL_NAME AS target_name,
-					e1.EMPL_EMAIL , e1.EMPL_PICTURE AS sender_pic , cc.COCO_NAME
-			FROM CHAT c
-			JOIN EMPLOYEE e1 ON c.CH_SENDER = e1.EMPL_ID
-			JOIN EMPLOYEE e2 ON c.CH_TARGET = e2.EMPL_ID
-			JOIN COMMON_CODE cc ON e1.EMPL_DEPT_CD = cc.COCO_CD
-			WHERE ((CH_SENDER =  #{ch_sender} AND CH_TARGET = #{empl.empl_id})
-			OR (CH_SENDER = #{empl.empl_id} AND CH_TARGET =  #{ch_sender}))
-			AND c.CH_DATE = (
-							SELECT MAX(CH_DATE)
-							FROM CHAT
-							WHERE ((CH_SENDER =  #{ch_sender} AND CH_TARGET = #{empl.empl_id})
-							OR (CH_SENDER = #{empl.empl_id} AND CH_TARGET =  #{ch_sender}))
-							)
-			ORDER BY c.CH_DATE DESC
-		</foreach>
+		SELECT CH_NO, CH_MESSAGE, CH_SENDER, sub.EMPL_NAME, DEPT_NAME , RANK_NAME , sub.EMPL_EMAIL,
+		    CH_TARGET, CH_DATE, CH_SET, EMPL_PICTURE AS SENDER_PIC , SORT
+		FROM (
+		    SELECT 
+		        CH_NO, CH_MESSAGE, CH_SENDER, EMPL_EMAIL,
+		        CH_TARGET, CH_DATE, CH_SET, EMPL_PICTURE, EMPL_NAME, c1.COCO_NAME AS DEPT_NAME , c2.COCO_NAME AS RANK_NAME,
+		        ROW_NUMBER() OVER (PARTITION BY CH_SENDER ORDER BY CH_DATE DESC) AS rn, 1 SORT
+		    FROM CHAT
+		    INNER JOIN EMPLOYEE e ON CH_SENDER = EMPL_ID
+		   INNER JOIN COMMON_CODE c1 ON e.EMPL_DEPT_CD = c1.COCO_CD
+		   INNER JOIN COMMON_CODE c2 ON e.EMPL_RANK_CD = c2.COCO_CD
+		   WHERE CH_TARGET = #{ch_target}
+		   OR CH_SENDER = #{ch_target}
+		   ) sub
+		WHERE rn = 1
+		UNION ALL
+		SELECT   CH_NO, CH_MESSAGE, CH_SENDER, EMPL_NAME, cc.COCO_NAME AS DEPT_NAME , cc2.COCO_NAME AS RANK_NAME , EMPL_EMAIL,
+		       CH_TARGET, NVL(CH_DATE, '2020-12-12'), CH_SET, EMPL_PICTURE, 2 SORT
+		FROM      EMPLOYEE   e
+		INNER JOIN   COMMON_CODE cc ON e.EMPL_DEPT_CD = cc.COCO_CD 
+		INNER JOIN   COMMON_CODE cc2 ON e.EMPL_RANK_CD = cc2.COCO_CD 
+		LEFT OUTER JOIN CHAT c ON e.EMPL_ID = c.CH_SENDER AND c.CH_TARGET = #{ch_target}
+		WHERE c.CH_SENDER IS NULL
+		AND e.EMPL_ID != #{ch_target}
+		ORDER BY SORT, CH_DATE DESC
 	</select>
 	
-	<!-- 나를 제외한 모든 유저목록 -->
-	<select id="userList" resultType="String">
-		SELECT EMPL_ID
-			FROM EMPLOYEE
-			WHERE EMPL_ID != #{empl_id}
-	</select>
-
-
 </mapper>

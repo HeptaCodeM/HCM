@@ -7,8 +7,6 @@
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp"%>
 <title>DOC메인화면</title>
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
@@ -86,5 +84,20 @@
 
 <script type="text/javascript" src="../ckeditor5/build/ckeditor.js"></script>
 <script type="module" src="../ckeditor5/sample/script.js"></script>
-<script type="text/javascript" src="../js/template.js"></script>
+<script type="text/javascript" src="/js/doc/template.js"></script>
+<script type="text/javascript">
+/* 템플릿 가져오기 */
+document.getElementById('getTemplate').addEventListener('click', function() {
+	fetch('./getTemplate.do', {
+		method: 'post'
+	}).then(resp => {
+		return resp.text();
+	}).then(data => {
+		editor.setData(data)
+	}).catch(error => {
+		console.log(error);
+	});
+});
+
+</script>
 </html>
