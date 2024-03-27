@@ -32,7 +32,6 @@
     display: inline-block;
 	}
 	.fc-next-button {
-	
 	}
 	.fc-toolbar-title{
 	display: inline-block;

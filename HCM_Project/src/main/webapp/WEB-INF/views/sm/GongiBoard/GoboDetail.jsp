@@ -88,22 +88,21 @@
                       <c:forEach var="comment" items="${Rlist}">
                           <li id="firstReply">
                               <div class="d-flex align-items-center no-border" style="border: none;">
-                                <c:choose>
-							    <c:when test="${sessionScope.userInfoVo.empl_picture_str != null}">
 							        <img src="${sessionScope.userInfoVo.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">
-							    </c:when>
-							    <c:otherwise>
-							        <img src="https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77" alt="프로필 사진" width="36" height="36" class="mr-3">
-							    </c:otherwise>
-								</c:choose>
-                                  <div style="margin-left: 10px;">
-                                      <strong>${comment.rebo_writer}</strong><br>
-                                      <div>${comment.rebo_content}</div>
-                                      <div><small><fmt:formatDate value="${comment.rebo_regdate}" pattern="yyyy-MM-dd HH:mm"/></small>
-                                      <a role="button" class="comment_info_button " onclick="showCommentForm(${comment.rebo_no})">답글쓰기</a>
-                                      </div>
-                                  </div>
-                              </div>
+                                  <div style="margin-left: 10px; position: relative; width: 100%;">
+								    <strong>${comment.rebo_writer}</strong><br>
+								    <div>${comment.rebo_content}</div>
+								    <div>
+								        <small><fmt:formatDate value="${comment.rebo_regdate}" pattern="yyyy-MM-dd HH:mm"/></small>
+								        <div style="position: absolute; top: 0; right: 0; float: right">
+								            <a role="button" title="더보기" class="comment_tool" href="#" id="comment_tool${comment.rebo_no}" onclick="toggleMenu(event, ${comment.rebo_no})">
+								                <img alt="더보기" src="https://cdn4.iconfinder.com/data/icons/liny/24/more-menu-vertical-line-64.png" style="width: 30px;">
+								            </a>
+								        </div>
+								    </div>
+								    <a role="button" class="comment_info_button" onclick="showCommentForm(${comment.rebo_no})">답글쓰기</a>
+								</div>
+							</div>
                           </li>
                           <div class="separator border-2 separator-dashed my-5 hrline"></div>
                            <li  id="commentFormContainer${comment.rebo_no}" style="display: none;">
@@ -143,17 +142,22 @@
 							        <img src="https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77" alt="프로필 사진" width="36" height="36" class="mr-3">
 							    </c:otherwise>
 								</c:choose>
-				                        <div style="margin-left: 10px;">
+				                        <div style="margin-left: 10px; position: relative; width: 100%;">
 				                            <strong>${reply.rebo_writer}</strong><br>
 				                            <div>${reply.rebo_content}</div>
 				                            <div><small><fmt:formatDate value="${reply.rebo_regdate}" pattern="yyyy-MM-dd HH:mm"/></small>
+				                            <div style="position: absolute; top: 0; right: 0; float: right">
+				                            	<a role="button" title="더보기" class="comment_tool" href="#" id="comment_tool${reply.rebo_no}" onclick="toggleMenu(event, ${reply.rebo_no})">
+				                            	 <img alt="더보기" src="https://cdn4.iconfinder.com/data/icons/liny/24/more-menu-vertical-line-64.png" style="width: 30px;">
+												</a>
+				                            </div>
 				                            <a role="button" class="comment_info_button" onclick="showCommentForm(${reply.rebo_no})">답글쓰기</a>
 				                            </div>
 				                        </div>
 				                    </div>
 				                </li>
 				                <div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>
-				                   <li  id="commentFormContainer${reply.rebo_no}" style="display: none;">
+				            <li  id="commentFormContainer${reply.rebo_no}" style="display: none;">
                              <div>
                                 <div class="CommentWriter mb-4">
                                     <form id="ReplyTwoForm">
@@ -175,7 +179,6 @@
                                     </form>
                                 </div>
                              </div>
-                          </li>
 				            </c:if>
 				        </c:forEach>
                          
@@ -209,6 +212,20 @@
                     </div>
                 </div>
             </div>
+         
+         
+         <div data-v-0330f652="" id="commentItem" role="menu" class="LayerMore" style="display: none;">
+         <ul class="layer_list">
+         	<li class="layer_item">
+         		<a href="#" role="button" class="update_button" onclick="updateButton()" style="text-decoration: none;"> 수정 </a>
+         		</li>
+         	<li class="layer_item">
+         	<a href="#" role="button" class="delete_button" onclick="deleteButoon()" style="text-decoration: none;"> 삭제 </a>
+         	</li>
+         	</ul>
+         	</div>
+         
+         
          
 <%@include file="/WEB-INF/views/menu/smSideMenu.jsp" %>   
 <script type="text/javascript" src="/js/sm/Gobo.js"></script>  
@@ -251,59 +268,6 @@ if (hrlineElement !== null) {
 }
 
 
-function insertReply(data){
-	 // 직렬화된 데이터를 가져옵니다.
-		var form = $("#ReplyForm").serialize();
-		var additionalData = "gobo_no=" + data;
-		form += "&" + additionalData;
-		
-		// jQuery를 사용하여 폼 필드의 값을 가져옵니다.
-		var rebo_writer = $("#ReplyForm #rebo_writer").val();
-		var rebo_content = $("#ReplyForm #rebo_content").val();
-		
-		$.ajax({
-				url: "/sm/insertReply.do",
-				data: form,
-				type: "get",
-				dataType: "json",
-				success: function() {
-					$("#ReplyForm")[0].reset();
-					var currentDate = new Date();
-					var formattedDate = currentDate.getFullYear() + '-' + 
-					                    ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' + 
-					                    ('0' + currentDate.getDate()).slice(-2) + ' ' + 
-					                    ('0' + currentDate.getHours()).slice(-2) + ':' + 
-					                    ('0' + currentDate.getMinutes()).slice(-2);
-					var commentHtml = '';
-					if ($("#commentList > li").length > 0) {
-					    // 상위에 형제 노드가 있는 경우
-					    commentHtml += '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
-					}
-					commentHtml += '<li>';
-					commentHtml += '<div class="d-flex align-items-center no-border" style="border: none;">';
-
-					commentHtml += '<img src="${sessionScope.userInfoVo.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">';
-					
-					commentHtml += '<div style="margin-left: 10px;">';
-					commentHtml += '<strong>'+rebo_writer+'</strong><br>';
-					commentHtml += '<div>'+rebo_content+'</div>';
-					commentHtml += '<div><small>'+formattedDate+'</small>';
-					commentHtml += '<a role="button" class="comment_info_button" onclick="showCommentForm('++')">답글쓰기</a>';
-					commentHtml += '</div>';
-					commentHtml += '</div>';
-					commentHtml += '</div>';
-					commentHtml += '</li>';
-					
-					
-					$("#commentList").append(commentHtml);
-				},
-				error: function() {
-					
-				}
-			});
-			
-			
-	}
 
 
 function insertReplyTwo(rebo_no) {
@@ -327,35 +291,38 @@ function insertReplyTwo(rebo_no) {
 
             var commentHtml = ''; // commentHtml 변수 초기화
             
-            
-            
             if ($("#commentList > li").length > 0) {
-			    // 상위에 형제 노드가 있는 경우
-			    commentHtml += '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
-			}
-                // secondReply가 있는 경우
-                commentHtml += '<li style="margin-left: 50px;">';
-                commentHtml += '<div class="d-flex align-items-center no-border" style="border: none;">';
-                commentHtml += '<img src="${sessionScope.userInfoVo.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">';
-                commentHtml += '<div style="margin-left: 10px;">';
-                commentHtml += '<strong>' + rebo_writer + '</strong><br>';
-                commentHtml += '<div>' + rebo_content + '</div>';
-                commentHtml += '<div><small>' + formattedDate + '</small>';
-                commentHtml += '<a role="button" class="comment_info_button" onclick="showCommentForm('+rebo_no+')">답글쓰기</a>';
-                commentHtml += '</div>';
-                commentHtml += '</div>';
-                commentHtml += '</div>';
-                commentHtml += '</li>';
-                
-                
+                // 상위에 형제 노드가 있는 경우
+                commentHtml += '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
+            }
 
-            container.append(commentHtml);
+            // secondReply가 있는 경우
+            commentHtml += '<li style="margin-left: 50px;">';
+            commentHtml += '<div class="d-flex align-items-center no-border" style="border: none;">';
+            commentHtml += '<img src="${sessionScope.userInfoVo.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">';
+            commentHtml += '<div style="margin-left: 10px;">';
+            commentHtml += '<strong>' + rebo_writer + '</strong><br>';
+            commentHtml += '<div>' + rebo_content + '</div>';
+            commentHtml += '<div><small>' + formattedDate + '</small>';
+            commentHtml += '<a role="button" class="comment_info_button" onclick="showCommentForm()">답글쓰기</a>';
+            commentHtml += '</div>';
+            commentHtml += '</div>';
+            commentHtml += '</div>';
+            commentHtml += '</li>';
+
+            // container가 포함된 ul 또는 ol 요소를 찾아서 새로운 li를 추가
+            container.closest('ul, ol').append(commentHtml);
+            
+            hideAllCommentForms();
         },
         error: function () {
             // 에러 처리
         }
     });
 }
+
+
+
 
 
 </script> 
