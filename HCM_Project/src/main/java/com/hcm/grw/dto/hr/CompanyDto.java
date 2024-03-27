@@ -31,4 +31,6 @@ public class CompanyDto {
 	private String comp_modify_id;
 	private String comp_modify_dt;
 	
+	private String comp_seal_str;
+	
 }

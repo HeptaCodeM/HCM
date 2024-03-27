@@ -1,6 +1,7 @@
 package com.hcm.grw.ctrl.sm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +44,15 @@ public class CalendarController {
 	
 	@GetMapping("/getAllCalendar.do")
 	@ResponseBody
-	public JSONArray CalendarList(String daygridmonth, HttpSession session) {
+	public JSONArray CalendarList(String daygridmonth, HttpSession session, String type) {
+			if(type == "" || type == null) {
+				type = "1,2,3,4";
+			}
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@"+type);
+	        String[] valueArray = type.split(",");
+	        // 배열을 리스트로 변환
+	        List<String> typeList = Arrays.asList(valueArray);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@"+typeList);
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@"+daygridmonth);
 		String year = "";
         String month = "";
@@ -61,21 +69,16 @@ public class CalendarController {
         if (month.length() == 1) {
             month = "0" + month;
         }
-        System.out.println(month);
+        
         String output = year + "-" + month;
 		log.info("CalendarController getAllCalendar.do  캘린더 데이터 로드");
 		ScbDto dto = new ScbDto();
 		EmployeeDto empldto = (EmployeeDto)session.getAttribute("userInfoVo");
 		List<String> list = new ArrayList<String>();
-		list.add("1");
-		list.add("2");
-		list.add("3");
-		list.add("4");
 		dto.setDaygridmonth(output);
 		dto.setScbo_empno(empldto.getEmpl_id());
-		dto.setType(list);
+		dto.setType(typeList);
 		List<ScbDto> lists = service.getAllCalendar(dto);
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+lists);
 		JSONArray arr = new JSONArray();
 			for (ScbDto vo : lists) {
 				JSONObject obj = new JSONObject();
@@ -118,7 +121,8 @@ public class CalendarController {
 	@PostMapping("/updateScbo.do")
 	@ResponseBody
 	public boolean updateScbo(ScbDto dto,HttpSession session) {
-		log.info("CalendarController detailScbo.do 일정 수정");
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@"+dto);
+		log.info("CalendarController updateScbo.do 일정 수정");
 		EmployeeDto empldto = (EmployeeDto)session.getAttribute("userInfoVo");
 		dto.setScbo_modify_id(empldto.getEmpl_id());
 		int n = service.updateScbo(dto);
@@ -126,6 +130,15 @@ public class CalendarController {
 	}
 	
 	
+	@GetMapping("/updateScboDelFlag.do")
+	@ResponseBody
+	public boolean updateScboDelFlag(ScbDto dto,HttpSession session) {
+		log.info("CalendarController updateScboDelFlag.do 일정 삭제");
+		EmployeeDto empldto = (EmployeeDto)session.getAttribute("userInfoVo");
+		dto.setScbo_modify_id(empldto.getEmpl_id());
+		int n = service.updateScboDelFlag(dto);
+		return (n>0)?true:false;
+	}
 	
 	
 	

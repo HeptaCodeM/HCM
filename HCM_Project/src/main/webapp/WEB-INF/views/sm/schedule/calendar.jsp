@@ -32,7 +32,6 @@
     display: inline-block;
 	}
 	.fc-next-button {
-	
 	}
 	.fc-toolbar-title{
 	display: inline-block;
@@ -49,20 +48,29 @@
      max-width: 100%; /* 이미지의 최대 너비를 부모 요소에 맞게 조정 */
     max-height: 100%; /
 	}
-	#filterModal { position: absolute; background-color:#fff; 
-	z-index:999; width:600px; left: 50%; transform: translateX(-50%); 
-	top: 15%; padding: 20px; border:1px solid #ccc; 
-	border-radius: 20px; display: none; 
-	}
-	.fc-button-group > .fc-addEventButton-button {
-    margin-right: 10px; 
-	}
+	
    .fc-scrollgrid-sync-table tr td:first-child .fc-daygrid-day-number{
    color:red;
    }
    .fc-scrollgrid-sync-table tr td:last-child .fc-daygrid-day-number{
    color:blue;
    }
+   #filterLayer { position: absolute; background-color:#fff; 
+	z-index:999; width:140px; height:300px; left: 34%; transform: translateX(-50%); 
+	top: 20%; padding: 20px; border:1px solid #ccc; 
+	border-radius: 20px; display: none; 
+	}
+	
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    th, td {
+        padding: 5px; /* 적절한 값으로 조절 */
+        margin: 0;
+    }
+</style>
 	
 </style>
 
@@ -187,7 +195,7 @@
              <div class="modal-body">
                <div class="form-group">
                      <form id="updateform">
-                      <input type="hidden" name="scbo_no" id="scbo_no">
+                      <input type="hidden" name="scbo_no" id="scbo_no1">
                      <div class="form-group">
                        <label for="sel1" class="col-form-label">구분</label>
                        <select class="form-select" id="scbo_cgory_no_update" name="scbo_cgory_no" required="required">
@@ -232,50 +240,56 @@
 				
 				
 				
-		<div id="filterModal">
-					<div>
-						<form name="filter" id="filter" method="post">
-							<input type="hidden" name="layer" value="empSearch">
-							<table class="table">
-								<tr>
-									<th>Filter</th>
-									<td>
-										<select name="searchType" class="form-select">
-											<option value="empl_name">성명</option>
-											<option value="empl_id">사번</option>
-										</select>
-									</td>
-									<td>
-										<input type="text" class="form-control form-control-solid" name="keyWord" id="keyWord" maxlength="20" required="required">
-									</td>
-									<td>
-										<button type="button" class="btn btn-success" id="kt_button_1" onclick="empInfoSearch()">
-										    <span class="indicator-label">
-										        검색
-										    </span>
-										    <span class="indicator-progress">
-										        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-										    </span>
-										</button>
-									</td>
-								</tr>
-							</table>
-						</form>
-					</div>
-					<div class="table-responsive">
-					<table id="searchEmployeeList" class="table table-row-bordered gy-5">
-						<thead>
-							<tr class="fw-semibold fs-6 text-muted">
-								<th>사번</th>
-								<th>성명</th>
-								<th>부서</th>
-								<th>직위</th>
-								<th>직책</th>
-							</tr>
-						</thead>
-					</table>
-					</div>
-				</div>		
+<div id="filterLayer">
+    <div style="text-align: right;">
+        <a href="javascript:void(0);" onclick="document.getElementById('filterLayer').style.display='none';">
+            <i class="ki-duotone ki-cross-square fs-2x">
+                <span class="path1"></span><span class="path2"></span>
+            </i>
+        </a>
+        <br>
+    </div>
+    <div class="menu-item px-3" style="overflow: hidden;">
+        <form name="filter" id="filter" method="post" onsubmit="return false;">
+            <table class="table">
+                <thead></thead>
+                <tbody>
+                    <tr>
+					    <th>&nbsp;&nbsp;개인 &nbsp;&nbsp;&nbsp;
+					    <input class="form-check-input" type="checkbox" name="type" value="3">
+					    </th>
+					</tr>
+					
+                    <tr>
+                        <th>&nbsp;&nbsp;외근 &nbsp;&nbsp;&nbsp;
+                        <input class="form-check-input" type="checkbox" name="type" value="4">
+                        </th>
+                    </tr>
+                       
+                    <tr>
+                        <th>&nbsp;&nbsp;연차 &nbsp;&nbsp;&nbsp;
+                        <input class="form-check-input" type="checkbox" name="type" value="2">
+                        </th>
+                    </tr> 
+                      
+                    <tr>
+                        <th>&nbsp;&nbsp;휴가 &nbsp;&nbsp;&nbsp;
+                        <input class="form-check-input" type="checkbox" name="type" value="1">
+                        </th>
+                    </tr>
+                       
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>
+                            <input type="button" class="btn btn-success" value="조회"  id="searchCalendar" onclick="searchLabel()" style="margin-left: 7px;">
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
+    </div>
+</div>
 <%@include file="/WEB-INF/views/menu/smSideMenu.jsp" %>		
 </body>
 <script type="text/javascript">
@@ -287,17 +301,8 @@ $(document).ready(function(){
 });
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    var yearmonth = $(".fc-toolbar-title").text();
-    var year = yearmonth.substring(0, 4); // "2024"
-    var month = yearmonth.substring(5, 7); // "03"
-    if (month.length === 1) {
-        month = "0" + month;
-    }
-    var daygridmonth = year + "-" + month; // "2024-03"
-    console.log(yearmonth);
-    listAjax(daygridmonth);
-});
-</script>
 
+
+
+</script>
 </html>
