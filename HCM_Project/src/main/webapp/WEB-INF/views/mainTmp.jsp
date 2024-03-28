@@ -71,9 +71,6 @@
 		<div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
 			<!--begin::Page title-->
 			<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-				<!--begin::Title-->
-				<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">제목이 여기에 들어가요!</h1>
-				<!--end::Title-->
 			</div>
 			<!--end::Page title-->
 		</div>		
@@ -222,29 +219,6 @@
 				</div>
 				<!--end::Col-->
 				
-				<!--begin::Col-->
-				<div class="col-xxl-6 mb-5 mb-xl-10">
-					<div class="card shadow-sm fixheightCard">
-					    <div class="card-header">
-					        <h3 class="card-title">뉴스검색</h3>
-					    </div>
-					    <div class="card-body">
-					    
-					    	<div class="bodyTop">
-					    		<input type="text" id="newsSearch" name="newsSearch" class="form-control form-control-solid newsInput" placeholder="검색어를 입력하세요">
-					    		<button type="button" id="newsSearchBtn" class="btn btn-primary btnLg">검색</button>
-					    	</div>
-					    	
-					    	<div class="separator border-2 my-10"></div>
-					    	
-					    	<div id="resultZone" class="resultZone">
-					    		
-					    	</div>
-					    	
-					    </div>
-					</div>
-				</div>
-				<!--end::Col-->
 				
 			</div>
 			

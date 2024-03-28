@@ -1,20 +1,11 @@
 package com.hcm.grw.ctrl;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -25,11 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.gson.Gson;
 import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.EmailService;
 import com.hcm.grw.comm.Function;
@@ -196,8 +184,9 @@ public class HomeController {
 	
 	
 	@GetMapping("/mainTmp.do")
-	public String mainTmp(Authentication authentication, Model model) throws JsonProcessingException {
-		
+	public String mainTmp(Authentication authentication, Model model, HttpServletResponse resp) throws JsonProcessingException {
+		log.info("{} 메인화면 진입", Function.getMethodName());
+
 		String empl_id = authentication.getName();
 		
 		List<GoboDto> gbLists = GoboService.getAllGobo();
@@ -243,8 +232,10 @@ public class HomeController {
 	
 	@GetMapping("/hr/home/registCommuteOkMain.do")
 	public @ResponseBody void registCommuteOk(Authentication authentication, 
-												Model model) throws IOException {
-		log.info("CommuteController registCommute 출/퇴근 처리 페이지");
+												Model model, 
+												HttpServletResponse resp) throws IOException {
+		log.info("{} 메인화면 출퇴근", Function.getMethodName());
+		resp.setContentType("text/html; charset=UTF-8");
 		
 		if(authentication == null) {
 			Function.alertLocation("로그인 후 이용 가능합니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
@@ -278,101 +269,5 @@ public class HomeController {
 		}
 		
 	}	
-	
-	@GetMapping(value = "searchNews.do")
-	@ResponseBody
-	public void searchNews(String newsSearch,Gson gson) {
-		HttpServletResponse resp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
-		resp.setContentType("text/html; charset=UTF-8;");
-		
-		System.out.println(newsSearch);
-		
-        String clientId = "MflzXYZnwONG5QBgICK2"; //애플리케이션 클라이언트 아이디
-        String clientSecret = "lhnOaKuzFv"; //애플리케이션 클라이언트 시크릿
-
-
-        String text = null;
-        try {
-            text = URLEncoder.encode(newsSearch, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("검색어 인코딩 실패",e);
-        }
-
-
-        String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + text + "&display=5&start=1&sort=sim";    // JSON 결과
-
-
-        Map<String, String> requestHeaders = new HashMap<>();
-        requestHeaders.put("X-Naver-Client-Id", clientId);
-        requestHeaders.put("X-Naver-Client-Secret", clientSecret);
-        String responseBody = get(apiURL,requestHeaders);
-        
-        Gson newsGson = new Gson();
-        Map<String, Object> newsMap = newsGson.fromJson(responseBody, Map.class);
-        System.out.println(newsMap.get("items"));
-        
-//      resp.setContentType("text/html; charset=UTF-8");
-        resp.setHeader("Content-Type", "text/html;charset=utf-8");
-        System.out.println(responseBody);
-//       return responseBody;
-	}
-	
-	 private static String get(String apiUrl, Map<String, String> requestHeaders){
-	        HttpURLConnection con = connect(apiUrl);
-	        try {
-	            con.setRequestMethod("GET");
-	            for(Map.Entry<String, String> header :requestHeaders.entrySet()) {
-	                con.setRequestProperty(header.getKey(), header.getValue());
-	            }
-
-
-	            int responseCode = con.getResponseCode();
-	            if (responseCode == HttpURLConnection.HTTP_OK) { // 정상 호출
-	                return readBody(con.getInputStream());
-	            } else { // 오류 발생
-	                return readBody(con.getErrorStream());
-	            }
-	        } catch (IOException e) {
-	            throw new RuntimeException("API 요청과 응답 실패", e);
-	        } finally {
-	            con.disconnect();
-	        }
-	    }
-
-
-	    private static HttpURLConnection connect(String apiUrl){
-	        try {
-	            URL url = new URL(apiUrl);
-	            return (HttpURLConnection)url.openConnection();
-	        } catch (MalformedURLException e) {
-	            throw new RuntimeException("API URL이 잘못되었습니다. : " + apiUrl, e);
-	        } catch (IOException e) {
-	            throw new RuntimeException("연결이 실패했습니다. : " + apiUrl, e);
-	        }
-	    }
-
-
-	    private static String readBody(InputStream body){
-	        InputStreamReader streamReader = new InputStreamReader(body);
-
-
-	        try (BufferedReader lineReader = new BufferedReader(streamReader)) {
-	            StringBuilder responseBody = new StringBuilder();
-
-
-	            String line;
-	            while ((line = lineReader.readLine()) != null) {
-	                responseBody.append(line);
-	            }
-
-
-	            return responseBody.toString();
-	        } catch (IOException e) {
-	            throw new RuntimeException("API 응답을 읽는 데 실패했습니다.", e);
-	        }
-	    }
-	
-	
-	
 	
 }
