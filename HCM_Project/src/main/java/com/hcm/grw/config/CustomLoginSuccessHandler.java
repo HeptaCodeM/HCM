@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -61,7 +62,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		if(authentication.isAuthenticated()) {
 			String ipAddr;
 			try {
-				ipAddr = Function.getIpAddress(request);
+				ipAddr = Function.getIpAddress();
 			} catch (Exception e) {
 				e.printStackTrace();
 				ipAddr = "";
@@ -70,11 +71,14 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 			loginHistoryMap.put("empl_id", authentication.getName());
 			loginHistoryMap.put("emlh_create_ip", ipAddr);
 			
+			int updateLastLoginCnt = employeeService.updaetLoginDate(authentication.getName());
+			log.info("{} - LAST_LOGIN_DT UPDATE : {}", Function.getMethodName(), updateLastLoginCnt);
 			int historyCnt = employeeService.insertLoginHistory(loginHistoryMap);
 			log.info("{} - historyCnt : {}", Function.getMethodName(), historyCnt);
 			
-			//log.info("@@@@@@@@@@@@@@@@ ckMobile : {}",CookiesMgr.getCookies(request, "ckMobile"));
-			if(CookiesMgr.getCookies(request, "ckMobile").equals("Y")) {
+			
+			log.info("mobile session : {}", StringUtils.defaultIfEmpty(String.valueOf(request.getSession().getAttribute("ckMobile")), ""));
+			if(StringUtils.defaultIfEmpty(String.valueOf(request.getSession().getAttribute("ckMobile")), "").equals("Y")) {
 				response.sendRedirect("/hr/commute/registCommute.do");
 			}else {
 				response.sendRedirect("/mainTmp.do");

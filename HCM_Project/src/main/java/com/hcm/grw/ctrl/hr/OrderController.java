@@ -45,13 +45,11 @@ public class OrderController {
 	/* 발령리스트(임직원) */
 	@GetMapping("orderList.do")
 	public String orderList(Model model,
-							Authentication authentication,
-							HttpServletResponse resp) {
+							Authentication authentication) {
 		log.info("{} 발령현황 조회", Function.getMethodName());
-		resp.setContentType("text/html; charset=UTF-8;");
 		
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}
 		
@@ -61,10 +59,8 @@ public class OrderController {
 	/* 발령리스트(임직원)-REST */
 	@PostMapping(value="orderSearchList.do", produces = "application/json;")
 	public @ResponseBody String orderSearchList(Model model,
-												Authentication authentication,
-												HttpServletResponse resp) {
+												Authentication authentication) {
 		log.info("{} 발령현황 조회-REST", Function.getMethodName());
-		resp.setContentType("text/html; charset=UTF-8;");
 	
 		String empl_id = "";
 		if(authentication == null) {
@@ -87,13 +83,11 @@ public class OrderController {
 	/* 발령리스트(관리자) */
 	@GetMapping("orderAdminList.do")
 	public String orderAdminList(Model model,
-								 Authentication authentication,
-								 HttpServletResponse resp) {
+								 Authentication authentication) {
 		log.info("{} 발령현황 조회", Function.getMethodName());
-		resp.setContentType("text/html; charset=UTF-8;");
 		
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}
 
@@ -131,10 +125,8 @@ public class OrderController {
 													 @RequestParam(name="empl_position_cd", required = false) String[] arr_empl_position_cd,
 													 @RequestParam(name="emod_type", required = false) String[] arr_emod_type,
 													 Model model,
-													 Authentication authentication,
-													 HttpServletResponse resp) {
+													 Authentication authentication) {
 		log.info("{} 발령현황 조회-REST", Function.getMethodName());
-		resp.setContentType("text/html; charset=UTF-8;");
 	
 		if(authentication == null) {
 			return "{\"error\":\"로그인 정보가 없습니다\"}";
@@ -182,13 +174,11 @@ public class OrderController {
 	/* 발령등록페이지 */
 	@GetMapping("registOrderAdmin.do")
 	public String registOrderAdmin(Model model,
-			 					   Authentication authentication,
-			 					   HttpServletResponse resp) {
+			 					   Authentication authentication) {
 		log.info("{} 발령현황 입력 화면", Function.getMethodName());
-		resp.setContentType("text/html; charset=UTF-8;");
 
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}
 		
@@ -222,7 +212,6 @@ public class OrderController {
 	@PostMapping("registOrderAdminOk.do")
 	public @ResponseBody void registOrderAdminOk(Model model,
 							 					 Authentication authentication,
-							 					 HttpServletResponse resp,
 							 					 @RequestParam(name="orderRows", required = true) int orderRows,
 							 					 @RequestParam(name="emod_order_dt", required = true) String[] arr_emod_order_dt,
 							 					 @RequestParam(name="empl_id", required = true) String[] arr_empl_id,
@@ -235,12 +224,11 @@ public class OrderController {
 							 					 @RequestParam(name="emod_order_position", required = false) String[] arr_emod_order_position
 							 					 ) {
 		log.info("{} 발령현황 입력 처리", Function.getMethodName());
-		resp.setContentType("text/html; charset=UTF-8;");
 		
 		
 		String emor_create_id = "";
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return;
 		}else {
 			emor_create_id = authentication.getName();
@@ -256,7 +244,7 @@ public class OrderController {
 		
 		//log.info("orderRows : {}", orderRows);
 		if(orderRows < 1) {
-			Function.alertHistoryBack(resp, "발령데이터 정보가 없습니다.", "", "");
+			Function.alertHistoryBack("발령데이터 정보가 없습니다.", "", "");
 			return;
 		}else {
 			String emod_order_dt = "";
@@ -316,7 +304,7 @@ public class OrderController {
 					} else if(emod_type.equals("OR000004")) {
 						detailDto.setEmod_order_position(emod_order_position);
 					} else {
-						Function.alertHistoryBack(resp, "발령구분에 대한 입력정보가 없습니다.", "", "");
+						Function.alertHistoryBack("발령구분에 대한 입력정보가 없습니다.", "", "");
 						return;
 					}
 					detailDto.setEmod_create_id(emor_create_id);
@@ -331,10 +319,10 @@ public class OrderController {
 		
 		boolean flag = orderService.registOrderAdmin(adminDto);
 		if(flag) {
-			Function.alertLocation(resp, "등록처리가 완료 되었습니다.", "/hr/order/orderAdminDetail.do?emor_id="+adminDto.getEmor_id(), "", "", "");
+			Function.alertLocation("등록처리가 완료 되었습니다.", "/hr/order/orderAdminDetail.do?emor_id="+adminDto.getEmor_id(), "", "", "");
 			return;
 		}else {
-			Function.alertHistoryBack(resp, "등록 중 오류가 발생하였습니다.", "", "");
+			Function.alertHistoryBack("등록 중 오류가 발생하였습니다.", "", "");
 			return;
 		}
 		
@@ -344,12 +332,11 @@ public class OrderController {
 	@GetMapping("orderAdminDetail.do")
 	public String orderAdminDetail(@RequestParam(required = true) String emor_id,
 									Model model,
-									Authentication authentication,
-									HttpServletResponse resp) {
+									Authentication authentication) {
 		log.info("{} 수정페이지 진입", Function.getMethodName());
 		
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}
 
@@ -390,10 +377,8 @@ public class OrderController {
 	public @ResponseBody String deleteOrderAdminDetail(@RequestParam(name="emor_id", required = false) String emor_id,
 													 @RequestParam(name="emod_seq", required = false) String emod_seq,
 													 Model model,
-													 Authentication authentication,
-													 HttpServletResponse resp) {
+													 Authentication authentication) {
 		log.info("{} 수정페이지 진입", Function.getMethodName());
-		resp.setContentType("text/html; charset=UTF-8;");
 	
 		String empl_id = "";
 		if(authentication == null) {
@@ -420,13 +405,11 @@ public class OrderController {
 	@GetMapping("deleteOrderAdminOk.do")
 	public @ResponseBody void deleteOrderAdminOk(@RequestParam(required = true) String emor_id,
 													Model model,
-													Authentication authentication,
-													HttpServletResponse resp) {
+													Authentication authentication) {
 		log.info("{} 발령현황 전체삭제 처리", Function.getMethodName());
-		resp.setContentType("text/html; charset=UTF-8;");
 		
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return;
 		}
 		
@@ -435,10 +418,10 @@ public class OrderController {
 		
 		int cnt = orderService.deleteOrderAdmin(detailDto);
 		if(cnt > 0) {
-			Function.alertLocation(resp, "삭제가 완료 되었습니다.", "/hr/order/orderAdminList.do", "", "", "");
+			Function.alertLocation("삭제가 완료 되었습니다.", "/hr/order/orderAdminList.do", "", "", "");
 			return;
 		}else {
-			Function.alertHistoryBack(resp, "삭제에 실패 하였습니다.", "", "");
+			Function.alertHistoryBack("삭제에 실패 하였습니다.", "", "");
 			return;
 		}
 	}
@@ -447,14 +430,12 @@ public class OrderController {
 	@GetMapping("confirmOrderAdminOk.do")
 	public @ResponseBody void confirmOrderAdminOk(@RequestParam(required = true) String emor_id,
 			Model model,
-			Authentication authentication,
-			HttpServletResponse resp) {
+			Authentication authentication) {
 		log.info("{} 발령현황 확정 처리", Function.getMethodName());
-		resp.setContentType("text/html; charset=UTF-8;");
 		
 		String emor_modify_id = "";
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return;
 		}else {
 			emor_modify_id = authentication.getName();
@@ -466,10 +447,10 @@ public class OrderController {
 		
 		int cnt = orderService.confirmOrderAdmin(adminDto);
 		if(cnt > 0) {
-			Function.alertLocation(resp, "확정이 완료 되었습니다.", "/hr/order/orderAdminDetail.do?emor_id="+emor_id, "", "", "");
+			Function.alertLocation("확정이 완료 되었습니다.", "/hr/order/orderAdminDetail.do?emor_id="+emor_id, "", "", "");
 			return;
 		}else {
-			Function.alertHistoryBack(resp, "확정에 실패 하였습니다.", "", "");
+			Function.alertHistoryBack("확정에 실패 하였습니다.", "", "");
 			return;
 		}
 	}	
@@ -478,7 +459,6 @@ public class OrderController {
 	@PostMapping("modifyOrderAdminOk.do")
 	public @ResponseBody void modifyOrderAdminOk(Model model,
 												 Authentication authentication,
-												 HttpServletResponse resp,
 												 @RequestParam(name="orderRows", required = true) int orderRows,
 												 @RequestParam(name="emor_id", required = true) String emor_id,
 												 @RequestParam(name="emod_seq", required = true) int[] arr_emod_seq,
@@ -493,12 +473,11 @@ public class OrderController {
 												 @RequestParam(name="emod_order_position", required = false) String[] arr_emod_order_position
 												 ) {
 		log.info("{} 발령현황 수정 처리", Function.getMethodName());
-		resp.setContentType("text/html; charset=UTF-8;");
 
 
 		String emod_modify_id = "";
 		if(authentication == null) {
-		Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+		Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 		return;
 		}else {
 			emod_modify_id = authentication.getName();
@@ -514,7 +493,7 @@ public class OrderController {
 		
 		//log.info("orderRows : {}", orderRows);
 		if(orderRows < 1) {
-			Function.alertHistoryBack(resp, "발령데이터 정보가 없습니다.", "", "");
+			Function.alertHistoryBack("발령데이터 정보가 없습니다.", "", "");
 			return;
 		}else {
 			int emod_seq = 0;
@@ -579,7 +558,7 @@ public class OrderController {
 						} else if(emod_type.equals("OR000004")) {
 							detailUpdateDto.setEmod_order_position(emod_order_position);
 						} else {
-							Function.alertHistoryBack(resp, "발령구분에 대한 입력정보가 없습니다.", "", "");
+							Function.alertHistoryBack("발령구분에 대한 입력정보가 없습니다.", "", "");
 							return;
 						}
 						detailUpdateDto.setEmod_modify_id(emod_modify_id);
@@ -603,7 +582,7 @@ public class OrderController {
 						} else if(emod_type.equals("OR000004")) {
 							detailInsertDto.setEmod_order_position(emod_order_position);
 						} else {
-							Function.alertHistoryBack(resp, "발령구분에 대한 입력정보가 없습니다.", "", "");
+							Function.alertHistoryBack("발령구분에 대한 입력정보가 없습니다.", "", "");
 							return;
 						}
 						detailInsertDto.setEmod_create_id(emod_modify_id);
@@ -618,10 +597,10 @@ public class OrderController {
 			
 			boolean flag = orderService.updateOrderAdminDetail(detailInsertListDto, detailUpdateListDto, orderRows);
 			if(flag) {
-				Function.alertLocation(resp, "수정처리가 완료 되었습니다.", "/hr/order/orderAdminDetail.do?emor_id="+emor_id, "", "", "");
+				Function.alertLocation("수정처리가 완료 되었습니다.", "/hr/order/orderAdminDetail.do?emor_id="+emor_id, "", "", "");
 				return;
 			}else {
-				Function.alertHistoryBack(resp, "수정 중 오류가 발생하였습니다.", "", "");
+				Function.alertHistoryBack("수정 중 오류가 발생하였습니다.", "", "");
 				return;
 			}
 			

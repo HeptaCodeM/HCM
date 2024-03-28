@@ -43,7 +43,7 @@ public class CreateNewAuthService {
 			SecurityContextHolder.getContext().setAuthentication(newAuth);
 			
 			//Session Role정보 Update
-			EmployeeDto employeeDto = employeeService.getUserInfo(auth.getName());
+			EmployeeDto employeeDto = employeeService.getUserInfo(newAuth.getName());
 			//이미지 스트링 정보로 처리
 			employeeDto.setEmpl_picture_str(Function.blobImageToString(employeeDto.getEmpl_picture()));
 			//2진정보 초기화

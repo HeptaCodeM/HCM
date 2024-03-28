@@ -66,7 +66,12 @@
 										</thead>	
 										<tbody>
 											<c:forEach var="codeList" items="${codeList}" varStatus="var">
+												<c:if test="${codeList.getCoco_delflag() eq 'N'}">
 												<tr style="cursor: pointer;" onclick="location.href='/hr/commonCode/roleDetail.do?coco_cd=${codeList.getCoco_cd()}&role=${role}'" class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
+												</c:if>
+												<c:if test="${codeList.getCoco_delflag() eq 'Y'}">
+												<tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
+												</c:if>
 													<td>NO.${var.count}</td>
 													<td>${codeList.getCoco_cd()}</td>
 													<td>${codeList.getCoco_name()}</td>

@@ -42,14 +42,13 @@ public class CommuteController {
 	@GetMapping("registCommute.do")
 	public String registCommute(Authentication authentication, 
 								Model model,
-								HttpServletRequest req,
-								HttpServletResponse resp) {
+								HttpServletRequest req) {
 		log.info("{} 출/퇴근 등록 페이지", Function.getMethodName());
 
 		HttpSession session = req.getSession();
 		EmployeeDto empDto = (EmployeeDto)session.getAttribute("userInfoVo");
 		if(authentication == null || empDto == null) {
-			Function.alertLocation(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
+			Function.alertLocation("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
 			return null;
 		}
 		
@@ -70,21 +69,18 @@ public class CommuteController {
 		model.addAttribute("commuteOutTime", commuteOutTime);
 
 		//ViewPage Device 정보 전달
-		model.addAttribute("mobileFlag", StringUtils.defaultIfEmpty(CookiesMgr.getCookies(req, "ckMobile"), ""));
+		model.addAttribute("mobileFlag", StringUtils.defaultIfEmpty(String.valueOf(req.getSession().getAttribute("ckMobile")), ""));
 		
 		return "hr/commute/registCommute";
 	}
 
 	@GetMapping("registCommuteOk.do")
 	public @ResponseBody void registCommuteOk(Authentication authentication, 
-											  Model model, 
-											  HttpServletRequest req,
-											  HttpServletResponse resp) throws IOException {
+											  Model model) throws IOException {
 		log.info("{} 출/퇴근 처리 페이지", Function.getMethodName());
-		resp.setContentType("text/html; charset=UTF-8");
 		
 		if(authentication == null) {
-			Function.alertLocation(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
+			Function.alertLocation("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
 		}
 		
 		String empl_id = authentication.getName();
@@ -109,9 +105,9 @@ public class CommuteController {
 		}
 		
 		if(cnt > 0) {
-			Function.alertLocation(resp, commuteMsg + "처리가 완료 되었습니다.", "/hr/commute/registCommute.do", "", "", "");
+			Function.alertLocation(commuteMsg + "처리가 완료 되었습니다.", "/hr/commute/registCommute.do", "", "", "");
 		}else {
-			Function.alertHistoryBack(resp, commuteMsg + "처리 중 오류가 발생하였습니다.\n관리자에게 문의하세요.", "", "");
+			Function.alertHistoryBack(commuteMsg + "처리 중 오류가 발생하였습니다.\n관리자에게 문의하세요.", "", "");
 		}
 		
 	}
@@ -120,13 +116,11 @@ public class CommuteController {
 	@GetMapping("empCommuteList.do")
 	public String empCommuteList(@RequestParam(required = false, name = "getYM") String getYM,
 								Authentication authentication, 
-								Model model, 
-								HttpServletResponse resp) throws IOException {
+								Model model) throws IOException {
 		log.info("{} 출/퇴근 처리 페이지", Function.getMethodName());
-		resp.setContentType("text/html; charset=UTF-8");
 		
 		if(authentication == null) {
-			Function.alertLocation(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
+			Function.alertLocation("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
 			return null;
 		}
 		

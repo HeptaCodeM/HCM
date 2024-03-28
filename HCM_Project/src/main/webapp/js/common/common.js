@@ -84,7 +84,7 @@ function swalHistoryBack(msg, className, btnName) {
 }
 
 //Swal Alert Close(Popup)
-function swalClose(msg, className, btnName) {
+function swalClose(msg, movePage, className, btnName) {
 	if(btnName == "" || btnName == "undefined"){
 		btnName = "확인";
 	}
@@ -117,6 +117,9 @@ function swalClose(msg, className, btnName) {
 	})
 	.then((result) => {
 		if (result.isConfirmed) {
+			if (movePage != "" && movePage != undefined) {
+				opener.location.href = movePage;
+			}
 			self.close();
 		}
 	})
