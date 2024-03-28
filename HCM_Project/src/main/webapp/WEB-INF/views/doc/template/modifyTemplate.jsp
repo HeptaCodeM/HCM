@@ -48,24 +48,25 @@
 							<div class="card-body pt-5">
 							
 							<!-- ---------------------------- 내 용 입 력 -------------------------------- -->
-							<div class="table-responsive">
+							<div class="table-responsive" style="max-width: 80%; margin: 0px auto;">
 							<form action="./updateTemplate.do" method="post" >
 							<table class="table table-bordered">
 								<tr>
-									<th>템플릿</th>
+									<th>카테고리</th>
 									<td id="category">
 										<select id="selectCategory" class="form-select form-select-solid" name="sica_cd"></select>
 									</td>
+									<th>템플릿</th>
 									<td>
 										<input type="text" class="form-control form-control-solid" name="sidt_temp_name" value="${temDto.sidt_temp_name }">
 									</td>
 								</tr>
 							</table>
 							
-								<div id="category">
-								결재 구분 : <select id="selectCategory" name="sica_cd"></select>
-							</div>
-								<h3>제목 <input type="text" name="sidt_temp_name" value="${temDto.sidt_temp_name }"></h3>
+							<!-- <div id="category">
+							결재 구분 : <select id="selectCategory" name="sica_cd"></select>
+							</div> 
+							<h3>제목 <input type="text" name="sidt_temp_name" value="${temDto.sidt_temp_name }"></h3>-->
 								<input type="hidden" name="sidt_temp_cd" value="${temDto.sidt_temp_cd }">
 								<input type="hidden" id="sica_cd" value="${temDto.sica_cd }">
 								<textarea id="editor" name="sidt_temp_content">${temDto.sidt_temp_content}</textarea>
