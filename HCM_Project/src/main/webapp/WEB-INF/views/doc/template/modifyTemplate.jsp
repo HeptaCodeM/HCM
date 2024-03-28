@@ -48,8 +48,20 @@
 							<div class="card-body pt-5">
 							
 							<!-- ---------------------------- 내 용 입 력 -------------------------------- -->
-							
+							<div class="table-responsive">
 							<form action="./updateTemplate.do" method="post" >
+							<table class="table table-bordered">
+								<tr>
+									<th>템플릿</th>
+									<td id="category">
+										<select id="selectCategory" class="form-select form-select-solid" name="sica_cd"></select>
+									</td>
+									<td>
+										<input type="text" class="form-control form-control-solid" name="sidt_temp_name" value="${temDto.sidt_temp_name }">
+									</td>
+								</tr>
+							</table>
+							
 								<div id="category">
 								결재 구분 : <select id="selectCategory" name="sica_cd"></select>
 							</div>
@@ -62,6 +74,7 @@
 							<input type="submit" class="btn btn-light-primary btnMd btn-color-gray-600" value="수정완료"> 
 							</div>
 							</form>
+							</div>
 							</div>
 						</div>
 						
