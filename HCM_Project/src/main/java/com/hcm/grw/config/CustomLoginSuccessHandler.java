@@ -71,6 +71,8 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 			loginHistoryMap.put("empl_id", authentication.getName());
 			loginHistoryMap.put("emlh_create_ip", ipAddr);
 			
+			int updateLastLoginCnt = employeeService.updaetLoginDate(authentication.getName());
+			log.info("{} - LAST_LOGIN_DT UPDATE : {}", Function.getMethodName(), updateLastLoginCnt);
 			int historyCnt = employeeService.insertLoginHistory(loginHistoryMap);
 			log.info("{} - historyCnt : {}", Function.getMethodName(), historyCnt);
 			
