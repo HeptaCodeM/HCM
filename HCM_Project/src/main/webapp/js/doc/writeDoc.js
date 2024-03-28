@@ -153,6 +153,25 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 			document.getElementById('sitb_doc_title').focus();
 		})
 	}, 1500)
+	
+	
+	if (sidt_temp_cd == 'TC000001' || sidt_temp_cd == 'TC000002') {
+		var span1 = document.createElement('span');
+		var span2 = document.createElement('span');
+		var span3 = document.createElement('span');
+		
+		span1.setAttribute('style', 'font-size: 13px; margin-left: 800px; font-weight: bold; color: orange;');
+		span2.setAttribute('style', 'font-size: 13px; margin-left: 20px; font-weight: bold; color: orange;');
+		span3.setAttribute('style', 'font-size: 13px; margin-left: 20px; font-weight: bold; color: orange;');
+		
+		span1.textContent = '* 총 휴가일수 : ' + document.getElementById('totalHoli').value; 
+		span2.textContent = '사용한 휴가일수 : ' + document.getElementById('useHoli').value;
+		span3.textContent = '잔여 휴가일수 : ' + document.getElementById('restHoli').value;
+		
+		document.getElementById('editor_div').prepend(span3);
+		document.getElementById('editor_div').prepend(span2);
+		document.getElementById('editor_div').prepend(span1);
+	}
 
 })
 
@@ -193,7 +212,7 @@ function insertTempDoc() {
 		console.log(sitb_doc_be)
 		console.log(sitb_doc_end)
 	}
-
+	
 	// 이벤트 날짜
 	var docData = {
 		sitb_doc_title: sitb_doc_title,
@@ -264,9 +283,27 @@ function insertDoc() {
 		var end = result2.replace('년', '-');
 		sidb_doc_be = be.replace('월', '-')
 		sidb_doc_end = end.replace('월', '-')
-
+		
+		var calEndDate = new Date(sidb_doc_end);
+		var calBeDate = new Date(sidb_doc_be);
+		if(calBeDate > calEndDate) {
+			swalAlert('기간을 다시 확인해주세요','','','확인');
+			return;
+		}
 	}
-
+	
+	if (sidt_temp_cd == 'TC000001' || sidt_temp_cd == 'TC000002') {
+		
+		var rest = document.getElementById('restHoli').value
+		var calEndDate = new Date(sidb_doc_end);
+		var calBeDate = new Date(sidb_doc_be);
+		var calResult = (calEndDate - calBeDate) / 1000 / 60 / 60 / 24;
+		if(calResult > rest) {
+			swalAlert('휴가 신청 기간이 잔여 휴가일보다 많습니다','','','확인');
+			return;
+		}
+	}
+	
 	var file = document.getElementById('sidf_file_content').files[0]; // 파일 가져오기
 	var formData = new FormData();
 

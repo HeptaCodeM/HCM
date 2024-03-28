@@ -56,7 +56,9 @@
 
 					<div class="card card-flush h-md-50 mb-xl-10">
 						<div class="card-header pt-5">
-							<h3 class="card-title text-gray-800 fw-bold">기안서 작성</h3>
+							<h3 class="card-title text-gray-800 fw-bold">
+								<span>기안서 작성</span>
+							</h3>
 						</div>
 						<div class="separator separator-dashed my-3"></div>
 						<div class="card-body pt-5">
@@ -82,7 +84,9 @@
 							<input type="hidden" value="${com.comp_tel }" id="comp_tel">
 							<input type="hidden" value="${com.comp_addr1 }" id="comp_addr1">
 							<input type="hidden" value="${com.comp_addr2 }" id="comp_addr2">
-							
+							<input type="hidden" value="${holiMap.USE_HOLIDAY }" id="useHoli">
+							<input type="hidden" value="${holiMap.REST_HOLIDAY }" id="restHoli">
+							<input type="hidden" value="${holiMap.TOTAL_HOLIDAY }" id="totalHoli">
 							<table class="table table-bordered">
 								<tr class="success">
 									<th>기안일</th>
