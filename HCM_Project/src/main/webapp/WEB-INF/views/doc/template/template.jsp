@@ -7,6 +7,16 @@
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp"%>
 <title>관리자메뉴</title>
+<style type="text/css">
+.btnMd {
+    width: 120px;
+    height: 35px;
+    line-height: 12px;
+    position: absolute;
+    right: 55px;
+}
+
+</style>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp"%>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -22,8 +32,7 @@
 			<div id="kt_app_toolbar_container"
 				class="app-container container-fluid d-flex flex-stack">
 				<!-- Page Title -->
-				<div
-					class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
 						관리자 메뉴
 					</h1>
@@ -44,10 +53,11 @@
 						<div class="card-body pt-5">
 							<!-- Content -->
 							<div class="table-responsive">
-								<button class="writeTemplate">템플릿 등록</button>
+								<button class="writeTemplate btn btn-primary btnMd" >템플릿 등록</button>
 							</div>
+							<div class="card-body pt-5">
 							<div class="table-responsive">
-							<table class="table table-hover table-rounded table-striped border gy-7 gs-7">
+							<table class="table table-hover table-rounded table-striped border gy-7 gs-7" style="margin-top: 40px;">
 								<thead>
 									<tr class="fw-semibold fs-6 text-gray-800 border-bottom-2 border-gray-200">
 										<th>템플릿코드</th>
@@ -57,7 +67,7 @@
 								</thead>
 								<tbody>
 									<c:forEach var="lst" items="${lst}" varStatus="vs">
-										<tr>
+										<tr style="cursor: pointer;" class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
 											<td>${lst.sidt_temp_cd}</td>
 											<td>
 												<a href="./detailTemplate.do?sidt_temp_cd=${lst.sidt_temp_cd}">${lst.sidt_temp_name}</a>
@@ -67,6 +77,7 @@
 									</c:forEach>
 								</tbody>
 							</table>
+							</div>
 							</div>
 						</div>
 					</div>
