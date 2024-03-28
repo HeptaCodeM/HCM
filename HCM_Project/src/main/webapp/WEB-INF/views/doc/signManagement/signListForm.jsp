@@ -34,7 +34,11 @@
 					<!-- 내용 시작 -->
 					<div id="kt_app_content" class="app-content flex-column-fluid">
 						<div class="app-container container-fluid">
-							<div class="card-flush h-md-50 mb-xl-10" style="background-color: white; text-align: center;">
+							<div class="card-flush h-md-50 mb-xl-10" style="background-color: white; text-align: center; width: 90%; margin: 0px auto;">
+								<div class="card-header pt-5">
+									<h3 class="card-title text-gray-800 fw-bold">보유중인 서명</h3><br>
+								</div> 
+								<div class="separator separator-dashed my-3"></div>	<br>
 							<c:forEach var="sign" items="${signList}" varStatus="var">
 								<div class="card-body pt-5" style="display: inline-block; width: 320px;" >
 									<div class="border border-gray-400" style="height: 240px;">
@@ -81,7 +85,7 @@
 						<br><br>
 						<input class="form-control form-control-solid" type="text" name="emsi_title" id="emsi_title" placeholder="서명 제목을 입력하세요">
 						<br>
-						<input type="hidden"name="empl_id" id="empl_id" value="${userInfoVo.empl_id}"> 
+						<input type="hidden"name="empl_id" id="empl_id" value="${userInfoVo.empl_id}">
 						<input type="hidden" name="emsi_create_id" id="emsi_create_id" value="${userInfoVo.empl_id}">
 
 				</div>

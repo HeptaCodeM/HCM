@@ -1,7 +1,5 @@
 package com.hcm.grw.ctrl.doc;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.hcm.grw.dto.doc.SignJsonDto;
 import com.hcm.grw.dto.doc.SignTempBoxDto;
 import com.hcm.grw.dto.hr.CompanyDto;
 import com.hcm.grw.dto.hr.EmpSignDto;
@@ -31,7 +25,7 @@ import com.hcm.grw.model.service.doc.ISignBoxService;
 import com.hcm.grw.model.service.doc.ISignFavoService;
 import com.hcm.grw.model.service.doc.ITempTreeService;
 import com.hcm.grw.model.service.hr.EmpSignService;
-import com.hcm.grw.model.service.hr.EmployeeService;
+import com.hcm.grw.model.service.hr.HolidayService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,11 +43,12 @@ public class SignPageController {
 	@Autowired
 	private ISignBoxService bService;
 	
-	@Autowired
-	private EmployeeService empService;
 	
 	@Autowired
 	private ITempTreeService tService;
+	
+	@Autowired
+	private HolidayService holiService;
 	
 	@GetMapping("write.do")
 	public String write() {
@@ -93,15 +88,18 @@ public class SignPageController {
 		return "doc/writeDoc/signSet/selectSign";
 	}
 	
+	@SuppressWarnings("deprecation")
 	@GetMapping("writeDoc.do")
 	public String writeDoc(Authentication auth, HttpSession session, Model model) {
 		log.info("SignPageController writeDoc.do 기안문 작성 페이지로 로그인 정보 전달");
 		if(auth != null) {
 			String id = auth.getName();
-			List<String> list = List.of(id);
-			List<EmployeeDto> dto = service.getFav(list);
+			List<EmployeeDto> dto = service.getFav(List.of(id));
 			session.setAttribute("loginInfo", dto.get(0));
 			model.addAttribute("loginInfo", dto.get(0));
+			Map<String, Object> map = holiService.selectEmpTotalHoliDayInfo(dto.get(0).getEmpl_id());
+			model.addAttribute("holiMap", map);
+			log.info(map.toString());
 		}
 		CompanyDto cDto = tService.getCompInfo();
 		if(cDto.getComp_seal() != null) {
