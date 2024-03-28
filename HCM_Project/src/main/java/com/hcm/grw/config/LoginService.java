@@ -29,11 +29,11 @@ public class LoginService implements UserDetailsService {
 	*/
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		log.info("LoginService loadUserByUsername : {}", userId);
-		log.info("LoginService repository : {}, {}", dao, dao.hashCode());
+		//log.info("LoginService repository : {}, {}", dao, dao.hashCode());
 
 		EmployeeDto employeeDto = dao.getLogin(userId);	//userId로 상세정보 조회
-		log.info("LoginService userInfoVo : {}", employeeDto);
-		log.info("employeeDto.getEmpl_pwd() : {}", employeeDto.getEmpl_pwd());
+		//log.info("LoginService userInfoVo : {}", employeeDto);
+		//log.info("employeeDto.getEmpl_pwd() : {}", employeeDto.getEmpl_pwd());
 		
 		if(employeeDto != null) {	//정보가 있다면...
 			/*

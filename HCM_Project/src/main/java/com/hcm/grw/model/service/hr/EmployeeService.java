@@ -11,12 +11,14 @@ public interface EmployeeService {
 
 	/*일반로그인*/
 	public EmployeeDto getLogin(String empl_id);
+	/*로그인 History입력*/
+	public int insertLoginHistory(Map<String, String> map);
 	/*유저정보*/
 	public EmployeeDto getUserInfo(String empl_id);
 	/*유저검색*/
 	public List<EmployeeDto> getUserInfoSearch(Map<String, String> map);
 	/*소셜로그인*/
-	public SnsInfoDto getSnsLoginInfo(String empl_id);
+	public String getSnsLoginInfo(Map<String, String> map);
 
 	/*인증번호 메일발송*/
 	public int getInitPwdcheck(Map<String, Object> map);
@@ -46,5 +48,25 @@ public interface EmployeeService {
 	public int updatePwd(Map<String, Object> map);
 	/*권한정보 조회*/
 	public List<AuthDto> selectAuthAllList();
+	/*임직원등록 시 이메일 중복체크*/
+	public int duplicationEmpEmail(String empl_email);	
+
+	
+//	========================= 작업구분선 ==================================
+	
+	public List<EmployeeDto> selectAllEmployee();
+	
+	public List<EmployeeDto> searchAllEmployee(Map<String, Object> map);
+	
+	public EmployeeDto selectOneEmployee(Map<String, Object> map);
+	
+	public int correctionEmployee(Map<String, Object> map);
+	
+	public boolean chkEmpPhoneNum(String empl_phone);
+
+	public boolean chkEmpTelNum(String empl_tel);
+	
+	public boolean chkEmpFaxNum(String empl_fax);
+	
 	
 }

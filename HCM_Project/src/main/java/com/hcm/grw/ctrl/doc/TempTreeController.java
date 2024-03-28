@@ -2,16 +2,16 @@ package com.hcm.grw.ctrl.doc;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -21,12 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hcm.grw.comm.FileCommonService;
-import com.hcm.grw.dto.doc.DocBoxDto;
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.doc.SignFileDto;
 import com.hcm.grw.dto.doc.SignTempBoxDto;
 import com.hcm.grw.dto.doc.TempTreeDto;
 import com.hcm.grw.dto.doc.TemplateDto;
+import com.hcm.grw.model.mapper.doc.IDocBoxDao;
 import com.hcm.grw.model.service.doc.IDocBoxService;
 import com.hcm.grw.model.service.doc.ISignBoxService;
 import com.hcm.grw.model.service.doc.ITempTreeService;
@@ -45,6 +45,8 @@ public class TempTreeController {
 	private ITemplateService tService;
 	@Autowired
 	private ISignBoxService bService;
+	@Autowired
+	private IDocBoxService dService;
 	
 	@GetMapping("getTempTree.do")
 	public ResponseEntity<?> tempTree(){
@@ -71,7 +73,7 @@ public class TempTreeController {
 		log.info("{}\n {}", file, dto);
 		if(file != null) {
 			SignFileDto fileDto = new SignFileDto();
-			fileDto.setSidf_file_origin(file.getName());
+			fileDto.setSidf_file_origin(file.getOriginalFilename());
 			fileDto.setSidf_file_size(String.valueOf(file.getSize()));
 			fileDto.setSidf_file_content(FileCommonService.fileUpload(file, resp));
 			fileDto.setSidf_file_stored(UUID.randomUUID().toString());
@@ -90,7 +92,32 @@ public class TempTreeController {
 		return ResponseEntity.ok("성공");
 	}
 	
-	
+	@PostMapping(value = "/tempLoadInsertDoc.do", produces = "text/html; charset=UTF-8")
+	public ResponseEntity<?> tempLoadInsertDoc(@RequestPart(value = "file", required = false) MultipartFile file, 
+									   @RequestPart("dto") SignBoxDto dto, 
+									   @RequestPart("sitb_doc_num") Map<String, String> sitb_doc_num,
+									   HttpServletResponse resp) throws IOException {
+		log.info("TempTreeController tempLoadInsertDoc.do POST 임시보관함 불러와서 기안문 작성");
+		log.info("{}\n {}\n {}", file, dto, sitb_doc_num);
+		if(file != null) {
+			SignFileDto fileDto = new SignFileDto();
+			fileDto.setSidf_file_origin(file.getOriginalFilename());
+			fileDto.setSidf_file_size(String.valueOf(file.getSize()));
+			fileDto.setSidf_file_content(FileCommonService.fileUpload(file, resp));
+			fileDto.setSidf_file_stored(UUID.randomUUID().toString());
+			int n = bService.insertTempTransaction(dto, fileDto, sitb_doc_num.get("sitb_doc_num"));
+			if(n != 1) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("트랜잭션 오류");
+			}
+		} else {
+			int n = bService.insertTempNoFileTransaction(dto, sitb_doc_num.get("sitb_doc_num"));
+			if(n != 1) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("트랜잭션 오류");
+			}
+		}
+		return ResponseEntity.ok("성공");
+	}
+		
 	
 	
 	

@@ -116,15 +116,36 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 	var sessionName = document.getElementById('myName');
 	var sessionDept = document.getElementById('myDept');
 	var sessionRank = document.getElementById('myRank');
-	var sessionBirth = document.getElementById('empl_birth')
+	var sessionBirth = document.getElementById('empl_birth');
+	var sessionJoinDate = document.getElementById('empl_joindate').value;
+	var sessioncompName = document.getElementById('comp_name').value;
+	var sessioncompNum = document.getElementById('comp_num').value;
+	var sessionCEOName = document.getElementById('comp_ceo_name').value;
+	var sessioncompTel = document.getElementById('comp_tel').value;
+	var sessioncompAddr1 = document.getElementById('comp_addr1').value;
+	var sessioncompAddr2 = document.getElementById('comp_addr2').value;
 	var insertName = docData.replace("홍길동", sessionName.value)
 	var insertDept = insertName.replace("인사팀", sessionDept.value)
 	var insertRank = insertDept.replace("대리", sessionRank.value)
+
+	// 재직증명서 값 모두 넣어주기
 	var insertBirth = insertRank.replace("900101", sessionBirth.value)
-	editor.setData(insertBirth);
-	
-	
-	// -----------------------------------> [작성화면] 사원정보 유효성검사
+	var insertcompName = insertBirth.replace("　", sessioncompName)
+
+	var date = new Date();
+	var formatDate = moment(date).format('YYYY년 MM월 DD일');
+	var formatJoinDate = moment(sessionJoinDate).format('YYYY년 MM월 DD일');
+
+	var insertJoinDate = insertcompName.replace('2024년 01월 01일 ~ 2024년 12월 31일', formatJoinDate + ' ~ ' + formatDate);
+	var insertCompNum = insertJoinDate.replace('　　', sessioncompNum);
+	var insertCEOName = insertCompNum.replace('　　　', sessionCEOName);
+	var insertCompTel = insertCEOName.replace('　　　　', sessioncompTel);
+	var insertCompAddr = insertCompTel.replace('　　　　　', sessioncompAddr1 + sessioncompAddr2);
+	var insertToday = insertCompAddr.replace('2024년 01월 01일', formatDate)
+	editor.setData(insertToday);
+
+
+	// -----------------------------------> [ 작성화면 ] 사원정보 유효성검사
 	setTimeout(function() {
 		var noTouch = document.getElementById('noTouch');
 		noTouch.addEventListener('click', function() {
@@ -134,8 +155,6 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 	}, 1500)
 
 })
-
-
 
 // -----------------------------------> [ 작성화면 ] 현재 작성일 설정   
 var currentDate = new Date();
@@ -163,14 +182,19 @@ function insertTempDoc() {
 	}
 
 
-	// 이벤트 날짜
-	var sidt_doc_event = document.getElementById('sidb_doc_event').textContent;
-	var eventArr = sidt_doc_event.split('~');
-	var sitb_doc_be = eventArr[0].replace(/년|월|\s+/g, '-').replace(/일/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
-	var sitb_doc_end = eventArr[1].replace(/년|월|\s+/g, '-').replace(/일/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
-	console.log(sitb_doc_be)
-	console.log(sitb_doc_end)
+	// 특정 템플릿 외 이벤트 날짜 검사 안하도록 수정
+	var sitb_doc_be = null;
+	var sitb_doc_end = null;
+	if (sidt_temp_cd == 'TC000001' || sidt_temp_cd == 'TC000002' || sidt_temp_cd == 'TC000006') {
+		var sidt_doc_event = document.getElementById('sidb_doc_event').textContent;
+		var eventArr = sidt_doc_event.split('~');
+		sitb_doc_be = eventArr[0].replace(/년|월|\s+/g, '-').replace(/일/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
+		sitb_doc_end = eventArr[1].replace(/년|월|\s+/g, '-').replace(/일/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
+		console.log(sitb_doc_be)
+		console.log(sitb_doc_end)
+	}
 
+	// 이벤트 날짜
 	var docData = {
 		sitb_doc_title: sitb_doc_title,
 		sitb_doc_content: sitb_doc_content,
@@ -180,12 +204,7 @@ function insertTempDoc() {
 		sitb_doc_be: sitb_doc_be,
 		sitb_doc_end: sitb_doc_end,
 		sica_cd: sica_cd,
-		sidt_temp_cd: sidt_temp_cd,
-		sitb_curr_id: json[0].appr_id,
-		empl_ref: ref.empl_ref,
-		empl_dept_cd: dept.empl_dept_cd,
-		emsi_seq: sign,
-		sitb_doc_json: json
+		sidt_temp_cd: sidt_temp_cd
 	}
 	console.log("기안문 임시저장 정보:", docData);
 	var formData = new FormData();
@@ -196,7 +215,11 @@ function insertTempDoc() {
 		body: formData
 	})
 		.then(resp => {
-			return resp.text()
+			if(!resp.ok) {
+				throw new Error();
+			} else {
+				return resp.text();
+			}
 		})
 		.then(data => {
 			console.log(data);
@@ -219,23 +242,30 @@ function insertDoc() {
 	var sidb_doc_content = editor.getData();
 	var empl_id = document.getElementById('id').value;
 	var checkbox = document.getElementsByName('alflag')[0];
+	var sidb_doc_alflag;
 	if (checkbox.checked) {
 		sidb_doc_alflag = 'Y'
 	} else {
 		sidb_doc_alflag = 'N'
 	}
-	var sidb_doc_event = document.getElementById('sidb_doc_event').textContent;
 
-	var eventArr = sidb_doc_event.split('~');
-	const bebe = eventArr[0].replace(/\s+/g, '');
-	const enen = eventArr[1].replace(/\s+/g, '');
+	var sidb_doc_be = null;
+	var sidb_doc_end = null;
 
-	result1 = bebe.substring(0, bebe.length - 1);
-	result2 = enen.substring(0, enen.length - 1);
-	var be = result1.replace('년', '-');
-	var end = result2.replace('년', '-');
-	var sidb_doc_be = be.replace('월', '-')
-	var sidb_doc_end = end.replace('월', '-')
+	if (sidt_temp_cd == 'TC000001' || sidt_temp_cd == 'TC000002' || sidt_temp_cd == 'TC000006') {
+		var sidb_doc_event = document.getElementById('sidb_doc_event').textContent;
+		var eventArr = sidb_doc_event.split('~');
+		const bebe = eventArr[0].replace(/\s+/g, '');
+		const enen = eventArr[1].replace(/\s+/g, '');
+
+		result1 = bebe.substring(0, bebe.length - 1);
+		result2 = enen.substring(0, enen.length - 1);
+		var be = result1.replace('년', '-');
+		var end = result2.replace('년', '-');
+		sidb_doc_be = be.replace('월', '-')
+		sidb_doc_end = end.replace('월', '-')
+
+	}
 
 	var file = document.getElementById('sidf_file_content').files[0]; // 파일 가져오기
 	var formData = new FormData();
@@ -268,17 +298,15 @@ function insertDoc() {
 		return;
 	}
 
-	if (!checkbox.checked) {
-		swalAlert('알림여부를 선택해주세요', '', '', '확인');
+	var signMsg = document.getElementById('signMsg');
+	if (signMsg.value == "" || signMsg.value == "서명을 선택해주세요") {
+		swalAlert('서명 등록을 하지 않으셨습니다', '', '', '확인');
 		return;
 	}
 
-	var signMsg = document.getElementById('signMsg');
-	if (signMsg.value === "서명을 선택해주세요") {
-		swalAlert('서명 등록을 하지 않으셨습니다', '', '', '확인');
-	}
 	if (json == undefined) {
 		swalAlert('결재선을 지정하지 않으셨습니다', '', '', '확인');
+		return;
 	}
 
 
@@ -359,10 +387,10 @@ window.addEventListener('message', function(e) {
 
 	if (data.hasOwnProperty('empl_ref')) {
 		ref = data;
-		document.getElementById('refName').textContent = ref.empl_ref_name;
+		document.getElementById('refName').value = ref.empl_ref_name;
 	} else if (data.hasOwnProperty('empl_dept_cd')) {
 		dept = data;
-		document.getElementById('deptName').textContent = dept.empl_dept_name;
+		document.getElementById('deptName').value = dept.empl_dept_name;
 	} else if (typeof data == "string") {
 		sign = data;
 		document.getElementById('signMsg').value = "서명이 선택되었습니다"
@@ -370,11 +398,11 @@ window.addEventListener('message', function(e) {
 		json = data;
 		//      document.getElementById('json').textContent = JSON.stringify(data);
 		if (data.length == 3) {
-			document.getElementById('apprName').textContent = data[0].appr_name + "(" + data[0].appr_position + ")" + "," + data[1].appr_name + "," + data[2].appr_name;
+			document.getElementById('apprName').value = data[0].appr_name + " (" + data[0].appr_position + ")" + " ➡️ " + data[1].appr_name + " (" + data[1].appr_position + ")" + " ➡️ " + data[2].appr_name + " (" + data[2].appr_position + ")";
 		} else if (data.length == 2) {
-			document.getElementById('apprName').textContent = data[0].appr_name + "(" + data[0].appr_position + ")" + "," + data[1].appr_name;
+			document.getElementById('apprName').value = data[0].appr_name + " (" + data[0].appr_position + ")" + " ➡️ " + data[1].appr_name + " (" + data[1].appr_position + ")";
 		} else {
-			document.getElementById('apprName').textContent = data[0].appr_name + "(" + data[0].appr_position + ")";
+			document.getElementById('apprName').value = data[0].appr_name + " (" + data[0].appr_position + ")";
 		}
 	}
 	console.log('ref : ', ref);

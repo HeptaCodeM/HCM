@@ -38,6 +38,7 @@
 				<!--end::Page title-->
 			</div>
 		</div>
+		<input id="tempNum" type="hidden" value="${dto.sitb_doc_num }">
 		<input id="tempTitle" type="hidden" value="${dto.sitb_doc_title }">
 		<div id="tempContent" style="display: none;">${dto.sitb_doc_content}</div>
 		<input id="tempSicaCd" type="hidden" value="${dto.sica_cd }">
@@ -95,6 +96,7 @@
 									<th>서명선택</th>
 									<td colspan="3">
 										<button id="selectSign">서명관리</button>
+										<input id="signMsg" class="form-control form-control-solid" readonly placeholder="서명을 선택해주세요">
 									</td>
 									<th>기본서명사용</th>
 									<td>

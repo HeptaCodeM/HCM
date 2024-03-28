@@ -212,7 +212,7 @@
 	<select id="getDetailDocsList" resultType="SignBoxDto">
 		SELECT SDB.SIDB_DOC_NUM,
 		SDB.SIDB_DOC_WRITEDT, SDB.SIDB_DOC_TITLE, SDB.SIDB_DOC_CONTENT,
-		SDB.SICA_CD, SDB.SIDB_DOC_EXPIREDT, SDB.SIDB_DOC_FLAG,
+		SDB.SICA_CD, SDB.SIDB_DOC_EXPIREDT, SDB.SIDB_DOC_FLAG, SDB.SIDB_DOC_ALFLAG,
 		SDB.SIDB_DOC_APPRDT, SDB.SIDB_DOC_STAT, SDB.EMPL_REF,
 		SDB.EMPL_DEPT_CD, SDB.SIDB_DOC_JSON,SDB.EMPL_ID , SDB.SIDB_CURR_id,
 		E.EMPL_NAME  , APPR_ID, e2.EMPL_NAME as APPR_NAME, 
@@ -336,10 +336,16 @@
 		FROM SIGN_TEMP_BOX sdb
 		JOIN EMPLOYEE e ON sdb.EMPL_ID = e.EMPL_ID
 		JOIN SIGN_DOC_TEMP t ON sdb.SIDT_TEMP_CD = t.SIDT_TEMP_CD
-		WHERE SDB.empl_id = #{empl_id}
+		WHERE SDB.empl_id = #{empl_id} 
 		ORDER BY
 		SDB.SITB_DOC_WRITEDT DESC
 	 </select>
+
+	<!-- 임시문서함 문서 삭제 -->
+	<delete id="deleteTempDocs">	
+		DELETE SIGN_TEMP_BOX
+		WHERE SITB_DOC_NUM = #{sitb_doc_num}
+	</delete>	
 
 	<!-- 참조자 이름 가져오기 -->
 	<select id="findEmployeeName" resultType="String">
