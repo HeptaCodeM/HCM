@@ -5,9 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp"%>
-<title>관리자메뉴</title>
+<title>HCM GROUPWARE</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+<link rel="stylesheet" href="../ckeditor5/sample/template.css">
 <style type="text/css">
 	.btnMd{
 		height: 38px;
@@ -49,7 +50,7 @@
 							
 							<!-- ---------------------------- 내 용 입 력 -------------------------------- -->
 							<div class="table-responsive" style="max-width: 80%; margin: 0px auto;">
-							<form action="./updateTemplate.do" method="post" >
+							<form action="./updateTemplateAdmin.do" method="post" >
 							<table class="table table-bordered">
 								<tr>
 									<th>카테고리</th>
@@ -67,12 +68,12 @@
 							결재 구분 : <select id="selectCategory" name="sica_cd"></select>
 							</div> 
 							<h3>제목 <input type="text" name="sidt_temp_name" value="${temDto.sidt_temp_name }"></h3>-->
-								<input type="hidden" name="sidt_temp_cd" value="${temDto.sidt_temp_cd }">
-								<input type="hidden" id="sica_cd" value="${temDto.sica_cd }">
-								<textarea id="editor" name="sidt_temp_content">${temDto.sidt_temp_content}</textarea>
+							<input type="hidden" name="sidt_temp_cd" value="${temDto.sidt_temp_cd }">
+							<input type="hidden" id="sica_cd" value="${temDto.sica_cd }">
+							<textarea id="editor" name="sidt_temp_content">${temDto.sidt_temp_content}</textarea>
 							<div class="btn">
 					<!-- 		<input type="button" onclick="updateTemplate()" value="수정완료"> -->
-							<input type="submit" class="btn btn-light-primary btnMd btn-color-gray-600" value="수정완료"> 
+								<input type="submit" class="btn btn-light-primary btnMd btn-color-gray-600" value="수정완료"> 
 							</div>
 							</form>
 							</div>
