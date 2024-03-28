@@ -41,13 +41,11 @@ public class HolidayController {
 	
 	/* 휴가현황 (임직원) */
 	@GetMapping("holidayList.do")
-	public String holidayList(Authentication authentication, 
-							  HttpServletResponse resp) {
+	public String holidayList(Authentication authentication) {
 		log.info("{} 휴가현황 조회", Function.getMethodName());
-		resp.setContentType("text/html; charset=UTF-8;");
 		
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}
 		
@@ -57,10 +55,8 @@ public class HolidayController {
 	@PostMapping(value="holidaySearchList.do", produces = "application/json;")
 	public @ResponseBody String holidaySearchList(@RequestParam(required = false) Map<String, Object> dateMap, 
 							  Authentication authentication, 
-							  Model model,
-							  HttpServletResponse resp) {
+							  Model model) {
 		log.info("{} 휴가현황 조회", Function.getMethodName());
-		resp.setContentType("text/html; charset=UTF-8;");
 		
 		String empl_id = "";
 		if(authentication == null) {
@@ -105,13 +101,11 @@ public class HolidayController {
 	/* 휴가현황 (관리자) */
 	@GetMapping("holidayAdminList.do")
 	public String holidayAdminList(Authentication authentication, 
-							  HttpServletResponse resp,
-							  Model model) {
+							  		Model model) {
 		log.info("{} 휴가현황 조회(관리자)", Function.getMethodName());
-		resp.setContentType("text/html; charset=UTF-8;");
 		
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}
 
@@ -141,10 +135,8 @@ public class HolidayController {
 														@RequestParam(name="empl_rank_cd", required = false) String[] arr_empl_rank_cd,
 														@RequestParam(name="empl_position_cd", required = false) String[] arr_empl_position_cd,
 													  	Authentication authentication, 
-													  	Model model,
-													  	HttpServletResponse resp) {
+													  	Model model) {
 		log.info("{} 휴가현황 조회(관리자)", Function.getMethodName());
-		resp.setContentType("text/html; charset=UTF-8;");
 
 		String empl_id = "";
 		if(authentication == null) {

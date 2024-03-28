@@ -181,6 +181,7 @@ public class CertificateController {
 	public boolean downloadDoc(@RequestParam("emdh_type") String emdh_type ,
 							@RequestParam("emdn_id") String emdn_id ,
 							Authentication authentication) {
+		log.info("{} 결제완료 증명서 PDF/PRINT", Function.getMethodName());
 		Map<String, Object> docMap = new HashMap<String, Object>();
 		String emdh_empl_id = authentication.getName();
 		System.out.println(emdh_empl_id);

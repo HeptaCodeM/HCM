@@ -145,41 +145,45 @@ function valueChk(){
 	valueChk.append('coco_name', coco_name);
 	valueChk.append('coco_cd', coco_cd);
 	valueChk.append('role', role);
-	fetch('/hr/commonCode/roleNameDuplicateChk.do',{
-		method: "POST",
-		headers: {
-		    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-		},
-		body: valueChk
-	})
-	.then(response =>{
-		return response.json();
-		console.log(response);
-	})
-	.then(data => {
-		console.log('NAME중복 : ',data.nameFlag);
-		var nameSpan = document.getElementById("nameSpan");
-		let coco_cdInput = document.getElementById("coco_cd");
-		let coco_nameInput = document.getElementById("coco_name");
-		let submitBtn = document.getElementById("submitBtn");
-		
-		if(data.nameFlag == "false" || coco_cdInput.value == ""){
-			nameSpan.innerHTML = "중복된 이름입니다! 다시 입력하세요";
-			submitBtn.disabled = true;
-		}else{
-			if(checkNameValue()){
-				nameSpan.innerHTML = "사용가능합니다";
-				submitBtn.disabled = false;
-			}else{
-				nameSpan.innerHTML = "한글만 입력하세요"
+	
+	if(coco_name != orgCoco_name){
+		fetch('/hr/commonCode/roleNameDuplicateChk.do',{
+			method: "POST",
+			headers: {
+			    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+			},
+			body: valueChk
+		})
+		.then(response =>{
+			return response.json();
+			console.log(response);
+		})
+		.then(data => {
+			console.log('NAME중복 : ',data.nameFlag);
+			var nameSpan = document.getElementById("nameSpan");
+			let coco_cdInput = document.getElementById("coco_cd");
+			let coco_nameInput = document.getElementById("coco_name");
+			let submitBtn = document.getElementById("submitBtn");
+			
+			if(data.nameFlag == "false" || coco_cdInput.value == ""){
+				nameSpan.innerHTML = "중복된 이름입니다! 다시 입력하세요";
 				submitBtn.disabled = true;
+			}else{
+				if(checkNameValue()){
+					nameSpan.innerHTML = "사용가능합니다";
+					submitBtn.disabled = false;
+				}else{
+					nameSpan.innerHTML = "한글만 입력하세요"
+					submitBtn.disabled = true;
+				}
 			}
-		}
-		
-	})
-    .catch(err => { 
-        console.log('에러발생', err);
-    });
+			
+		})
+	    .catch(err => { 
+	        console.log('에러발생', err);
+	    });
+	}
+	
 }
 
 

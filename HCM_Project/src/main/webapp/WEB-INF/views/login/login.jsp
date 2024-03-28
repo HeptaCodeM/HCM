@@ -69,25 +69,9 @@
 		<div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center" style="background-image: url(/assets/media/misc/auth-bg.png)">
 			<!--begin::Content-->
 			<div class="d-flex flex-column flex-center p-6 p-lg-10 w-100">
-				<!--begin::Logo-->
-				<a href="/main.do" class="mb-0 mb-lg-20">
-					<img alt="Logo" src="/image/naverLogo.svg" class="h-40px h-lg-50px" />
-				</a>
-				<!--end::Logo-->
 				<!--begin::Image-->
-				<img class="d-none d-lg-block mx-auto w-300px w-lg-75 w-xl-500px mb-10 mb-lg-20" src="/image/naverworks.png" alt="" />
+				<img class="d-none d-lg-block mx-auto w-300px w-lg-75 w-xl-500px mb-10" style="margin-top: 32.5px;" src="/image/logo-removebg-preview.png" alt="" />
 				<!--end::Image-->
-				<!--begin::Title-->
-				<h1 class="d-none d-lg-block text-white fs-2qx fw-bold text-center mb-7">출근하세요 빨리...</h1>
-				<!--end::Title-->
-				<!--begin::Text-->
-				<div class="d-none d-lg-block text-white fs-base text-center">
-					<!-- 여기에는<br>
-					대충<br>
-					설명이<br>
-					들어가요! -->
-				</div>
-				<!--end::Text-->
 			</div>
 			<!--end::Content-->
 		</div>

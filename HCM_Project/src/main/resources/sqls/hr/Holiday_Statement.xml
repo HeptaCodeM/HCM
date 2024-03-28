@@ -62,9 +62,9 @@
 	<select id="selectEmpTotalHoliDayInfo" parameterType="String" resultType="Map">
 		<![CDATA[
 		SELECT
-				EMHO_HOLIDAY AS TOTAL_HOLIDAY,
+				SUM(EMHO_HOLIDAY) AS TOTAL_HOLIDAY,
 				SUM(USE_HOLIDAY) USE_HOLIDAY,
-				EMHO_HOLIDAY - SUM(USE_HOLIDAY) REST_HOLIDAY
+				SUM(EMHO_HOLIDAY) - SUM(USE_HOLIDAY) REST_HOLIDAY
 		FROM	(
 				SELECT
 						E.EMHO_HOLIDAY,
@@ -97,8 +97,9 @@
 				AND B.SICA_CD = 'CC000001' --근태
 				AND C.SIDT_TEMP_CD IN ('TC000001', 'TC000002') --TC000001(연차신청서), TC000002(휴가신청서)
 				AND E.EMHO_YEAR || TO_CHAR(TO_DATE(D.EMPL_JOINDATE, 'YYYY-MM-DD'), '-MM-DD') < TO_CHAR(A.SIDB_DOC_BE, 'YYYY-MM-DD')	--휴가부여년도/입사월일 기준으로 휴가정보 처리
+				UNION ALL 
+				SELECT 0, 0 FROM DUAL
 				)
-		GROUP BY EMHO_HOLIDAY
 		]]>
 	</select>
 

@@ -90,7 +90,7 @@ public class EmployeeController {
 	@PostMapping("registEmpAdminOk.do")
 	public @ResponseBody void registEmpAdminOk(@RequestParam("empl_picture") List<MultipartFile> file, 
 												@RequestParam Map<String, String> map, 
-												HttpServletResponse resp, 
+												HttpServletResponse resp,
 												Authentication authentication) throws IOException {
 		log.info("{} 임직원 등록처리", Function.getMethodName());
 		log.info("input map : {}", map);
@@ -99,7 +99,7 @@ public class EmployeeController {
 
 		String empl_id = "";
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return;
 		}else {
 			empl_id = authentication.getName();
@@ -107,7 +107,7 @@ public class EmployeeController {
 		
 		int dupCnt = employeeService.duplicationEmpEmail(map.get("empl_email"));
 		if(dupCnt > 0) {
-			Function.alertHistoryBack(resp, "이미 등록된 이메일입니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			Function.alertHistoryBack("이미 등록된 이메일입니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return;
 		}
 		
@@ -165,7 +165,7 @@ public class EmployeeController {
 		
 		String empl_id = "";
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}else {
 			empl_id = authentication.getName();
@@ -187,15 +187,13 @@ public class EmployeeController {
 	@PostMapping("empModifyOk.do")
 	public @ResponseBody void empModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, 
 												@RequestParam Map<String, String> map, 
-												HttpServletResponse resp, 
 												Authentication authentication,
 												HttpServletRequest req) throws IOException {
 		log.info("{} 임직원정보 수정처리", Function.getMethodName());
-		resp.setContentType("text/html;charset=utf-8;");
 		
         String empl_modify_id = "";
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return;
 		}else {
 			empl_modify_id = authentication.getName();
@@ -226,7 +224,7 @@ public class EmployeeController {
 		int n = employeeService.updateEmployee(emp);
 		String msg;
 		if(n < 1) {
-			Function.alertHistoryBack(resp, "수정 시 오류가 발생하였습니다.", "", "");
+			Function.alertHistoryBack("수정 시 오류가 발생하였습니다.", "", "");
 			return;
 			//sb.append("alert('수정 시 오류가 발생하였습니다.'); history.back();");
 		}else {
@@ -240,7 +238,7 @@ public class EmployeeController {
 			session.setAttribute("userInfoVo", employeeDto);
 
 			
-			Function.alertLocation(resp, "정상적으로 수정 되었습니다.", "/hr/employee/empModify.do", "","","");
+			Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/empModify.do", "","","");
 			return;
 			//sb.append("alert('정상적으로 수정 되었습니다.');");
 			//sb.append("location.href='/hr/employee/list.do';");
@@ -255,7 +253,7 @@ public class EmployeeController {
 		resp.setContentType("text/html; charset=utf-8");
 		
 		if(StringUtils.isEmpty(empl_id)) {
-			Function.alertHistoryBack(resp, "요청 사번이 없습니다.", "", "");
+			Function.alertHistoryBack("요청 사번이 없습니다.", "", "");
 			return null;
 		}
 		
@@ -276,7 +274,7 @@ public class EmployeeController {
 		resp.setContentType("text/html; charset=utf-8");
 		
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}
 		
@@ -292,7 +290,7 @@ public class EmployeeController {
 		resp.setContentType("text/html; charset=utf-8");
 
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "", "");
 			return;
 		}
 
@@ -312,12 +310,12 @@ public class EmployeeController {
 			int cnt = employeeService.updatePwd(chgPwdMap);
 	
 			if(cnt == 0) {
-				Function.alertHistoryBack(resp, "비밀번호 변경에 실패하였습니다.", "", "");
+				Function.alertHistoryBack("비밀번호 변경에 실패하였습니다.", "", "");
 			}else {
-				Function.alertLocation(resp, "비밀번호 변경이 완료 되었습니다.", "/hr/employee/updatePwd.do", "", "", "");
+				Function.alertLocation("비밀번호 변경이 완료 되었습니다.", "/hr/employee/updatePwd.do", "", "", "");
 			}
 		}else {
-			Function.alertHistoryBack(resp, "현재 비밀번호와 일치하지 않습니다.", "", "");
+			Function.alertHistoryBack("현재 비밀번호와 일치하지 않습니다.", "", "");
 		}
 	}
 	
@@ -373,7 +371,7 @@ public class EmployeeController {
 		String empl_modify_id = "";
 		String empl_id = authMap.get("empl_id").toString();
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return;
 		}else {
 			empl_modify_id = authentication.getName();
@@ -387,11 +385,11 @@ public class EmployeeController {
 		int cnt = employeeService.updateAuthEmployee(authMap);
 		if(cnt > 0 ) {
 			if(type.equals("D")) {
-				Function.alertLocation(resp, "권한삭제가 완료 되었습니다.", "/hr/employee/authAdminList.do", "", "", "");
+				Function.alertLocation("권한삭제가 완료 되었습니다.", "/hr/employee/authAdminList.do", "", "", "");
 			}else if(type.equals("I")) {
-				Function.alertLocation(resp, "권한등록이 완료 되었습니다.", "/hr/employee/authAdminList.do", "", "", "");
+				Function.alertLocation("권한등록이 완료 되었습니다.", "/hr/employee/authAdminList.do", "", "", "");
 			}else {
-				Function.alertLocation(resp, "권한수정이 완료 되었습니다.", "/hr/employee/modifyAuthAdmin.do?empl_id="+empl_id, "btn-danger", "", "");
+				Function.alertLocation("권한수정이 완료 되었습니다.", "/hr/employee/modifyAuthAdmin.do?empl_id="+empl_id, "btn-danger", "", "");
 			}
 			
 			if(empl_id.equals(empl_modify_id)) {
@@ -400,7 +398,7 @@ public class EmployeeController {
 				boolean flag = authService.createNewAuthentication(authentication, authentication.getName(), req);
 				if(!flag) {
 					log.info("{} - 인증등록 오류발생.", Function.getMethodName());
-					Function.alertLocation(resp, "인증 재등록에 실패하였습니다.<br>다시 로그인하여 주세요.", "/login/login.do", "btn-danger", "", "");
+					Function.alertLocation("인증 재등록에 실패하였습니다.<br>다시 로그인하여 주세요.", "/login/login.do", "btn-danger", "", "");
 					return;
 				}
 
@@ -408,7 +406,7 @@ public class EmployeeController {
 			
 			return;
 		}else {
-			Function.alertHistoryBack(resp, "권한등록에 오류가 발생하였습니다.", "", "");
+			Function.alertHistoryBack("권한등록에 오류가 발생하였습니다.", "", "");
 			return;
 		}
 	}
@@ -421,7 +419,7 @@ public class EmployeeController {
 		log.info("{} 권한수정페이지", Function.getMethodName());
 
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "");
 			return null;
 		}
 		
@@ -467,8 +465,7 @@ public class EmployeeController {
 
 	@GetMapping("modifyAdmin.do")
 	public void modifyAdmin(Model model ,String empl_id) {
-		log.info("EmployeeListController modifyAdmin 수정페이지 진입");
-		log.info("=========================================");
+		log.info("{} 임직원정보 상세(어드민)화면", Function.getMethodName());
 		System.out.println(empl_id);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empl_id", empl_id);
@@ -484,7 +481,6 @@ public class EmployeeController {
 	@PostMapping("modifyAdminOk.do")
 	public @ResponseBody void employeeModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, 
 												@RequestParam Map<String, String> map, 
-												HttpServletResponse resp, 
 												Authentication authentication,
 												String empl_id) throws IOException {
 		log.info("{} 수정처리", Function.getMethodName());
@@ -514,11 +510,11 @@ public class EmployeeController {
 		int n = employeeService.updateEmployee(emp);
 		String msg;
 		if(n < 1) {
-			Function.alertHistoryBack(resp, "수정 시 오류가 발생하였습니다.", "", "");
+			Function.alertHistoryBack("수정 시 오류가 발생하였습니다.", "", "");
 			return;
 			//sb.append("alert('수정 시 오류가 발생하였습니다.'); history.back();");
 		}else {
-			Function.alertLocation(resp, "정상적으로 수정 되었습니다.", "/hr/employee/modifyAdmin.do?empl_id="+empl_id, "","","");
+			Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/modifyAdmin.do?empl_id="+empl_id, "","","");
 			return;
 			//sb.append("alert('정상적으로 수정 되었습니다.');");
 			//sb.append("location.href='/hr/employee/list.do';");
@@ -538,6 +534,7 @@ public class EmployeeController {
 								@RequestParam("rkArr") String[] rkArr,
 								@RequestParam("pnArr") String[] pnArr
 							) {
+		log.info("{} 임직원정보(어드민) 검색", Function.getMethodName());
 		System.out.println(empShCtgVal);
 		System.out.println(empStaCtg);
 		System.out.println(startDate);
@@ -609,6 +606,7 @@ public class EmployeeController {
 	@GetMapping(value = "empAdminValueChk.do")
 	@ResponseBody
 	public boolean empAdminValueChk(String empl_phone, String empl_tel, String empl_fax) {
+		log.info("{} 임직원정보(어드민) 중복확인", Function.getMethodName());
 		boolean returnBool = true;
 		if(empl_phone != null) {
 			System.out.println(empl_phone);
@@ -632,13 +630,12 @@ public class EmployeeController {
 	@GetMapping("naverSns.do")
 	public String naverSns(Model model,
 						 Authentication authentication,
-						 HttpServletRequest req,
-						 HttpServletResponse resp) {
+						 HttpServletRequest req) {
 		log.info("{} 간편로그인 진입", Function.getMethodName());
 
 		String empl_id = "";
 		if(authentication == null) {
-			Function.alertLocation(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
+			Function.alertLocation("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
 			return null;
 		}else {
 			empl_id = authentication.getName();
@@ -672,15 +669,14 @@ public class EmployeeController {
 
 	@GetMapping("delNaverSns.do")
 	public @ResponseBody void delNaverSns(Model model,
-										 Authentication authentication,
-										 HttpServletResponse resp) {
+										 Authentication authentication) {
 		log.info("{} 간편로그인 삭제", Function.getMethodName());
 
 		
 		String empl_id = "";
 		String emsn_id = "";
 		if(authentication == null) {
-			Function.alertHistoryBack(resp, "로그인 정보가 없습니다.("+Function.getMethodName()+")", "", "");
+			Function.alertHistoryBack("로그인 정보가 없습니다.("+Function.getMethodName()+")", "", "");
 			return;
 		}else {
 			empl_id = authentication.getName();
@@ -688,7 +684,7 @@ public class EmployeeController {
 
 		SnsInfoDto snsDto = employeeService.getSnsInfo(empl_id);
 		if(snsDto == null) {
-			Function.alertLocation(resp, "네이버 간편로그인 조회 정보가 없습니다.", "/hr/employee/naverSns.do", "", "", "");
+			Function.alertLocation("네이버 간편로그인 조회 정보가 없습니다.", "/hr/employee/naverSns.do", "", "", "");
 			return;
 		}else {
 			emsn_id = snsDto.getEmsn_id();
@@ -696,10 +692,10 @@ public class EmployeeController {
 		
 		int cnt = employeeService.delSnsInfo(emsn_id);
 		if(cnt>0) {
-			Function.alertLocation(resp, "네이버 간편로그인 연결이 해제 되었습니다.", "/hr/employee/naverSns.do", "", "", "");
+			Function.alertLocation("네이버 간편로그인 연결이 해제 되었습니다.", "/hr/employee/naverSns.do", "", "", "");
 			return;
 		}else {
-			Function.alertLocation(resp, "네이버 간편로그인 연결 해제 오류가 발생하였습니다.", "/hr/employee/naverSns.do", "", "", "");
+			Function.alertLocation("네이버 간편로그인 연결 해제 오류가 발생하였습니다.", "/hr/employee/naverSns.do", "", "", "");
 			return;
 		}
 		
