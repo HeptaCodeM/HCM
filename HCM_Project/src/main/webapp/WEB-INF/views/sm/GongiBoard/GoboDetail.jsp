@@ -87,6 +87,7 @@
                           <ul class="list-group" id="commentList">
                       <c:forEach var="comment" items="${Rlist}">
                           <li id="firstReply">
+                          <input type="hidden" name="rebo_no" id="rebo_no" value="${comment.rebo_no}">
                               <div class="d-flex align-items-center no-border" style="border: none;">
 							        <img src="${sessionScope.userInfoVo.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">
                                   <div style="margin-left: 10px; position: relative; width: 100%;">
@@ -95,9 +96,11 @@
 								    <div>
 								        <small><fmt:formatDate value="${comment.rebo_regdate}" pattern="yyyy-MM-dd HH:mm"/></small>
 								        <div style="position: absolute; top: 0; right: 0; float: right">
-								            <a role="button" title="더보기" class="comment_tool" href="#" id="comment_tool${comment.rebo_no}" onclick="toggleMenu(event, ${comment.rebo_no})">
-								                <img alt="더보기" src="https://cdn4.iconfinder.com/data/icons/liny/24/more-menu-vertical-line-64.png" style="width: 30px;">
-								            </a>
+								           	<div style="position: relative;">
+				                            	<a role="button" title="더보기" class="comment_tool" href="#" id="comment_tool${comment.rebo_no}" onclick="toggleMenu(event, ${comment.rebo_no})">
+				                            	 <img alt="더보기" src="https://cdn4.iconfinder.com/data/icons/liny/24/more-menu-vertical-line-64.png" style="height: 60px;">
+												</a>
+												</div>
 								        </div>
 								    </div>
 								    <a role="button" class="comment_info_button" onclick="showCommentForm(${comment.rebo_no})">답글쓰기</a>
@@ -132,6 +135,7 @@
             <!-- 현재 댓글과 depth가 1이고, rebo_parent_no가 현재 댓글의 rebo_no와 같은 경우 -->
 				            <c:if test="${comment.rebo_step == reply.rebo_step}">
 				                <li id="secondReply" style="margin-left: 50px;">
+				                <input type="hidden" name="rebo_no" id="rebo_no" value="${reply.rebo_step}">
 				                    <!-- 대댓글 내용 출력 -->
 				                    <div class="d-flex align-items-center no-border" style="border: none;">
 				                         <c:choose>
@@ -146,10 +150,12 @@
 				                            <strong>${reply.rebo_writer}</strong><br>
 				                            <div>${reply.rebo_content}</div>
 				                            <div><small><fmt:formatDate value="${reply.rebo_regdate}" pattern="yyyy-MM-dd HH:mm"/></small>
-				                            <div style="position: absolute; top: 0; right: 0; float: right">
+				                            <div style="position: absolute; top: 0; right: 0; float: right" >
+				                            	<div style="position: relative;">
 				                            	<a role="button" title="더보기" class="comment_tool" href="#" id="comment_tool${reply.rebo_no}" onclick="toggleMenu(event, ${reply.rebo_no})">
-				                            	 <img alt="더보기" src="https://cdn4.iconfinder.com/data/icons/liny/24/more-menu-vertical-line-64.png" style="width: 30px;">
+				                            	 <img alt="더보기" src="https://cdn4.iconfinder.com/data/icons/liny/24/more-menu-vertical-line-64.png" style="height: 60px;">
 												</a>
+												</div>
 				                            </div>
 				                            <a role="button" class="comment_info_button" onclick="showCommentForm(${reply.rebo_no})">답글쓰기</a>
 				                            </div>
@@ -320,7 +326,6 @@ function insertReplyTwo(rebo_no) {
         }
     });
 }
-
 
 
 

@@ -81,16 +81,45 @@ function updateGoboDelFlag(gobo_no){
 	}
 }
 
-function toggleMenu(event, reboNo) {
-    event.preventDefault(); // 기본 이벤트 동작 방지
-    // 버튼에 연결된 commentItem 요소를 찾아서 표시 여부를 토글합니다.
-    var menu = document.getElementById("comment_tool"+reboNo);
-		menu.style.display='block';
-		menu.style.top = (event.offsetTop+menu.offsetHeight-20)+"px";
-		menu.style.left = (event.offsetLeft+(event.offsetWidth*1.5)+menu.offsetWidth+15)+"px";
-		
-		
+
+
+
+function toggleMenu(event, rebo_no) {
+    // 이벤트 전파 방지
+    event.stopPropagation();
+    
+    // 클릭된 요소를 선택합니다.
+    var moreButton = $(event.target);
+    
+    // 클릭된 요소 바로 다음에 있는 LayerMore 요소를 선택합니다.
+    var layerMore = moreButton.next('.LayerMore');
+    
+    // LayerMore 요소가 보이는지 여부를 확인하여 토글합니다.
+    if (layerMore.is(':visible')) {
+        layerMore.hide();
+    } else {
+        // 다른 LayerMore 요소를 모두 숨깁니다.
+        $('.LayerMore').hide();
+        // LayerMore 요소를 생성하여 추가합니다.
+        var html = '<div data-v-0330f652="" id="commentItem" role="menu" class="LayerMore" style="position: absolute;">';
+        html += '<ul class="layer_list">';
+        html += '<li class="layer_item">';
+        html += '<a href="#" role="button" class="update_button" onclick="updateButton('+rebo_no+')" style="text-decoration: none;"> 수정 </a>';
+        html += '</li>';
+        html += '<li class="layer_item">';
+        html += '<a href="#" role="button" class="delete_button" onclick="deleteButton('+rebo_no+')" style="text-decoration: none;"> 삭제 </a>';
+        html += '</li>';
+        html += '</ul>';
+        html += '</div>';
+        // 클릭된 요소 바로 다음에 새로운 HTML을 추가합니다.
+        moreButton.after(html);
+    }
 }
+
+
+
+
+
 
 
 function insertReply(data){
