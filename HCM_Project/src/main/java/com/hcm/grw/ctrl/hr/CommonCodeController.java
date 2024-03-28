@@ -88,7 +88,7 @@ public class CommonCodeController {
 	}	
 
 	@PostMapping(value = "/hr/commonCode/correctionRole.do")
-	public @ResponseBody void correctionRole(HttpServletRequest request , Authentication authentication ,HttpServletResponse resp) {
+	public @ResponseBody void correctionRole(HttpServletRequest request , Authentication authentication) {
 		String coco_name = request.getParameter("coco_name");
 		String coco_cd = request.getParameter("coco_cd");
 		String role = request.getParameter("role");
@@ -104,10 +104,10 @@ public class CommonCodeController {
 		int cnt =  codeService.correctionRole(map);
 		String msg;
 		if(cnt == 1) {
-			Function.alertLocation(resp, "입력 되었습니다.", "/hr/commonCode/roleList.do?role="+role, "","","");
+			Function.alertLocation("입력 되었습니다.", "/hr/commonCode/roleList.do?role="+role, "","","");
 			return;
 		}else {
-			Function.alertHistoryBack(resp, "입력 시 오류가 발생하였습니다.", "", "");
+			Function.alertHistoryBack("입력 시 오류가 발생하였습니다.", "", "");
 			return;
 		}		
 //		return "redirect:/hr/commonCode/roleList.do?role="+role;
@@ -121,7 +121,7 @@ public class CommonCodeController {
 	}
 	
 	@PostMapping(value = "/hr/commonCode/insertRoleOne.do")
-	public @ResponseBody void insertRoleOne(HttpServletRequest request , Authentication authentication ,HttpServletResponse resp) {
+	public @ResponseBody void insertRoleOne(HttpServletRequest request , Authentication authentication) {
 		String coco_name = request.getParameter("coco_name");
 		String coco_cd = request.getParameter("coco_cd");
 		String role = request.getParameter("role");
@@ -139,11 +139,11 @@ public class CommonCodeController {
 		int cnt = codeService.insertRoleOne(map);
 		String msg;
 		if(cnt == 1) {
-			Function.alertLocation(resp, "입력 되었습니다.", "/hr/commonCode/roleList.do?role="+role, "","","");
+			Function.alertLocation("입력 되었습니다.", "/hr/commonCode/roleList.do?role="+role, "","","");
 			return;
 //			return "redirect:/hr/commonCode/roleList.do?role="+role;
 		}else {
-			Function.alertHistoryBack(resp, "입력 시 오류가 발생하였습니다.", "", "");
+			Function.alertHistoryBack("입력 시 오류가 발생하였습니다.", "", "");
 			return;
 //			return "redirect:/hr/commonCode/roleList.do?role="+role;
 		}

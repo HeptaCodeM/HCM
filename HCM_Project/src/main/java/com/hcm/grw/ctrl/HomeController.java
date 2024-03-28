@@ -25,6 +25,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
@@ -63,7 +65,7 @@ public class HomeController {
 	
 	
 	@GetMapping({"/index.do", "/"})
-	public String index(HttpServletRequest request, Model model, Authentication authentication, HttpSession session) {
+	public String index(Model model, Authentication authentication, HttpSession session) {
 		
 		String getId = "";
 		if(authentication != null) {
@@ -108,30 +110,30 @@ public class HomeController {
 
 	//쿠키생성
 	@GetMapping("/setCookies.do")
-	public String setCookiesTest(HttpServletResponse resp) {
+	public String setCookiesTest() {
 		log.info("testCk 쿠키생성");
-		CookiesMgr.setCookies(resp, "testCk", "1111", 20);
+		CookiesMgr.setCookies("testCk", "1111", 20);
 		
 		return "redirect:/";
 	}
 
 	//쿠키값 확인
 	@GetMapping("/getCookies.do")
-	public String getCookiesTest(HttpServletRequest req) {
+	public String getCookiesTest() {
 		
-		log.info(CookiesMgr.getCookies(req, "testCk"));
-		log.info("testCk 쿠키확인 : {}", CookiesMgr.getCookies(req, "testCk"));
+		log.info(CookiesMgr.getCookies("testCk"));
+		log.info("testCk 쿠키확인 : {}", CookiesMgr.getCookies("testCk"));
 		
 		return "redirect:/";
 	}
 	
 	//쿠키삭제
 	@GetMapping("/delCookies.do")
-	public String delCookiesTest(HttpServletRequest req, HttpServletResponse resp) {
+	public String delCookiesTest() {
 		log.info("testCk 쿠키삭제");
 		
-		//CookiesMgr.delCookies(req, resp, "All");	//모두삭제
-		CookiesMgr.delCookies(req, resp, "testCk");	//단일삭제
+		//CookiesMgr.delCookies(req, "All");	//모두삭제
+		CookiesMgr.delCookies("testCk");	//단일삭제
 		
 		return "redirect:/";
 	}
@@ -194,7 +196,7 @@ public class HomeController {
 	
 	
 	@GetMapping("/mainTmp.do")
-	public String mainTmp(Authentication authentication, Model model, HttpServletResponse resp) throws JsonProcessingException {
+	public String mainTmp(Authentication authentication, Model model) throws JsonProcessingException {
 		
 		String empl_id = authentication.getName();
 		
@@ -241,13 +243,11 @@ public class HomeController {
 	
 	@GetMapping("/hr/home/registCommuteOkMain.do")
 	public @ResponseBody void registCommuteOk(Authentication authentication, 
-												Model model, 
-												HttpServletResponse resp) throws IOException {
+												Model model) throws IOException {
 		log.info("CommuteController registCommute 출/퇴근 처리 페이지");
-		resp.setContentType("text/html; charset=UTF-8");
 		
 		if(authentication == null) {
-			Function.alertLocation(resp, "로그인 후 이용 가능합니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
+			Function.alertLocation("로그인 후 이용 가능합니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");
 		}
 		
 		String empl_id = authentication.getName();
@@ -272,16 +272,19 @@ public class HomeController {
 		}
 		
 		if(cnt > 0) {
-			Function.alertLocation(resp, commuteMsg + "처리가 완료 되었습니다.", "/mainTmp.do", "", "", "");
+			Function.alertLocation(commuteMsg + "처리가 완료 되었습니다.", "/mainTmp.do", "", "", "");
 		}else {
-			Function.alertHistoryBack(resp, commuteMsg + "처리 중 오류가 발생하였습니다.<br>관리자에게 문의하세요.", "", "");
+			Function.alertHistoryBack(commuteMsg + "처리 중 오류가 발생하였습니다.<br>관리자에게 문의하세요.", "", "");
 		}
 		
 	}	
 	
 	@GetMapping(value = "searchNews.do")
 	@ResponseBody
-	public void searchNews(String newsSearch,HttpServletResponse resp, Gson gson) {
+	public void searchNews(String newsSearch,Gson gson) {
+		HttpServletResponse resp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
+		resp.setContentType("text/html; charset=UTF-8;");
+		
 		System.out.println(newsSearch);
 		
         String clientId = "MflzXYZnwONG5QBgICK2"; //애플리케이션 클라이언트 아이디

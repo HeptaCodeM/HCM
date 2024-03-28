@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -70,14 +72,12 @@ public class NaverOAuth {
 	
 	@GetMapping("naverCallback.do")
 	public @ResponseBody String NaverCallback(String code, 
-											  String state, 
-											  HttpServletRequest rep, 
-											  HttpServletResponse resp) {
+											  String state) {
 		log.info("{} - CallBack code : {}, state : {}", Function.getMethodName(), code, state);
 		
 		String strToken = this.getToken(code, state);
 		if(strToken.isEmpty()) {
-			Function.alertClose(resp, "토큰정보 오류입니다.", "", "", "");
+			Function.alertClose("토큰정보 오류입니다.", "", "", "");
 			return null;
 		}
 		log.info("strToken : {}", strToken);
@@ -94,12 +94,12 @@ public class NaverOAuth {
 			
 			if(responseCode.equals("200") && resultCode.equals("00")) {
 				log.info("{}, {}", id, email);
-				procSnsLogin(rep, resp, id, email);	//SNS로그인 처리
+				procSnsLogin(id, email);	//SNS로그인 처리
 			}else {
-				Function.alertClose(resp, "["+resultCode+"]"+message, "", "", "");
+				Function.alertClose("["+resultCode+"]"+message, "", "", "");
 			}
 		}else {
-			Function.alertClose(resp, "사용자정보 오류입니다[1].", "", "", "");
+			Function.alertClose("사용자정보 오류입니다[1].", "", "", "");
 		}
 		
 		return null;
@@ -214,10 +214,9 @@ public class NaverOAuth {
 	
 	
 	//SNS로그인 처리
-	public void procSnsLogin(HttpServletRequest req, 
-							 HttpServletResponse resp, 
-							 @RequestParam(name="id", required = true) String id, 
+	public void procSnsLogin(@RequestParam(name="id", required = true) String id, 
 							 @RequestParam(name="email", required = true) String email) {
+		HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 		log.info("{} - Naver 사용자 로그인 처리", Function.getMethodName());
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -233,10 +232,10 @@ public class NaverOAuth {
 			boolean flag = authService.createNewAuthentication(authentication, empl_id, req);
 			if(!flag) {
 				log.info("{} - 인증등록 오류발생.", Function.getMethodName());
-				Function.alertClose(resp, "인증 재등록에 실패하였습니다.<br>다시 로그인하여 주세요.", "", "", "");
+				Function.alertClose("인증 재등록에 실패하였습니다.<br>다시 로그인하여 주세요.", "", "", "");
 				return;
 			}else {
-				Function.alertClose(resp, "간편로그인에 성공하였습니다.", "/", "", "");
+				Function.alertClose("간편로그인에 성공하였습니다.", "/", "", "");
 				return;
 			}
 		}else if(authentication != null && !authentication.getName().equals("anonymousUser")) {	// Authentication정보가 있다면 등록처리 한다.
@@ -253,18 +252,18 @@ public class NaverOAuth {
 				boolean flag = authService.createNewAuthentication(authentication, authentication.getName(), req);
 				if(!flag) {
 					log.info("{} - 인증등록 오류발생(로그인 사용자 자동 등록).", Function.getMethodName());
-					Function.alertClose(resp, "인증 재등록에 실패하였습니다.<br>다시 로그인하여 주세요.", "", "", "");
+					Function.alertClose("인증 재등록에 실패하였습니다.<br>다시 로그인하여 주세요.", "", "", "");
 					return;
 				}else {
-					Function.alertClose(resp, "네이버 간편로그인에 등록었습니다.", "/hr/employee/naverSns.do", "", "");
+					Function.alertClose("네이버 간편로그인에 등록었습니다.", "/hr/employee/naverSns.do", "", "");
 					return;
 				}
 
 			}else {
-				Function.alertClose(resp, "네이버 간편로그인 등록에 실패하였습니다.<br>다시 시도하여 주세요.", "", "", "");
+				Function.alertClose("네이버 간편로그인 등록에 실패하였습니다.<br>다시 시도하여 주세요.", "", "", "");
 			}
 		}else {
-			Function.alertClose(resp, "네이버 간편로그인 정보가 없습니다.<br>로그인 후 간편로그인을 등록하여 주시기 바랍니다.", "", "", "");
+			Function.alertClose("네이버 간편로그인 정보가 없습니다.<br>로그인 후 간편로그인을 등록하여 주시기 바랍니다.", "", "", "");
 		}
 		
 	}

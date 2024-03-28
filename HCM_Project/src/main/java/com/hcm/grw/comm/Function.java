@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.util.Base64Utils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,7 +36,8 @@ public class Function {
 	 * @throws IOException 
 	* @since : 2024.03.06
 	*/
-	public static void alertLocation(HttpServletResponse resp, String msg, String location, String className, String btnText, String focus) {
+	public static void alertLocation(String msg, String location, String className, String btnText, String focus) {
+		HttpServletResponse resp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
 		resp.setContentType("text/html; charset=UTF-8;");
 
 		if(msg == "" || msg == null) msg = "";
@@ -72,7 +75,8 @@ public class Function {
 	 * @throws IOException 
 	* @since : 2024.03.06
 	*/
-	public static void alertHistoryBack(HttpServletResponse resp, String msg, String className, String btnText) {
+	public static void alertHistoryBack(String msg, String className, String btnText) {
+		HttpServletResponse resp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
 		resp.setContentType("text/html; charset=UTF-8;");
 
 		if(msg == "" || msg == null) msg = "";
@@ -107,7 +111,8 @@ public class Function {
 	 * @throws IOException
 	* @since : 2024.03.27
 	*/
-	public static void alertClose(HttpServletResponse resp, String msg, String location, String className, String btnText) {
+	public static void alertClose(String msg, String location, String className, String btnText) {
+		HttpServletResponse resp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
 		resp.setContentType("text/html; charset=UTF-8;");
 
 		if(msg == "" || msg == null) msg = "";
@@ -208,7 +213,9 @@ public class Function {
 	* @author : SDJ
 	* @since : 2024.03.27
 	*/	
-	public static String getIpAddress(HttpServletRequest req) throws Exception {
+	public static String getIpAddress() throws Exception {
+		HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+
 		String ipAddr=req.getRemoteAddr();
 		if(ipAddr.equalsIgnoreCase("0:0:0:0:0:0:0:1")){
 		    InetAddress inetAddress=InetAddress.getLocalHost();
@@ -217,5 +224,6 @@ public class Function {
 		
 		return ipAddr;
 	}
+	
 	
 }

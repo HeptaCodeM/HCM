@@ -59,8 +59,7 @@ public class LoginController {
 	public String login(String error, 
 						String logout,
 						Model model, 
-						HttpServletRequest req, 
-						HttpServletResponse resp) {
+						HttpServletRequest req) {
 		log.info("error : {}", error);
 		log.info("logout : {}", logout);
 
@@ -73,7 +72,7 @@ public class LoginController {
 		}
 
 		try {
-			String ipAddr=Function.getIpAddress(req);
+			String ipAddr=Function.getIpAddress();
 			
 			Map<String, String> loginMap = new HashMap<String, String>();
 			
@@ -105,7 +104,7 @@ public class LoginController {
 		//모바일 처리
 		Device device = DeviceUtils.getCurrentDevice(req);
 		if(device.isMobile()) {
-			CookiesMgr.setCookies(resp, "ckMobile", "Y", 0);
+			req.getSession().setAttribute("ckMobile", "Y");
 			model.addAttribute("mobile", "Y");
 		}else {
 			model.addAttribute("mobile", "N");
@@ -169,7 +168,7 @@ public class LoginController {
 			
 			if(sendFlag) {
 				resp.getWriter().print("true");
-				CookiesMgr.setCookies(resp, "cInitPwdAuthNum", String.valueOf(randomNumber), 3);
+				CookiesMgr.setCookies("cInitPwdAuthNum", String.valueOf(randomNumber), 3);
 			}else {
 				resp.getWriter().print("false");
 			}
@@ -185,7 +184,7 @@ public class LoginController {
 		resp.setContentType("text/html; charset=UTF-8;");
 		
 		String authNum = authNumMap.get("authnum").toString();
-		String cAuthNum = CookiesMgr.getCookies(req, "cInitPwdAuthNum");
+		String cAuthNum = CookiesMgr.getCookies("cInitPwdAuthNum");
 
 		log.info("authNum : {}, cAuthNum : {}", authNum, cAuthNum);
 		
@@ -219,7 +218,7 @@ public class LoginController {
 				boolean sendFlag = emailService.sendMail(subject, content, toEmail, fromEmail, true);
 				if(sendFlag) {
 					resp.getWriter().print("true");
-					CookiesMgr.delCookies(req, resp, "cInitPwdAuthNum");
+					CookiesMgr.delCookies("cInitPwdAuthNum");
 				}else {
 					resp.getWriter().print("false");
 				}
