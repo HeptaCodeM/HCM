@@ -45,7 +45,9 @@
 	   	display: flex;
 	   	justify-content: center;
 	}
-	
+	.fc-scrollgrid-sync-table{
+       pointer-events: none;
+    }
 	
 </style>
 </head>
