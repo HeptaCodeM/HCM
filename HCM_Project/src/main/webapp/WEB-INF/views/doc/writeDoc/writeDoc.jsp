@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp"%>
-<title>DOC메인화면</title>
+<title>기안서작성</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <link rel="stylesheet" href="/ckeditor5/sample/template.css">
@@ -54,8 +54,6 @@
 				<!-- 컨테이너 -->
 				<div class="app-container container-fluid">
 
-					<!-- row -->
-					<!-- col -->
 					<div class="card card-flush h-md-50 mb-xl-10">
 						<div class="card-header pt-5">
 							<h3 class="card-title text-gray-800 fw-bold">기안서 작성</h3>
@@ -84,6 +82,7 @@
 							<input type="hidden" value="${com.comp_tel }" id="comp_tel">
 							<input type="hidden" value="${com.comp_addr1 }" id="comp_addr1">
 							<input type="hidden" value="${com.comp_addr2 }" id="comp_addr2">
+							
 							<table class="table table-bordered">
 								<tr class="success">
 									<th>기안일</th>
@@ -137,7 +136,7 @@
 								</tr>
 							</table>
 							<textarea id="editor" name="sidb_doc_content"></textarea>
-							<table class="table table-bordered">
+							<table class="table table-bordered" style="margin: 10px 0px;">
 								<tr>
 									<th colspan="6">첨부파일 <span style="color: orange; margin-left: 30px;">* 10MB 미만의 이미지 / 문서 파일만 업로드 가능합니다</span></th>
 								</tr>
