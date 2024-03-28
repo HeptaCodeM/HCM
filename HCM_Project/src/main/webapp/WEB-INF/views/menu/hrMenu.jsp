@@ -4,9 +4,9 @@
 String hrLeftMenu [] = {"조직관리", "증명서관리", "근태관리", "인사발령관리" , "휴가관리"};
 // 소분류 메뉴명
 String hrSubLeftMenu [][] = {
-		{"정보수정", "비밀번호변경", "사원등록", "사원조회", 
-		"부서관리","직위관리", "직책관리", "권한관리", 
-		"회사정보관리"},					//hrLeftMenu[0]
+		{"정보수정", "비밀번호변경", "간편로그인관리", "사원등록", 
+		"사원조회", "부서관리","직위관리", "직책관리", 
+		"권한관리", "회사정보관리"},			//hrLeftMenu[0]
 		{"증명서리스트"},					//hrLeftMenu[1]
 		{"출퇴근등록", "출퇴근현황"},			//hrLeftMenu[2]
 		{"인사발령조회", "인사발령관리(관리자)"},	//hrLeftMenu[3]
@@ -14,12 +14,12 @@ String hrSubLeftMenu [][] = {
 };
 //소분류 링크
 String hrSubLinkLeftMenu [][] = {
-		{"/hr/employee/empModify.do", "/hr/employee/updatePwd.do", "/hr/employee/registEmpAdmin.do", "/hr/employee/list.do", 
-		"/hr/commonCode/roleList.do?role=DT","/hr/commonCode/roleList.do?role=RK", "/hr/commonCode/roleList.do?role=PN", "/hr/employee/authAdminList.do", 
-		"/hr/company/companyInfo.do"},		//hrLeftMenu[0]
+		{"/hr/employee/empModify.do", "/hr/employee/updatePwd.do", "/hr/employee/naverSns.do", "/hr/employee/registEmpAdmin.do", 
+		"/hr/employee/list.do", "/hr/commonCode/roleList.do?role=DT","/hr/commonCode/roleList.do?role=RK", "/hr/commonCode/roleList.do?role=PN", 
+		"/hr/employee/authAdminList.do", "/hr/company/companyInfo.do"},		//hrLeftMenu[0]
 		{"/hr/certificate/certificate.do"},									//hrLeftMenu[1]
 		{"/hr/commute/registCommute.do", "/hr/commute/empCommuteList.do"},	//hrLeftMenu[2]
-		{"/hr/order/orderList.do", "/hr/order/orderAdminList.do"},															//hrLeftMenu[3]
+		{"/hr/order/orderList.do", "/hr/order/orderAdminList.do"},			//hrLeftMenu[3]
 		{"/hr/holiday/holidayList.do","/hr/holiday/holidayAdminList.do"}	//hrLeftMenu[4]
 };
 

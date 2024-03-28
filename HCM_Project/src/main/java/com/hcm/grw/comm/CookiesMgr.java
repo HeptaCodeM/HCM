@@ -5,6 +5,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -29,8 +32,9 @@ public class CookiesMgr extends HttpServlet {
 	* @since : 2024.03.06
 	*/
 	/* setCookies */
-	public static void setCookies(HttpServletResponse rep, String cName, String cValue, int expireTime) {
-		rep.setContentType("text/html;charset=UTF-8");
+	public static void setCookies(String cName, String cValue, int expireTime) {
+		HttpServletResponse resp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
+		resp.setContentType("text/html; charset=UTF-8;");
 		
 		try {
 			if(expireTime == 0) {
@@ -58,7 +62,7 @@ public class CookiesMgr extends HttpServlet {
 		hcmCookies.setPath("/");
 		hcmCookies.setMaxAge(60*expireTime);
 		hcmCookies.setSecure(false);
-		rep.addCookie(hcmCookies);
+		resp.addCookie(hcmCookies);
 	}
 
 	/**
@@ -70,7 +74,9 @@ public class CookiesMgr extends HttpServlet {
 	* @since : 2024.03.06
 	*/
 	/* getCookies */
-	public static String getCookies(HttpServletRequest req, String cName) {
+	public static String getCookies(String cName) {
+		HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+
 		Cookie[] loginCookie = req.getCookies();
 		String rtnStr = "";
 		if(loginCookie!= null) {
@@ -98,7 +104,11 @@ public class CookiesMgr extends HttpServlet {
 	* @since : 2024.03.06
 	*/
 	/* delCookies */
-	public static void delCookies(HttpServletRequest req, HttpServletResponse res, String cName) {
+	public static void delCookies(String cName) {
+		HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+		HttpServletResponse resp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
+		resp.setContentType("text/html; charset=UTF-8;");
+		
 		Cookie[] loginCookie = req.getCookies();
 		if(loginCookie != null) {
 			for(Cookie c : loginCookie) {
@@ -108,7 +118,7 @@ public class CookiesMgr extends HttpServlet {
 					System.out.println(c.getName());
 					System.out.println(c.getValue());
 					System.out.println(c.getMaxAge());
-					res.addCookie(c);
+					resp.addCookie(c);
 				}
 			}
 		}

@@ -67,15 +67,14 @@ public class TempTreeController {
 	
 	@PostMapping(value = "/insertDoc.do", produces = "text/html; charset=UTF-8")
 	public ResponseEntity<?> insertDoc(@RequestPart(value = "file", required = false) MultipartFile file, 
-									   @RequestPart("dto") SignBoxDto dto,
-									   HttpServletResponse resp) throws IOException {
+									   @RequestPart("dto") SignBoxDto dto) throws IOException {
 		log.info("TempTreeController insertTempDoc.do POST 기안문 작성");
 		log.info("{}\n {}", file, dto);
 		if(file != null) {
 			SignFileDto fileDto = new SignFileDto();
 			fileDto.setSidf_file_origin(file.getOriginalFilename());
 			fileDto.setSidf_file_size(String.valueOf(file.getSize()));
-			fileDto.setSidf_file_content(FileCommonService.fileUpload(file, resp));
+			fileDto.setSidf_file_content(FileCommonService.fileUpload(file));
 			fileDto.setSidf_file_stored(UUID.randomUUID().toString());
 			bService.insertTransaction(dto, fileDto);
 		} else {
@@ -95,15 +94,14 @@ public class TempTreeController {
 	@PostMapping(value = "/tempLoadInsertDoc.do", produces = "text/html; charset=UTF-8")
 	public ResponseEntity<?> tempLoadInsertDoc(@RequestPart(value = "file", required = false) MultipartFile file, 
 									   @RequestPart("dto") SignBoxDto dto, 
-									   @RequestPart("sitb_doc_num") Map<String, String> sitb_doc_num,
-									   HttpServletResponse resp) throws IOException {
+									   @RequestPart("sitb_doc_num") Map<String, String> sitb_doc_num) throws IOException {
 		log.info("TempTreeController tempLoadInsertDoc.do POST 임시보관함 불러와서 기안문 작성");
 		log.info("{}\n {}\n {}", file, dto, sitb_doc_num);
 		if(file != null) {
 			SignFileDto fileDto = new SignFileDto();
 			fileDto.setSidf_file_origin(file.getOriginalFilename());
 			fileDto.setSidf_file_size(String.valueOf(file.getSize()));
-			fileDto.setSidf_file_content(FileCommonService.fileUpload(file, resp));
+			fileDto.setSidf_file_content(FileCommonService.fileUpload(file));
 			fileDto.setSidf_file_stored(UUID.randomUUID().toString());
 			int n = bService.insertTempTransaction(dto, fileDto, sitb_doc_num.get("sitb_doc_num"));
 			if(n != 1) {

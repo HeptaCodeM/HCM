@@ -25,6 +25,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
+	public int updaetLoginDate(String empl_id) {
+		return sqlSessionTemplate.update(NS+"updaetLoginDate", empl_id);
+	}
+	
+	@Override
 	public int insertLoginHistory(Map<String, String> map) {
 		return sqlSessionTemplate.insert(NS+"insertLoginHistory", map);
 	}

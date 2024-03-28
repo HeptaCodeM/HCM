@@ -642,11 +642,11 @@ public class DocController {
 
 	//상세조회 문서에 첨부된 파일 다운로드
 	@GetMapping("/doc/docBox/fileDown.do")
-	public void fileDown(HttpServletResponse response, @RequestParam String sidf_file_num)
+	public void fileDown(@RequestParam String sidf_file_num)
 			throws IOException, SerialException, SQLException {
 		SignFileDto dto = docService.getDocsDetailFile(sidf_file_num);
 
-		FileCommonService.fileDownload(response, dto.getSidf_file_origin(), dto.getSidf_file_content());
+		FileCommonService.fileDownload(dto.getSidf_file_origin(), dto.getSidf_file_content());
 	}
 	
  
@@ -676,7 +676,7 @@ public class DocController {
 		dto.setSidb_doc_num(docNum);
 		
 		//문서 삭제하는 메소드 
-		int n=docService.deleteTempDocs(dto);
+		int n=docService.deleteTempDocs(docNum);
 		
 		EmployeeDto Edto = (EmployeeDto) session.getAttribute("userInfoVo");
 

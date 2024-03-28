@@ -43,6 +43,10 @@ public class LoginController {
 	@Autowired
 	private CompanyService companyService;
 
+	@Autowired
+	private NaverOAuth naverOAuth;
+
+	
 	@Value("#{dataSpcProperties['naver.auth']}")
 	private String authUrl;
 	@Value("#{dataSpcProperties['naver.redirect']}")
@@ -51,13 +55,11 @@ public class LoginController {
 	private String clientId;
 	
 	
-	
 	@GetMapping("/login/login.do")
 	public String login(String error, 
 						String logout,
 						Model model, 
-						HttpServletRequest request, 
-						HttpServletResponse response) {
+						HttpServletRequest req) {
 		log.info("error : {}", error);
 		log.info("logout : {}", logout);
 
@@ -70,7 +72,7 @@ public class LoginController {
 		}
 
 		try {
-			String ipAddr=Function.getIpAddress(request);
+			String ipAddr=Function.getIpAddress();
 			
 			Map<String, String> loginMap = new HashMap<String, String>();
 			
@@ -100,33 +102,33 @@ public class LoginController {
 		}
 		
 		//모바일 처리
-		Device device = DeviceUtils.getCurrentDevice(request);
+		Device device = DeviceUtils.getCurrentDevice(req);
 		if(device.isMobile()) {
-			CookiesMgr.setCookies(response, "ckMobile", "Y", 0);
+			req.getSession().setAttribute("ckMobile", "Y");
 			model.addAttribute("mobile", "Y");
 		}else {
 			model.addAttribute("mobile", "N");
 		}
 		
 		String naverUrl = "";
-		naverUrl += authUrl;
-		naverUrl += "&client_id=".concat(clientId);
+		naverUrl += naverOAuth.getAuthUrl();
+		naverUrl += "&client_id=".concat(naverOAuth.getClientId());
 		try {
-			naverUrl += "&redirect_uri=".concat(URLEncoder.encode(redirectUrl,"UTF-8"));
+			naverUrl += "&redirect_uri=".concat(URLEncoder.encode(naverOAuth.getRedirectUrl(),"UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 			naverUrl += "&redirect_uri=";
 		}
-		NaverOAuth naverOAuth = new NaverOAuth();
 		String rndStr = naverOAuth.generateState();
 		naverUrl += "&state=".concat(rndStr);
 		
-		request.getSession().setAttribute("state", rndStr);
+		req.getSession().setAttribute("state", rndStr);
 		
 		model.addAttribute("naverSnsUrl", naverUrl);
 		
 		return "login/login";
 	}
+	
 	
 	@GetMapping("/login/restPwd.do")
 	public String restPwd(Model model) {
@@ -166,7 +168,7 @@ public class LoginController {
 			
 			if(sendFlag) {
 				resp.getWriter().print("true");
-				CookiesMgr.setCookies(resp, "cInitPwdAuthNum", String.valueOf(randomNumber), 3);
+				CookiesMgr.setCookies("cInitPwdAuthNum", String.valueOf(randomNumber), 3);
 			}else {
 				resp.getWriter().print("false");
 			}
@@ -182,7 +184,7 @@ public class LoginController {
 		resp.setContentType("text/html; charset=UTF-8;");
 		
 		String authNum = authNumMap.get("authnum").toString();
-		String cAuthNum = CookiesMgr.getCookies(req, "cInitPwdAuthNum");
+		String cAuthNum = CookiesMgr.getCookies("cInitPwdAuthNum");
 
 		log.info("authNum : {}, cAuthNum : {}", authNum, cAuthNum);
 		
@@ -216,7 +218,7 @@ public class LoginController {
 				boolean sendFlag = emailService.sendMail(subject, content, toEmail, fromEmail, true);
 				if(sendFlag) {
 					resp.getWriter().print("true");
-					CookiesMgr.delCookies(req, resp, "cInitPwdAuthNum");
+					CookiesMgr.delCookies("cInitPwdAuthNum");
 				}else {
 					resp.getWriter().print("false");
 				}
