@@ -20,7 +20,10 @@ import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.CommonCodeDto;
 import com.hcm.grw.model.service.hr.CommonCodeService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 public class CommonCodeController {
 
 	@Autowired
@@ -29,6 +32,7 @@ public class CommonCodeController {
 	
 	@GetMapping(value = "/hr/commonCode/roleList.do")
 	public String roleList(Model model, String role){
+		log.info("{} 직위/직책/부서 리스트 화면진입", Function.getMethodName());
 		System.out.println(role);
 		Map<String, Object> roleMap = new HashMap<String, Object>();
 		roleMap.put("role", role);
@@ -43,6 +47,7 @@ public class CommonCodeController {
 	
 	@GetMapping(value = "/hr/commonCode/roleDetail.do")
 	public String hrRoleDetail(String coco_cd , String role , Model model) {
+		log.info("{} 직위/직책/부서 상세 화면진입", Function.getMethodName());
 		System.out.println(coco_cd);
 		System.out.println(role);
 		System.out.println(role.equals("DT"));
@@ -74,6 +79,7 @@ public class CommonCodeController {
 	
 	@GetMapping(value = "/hr/commonCode/deleteRoleOne.do")
 	public String deleteRoleOne(HttpServletRequest request) {
+		log.info("{} 직위/직책/부서 삭제", Function.getMethodName());
 		String coco_cd = request.getParameter("coco_cd");
 		System.out.println(coco_cd);
 		String role = request.getParameter("role");
@@ -89,6 +95,7 @@ public class CommonCodeController {
 
 	@PostMapping(value = "/hr/commonCode/correctionRole.do")
 	public @ResponseBody void correctionRole(HttpServletRequest request , Authentication authentication ,HttpServletResponse resp) {
+		log.info("{} 직위/직책/부서 수정", Function.getMethodName());
 		String coco_name = request.getParameter("coco_name");
 		String coco_cd = request.getParameter("coco_cd");
 		String role = request.getParameter("role");
@@ -116,12 +123,14 @@ public class CommonCodeController {
 
 	@GetMapping(value = "/hr/commonCode/insertRole.do")
 	public String insertRole(String role , Model model) {
+		log.info("{} 직위/직책/부서 입력 화면진입", Function.getMethodName());
 		model.addAttribute("role", role);
 		return "hr/commonCode/insertRole";
 	}
 	
 	@PostMapping(value = "/hr/commonCode/insertRoleOne.do")
 	public @ResponseBody void insertRoleOne(HttpServletRequest request , Authentication authentication ,HttpServletResponse resp) {
+		log.info("{} 직위/직책/부서 입력", Function.getMethodName());
 		String coco_name = request.getParameter("coco_name");
 		String coco_cd = request.getParameter("coco_cd");
 		String role = request.getParameter("role");
@@ -156,6 +165,7 @@ public class CommonCodeController {
 	public Map<String, Object> roleDuplicateChk(@RequestParam("coco_name") String coco_name ,
 												@RequestParam("coco_cd") String coco_cd ,
 												@RequestParam("role") String role) {
+		log.info("{} 직위/직책/부서 중복확인", Function.getMethodName());
 		System.out.println(coco_name);
 		System.out.println(coco_cd);
 		System.out.println(role);

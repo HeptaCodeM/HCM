@@ -467,8 +467,7 @@ public class EmployeeController {
 
 	@GetMapping("modifyAdmin.do")
 	public void modifyAdmin(Model model ,String empl_id) {
-		log.info("EmployeeListController modifyAdmin 수정페이지 진입");
-		log.info("=========================================");
+		log.info("{} 임직원정보 상세(어드민)화면", Function.getMethodName());
 		System.out.println(empl_id);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empl_id", empl_id);
@@ -538,6 +537,7 @@ public class EmployeeController {
 								@RequestParam("rkArr") String[] rkArr,
 								@RequestParam("pnArr") String[] pnArr
 							) {
+		log.info("{} 임직원정보(어드민) 검색", Function.getMethodName());
 		System.out.println(empShCtgVal);
 		System.out.println(empStaCtg);
 		System.out.println(startDate);
@@ -609,6 +609,7 @@ public class EmployeeController {
 	@GetMapping(value = "empAdminValueChk.do")
 	@ResponseBody
 	public boolean empAdminValueChk(String empl_phone, String empl_tel, String empl_fax) {
+		log.info("{} 임직원정보(어드민) 중복확인", Function.getMethodName());
 		boolean returnBool = true;
 		if(empl_phone != null) {
 			System.out.println(empl_phone);
