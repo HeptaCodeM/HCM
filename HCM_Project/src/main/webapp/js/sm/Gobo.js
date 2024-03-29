@@ -87,6 +87,7 @@ function updateGoboDelFlag(gobo_no){
 function toggleMenu(event, rebo_no) {
     // 이벤트 전파 방지
     event.stopPropagation();
+    event.preventDefault();
     
     // 클릭된 요소를 선택합니다.
     var moreButton = $(event.target);
@@ -101,19 +102,50 @@ function toggleMenu(event, rebo_no) {
         // 다른 LayerMore 요소를 모두 숨깁니다.
         $('.LayerMore').hide();
         // LayerMore 요소를 생성하여 추가합니다.
-        var html = '<div data-v-0330f652="" id="commentItem" role="menu" class="LayerMore" style="position: absolute;">';
-        html += '<ul class="layer_list">';
-        html += '<li class="layer_item">';
-        html += '<a href="#" role="button" class="update_button" onclick="updateButton('+rebo_no+')" style="text-decoration: none;"> 수정 </a>';
-        html += '</li>';
-        html += '<li class="layer_item">';
-        html += '<a href="#" role="button" class="delete_button" onclick="deleteButton('+rebo_no+')" style="text-decoration: none;"> 삭제 </a>';
-        html += '</li>';
-        html += '</ul>';
+        var html = '<div data-v-0330f652="" id="commentItem'+rebo_no+'" role="menu" class="menu-rounded menu-gray-500 menu-state-bg menu-state-color fw-semibold py-1 fs-6 w-50px LayerMore" style="position: absolute; background: #fff; border-radius: 8px; border: 1px solid #ccc; z-index: 9999; text-align:center; right:-11px;">';
+        html += '<a href="#" role="button" class="update_button" onclick="updateButton('+rebo_no+')" style="text-decoration: none; color:black;"> 수정 </a><br>';
+        html += '<a href="#" role="button" class="delete_button" onclick="deleteButton('+rebo_no+')" style="text-decoration: none; color:black;"> 삭제 </a>';
         html += '</div>';
         // 클릭된 요소 바로 다음에 새로운 HTML을 추가합니다.
         moreButton.after(html);
     }
+}
+
+function deleteButton(rebo_no){
+	sweetAlertConfirm("댓글을 삭제 하시겠습니까?",deleteAjax(rebo_no) , '');
+}
+function deleteAjax(rebo_no){
+	$.ajax({
+		url: "/sm/updateReply.do",
+		data:{rebo_no:rebo_no},
+		type:"get",
+		dataType: "json",
+		success: function(){
+			
+		},
+		error: function(){
+			
+		}
+	})
+	
+}
+function updateButton(rebo_no){
+	sweetAlertConfirm("댓글을 수정 하시겠습니까?",updateAjax(rebo_no) , '');
+}
+function updateAjax(rebo_no){
+	
+	$.ajax({
+		url: "/sm/updateReplyDelFlag.do",
+		data:{rebo_no:rebo_no},
+		type:"get",
+		dataType: "json",
+		success: function(){
+		},
+		error:function(){
+			
+		}
+	})
+	
 }
 
 
@@ -122,158 +154,7 @@ function toggleMenu(event, rebo_no) {
 
 
 
-function insertReply(data){
-	 // 직렬화된 데이터를 가져옵니다.
-		var form = $("#ReplyForm").serialize();
-		var additionalData = "gobo_no=" + data;
-		form += "&" + additionalData;
-		
-		// jQuery를 사용하여 폼 필드의 값을 가져옵니다.
-		var rebo_writer = $("#ReplyForm #rebo_writer").val();
-		var rebo_content = $("#ReplyForm #rebo_content").val();
-		
-		$.ajax({
-				url: "/sm/insertReply.do",
-				data: form,
-				type: "get",
-				dataType: "json",
-				success: function() {
-					$("#ReplyForm")[0].reset();
-					var currentDate = new Date();
-					var formattedDate = currentDate.getFullYear() + '-' + 
-					                    ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' + 
-					                    ('0' + currentDate.getDate()).slice(-2) + ' ' + 
-					                    ('0' + currentDate.getHours()).slice(-2) + ':' + 
-					                    ('0' + currentDate.getMinutes()).slice(-2);
-					var commentHtml = '';
-					if ($("#commentList > li").length > 0) {
-					    // 상위에 형제 노드가 있는 경우
-					    commentHtml += '<div class="separator border-2 separator-dashed my-5 hrline" style="margin-left: 50px;"></div>';
-					}
-					commentHtml += '<li>';
-					commentHtml += '<div class="d-flex align-items-center no-border" style="border: none;">';
 
-					commentHtml += '<img src="${sessionScope.userInfoVo.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">';
-					
-					commentHtml += '<div style="margin-left: 10px;">';
-					commentHtml += '<strong>'+rebo_writer+'</strong><br>';
-					commentHtml += '<div>'+rebo_content+'</div>';
-					commentHtml += '<div><small>'+formattedDate+'</small>';
-					commentHtml += '<a role="button" class="comment_info_button" onclick="showCommentForm()">답글쓰기</a>';
-					commentHtml += '</div>';
-					commentHtml += '</div>';
-					commentHtml += '</div>';
-					commentHtml += '</li>';
-					
-					
-					$("#commentList").append(commentHtml);
-				},
-				error: function() {
-					
-				}
-			});
-			
-			
-	}
-
-
-
-
-
-
-
-
-// 새로운 li 요소 생성
-var liElement = document.createElement('li');
-liElement.id = 'firstReply';
-
-// 새로운 div 요소 생성
-var divElement = document.createElement('div');
-divElement.classList.add('d-flex', 'align-items-center', 'no-border');
-divElement.style.border = 'none';
-
-// 새로운 이미지 요소 생성
-var imgElement = document.createElement('img');
-imgElement.src = sessionScope.userInfoVo.empl_picture_str;
-imgElement.alt = '프로필 사진';
-imgElement.width = '36';
-imgElement.height = '36';
-imgElement.classList.add('mr-3');
-
-// 새로운 div 요소 생성
-var innerDivElement = document.createElement('div');
-innerDivElement.style.marginLeft = '10px';
-innerDivElement.style.position = 'relative';
-innerDivElement.style.width = '100%';
-
-// 새로운 strong 요소 생성
-var strongElement = document.createElement('strong');
-strongElement.textContent = comment.rebo_writer;
-
-// 새로운 div 요소 생성
-var contentDivElement = document.createElement('div');
-contentDivElement.textContent = comment.rebo_content;
-
-// 새로운 small 요소 생성
-var smallElement = document.createElement('small');
-smallElement.textContent = new Intl.DateTimeFormat('en-US', { 
-  year: 'numeric', 
-  month: '2-digit', 
-  day: '2-digit', 
-  hour: '2-digit', 
-  minute: '2-digit' 
-}).format(comment.rebo_regdate);
-
-// 새로운 div 요소 생성
-var actionDivElement = document.createElement('div');
-actionDivElement.style.position = 'absolute';
-actionDivElement.style.top = '0';
-actionDivElement.style.right = '0';
-actionDivElement.style.float = 'right';
-
-// 새로운 a 요소 생성
-var aElement = document.createElement('a');
-aElement.role = 'button';
-aElement.title = '더보기';
-aElement.classList.add('comment_tool');
-aElement.href = '#';
-aElement.id = 'comment_tool' + comment.rebo_no;
-aElement.onclick = function(event) {
-  toggleMenu(event, comment.rebo_no);
-};
-
-// 새로운 이미지 요소 생성
-var imgElementInsideA = document.createElement('img');
-imgElementInsideA.alt = '더보기';
-imgElementInsideA.src = 'https://cdn4.iconfinder.com/data/icons/liny/24/more-menu-vertical-line-64.png';
-imgElementInsideA.style.width = '30px';
-
-// 새로운 a 요소 생성
-var replyButton = document.createElement('a');
-replyButton.role = 'button';
-replyButton.classList.add('comment_info_button');
-replyButton.onclick = function() {
-  showCommentForm(comment.rebo_no);
-};
-replyButton.textContent = '답글쓰기';
-
-// DOM 트리에 요소들을 추가
-aElement.appendChild(imgElementInsideA);
-actionDivElement.appendChild(aElement);
-innerDivElement.appendChild(strongElement);
-innerDivElement.appendChild(document.createElement('br'));
-innerDivElement.appendChild(contentDivElement);
-innerDivElement.appendChild(document.createElement('br'));
-innerDivElement.appendChild(smallElement);
-innerDivElement.appendChild(actionDivElement);
-innerDivElement.appendChild(replyButton);
-divElement.appendChild(imgElement);
-divElement.appendChild(innerDivElement);
-liElement.appendChild(divElement);
-
-// 원하는 부모 요소에 새로 생성한 요소를 추가
-var parentElement = document.getElementById('commentList'); // 부모 요소를 지정해주세요.
-parentElement.appendChild(liElement);
 
 
 
