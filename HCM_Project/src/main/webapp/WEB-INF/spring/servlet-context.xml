@@ -46,7 +46,22 @@
 			<mvc:mapping path="/**"/>
 			<bean class="com.hcm.grw.interceptor.DuplicateRequestHandler"/>
 		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/login/*"/>
+			<mvc:exclude-mapping path="/error/*"/>
+			<mvc:exclude-mapping path="/api/*"/>
+			<mvc:exclude-mapping path="/"/>
+			<bean class="com.hcm.grw.interceptor.AuthCheckHandler"/>
+		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+		</mvc:interceptor>
+
 	</mvc:interceptors>
-	
+
 	
 </beans>

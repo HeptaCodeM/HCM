@@ -7,6 +7,8 @@ import java.nio.charset.StandardCharsets;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,7 @@ public class FileCommonService {
 	
 	/**
 	 * @param file Form-data MultipartFile
+	 * @param resp HttpServletResponse
 	 * @return Blob 파일 데이터 리턴 (dto 객체에 set 필수)
 	 * @author JISU
 	 * @since 2024.03.15
@@ -57,7 +60,10 @@ public class FileCommonService {
 	 * @author JISU
 	 * @since 2024.03.15
 	 */
-	public static void fileDownload(HttpServletResponse response, String fileName, byte[] fileContent) {
+	public static void fileDownload(String fileName, byte[] fileContent) {
+		HttpServletResponse resp = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
+		resp.setContentType("text/html; charset=UTF-8;");
+		
 		log.info("FileCommonService 파일 다운로드 실행 : {}", fileName);
 		String name = "";
 		try {
@@ -67,10 +73,10 @@ public class FileCommonService {
 			name = fileName;
 		}
 		
-		response.setContentType("application/octet-stream");
-		response.setHeader("Content-Disposition", "attachment; filename=\"" + name + "\"");
+		resp.setContentType("application/octet-stream");
+		resp.setHeader("Content-Disposition", "attachment; filename=\"" + name + "\"");
 		
-		try(OutputStream out = response.getOutputStream()) {
+		try(OutputStream out = resp.getOutputStream()) {
 			out.write(fileContent);
 			out.flush();
 		} catch (IOException e) {

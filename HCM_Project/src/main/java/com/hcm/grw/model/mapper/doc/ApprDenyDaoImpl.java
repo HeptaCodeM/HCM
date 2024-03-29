@@ -50,5 +50,9 @@ public class ApprDenyDaoImpl implements IApprDenyDao {
 		return sqlSessionTemplate.update(NS+"finalDocApprove", dto);
 	}
 
+	@Override
+	public int gianCancel(SignBoxDto dto) {
+		return sqlSessionTemplate.update(NS+"gianCancel", dto);
+	}
 
 }

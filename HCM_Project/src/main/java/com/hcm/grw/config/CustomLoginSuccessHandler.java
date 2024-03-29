@@ -2,22 +2,24 @@ package com.hcm.grw.config;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.EmployeeDto;
-import com.hcm.grw.model.mapper.hr.EmployeeDao;
+import com.hcm.grw.model.service.hr.EmployeeService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,12 +27,13 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Autowired
-	private EmployeeDao employeeDao;
+	private EmployeeService employeeService;
 	
 	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-			Authentication authentication) throws IOException, ServletException {
-		log.info("login Success");
+	public void onAuthenticationSuccess(HttpServletRequest request, 
+										HttpServletResponse response,
+										Authentication authentication) throws IOException, ServletException {
+		log.info("{} - login Success", Function.getMethodName());
 		
 		List<String> roleNames = new ArrayList<String>();
 	
@@ -44,7 +47,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		});
 		
 		
-		EmployeeDto employeeDto = employeeDao.getUserInfo(authentication.getName());
+		EmployeeDto employeeDto = employeeService.getUserInfo(authentication.getName());
 		
 		HttpSession session = request.getSession();
 		//이미지 스트링 정보로 처리
@@ -52,12 +55,34 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		//2진정보 초기화
 		employeeDto.setEmpl_picture(null);
 		session.setAttribute("userInfoVo", employeeDto);
-
+		
 		log.info("ROLE NAME : {}", roleNames);
 
 		// 로그인 성공 시 메인화면 이동
 		if(authentication.isAuthenticated()) {
-			response.sendRedirect("/mainTmp.do");
+			String ipAddr;
+			try {
+				ipAddr = Function.getIpAddress();
+			} catch (Exception e) {
+				e.printStackTrace();
+				ipAddr = "";
+			}
+			Map<String, String> loginHistoryMap = new HashMap<String, String>();
+			loginHistoryMap.put("empl_id", authentication.getName());
+			loginHistoryMap.put("emlh_create_ip", ipAddr);
+			
+			int updateLastLoginCnt = employeeService.updaetLoginDate(authentication.getName());
+			log.info("{} - LAST_LOGIN_DT UPDATE : {}", Function.getMethodName(), updateLastLoginCnt);
+			int historyCnt = employeeService.insertLoginHistory(loginHistoryMap);
+			log.info("{} - historyCnt : {}", Function.getMethodName(), historyCnt);
+			
+			
+			log.info("mobile session : {}", StringUtils.defaultIfEmpty(String.valueOf(request.getSession().getAttribute("ckMobile")), ""));
+			if(StringUtils.defaultIfEmpty(String.valueOf(request.getSession().getAttribute("ckMobile")), "").equals("Y")) {
+				response.sendRedirect("/hr/commute/registCommute.do");
+			}else {
+				response.sendRedirect("/mainTmp.do");
+			}
 			return;
 		}
 

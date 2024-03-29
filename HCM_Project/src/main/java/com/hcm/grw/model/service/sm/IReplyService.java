@@ -9,7 +9,9 @@ public interface IReplyService {
 	
 	/* 댓글 전체조회 */
 	public List<ReplyDto> getAllReply(String no);
+	public List<ReplyDto> getAllReplyTwo(String no);
 	/* 댓글등록 */
+	public String maxNo(String no);
 	public int insertReply(ReplyDto dto);
 	/*대댓글등록*/
 	public int insertReplyTwo(ReplyDto dto);
@@ -17,4 +19,8 @@ public interface IReplyService {
 	public int updateReply(ReplyDto dto);
 	/* 댓글 삭제 */
 	public int updateReplyDelFlag(String no);
+	
+//	public String TransactionReply(ReplyDto dto);
+//	
+//	public String TransactionReplyTwo(ReplyDto dto);
 }

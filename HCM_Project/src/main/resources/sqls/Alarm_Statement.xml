@@ -51,6 +51,7 @@
 			AND AL_TARGET = #{al_target}
 	</select>		
 	
+<!-- 	나에게 온 모든 알림 조회 -->
 	<select id="selectAllAlarm" resultType="AlarmDto">
 		SELECT a.* , e.EMPL_NAME AS PRODUCER_NAME, e2.EMPL_NAME AS TARGET_NAME, sdt.SIDT_TEMP_NAME AS TEMPLATE
 			FROM ALARM a 
@@ -68,6 +69,7 @@
 			ORDER BY AL_DATE DESC
 	</select>
 	
+<!-- 	알림 끄기 -->
 	<update id="alarmOff">
 		UPDATE ALARM SET AL_SET = 'N'
 		WHERE AL_NO IN (

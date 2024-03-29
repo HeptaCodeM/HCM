@@ -1,6 +1,7 @@
 package com.hcm.grw.model.service.sm;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,12 @@ public class ScbServiceImpl implements IScbService {
 	public List<ScbDto> getAllCalendar(ScbDto dto) {
 		log.info("ScbServiceImpl getAllCalendar Service 일정 조회");
 		return dao.getAllCalendar(dto);
+	}
+	
+	@Override
+	public ScbDto detailScbo(Map<String, Object> map) {
+		log.info("ScbServiceImpl getAllCalendar Service 일정 상세 조회");
+		return dao.detailScbo(map);
 	}
 	
 	

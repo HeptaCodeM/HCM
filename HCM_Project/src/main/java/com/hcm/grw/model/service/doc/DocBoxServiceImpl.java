@@ -91,25 +91,6 @@ public class DocBoxServiceImpl implements IDocBoxService {
 		return (n+m)>1?true:false;
 	}
 	
-	//문서 조회 테이블+json 동시 트랜잭션
-	@Transactional(readOnly = true)
-	public boolean getDocs(SignBoxDto dto) {
-		
-	 List<SignBoxDto> table=dao.getAllDocsTable(dto);
-	 List<SignBoxDto> json=	dao.getAllDocsJson(dto);
-		
-	 int n = 0;
-	 int m = 0;
-
-	 if (table != null) {
-		  n = 1;
-		 }
-	 if (json != null) {
-		  m = 1;
-		 }
-		
-		return (n+m)>1?true:false;
-	}
 	
 	@Override
 	public List<SignBoxDto> getChamjoJson(Map<String, String> inMap) {
@@ -139,5 +120,24 @@ public class DocBoxServiceImpl implements IDocBoxService {
 	@Override
 	public SignFileDto getDocsDetailFile(String sidf_file_num) {
 		return dao.getDocsDetailFile(sidf_file_num);
+	}
+	
+	@Override
+	public List<SignBoxDto> getTempDocs(SignBoxDto dto) {
+		return dao.getTempDocs(dto);
+	}
+	
+	@Override
+	public int deleteTempDocs(String sitb_doc_num) {
+		return dao.deleteTempDocs(sitb_doc_num);	}
+	
+	@Override
+	public String findEmployeeName(String id) {
+		return dao.findEmployeeName(id);
+	}
+	
+	@Override
+	public String findDeptName(String dept) {
+		return dao.findDeptName(dept);
 	}
 }	

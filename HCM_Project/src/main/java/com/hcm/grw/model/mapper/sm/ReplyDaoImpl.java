@@ -26,6 +26,17 @@ public class ReplyDaoImpl implements IReplyDao {
 		log.info("ReplyDaoImpl getAllReply Dao Access");
 		return session.selectList(NS+"getAllReply",no);
 	}
+	
+	@Override
+	public String maxNo(String no) {
+		log.info("ReplyDaoImpl getAllReply Dao Access");
+		return session.selectOne(NS+"maxNo",no);
+	}
+	@Override
+	public List<ReplyDto> getAllReplyTwo(String no) {
+		log.info("ReplyDaoImpl getAllReply Dao Access");
+		return session.selectList(NS+"getAllReplyTwo",no);
+	}
 
 	@Override
 	public int insertReply(ReplyDto dto) {

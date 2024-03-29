@@ -2,55 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.hcm.grw.model.mapper.hr.HolidayDaoImpl">
 
-
-	<insert id="registEmployeeHoliday">
-		<![CDATA[
-		INSERT INTO EMP_HOLIDAY(EMHO_YEAR, EMPL_ID, EMHO_HOLIDAY)
-		SELECT
-		TO_CHAR(CURRENT_DATE, 'YYYY'),
-		A.EMPL_ID,
-		A.HOLIDAY
-		FROM (
-		SELECT
-		T.EMPL_ID,
-		T.EMPL_NAME,
-		T.EMPL_JOINDATE,
-		T.YEAR_DIFFERENCE,
-		CASE WHEN T.YEAR_DIFFERENCE < 1 THEN 0
-		WHEN T.YEAR_DIFFERENCE >= 1 THEN
-		CASE WHEN 15+((T.YEAR_DIFFERENCE-1)/2) > 20 THEN 20
-		ELSE 15+TRUNC((T.YEAR_DIFFERENCE-1)/2)
-		END
-		END AS HOLIDAY
-		FROM (
-		SELECT
-		A.EMPL_ID,
-		A.EMPL_NAME,
-		A.EMPL_JOINDATE,
-		TRUNC(MONTHS_BETWEEN(TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD'), TO_DATE(A.EMPL_JOINDATE, 'YYYY-MM-DD')) / 12) AS YEAR_DIFFERENCE
-		FROM EMPLOYEE A
-		WHERE EMPL_DELFLAG ='N'
-		) T
-		WHERE T.YEAR_DIFFERENCE > 0
-		) A
-		LEFT OUTER JOIN EMP_HOLIDAY B ON A.EMPL_ID = B.EMPL_ID AND B.EMHO_YEAR = TO_CHAR(CURRENT_DATE , 'YYYY')
-		WHERE B.EMPL_ID IS NULL
-		AND A.HOLIDAY > 0
-		]]>
-	</insert>
-
-
 	<!-- 휴가정보 조회 -->
-	<select id="holidayList" parameterType="String" resultType="HolidayDto">
+	<select id="holidayList" parameterType="Map" resultType="HolidayDto">
 		<![CDATA[
 		SELECT
-		A.SIDB_DOC_NUM,
-		B.SICA_NAME,
-		C.SIDT_TEMP_NAME,
-		A.SIDB_DOC_TITLE,
-		A.SIDB_DOC_APPRDT, -- 최종승인일(증명서 기간 종료일로 지정)
+		SUBSTR(C.SIDT_TEMP_NAME, 0, 2) AS SIDT_TEMP_NAME,
 		A.SIDB_DOC_BE,
 		A.SIDB_DOC_END,
+		TO_CHAR(A.SIDB_DOC_BE, 'YYYY-MM-DD')||' ~ '||TO_CHAR(A.SIDB_DOC_END, 'YYYY-MM-DD') AS SIDB_DOC_DATE,
+		A.SIDB_DOC_APPRDT, -- 최종승인일
 		(
 			SELECT 
 					COUNT(*)
@@ -60,48 +20,30 @@
 				CONNECT BY LEVEL <= (A.SIDB_DOC_END - A.SIDB_DOC_BE) + 1
 				MINUS
 				SELECT HOLI_DATE FROM HOLIDAY WHERE HOLI_FLAG = 'Y'
-			)		
+			)	
 		) AS HOLIDAY
 		FROM SIGN_DOC_BOX A
 		INNER JOIN SIGN_CATEGORY B ON A.SICA_CD = B.SICA_CD
 		INNER JOIN SIGN_DOC_TEMP C ON A.SIDT_TEMP_CD = C.SIDT_TEMP_CD
 		INNER JOIN EMPLOYEE D ON A.EMPL_ID = D.EMPL_ID
-		WHERE D.EMPL_ID = #{empl_id}
-		AND A.SIDB_DOC_STAT = '3'
+		WHERE A.SIDB_DOC_STAT IN ('1', '2', '3')
 		AND B.SICA_CD = 'CC000001' --근태
 		AND C.SIDT_TEMP_CD IN ('TC000001', 'TC000002') --TC000001(연차신청서), TC000002(휴가신청서)
 		]]>
+		<if test="empl_id != null and empl_id != ''">
+		AND D.EMPL_ID = #{empl_id}
+		</if>
+		<if test="sdate != null and sdate != ''">
+		<![CDATA[
+		AND (TO_CHAR(A.SIDB_DOC_BE, 'YYYY-MM-DD') >= #{sdate} OR TO_CHAR(A.SIDB_DOC_END, 'YYYY-MM-DD') >= #{sdate})
+		]]>
+		</if>
+		<if test="edate != null and edate != ''">
+		<![CDATA[
+		AND (TO_CHAR(A.SIDB_DOC_BE, 'YYYY-MM-DD') <= #{edate} OR TO_CHAR(A.SIDB_DOC_END, 'YYYY-MM-DD') <= #{edate})
+		]]>
+		</if>
 	</select>
-
-	<insert id="registSpecialDay" parameterType="Map">
-		MERGE INTO HOLIDAY H
-		USING (SELECT #{holi_date} HOLI_DATE FROM DUAL) S
-		ON (H.HOLI_DATE = S.HOLI_DATE)
-		WHEN MATCHED THEN
-			UPDATE SET
-		    	HOLI_NAME = #{holi_name},
-		    	HOLI_FLAG = #{holi_flag},
-		    	HOLI_MODIFY_ID = 'SYSTEM',
-		    	HOLI_MODIFY_DT = CURRENT_DATE
-		WHEN NOT MATCHED THEN
-			INSERT (HOLI_DATE, HOLI_NAME, HOLI_FLAG, HOLI_CREATE_ID)
-			VALUES (#{holi_date}, #{holi_name}, #{holi_flag}, 'SYSTEM')
-	</insert>
-
-	<insert id="registNomalDay">
-		MERGE INTO HOLIDAY H
-		USING (SELECT HOLI_DATE, HOLI_NAME, HOLI_FLAG FROM VW_NOMAL_HOLIDAY) S
-		ON (H.HOLI_DATE = S.HOLI_DATE)
-		WHEN MATCHED THEN
-			UPDATE SET
-		    	HOLI_NAME = S.HOLI_NAME,
-		    	HOLI_FLAG = S.HOLI_FLAG,
-		    	HOLI_MODIFY_ID = 'SYSTEM',
-		    	HOLI_MODIFY_DT = CURRENT_DATE
-		WHEN NOT MATCHED THEN
-			INSERT (HOLI_DATE, HOLI_NAME, HOLI_FLAG, HOLI_CREATE_ID)
-			VALUES (S.HOLI_DATE, S.HOLI_NAME, S.HOLI_FLAG, 'SYSTEM')
-	</insert>
 
 	<select id="selectHoliDayInfo" parameterType="Map" resultType="Integer">
 		<![CDATA[
@@ -117,16 +59,66 @@
 		]]>
 	</select>
 
-	<select id="selectEmpTotalHoliDayInfo" parameterType="String" resultType="map">
+	<select id="selectEmpTotalHoliDayInfo" parameterType="String" resultType="Map">
+		      <![CDATA[
+      SELECT
+            SUM(EMHO_HOLIDAY) AS TOTAL_HOLIDAY,
+            SUM(USE_HOLIDAY) USE_HOLIDAY,
+            SUM(EMHO_HOLIDAY) - SUM(USE_HOLIDAY) REST_HOLIDAY
+      FROM   (
+            SELECT
+                  E.EMHO_HOLIDAY,
+                  (
+                     SELECT 
+                           COUNT(*)
+                     FROM   (
+                           SELECT DISTINCT TO_CHAR(A.SIDB_DOC_BE + LEVEL - 1, 'YYYYMMDD') AS HOLI_DATE
+                           FROM DUAL
+                           CONNECT BY LEVEL <= (A.SIDB_DOC_END - A.SIDB_DOC_BE) + 1
+                           MINUS
+                           SELECT HOLI_DATE FROM HOLIDAY WHERE HOLI_FLAG = 'Y'
+                           )   
+                  ) AS USE_HOLIDAY
+            FROM       SIGN_DOC_BOX A
+            INNER JOIN SIGN_CATEGORY B ON A.SICA_CD = B.SICA_CD
+            INNER JOIN SIGN_DOC_TEMP C ON A.SIDT_TEMP_CD = C.SIDT_TEMP_CD
+            INNER JOIN EMPLOYEE D ON A.EMPL_ID = D.EMPL_ID
+            LEFT OUTER JOIN (
+                        SELECT EMPL_ID, EMHO_YEAR, EMHO_HOLIDAY
+                        FROM EMP_HOLIDAY
+                        WHERE (EMPL_ID, EMHO_YEAR) IN (
+                              SELECT EMPL_ID, MAX(EMHO_YEAR) EMHO_YEAR
+                              FROM EMP_HOLIDAY
+                              GROUP BY EMPL_ID
+                        )
+                        ) E ON D.EMPL_ID = E.EMPL_ID
+            WHERE D.EMPL_ID = #{empl_id}
+            --AND A.SIDB_DOC_STAT = '3'
+            AND B.SICA_CD = 'CC000001' --근태
+            AND C.SIDT_TEMP_CD IN ('TC000001', 'TC000002') --TC000001(연차신청서), TC000002(휴가신청서)
+            AND E.EMHO_YEAR || TO_CHAR(TO_DATE(D.EMPL_JOINDATE, 'YYYY-MM-DD'), '-MM-DD') < TO_CHAR(A.SIDB_DOC_BE, 'YYYY-MM-DD')   --휴가부여년도/입사월일 기준으로 휴가정보 처리
+            UNION ALL 
+            SELECT 0, 0 FROM DUAL
+            )
+      ]]>
+	</select>
+
+	<select id="selectEmpTotalHoliDayInfoAdmin" parameterType="Map" resultType="HolidayAdminDto">
 		<![CDATA[
 		SELECT
+				B.EMPL_ID,
+				B.EMPL_NAME,
+				C.COCO_NAME AS EMPL_DEPT_NM,
+				D.COCO_NAME AS EMPL_RANK_NM,
+				E.COCO_NAME AS EMPL_POSITION_NM,
 				EMHO_HOLIDAY AS TOTAL_HOLIDAY,
-				SUM(USE_HOLIDAY) USE_HOLIDAY,
-				EMHO_HOLIDAY - SUM(USE_HOLIDAY) REST_HOLIDAY
+				USE_HOLIDAY,
+				EMHO_HOLIDAY - USE_HOLIDAY REST_HOLIDAY
 		FROM	(
 				SELECT
-						E.EMHO_HOLIDAY,
-						(
+						D.EMPL_ID,
+						NVL(E.EMHO_HOLIDAY, 0) AS EMHO_HOLIDAY,
+						SUM((
 							SELECT 
 									COUNT(*)
 							FROM	(
@@ -136,7 +128,7 @@
 									MINUS
 									SELECT HOLI_DATE FROM HOLIDAY WHERE HOLI_FLAG = 'Y'
 									)	
-						) AS USE_HOLIDAY
+						)) AS USE_HOLIDAY
 				FROM 		SIGN_DOC_BOX A
 				INNER JOIN SIGN_CATEGORY B ON A.SICA_CD = B.SICA_CD
 				INNER JOIN SIGN_DOC_TEMP C ON A.SIDT_TEMP_CD = C.SIDT_TEMP_CD
@@ -149,14 +141,46 @@
 										FROM EMP_HOLIDAY
 										GROUP BY EMPL_ID
 								)
-								) E ON D.EMPL_ID = E.EMPL_ID
-				WHERE D.EMPL_ID = #{empl_id}
-				--AND A.SIDB_DOC_STAT = '3'
+				) E ON D.EMPL_ID = E.EMPL_ID
+				WHERE A.SIDB_DOC_STAT IN ('1','2','3')
 				AND B.SICA_CD = 'CC000001' --근태
 				AND C.SIDT_TEMP_CD IN ('TC000001', 'TC000002') --TC000001(연차신청서), TC000002(휴가신청서)
 				AND E.EMHO_YEAR || TO_CHAR(TO_DATE(D.EMPL_JOINDATE, 'YYYY-MM-DD'), '-MM-DD') < TO_CHAR(A.SIDB_DOC_BE, 'YYYY-MM-DD')	--휴가부여년도/입사월일 기준으로 휴가정보 처리
-				)
-		GROUP BY EMHO_HOLIDAY
+				GROUP BY D.EMPL_ID, E.EMHO_HOLIDAY
+		) A
+		INNER JOIN EMPLOYEE B ON A.EMPL_ID = B.EMPL_ID
+		INNER JOIN COMMON_CODE C ON B.EMPL_DEPT_CD = C.COCO_CD
+		INNER JOIN COMMON_CODE D ON B.EMPL_RANK_CD = D.COCO_CD
+		LEFT JOIN COMMON_CODE E ON B.EMPL_POSITION_CD = E.COCO_CD
+		WHERE 1=1
+		]]>
+		<if test="keyWord != null and keyWord != ''">
+		AND ${searchType} LIKE CONCAT(#{keyWord}, '%')
+		</if>
+		<if test="empl_delflag != null and empl_delflag != ''">
+		AND B.EMPL_DELFLAG = #{empl_delflag}
+		</if>
+		
+		<if test="empl_dept_cd != null and empl_dept_cd != ''">
+		    AND B.EMPL_DEPT_CD IN 
+		    <foreach collection="empl_dept_cd" item="dcode" open="(" separator="," close=")">
+		        #{dcode}
+		    </foreach>
+		</if>
+		<if test="empl_rank_cd != null and empl_rank_cd != ''">
+			AND B.EMPL_RANK_CD IN
+			<foreach collection="empl_rank_cd" item="rcode" open="(" separator="," close=")">
+				#{rcode}
+			</foreach>
+		</if>
+		<if test="empl_position_cd != null and empl_position_cd != ''">
+			AND B.EMPL_POSITION_CD IN
+			<foreach collection="empl_position_cd" item="pcode" open="(" separator="," close=")">
+				#{pcode}
+			</foreach>
+		</if>		
+		<![CDATA[
+		ORDER BY B.EMPL_ID ASC
 		]]>
 	</select>
 

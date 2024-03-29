@@ -14,13 +14,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HolidayDto {
-	private String sidb_doc_num;
-	private String sica_name;
 	private String sidt_temp_name;
-	private String sidb_doc_title;
 	private Date sidb_doc_apprdt;
 	private Date sidb_doc_be;
 	private Date sidb_doc_end;
+	private String sidb_doc_date;
 	private String holiday;
-
 }

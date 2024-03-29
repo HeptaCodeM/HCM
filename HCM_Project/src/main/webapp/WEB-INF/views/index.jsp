@@ -33,6 +33,10 @@
 		<a href="/doc/noticeAlarmTest.do">Alarm 테스트</a>
 		<hr>
 		<a href="/hr/employee/selectEmployeeOne.do?empl_id?20220101">사원정보 요청</a>
+		<br>
+		<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+		<img src="/image/logo-removebg-preview.png" style="height:150px">
+		<div style="color:#F5A315;color: #F5A315; font-size: 50px; font-weight: 400; letter-spacing: 4px; font-family: 'Jua','Google Sans','Roboto'">HCM</div>
 	</div>
 </body>
 </html>

@@ -42,4 +42,10 @@ public class ChatDaoImpl implements ChatDao {
 		return template.selectOne(NS + "noReadList", dto);
 	}
 
+	@Override
+	public List<ChatDto> chatUserList(String ch_target) {
+		log.info("ChatDaoImpl chatUserList DAO Access");
+		return template.selectList(NS + "chatUserList", ch_target);
+	}
+
 }

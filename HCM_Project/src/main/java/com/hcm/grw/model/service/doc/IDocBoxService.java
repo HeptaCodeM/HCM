@@ -45,8 +45,6 @@ public interface IDocBoxService {
 		//최종 결재 승인 트랜잭션 처리
 		public boolean finalApprove(SignBoxDto dto);
 		
-		//문서 조회 테이블+json 동시 트랜잭션
-		public boolean getDocs(SignBoxDto dto);
 		
 		//참조 문서함 Json만 조회
 		public List<SignBoxDto> getChamjoJson(Map<String, String> inMap);
@@ -65,4 +63,15 @@ public interface IDocBoxService {
 		
 		//상세조회문서에 첨부된 파일다운 조회
 		public SignFileDto getDocsDetailFile(String sidf_file_num);
+
+		//임시 문서함 조회
+		public List<SignBoxDto> getTempDocs(SignBoxDto dto);
+		
+		//임시 문서함 삭제
+		public int deleteTempDocs(String sitb_doc_num);
+		//참조자 조회
+		public String findEmployeeName(String id);
+		
+		//참조부서명 조회
+		public String findDeptName(String dept);
 }

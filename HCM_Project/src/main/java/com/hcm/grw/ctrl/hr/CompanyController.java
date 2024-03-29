@@ -19,12 +19,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.CompanyDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.mapper.hr.EmployeeDao;
 import com.hcm.grw.model.service.hr.CompanyService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 public class CompanyController {
 
 	@Autowired
@@ -36,6 +40,7 @@ public class CompanyController {
 	
 	@GetMapping(value = "/hr/company/companyInfo.do")
 	public String companyInfo(Model model, Authentication authentication) {
+		log.info("{} 회사정보 화면 진입", Function.getMethodName());
 		String userId = authentication.getName();
 		System.out.println(userId);
 		EmployeeDto fnEmployeeDto = employeeDao.getUserInfo(userId);
@@ -60,6 +65,7 @@ public class CompanyController {
 	
 	@GetMapping(value = "/hr/company/companyInfoCorrection.do")
 	public String companyInfoCorrection(Model model) {
+		log.info("{} 회사정보 수정 화면진입", Function.getMethodName());
 		Map<String, Object> companyMap = new HashMap<String, Object>();
 		companyMap.put("comp_id", "ITCOM0A1");
 		CompanyDto companyDto = companyService.showCompanyInfo(companyMap);
@@ -69,6 +75,7 @@ public class CompanyController {
 	
 	@PostMapping(value = "/hr/company/correctionCompanyInfo.do")
 	public String correctionCompanyInfo(HttpServletRequest request) {
+		log.info("{} 회사정보 수정", Function.getMethodName());
 		String comp_name = request.getParameter("comp_name");
 		String comp_num = request.getParameter("comp_num");
 		String comp_ceo_name = request.getParameter("comp_ceo_name");
@@ -107,6 +114,7 @@ public class CompanyController {
 	
 	@GetMapping(value = "/hr/company/showCompanySeal.do")
 	public String showCompanySeal(Model model) {
+		log.info("{} 회사정보 직인 확인", Function.getMethodName());
 		Map<String, Object> sealMap = new HashMap<String, Object>();
 		sealMap.put("comp_id", "ITCOM0A1");
 		CompanyDto sealDto = companyService.showCompanySeal(sealMap);
@@ -117,15 +125,11 @@ public class CompanyController {
 		return "hr/company/showCompanySeal";
 	}
 	
-	
-	@GetMapping(value = "/hr/company/insertCompanySealForm.do")
-	public String insertCompanySeal(Model model) {
-		return "hr/company/insertCompanySealForm";
-	}
-	
+
 	
 	@PostMapping(value = "/hr/company/companySealUpload.do")
 	public String companySealUpload(HttpServletRequest request, List<MultipartFile> file)throws IOException {
+		log.info("{} 회사정보 직인 업로드", Function.getMethodName());
 		System.out.println("동작");
 		System.out.println(file.size());
 		System.out.println(file);

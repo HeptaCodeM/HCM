@@ -5,18 +5,19 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hcm.grw.comm.EmailService;
 import com.hcm.grw.dto.doc.SignBoxDto;
-import com.hcm.grw.dto.doc.SignJsonDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.doc.IApprDenyService;
 import com.hcm.grw.model.service.doc.IDocBoxService;
+import com.hcm.grw.model.service.hr.EmployeeService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,81 +30,94 @@ public class ApproveDenyController {
 	private IApprDenyService apprService;
 	@Autowired
 	private IDocBoxService docService;
+	@Autowired
+	private EmailService emailService;
+	@Autowired
+	private EmployeeService empService;
 	
-	@PostMapping("/doc/docBox/approve.do")
-	public String approve(String reply, Model model, String docNum,HttpSession session ) {
-		log.info("approve 승인 진입", reply);
+	@PostMapping(value = "/doc/docBox/approve.do", produces = "text/html; charset=UTF-8")
+	@ResponseBody
+	public ResponseEntity<?> approve(@RequestBody SignBoxDto dto, Model model, HttpSession session ) {
 		
-		//승인할 문서번호와 첨언내용 
-		SignBoxDto dto = new SignBoxDto();
-		dto.setSidb_doc_num(docNum);
-		dto.setAppr_reply(reply);
-		
-		// 서명 이미지 임의 지정 (추후 선택방식으로 변경예정)
-		String seq = "6";
-		dto.setEmsi_seq(seq);
-		
-		//세션에서 가져온 결재자  사원 아이디 set
-		EmployeeDto Edto = (EmployeeDto)session.getAttribute("userInfoVo");
+		// 세션에서 가져온 결재자 사원 아이디 set
+		EmployeeDto Edto = (EmployeeDto) session.getAttribute("userInfoVo");
 		dto.setEmpl_id(Edto.getEmpl_id());
-		
-		//내 appr depth와 max depth 비교해서 최종 여부 판단 
+		log.info("approve approve.do POST 승인자 아이디 : {}", Edto.getEmpl_id());
+
+		// 내 appr depth와 max depth 비교해서 최종 여부 판단
 		SignBoxDto depth = docService.getMyDepth(dto);
-		System.out.println("나의 결재순서는???"+depth.getAppr_depth()+ "이문서의 결재자 수는?" +depth.getMax_depth());
+
+		// getMyDepth 메소드로 가져온 나의 결재 순서 appr_depth
+		String turn = depth.getAppr_depth();
+		int turnInt = Integer.parseInt(turn) - 1;
+		String string_index = Integer.toString(turnInt);
+		dto.setString_index(string_index);
+
+		// 내 depth와 max depth 비교해서 어떤 쿼리 실행시킬지 선택
+		String apprDepth = depth.getAppr_depth();
+		String maxDepth = depth.getMax_depth();
 		
+		List<SignBoxDto> docDto = docService.getDetailDocsList(dto);
+		String num = docDto.get(0).getSidb_doc_num();
 		
-		//getMyDepth 메소드로 가져온 나의 결재 순서  appr_depth
-			String turn = depth.getAppr_depth();
-			int turnInt = Integer.parseInt(turn)-1;
-			String string_index = Integer.toString(turnInt);
-			dto.setString_index(string_index);
+		if (apprDepth.equals(maxDepth)) {
+			apprService.finalApprove(dto);
 			
-		
-	    // 내 depth와 max depth 비교해서 어떤 쿼리 실행시킬지 선택
-			String apprDepth = depth.getAppr_depth();
-			String maxDepth = depth.getMax_depth();	
-			
-			if (apprDepth.equals(maxDepth)) {
-			    apprService.finalApprove(dto);
-			} else {
-			    apprService.approve(dto);
+			// 이메일 전송 from 김지아
+			if(docDto.get(0).getSidb_doc_alflag().equalsIgnoreCase("Y")) {
+				String empl_id = docDto.get(0).getEmpl_id();
+				EmployeeDto eDto = empService.getUserInfo(empl_id);
+				emailService.sendMail("문서번호" + docDto.get(0).getSidb_doc_num() + " 에 대한 기안이 최종 승인되었습니다", 
+						"결재문서 바로가기 : <a href='http://localhost:8080/doc/docBox/getDetail.do?docNum="
+								+ docDto.get(0).getSidb_doc_num()+"'>" + docDto.get(0).getSidb_doc_title() + "</a>",
+								eDto.getEmpl_email(), null, true);
 			}
-	    List<SignBoxDto> docDto= docService.getDetailDocsList(dto);
-		model.addAttribute("docDto",docDto);
-	    
-		return "/doc/docBox/boardDetail/boardDetail";
+			
+		} else {
+			apprService.approve(dto);
+		}
+		
+		return ResponseEntity.ok(num);
 	}
 	
-	@PostMapping("/doc/docBox/deny.do")
-	public String deny(@RequestParam("reply") String reply, Model model, String docNum, HttpSession session) {
-		log.info("deny 반려 진입", reply);
+	@PostMapping(value = "/doc/docBox/deny.do", produces = "text/html; charset=UTF-8")
+	@ResponseBody
+	public ResponseEntity<?> deny(@RequestBody SignBoxDto dto, Model model, HttpSession session) {
+	
+		// 세션에서 가져온 결재자 사원 아이디 set
+		EmployeeDto Edto = (EmployeeDto) session.getAttribute("userInfoVo");
+		dto.setEmpl_id(Edto.getEmpl_id());
+
+		log.info("deny deny.do POST 반려자 아이디 : {}", Edto.getEmpl_id());
+
+		// 내 appr depth와 max depth 비교해서 최종 여부 판단
+		SignBoxDto depth = docService.getMyDepth(dto);
+
+		// getMyDepth 메소드로 가져온 나의 결재 순서 appr_depth
+		String turn = depth.getAppr_depth();
+		int turnInt = Integer.parseInt(turn) - 1;
+		String string_index = Integer.toString(turnInt);
+		dto.setString_index(string_index);
+
+		apprService.deny(dto);
+
+		List<SignBoxDto> docDto = docService.getDetailDocsList(dto);
+		String num = docDto.get(0).getSidb_doc_num();
+		
+		// 이메일 전송 from 김지아
+
+		return ResponseEntity.ok(num);
+	}
+	
+	
+	@PostMapping("/doc/docBox/gianCancel.do")
+	public String gianCancel(Model model, String docNum, HttpSession session) {
+		log.info("gianCancel gianCancel.do POST 상신취소 문서 번호 : {}", docNum);
 		SignBoxDto dto = new SignBoxDto();
 		dto.setSidb_doc_num(docNum);
-		dto.setAppr_reply(reply);
 	
-		//세션에서 가져온 결재자  사원 아이디 set
-		EmployeeDto Edto = (EmployeeDto)session.getAttribute("userInfoVo");
-		dto.setEmpl_id(Edto.getEmpl_id());
+		int n=apprService.gianCancel(dto);
 		
-		//내 appr depth와 max depth 비교해서 최종 여부 판단 
-		SignBoxDto depth = docService.getMyDepth(dto);
-		System.out.println("나의 결재순서는???"+depth.getAppr_depth()+ "이문서의 결재자 수는?" +depth.getMax_depth());
-		
-		
-		//getMyDepth 메소드로 가져온 나의 결재 순서  appr_depth
-			String turn = depth.getAppr_depth();
-			int turnInt = Integer.parseInt(turn)-1;
-			String string_index = Integer.toString(turnInt);
-			dto.setString_index(string_index);
-		
-	
-		
-			apprService.deny(dto);
-	    
-		
-	    List<SignBoxDto> docDto= docService.getDetailDocsList(dto);
-		model.addAttribute("docDto",docDto);
-	    
-		return "/doc/docBox/boardDetail/boardDetail";
+		return (n==1)?"redirect:/doc/docBox.do":"redirect:/error403.do";
 	}
 }

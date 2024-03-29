@@ -76,10 +76,10 @@ public class TestController {
 	}
 	
 	@GetMapping("fileDown.do")
-	public void fileDown(HttpServletResponse response, @RequestParam String sidf_file_num) throws IOException, SerialException, SQLException {
+	public void fileDown(@RequestParam String sidf_file_num) throws IOException, SerialException, SQLException {
 		SignFileDto dto = service.getDetailFile(sidf_file_num);
 		
-		FileCommonService.fileDownload(response, dto.getSidf_file_origin(), dto.getSidf_file_content());	
+		FileCommonService.fileDownload(dto.getSidf_file_origin(), dto.getSidf_file_content());	
 	}
 	
 	@GetMapping("getFileView.do")

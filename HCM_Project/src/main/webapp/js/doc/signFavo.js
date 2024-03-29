@@ -28,11 +28,10 @@ var fFlag;
 var sFlag;
 var tFlag;
 
+loadFavoLineList();
+loadFavoList();
 
-	loadFavoLineList();
-	loadFavoList();
-	
-	$('#schName').focus();
+$('#schName').focus();
 	
 	// 검색기능
 	$('#schBtn').on('click', function() {
@@ -64,15 +63,15 @@ var tFlag;
 
 	});
 	
-	// 로그인한 본인 아이디 숨김
-	setTimeout(function () {
-		var empl_id = document.getElementById('empl_id').value;
-		var allNode = $('#jstree').jstree('get_json', '#', { flat: true });
-		var sel = allNode.find(function(node) {
-			return node.id == empl_id;
-		})
-		$('#jstree').jstree('hide_node', sel);
-	}, 1000)
+// 로그인한 본인 아이디 숨김
+setTimeout(function() {
+	var empl_id = document.getElementById('empl_id').value;
+	var allNode = $('#jstree').jstree('get_json', '#', { flat: true });
+	var sel = allNode.find(function(node) {
+		return node.id == empl_id;
+	})
+	$('#jstree').jstree('hide_node', sel);
+}, 1000)
 	
 	
 	// 결재자 리스트를 json형태로 저장 (즐겨찾기 라인추가)
@@ -156,70 +155,47 @@ var tFlag;
 				
 		} else {
 			console.log(appr1, appr2, appr3)
-			alert('결재자를 선택해주세요');
+			swalAlert('결재자를 선택해주세요','','','확인');
 		}
 	})
 	
-	// 초기화 버튼
-	document.getElementById('initial').addEventListener('click', function() {
-		
-		var input = document.querySelectorAll('tr:not(:first-child):not(:nth-child(1)) input');
-		for(i of input) {
-			i.value = '';
-		}
-		var span = document.querySelectorAll('tr:not(:first-child):not(:nth-child(1)) span');
-		for(s of span) {
-			s.textContent = '';
-		}
-		
-	});
-	
-	// 모달
-	var element = document.querySelector('#kt_modal_3');
-	dragElement(element);
+// 초기화 버튼
+document.getElementById('initial').addEventListener('click', function() {
 
-	function dragElement(elmnt) {
-		var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-		if (elmnt.querySelector('.modal-content')) {
-			elmnt.querySelector('.modal-content').onmousedown = dragMouseDown;
-		} else {
-			elmnt.onmousedown = dragMouseDown;
-		}
-
-		function dragMouseDown(e) {
-			e = e || window.event;
-			pos3 = e.clientX;
-			pos4 = e.clientY;
-			document.onmouseup = closeDragElement;
-			document.onmousemove = elementDrag;
-		}
-
-		function elementDrag(e) {
-			e = e || window.event;
-			pos1 = pos3 - e.clientX;
-			pos2 = pos4 - e.clientY;
-			pos3 = e.clientX;
-			pos4 = e.clientY;
-			elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-			elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-		}
-
-		function closeDragElement() {
-			document.onmouseup = null;
-			document.onmousemove = null;
-		}
+	var input = document.querySelectorAll('tr:not(:first-child):not(:nth-child(1)) input');
+	for (i of input) {
+		i.value = '';
 	}
+	var span = document.querySelectorAll('tr:not(:first-child):not(:nth-child(1)) span');
+	for (s of span) {
+		s.textContent = '';
+	}
+
+});
 	
-	// 참조 팝업창
-	document.getElementById('signRefer').addEventListener('click', function() {
-		open('/doc/writeDoc/signRefer.do', '', 'width=640px height=960px left=300')
-	});
+var ref;
+var dept;
+var json;
+var sign;
+
+window.addEventListener('message', function(e) {
+	var data = e.data;
 	
-	document.getElementById('fileTest').addEventListener('click', function() {
-		location.href='./fileTest.do';
-	});
-	
-	
+	if(data.hasOwnProperty('empl_ref')) {
+		ref = data;
+	} else if(data.hasOwnProperty('empl_dept_cd')) {
+		dept = data;
+	} else if (typeof data == "string") {
+		sign = data;
+	} else {
+		json = data;
+	}
+	console.log('ref : ' , ref);
+	console.log('dept : ', dept);
+	console.log('json : ', json);
+	console.log('sign : ', sign);
+});
+
 	// 즐겨찾기 삭제
 	document.getElementById('delBtn').addEventListener('click', function() {
 		var select = document.getElementById('apprList').value;
@@ -235,12 +211,11 @@ var tFlag;
 	document.getElementById('delLineBtn').addEventListener('click', function() {
 		var select = document.getElementById('apprLineList').value;
 		if(select != '결재선을 선택해주세요') {
-			sweetAlertConfirm("즐겨찾기를 삭제할까요?", delLine, '')
+			sweetAlertConfirm("즐겨찾기를 삭제할까요?", delLine, '');
 		} else {
 			swalAlert('라인을 선택해주세요', '', '', '확인');
 		}
 	});	
-		
 		
 	// 즐겨찾기 결재자 결재선으로 보내기
 	document.getElementsByName('insBtn')[0].addEventListener('click', function() {
@@ -260,7 +235,6 @@ var tFlag;
 			var second = $('#second').val();
 			var third = $('#third').val();
 			var posFlag = f.coco_name_rnm;
-			var resFlag;
 			switch (posFlag) {
 				case '사원': resFlag = 1; break;
 				case '대리': resFlag = 2; break;
@@ -283,12 +257,12 @@ var tFlag;
 			}
 			
 			if(fFlag > sFlag || fFlag > tFlag || sFlag > tFlag) {
-				alert('더 높은 직급의 결재자를 선택해주세요');
+				swalAlert('높은 직급의 결재자를 선택해주세요','','','확인');
 				return;
 			}
 			console.log(fFlag, sFlag, tFlag)
 			if(f.empl_name == $('#first').val() || f.empl_name == $('#second').val() || f.empl_name == $('#third').val()) {
-				alert('중복된 결재자 입니다');
+				swalAlert('중복된 결재자 입니다','','','확인');
 				return;
 			}
 			if(first.length == 0) {
@@ -310,6 +284,14 @@ var tFlag;
 				$('#id3').text(f.empl_id);
 				$('#de3').val(3);
 			}
+			
+			var allNode = $('#jstree').jstree('get_json', '#', { flat: true });
+			var selectNode = allNode.find(function(node) {
+				return node.id == f.empl_id;
+			});
+			console.log(selectNode);
+			$('#jstree').jstree('hide_node', selectNode);
+			
 		})
 		.catch(err => {console.log(err);});
 	})
@@ -374,8 +356,6 @@ var tFlag;
 			console.log(err);
 		});
 	})
-	
-	
 	
 	$('#jstree').jstree({
 		// 검색기능 , 우클릭메뉴, 라벨 효과
@@ -451,7 +431,7 @@ var tFlag;
 										// 결재자를 순서대로 화면에 뿌려줌
 										if (val1.length > 0 && val2.length > 0) {
 											if (second > third) {
-												alert('낮은 직급의 결재자를 지정할 수 없습니다');
+												swalAlert('높은 직급의 결재자를 선택해주세요','','','확인');
 												return;
 											}
 											$('#third').val(data[0].empl_name); // 3차결재자
@@ -464,7 +444,7 @@ var tFlag;
 											$('#jstree').jstree('deselect_all');
 										} else if (val1.length > 0 && val2.length == 0) {
 											if (first > second) {
-												alert('낮은 직급의 결재자를 지정할 수 없습니다');
+												swalAlert('높은 직급의 결재자를 선택해주세요','','','확인');
 												return;
 											}
 											$('#second').val(data[0].empl_name); // 2차결재자
@@ -477,7 +457,7 @@ var tFlag;
 											$('#jstree').jstree('deselect_all');
 										} else {
 											if (first > third || first > second) {
-												alert('높은 직급의 결재자를 지정할 수 없습니다');
+												swalAlert('높은 직급의 결재자를 선택해주세요','','','확인');
 												return;
 											}
 											$('#first').val(data[0].empl_name); // 1차결재자
@@ -539,18 +519,18 @@ var tFlag;
 				dataType: 'json',
 				success: function(data) {
 					data.forEach(function(node, idx) {
-
+						console.log(myPositionFlag);
 						if (node.pos_na != undefined) {
 							if (myPositionFlag > node.pos_flag) {
-								node.text = node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;<span class="positionFlag" style="display: none;">' + node.pos_flag + '</span>';
+								node.text = '<span onclick="empInfoLayer(' + node.id + ', this)">' + node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;<span class="positionFlag" style="display: none;">' + node.pos_flag + '</span></span>';
 							} else {
-								node.text = node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="pick()" class="btn btn-basic btn-sm addd" style="padding: 0.2px;">➕</button><span class="positionFlag" style="display: none;">' + node.pos_flag + '</span>';
+								node.text = '<span onclick="empInfoLayer(' + node.id + ', this)">' + node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="pick()" class="btn btn-basic btn-sm addd" style="padding: 0.2px;">➕</button><span class="positionFlag" style="display: none;">' + node.pos_flag + '</span></span>';
 							}
 						}
 
-						if (myPositionFlag > parseInt(node.pos_flag) && node.pos_na != null) {
-							node.state = { disabled: true };
-						}
+//						if (myPositionFlag > parseInt(node.pos_flag) && node.pos_na != null) {
+//							node.state = { disabled: true };
+//						}
 
 					});
 
@@ -569,9 +549,14 @@ var tFlag;
 			$('#schBtn').click();
 		}
 	});
-	
-	
 
+//$('#jstree').on('select_node.jstree', function(e, data) {
+//	var id = data.node.id
+//	if(id.startsWith == 'DT') {
+//		return;
+//	}
+//	empInfoLayer(id, this);
+//});	
 
 
 // + 버튼으로 라인 보내기
@@ -610,7 +595,7 @@ function pick() {
 			}
 			
 			if(fFlag > sFlag || fFlag > tFlag || sFlag > tFlag) {
-				alert('더 높은 직급의 결재자를 선택해주세요');
+				swalAlert('높은 직급의 결재자를 선택해주세요','','','확인');
 				return;
 			}
 			console.log(fFlag, sFlag, tFlag)
@@ -659,7 +644,6 @@ function delFavo() {
 		}).catch(err => {
 			console.log(err);
 		});
-	
 	
 }
 

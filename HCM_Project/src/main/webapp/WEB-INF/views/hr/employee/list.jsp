@@ -4,12 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-	<title>HCM GroupWare</title>
+<meta charset="UTF-8">
+<%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
+<title>HCM GroupWare</title>
 	<style type="text/css">
 		.searchEmpInput{
-			width: 400px;
+			width: 300px;
 			height: 40px;
 		}
 		
@@ -25,6 +25,7 @@
 			display: flex;
 			justify-content: center;
 		}
+		
 	</style>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
@@ -58,7 +59,7 @@
 								<div class="cardFlexSearch">
 									<span>
 										<select id="empShCtg" class="form-select form-select-solid searchEmpSelect">
-											<option value="">검색분류</option>
+											<option value="empl_name">검색분류</option>
 											<option value="empl_name">성명</option>
 											<option value="empl_id">사원번호</option>
 											<option value="empl_phone">전화번호</option>
@@ -122,9 +123,9 @@
 						
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-body pt-5 table-responsive">
-								<table id="emplListTable" class="table table-hover table-rounded table-flush">
+								<table id="emplListTable" class="table table-row-bordered gy-5">
 									<thead>
-										<tr class="fw-semibold fs-7 border-bottom border-gray-200 py-4">
+										<tr class="fw-semibold fs-6 text-muted">
 											<th>사번</th>
 											<th>성명</th>
 											<th>부서명</th>
@@ -135,14 +136,7 @@
 									</thead>
 									<tbody>
 									<c:forEach items="${lists}" var="emp">
-									<c:choose>
-										<c:when test="${emp.empl_delflag eq 'Y'}">
-										<tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
-										</c:when>
-										<c:otherwise>
-										<tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6" style="cursor: pointer;" onclick="location.href='/hr/employee/modifyAdmin.do?empl_id=${emp.empl_id}'">
-										</c:otherwise>
-									</c:choose>										
+										<tr style="cursor: pointer;" onclick="location.href='/hr/employee/modifyAdmin.do?empl_id=${emp.empl_id}'">
 											<td>${emp.empl_id}</td>
 											<td>${emp.empl_name}</td>
 											<td>${emp.coco_name_dnm}</td>
@@ -159,6 +153,7 @@
 												</c:choose>
 											</td>
 										</tr>
+										<input type="hidden" id="empl_id" value="${emp.empl_id}">
 									</c:forEach>
 									</tbody>
 								</table>
@@ -174,146 +169,5 @@
 			
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
 </body>
-<script type="text/javascript">
-var startDate = "";
-var endDate = "";
-
-
-	$(document).ready(function(){
-		$('#emplListTable').DataTable({
-	        lengthChange: false,
-	        info: false
-		});
-	});
-
-	
-	
-	$(function() {
-
-	  $('#empDatepicker').daterangepicker({
-	      autoUpdateInput: false,
-	      locale: {
-	          cancelLabel: '초기화',
-	          applyLabel: '설정'
-	      }
-	  });
-	
-	  $('#empDatepicker').on('apply.daterangepicker', function(ev, picker) {
-	     	$(this).val(picker.startDate.format('YYYY년MM월DD일') + ' ~ ' + picker.endDate.format('YYYY년MM월DD일'));
-	     	startDate = picker.startDate.format('YYYY-MM-DD');
-	     	endDate = picker.endDate.format('YYYY-MM-DD');
-	  });
-	
-	  $('#empDatepicker').on('cancel.daterangepicker', function(ev, picker) {
-	      	$(this).val('');
-	  });
-	
-	});
-	
-	var empSearchBtn = document.getElementById("empSearchBtn");
-	empSearchBtn.addEventListener('click',function(){
-//		console.log("작동");
-		
-		var empShCtgVal = document.getElementById('empShCtg').value;
-		console.log(empShCtgVal);
-		
-		var empStaCtg = document.getElementById('empStaCtg').value;
-		console.log(empStaCtg);
-		
-		var empSearchValue = document.getElementById('empSearchValue').value;
-		console.log(empSearchValue);
-
-	   
-		var dtChkVal = document.getElementsByName('dtChkVal');
-		let dtArr = new Array();	
-			for(let i = 0; i < dtChkVal.length; i++){
-				if(dtChkVal[i].checked){
-					dtArr.push(dtChkVal[i].value);
-				}
-			}
-		console.log(dtArr);
-			
-		var rkChkVal = document.getElementsByName('rkChkVal');
-		let rkArr = new Array();
-			for(let j = 0; j < rkChkVal.length; j++){
-				if(rkChkVal[j].checked){
-					rkArr.push(rkChkVal[j].value);
-				}
-			}
-		console.log(rkArr);
-			
-		var pnChkVal = document.getElementsByName('pnChkVal');
-		let pnArr = new Array();
-		
-			for(let k = 0; k < pnChkVal.length; k++){
-				if(pnChkVal[k].checked){
-					pnArr.push(pnChkVal[k].value);
-				}
-			}
-		console.log(pnArr);	
-		
-		
-		var valueChk = new URLSearchParams();
-		valueChk.append('empShCtgVal', empShCtgVal);
-		valueChk.append('empStaCtg', empStaCtg);
-		valueChk.append('startDate', startDate);
-		valueChk.append('endDate', endDate);
-		valueChk.append('empSearchValue', empSearchValue);
-		valueChk.append('dtArr', dtArr);
-		valueChk.append('rkArr', rkArr);
- 		valueChk.append('pnArr', pnArr);
-/*		fetch('/hr/employee/empSearching.do',{
-			method: "POST",
-			headers: {
-			    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-			},
-			body: valueChk
-		})
-		.then(response =>{
-			return response.json();
-			console.log(response.json());
-			startDate = "";
-			endDate = "";
-		})
-		.then(returnData => {
-			console.log(returnData);
-			returnList(returnData);
-			
-		})
-	    .catch(err => { 
-	        console.log('에러발생', err);
-	        startDate = "";
-			endDate = "";
-	    }); */ 
-	    var innerFr = document.getElementById("emplListTable");
-	    var frstyle = document.defaultView.getComputedStyle(innerFr);
-		$("#emplListTable").DataTable().destroy(); 
-		$.ajax({
-		    type: "POST",
-		    url: "/hr/employee/empSearching.do?"+valueChk,	
-		    success: function (searchlists) {
-		        console.log(searchlists);
-		        $('#emplListTable').DataTable({
-		        	data:searchlists,
-		        	lengthChange: false,
-			        info: false,
-		        	columns: [ { data: "empl_id" }, 
-					       { data: "empl_name" }, 
-					       { data: "coco_name_dnm" }, 
-					       { data: "coco_name_rnm" }, 
-					       { data: "coco_name_pnm" }, 
-					       { data: "empl_delflag" }]
-					       
-		        });
-		        document.getElementById("emplListTable");
-		    },
-		    error:function(err){
-				console.log(err);
-			}
-		});
-		
-	});
-
-	
-</script>
+<script type="text/javascript" src="/js/hr/empAdminList.js"></script>
 </html>

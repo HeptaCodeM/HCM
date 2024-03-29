@@ -57,12 +57,15 @@ function offAlarmAll() {
 
 // 알림목록 불러오기
 function getAlarmList() {
-	var id = document.getElementById('id').value;
+	var id = document.getElementById('id');
+	if(id == null) {
+		return;
+	} 
 	var timeLines = document.getElementsByClassName('timeline-item');
 	timeLines.forEach(function(time) {
 		time.textContent = '';
 	})
-	fetch('/getAlarmList.do?al_target=' + id)
+	fetch('/getAlarmList.do?al_target=' + id.value)
 	.then(resp => {
 		return resp.json();
 	})
@@ -198,7 +201,7 @@ function getAlarmList() {
 				alA1.setAttribute('href', '/sm/getDetailGobo.do?gobo_no=' + d.al_key); // 일정링크
 			} else if (d.al_flag == 3 || d.al_flag == 4 || d.al_flag == 5) {
 				alA1.textContent = d.al_title;
-				alA1.setAttribute('href', '/doc/docBox/getDetail.do?sidb_doc_num=' + d.al_key); // 결재링크
+				alA1.setAttribute('href', '/doc/docBox/getDetail.do?docNum=' + d.al_key); // 결재링크
 			}
 			alDiv12.setAttribute('class', 'symbol-group symbol-hover flex-nowrap flex-grow-1 min-w-60px pe-2');
 			alI2.setAttribute('class', 'ki-duotone ki-cross-circle fs-1');

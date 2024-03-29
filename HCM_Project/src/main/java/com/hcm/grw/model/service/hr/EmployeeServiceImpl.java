@@ -35,13 +35,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	public int updaetLoginDate(String empl_id) {	
+		return dao.updaetLoginDate(empl_id);
+	}
+	
+	@Override
+	public int insertLoginHistory(Map<String, String> map) {
+		return dao.insertLoginHistory(map);
+	}
+	
+	@Override
 	public EmployeeDto getUserInfo(String empl_id) {
 		return dao.getUserInfo(empl_id);
 	}
 
 	@Override
-	public SnsInfoDto getSnsLoginInfo(String empl_id) {
-		return dao.getSnsInfo(empl_id);
+	public String getSnsLoginInfo(Map<String, String> map) {
+		return dao.getSnsLoginInfo(map);
 	}
 
 	@Override
@@ -133,4 +143,49 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return dao.getUserInfoSearch(map);
 	}
 
+	@Override
+	public int duplicationEmpEmail(String empl_email) {
+		return dao.duplicationEmpEmail(empl_email);
+	}
+	
+	
+//	======================= 구분선 ===================================		
+	
+	
+	@Override
+	public List<EmployeeDto> selectAllEmployee() {
+		return dao.selectAllEmployee();
+	}
+
+	@Override
+	public List<EmployeeDto> searchAllEmployee(Map<String, Object> map) {
+		return dao.searchAllEmployee(map);
+	}
+
+	@Override
+	public EmployeeDto selectOneEmployee(Map<String, Object> map) {
+		return dao.selectOneEmployee(map);
+	}
+
+	@Override
+	public int correctionEmployee(Map<String, Object> map) {
+		return dao.correctionEmployee(map);
+	}
+
+	@Override
+	public boolean chkEmpPhoneNum(String empl_phone) {
+		return dao.chkEmpPhoneNum(empl_phone);
+	}
+
+	@Override
+	public boolean chkEmpTelNum(String empl_tel) {
+		return dao.chkEmpTelNum(empl_tel);
+	}
+
+	@Override
+	public boolean chkEmpFaxNum(String empl_fax) {
+		return dao.chkEmpFaxNum(empl_fax);
+	}
+	
+	
 }

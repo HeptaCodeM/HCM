@@ -9,12 +9,14 @@
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
 <title>DOC메인화면</title>
 <style type="text/css">
-th,td {
+th, td {
 	text-align: center;
+	height: 27px !important;
+	padding: 5px;
 }
 td>input {
 	text-align: center;
-	height: 28px;
+	height: 20px;
 }
 td>img {
 	height: 32px;
@@ -33,25 +35,19 @@ td>img {
 		<div class="app-wrapper flex-column flex-row-fluid">
 			<div class="app-toolbar py-3 py-lg-6">
 				<div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
-					<!--begin::Page title-->
 					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-						<!--begin::Title-->
 						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">결재선 관리</h1>
-						<button type="button" id="signRefer">참조</button>
-						<button type="button" id="fileTest">파일테스트</button>
-						<!--end::Title-->
 					</div>
-					<!--end::Page title-->
 				</div>		
 			</div>
 			
 			<!-- 로그인세션영역 -->
 			<input type="hidden" value="${userInfoVo.empl_id}" id="empl_id"> 
-			<input type="hidden" value="${userInfoVo.coco_name_rnm}" id="positionFlag">
+			<input type="hidden" value="${userInfoVo.empl_rank_nm}" id="positionFlag">
 			<!-- OJS -->	
 			<div class="app-container container-fulid">
 				<div class="row gx-5 gx-xl-10">
-				<div class="col-xxl-3 mb-5 mb-xl-10">
+				<div class="col-xxl-5 mb-5 mb-xl-10">
 					<div class="card card-flush h-md-100 mb-xl-10">
 						<div class="card-header pt-5">
 							<h3 class="card-title text-gray-800 fw-bold">사원 검색</h3>
@@ -62,10 +58,10 @@ td>img {
 								<div class="d-flex flex-column flex-column-fluid">
 									<div id="kt_app_content" class="app-content flex-column-fluid">
 										<div class="input-group">
-										<input type="text" id="schName" spellcheck="false" class="form-control" placeholder="검색할 사원을 입력하세요"> 
+										<input type="text" id="schName" spellcheck="false" class="form-control" placeholder="검색할 사원을 입력하세요" style="height: 36px; display: inline;"> 
 										<span class="input-group-btn">
 											<button class="btn btn-default btn-sm" type="button" id="schBtn" style="margin-left: 1px;">
-												<span class="ki-solid ki-magnifier fs-2qx"></span>
+												<span class="ki-solid ki-magnifier fs-1"></span>
 											</button>
 										</span>
 										</div>
@@ -78,7 +74,7 @@ td>img {
 					</div>
 				</div>
 				
-				<div class="col-xxl-5 mb-5 mb-xl-10">
+				<div class="col-xxl-7 mb-5 mb-xl-10">
 					<div class="card card-flush h-md-100 mb-xl-10">
 						<div class="card-header pt-5">
 							<h3 class="card-title text-gray-800 fw-bold">결재라인</h3>
@@ -89,9 +85,9 @@ td>img {
 								<div class="d-flex flex-column flex-column-fluid">
 									<div id="kt_app_content" class="app-content flex-column-fluid">
 								
-										<table class="table table-condensed" style="width: 90%; margin: 0 auto;">
+										<table class="table-responsive" style="width: 90%; margin: 0 auto;">
 											<thead>
-												<tr>
+												<tr class="fw-bold fs-6 text-gray-800">
 													<th width="5%"></th>
 													<th width="30%">결재자</th>
 													<th width="20%">직급</th>
@@ -104,16 +100,16 @@ td>img {
 												<tr>
 													<td></td>
 													<td>
-														<input class="form-control form-control-solid" value="${userInfoVo.empl_name}">
+														<input class="form-control form-control-solid" value="${userInfoVo.empl_name}" readonly>
 													</td>
 													<td>
-														<input class="form-control form-control-solid" value="${userInfoVo.empl_rank_nm}">
+														<input class="form-control form-control-solid" value="${userInfoVo.empl_rank_nm}" readonly>
 													</td>
 													<td>
-														<input class="form-control form-control-solid" value="${userInfoVo.empl_dept_nm}">
+														<input class="form-control form-control-solid" value="${userInfoVo.empl_dept_nm}" readonly>
 													</td>
 													<td>
-														<input class="form-control form-control-solid" value="본인">
+														<input class="form-control form-control-solid" value="본인" readonly>
 													</td>
 													<td style="display: none;"></td>
 												</tr>
@@ -122,16 +118,16 @@ td>img {
 														<button class="cancelBtn btn btn-sm btn-basic">➖</button>
 													</td>
 													<td>
-														<input class="form-control form-control-solid" id="first">
+														<input class="form-control form-control-solid" id="first" readonly>
 													</td>
 													<td>
-														<input class="form-control form-control-solid" id="rk1">
+														<input class="form-control form-control-solid" id="rk1" readonly>
 													</td>
 													<td>
-														<input class="form-control form-control-solid" id="dp1">
+														<input class="form-control form-control-solid" id="dp1" readonly>
 													</td>
 													<td>
-														<input class="form-control form-control-solid" value="1" id="de1">
+														<input class="form-control form-control-solid" value="1" id="de1" readonly>
 													</td>
 													<td style="display: none;">
 														<span id="id1"></span>
@@ -142,16 +138,16 @@ td>img {
 														<button class="cancelBtn btn btn-sm btn-basic">➖</button>
 													</td>
 													<td>
-														<input class="form-control form-control-solid" id="second">
+														<input class="form-control form-control-solid" id="second" readonly>
 													</td>
 													<td>
-														<input class="form-control form-control-solid" id="rk2">
+														<input class="form-control form-control-solid" id="rk2" readonly>
 													</td>
 													<td>
-														<input class="form-control form-control-solid" id="dp2">
+														<input class="form-control form-control-solid" id="dp2" readonly>
 													</td>
 													<td>
-														<input class="form-control form-control-solid" value="2" id="de2">
+														<input class="form-control form-control-solid" value="2" id="de2" readonly>
 													</td>
 													<td style="display: none;">
 														<span id="id2"></span>
@@ -162,16 +158,16 @@ td>img {
 														<button class="cancelBtn btn btn-sm btn-basic">➖</button>
 													</td>
 													<td>
-														<input class="form-control form-control-solid" id="third">
+														<input class="form-control form-control-solid" id="third" readonly>
 													</td>
 													<td>
-														<input class="form-control form-control-solid" id="rk3">
+														<input class="form-control form-control-solid" id="rk3" readonly>
 													</td>
 													<td>
-														<input class="form-control form-control-solid" id="dp3">
+														<input class="form-control form-control-solid" id="dp3" readonly>
 													</td>
 													<td>
-														<input class="form-control form-control-solid" value="3" id="de3">
+														<input class="form-control form-control-solid" value="3" id="de3" readonly>
 													</td>
 													<td style="display: none;">
 														<span id="id3"></span>
@@ -181,9 +177,9 @@ td>img {
 										</table>
 										<br>
 										<div style="text-align: right;">
-											<input type="text" id="favoName" placeholder="별칭 입력" maxlength="20" class="col-xs-3" style="float: none;">
-											<input type="button" class="btn btn-primary btnMd" id="addLine" value="등록">
-											<input type="button" class="btn btnMd btn-primary" id="initial" value="초기화" style="margin-right: 40px;">
+											<input type="text" id="favoName" placeholder="별칭 입력" maxlength="20" class="form-control bg-transparent" style="width: 40%; display: inline; height: 36px;">
+											<input type="button" class="btn btn-light-primary btnSm btn-color-gray-600" id="addLine" value="등록">
+											<input type="button" class="btn btnSm btn-light-primary btn-color-gray-600" id="initial" value="초기화" style="margin-right: 40px;">
 										</div>
 								
 									</div>
@@ -193,46 +189,21 @@ td>img {
 					</div>
 				</div>
 				
-				<div class="col-xxl-4 mb-5 mb-xl-10">
+				<div class="col-xxl-6 mb-5 mb-xl-10">
 					<div class="card card-flush h-md-100 mb-xl-10">
 						<div class="card-header pt-5">
-							<h3 class="card-title text-gray-800 fw-bold">즐겨찾기 등록</h3>
+							<h3 class="card-title text-gray-800 fw-bold">즐겨찾는 라인</h3>
 						</div> 
 						<div class="separator separator-dashed my-3"></div>	
 						<div class="card-body pt-5">
 							<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
 								<div class="d-flex flex-column flex-column-fluid">
 									<div id="kt_app_content" class="app-content flex-column-fluid">
-										<div>
-											<div>
-											<select id="apprList" class="form-select form-select-sm" style="height: 40px;" data-control="select2">
-												<option selected>결재자를 선택해주세요</option>
-											</select>
-											</div>
-											<br>
-											<div style="text-align: left">
-											<button type="button" class="btn btn-primary btnSm" id="kt_button_1" name="insBtn" style="height: 32px; line-height: 14px; width: 100px;">
-											    <span class="indicator-label">
-											        추가
-											    </span>
-											    <span class="indicator-progress">
-											        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-											    </span>
-											</button>
-											<button type="button" class="btn btn-primary btnSm" id="delBtn" style="height: 32px; line-height: 14px; width: 100px;">
-											    삭제
-											</button>
-											</div>
-										</div>
-										<br><br>
-										<div class="separator separator-dashed my-3"></div>
-										<br><br>
-										<div>
 											<select id="apprLineList" class="form-select form-select-sm" style="height: 40px;" data-control="select2">
 												<option selected>결재선을 선택해주세요</option>
 											</select>
 											<br><br>
-											<button type="button" class="btn btn-primary btnMd" id="kt_button_1" name="selectApprLine" style="height: 32px; line-height: 14px; width: 100px;">
+											<button type="button" class="btn btn-light-primary btnSm btn-color-gray-600" id="kt_button_1" name="selectApprLine">
 											    <span class="indicator-label">
 											        적용
 											    </span>
@@ -240,10 +211,9 @@ td>img {
 											        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 											    </span>
 											</button>
-											<button type="button" class="btn btn-primary btnMd" id="delLineBtn" style="height: 32px; line-height: 14px; width: 100px;">
+											<button type="button" class="btn btn-light-primary btnSm btn-color-gray-600" id="delLineBtn">
 											    삭제
 											</button>
-										</div>
 								
 									</div>
 								</div>
@@ -251,6 +221,43 @@ td>img {
 						</div>
 					</div>
 				</div>
+				
+				<div class="col-xxl-6 mb-5 mb-xl-10">
+					<div class="card card-flush h-md-100 mb-xl-10">
+						<div class="card-header pt-5">
+							<h3 class="card-title text-gray-800 fw-bold">즐겨찾는 결재자</h3>
+						</div> 
+						<div class="separator separator-dashed my-3"></div>	
+						<div class="card-body pt-5">
+							<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+								<div class="d-flex flex-column flex-column-fluid">
+									<div id="kt_app_content" class="app-content flex-column-fluid">
+											<div>
+											<select id="apprList" class="form-select form-select-sm" style="height: 40px;" data-control="select2">
+												<option selected>결재자를 선택해주세요</option>
+											</select>
+											</div>
+											<br>
+											<div style="text-align: left">
+											<button type="button" class="btn btn-light-primary btnSm btn-color-gray-600" id="kt_button_1" name="insBtn">
+											    <span class="indicator-label">
+											        추가
+											    </span>
+											    <span class="indicator-progress">
+											        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+											    </span>
+											</button>
+											<button type="button" class="btn btn-light-primary btnSm btn-color-gray-600" id="delBtn">
+											    삭제
+											</button>
+											</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 				
 				</div>
 				
@@ -282,7 +289,7 @@ td>img {
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary me-10" data-bs-dismiss="modal" id="can">취소</button>
-					<button type="button" class="btn btn-primary me-10" data-bs-dismiss="modal" id="con">확인</button>
+					<button type="button" class="btn btn-light-primary me-10" data-bs-dismiss="modal" id="con">확인</button>
 				</div>
 			</div>
 		</div>

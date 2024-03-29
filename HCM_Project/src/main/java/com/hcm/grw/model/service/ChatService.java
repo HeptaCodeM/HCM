@@ -14,4 +14,6 @@ public interface ChatService {
 	
 	public int noReadList(ChatDto dto);
 	
+	public List<ChatDto> chatUserList(String ch_target);
+	
 }

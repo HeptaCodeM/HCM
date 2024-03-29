@@ -41,19 +41,8 @@
 							<div
 								data-kt-menu-trigger="{default: &#39;click&#39;, lg: &#39;hover&#39;}"
 								data-kt-menu-placement="bottom-start"
-								class="menu-item here menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
-								<a href="/mainTmp.do">
-									<span class="menu-link"> <span class="menu-title">메인템플릿화면</span>
-										<span class="menu-arrow d-lg-none"></span>
-									</span>
-								</a>
-
-							</div>
-							<div
-								data-kt-menu-trigger="{default: &#39;click&#39;, lg: &#39;hover&#39;}"
-								data-kt-menu-placement="bottom-start"
 								class="menu-item menu-lg-down-accordion me-0 me-lg-2">
-								<a href="/hr/hrMainTmp.do">
+								<a href="/hr/commute/empCommuteList.do">
 									<span class="menu-link"> <span class="menu-title">인사관리</span>
 										<span class="menu-arrow d-lg-none"></span>
 									</span>
@@ -63,7 +52,7 @@
 								data-kt-menu-trigger="{default: &#39;click&#39;, lg: &#39;hover&#39;}"
 								data-kt-menu-placement="bottom-start"
 								class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2">
-								<a href="/sm/smMainTmp.do">
+								<a href="/sm/calendar.do">
 									<span class="menu-link"> <span class="menu-title">일정관리</span>
 										<span class="menu-arrow d-lg-none"></span>
 									</span>
@@ -74,7 +63,7 @@
 								data-kt-menu-trigger="{default: &#39;click&#39;, lg: &#39;hover&#39;}"
 								data-kt-menu-placement="bottom-start"
 								class="menu-item menu-lg-down-accordion me-0 me-lg-2">
-								<a href="/doc/docMainTmp.do">
+								<a href="/doc/docBox.do">
 									<span class="menu-link"> <span class="menu-title">전자결재</span>
 										<span class="menu-arrow d-lg-none"></span>
 									</span>
@@ -86,97 +75,148 @@
 				<div class="app-navbar flex-shrink-0">
 				
 					<div class="app-navbar-item ms-1 ms-lg-3">
-									<div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px" id="kt_activities_toggle">
-										<i class="ki-duotone ki-notification-on fs-1">
-											<span class="path1"></span>
-											<span class="path2"></span>
-											<span class="path3"></span>
-											<span class="path4"></span>
-											<span class="path5"></span>
-										</i>
-										<div class="symbol symbol-circle symbol-25px" style="background-color: #f8285a; width: 12px; height: 12px; color: white; font-size: 10px; margin-bottom: 10px; margin-left: -5px; display: none;" id="numberFlag"></div>
-									</div>
-								</div>
+						<div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px" id="kt_activities_toggle">
+							<i class="ki-duotone ki-notification-on fs-1">
+								<span class="path1"></span>
+								<span class="path2"></span>
+								<span class="path3"></span>
+								<span class="path4"></span>
+								<span class="path5"></span>
+							</i>
+							<div class="symbol symbol-circle symbol-25px" style="background-color: #f8285a; width: 12px; height: 12px; color: white; font-size: 10px; margin-bottom: 10px; margin-left: -5px; display: none;" id="numberFlag"></div>
+						</div>
+					</div>
 								
-								<div class="app-navbar-item ms-1 ms-lg-3" id="chatMain">
-			<div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px position-relative" id="kt_drawer_chat_toggle">
-				<i class="ki-duotone ki-message-text-2 fs-1">
-					<span class="path1"></span>
-					<span class="path2"></span>
-					<span class="path3"></span>
-				</i>
-				<span class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
-			</div>
-		</div>
+					<div class="app-navbar-item ms-1 ms-lg-3" id="chatMain">
+						<div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px position-relative" id="kt_drawer_chat_toggle">
+							<i class="ki-duotone ki-message-text-2 fs-1">
+								<span class="path1"></span>
+								<span class="path2"></span>
+								<span class="path3"></span>
+							</i>
+							<span class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
+						</div>
+					</div>
 
 					<div class="app-navbar-item ms-1 ms-lg-3">
 						<a href="#"
 							class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px"
 							data-kt-menu-trigger="{default:'click', lg: 'hover'}"
 							data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-							<i class="ki-duotone ki-night-day theme-light-show fs-1"> <span
-								class="path1"></span> <span class="path2"></span> <span
-								class="path3"></span> <span class="path4"></span> <span
-								class="path5"></span> <span class="path6"></span> <span
-								class="path7"></span> <span class="path8"></span> <span
-								class="path9"></span> <span class="path10"></span>
-						</i> <i class="ki-duotone ki-moon theme-dark-show fs-1"> <span
-								class="path1"></span> <span class="path2"></span>
-						</i>
+							<i class="ki-duotone ki-night-day theme-light-show fs-1"> 
+							<span class="path1"></span> <span class="path2"></span>
+							<span class="path3"></span> <span class="path4"></span> 
+							<span class="path5"></span> <span class="path6"></span> 
+							<span class="path7"></span> <span class="path8"></span> 
+							<span class="path9"></span> <span class="path10"></span>
+							</i>
+							<i class="ki-duotone ki-moon theme-dark-show fs-1"> 
+							<span class="path1"></span> 
+							<span class="path2"></span>
+							</i>
 						</a>
 						<div
 							class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-gray-500 menu-active-bg menu-state-color fw-semibold py-4 fs-base w-150px"
 							data-kt-menu="true" data-kt-element="theme-mode-menu" style="">
 							<div class="menu-item px-3 my-0">
-								<a href="#" class="menu-link px-3 py-2 active"
-									data-kt-element="mode" data-kt-value="light"> <span
-									class="menu-icon" data-kt-element="icon"> <i
-										class="ki-duotone ki-night-day fs-2"> <span class="path1"></span>
-											<span class="path2"></span> <span class="path3"></span> <span
-											class="path4"></span> <span class="path5"></span> <span
-											class="path6"></span> <span class="path7"></span> <span
-											class="path8"></span> <span class="path9"></span> <span
-											class="path10"></span>
+								<a href="#" class="menu-link px-3 py-2 active" data-kt-element="mode" data-kt-value="light"> 
+									<span class="menu-icon" data-kt-element="icon"> 
+									<i class="ki-duotone ki-night-day fs-2"> 
+									<span class="path1"></span>
+									<span class="path2"></span> <span class="path3"></span> 
+									<span class="path4"></span> <span class="path5"></span> 
+									<span class="path6"></span> <span class="path7"></span> 
+									<span class="path8"></span> <span class="path9"></span> 
+									<span class="path10"></span>
 									</i>
-								</span> <span class="menu-title">Light</span>
+									</span> 
+									<span class="menu-title">Light</span>
 								</a>
 							</div>
 							<div class="menu-item px-3 my-0">
-								<a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
-									data-kt-value="dark"> <span class="menu-icon"
-									data-kt-element="icon"> <i
-										class="ki-duotone ki-moon fs-2"> <span class="path1"></span>
-											<span class="path2"></span>
+								<a href="#" class="menu-link px-3 py-2" data-kt-element="mode" data-kt-value="dark"> 
+									<span class="menu-icon" data-kt-element="icon"> 
+									<i class="ki-duotone ki-moon fs-2"> 
+									<span class="path1"></span>
+									<span class="path2"></span>
 									</i>
-								</span> <span class="menu-title">Dark</span>
+									</span> 
+									<span class="menu-title">Dark</span>
 								</a>
 							</div>
 							<div class="menu-item px-3 my-0">
-								<a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
-									data-kt-value="system"> <span class="menu-icon"
-									data-kt-element="icon"> <i
-										class="ki-duotone ki-screen fs-2"> <span class="path1"></span>
-											<span class="path2"></span> <span class="path3"></span> <span
-											class="path4"></span>
+								<a href="#" class="menu-link px-3 py-2" data-kt-element="mode" data-kt-value="system"> 
+									<span class="menu-icon" data-kt-element="icon"> 
+									<i class="ki-duotone ki-screen fs-2"> 
+									<span class="path1"></span>
+									<span class="path2"></span>
+									<span class="path3"></span>
+									<span class="path4"></span>
 									</i>
-								</span> <span class="menu-title">System</span>
+									</span> 
+									<span class="menu-title">System</span>
 								</a>
 							</div>
 						</div>
 					</div>
 
-					<div class="app-navbar-item ms-2 ms-1 ms-lg-3"
-						id="kt_header_user_menu_toggle">
+					<div class="app-navbar-item ms-2 ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 						<div class="cursor-pointer symbol symbol-35px symbol-md-40px"
 							data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
 							data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-							<img src="/image/300-3.jpg" alt="user">
+							<img src="${userInfoVo.empl_picture_str}" alt="user">
 						</div>
+
+
+						<!--begin::내정보 menu 시작-->
+						<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px" data-kt-menu="true">
+							<!--begin::Menu item-->
+							<div class="menu-item px-3">
+								<div class="menu-content d-flex align-items-center px-3">
+									<!--begin::Avatar-->
+									<div class="symbol symbol-50px me-5">
+										<img alt="Logo" src="${userInfoVo.empl_picture_str}" />
+									</div>
+									<!--end::Avatar-->
+									<!--begin::Username-->
+									<div class="d-flex flex-column">
+										<div class="fw-bold d-flex align-items-center fs-5">${userInfoVo.empl_name}
+										<span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">${userInfoVo.empl_rank_nm}</span></div>
+										<div class="fw-semibold text-muted fs-7">${userInfoVo.empl_dept_nm}</div>
+										<a href="mailto:${userInfoVo.empl_email}" class="fw-semibold text-muted text-hover-primary fs-7">${userInfoVo.empl_email}</a>
+									</div>
+									<!--end::Username-->
+								</div>
+							</div>
+							<!--end::Menu item-->
+
+							<!--begin::Menu separator-->
+							<div class="separator my-2"></div>
+							<!--end::Menu separator-->
+							<!--begin::Menu item-->
+							<div class="menu-item px-5 my-1">
+								<a href="/hr/employee/empModify.do" class="menu-link px-5">정보수정</a>
+							</div>
+							<!--end::Menu item-->
+							<!--begin::Menu item-->
+							<div class="menu-item px-5">
+								<a href="/logout" class="menu-link px-5">로그아웃</a>
+							</div>
+							<!--end::Menu item-->
+						</div>
+						<!--end::내정보 menu 종료-->
+
+
+
+
+
+
+
 					</div>
 				</div>
 			</div>
 		</div>
-		<input type="hidden" value="${userInfoVo.empl_picture_str }">
+
 		<!-- ------------------------------ 알림 영역 사작 ------------------------------ -->
 		<div id="kt_activities" class="bg-body drawer drawer-end drawer-end" data-kt-drawer="true" data-kt-drawer-name="activities" data-kt-drawer-activate="true" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'300px', 'lg': '720px'}" data-kt-drawer-direction="end" data-kt-drawer-toggle="#kt_activities_toggle" data-kt-drawer-close="#kt_activities_close" style="width: 600px !important;">
 			<div class="card shadow-none border-0 rounded-0">
@@ -197,8 +237,8 @@
 						<c:if test="${userInfoVo ne null}">
 							<input type="hidden" id="id" value="${userInfoVo.empl_id}">
 							<input type="hidden" id="myName" value="${userInfoVo.empl_name}">
-							
-							
+							<input type="hidden" id="myDept" value="${userInfoVo.empl_dept_nm}">
+							<input type="hidden" id="myRank" value="${userInfoVo.empl_rank_nm}">
 							<input type="hidden" id="myPic" value="${userInfoVo.empl_picture_str }">
 						</c:if>
 					</div>
@@ -211,32 +251,32 @@
 					
 							<!-- 알림 Ajax 삽입 영역 -->
 							
-							<div class="timeline-item">
-								<div class="timeline-line"></div>
-								<div class="timeline-icon">
-									<i class="ki-duotone ki-calendar fs-2 text-gray-500">
-										<span class="path1"></span>
-										<span class="path2"></span>
-									</i>
-								</div>
-								<div class="timeline-content mb-10 mt-n1">
-									<div class="pe-3 mb-5">
-										<div class="fs-5 fw-semibold mb-2">일정알림</div>
-										<div class="d-flex align-items-center mt-1 fs-6">
-											<div class="text-muted me-2 fs-7">2024-03-15 16:23:07</div>
-										</div>
-									</div>
-									<div class="overflow-auto pb-5">
-										<div class="d-flex align-items-center border border-dashed border-gray-300 rounded min-w-600px p-7">
+<!-- 							<div class="timeline-item"> -->
+<!-- 								<div class="timeline-line"></div> -->
+<!-- 								<div class="timeline-icon"> -->
+<!-- 									<i class="ki-duotone ki-calendar fs-2 text-gray-500"> -->
+<!-- 										<span class="path1"></span> -->
+<!-- 										<span class="path2"></span> -->
+<!-- 									</i> -->
+<!-- 								</div> -->
+<!-- 								<div class="timeline-content mb-10 mt-n1"> -->
+<!-- 									<div class="pe-3 mb-5"> -->
+<!-- 										<div class="fs-5 fw-semibold mb-2">일정알림</div> -->
+<!-- 										<div class="d-flex align-items-center mt-1 fs-6"> -->
+<!-- 											<div class="text-muted me-2 fs-7">2024-03-15 16:23:07</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 									<div class="overflow-auto pb-5"> -->
+<!-- 										<div class="d-flex align-items-center border border-dashed border-gray-300 rounded min-w-600px p-7"> -->
 										
-											<a href="apps/projects/project.html" class="fs-5 text-gray-900 text-hover-primary fw-semibold w-300px min-w-200px">
-											AM 10:00 - 프로젝트 일정 중간 회의
-											</a>
+<!-- 											<a href="apps/projects/project.html" class="fs-5 text-gray-900 text-hover-primary fw-semibold w-300px min-w-200px"> -->
+<!-- 											AM 10:00 - 프로젝트 일정 중간 회의 -->
+<!-- 											</a> -->
 										
-										</div>
-									</div>
-								</div>
-							</div>
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 						</div>
 					</div>
 				</div>
@@ -273,24 +313,23 @@
 									</i>
 								</span>
 							</form>
-						<div data-kt-search-element="results">
-									<div class="scroll-y me-n7 pe-7" id="searchMainDiv" style="height: 760px;">
+							<div class="py-5" style="height: 760px; overflow: auto;" id="searchMainDiv">
 									
-									<!-- Ajax 유저목록 삽입 영역 -->	
+									<!-- ------------------------------ 유저목록 Ajax 삽입 영역 ------------------------------ -->	
 									
-									</div>
-								</div>
+								<div class="border-bottom border-gray-300 border-bottom-dashed"></div>
 							</div>
+						</div>
 			</div>
 			<div class="card w-100 border-0 rounded-0" id="kt_drawer_chat_messenger">
 				<div class="card-header pe-5" id="chatHeaderDiv">
 					<div class="card-title">
 						<div class="d-flex justify-content-center flex-column me-3">
 							<a class="fs-4 fw-bold text-gray-900 text-hover-primary me-1 mb-2 lh-1">대화상대를 선택해주세요</a>
-							<div class="mb-0 lh-1">
-								<span class="badge badge-success badge-circle w-10px h-10px me-1"></span>
-								<span class="fs-7 fw-semibold text-muted">접속중</span>
-							</div>
+<!-- 							<div class="mb-0 lh-1"> -->
+<!-- 								<span class="badge badge-success badge-circle w-10px h-10px me-1"></span> -->
+<!-- 								<span class="fs-7 fw-semibold text-muted">접속중</span> -->
+<!-- 							</div> -->
 						</div>
 					</div>
 					<div class="card-toolbar">
@@ -305,44 +344,9 @@
 				<div class="card-body" id="kt_drawer_chat_messenger_body">
 					<div id="mainDiv" class="scroll-y me-n5 pe-5" data-kt-element="messages" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_drawer_chat_messenger_header, #kt_drawer_chat_messenger_footer" data-kt-scroll-wrappers="#kt_drawer_chat_messenger_body" data-kt-scroll-offset="0px" style="height: 1009px;">
 					
-						<div class="d-flex justify-content-start mb-10">
-							<div class="d-flex flex-column align-items-start">
-								<div class="d-flex align-items-center mb-2">
-									<div class="symbol symbol-35px symbol-circle">
-									상대방 이미지
-										<img alt="Pic" src="/assets/media/avatars/300-25.jpg">
-									</div>
-									<div class="ms-3">
-										<a class="fs-5 fw-bold text-gray-900 text-hover-primary me-1">상대방이름</a>
-										<span class="text-muted fs-7 mb-1">메시지받은시간</span>
-									</div>
-								</div>
-								<div class="p-5 rounded bg-light-info text-gray-900 fw-semibold mw-lg-400px text-start" data-kt-element="message-text">
-									받은내용 출력
-								</div>
-							</div>
-						</div>
-						
-						<div class="d-flex justify-content-end mb-10">
-							<div class="d-flex flex-column align-items-end">
-								<div class="d-flex align-items-center mb-2">
-									<div class="me-3">
-										<span class="text-muted fs-7 mb-1">메시지보낸시간</span>
-										<a class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1">${userInfoVo.empl_name }</a>
-									</div>
-									<div class="symbol symbol-35px symbol-circle">
-									본인사진
-										<img alt="Pic" src="/assets/media/avatars/300-1.jpg">
-									</div>
-								</div>
-								<div class="p-5 rounded bg-light-primary text-gray-900 fw-semibold mw-lg-400px text-end" data-kt-element="message-text">
-									보내는내용 출력
-								</div>
-							</div>
-						</div>
-						
-					<div class="d-flex justify-content-start mb-10" data-kt-element="template-in">
-						</div></div>
+					<!-- ------------------------------ 대화 Ajax 삽입 영역 ------------------------------ -->
+					
+					</div>
 				</div>
 				<div class="card-footer pt-4" id="kt_drawer_chat_messenger_footer">
 					<textarea class="form-control form-control-flush mb-3" rows="1" data-kt-element="input" id="message"

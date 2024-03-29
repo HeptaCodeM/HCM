@@ -41,4 +41,10 @@ public class ChatServiceImpl implements ChatService {
 		return dao.noReadList(dto);
 	}
 
+	@Override
+	public List<ChatDto> chatUserList(String ch_target) {
+		log.info("ChatServiceImpl chatUserList Service 정렬을 위한 유저 목록 조회");
+		return dao.chatUserList(ch_target);
+	}
+
 }

@@ -41,4 +41,9 @@ public class ApprDenyServiceImpl implements IApprDenyService {
 		return (n+m)>1?true:false;
 	}
 
+	@Override
+	public int gianCancel(SignBoxDto dto) {
+		int n = dao.gianCancel(dto);
+		return n;
+	}
 }

@@ -10,18 +10,39 @@
 		AND EMPL_DELFLAG = 'N'
 	</select>
 
+	<update id="updaetLoginDate" parameterType="String">
+		UPDATE	EMPLOYEE SET
+				EMPL_LAST_LOGIN_DT = CURRENT_DATE
+		WHERE	EMPL_ID = #{empl_id}
+	</update>
+
+	<!-- 로그인 History -->
+	<insert id="insertLoginHistory" parameterType="Map">
+		<selectKey keyProperty="emlh_seq" resultType="Integer" order="BEFORE">
+			SELECT NVL(MAX(EMLH_SEQ), 0)+1 FROM EMP_LOGIN_HISTORY
+		</selectKey>
+		INSERT INTO EMP_LOGIN_HISTORY(EMLH_SEQ, EMPL_ID, EMLH_CREATE_DT, EMLH_CREATE_IP)
+		VALUES (#{emlh_seq}, #{empl_id}, CURRENT_DATE, #{emlh_create_ip})
+	</insert>
+
 	<!-- 사용저 정보 -->
 	<select id="getUserInfo" parameterType="String" resultType="EmployeeDto">
 		SELECT 
-						EMPL_ID, EMPL_NAME, 
+						EMPL_ID, EMPL_NAME, EMPL_EMAIL,
 						EMPL_DEPT_CD, D.COCO_NAME EMPL_DEPT_NM, 
 						EMPL_RANK_CD, R.COCO_NAME EMPL_RANK_NM, 
 						EMPL_POSITION_CD, P.COCO_NAME EMPL_POSITION_NM, 
-						EMPL_PICTURE, EMPL_AUTH
+						EMPL_PICTURE, EMPL_AUTH, AUCO_NAME EMPL_AUTH_NM,
+						(
+							SELECT EMSI_SEQ FROM EMP_SIGN 
+							WHERE EMSI_SETFLAG = 'Y' AND EMSI_DELFLAG = 'N' AND EMPL_ID = #{empl_id}
+						) AS EMSI_SEQ,
+						EMPL_BIRTH, EMPL_JOINDATE
 		FROM 			EMPLOYEE E
 		INNER JOIN		COMMON_CODE D ON E.EMPL_DEPT_CD = D.COCO_CD 
 		INNER JOIN		COMMON_CODE R ON E.EMPL_RANK_CD = R.COCO_CD 
 		LEFT OUTER JOIN COMMON_CODE P ON E.EMPL_POSITION_CD = P.COCO_CD 
+		LEFT OUTER JOIN AUTH_CODE 	A ON E.EMPL_AUTH = A.AUCO_CD 
 		WHERE 			EMPL_ID = #{empl_id}
 		AND 			EMPL_DELFLAG = 'N'
 	</select>
@@ -48,16 +69,14 @@
 	</select>
 
 	<!-- 소셜로그인 -->
-	<select id="getSnsLoginInfo" parameterType="String" resultType="SnsInfoDto">
+	<select id="getSnsLoginInfo" parameterType="Map" resultType="String">
 		SELECT
-		ES.EMSN_ID,
-		ES.EMPL_ID,
-		ES.EMSN_EMAIL,
-		ES.EMSN_CREATE_DT
-		FROM EMPLOYEE E
-		INNER JOIN EMP_SNS ES ON E.EMPL_ID = ES.EMPL_ID
-		WHERE E.EMPL_ID = #{empl_id}
-		AND E.EMPL_DELFLAG = 'N'
+					ES.EMPL_ID
+		FROM		EMPLOYEE E
+		INNER JOIN	EMP_SNS ES ON E.EMPL_ID = ES.EMPL_ID
+		WHERE 		ES.EMSN_ID = #{emsn_id}
+		AND			ES.EMSN_EMAIL = #{emsn_email}
+		AND 		E.EMPL_DELFLAG = 'N'
 	</select>
 
 	<!-- 인증번호 메일발송용 사원체크 -->
@@ -114,8 +133,9 @@
 	<!-- 권한코드 전체조회 -->
 	<select id="selectAuthAllList" resultType="AuthDto">
 		SELECT
-					AUCO_CD, AUCO_NAME, AUCO_DELFLAG
-					AUCO_CREATE_ID, AUCO_CREATE_DT, AUCO_MODIFY_ID, AUCO_MODIFY_DT
+					AUCO_CD, AUCO_NAME, AUCO_DELFLAG,
+					AUCO_CREATE_ID, AUCO_CREATE_DT, 
+					AUCO_MODIFY_ID, AUCO_MODIFY_DT
 		FROM		AUTH_CODE
 		ORDER BY 	AUCO_CD ASC
 	</select>
@@ -199,5 +219,156 @@
 		AND EMPL_PWD = #{empl_pwd}
 		AND EMPL_DELFLAG = 'N'
 	</update>
+	
+<!-- ============================== 작업 구분선 ============================== -->	
+
+	<select id="selectAllEmployee" resultType="EmployeeDto">
+	SELECT 		
+				A.EMPL_ID,
+	            A.EMPL_NAME,
+	            A.EMPL_PHONE,
+	            A.EMPL_EMAIL, 
+	            A.EMPL_PICTURE,
+	            C1.COCO_CD AS COCO_CD_DCD,
+	            C1.COCO_NAME AS COCO_NAME_DNM,
+	            C2.COCO_CD AS COCO_CD_RCD,
+	            C2.COCO_NAME AS COCO_NAME_RNM,
+	            C3.COCO_CD AS COCO_CD_PCD,
+	            C3.COCO_NAME AS COCO_NAME_PNM,
+	            A.EMPL_JOINDATE,
+	            A.EMPL_LEAVEDATE,  
+	            A.EMPL_DELFLAG   
+	FROM          EMPLOYEE A
+	INNER JOIN      COMMON_CODE C1 ON A.EMPL_DEPT_CD = C1.COCO_CD
+	INNER JOIN      COMMON_CODE C2 ON A.EMPL_RANK_CD = C2.COCO_CD
+	LEFT OUTER JOIN   COMMON_CODE C3 ON A.EMPL_POSITION_CD  = C3.COCO_CD
+	ORDER BY A.EMPL_ID DESC
+	</select>
+	
+	<select id="searchAllEmployee" parameterType="Map" resultType="EmployeeDto">
+	SELECT 
+				A.EMPL_ID,
+	            A.EMPL_NAME, 
+	            A.EMPL_PHONE,
+	            C1.COCO_CD AS COCO_CD_DCD,
+	            C1.COCO_NAME AS COCO_NAME_DNM,
+	            C2.COCO_CD AS COCO_CD_RCD,
+	            C2.COCO_NAME AS COCO_NAME_RNM,
+	            C3.COCO_CD AS COCO_CD_PCD,
+	            C3.COCO_NAME AS COCO_NAME_PNM,
+	            A.EMPL_JOINDATE,
+	            A.EMPL_LEAVEDATE,  
+	            A.EMPL_DELFLAG  
+	FROM          EMPLOYEE A
+	INNER JOIN      COMMON_CODE C1 ON A.EMPL_DEPT_CD = C1.COCO_CD
+	INNER JOIN      COMMON_CODE C2 ON A.EMPL_RANK_CD = C2.COCO_CD
+	LEFT OUTER JOIN   COMMON_CODE C3 ON A.EMPL_POSITION_CD  = C3.COCO_CD
+		WHERE A.EMPL_PWD IS NOT NULL
+	<if test="empl_delflag != null and empl_delflag == ''">
+			AND A.EMPL_DELFLAG = #{empl_delflag}
+	</if>
+	
+	<choose>
+		<when test="searchCtg == 'empl_name'">
+			<if test="empl_name != null">
+				AND A.EMPL_NAME LIKE '%'||#{empl_name}||'%'
+			</if>
+		</when>
+		<when test="searchCtg == 'empl_id'">
+			<if test="empl_id != null">
+				AND A.EMPL_ID LIKE '%'||#{empl_id}||'%'
+			</if>
+		</when>
+		<when test="searchCtg == 'empl_phone'">
+			<if test="empl_phone != null">
+				AND A.EMPL_PHONE LIKE '%'||#{empl_phone}||'%'
+			</if>
+		</when>
+	</choose>
+	
+	
+	<if test="startdate != null and enddate != null">
+		AND TO_DATE(A.EMPL_JOINDATE) BETWEEN TO_DATE(#{startdate},'YYYY-MM-DD') AND TO_DATE(#{enddate},'YYYY-MM-DD')
+	</if>
+	
+	<if test="empl_dept_cd != null">
+		AND A.EMPL_DEPT_CD IN 
+		<foreach collection="dtArr" item="dtA" open="(" separator="," close=")">
+			#{dtA}
+		</foreach>
+	</if>
+ 	<if test="empl_rank_cd != null">
+		AND A.EMPL_RANK_CD IN
+		<foreach collection="rkArr" item="rkA" open="(" separator="," close=")">
+			#{rkA}
+		</foreach>
+	</if>
+	<if test="empl_position_cd != null">
+		AND A.EMPL_POSITION_CD IN
+		<foreach collection="pnArr" item="pnA" open="(" separator="," close=")">
+			#{pnA}
+		</foreach>
+	</if>
+	</select>
+	
+	<select id="selectOneEmployee" parameterType="Map" resultType="EmployeeDto">
+		SELECT 
+					A.EMPL_ID,
+		            A.EMPL_NAME,
+		            A.EMPL_BIRTH,
+		            A.EMPL_EMAIL,
+		            A.EMPL_PHONE,
+		            A.EMPL_TEL,
+		            A.EMPL_FAX,
+		            C1.COCO_CD AS COCO_CD_DCD,
+		            C1.COCO_NAME AS COCO_NAME_DNM,
+		            C2.COCO_CD AS COCO_CD_RCD,
+		            C2.COCO_NAME AS COCO_NAME_RNM,
+		            C3.COCO_CD AS COCO_CD_PCD,
+		            C3.COCO_NAME AS COCO_NAME_PNM,
+		            A.EMPL_JOINDATE,
+		            A.EMPL_LEAVEDATE,
+		            A.EMPL_GENDER,
+		            A.EMPL_PICTURE
+		FROM          EMPLOYEE A
+		INNER JOIN      COMMON_CODE C1 ON A.EMPL_DEPT_CD = C1.COCO_CD
+		INNER JOIN      COMMON_CODE C2 ON A.EMPL_RANK_CD = C2.COCO_CD
+		LEFT OUTER JOIN   COMMON_CODE C3 ON A.EMPL_POSITION_CD  = C3.COCO_CD
+			WHERE A.EMPL_ID = #{empl_id}
+	</select>
+	
+	<update id="correctionEmployee" parameterType="Map">
+		UPDATE EMPLOYEE SET EMPL_PHONE = #{empl_phone},
+					EMPL_TEL = #{empl_tel},
+					EMPL_FAX = #{empl_fax},
+					EMPL_MODIFY_ID = #{empl_modify_id},
+					EMPL_MODIFY_DT = CURRENT_DATE
+		WHERE EMPL_ID = #{empl_id}
+	</update>
+	
+	
+	<select id="chkEmpPhoneNum" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) 
+			FROM EMPLOYEE e 
+			WHERE EMPL_PHONE = #{empl_phone}
+	</select>
+	
+	<select id="chkEmpTelNum" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) 
+			FROM EMPLOYEE e 
+			WHERE EMPL_TEL  = #{empl_tel}
+	</select>
+	
+	<select id="chkEmpFaxNum" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) 
+			FROM EMPLOYEE e 
+			WHERE EMPL_FAX = #{empl_fax}
+	</select>
+
+	<select id="duplicationEmpEmail" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) 
+			FROM EMPLOYEE e 
+			WHERE EMPL_EMAIL = #{empl_email}
+	</select>
 
 </mapper>

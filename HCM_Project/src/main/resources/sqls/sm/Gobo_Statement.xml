@@ -63,7 +63,7 @@ WHERE GOBO_NO= #{gobo_no}
 <update id="updateGobo">
 UPDATE ADMIN.GONGJI_BOARD
 SET GOBO_TITLE = #{gobo_title},GOBO_CONTENT = #{gobo_content},
-GOBO_MODIFY_ID = #{gobo_modify_id},GOBO_MODIFY_DATE = TO_DATE(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS'),
+GOBO_MODIFY_ID = #{gobo_modify_id},GOBO_MODIFY_DATE = CURRENT_TIMESTAMP,
 GOBO_BIGO = #{gobo_bigo}
 WHERE GOBO_NO = #{gobo_no}
 </update>

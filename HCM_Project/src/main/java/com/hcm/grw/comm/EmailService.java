@@ -50,6 +50,11 @@ public class EmailService {
 			
 			log.info("subject : {}, content : {}, toEmail : {}, fromEmail : {}", subject, content, toEmail, fromEmail);
 			
+			log.info(Function.getHtmlTemplate("mailForm"));
+			if(htmlFlag) {
+				content = Function.getHtmlTemplate("mailForm").replace("#{content}", content);
+			}
+			
 			MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
             messageHelper.setSubject(subject);	// 메일제목은 생략이 가능하다			

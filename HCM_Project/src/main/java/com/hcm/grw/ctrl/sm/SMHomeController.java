@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,17 +48,33 @@ public class SMHomeController {
 	public String getDetailGobo(String gobo_no,Model model) {
 		log.info("SMHomeController getDetailGobo.do 공지사항 상세조회 화면 이동");
 		GoboDto dto =  GoboService.getDetailGobo(gobo_no);
-		List<ReplyDto> Rlist = ReplyService.getAllReply(gobo_no);
+		List<ReplyDto> list = ReplyService.getAllReply(gobo_no);
+		for (ReplyDto rdto : list) {
+			if(rdto.getEmpl_picture() != null) {
+				rdto.setEmpl_picture_str(Base64Utils.encodeToString(rdto.getEmpl_picture()));
+			}
+		}
+		
 		model.addAttribute("dto",dto);
-		model.addAttribute("Rlist",Rlist);
+		model.addAttribute("list",list);
 		return "sm/GongiBoard/GoboDetail";
 	}
 	
+	
+	
 	@PostMapping("updateGobo.do")
-	public String updateGobo(GoboDto dto) {
+	@ResponseBody
+	public Boolean updateGobo(GoboDto dto) {
 		log.info("SMHomeController updateGobo.do 공지사항 수정 ");
-		GoboService.updateGobo(dto);
-		return "sm/GongiBoard/Gobo";
+		int n = GoboService.updateGobo(dto);
+		return (n>0)?true:false;
+	}
+	@GetMapping("updateGoboMove.do")
+	public String updateGoboMove(String gobo_no,Model model) {
+		log.info("SMHomeController updateGobo.do 공지사항 수정화면 이동 ");
+		GoboDto dto =  GoboService.getDetailGobo(gobo_no);
+		model.addAttribute("dto",dto);
+		return "sm/GongiBoard/updateGobo";
 	}
 	
 	
@@ -65,6 +82,7 @@ public class SMHomeController {
 	public String updateGoboDelFlag(String gobo_no) {
 		log.info("SMHomeController updateGoboDelFlag.do 공지사항 삭제 : {} ", gobo_no);
 		int n = GoboService.updateGoboDelFlag(gobo_no);
+		
 		return "redirect:/sm/getAllGobo.do";
 	}
 	

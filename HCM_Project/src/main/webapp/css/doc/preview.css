@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+.btnMd {
+    width: 100px;
+    height: 32px;
+    line-height: 12px;
+    border-radius: 8px;
+    border: none;
+    background-color:#1B84FF;
+    color:white;
+    position: fixed;
+    bottom: 10px; 
+    right: 10px; 
+    cursor: pointer;
+}
+
+.btnMd:hover{
+	background-color: #056EE9;
+}
+
+.flex {
+  display: flex;
+  justify-content: flex-end; 
+  margin-right: 4%;
+}
+
+.card .card-header {
+justify-content: center;
+ align-items: center;
+flex-direction:column;
+}
+.container {
+	width: 80%;
+	max-width: 1000px;
+	margin: 0 auto;
+}
+
+.footer {
+	margin-top: 30px;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 5px;
+	text-align: left;
+}
+.top-table, .top-table th, .top-table td, .top-table tr{
+ border: solid 1px;
+ text-align: center;
+ vertical-align: middle;
+}
+
+.header {
+	float: right;
+	top: 10px; 
+	right: 10px; 
+	max-width: 40%; 
+	height: 30%;
+}
+
+.content {
+	margin-top: 50px;
+	max-width: 100%;
+}
+.transparent-table, .transparent-table td, .transparent-table tr {
+    border: none;
+}
+.transparent-table {
+    margin-left : 7%;
+}
+.reply-table, .reply-table td, .reply-table tr, .reply-table th{
+ text-align: center;
+ vertical-align: middle;
+}

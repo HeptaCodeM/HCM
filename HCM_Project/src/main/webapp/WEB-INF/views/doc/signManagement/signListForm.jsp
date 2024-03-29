@@ -34,10 +34,14 @@
 					<!-- 내용 시작 -->
 					<div id="kt_app_content" class="app-content flex-column-fluid">
 						<div class="app-container container-fluid">
-							<div class="card-flush h-md-50 mb-xl-10" style="background-color: white;">
+							<div class="card-flush h-md-50 mb-xl-10" style="background-color: white; text-align: center; width: 90%; margin: 0px auto;">
+								<div class="card-header pt-5">
+									<h3 class="card-title text-gray-800 fw-bold">보유중인 서명</h3><br>
+								</div> 
+								<div class="separator separator-dashed my-3"></div>	<br>
 							<c:forEach var="sign" items="${signList}" varStatus="var">
-								<div class="card-body pt-5" style="display: inline-block; width: 320px; text-align: center;" >
-									<div style="border: 1px solid; height: 240px; ">
+								<div class="card-body pt-5" style="display: inline-block; width: 320px;" >
+									<div class="border border-gray-400" style="height: 240px;">
 									<img src="${sign.emsi_sign_img}"><br>
 									 </div><br>
 									<div class="card-footer" style="margin: 0px auto;">
@@ -54,12 +58,11 @@
 							<br><br>
 							</div>
 						</div>
-					</div>
-					<!-- 내용 끝 -->
 					<div style="text-align: center;">
-						<button class="btn btn-primary btnLg me-10" data-bs-toggle="modal" data-bs-target="#kt_modal_3">서명추가</button>
-						<button class="btn btn-primary btnLg me-10" id="defaultBtn">기본서명설정</button>
-						<button class="btn btn-primary btnLg me-10" id="delBtn">삭제</button>
+						<button class="btn btn-light-primary btn-color-gray-600" data-bs-toggle="modal" data-bs-target="#kt_modal_3">서명추가</button>
+						<button class="btn btn-light-primary btn-color-gray-600" id="defaultBtn">기본서명설정</button>
+						<button class="btn btn-light-primary btn-color-gray-600" id="delBtn">삭제</button>
+					</div>
 					</div>
 			</div>
 		</div>
@@ -69,31 +72,28 @@
 				<div class="modal-header">
 					<h5 class="modal-title">서명 추가</h5>
 
-					<!--begin::Close-->
 					<div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
 						data-bs-dismiss="modal" aria-label="Close">
 						<i class="ki-duotone ki-cross fs-2x"><span class="path1"></span><span
 							class="path2"></span></i>
 					</div>
-					<!--end::Close-->
 				</div>
 
 				<div class="modal-body" style="margin: 0px auto;">
 
-						<canvas id="signpad" width="320px" height="240px" style="border: 1px solid;"></canvas>
-						<br> 
-					서명 제목
+						<canvas id="signpad" width="320px" height="240px" class="border border-gray-400"></canvas>
+						<br><br>
 						<input class="form-control form-control-solid" type="text" name="emsi_title" id="emsi_title" placeholder="서명 제목을 입력하세요">
 						<br>
-						<input type="hidden"name="empl_id" id="empl_id" value="${userInfoVo.empl_id}"> 
+						<input type="hidden"name="empl_id" id="empl_id" value="${userInfoVo.empl_id}">
 						<input type="hidden" name="emsi_create_id" id="emsi_create_id" value="${userInfoVo.empl_id}">
 
 				</div>
 
 				<div class="modal-footer" style="margin: 0px auto;">
-					<button class="btn btn-primary me-10" id="save">저장</button>
-					<button class="btn btn-primary me-10" id="clear">지우기</button>
-					<button class="btn btn-primary me-10" data-bs-dismiss="modal">취소</button>
+					<button class="btn btn-light-primary btn-color-gray-600" id="save">저장</button>
+					<button class="btn btn-light-primary btn-color-gray-600" id="clear">지우기</button>
+					<button class="btn btn-light-primary btn-color-gray-600" data-bs-dismiss="modal">취소</button>
 				</div>
 			</div>
 		</div>

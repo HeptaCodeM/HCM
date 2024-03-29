@@ -26,10 +26,12 @@
       <typeAlias type="com.hcm.grw.dto.hr.CommuteDto" alias="CommuteDto" />
       <!-- 발령정보 -->
       <typeAlias type="com.hcm.grw.dto.hr.OrderInfoListDto" alias="OrderInfoListDto" />
-      <typeAlias type="com.hcm.grw.dto.hr.OrderInfoMasterDto" alias="OrderInfoMasterDto" />
+      <!-- <typeAlias type="com.hcm.grw.dto.hr.OrderInfoMasterDto" alias="OrderInfoMasterDto" /> -->
+      <typeAlias type="com.hcm.grw.dto.hr.OrderInfoAdminDto" alias="OrderInfoAdminDto" />
       <typeAlias type="com.hcm.grw.dto.hr.OrderInfoDetailDto" alias="OrderInfoDetailDto" />
       <!-- 휴가 -->
       <typeAlias type="com.hcm.grw.dto.hr.HolidayDto" alias="HolidayDto" />
+      <typeAlias type="com.hcm.grw.dto.hr.HolidayAdminDto" alias="HolidayAdminDto"/>
 
       <typeAlias type="com.hcm.grw.dto.hr.SnsInfoDto" alias="SnsInfoDto" />
       <typeAlias type="com.hcm.grw.dto.hr.CommonCodeDto" alias="CommonCodeDto"/>
@@ -42,6 +44,7 @@
       <typeAlias type="com.hcm.grw.dto.ChatDto" alias="ChatDto"/>
       
       <typeAlias type="com.hcm.grw.dto.hr.AuthDto" alias="AuthDto"/>
+      
    </typeAliases>
    
 
@@ -68,8 +71,8 @@
       <mapper resource="sqls/hr/EmpSignDto_Statement.xml"/>
       <mapper resource="sqls/hr/CompanyDto_Statement.xml"/>
       <mapper resource="sqls/hr/SignDocBoxDto_Statement.xml"/>
-      <mapper resource="sqls/hr/EmployeeList_Statement.xml"/>
       <mapper resource="sqls/Alarm_Statement.xml"/>
       <mapper resource="sqls/Chat_Statement.xml"/>
+      <mapper resource="sqls/schedule/Schedule_Statement.xml"/>
    </mappers>
 </configuration>

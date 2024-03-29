@@ -2,7 +2,18 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 
+<%
+    // 현재 날짜를 가져오기
+    LocalDate currentDate = LocalDate.now();
+    // 날짜 포맷 지정
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    // 포맷에 맞게 날짜를 문자열로 변환
+    String formattedDate = currentDate.format(formatter);
+    // formattedDate를 요청 스코프에 저장
+    request.setAttribute("formattedDate", formattedDate);%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +33,6 @@
 .top-ym>div {display: inline-block; vertical-align: middle;}
 .top-ym .cur-month {font-size: 32px; vertical-align: middle; font-weight: 600; margin:0 50px;}
 </style>
-
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp"%>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true"
@@ -117,7 +127,7 @@
 												${list.duration_hour}
 											</td>
 											<td class="center">
-												<c:if test="${weekName ne '토요일' and weekName ne '일요일'}">
+												<c:if test="${weekName ne '토요일' and weekName ne '일요일' and list.yyyymmdd < formattedDate}">
 													<c:if test="${list.duration_hour < 9}">
 														<c:if test="${list.duration_hour == 0}">
 															<span style="color:#B40404;">결근</span>

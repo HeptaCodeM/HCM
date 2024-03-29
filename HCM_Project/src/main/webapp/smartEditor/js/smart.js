@@ -70,7 +70,7 @@ $(document).ready(function() {
 		//초기화버튼 클릭이벤트
 	$("#resetbutton").click(function() {
 		oEditors.getById["smartEditor"].exec("SET_IR", [""]);
-		$('#form')[0].reset();
+		$('#insertForm')[0].reset();
 	});
 });
 

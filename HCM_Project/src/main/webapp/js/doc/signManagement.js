@@ -21,7 +21,7 @@ save.addEventListener("click",function(){
 	var emsi_create_id = document.getElementById("emsi_create_id").value;
 	var signData = new Object();
 	if(signature.isEmpty() || emsi_title == '') {
-		alert("내용이 없습니다.");
+		swalAlert('서명 타이틀을 지정해주세요', '', '', '확인');
 	} else {
 //		console.log(data);
 		signData.emsi_sign_img = data;
@@ -69,19 +69,27 @@ document.getElementById('delBtn').addEventListener('click', delSign);
 document.getElementById('defaultBtn').addEventListener('click', setDefault);
 
 function delSign() {
+	var seq = '';
+	var id = document.getElementById('empl_id').value;
+	var chkbox = document.getElementsByName("signDefault");
+	var searchDiv;
+	for (let chk of chkbox) {
+		if (chk.checked) {
+			seq = chk.value;
+			searchDiv = chk.parentNode;
+		}
+	}
+	if (seq == '') {
+		swalAlert('서명을 선택해주세요', '', '', '확인');
+		return;
+	}
+	var defaultSign = searchDiv.querySelectorAll('span')[0].textContent;
+	if(defaultSign == '대표') {
+		swalAlert('대표 서명은 삭제할 수 없습니다', '', '', '확인');
+		return;
+	}
 	sweetAlertConfirm("서명을 삭제할까요?", function() {
-		var seq = '';
-		var id = document.getElementById('empl_id').value;
-		var chkbox = document.getElementsByName("signDefault");
-		for (let chk of chkbox) {
-			if (chk.checked) {
-				seq = chk.value;
-			}
-		}
-		if (seq == '') {
-			swalAlert('서명을 선택해주세요', '', '', '확인');
-			return;
-		}
+
 		fetch('/doc/signManagement/deleteSign.do?emsi_seq=' + seq + '&empl_id=' + id)
 			.then(resp => { return resp.text() })
 			.then(data => {
@@ -92,7 +100,7 @@ function delSign() {
 				}, 1000)
 
 			})
-	.catch(err => {console.log(err)});
+			.catch(err => { console.log(err) });
 	}, '')
 }
 
@@ -109,7 +117,6 @@ function setDefault() {
 		swalAlert('서명을 선택해주세요', '', '', '확인');
 		return;
 	}
-	
 	
 	fetch('/doc/signManagement/setDefault.do?emsi_seq=' + seq + '&empl_id=' + id)
 	.then(resp => {return resp.text()})

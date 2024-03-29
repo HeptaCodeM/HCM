@@ -1,5 +1,6 @@
 package com.hcm.grw.dto.doc;
 
+import java.io.Serializable;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -15,8 +16,9 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignBoxDto {
+public class SignBoxDto implements Serializable {
 	
+	private static final long serialVersionUID = 1194695330680943887L;
 	private String sidb_doc_num;
 	private String sidb_doc_writedt;
 	private String empl_id;
@@ -66,5 +68,6 @@ public class SignBoxDto {
 	private String empl_pictureStr;
 	private String sidb_curr_id;
 	private String empl_rank;
+	private String empl_sign;
 	
 }

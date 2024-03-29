@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.dto.hr.HolidayDto;
 import com.hcm.grw.dto.hr.OrderInfoDetailDto;
 import com.hcm.grw.dto.hr.OrderInfoListDto;
-import com.hcm.grw.dto.hr.OrderInfoMasterDto;
 import com.hcm.grw.dto.hr.SnsInfoDto;
 import com.hcm.grw.model.mapper.hr.EmployeeDao;
 import com.hcm.grw.model.service.hr.CommuteService;
@@ -232,7 +230,7 @@ public class SDJ_JUnitTest {
 		odDtoDetail.setEmod_modify_id(createId);
 		odDtoDetails.add(odDtoDetail);
 		
-		boolean flag = orderService.updateOrderAdminDetail(odDtoDetails);
+		boolean flag = orderService.updateOrderAdminDetail(odDtoDetails, null, odDtoDetails.size());
 		assertEquals(true, flag);
 		
 		// 발령 리스트
@@ -245,7 +243,10 @@ public class SDJ_JUnitTest {
 	public void HolidayTest() {
 		//휴가정보 조회
 		String empl_id = "20230107";
-		List<HolidayDto> had = holidayService.holidayList(empl_id);
+		Map<String, String> map = new HashMap<String, String>(){{
+			put("empl_id", "20230107");
+		}};
+		List<HolidayDto> had = holidayService.holidayList(map);
 		log.info("휴가정보 리스트 : {}", had);
 		assertNotEquals(0, had.size());
 	}

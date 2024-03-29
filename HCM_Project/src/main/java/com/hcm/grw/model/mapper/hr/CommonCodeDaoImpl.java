@@ -63,6 +63,10 @@ public class CommonCodeDaoImpl implements CommonCodeDao {
 		return sessionTemplate.selectOne(NS+"roleNameDuplicateChk",map);
 	}	
 	
-	
+	@Override
+	public int delCodeChk(Map<String, Object> map) {
+		log.info("CommonCodeImpl delCodeChk 진입 // {}",map);
+		return sessionTemplate.selectOne(NS+"delCodeChk",map);
+	}
 
 }

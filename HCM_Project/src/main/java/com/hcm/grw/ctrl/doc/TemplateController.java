@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
+import com.hcm.grw.dto.doc.SignJsonDto;
 import com.hcm.grw.dto.doc.TemplateDto;
 import com.hcm.grw.model.service.doc.ITemplateService;
 
@@ -128,7 +129,7 @@ public class TemplateController {
 		return "redirect:template.do";
 	}
 
-	@PostMapping(value = "/getTemplate.do", produces = "text/html; charset=UTF-8")
+	@GetMapping(value = "/getTemplate.do", produces = "text/html; charset=UTF-8")
 	@ResponseBody
 	public String getTemplate(String sidt_temp_cd, Model model) {
 		log.info("TemplateController 선택한 템플릿 에디터로 가져오는 getTemplate: {}", sidt_temp_cd);
@@ -206,5 +207,10 @@ public class TemplateController {
 			log.error("TemplateController removeImage Error : \n" + e.getMessage());
 		}
 	}
+	
+	
+	
+	
+	
 
 }
