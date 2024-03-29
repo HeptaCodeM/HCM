@@ -5,13 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp"%>
-<title>DOC메인화면</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+<title>임시저장문서</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <link rel="stylesheet" href="/ckeditor5/sample/template.css">
-
+<style type="text/css">
+	.form-control {
+		height: 30px !important;
+	}
+</style>
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp"%>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
@@ -21,40 +23,27 @@
 	data-kt-app-sidebar-push-toolbar="true"
 	data-kt-app-sidebar-push-footer="true"
 	data-kt-app-toolbar-enabled="true" class="app-default modal-open" style="overflow: auto; padding-right: 0px;">
-	<!-- **전체페이지 감싸기** -->
+	
 	<div class="app-wrapper flex-column flex-row-fluid">
-		<!-- 메인페이지 -->
 		<div class="app-toolbar py-3 py-lg-6">
-			<div id="kt_app_toolbar_container"
-				class="app-container container-fluid d-flex flex-stack">
+			<div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
 				<!--begin::Page title-->
-				<div
-					class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<!--begin::Title-->
 					<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
-						임시보관 문서 상세페이지</h1>
+						임시보관 문서 상세페이지
+					</h1>
 					<!--end::Title-->
 				</div>
 				<!--end::Page title-->
 			</div>
 		</div>
-		<input id="tempNum" type="hidden" value="${dto.sitb_doc_num }">
-		<input id="tempTitle" type="hidden" value="${dto.sitb_doc_title }">
-		<div id="tempContent" style="display: none;">${dto.sitb_doc_content}</div>
-		<input id="tempSicaCd" type="hidden" value="${dto.sica_cd }">
-		<input id="tempExpiredt" type="hidden" value="${dto.sitb_doc_expiredt }">
-		<input id="tempAlflag" type="hidden" value="${dto.sitb_doc_alflag }">
-		<input id="tempCd" type="hidden" value="${dto.sidt_temp_cd }">
-	
+		
 		<div class="app-content flex-column-fluid">
 			<!-- 내용 시작 -->
 			<div id="kt_app_content" class="app-content flex-column-fluid">
-
 				<!-- 컨테이너 -->
 				<div class="app-container container-fluid">
-
-					<!-- row -->
-					<!-- col -->
 					<div class="card card-flush h-md-50 mb-xl-10">
 						<div class="card-header pt-5">
 							<h3 class="card-title text-gray-800 fw-bold">작성중인 문서</h3>
@@ -66,56 +55,78 @@
 							
 							
 							<!-- 기안문 작성 화면 -->
-							<div id="editor_div">
+							<div id="editor_div" style="max-width: 80%; margin: 0px auto;">
 							
+							<!-- 페이지 정보 -->
+							<input id="tempNum" type="hidden" value="${dto.sitb_doc_num }">
+							<input id="tempTitle" type="hidden" value="${dto.sitb_doc_title }">
+							<div id="tempContent" style="display: none;">${dto.sitb_doc_content}</div>
+							<input id="tempSicaCd" type="hidden" value="${dto.sica_cd }">
+							<input id="tempExpiredt" type="hidden" value="${dto.sitb_doc_expiredt }">
+							<input id="tempAlflag" type="hidden" value="${dto.sitb_doc_alflag }">
+							<input id="tempCd" type="hidden" value="${dto.sidt_temp_cd }">
 							<input type="hidden" value="${userInfoVo.emsi_seq }" id="emsi_seq">
+
 							<table class="table table-bordered">
 								<tr class="success">
 									<th>기안일</th>
 <!-- 									<td><input id="currentDate" name="sidb_doc_writedt" maxlength="20"></td> -->
-									<td><div id="currentDate" name="sidb_doc_writedt" maxlength="20"></div></td>
-									<th>만료일</th>
-									<td><input type="date" class="sitb_doc_expiredt" name="sidb_doc_expiredt" data-td-target-input="nearest"></td>
-									<th>알림여부</th>
-									<td><input type="checkbox" class="form-check-input" name="alflag"></td>
+									<td style="text-align: center; vertical-align: middle;"><div id="currentDate" name="sidb_doc_writedt" maxlength="20"></div></td>
+									<th style="text-align: center;">만료일</th>
+<!-- 									<td><input type="date" class="sitb_doc_expiredt" name="sidb_doc_expiredt" data-td-target-input="nearest"></td> -->
+									<td>
+									<div class="input-group" id="kt_td_picker_localization" data-td-target-input="nearest" data-td-target-toggle="nearest">
+									    <input type="text" class="form-control sitb_doc_expiredt" name="sidb_doc_expiredt" data-td-target="#kt_td_picker_localization"/>
+									    <span class="input-group-text" data-td-target="#kt_td_picker_localization" data-td-toggle="datetimepicker" style="height: 30px !important;">
+									        <i class="ki-duotone ki-calendar fs-2"><span class="path1"></span><span class="path2"></span></i>
+									    </span>
+									</div>
+									</td>
+									<th style="text-align: center;">결재승인 / 반려 알림</th>
+									<td style="text-align: center; vertical-align: middle;">
+										<input type="checkbox" class="form-check-input" name="alflag">
+									</td>
 								</tr>
-								<tr id="signLine">
-									<th>결재선</th>
+								<tr>
+									<th  id="signLine" style="cursor: pointer;">결재선</th>
 									<td colspan="5">
+										<input type="text" class="form-control form-control-solid" id="apprName" readonly>
 										<div id="apprName"></div>
 									</td>
 								</tr>
-								<tr id="signRefer">
-									<th>참조 및 참조부서</th>
-									<td colspan="5">
-										<div id="refName"></div>
-										<div id="deptName"></div>
+								<tr>
+									<th id="signRefer" style="cursor: pointer;">참조 및 참조부서</th>
+									<td colspan="3">
+										<input type="text" class="form-control form-control-solid" id="refName" readonly>
+									</td>
+									<td colspan="2">
+										<input type="text" class="form-control form-control-solid" id="deptName" readonly>
 									</td>
 								</tr>
 								<tr id="signLine">
-									<th>서명선택</th>
+									<th id="selectSign" style="cursor: pointer;">서명선택</th>
 									<td colspan="3">
-										<button id="selectSign">서명관리</button>
-										<input id="signMsg" class="form-control form-control-solid" readonly placeholder="서명을 선택해주세요">
+										<input id="signMsg" class="form-control form-control-solid" readonly>
 									</td>
-									<th>기본서명사용</th>
-									<td>
-										<input type="checkbox" id="chk"  class="form-check-input" name="defaultSign" onclick="defaultSign()">
+									<th style="text-align: center;">대표 등록 서명사용</th>
+									<td style="text-align: center; vertical-align: middle;">
+										<input type="checkbox" id="chk"  class="form-check-input" onclick="defaultSign()">
 									</td>
 								</tr>
 								
 								<tr>
 									<th>제목</th>
-									<td colspan="5"><input type="text" class="sitb_doc_title" name="sidb_doc_title" maxlength="20"></td>
+									<td colspan="5"><input type="text" class="sitb_doc_title form-control form-solid" name="sidb_doc_title" maxlength="20"></td>
 									
 								</tr>
 							</table>
 							<textarea id="editor" name="sidb_doc_content"></textarea>
-							<table class="table table-bordered">
+							<table class="table table-bordered" style="margin: 10px 0px;">
 								<tr>
-									<th>첨부파일</th>
-									<td colspan="2"><input type="file" id="sidf_file_content" name="file" class="form-control form-control-solid"></td>
-									
+									<th colspan="6">첨부파일 <span style="color: orange; margin-left: 30px;">* 10MB 미만의 이미지 / 문서 파일만 업로드 가능합니다</span></th>
+								</tr>
+								<tr>
+									<td colspan="6"><input type="file" id="sidf_file_content" name="file" class="form-control form-control-solid" style="line-height: 12px;"></td>
 								</tr>
 							</table>
 							

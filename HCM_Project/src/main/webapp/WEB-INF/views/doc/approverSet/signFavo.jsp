@@ -46,7 +46,7 @@ td>img {
 			<input type="hidden" value="${userInfoVo.empl_rank_nm}" id="positionFlag">
 			<!-- OJS -->	
 			<div class="app-container container-fulid">
-				<div class="row gx-5 gx-xl-10" style="">
+				<div class="row gx-5 gx-xl-10">
 				<div class="col-xxl-5 mb-5 mb-xl-10">
 					<div class="card card-flush h-md-100 mb-xl-10">
 						<div class="card-header pt-5">

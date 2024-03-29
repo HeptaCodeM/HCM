@@ -578,9 +578,9 @@ document.getElementById('initial').addEventListener('click', function() {
 							}
 						}
 
-						if (myPositionFlag > parseInt(node.pos_flag) && node.pos_na != null) {
-							node.state = { disabled: true };
-						}
+//						if (myPositionFlag > parseInt(node.pos_flag) && node.pos_na != null) {
+//							node.state = { disabled: true };
+//						}
 
 					});
 
