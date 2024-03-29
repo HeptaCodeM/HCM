@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +30,8 @@ import com.hcm.grw.model.service.RedisSubscriber;
 @RequestMapping("/doc/")
 public class PubSubController {
 	
-	@Autowired
-	@Qualifier("listenerContainer")
+//	@Autowired
+//	@Qualifier("listenerContainer")
     // topic에 메시지 발행을 기다리는 Listener
     private RedisMessageListenerContainer redisMessageListener;
 	// 발행자
