@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 click: function() {
                     calendar.prev(); // 이전 달로 이동
                     currentMonth = calendar.view.title; // 현재 월 값 업데이트
-                    listAjax(currentMonth); // AJAX 호출
+                    listAjax(currentMonth,); // AJAX 호출
                 }
             },
             customNextButton: {
@@ -71,10 +71,14 @@ document.addEventListener('DOMContentLoaded', function() {
             var scbo_no = info.event.extendedProps.scbo_no;
             detail(scbo_no);
         },
+        
         editable: false,// 수정할려면 true로 바꾸면 됨
         droppable: false, //드래그 안되게 막음
         displayEventTime: false,//이벤트에 시간 표시여부
         dayMaxEvents: true,// 일정 표시개수 4개 제한
+       	eventOverlap: function(stillEvent, movingEvent) {
+    return stillEvent.allDay && movingEvent.allDay;
+  }
     });
 
     // 초기 렌더링 시에 AJAX 호출
@@ -85,35 +89,48 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function listAjax(daygridmonth) {
-
-            
-    	 	var formData = $("#filter").serializeArray();
-            var selectedValues = [];
-            // 수집한 값을 배열에 넣습니다.
-            $.each(formData, function(index, element){
-                selectedValues.push(element.value);
-            });
-            // 선택된 값들을 콤마로 구분하여 문자열로 변환합니다.
-            var selectedString = selectedValues.join(',');
-            // AJAX 요청을 보냅니다.
-            if(selectedString == null){
-				selectedString = "1,2,3,4"
-			}
-			
+	
+	    // 기존에 동일한 ID를 가진 이벤트 소스가 있는지 확인하고 있다면 삭제합니다.
+    var existingEventSource = calendar.getEventSourceById("calendarData");
+    if (existingEventSource) {
+        existingEventSource.remove();
+    }
+	
+//			calendar.getEventSources().forEach(function(source) {
+			    // 이벤트 소스의 클래스 이름이 "koHol"을 포함하는지 확인합니다.
+//			    var google = source.context.eventSources
+//			    console.log(google);
+//			    console.log(source);
+//			    source.remove();
+			   
+//			    calendar.addEventSource(google);
+//			    if(source.context.eventSources){
+//					google += source;
+//				}else{}
+			    // "koHol" 클래스를 가지지 않은 이벤트 소스를 제거합니다.
+//});
+	
+    var formData = $("#filter").serializeArray();
+    var selectedValues = [];
+    // 수집한 값을 배열에 넣습니다.
+    $.each(formData, function(index, element){
+        selectedValues.push(element.value);
+    });
+    // 선택된 값들을 콤마로 구분하여 문자열로 변환합니다.
+    var selectedString = selectedValues.join(',');
+    // AJAX 요청을 보냅니다.
+    if(selectedString == null){
+        selectedString = "1,2,3,4"
+    }
+    
     // AJAX 호출 및 데이터 처리
-    $.ajax({
+      $.ajax({
         type: "get",
         url: "/sm/getAllCalendar.do",
         data: { daygridmonth: daygridmonth, type: selectedString},
         dataType: "json",
         success: function(data) {
-		 // 기존의 특정 클래스 이름을 가진 이벤트 소스를 제거합니다.
-			   calendar.getEventSources().forEach(function(source) {
-            if (source.className && source.className.includes("koHol")) {
-                source.remove();
-            }
-        });
-            // 받아온 데이터를 FullCalendar의 이벤트 형식으로 가공
+		// 받아온 데이터를 FullCalendar의 이벤트 형식으로 가공합니다.
             var events = data.map(function(item) {
                 return {
                     title: item.title, // 이벤트 제목
@@ -124,11 +141,14 @@ function listAjax(daygridmonth) {
                     scbo_cgory_no: item.scbo_cgory_no,
                 };
             });
-//             새로운 이벤트 데이터 추가
-			
-            calendar.addEventSource(events);
-            
-            
+
+            // FullCalendar에 새로운 이벤트 소스를 추가합니다.
+            calendar.addEventSource({
+                id: "calendarData", // 이벤트 소스에 대한 ID
+                events: events // 새로운 이벤트 데이터
+            });
+
+            // FullCalendar에 추가된 이벤트를 다시 그립니다.
             calendar.refetchEvents();
         },
         error: function() {

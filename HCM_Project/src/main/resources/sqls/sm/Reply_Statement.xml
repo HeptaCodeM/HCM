@@ -8,56 +8,36 @@
 SELECT 
     RB.REBO_NO,RB.GOBO_NO,RB.REBO_CONTENT,RB.REBO_WRITER,
     RB.REBO_WRITER_ID,RB.REBO_REGDATE,RB.REBO_MODIFY_DATE,RB.REBO_STEP,
-    RB.REBO_DEPTH,GB.GOBO_NO
+    RB.REBO_DEPTH,GB.GOBO_NO,E.EMPL_PICTURE
 FROM 
     ADMIN.REPLY_BOARD RB INNER JOIN ADMIN.GONGJI_BOARD GB 
     ON GB.GOBO_NO = RB.GOBO_NO
-WHERE RB.GOBO_NO = #{gobo_no} AND REBO_DEPTH = '0'
+    JOIN EMPLOYEE e 
+    ON RB.REBO_WRITER_ID  = E.EMPL_ID
+WHERE RB.GOBO_NO = #{gobo_no} 
 ORDER BY REBO_REGDATE ASC 
 </select>
 
-<select id="maxNo" resultType="java.lang.String">
-SELECT REBO_NO
-FROM ADMIN.REPLY_BOARD
-WHERE REBO_NO = (SELECT MAX(REBO_NO)FROM REPLY_BOARD rb)
-</select>
 
-
-<select id="getAllReplyTwo" resultType="ReplyDto">
-SELECT 
-    RB.REBO_NO,RB.GOBO_NO,RB.REBO_CONTENT,RB.REBO_WRITER,
-    RB.REBO_WRITER_ID,RB.REBO_REGDATE,RB.REBO_MODIFY_DATE,RB.REBO_STEP,
-    RB.REBO_DEPTH,GB.GOBO_NO
-FROM 
-    ADMIN.REPLY_BOARD RB INNER JOIN ADMIN.GONGJI_BOARD GB 
-    ON GB.GOBO_NO = RB.GOBO_NO
-WHERE RB.GOBO_NO = #{gobo_no} AND REBO_DEPTH = '1'
-ORDER BY REBO_REGDATE ASC 
-</select>
 
 <!-- 댓글등록 -->
-<insert id="insertReply">
+<insert id="insertReply" parameterType="ReplyDto">
+ <selectKey keyProperty="rebo_no" resultType="String" order="BEFORE">
+       SELECT  NVL(MAX(REBO_NO)+1,0) FROM REPLY_BOARD rb
+    </selectKey>
 INSERT INTO ADMIN.REPLY_BOARD
 (REBO_NO, GOBO_NO, REBO_CONTENT, REBO_WRITER, 
 REBO_WRITER_ID, REBO_REGDATE, REBO_MODIFY_ID, REBO_MODIFY_DATE, 
 REBO_STEP, REBO_DEPTH, REBO_DELFLAG)
-VALUES((SELECT NVL(MAX(REBO_NO)+1,0) FROM REPLY_BOARD), #{gobo_no}, #{rebo_content}, #{rebo_writer}, 
+VALUES(#{rebo_no}, #{gobo_no}, #{rebo_content}, #{rebo_writer}, 
 #{rebo_writer_id}, CURRENT_TIMESTAMP , #{rebo_writer_id}, CURRENT_TIMESTAMP, 
 (SELECT NVL(MAX(REBO_STEP)+1,0) FROM REPLY_BOARD), 0, 'N' )
+
+  
 </insert>
 
 
 
-<!-- 대댓글등록 -->
-<insert id="insertReplyTwo">
-INSERT INTO ADMIN.REPLY_BOARD
-(REBO_NO, GOBO_NO, REBO_CONTENT, REBO_WRITER, 
-REBO_WRITER_ID, REBO_REGDATE, REBO_MODIFY_ID, REBO_MODIFY_DATE, 
-REBO_STEP, REBO_DEPTH, REBO_DELFLAG)
-VALUES((SELECT NVL(MAX(REBO_NO)+1,0) FROM REPLY_BOARD), #{gobo_no}, #{rebo_content}, #{rebo_writer}, 
-#{rebo_writer_id}, CURRENT_TIMESTAMP , #{rebo_writer_id}, CURRENT_TIMESTAMP, 
-#{rebo_step}, 1, 'N' )
-</insert>
 
 
 
