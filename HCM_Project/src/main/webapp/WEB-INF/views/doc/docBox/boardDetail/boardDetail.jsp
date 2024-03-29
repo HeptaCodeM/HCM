@@ -25,11 +25,11 @@
   justify-content: flex-end; 
 }
 
-.card .card-header {
+/* .card .card-header {
 justify-content: center;
  align-items: center;
 flex-direction:column;
-}
+} */
 .container {
 	width: 80%;
 	margin: 0 auto;
@@ -76,6 +76,10 @@ th, td {
  text-align: center;
  vertical-align: middle;
 }
+#pdfZone{
+width:80%;
+padding-left:15%;
+}
 </style>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
 	data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true"
@@ -107,7 +111,8 @@ th, td {
 			<div id="kt_app_content" class="app-content flex-column-fluid">
 				<div class="app-container container-fluid">
 					<div class="card card-flush h-md-50 mb-xl-10">
-						<div style="text-align:center;"  class="card-header pt-5">
+						<div style="text-align:center; justify-content: center; align-items: center;
+									flex-direction:column;"  class="card-header pt-5">
 							<h1> ${docDto1.sidb_doc_title}</h1>
 							<input type="hidden" value="${docDto1.sidb_doc_alflag}" id="alFlag"/>
 							 <br>
@@ -172,15 +177,15 @@ th, td {
 							<div id="pdfDiv">
 							<div id="pdfZone">
 								<div class="flex">
-								<div style="max-width:40%;">
+								<div style="max-width:53%;">
 									<table class="top-table">
 										<tr>
 											<th rowspan="4" style="width:30px">결<br>재
 											</th>
 										<tr style="height:30px;">
-										    <td style="width:95px;"> ${docDto1.empl_name} ${docDto1.empl_rank}</td>
+										    <td style="min-width:95px;"> ${docDto1.empl_name} ${docDto1.empl_rank}</td>
 											<c:forEach items="${docDto}" var="dt" varStatus="i">
-												<td style="width:95px;">${dt.appr_name} ${dt.appr_rank}</td>
+												<td style="min-width:95px;">${dt.appr_name} ${dt.appr_rank}</td>
 											</c:forEach>
 										</tr>
 										<tr style="height:80px;">

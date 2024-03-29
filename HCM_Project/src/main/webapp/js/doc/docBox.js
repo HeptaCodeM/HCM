@@ -1882,10 +1882,20 @@ $(document).ready( function () {
 //임시 문서함 삭제후 Ajax
 function deleteAjax(docNum, docName){
 	
-	
-    var confirmation =  confirm(docName + " 문서를 삭제하시겠습니까?");
-	
-	if (confirmation) {
+ Swal.fire({
+        html: `정말 <strong>${docName}</strong> 문서를  <br>삭제하시겠습니까?`,
+ //       icon: "question",
+        buttonsStyling: false,
+        showCancelButton: true,
+        confirmButtonText: "삭제",
+        cancelButtonText: '취소',
+        customClass: {
+            confirmButton: "btn btn-light-danger",
+            cancelButton: 'btn btn-light-primary'
+        }
+    }).then((result) => { 
+    
+	if (result.isConfirmed) {
 	// 기존에 있던 테이블 삭제
 	$("#tempBox").DataTable().destroy(); 
 	var mainDiv = document.getElementById('tableOuter');
@@ -1896,6 +1906,8 @@ function deleteAjax(docNum, docName){
 	     data: { docNum: docNum },
 	     success:function(data){ 
 	    	console.log(data);
+	    	
+	    	
 	    	var in3 = '';
 	    	var in2 = '';
 	    	var in1 = '<table id="tempBox" class="stripe hover">'
@@ -1962,6 +1974,15 @@ function deleteAjax(docNum, docName){
 		lengthMenu: [ 5, 10, 15 ], //몇개씩 볼지(기본값 10, 25, 50, 100)
         pagingType: "simple_numbers" 
 			 });
+		
+		Swal.fire({
+                    text: '삭제되었습니다.',
+           //         icon: 'success',
+                    confirmButtonText: '확인',
+                    customClass: {
+       			    confirmButton: 'btn btn-light-primary' 
+    	}
+                });
 		   },
 		  error:function(){
 			alert("Ajax 처리중 오류 발생");
@@ -1969,4 +1990,5 @@ function deleteAjax(docNum, docName){
 	})
 	
 	}//if문 닫는 괄호
-}; 
+}); 
+}
