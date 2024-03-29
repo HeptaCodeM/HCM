@@ -1,9 +1,7 @@
 package com.hcm.grw.ctrl;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.listener.ChannelTopic;
@@ -41,13 +39,13 @@ public class PubSubController {
 	@Autowired
 	private RedisSubscriber redisSubscriber;
 	// topic 이름으로 topic정보를 가져와 메시지를 발송할 수 있도록 Map에 저장
-	@Autowired
+//	@Autowired
 	private Map<String, ChannelTopic> channels;
 	
-	@PostConstruct
-	public void init() {
-		channels = new HashMap<>();
-	}
+//	@PostConstruct
+//	public void init() {
+//		channels = new HashMap<>();
+//	}
 
 	// 유효한 Topic 리스트 반환
     @GetMapping("room.do")
