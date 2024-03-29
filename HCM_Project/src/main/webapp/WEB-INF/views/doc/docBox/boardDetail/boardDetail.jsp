@@ -25,11 +25,11 @@
   justify-content: flex-end; 
 }
 
-.card .card-header {
+/* .card .card-header {
 justify-content: center;
  align-items: center;
 flex-direction:column;
-}
+} */
 .container {
 	width: 80%;
 	margin: 0 auto;
@@ -76,6 +76,10 @@ th, td {
  text-align: center;
  vertical-align: middle;
 }
+#pdfZone{
+width:80%;
+padding-left:15%;
+}
 </style>
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar"
 	data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true"
@@ -107,7 +111,8 @@ th, td {
 			<div id="kt_app_content" class="app-content flex-column-fluid">
 				<div class="app-container container-fluid">
 					<div class="card card-flush h-md-50 mb-xl-10">
-						<div style="text-align:center;"  class="card-header pt-5">
+						<div style="text-align:center; justify-content: center; align-items: center;
+									flex-direction:column;"  class="card-header pt-5">
 							<h1> ${docDto1.sidb_doc_title}</h1>
 							<input type="hidden" value="${docDto1.sidb_doc_alflag}" id="alFlag"/>
 							 <br>
@@ -172,15 +177,15 @@ th, td {
 							<div id="pdfDiv">
 							<div id="pdfZone">
 								<div class="flex">
-								<div style="max-width:40%;">
+								<div style="max-width:53%;">
 									<table class="top-table">
 										<tr>
 											<th rowspan="4" style="width:30px">결<br>재
 											</th>
 										<tr style="height:30px;">
-										    <td style="width:95px;"> ${docDto1.empl_name} ${docDto1.empl_rank}</td>
+										    <td style="min-width:95px;"> ${docDto1.empl_name} ${docDto1.empl_rank}</td>
 											<c:forEach items="${docDto}" var="dt" varStatus="i">
-												<td style="width:95px;">${dt.appr_name} ${dt.appr_rank}</td>
+												<td style="min-width:95px;">${dt.appr_name} ${dt.appr_rank}</td>
 											</c:forEach>
 										</tr>
 										<tr style="height:80px;">
@@ -307,14 +312,14 @@ th, td {
 								
 		<div style="text-align: center; margin-top: 30px;">
 	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.sidb_curr_id and docDto1.sidb_doc_stat != 3 and docDto1.sidb_doc_stat != 4 }">
-    <button type="button" class="btn btn-primary btnLg" data-bs-toggle="modal" data-bs-target="#kt_modal_3">승인</button>
+    <button type="button" class="btn btn-primary btnSm" data-bs-toggle="modal" data-bs-target="#kt_modal_3">승인</button>
     <span style="min-width:100px;">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button type="button" class="btn btn-danger btnLg" data-bs-toggle="modal" data-bs-target="#kt_deny">반려</button>
+    <button type="button" class="btn btn-danger btnSm " data-bs-toggle="modal" data-bs-target="#kt_deny">반려</button>
 	</c:if>
 
 	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.empl_id and docDto1.sidb_doc_stat == 1}">
   <!--   <button type="button" class="btn btn-primary" onclick="docEdit()">품의수정</button> -->
-    <button type="button" class="btn btn-danger" onclick="gianCancel()">상신취소</button>
+    <button type="button" style="height:40px;" class="btn btn-danger" onclick="gianCancel()">상신취소</button>
 	<form id="gianCancel" action="./gianCancel.do" method="post">
 						<input type="hidden" value="${docDto1.sidb_doc_num}" name="docNum"/>
 					</form>
@@ -379,7 +384,7 @@ th, td {
 						</div>
 					</div>
 				
-					<p>첨언</p>
+					<p style="text-align:center;">첨언</p>
 					<input type="hidden" value="${docDto1.sidb_doc_num}" id="docNum" name="docNum"/>
 						<textarea id="approvalReply" class="form-control" style="width: 100%;"></textarea>
 				</div>
@@ -398,7 +403,7 @@ th, td {
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h3 class="modal-title">반려</h3>
+					<h3 class="modal-title" style="text-align:center;">반려</h3>
 
 					<!--begin::Close-->
 					<div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
@@ -412,7 +417,7 @@ th, td {
 				<!-- 반려사유 입력 form -->
 				<div class="modal-body">
 				
-					<p>반려사유</p>
+					<p style="text-align:center;">반려사유</p>
 						<textarea id="rejectReply" class="form-control" style="width: 100%;"></textarea>
 						<input type="hidden" value="${docDto1.sidb_doc_num}" name="docNum"/>
 				</div>
