@@ -307,14 +307,14 @@ th, td {
 								
 		<div style="text-align: center; margin-top: 30px;">
 	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.sidb_curr_id and docDto1.sidb_doc_stat != 3 and docDto1.sidb_doc_stat != 4 }">
-    <button type="button" class="btn btn-primary btnLg" data-bs-toggle="modal" data-bs-target="#kt_modal_3">승인</button>
+    <button type="button" class="btn btn-primary btnSm" data-bs-toggle="modal" data-bs-target="#kt_modal_3">승인</button>
     <span style="min-width:100px;">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button type="button" class="btn btn-danger btnLg" data-bs-toggle="modal" data-bs-target="#kt_deny">반려</button>
+    <button type="button" class="btn btn-danger btnSm " data-bs-toggle="modal" data-bs-target="#kt_deny">반려</button>
 	</c:if>
 
 	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.empl_id and docDto1.sidb_doc_stat == 1}">
   <!--   <button type="button" class="btn btn-primary" onclick="docEdit()">품의수정</button> -->
-    <button type="button" class="btn btn-danger" onclick="gianCancel()">상신취소</button>
+    <button type="button" style="height:40px;" class="btn btn-danger" onclick="gianCancel()">상신취소</button>
 	<form id="gianCancel" action="./gianCancel.do" method="post">
 						<input type="hidden" value="${docDto1.sidb_doc_num}" name="docNum"/>
 					</form>
@@ -379,7 +379,7 @@ th, td {
 						</div>
 					</div>
 				
-					<p>첨언</p>
+					<p style="text-align:center;">첨언</p>
 					<input type="hidden" value="${docDto1.sidb_doc_num}" id="docNum" name="docNum"/>
 						<textarea id="approvalReply" class="form-control" style="width: 100%;"></textarea>
 				</div>
@@ -398,7 +398,7 @@ th, td {
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h3 class="modal-title">반려</h3>
+					<h3 class="modal-title" style="text-align:center;">반려</h3>
 
 					<!--begin::Close-->
 					<div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
@@ -412,7 +412,7 @@ th, td {
 				<!-- 반려사유 입력 form -->
 				<div class="modal-body">
 				
-					<p>반려사유</p>
+					<p style="text-align:center;">반려사유</p>
 						<textarea id="rejectReply" class="form-control" style="width: 100%;"></textarea>
 						<input type="hidden" value="${docDto1.sidb_doc_num}" name="docNum"/>
 				</div>

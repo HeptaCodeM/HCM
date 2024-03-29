@@ -18,7 +18,6 @@ $(document).ready( function () {
                 "first": "처음",
                 "last" : "마지막"
             },
-          //https://datatables.net/reference/option/language   위를 더 디테일하게 수정하고싶으면 여기로~
         },
         
         info: true, // 좌측하단 정보 표시 
@@ -1861,7 +1860,6 @@ $(document).ready( function () {
                 "first": "처음",
                 "last" : "마지막"
             },
-          //https://datatables.net/reference/option/language   위를 더 디테일하게 수정하고싶으면 여기로~
         },
         
         info: true, // 좌측하단 정보 표시 
@@ -1885,7 +1883,7 @@ $(document).ready( function () {
 function deleteAjax(docNum, docName){
 	
 	
-    var confirmation =  confirm(docName + "문서를 삭제하시겠습니까?");
+    var confirmation =  confirm(docName + " 문서를 삭제하시겠습니까?");
 	
 	if (confirmation) {
 	// 기존에 있던 테이블 삭제
@@ -1929,7 +1927,7 @@ function deleteAjax(docNum, docName){
 
 	    	            + '<td style="text-align:center;">' +formattedDate + '</td>'
 	    	            
-	    	            + '<td> <button type="submit" class="btn-light-danger btnSm" onclick="deleteAjax('+d.sidb_doc_num+', \'' + d.sidb_doc_title + '\')"> 삭제</button>'
+	    	            + '<td> <button type="submit" class="btn btn-light-danger btnSm" onclick="deleteAjax('+d.sidb_doc_num+', \'' + d.sidb_doc_title + '\')"> 삭제</button>'
 	    	            in2 += '                    </td>'
 	    	            + '                </tr>'
 	    	    
@@ -1963,7 +1961,6 @@ function deleteAjax(docNum, docName){
 //      displayLength: 20, //처음에 몇 건을 볼지 
 		lengthMenu: [ 5, 10, 15 ], //몇개씩 볼지(기본값 10, 25, 50, 100)
         pagingType: "simple_numbers" 
-        // 페이징 타입 설정 : simple =이전, 다음 /simple_numbers 숫자페이징+이전 다음 , /full_numbers = 처음, 마지막 추가
 			 });
 		   },
 		  error:function(){
