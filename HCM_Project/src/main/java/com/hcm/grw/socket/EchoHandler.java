@@ -129,5 +129,18 @@ public class EchoHandler extends TextWebSocketHandler {
 		return emp;
 		
 	}
+	
+	public void sendMessageToClients(String message) {
+		for (WebSocketSession clientSession : sessionList) {
+			if (clientSession.isOpen()) {
+				try {
+					clientSession.sendMessage(new TextMessage(message));
+					log.info(message);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 }

@@ -74,6 +74,7 @@ public class SignFavoRestController {
 	public ResponseEntity<?> insertFavo(@RequestBody Map<String, Object> map) {
 		log.info("SignFavoController insertFavo.do GET 즐겨찾기 결재자 등록 요청 값 : {}", map);
 		SignFavoDto dto = service.duplicateFav(map);
+		
 		if(dto != null) {
 			return ResponseEntity.ok("이미 등록된 결재자 입니다");
 		}
