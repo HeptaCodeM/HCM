@@ -116,6 +116,11 @@
 						valueChk.append('coco_name', coco_name);
 						valueChk.append('coco_cd', coco_cd);
 						valueChk.append('role', role);
+						
+						if(coco_name == "" || coco_cd == ""){
+							return false;
+						}
+						
 						fetch('/hr/commonCode/roleNameDuplicateChk.do',{
 							method: "POST",
 							headers: {

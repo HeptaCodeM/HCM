@@ -35,6 +35,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
+	public int updaetLoginDate(String empl_id) {	
+		return dao.updaetLoginDate(empl_id);
+	}
+	
+	@Override
 	public int insertLoginHistory(Map<String, String> map) {
 		return dao.insertLoginHistory(map);
 	}

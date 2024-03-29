@@ -26,7 +26,6 @@ public class SignController {
 	@GetMapping(value = "/hr/sign/signListForm.do")
 	public String signListForm(Model model) {
 		Map<String, Object> signMap = new HashMap<String, Object>();
-		// TODO login세션 생기면 수정하고 테스트 [재원]
 		signMap.put("empl_id", "20230102");
 		List<EmpSignDto> signList = empSignService.selectAllSign(signMap);
 		System.out.println(signList);
@@ -44,7 +43,6 @@ public class SignController {
 	@ResponseBody
 	public void insertSign(@RequestBody String signJson) {
 		Gson signGson = new Gson();
-		// TODO login세션 생기면 수정하고 테스트 [재원]
 		Map<String, String> map = signGson.fromJson(signJson, Map.class);
 		String emsi_title = map.get("emsi_title");
 		String emsi_sign_img = map.get("emsi_sign_img");
@@ -62,7 +60,6 @@ public class SignController {
 	@GetMapping(value = "/hr/sign/delThisSign.do")
 	public String delThisSign(String emsi_seq) {
 		System.out.println(emsi_seq);
-		// TODO login세션 생기면 수정하고 테스트 [재원]
 		Map<String, Object> signMap = new HashMap<String, Object>();
 		signMap.put("empl_id", "20230102");
 		signMap.put("emsi_seq", emsi_seq);
@@ -77,7 +74,6 @@ public class SignController {
 	@GetMapping(value = "/hr/sign/setDefaultSign.do")
 	public String setDefaultSign(String emsi_seq) {
 		System.out.println(emsi_seq);
-		// TODO login세션 생기면 수정하고 테스트 [재원]
 		Map<String, Object> signMap = new HashMap<String, Object>();
 		signMap.put("empl_id", "20230102");
 		

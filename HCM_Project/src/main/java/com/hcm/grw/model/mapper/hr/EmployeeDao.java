@@ -11,6 +11,8 @@ public interface EmployeeDao {
 
 	/*일반로그인*/
 	public EmployeeDto getLogin(String empl_id);
+	/*회원정보 로그인 일자 수정*/
+	public int updaetLoginDate(String empl_id);
 	/*로그인 History입력*/
 	public int insertLoginHistory(Map<String, String> map);
 	/*유저정보*/

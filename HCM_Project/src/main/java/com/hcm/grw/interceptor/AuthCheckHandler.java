@@ -97,7 +97,7 @@ public class AuthCheckHandler implements HandlerInterceptor {
 			return true;
 		}catch(Exception ex) {
 			ex.printStackTrace();
-			Function.alertLocation(response, "오류가 발생 하였습니다.", "/login/login.do", "", "", "");
+			Function.alertLocation("오류가 발생 하였습니다.", "/login/login.do", "", "", "");
 			return false;
 		}
 	}
