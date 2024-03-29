@@ -112,16 +112,57 @@ function toggleMenu(event, rebo_no) {
 }
 
 function deleteButton(rebo_no){
-	sweetAlertConfirm("댓글을 삭제 하시겠습니까?",deleteAjax(rebo_no) , '');
+		Swal.fire({
+        html: `정말 삭제하시겠습니까?`,
+   //     icon: "question",
+        buttonsStyling: false,
+        showCancelButton: true,
+        confirmButtonText: " &nbsp;&nbsp; 예  &nbsp;&nbsp; ",
+        cancelButtonText: '아니요',
+        customClass: {
+            confirmButton: "btn btn-light-primary",
+            cancelButton: 'btn btn-light-danger'
+        }
+    }).then((result) => { 
+        if (result.isConfirmed) {
+            // 사용자가 상신 취소를 확인한 경우
+            // 여기서 상신 취소 처리 로직을 실행하면 됩니다.
+            Swal.fire({
+                text: '삭제되었습니다.',
+             //   icon: 'success',
+                confirmButtonText: '확인',
+                customClass: {
+                    confirmButton: 'btn btn-light-primary' 
+                }
+            })
+            .then(() => {
+             deleteAjax(rebo_no);
+             });
+        }
+    });
 }
 function deleteAjax(rebo_no){
+	
+	
 	$.ajax({
-		url: "/sm/updateReply.do",
+		url: "/sm/updateReplyDelFlag.do",
 		data:{rebo_no:rebo_no},
 		type:"get",
 		dataType: "json",
 		success: function(){
-			
+			var liElement = $('#commentItem' + rebo_no).closest('li');
+            // 해당 li 요소의 바로 위에 있는 hrline 요소를 선택합니다.
+            var hrLineAbove = liElement.prev('.hrline');
+            // 해당 li 요소의 바로 아래에 있는 hrline 요소를 선택합니다.
+            var hrLineBelow = liElement.next('.hrline');
+            // hrline 요소가 있으면 삭제합니다.
+            if (hrLineAbove.length > 0) {
+                hrLineAbove.remove();
+            } else if (hrLineBelow.length > 0) {
+                hrLineBelow.remove();
+            }
+            // 선택한 li 요소를 삭제합니다.
+            liElement.remove();
 		},
 		error: function(){
 			
@@ -129,8 +170,41 @@ function deleteAjax(rebo_no){
 	})
 	
 }
+
+
+
+
 function updateButton(rebo_no){
-	sweetAlertConfirm("댓글을 수정 하시겠습니까?",updateAjax(rebo_no) , '');
+	    var liElement = $('#commentItem' + rebo_no);
+
+    // 댓글 내용을 가져옵니다.
+    var commentContent = $('#replycontent').text().trim();
+
+    // li 태그 내의 내용을 모두 지웁니다.
+    liElement.empty();
+
+    // 새로운 내용을 생성하여 추가합니다.
+    var newContent = '<div class="CommentWriter mb-4" style="margin-top: 50px ">';
+    newContent += '<form id="ReplyForm">';
+    newContent += '<div class="comment_inbox border border-2">';
+    newContent += '<input type="hidden" name="rebo_writer_id" id="rebo_writer_id" value="${sessionScope.userInfoVo.empl_id}">';
+    newContent += '<input type="hidden" name="rebo_modify_id" id="rebo_modify_id" value="${sessionScope.userInfoVo.empl_id}">';
+    newContent += '<input type="hidden" name="rebo_writer" id="rebo_writer" value="${sessionScope.userInfoVo.empl_name}">';
+    newContent += '<em class="comment_inbox_name">${sessionScope.userInfoVo.empl_name}</em>';
+    newContent += '<textarea id="rebo_content" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" oninput="checkInput()" name="rebo_content">' + commentContent + '</textarea>';
+    newContent += '<div class="d-flex justify-content-end align-items-end">';
+    newContent += '<div class="register_box">';
+    newContent += '<button id="submitButton" type="button" class="btn btn-primary" onclick="updateAjax('+rebo_no+')" disabled>등록</button>';
+    newContent += '</div>';
+    newContent += '</div>';
+    newContent += '</div>';
+    newContent += '</form>';
+    newContent += '</div>';
+
+    // 새로운 내용을 li 태그에 추가합니다.
+    liElement.append(newContent);
+
+	
 }
 function updateAjax(rebo_no){
 	

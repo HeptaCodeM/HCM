@@ -92,7 +92,7 @@
 							        <img src="data:image/png;base64,${comment.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">
                                   <div style="margin-left: 10px; position: relative; width: 100%;">
 								    <strong>${comment.rebo_writer}</strong><br>
-								    <div>${comment.rebo_content}</div>
+								    <div id="replycontent">${comment.rebo_content}</div>
 								    <div>
 								        <small><fmt:formatDate value="${comment.rebo_regdate}" pattern="yyyy-MM-dd HH:mm"/></small>
 								        <div style="position: absolute; top: -12px; right: 0; float: right">

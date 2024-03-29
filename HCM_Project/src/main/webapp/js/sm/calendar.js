@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 click: function() {
                     calendar.prev(); // 이전 달로 이동
                     currentMonth = calendar.view.title; // 현재 월 값 업데이트
-                    listAjax(currentMonth,); // AJAX 호출
+                    listAjax(currentMonth); // AJAX 호출
                 }
             },
             customNextButton: {
@@ -64,8 +64,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         },
-        dateClick: function() {   //일자 클릭시 이벤트
-            insert();
+        dateClick: function(info) {   //일자 클릭시 이벤트
+            // 클릭된 날짜 정보 가져오기
+    		var clickedDate = info.date;
+
+    // 클릭된 날짜를 원하는 형식으로 변환
+   	 		var formattedDate = clickedDate.getFullYear() + '/' +
+                        ('0' + (clickedDate.getMonth() + 1)).slice(-2) + '/' +
+                        ('0' + clickedDate.getDate()).slice(-2) + ' ' +
+                        ('0' + clickedDate.getHours()).slice(-2) + ':' +
+                        ('0' + clickedDate.getMinutes()).slice(-2);
+
+    // insert 함수 호출 및 클릭된 날짜 정보 전달
+   		 insert(formattedDate);
         },
         eventClick: function(info) {  // 일정명 클릭시 이벤트
             var scbo_no = info.event.extendedProps.scbo_no;
@@ -195,13 +206,18 @@ function detail(scbo_no){
     });
 }
 
-function insert() {
+function insert(day) {
     var daygridmonth = $(".fc-toolbar-title").text();
+    $("#scbo_start").val(day);
+    $("#scbo_end").val(day);
     $("#insertModal").modal("show"); // modal 나타내기
-
+	 $('#insertModal').on('hidden.bs.modal', function () {
+        // 폼 초기화
+        $("#form")[0].reset();
+    });
     // 기존의 이벤트 핸들러를 제거합니다.
     $("#addCalendar").off("click");
-
+	
     // 추가 버튼 클릭 시 이벤트 핸들러를 설정합니다.
     $("#addCalendar").on("click", function() {
         var scbo_cgory_no = $("#scbo_cgory_no").val();
@@ -209,7 +225,7 @@ function insert() {
         var scbo_content = $("#scbo_content").val();
         var scbo_start = $("#scbo_start").val();
         var scbo_end = $("#scbo_end").val();
-
+		
         //내용 입력 여부 확인
         if (scbo_title == null || scbo_title == "") {
             alert("제목을 입력하세요.");
@@ -221,7 +237,7 @@ function insert() {
             alert("종료일이 시작일보다 먼저입니다.");
         } else { // 정상적인 입력 시
             var data = $("#form").serialize()
-
+			
             $.ajax({
                 url: "/sm/insertScbo.do",
                 data: data,
@@ -257,10 +273,10 @@ $(document).ready(function(){
 
 	// start day와 end day datetimepicker 설정
 	$("#scbo_start, #scbo_end,scbo_start1, #scbo_end1").datetimepicker({
-		disabledWeekDays: [0, 6], // 0: 일요일, 6: 토요일 // 주말 선택 불가
 		allowTimes: ['09:00','09:30', '10:00','10:30', '11:00','11:30','12:00','12:30',
 		 '13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30',
 		 '18:00','18:30','19:00','19:30','20:00','20:30','21:00'], // 선택 가능한 시간
+		 
 	});
 // datetimepicker 생성
 $("#scbo_start").datetimepicker({

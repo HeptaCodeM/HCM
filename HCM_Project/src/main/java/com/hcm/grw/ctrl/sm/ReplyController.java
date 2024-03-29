@@ -36,6 +36,7 @@ public class ReplyController {
 	}
 	
 	@GetMapping("updateReply.do")
+	@ResponseBody
 	public Boolean updateReply(ReplyDto dto) {
 		log.info("ReplyController insertReplyTwo 댓글 수정 :  {} ", dto);
 		int n = service.updateReply(dto);
@@ -44,6 +45,7 @@ public class ReplyController {
 	
 	
 	@GetMapping("updateReplyDelFlag.do")
+	@ResponseBody
 	public Boolean updateReplyDelFlag(String rebo_no) {
 		log.info("ReplyController insertReplyTwo 댓글 삭제 :  {} ",rebo_no);
 		int n = service.updateReplyDelFlag(rebo_no);
