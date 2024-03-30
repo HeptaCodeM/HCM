@@ -9,11 +9,13 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +27,7 @@ import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.EmailService;
 import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.CompanyDto;
+import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.hr.CompanyService;
 import com.hcm.grw.model.service.hr.EmployeeService;
 
@@ -59,7 +62,10 @@ public class LoginController {
 	public String login(String error, 
 						String logout,
 						Model model, 
-						HttpServletRequest req) {
+						HttpServletRequest req,
+						HttpServletResponse resp,
+						Authentication authentication,
+						HttpSession httpSession) throws IOException {
 		log.info("error : {}", error);
 		log.info("logout : {}", logout);
 
@@ -71,6 +77,12 @@ public class LoginController {
 			model.addAttribute("logout", "로그아웃!!");
 		}
 
+		// 로그인된 authentication, session정보가 있다면 메인으로 이동처리 한다.
+		if(authentication != null && !authentication.getName().equals("anonymousUser") && ((EmployeeDto)httpSession.getAttribute("userInfoVo")) != null) {
+			resp.sendRedirect("/");
+			return null;
+		}
+		
 		try {
 			String ipAddr=Function.getIpAddress();
 			
