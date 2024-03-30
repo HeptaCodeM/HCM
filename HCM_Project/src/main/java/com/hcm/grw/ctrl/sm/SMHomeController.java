@@ -18,6 +18,7 @@ import com.hcm.grw.dto.sm.GoboDto;
 import com.hcm.grw.dto.sm.ReplyDto;
 import com.hcm.grw.model.service.sm.IGoboService;
 import com.hcm.grw.model.service.sm.IReplyService;
+import com.hcm.grw.socket.EchoHandler;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,8 +32,8 @@ public class SMHomeController {
 	private IGoboService GoboService;
 	@Autowired
 	private IReplyService ReplyService;
-	
-	
+	@Autowired
+	private EchoHandler echoHandler;
 	
 	@GetMapping("getAllGobo.do")
 	public String AllGobo(Model model) {
@@ -102,6 +103,10 @@ public class SMHomeController {
 	    dto.setGobo_writer(empldto.getEmpl_name());
 	    dto.setGobo_writer_id(empldto.getEmpl_id());
 	    int n = GoboService.insertGobo(dto);
+	    
+	    // 공지등록 전체푸쉬알림 - OJS
+	    echoHandler.sendMessageToClients("새로운 공지사항이 등록되었습니다");
+	    
 	    return (n>0)?true:false;
 	}
 	

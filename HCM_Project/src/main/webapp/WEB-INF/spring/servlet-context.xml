@@ -30,12 +30,16 @@
 	<task:annotation-driven scheduler="scheduler"/>
 	<task:scheduler id="scheduler" pool-size="10"/>
 	
+	<bean id="echoHandler" class="com.hcm.grw.socket.EchoHandler"/>
+	
 	<websocket:handlers>
-		<websocket:mapping handler="hcmWs.do" path="/hcmWs.do"/>
+		<websocket:mapping handler="echoHandler" path="/hcmWs.do"/>
 		<websocket:handshake-interceptors>
 			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
 		</websocket:handshake-interceptors>
 	</websocket:handlers>
+	
+	
 	
 	
 	

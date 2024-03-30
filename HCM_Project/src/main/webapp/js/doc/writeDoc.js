@@ -162,18 +162,29 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 		var span1 = document.createElement('span');
 		var span2 = document.createElement('span');
 		var span3 = document.createElement('span');
+		var div = document.createElement('div')
 		
 		span1.setAttribute('style', 'font-size: 13px; margin-left: 800px; font-weight: bold; color: orange;');
 		span2.setAttribute('style', 'font-size: 13px; margin-left: 20px;  font-weight: bold; color: orange;');
 		span3.setAttribute('style', 'font-size: 13px; margin-left: 20px;  font-weight: bold; color: orange;');
+//=======
+//		span1.setAttribute('style', 'font-size: 13px; font-weight: bold; color: orange;');
+//		span2.setAttribute('style', 'font-size: 13px; margin-left: 20px; font-weight: bold; color: orange;');
+//		span3.setAttribute('style', 'font-size: 13px; margin-left: 20px; font-weight: bold; color: orange;');
+//		div.setAttribute('style', 'text-align: right;')
+//>>>>>>> branch 'doc' of https://github.com/HeptaCodeM/HCM.git
 		
 		span1.textContent = '* 총 휴가일수 : ' + document.getElementById('totalHoli').value; 
 		span2.textContent = '사용한 휴가일수 : ' + document.getElementById('useHoli').value;
 		span3.textContent = '잔여 휴가일수 : ' + document.getElementById('restHoli').value;
 		
-		document.getElementById('editor_div').prepend(span3);
-		document.getElementById('editor_div').prepend(span2);
-		document.getElementById('editor_div').prepend(span1);
+		div.append(span1);
+		div.append(span2);
+		div.append(span3);
+		
+		document.getElementById('editor_div').prepend(div);
+		
+		
 	}
 
 })
