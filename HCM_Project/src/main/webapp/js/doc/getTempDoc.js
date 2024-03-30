@@ -248,6 +248,7 @@ window.addEventListener('message', function(e) {
 			document.getElementById('apprName').value = data[0].appr_name + " (" + data[0].appr_position + ")";
 		}
 	}
+	
 	console.log('ref : ', ref);
 	console.log('dept : ', dept);
 	console.log('json : ', json);

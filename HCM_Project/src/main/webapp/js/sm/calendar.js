@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 click: function() {
                     calendar.prev(); // 이전 달로 이동
                     currentMonth = calendar.view.title; // 현재 월 값 업데이트
-                    listAjax(currentMonth,); // AJAX 호출
+                    listAjax(currentMonth); // AJAX 호출
                 }
             },
             customNextButton: {

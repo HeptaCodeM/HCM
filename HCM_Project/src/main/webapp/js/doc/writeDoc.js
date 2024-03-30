@@ -271,8 +271,6 @@ function insertDoc() {
 		sidb_doc_alflag = 'N'
 	}
 
-
-	
 	var sidb_doc_be = null;
 	var sidb_doc_end = null;
 
@@ -297,8 +295,8 @@ function insertDoc() {
 			return;
 		}
 		
-		if(currentDate > calBeDate || currentDate < calEndDate) {
-			swalAlert('기간을 다시 확인해주세요','','','확인');
+		if(currentDate > calBeDate || currentDate > calEndDate) {
+			swalAlert('시작일과 종료일을 확인해주세요','','','확인');
 			return;
 		} 
 	}
@@ -316,7 +314,8 @@ function insertDoc() {
 		}
 	}
 	
-	var file = document.getElementById('sidf_file_content').files[0]; // 파일 가져오기
+	// -----------------------------------> [ 작성화면 ] 
+	var file = document.getElementById('sidf_file_content').files[0]; 
 	var formData = new FormData();
 
 	if (ref == undefined) {
@@ -408,7 +407,6 @@ function insertDoc() {
 document.getElementById('insertTempDoc').addEventListener('click', insertTempDoc)
 // -----------------------------------> [ 작성화면 ] 제출하기 insertDoc button
 document.getElementById('insertDoc').addEventListener('click', insertDoc);
-
 
 
 // 참조 팝업창

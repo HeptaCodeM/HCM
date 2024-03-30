@@ -75,7 +75,7 @@ public class TemplateController {
 	public String insertTemplate(@ModelAttribute TemplateDto dto) {
 		log.info("TemplateController 템플릿 등록하는 insertTemplate");
 		int n = service.insertTemp(dto);
-		return (n == 0) ? "" : "redirect:template.do";
+		return (n == 0) ? "" : "redirect:templateAdmin.do";
 	}
 	
 //  @PostMapping("/insertTemplate.do")
@@ -107,7 +107,7 @@ public class TemplateController {
 		map.put("sidt_temp_cd", dto.getSidt_temp_cd());
 		service.updateTemp(map);
 //		model.addAttribute("lst", dto);
-		return "redirect:detailTemplate.do?sidt_temp_cd=" + map.get("sidt_temp_cd");
+		return "redirect:detailTemplateAdmin.do?sidt_temp_cd=" + map.get("sidt_temp_cd");
 	}
 
 //	@PostMapping(value = "/updateTemplate.do")
@@ -126,7 +126,7 @@ public class TemplateController {
 	public String deleteTemplate(@RequestParam(name = "sidt_temp_cd") String sidt_temp_cd) {
 		log.info("TemplateController 템플릿 삭제하는 deleteTemplate");
 		int n = service.deleteTemp(sidt_temp_cd);
-		return "redirect:template.do";
+		return "redirect:templateAdmin.do";
 	}
 
 	@GetMapping(value = "/getTemplateAdmin.do", produces = "text/html; charset=UTF-8")
