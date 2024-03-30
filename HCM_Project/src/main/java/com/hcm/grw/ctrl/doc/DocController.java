@@ -144,7 +144,6 @@ public class DocController {
 		model.addAttribute("signList", signList);
 
 		model.addAttribute("docDto", docDto);
-		log.info("getDetailBoard getDetail.do 상세조회 리스트 결과 : {}", docDto);
 
 		if (n != 1) {
 			response.setContentType("text/html; charset=UTF-8");
