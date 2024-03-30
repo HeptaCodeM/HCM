@@ -29,5 +29,7 @@ public class ReplyDto {
 	private String rebo_step;
 	private String rebo_depth;
 	private String rebo_delflag;
-
+	private byte[] empl_picture;
+	private String empl_picture_str;
+	
 }

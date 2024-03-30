@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import com.hcm.grw.dto.sm.GoboDto;
 import com.hcm.grw.dto.sm.ReplyDto;
 import com.hcm.grw.model.service.sm.IGoboService;
 import com.hcm.grw.model.service.sm.IReplyService;
+import com.hcm.grw.socket.EchoHandler;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,8 +32,8 @@ public class SMHomeController {
 	private IGoboService GoboService;
 	@Autowired
 	private IReplyService ReplyService;
-	
-	
+	@Autowired
+	private EchoHandler echoHandler;
 	
 	@GetMapping("getAllGobo.do")
 	public String AllGobo(Model model) {
@@ -47,11 +49,15 @@ public class SMHomeController {
 	public String getDetailGobo(String gobo_no,Model model) {
 		log.info("SMHomeController getDetailGobo.do 공지사항 상세조회 화면 이동");
 		GoboDto dto =  GoboService.getDetailGobo(gobo_no);
-		List<ReplyDto> Rlist = ReplyService.getAllReply(gobo_no);
-		List<ReplyDto> Dlist = ReplyService.getAllReplyTwo(gobo_no);
+		List<ReplyDto> list = ReplyService.getAllReply(gobo_no);
+		for (ReplyDto rdto : list) {
+			if(rdto.getEmpl_picture() != null) {
+				rdto.setEmpl_picture_str(Base64Utils.encodeToString(rdto.getEmpl_picture()));
+			}
+		}
+		
 		model.addAttribute("dto",dto);
-		model.addAttribute("Rlist",Rlist);
-		model.addAttribute("Dlist",Dlist);
+		model.addAttribute("list",list);
 		return "sm/GongiBoard/GoboDetail";
 	}
 	
@@ -97,6 +103,10 @@ public class SMHomeController {
 	    dto.setGobo_writer(empldto.getEmpl_name());
 	    dto.setGobo_writer_id(empldto.getEmpl_id());
 	    int n = GoboService.insertGobo(dto);
+	    
+	    // 공지등록 전체푸쉬알림 - OJS
+	    echoHandler.sendMessageToClients("새로운 공지사항이 등록되었습니다");
+	    
 	    return (n>0)?true:false;
 	}
 	

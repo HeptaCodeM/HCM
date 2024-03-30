@@ -31,6 +31,12 @@ onload = function() {
 	ws.onmessage = function(e) {
 //		console.log('웹소켓 서버 수신')
 		var myId = document.getElementById('id').value;
+		console.log('웹소켓 수신', e.data);
+		if(e.data === '새로운 공지사항이 등록되었습니다') {
+			notify(e.data);
+			
+			return;
+		}
 		if(e.data === '접속여부판단:온라인') {
 //			console.log(e.data);
 			var parent = document.getElementById('target').parentNode;
