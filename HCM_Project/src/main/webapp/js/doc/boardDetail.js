@@ -197,7 +197,7 @@ console.log(docNum)
 getFile();
 document.getElementById('downBtn').addEventListener('click', function() {
 	var sel = document.getElementById('fileNum');
-	location.href = './fileDown.do?sidf_file_num=' + sel.value;
+	location.href = '/doc/docBox/fileDown.do?sidf_file_num=' + sel.value;
 
 });
 
