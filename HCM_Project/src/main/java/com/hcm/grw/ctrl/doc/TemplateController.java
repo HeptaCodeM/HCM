@@ -20,14 +20,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.WebUtils;
 
-import com.hcm.grw.dto.doc.SignJsonDto;
 import com.hcm.grw.dto.doc.TemplateDto;
 import com.hcm.grw.model.service.doc.ITemplateService;
 
@@ -125,7 +123,7 @@ public class TemplateController {
 	@GetMapping("/deleteTemplateAdmin.do")
 	public String deleteTemplate(@RequestParam(name = "sidt_temp_cd") String sidt_temp_cd) {
 		log.info("TemplateController 템플릿 삭제하는 deleteTemplate");
-		int n = service.deleteTemp(sidt_temp_cd);
+		service.deleteTemp(sidt_temp_cd);
 		return "redirect:templateAdmin.do";
 	}
 

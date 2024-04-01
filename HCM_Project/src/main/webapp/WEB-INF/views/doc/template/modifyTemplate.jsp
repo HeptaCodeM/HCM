@@ -50,7 +50,7 @@
 							
 							<!-- ---------------------------- 내 용 입 력 -------------------------------- -->
 							<div class="table-responsive" style="max-width: 80%; margin: 0px auto;">
-							<form action="./updateTemplateAdmin.do" method="post" >
+							<form action="/doc/updateTemplateAdmin.do" method="post" >
 							<table class="table table-bordered">
 								<tr>
 									<th>카테고리</th>

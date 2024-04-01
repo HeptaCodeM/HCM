@@ -52,7 +52,7 @@
 
 							<!-- 						<button id="getTemplate">[TEST] 템플릿 가져오기</button> -->
 							<div class="table-responsive" style="max-width: 80%; margin: 0px auto;">
-							<form action="./insertTemplateAdmin.do" method="post">
+							<form action="/doc/insertTemplateAdmin.do" method="post">
 							<table class="table table-bordered">
 								<tr>
 									<th>카테고리</th>
@@ -75,7 +75,7 @@
 								<textarea id="editor" name="sidt_temp_content"></textarea>
 								<div class="btn">
 									<input type="submit" class="btn btn-light-primary btnMd btn-color-gray-600" value="등록하기" style="margin-right: 5px;"> 
-									<input type="button" class="btn btn-light-primary btnMd btn-color-gray-600" onclick="location.href='./templateAdmin.do'" value="목록보기">
+									<input type="button" class="btn btn-light-primary btnMd btn-color-gray-600" onclick="location.href='/doc/templateAdmin.do'" value="목록보기">
 								</div>
 							</form>
 							</div>

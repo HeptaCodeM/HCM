@@ -94,7 +94,7 @@
 	/* 수정하기 */
 	var modifybtn = document.querySelector('.modifyTemplate');
 	modifybtn.addEventListener("click", function(){
-		window.location.href = "./modifyTemplateAdmin.do?sidt_temp_cd=${temDto.sidt_temp_cd}";
+		window.location.href = "/doc/modifyTemplateAdmin.do?sidt_temp_cd=${temDto.sidt_temp_cd}";
 	});
 	
 	/* 삭제하기 */
@@ -102,7 +102,7 @@
 	deletebtn.addEventListener("click", function(){
 		var confirmation = sweetAlertConfirm("해당 템플릿을 삭제하시겠습니까?", function(){
 			if(confirmation){
-				window.location.href = "./deleteTemplateAdmin.do?sidt_temp_cd=${temDto.sidt_temp_cd}";
+				window.location.href = "/doc/deleteTemplateAdmin.do?sidt_temp_cd=${temDto.sidt_temp_cd}";
 			} else {
 				self.close();
 			}					
