@@ -144,6 +144,7 @@
 							if(data.nameFlag == "false"){
 								nameSpan.innerHTML = "중복된 이름입니다! 다시 입력하세요";
 								coco_cdInput.disabled = true;
+								return false;
 							}else{
 								if(checkNameValue()){
 									nameSpan.innerHTML = "사용가능합니다";
@@ -166,6 +167,7 @@
 									codeSpan.innerHTML = "EX)\"${role}000008\" 형식으로 입력해주세요";
 								}
 								submitBtn.disabled = true;
+								return false;
 							}else{
 								if(checkCodeValue()){
 									codeSpan.innerHTML = "사용가능합니다";
@@ -173,6 +175,7 @@
 								}else{
 									codeSpan.innerHTML = "코드형식을 확인해주세요! EX)\"${role}000008\""
 									submitBtn.disabled = true;
+									return false;
 								}
 							}
 							
