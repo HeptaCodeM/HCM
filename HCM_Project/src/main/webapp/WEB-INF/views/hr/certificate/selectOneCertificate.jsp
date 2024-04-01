@@ -20,6 +20,10 @@
 	  body { margin: 1.6cm; }
 	}
 	
+	#hiidenSealImg{
+		display: inline-block !important;
+	}
+	
 </style>
 <title>증명서출력화면</title>
 </head>
@@ -31,15 +35,12 @@
 		data-kt-app-sidebar-push-toolbar="true"
 		data-kt-app-sidebar-push-footer="true"
 		data-kt-app-toolbar-enabled="true" class="app-default">
-
+		<c:set var="docDto1" value="${docDto[0]}" />
 		<div class="app-wrapper flex-column flex-row-fluid">
 			<div class="app-toolbar py-3 py-lg-6">
 				<div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
 					<!--begin::Page title-->
 					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-						<!--begin::Title-->
-						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">제목이 여기에 들어가요!</h1>
-						<!--end::Title-->
 					</div>
 					<!--end::Page title-->
 				</div>		
@@ -50,23 +51,20 @@
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-header pt-5">
-								<h3 class="card-title text-gray-800 fw-bold">소제목? 들어갑니다</h3>
+								<h3 class="card-title text-gray-800 fw-bold">[재직증명서] ${docDto1.sidb_doc_title}</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
 							<div class="card-body pt-5" >
 								<div class="saveZomeCss">
-									<c:set var="docDto1" value="${docDto[0]}" />
 									<div id="savePdfZone" class="content">
 										<input id="docTitle" type="hidden" value="${docDto1.sidb_doc_title}">
 										<input id="docNumber" type="hidden" value="${boxDto.getSidb_doc_num()}">
-										<br><br><br>
 										${docDto1.sidb_doc_content}
 									</div>
 								</div>
 								<div>
 									<button id="savePdf" class="btn btn-primary btnLg me-10">PDF저장하기</button>
 									<button id="printPdf" class="btn btn-primary btnLg me-10">프린트하기</button>
-									<button onclick="test()" class="btn btn-primary btnLg me-10">TEST</button>
 									<button id="toDocList" onclick="javascript:history.back(-1)" class="btn btn-primary btnLg me-10">목록으로</button>
 								</div>
 							</div>

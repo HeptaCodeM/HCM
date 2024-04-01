@@ -94,6 +94,9 @@
 											<c:forEach var="dt" items="${deptList}">
 												<input name="dtChkVal" class="form-check-input" type="checkbox" value="${dt.getCoco_cd()}"/>&nbsp;
 												${dt.getCoco_name()}
+												<c:if test="${dt.getCoco_delflag() eq 'Y'}">
+													<span class="text-danger">[X]</span>
+												</c:if>
 											</c:forEach>
 										</span>&nbsp;
 									</div>
@@ -104,6 +107,9 @@
 											<c:forEach var="rk" items="${rankList}">
 												<input name="rkChkVal" class="form-check-input" type="checkbox" value="${rk.getCoco_cd()}"/>&nbsp;
 												${rk.getCoco_name()}
+												<c:if test="${rk.getCoco_delflag() eq 'Y'}">
+													<span class="text-danger">[X]</span>
+												</c:if>
 											</c:forEach>
 										</span>&nbsp;
 									</div>
@@ -114,6 +120,9 @@
 											<c:forEach var="pn" items="${positionList}">
 												<input name="pnChkVal" class="form-check-input" type="checkbox" value="${pn.getCoco_cd()}"/>&nbsp;
 												${pn.getCoco_name()}
+												<c:if test="${pn.getCoco_delflag() eq 'Y'}">
+													<span class="text-danger">[X]</span>
+												</c:if>
 											</c:forEach>
 										</span>&nbsp;
 									</div>

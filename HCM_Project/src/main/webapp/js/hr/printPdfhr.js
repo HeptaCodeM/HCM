@@ -9,7 +9,7 @@ function openPreview() {
          
          var previewContent = document.getElementById("savePdfZone").innerHTML;
          var previewWindow = window.open('', '_blank', options);
-         previewWindow.document.write('<html><head><title>미리보기</title></head><body><div id="saveZone">' + previewContent + '</div></body>'
+         previewWindow.document.write('<html><style type="text/css"> #hiidenSealImg{ display: inline-block !important; vertical-align: middle; } </style><head><title>미리보기</title></head><body><div id="saveZone">' + previewContent + '</div></body>'
          							+  '<button class="btn btn-primary btnMd" style="font-size: small;" id="makePdf">PDF 저장</button>'+
          							'</html>');
          previewWindow.document.close();
@@ -73,6 +73,7 @@ window.onload = function(){
 		.then(returnData => {
 			console.log(returnData);
 			document.body.innerHTML = printBody;
+			document.getElementById("hiidenSealImg").style.display="inline-block";
 			window.print();
 			document.body.innerHTML = orgBody;
 		})
