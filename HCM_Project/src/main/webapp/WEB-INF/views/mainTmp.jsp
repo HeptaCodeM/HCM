@@ -267,5 +267,4 @@ function init() {
 init();
 
 </script>
-<script type="text/javascript" src="/js/news.js"></script>
 </html>

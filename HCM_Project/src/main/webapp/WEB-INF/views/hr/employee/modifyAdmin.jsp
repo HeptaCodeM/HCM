@@ -135,7 +135,7 @@
 												        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 												    </span>
 												</button>
-												<button type="button" class="btn btn-success btnMd me-10" id="kt_button_1" onclick="location.href='/hr/employee/list.do';">
+												<button type="button" class="btn btn-success btnMd me-10" id="kt_button_1" onclick="location.href='/hr/employee/list.do'">
 												    <span class="indicator-label">
 												        리스트
 												    </span>
@@ -217,7 +217,7 @@ function valChk() {
      if(orgEmpl_phone == aftEmpl_phone &&
         	orgEmpl_tel == aftEmpl_tel &&	
         	orgEmpl_fax == aftEmpl_fax){
-    		swalAlert("변경된 값이 없습니다!","","","","");
+    		swalAlert("변경된 값이 없습니다!","/hr/employee/list.do","","","");
     		return false;
         } 
     
@@ -225,6 +225,7 @@ function valChk() {
     var regexPhoneNum = /^\d{3}-\d{4}-\d{4}$/;
     if(!regexPhoneNum.test(aftEmpl_phone)){
     	swalAlert("\"010-1234-1234\"형식으로 입력하세요!","","","","");
+    	return false;
     }
     
     
@@ -232,12 +233,14 @@ function valChk() {
     var regexTelNum = /^\d{3}$/;
     if(!regexTelNum.test(aftEmpl_tel)){
     	swalAlert("\"111\"형식으로 입력하세요!","","","","");
+    	return false;
     }
     
     
     var regexFaxNum = /^\d{2,3}-\d{3}-\d{4}$/;
     if(!regexFaxNum.test(aftEmpl_fax)){
     	swalAlert("\"(02)031-123-1234\"형식으로 입력하세요!","","","","");
+    	return false;
     }
     
 }
@@ -250,6 +253,9 @@ faxNumChk.addEventListener("focusout",function(){ faxChk(); });
 
 function phoneChk() {
 	const chkNum = document.getElementById("empl_phone").value;
+	if(orgEmpl_phone == chkNum){
+		return false;
+	}
 	$.ajax({
 	    type: "GET",
 	    url: "/hr/employee/empAdminValueChk.do?empl_phone="+chkNum,	
@@ -267,6 +273,9 @@ function phoneChk() {
 
 function telChk(){
 	const chkNum = document.getElementById("empl_tel").value;
+	if(orgEmpl_tel == chkNum){
+		return false;
+	}
 	$.ajax({
 	    type: "GET",
 	    url: "/hr/employee/empAdminValueChk.do?empl_tel="+chkNum,	
@@ -285,6 +294,9 @@ function telChk(){
 
 function faxChk() {
 	const chkNum = document.getElementById("empl_fax").value;
+	if(orgEmpl_fax == chkNum){
+		return false;
+	}
 	$.ajax({
 	    type: "GET",
 	    url: "/hr/employee/empAdminValueChk.do?empl_fax="+chkNum,	
