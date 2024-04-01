@@ -91,7 +91,9 @@
 		-->
 		<security:remember-me key="HCM"
 							  token-validity-seconds="864000" 
-							  remember-me-parameter="remember-me"/>
+							  remember-me-parameter="autoLogin"
+							  remember-me-cookie="autoLogin"
+							  />
 		<security:session-management>
 			<security:concurrency-control max-sessions="1" expired-url="/logout" />
 		</security:session-management>

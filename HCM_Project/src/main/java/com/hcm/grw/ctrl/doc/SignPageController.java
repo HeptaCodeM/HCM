@@ -50,12 +50,6 @@ public class SignPageController {
 	@Autowired
 	private HolidayService holiService;
 	
-	@GetMapping("write.do")
-	public String write() {
-		log.info("SignTreeController write.do GET 문서작성 페이지");
-		return "doc/write";
-	}
-
 	@GetMapping("signFavo.do")
 	public String signFavo(Model model, HttpSession session) {
 		log.info("SignTreeController signFavo.do GET 결재선 관리 페이지");
@@ -104,6 +98,7 @@ public class SignPageController {
 		CompanyDto cDto = tService.getCompInfo();
 		if(cDto.getComp_seal() != null) {
 			cDto.setComp_seal_str(Base64Utils.encodeToString(cDto.getComp_seal()));
+			cDto.setComp_seal(null);
 		}
 		model.addAttribute("com", cDto);
 		return "doc/writeDoc/writeDoc";
@@ -115,11 +110,6 @@ public class SignPageController {
 		SignTempBoxDto dto = bService.getTempDoc(sitb_doc_num);
 		model.addAttribute("dto", dto);
 		return "/doc/writeDoc/getTempDoc";
-	}
-	
-	@GetMapping("fileTest.do")
-	public String fileTest() {
-		return "doc/fileTest";
 	}
 	
 	@GetMapping("signManagement.do")

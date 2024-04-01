@@ -72,8 +72,9 @@ public class SignFavoRestController {
 	
 	@PostMapping(path = "insertFavo.do", produces = "text/html; charset=UTF-8")
 	public ResponseEntity<?> insertFavo(@RequestBody Map<String, Object> map) {
-		log.info("SignFavoController insertFavo.do GET 즐겨찾기 결재자 등록 요청 값 : {}", map);
+		log.info("SignFavoController insertFavo.do GET 즐겨찾기 결재자 등록 요청");
 		SignFavoDto dto = service.duplicateFav(map);
+		
 		if(dto != null) {
 			return ResponseEntity.ok("이미 등록된 결재자 입니다");
 		}
@@ -96,7 +97,7 @@ public class SignFavoRestController {
 	
 	@PostMapping(value = "insertFavoList.do", produces = "text/html; charset=UTF-8")
 	public ResponseEntity<?> insertFavoList(@RequestBody List<Map<String, Object>> list) {
-		log.info("SignFavoController insertFavoList.do POST 즐겨찾기 결재라인 등록 : {}", list);
+		log.info("SignFavoController insertFavoList.do POST 즐겨찾기 결재라인 등록");
 		SignFavoDto dto = new SignFavoDto();
 		String siaf_appr_line = "";
 		dto.setEmpl_id((String)list.get(0).get("empl_id"));

@@ -69,11 +69,34 @@ function deny() {
 }
 
 function gianCancel() {
-	 var really = confirm("정말 상신 취소하시겠습니까?");
-    if (really) {
-        alert("상신취소 되었습니다");
-        document.getElementById('gianCancel').submit();
-    }
+    Swal.fire({
+        html: `정말 상신 취소하시겠습니까?`,
+   //     icon: "question",
+        buttonsStyling: false,
+        showCancelButton: true,
+        confirmButtonText: " &nbsp;&nbsp; 예  &nbsp;&nbsp; ",
+        cancelButtonText: '아니요',
+        customClass: {
+            confirmButton: "btn btn-light-primary",
+            cancelButton: 'btn btn-light-danger'
+        }
+    }).then((result) => { 
+        if (result.isConfirmed) {
+            // 사용자가 상신 취소를 확인한 경우
+            // 여기서 상신 취소 처리 로직을 실행하면 됩니다.
+            Swal.fire({
+                text: '상신 취소되었습니다.',
+             //   icon: 'success',
+                confirmButtonText: '확인',
+                customClass: {
+                    confirmButton: 'btn btn-light-primary' 
+                }
+            })
+            .then(() => {
+             document.getElementById('gianCancel').submit(); 
+             });
+        }
+    });
 }
 
 //승인 모달창
@@ -270,10 +293,10 @@ function preview(){
 
 //윈도우 오픈시 생성시킬 html 코드들 
    function openPreview() {
-		 const width = 1200;
-    	 const height = 800;
-  	     const left =  Math.ceil((window.screen.width - width)/2);
- 	     const top = Math.ceil((window.screen.height - height)/2);
+		 const width = '900px';
+    	 const height = '800px';
+  	     const left =  (window.screen.width - width) / 2;
+ 	     const top = (window.screen.height - height) / 2;
  	     const options = 'width=' + width + ', height=' + height + ', top=' + top + ', left=' + left + ', scrollbars=yes';
             
             var previewContent = document.getElementById('pdfDiv').innerHTML;

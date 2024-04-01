@@ -135,7 +135,7 @@ $('#jstree').on('select_node.jstree', function(e, data) {
 		fetch('/doc/userInfo.do?empl_id=' + id)
 			.then(resp => { return resp.json() })
 			.then(data => {
-				console.log(data);
+//				console.log(data);
 				var d = data[0];
 				var input = document.createElement('input');
 				var hiddenInput = document.createElement('input');
@@ -197,8 +197,8 @@ function saveRefer() {
 	}
 	refName = refName.substring(0, refName.lastIndexOf(','));
 	refDeptName = refDeptName.substring(0, refDeptName.lastIndexOf(','));
-	console.log(refName);
-	console.log(refDeptName);
+//	console.log(refName);
+//	console.log(refDeptName);
 	
 	refer = refer.substring(0, refer.lastIndexOf(','));
 	referDept = referDept.substring(0, referDept.lastIndexOf(','));
