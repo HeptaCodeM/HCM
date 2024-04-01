@@ -51,7 +51,7 @@ $('#schName').focus();
 		var selectNode = allNode.find(function(node) {
 			return node.id == row.find('td span').text();
 		});
-		console.log(selectNode);
+//		console.log(selectNode);
 		// 숨겼던 노드를 다시 보여줌
 		$('#jstree').jstree('show_node', selectNode);
 		// input창 비움
@@ -132,7 +132,7 @@ setTimeout(function() {
 							];
 		}
 		
-		console.log(approverData);
+//		console.log(approverData);
 		if(approverData != null) {
 			fetch('/doc/insertFavoList.do', {
 				method: 'post',
@@ -154,7 +154,7 @@ setTimeout(function() {
 				});
 				
 		} else {
-			console.log(appr1, appr2, appr3)
+//			console.log(appr1, appr2, appr3)
 			swalAlert('결재자를 선택해주세요','','','확인');
 		}
 	})
@@ -190,10 +190,10 @@ window.addEventListener('message', function(e) {
 	} else {
 		json = data;
 	}
-	console.log('ref : ' , ref);
-	console.log('dept : ', dept);
-	console.log('json : ', json);
-	console.log('sign : ', sign);
+//	console.log('ref : ' , ref);
+//	console.log('dept : ', dept);
+//	console.log('json : ', json);
+//	console.log('sign : ', sign);
 });
 
 	// 즐겨찾기 삭제
@@ -229,7 +229,7 @@ window.addEventListener('message', function(e) {
 		fetch('/doc/getFavo.do?siaf_favo_cd=' + selValue)
 		.then(resp => {return resp.json();})
 		.then(data => {
-			console.log(data);
+//			console.log(data);
 			var f = data[0];
 			var first = $('#first').val();
 			var second = $('#second').val();
@@ -260,7 +260,7 @@ window.addEventListener('message', function(e) {
 				swalAlert('높은 직급의 결재자를 선택해주세요','','','확인');
 				return;
 			}
-			console.log(fFlag, sFlag, tFlag)
+//			console.log(fFlag, sFlag, tFlag)
 			if(f.empl_name == $('#first').val() || f.empl_name == $('#second').val() || f.empl_name == $('#third').val()) {
 				swalAlert('중복된 결재자 입니다','','','확인');
 				return;
@@ -289,7 +289,7 @@ window.addEventListener('message', function(e) {
 			var selectNode = allNode.find(function(node) {
 				return node.id == f.empl_id;
 			});
-			console.log(selectNode);
+//			console.log(selectNode);
 			$('#jstree').jstree('hide_node', selectNode);
 			
 		})
@@ -304,11 +304,11 @@ window.addEventListener('message', function(e) {
 			swalAlert('라인을 선택해주세요', '', '', '확인');
 			return;
 		}
-		console.log(selList);
+//		console.log(selList);
 		fetch('/doc/favoInfo.do?siaf_favo_cd=' + selList)
 		.then(resp => {return resp.json()})
 		.then(data => {
-			console.log(data);
+//			console.log(data);
 			if(data.length == 1) {
 				let f = data[0];
 				$('#first').val(f.empl_name);
@@ -364,7 +364,7 @@ window.addEventListener('message', function(e) {
 		contextmenu: {
 			items: function(node) {
 				if (node.children.length == 0 && node.state.disabled != true) {
-					console.log(node.state.disabled);
+//					console.log(node.state.disabled);
 					return {
 						m1: {
 							label: '결재자 지정',
@@ -377,7 +377,7 @@ window.addEventListener('message', function(e) {
 									.then(resp => { return resp.json() })
 									.then(data => {
 
-										console.log(data);
+//										console.log(data);
 										var val1 = $('#first').val();
 										var val2 = $('#second').val();
 
@@ -426,7 +426,7 @@ window.addEventListener('message', function(e) {
 											default: 0;
 										}
 
-										console.log(first, second, third);
+//										console.log(first, second, third);
 
 										// 결재자를 순서대로 화면에 뿌려줌
 										if (val1.length > 0 && val2.length > 0) {
@@ -481,14 +481,14 @@ window.addEventListener('message', function(e) {
 							icon: 'ki-duotone ki-star',
 							// 즐겨찾기 등록 
 							action: function(e) {
-								console.log(e);
+//								console.log(e);
 								var id = document.getElementById('empl_id').value
 								var siaf_appr_id = $('#jstree').jstree('get_selected')[0];
 								let addData = {
 									empl_id: id,
 									siaf_appr_id: siaf_appr_id
 								}
-								console.log(siaf_appr_id, id)
+//								console.log(siaf_appr_id, id)
 								fetch('/doc/insertFavo.do', {
 									headers: { 'Content-Type': 'application/json' },
 									method: 'post',
@@ -519,7 +519,7 @@ window.addEventListener('message', function(e) {
 				dataType: 'json',
 				success: function(data) {
 					data.forEach(function(node, idx) {
-						console.log(myPositionFlag);
+//						console.log(myPositionFlag);
 						if (node.pos_na != undefined) {
 							if (myPositionFlag > node.pos_flag) {
 								node.text = '<span onclick="empInfoLayer(' + node.id + ', this)">' + node.text + ' (' + node.pos_na + ')&nbsp;&nbsp;<span class="positionFlag" style="display: none;">' + node.pos_flag + '</span></span>';
@@ -566,7 +566,7 @@ function pick() {
 		fetch('/doc/userInfo.do?empl_id=' + id)
 		.then(resp => {return resp.json();})
 		.then(data => {
-			console.log(data);
+//			console.log(data);
 			var f = data[0];
 			var first = $('#first').val();
 			var second = $('#second').val();
@@ -598,7 +598,7 @@ function pick() {
 				swalAlert('높은 직급의 결재자를 선택해주세요','','','확인');
 				return;
 			}
-			console.log(fFlag, sFlag, tFlag)
+//			console.log(fFlag, sFlag, tFlag)
 			if(first.length == 0) {
 				$('#first').val(f.empl_name);
 				$('#rk1').val(f.coco_name_rnm);
@@ -651,7 +651,7 @@ function delFavo() {
 function delLine() {
 	var select = document.querySelector('select#apprLineList');
 	var selList = select.options[select.selectedIndex].value;
-	console.log(selList);
+//	console.log(selList);
 	fetch('/doc/deleteFav.do?siaf_favo_cd=' + selList)
 		.then(resp => {
 			return resp.text();
@@ -685,19 +685,19 @@ function loadFavoLineList() {
 			return resp.json();
 		})
 		.then(data => {
-			console.log(data);
+//			console.log(data);
 			var lineList = data.lineList;
 			var empList = data.resultList[0];
-			console.log(empList);
+//			console.log(empList);
 
 			for (let i = 0; i < lineList.length; i++) {
-				console.log(lineList[i].siaf_favo_cd, lineList[i].siaf_favo_name);
+//				console.log(lineList[i].siaf_favo_cd, lineList[i].siaf_favo_name);
 				var opt = document.createElement('option');
 				opt.setAttribute('value', lineList[i].siaf_favo_cd);
 				opt.textContent = lineList[i].siaf_favo_name + ' ➡️ (';
 
 				for (let j = 0; j < empList[i].length; j++) {
-					console.log(empList[i][j].empl_id, empList[i][j].empl_name);
+//					console.log(empList[i][j].empl_id, empList[i][j].empl_name);
 					if (j == empList[i].length - 1) {
 						opt.textContent += empList[i][j].empl_name;
 					} else {
@@ -726,7 +726,7 @@ function loadFavoList() {
 			return resp.json();
 		})
 		.then(data => {
-			console.log(data);
+//			console.log(data);
 
 			for (let d of data) {
 				var opt = document.createElement('option');

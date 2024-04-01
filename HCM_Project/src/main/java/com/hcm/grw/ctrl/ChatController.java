@@ -41,11 +41,12 @@ public class ChatController {
 	
 	@GetMapping(value = "loadMessage.do", produces = "text/html; charset=UTF-8")
 	public ResponseEntity<?> loadMessage(ChatDto dto) {
-		log.info("ChatController loadMessage 대화목록 불러오기 : {}", dto);
+		log.info("ChatController loadMessage 대화목록 불러오기 : {}", dto.getCh_target());
 		List<ChatDto> chatList = service.selectAllMessage(dto);
 		for (ChatDto chatDto : chatList) {
 			if(chatDto.getSender_pic() != null) {
 				chatDto.setSender_pic_str(Base64Utils.encodeToString(chatDto.getSender_pic()));
+				chatDto.setSender_pic(null);
 			}
 		}
 		return ResponseEntity.ok(new GsonBuilder().create().toJson(chatList));
@@ -58,6 +59,7 @@ public class ChatController {
 		for(ChatDto dto : list) {
 			if(dto.getSender_pic() != null) {
 				dto.setSender_pic_str(Base64Utils.encodeToString (dto.getSender_pic()));
+				dto.setSender_pic(null);
 			}
 		}
 		return ResponseEntity.ok(new GsonBuilder().create().toJson(list));
