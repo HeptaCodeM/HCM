@@ -218,7 +218,7 @@ $('#schName').focus();
 							];
 		}
 		
-		opener.postMessage(sidb_doc_json, "*");
+		opener.postMessage(sidb_doc_json, location.origin);
 		sweetAlertConfirm('결재선을 저장할까요?',function() {
 			if(sidb_doc_json == undefined) {
 				swalAlert('결재자를 지정해주세요','','','확인');

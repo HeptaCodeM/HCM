@@ -76,7 +76,7 @@ function saveSign() {
 	} else {
 		sweetAlertConfirm("선택한 서명을 저장할까요?", function() {
 			var sign = selCheck[0].value;
-			opener.postMessage(sign, '*');
+			opener.postMessage(sign, location.origin);
 			self.close();
 		}, '');
 	}
