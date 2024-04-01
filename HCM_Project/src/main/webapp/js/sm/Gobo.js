@@ -111,6 +111,9 @@ function toggleMenu(event, rebo_no) {
     }
 }
 
+
+
+
 function deleteButton(rebo_no){
 		Swal.fire({
         html: `정말 삭제하시겠습니까?`,
@@ -141,9 +144,11 @@ function deleteButton(rebo_no){
         }
     });
 }
+
+
+
+
 function deleteAjax(rebo_no){
-	
-	
 	$.ajax({
 		url: "/sm/updateReplyDelFlag.do",
 		data:{rebo_no:rebo_no},
@@ -174,46 +179,52 @@ function deleteAjax(rebo_no){
 
 
 
-function updateButton(rebo_no){
-	    var liElement = $('#commentItem' + rebo_no);
+function updateButton(rebo_no) {
+    var liElement = $('#firstReply' + rebo_no);
 
-    // 댓글 내용을 가져옵니다.
-    var commentContent = $('#replycontent').text().trim();
+    // 이전 내용을 가져옵니다.
+    var Content = $('#replycontent' + rebo_no).text().trim();
+    var writer = $('#rebo_writer' + rebo_no).text().trim();
 
-    // li 태그 내의 내용을 모두 지웁니다.
-    liElement.empty();
+    // li 태그 내의 내용을 숨깁니다.
+    liElement.hide();
 
     // 새로운 내용을 생성하여 추가합니다.
-    var newContent = '<div class="CommentWriter mb-4" style="margin-top: 50px ">';
-    newContent += '<form id="ReplyForm">';
+    var newContent = '<div id="updatedContent' + rebo_no + '" class="CommentWriter mb-4" style="margin-top: 50px">';
+    newContent += '<form id="ReplyForm'+rebo_no+'">';
     newContent += '<div class="comment_inbox border border-2">';
     newContent += '<input type="hidden" name="rebo_writer_id" id="rebo_writer_id" value="${sessionScope.userInfoVo.empl_id}">';
     newContent += '<input type="hidden" name="rebo_modify_id" id="rebo_modify_id" value="${sessionScope.userInfoVo.empl_id}">';
     newContent += '<input type="hidden" name="rebo_writer" id="rebo_writer" value="${sessionScope.userInfoVo.empl_name}">';
-    newContent += '<em class="comment_inbox_name">${sessionScope.userInfoVo.empl_name}</em>';
-    newContent += '<textarea id="rebo_content" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" oninput="checkInput()" name="rebo_content">' + commentContent + '</textarea>';
+    newContent += '<em class="comment_inbox_name">' + writer + '</em>';
+    newContent += '<textarea id="rebo_content" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" oninput="checkInput()" name="rebo_content">'+Content+'</textarea>';
     newContent += '<div class="d-flex justify-content-end align-items-end">';
     newContent += '<div class="register_box">';
-    newContent += '<button id="submitButton" type="button" class="btn btn-primary" onclick="updateAjax('+rebo_no+')" disabled>등록</button>';
+    newContent += '<button id="cancelButton" type="button" class="btn btn-danger ml-2" onclick="cancelUpdate(' + rebo_no + ')">취소</button>';
+    newContent += '<button id="updateButton" type="button" class="btn btn-primary" onclick="updateAjax(' + rebo_no + ')">등록</button>';
     newContent += '</div>';
     newContent += '</div>';
     newContent += '</div>';
     newContent += '</form>';
     newContent += '</div>';
 
-    // 새로운 내용을 li 태그에 추가합니다.
-    liElement.append(newContent);
-
-	
+    // 새로운 내용을 li 태그 이전에 추가합니다.
+    liElement.before(newContent);
+    
 }
+
+
+
 function updateAjax(rebo_no){
-	
+	var data = $("#ReplyForm"+rebo_no).serialize()
+	console.log(data);
 	$.ajax({
-		url: "/sm/updateReplyDelFlag.do",
-		data:{rebo_no:rebo_no},
+		url: "/sm/updateReply.do",
+		data:data,
 		type:"get",
 		dataType: "json",
 		success: function(){
+			console.log("성공");
 		},
 		error:function(){
 			
@@ -225,7 +236,11 @@ function updateAjax(rebo_no){
 
 
 
-
+function cancelUpdate(rebo_no) {
+    // 업데이트된 새로운 내용을 삭제하고 li 태그를 보여줍니다.
+    $('#updatedContent' + rebo_no).remove();
+    $('#firstReply' + rebo_no).show();
+}
 
 
 
