@@ -105,6 +105,14 @@ public class ApproveDenyController {
 		String num = docDto.get(0).getSidb_doc_num();
 		
 		// 이메일 전송 from 김지아
+		if(docDto.get(0).getSidb_doc_alflag().equalsIgnoreCase("Y")) {
+			String empl_id = docDto.get(0).getEmpl_id();
+			EmployeeDto eDto = empService.getUserInfo(empl_id);
+			emailService.sendMail("문서번호" + docDto.get(0).getSidb_doc_num() + " 에 대한 기안이 반려되었습니다", 
+					"결재문서 바로가기 : <a href='http://localhost:8080/doc/docBox/getDetail.do?docNum="
+							+ docDto.get(0).getSidb_doc_num()+"'>" + docDto.get(0).getSidb_doc_title() + "</a>",
+							eDto.getEmpl_email(), null, true);
+		}
 
 		return ResponseEntity.ok(num);
 	}

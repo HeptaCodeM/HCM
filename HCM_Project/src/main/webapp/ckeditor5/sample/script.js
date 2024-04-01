@@ -56,9 +56,9 @@ ClassicEditor
 		},
 		/* 이미지 업로드 */
         simpleUpload: {
-            uploadUrl: './uploadImage.do',
+            uploadUrl: './uploadImageAdmin.do',
             withCredentials: true
-            
+           
         }, 
         /* 문서 자동저장 */
 		autosave: {

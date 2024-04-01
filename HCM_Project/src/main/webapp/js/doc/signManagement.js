@@ -8,13 +8,13 @@ var signature = new SignaturePad(canvas, {
  
 var clear = document.querySelector("#clear");
 clear.addEventListener("click",function(){
-	console.log("작동");
+//	console.log("작동");
 	signature.clear();
 });
 
 var save = document.querySelector("#save");
 save.addEventListener("click",function(){
-	console.log("작동");
+//	console.log("작동");
 	var data = signature.toDataURL("image/png");
 	var emsi_title = document.getElementById("emsi_title").value;
 	var empl_id = document.getElementById("empl_id").value;
@@ -45,7 +45,7 @@ save.addEventListener("click",function(){
 			}
 		})
 		.then(data => {
-			console.log(data);
+//			console.log(data);
 			if(data === 'true') {
 				swalAlert('저장되었습니다', '', '', '확인');
 				setTimeout(function() {
@@ -93,7 +93,7 @@ function delSign() {
 		fetch('/doc/signManagement/deleteSign.do?emsi_seq=' + seq + '&empl_id=' + id)
 			.then(resp => { return resp.text() })
 			.then(data => {
-				console.log(data);
+//				console.log(data);
 				swalAlert('삭제되었습니다', '', '', '확인');
 				setTimeout(function() {
 					location.href = '/doc/signManagement.do';
@@ -121,7 +121,7 @@ function setDefault() {
 	fetch('/doc/signManagement/setDefault.do?emsi_seq=' + seq + '&empl_id=' + id)
 	.then(resp => {return resp.text()})
 	.then(data => {
-		console.log(data);
+//		console.log(data);
 		swalAlert('설정되었습니다', '', '', '확인');
 		setTimeout(function() {
 			location.href = '/doc/signManagement.do';
