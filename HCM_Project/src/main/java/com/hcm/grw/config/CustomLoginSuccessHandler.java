@@ -19,7 +19,6 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.RedisSubscriber;

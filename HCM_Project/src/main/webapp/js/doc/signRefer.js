@@ -218,18 +218,18 @@ function saveRefer() {
 		})
 	} else if(refer.length == 0 && referDept.length > 0) {
 		sweetAlertConfirm('참조자를 저장할까요?',function() {
-			opener.postMessage(refDept, '*');
+			opener.postMessage(refDept, location.origin);
 			self.close();
 		})
 	} else if(refer.length > 0 && referDept.length == 0) {
 		sweetAlertConfirm('참조자를 저장할까요?',function() {
-			opener.postMessage(ref, '*');
+			opener.postMessage(ref, location.origin);
 			self.close();
 		})
 	} else {
 		sweetAlertConfirm('참조자를 저장할까요?',function() {
-			opener.postMessage(ref, '*');
-			opener.postMessage(refDept, '*');
+			opener.postMessage(ref, location.origin);
+			opener.postMessage(refDept, location.origin);
 			self.close();
 		})
 	}

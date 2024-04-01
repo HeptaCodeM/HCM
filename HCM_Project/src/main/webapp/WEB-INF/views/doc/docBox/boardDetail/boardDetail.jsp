@@ -123,10 +123,10 @@ padding-left:15%;
 									<td style="width:300px;">${docDto1.sidb_doc_num}</td>
 									<td style="min-width:70px;">기안자 :</td>
 									<td style="width:300px;">${docDto1.empl_name}</td>
-									<td style="min-width:70px;">결재기한 :</td>
+									<td style="min-width:70px;">기안일자 :</td>
 									<td style="width:300px;">
 									<fmt:parseDate var="patternDate"
-													value="${docDto1.sidb_doc_expiredt}"
+													value="${docDto1.sidb_doc_writedt}"
 													pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
 													value="${patternDate}" pattern="yyyy년 MM월 dd일" />
 									</td>
@@ -134,11 +134,11 @@ padding-left:15%;
 								<tr>
 									<td>문서분류 :</td>
 									<td>${docDto1.sidt_temp_name}</td>
-									<td>기안부서 :</td>
+									<td>소속부서 :</td>
 									<td>${docDto1.writer_dt}</td>
-									<td>기안일자 :</td>
+									<td>결재기한 :</td>
 									<td><fmt:parseDate var="patternDate"
-													value="${docDto1.sidb_doc_writedt}"
+													value="${docDto1.sidb_doc_expiredt}"
 													pattern="yyyy-MM-dd HH:mm:ss" /> <fmt:formatDate
 													value="${patternDate}" pattern="yyyy년 MM월 dd일" />
 									</td>
@@ -319,7 +319,7 @@ padding-left:15%;
 
 	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.empl_id and docDto1.sidb_doc_stat == 1}">
   <!--   <button type="button" class="btn btn-primary" onclick="docEdit()">품의수정</button> -->
-    <button type="button" style="height:40px;" class="btn btn-danger" onclick="gianCancel()">상신취소</button>
+    <button type="button" style="height:40px;" class="btn btn-light-danger" onclick="gianCancel()">상신취소</button>
 	<form id="gianCancel" action="./gianCancel.do" method="post">
 						<input type="hidden" value="${docDto1.sidb_doc_num}" name="docNum"/>
 					</form>

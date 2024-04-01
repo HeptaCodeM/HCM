@@ -155,7 +155,7 @@
 					    		<tr class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
 					    			<th>순번</th>
 					    			<th>제목</th>
-					    			<th>작성일</th>
+					    			<th>기안일</th>
 					    		</tr>
 					    	</thead>
 					    	<tbody>
@@ -173,7 +173,8 @@
 							    			<td>${idx+1}</td>
 							    			<td>${allDoc.get(idx).getSidb_doc_title()}</td>
 							    			<td>
-							    				${allDoc.get(idx).getSidb_doc_writedt()}
+							    			<fmt:parseDate var="patternDate"	value="${allDoc.get(idx).getSidb_doc_writedt()}"	pattern="yyyy-MM-dd HH:mm:ss" /> 
+											<fmt:formatDate value="${patternDate}" pattern="yyyy년 MM월 dd일" />
 							    			</td>
 							    		</tr>
 									    </c:forEach>
@@ -184,7 +185,8 @@
 							    			<td>${idx+1}</td>
 							    			<td>${allDoc.get(idx).getSidb_doc_title()}</td>
 							    			<td>
-							    				${allDoc.get(idx).getSidb_doc_writedt()}
+							    			<fmt:parseDate var="patternDate"	value="${allDoc.get(idx).getSidb_doc_writedt()}"	pattern="yyyy-MM-dd HH:mm:ss" /> 
+											<fmt:formatDate value="${patternDate}" pattern="yyyy년 MM월 dd일" />
 							    			</td>
 							    		</tr>
 									    </c:forEach>

@@ -70,7 +70,7 @@
 										<tr style="cursor: pointer;" class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
 											<td>${lst.sidt_temp_cd}</td>
 											<td>
-												<a href="./detailTemplateAdmin.do?sidt_temp_cd=${lst.sidt_temp_cd}">${lst.sidt_temp_name}</a>
+												<a href="/doc/detailTemplateAdmin.do?sidt_temp_cd=${lst.sidt_temp_cd}">${lst.sidt_temp_name}</a>
 											</td>
 											<td>${lst.sidt_temp_flag}</td>
 										</tr>
@@ -91,7 +91,7 @@
 <script type="text/javascript">
 	var writebtn = document.querySelector('.writeTemplate');
 	writebtn.addEventListener("click", function() {
-		window.location.href = "./writeTemplate.do";
+		window.location.href = "/doc/writeTemplateAdmin.do";
 	});
 </script>
 </html>

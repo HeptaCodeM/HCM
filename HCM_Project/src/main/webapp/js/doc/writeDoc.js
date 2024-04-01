@@ -164,15 +164,10 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 		var span3 = document.createElement('span');
 		var div = document.createElement('div')
 		
-		span1.setAttribute('style', 'font-size: 13px; margin-left: 800px; font-weight: bold; color: orange;');
-		span2.setAttribute('style', 'font-size: 13px; margin-left: 20px;  font-weight: bold; color: orange;');
-		span3.setAttribute('style', 'font-size: 13px; margin-left: 20px;  font-weight: bold; color: orange;');
-//=======
-//		span1.setAttribute('style', 'font-size: 13px; font-weight: bold; color: orange;');
-//		span2.setAttribute('style', 'font-size: 13px; margin-left: 20px; font-weight: bold; color: orange;');
-//		span3.setAttribute('style', 'font-size: 13px; margin-left: 20px; font-weight: bold; color: orange;');
-//		div.setAttribute('style', 'text-align: right;')
-//>>>>>>> branch 'doc' of https://github.com/HeptaCodeM/HCM.git
+		span1.setAttribute('style', 'font-size: 13px; font-weight: bold; color: orange;');
+		span2.setAttribute('style', 'font-size: 13px; margin-left: 20px; font-weight: bold; color: orange;');
+		span3.setAttribute('style', 'font-size: 13px; margin-left: 20px; font-weight: bold; color: orange;');
+		div.setAttribute('style', 'text-align: right;')
 		
 		span1.textContent = '* 총 휴가일수 : ' + document.getElementById('totalHoli').value; 
 		span2.textContent = '사용한 휴가일수 : ' + document.getElementById('useHoli').value;
@@ -298,9 +293,12 @@ function insertDoc() {
 		sidb_doc_be = be.replace('월', '-')
 		sidb_doc_end = end.replace('월', '-')
 		
-		var currentDate = new Date();
-		var calEndDate = new Date(sidb_doc_end);
-		var calBeDate = new Date(sidb_doc_be);
+		var currentDate = moment(new Date()).format('YYYY-MM-DD');
+		var calEndDate = moment(new Date(sidb_doc_end)).format('YYYY-MM-DD');
+		var calBeDate = moment(new Date(sidb_doc_be)).format('YYYY-MM-DD');
+		console.log(currentDate);
+		console.log(calBeDate)
+		console.log(calEndDate)
 		if(calBeDate > calEndDate) {
 			swalAlert('기간을 다시 확인해주세요','','','확인');
 			return;
@@ -426,7 +424,7 @@ document.getElementById('signRefer').addEventListener('click', function() {
 });
 // 결재선 팝업
 document.getElementById('signLine').addEventListener('click', function() {
-	open('/doc/writeDoc/signLine.do', '', 'width=1600px height=900px left=400');
+	open('/doc/writeDoc/signLine.do', '', 'width=1600px height=900px left=100');
 });
 // 서명 팝업
 document.getElementById('selectSign').addEventListener('click', function() {
@@ -442,7 +440,6 @@ var sign;
 // -----------------------------------> [ 작성화면 ] 기안문 기본 정보 load
 window.addEventListener('message', function(e) {
 	var data = e.data;
-
 	if (data.hasOwnProperty('empl_ref')) {
 		ref = data;
 		document.getElementById('refName').value = ref.empl_ref_name;
@@ -459,7 +456,7 @@ window.addEventListener('message', function(e) {
 			document.getElementById('apprName').value = data[0].appr_name + " (" + data[0].appr_position + ")" + " ➡️ " + data[1].appr_name + " (" + data[1].appr_position + ")" + " ➡️ " + data[2].appr_name + " (" + data[2].appr_position + ")";
 		} else if (data.length == 2) {
 			document.getElementById('apprName').value = data[0].appr_name + " (" + data[0].appr_position + ")" + " ➡️ " + data[1].appr_name + " (" + data[1].appr_position + ")";
-		} else {
+		} else if (data.length == 1) {
 			document.getElementById('apprName').value = data[0].appr_name + " (" + data[0].appr_position + ")";
 		}
 	}

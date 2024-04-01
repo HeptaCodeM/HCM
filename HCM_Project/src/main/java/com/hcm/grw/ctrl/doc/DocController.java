@@ -649,6 +649,7 @@ public class DocController {
 
 	//상세조회 문서에 첨부된 파일 다운로드
 	@GetMapping("/doc/docBox/fileDown.do")
+	@ResponseBody
 	public void fileDown(@RequestParam String sidf_file_num)
 			throws IOException, SerialException, SQLException {
 		SignFileDto dto = docService.getDocsDetailFile(sidf_file_num);
