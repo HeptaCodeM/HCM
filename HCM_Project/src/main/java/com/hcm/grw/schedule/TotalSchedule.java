@@ -30,7 +30,8 @@ public class TotalSchedule {
 	
 	
 	/* 휴가일 발생 스케쥴 처리 */
-	@Scheduled(cron="0 0 0/1 * * *")	// 매시정각 동작
+	//@Scheduled(cron="0 0 0/1 * * *")	// 매시정각 동작
+	@Scheduled(cron="0 0 * * * ?")	// 매시 동작
 	public void registEmployeeHoliday() {
 		log.info("HrSchedule registEmployeeHoliday 매년 휴가정보 입력처리");
 		int n = scheduleService.registEmployeeHoliday();
@@ -50,7 +51,8 @@ public class TotalSchedule {
 	/*특일(공휴일)정보 입력*/
 	/*평/휴일(특일제외)정보 입력*/
 	//@Scheduled(cron="0/30 * * * * ?")	//매 30초 동작
-	@Scheduled(cron="0 0 0 1 * ?")	// 매월1일 동작
+	//@Scheduled(cron="0 0 0 1 * ?")	// 매월1일 동작
+	@Scheduled(cron="0 5 * * * ?")	// 매시 5분 동작
 	@Transactional
 	public void registSpecialDay() throws IOException {
         log.info("SpecialDaySchedule registSpecialDay 특/평/휴일정보 입력/수정");

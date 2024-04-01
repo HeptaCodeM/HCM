@@ -62,57 +62,73 @@
 	<select id="selectEmpTotalHoliDayInfo" parameterType="String" resultType="Map">
 		<![CDATA[
 		SELECT 
-				SUM(TOTAL_HOLIDAY) AS TOTAL_HOLIDAY,
-				SUM(USE_HOLIDAY) AS USE_HOLIDAY,
-				SUM(REST_HOLIDAY) AS REST_HOLIDAY
+				SUM(EMHO_HOLIDAY) TOTAL_HOLIDAY,
+				SUM(USE_HOLIDAY) USE_HOLIDAY,
+				CASE WHEN SUM(REST_HOLIDAY) < 0 THEN 0
+				ELSE SUM(REST_HOLIDAY) 
+				END REST_HOLIDAY,
+				TO_CHAR(HOLI_SDATE, 'YYYY-MM-DD') STANDARD_HOLIDAY
 		FROM	(
+				-- 총휴가일수
 				SELECT
-						EMHO_HOLIDAY AS TOTAL_HOLIDAY,
-				        SUM(USE_HOLIDAY) USE_HOLIDAY,
-				        EMHO_HOLIDAY - SUM(USE_HOLIDAY) REST_HOLIDAY
-				FROM   (
-				            SELECT
-				                  B.EMHO_HOLIDAY,
-				                  (
-				                     SELECT 
-				                           COUNT(*)
-				                     FROM   (
-				                           SELECT DISTINCT TO_CHAR(C.SIDB_DOC_BE + LEVEL - 1, 'YYYYMMDD') AS HOLI_DATE
-				                           FROM DUAL
-				                           CONNECT BY LEVEL <= (C.SIDB_DOC_END - C.SIDB_DOC_BE) + 1
-				                           MINUS
-				                           SELECT HOLI_DATE FROM HOLIDAY WHERE HOLI_FLAG = 'Y'
-				                           )   
-				                  ) AS USE_HOLIDAY
-				            FROM 		EMPLOYEE A
-				            INNER JOIN (
-				                        SELECT EMPL_ID, EMHO_YEAR, EMHO_HOLIDAY
-				                        FROM EMP_HOLIDAY
-				                        WHERE (EMPL_ID, EMHO_YEAR) IN (
-				                              SELECT EMPL_ID, MAX(EMHO_YEAR) EMHO_YEAR
-				                              FROM EMP_HOLIDAY
-				                              GROUP BY EMPL_ID
-				                        	  )
-				                        ) B ON A.EMPL_ID = B.EMPL_ID
-				            LEFT OUTER JOIN	(
-								            SELECT 
-								            			A.EMPL_ID,
-								            			A.SIDB_DOC_BE,
-								            			A.SIDB_DOC_END
-								            FROM 		SIGN_DOC_BOX A
-								            INNER JOIN	SIGN_CATEGORY B ON A.SICA_CD = B.SICA_CD
-								            INNER JOIN	SIGN_DOC_TEMP C ON A.SIDT_TEMP_CD = C.SIDT_TEMP_CD
-								            WHERE A.EMPL_ID = #{empl_id}
-								            AND A.SIDB_DOC_STAT = '3'
-								            AND A.SICA_CD = 'CC000001'
-								            AND A.SIDT_TEMP_CD IN ('TC000001', 'TC000002')
-				            				) C ON A.EMPL_ID = C.EMPL_ID AND B.EMHO_YEAR || TO_CHAR(TO_DATE(A.EMPL_JOINDATE, 'YYYY-MM-DD'), '-MM-DD') <= TO_CHAR(C.SIDB_DOC_BE, 'YYYY-MM-DD')
-						WHERE A.EMPL_ID = #{empl_id}
-						)
-				GROUP BY EMHO_HOLIDAY
-				UNION ALL 
-				SELECT 0, 0, 0 FROM DUAL
-				)
+						SUM(A.EMHO_HOLIDAY) EMHO_HOLIDAY,
+						NVL(C.USE_HOLIDAY, 0) USE_HOLIDAY,
+						A.EMHO_HOLIDAY-NVL(C.USE_HOLIDAY, 0) AS REST_HOLIDAY,
+						HOLI_SDATE
+				FROM		(
+				            SELECT EMPL_ID, EMHO_YEAR, EMHO_HOLIDAY
+				            FROM EMP_HOLIDAY
+				            WHERE (EMPL_ID, EMHO_YEAR) IN (
+				                  SELECT EMPL_ID, MAX(EMHO_YEAR) EMHO_YEAR
+				                  FROM EMP_HOLIDAY
+				                  GROUP BY EMPL_ID
+				            	  )
+				            ) A 
+				INNER JOIN EMPLOYEE B ON A.EMPL_ID = B.EMPL_ID
+				LEFT OUTER JOIN (
+							-- 휴가 사용일
+							SELECT 
+										EMPL_ID,
+										COUNT(HOLI_DATE) USE_HOLIDAY,
+										HOLI_SDATE
+							FROM		(
+										SELECT 		DISTINCT
+													A.EMPL_ID,
+													CASE WHEN HOLI_SDATE > A.SIDB_DOC_BE THEN TO_CHAR(HOLI_SDATE + LEVEL - 1, 'YYYYMMDD')
+														 ELSE TO_CHAR(A.SIDB_DOC_BE + LEVEL - 1, 'YYYYMMDD') 
+														 END AS HOLI_DATE,
+													HOLI_SDATE
+										FROM		(
+													SELECT
+															EMPL_ID,
+															SIDB_DOC_BE,
+															SIDB_DOC_END
+													FROM	SIGN_DOC_BOX
+													WHERE	SIDB_DOC_STAT = '3'
+										            AND		SICA_CD = 'CC000001'
+										            AND		SIDT_TEMP_CD IN ('TC000001', 'TC000002')
+													) A
+										INNER JOIN 	(
+										            SELECT A.EMPL_ID, A.EMHO_YEAR, A.EMHO_HOLIDAY, TO_DATE(A.EMHO_YEAR || TO_CHAR(TO_DATE(B.EMPL_JOINDATE, 'YYYY-MM-DD'), '-MM-DD'), 'YYYY-MM-DD') AS HOLI_SDATE
+										            FROM EMP_HOLIDAY A
+										            INNER JOIN EMPLOYEE B ON A.EMPL_ID = B.EMPL_ID
+										            WHERE (A.EMPL_ID, A.EMHO_YEAR) IN (
+										                  SELECT EMPL_ID, MAX(EMHO_YEAR) EMHO_YEAR
+										                  FROM EMP_HOLIDAY
+										                  GROUP BY EMPL_ID
+										            	  )
+													) D ON A.EMPL_ID = D.EMPL_ID
+										CONNECT BY LEVEL <= (A.SIDB_DOC_END - CASE WHEN HOLI_SDATE > A.SIDB_DOC_BE THEN HOLI_SDATE ELSE A.SIDB_DOC_BE END) + 1
+										) T
+							WHERE 		T.HOLI_DATE NOT IN (
+										SELECT HOLI_DATE FROM HOLIDAY WHERE HOLI_FLAG = 'Y'
+										)
+							GROUP BY EMPL_ID, HOLI_SDATE
+							) C ON A.EMPL_ID = C.EMPL_ID
+				WHERE 	A.EMPL_ID = '20230105'
+				GROUP BY A.EMHO_HOLIDAY, C.USE_HOLIDAY, HOLI_SDATE
+		 		)
+		GROUP BY HOLI_SDATE
 		]]>
 	</select>
 
@@ -124,42 +140,81 @@
 				C.COCO_NAME AS EMPL_DEPT_NM,
 				D.COCO_NAME AS EMPL_RANK_NM,
 				E.COCO_NAME AS EMPL_POSITION_NM,
-				EMHO_HOLIDAY AS TOTAL_HOLIDAY,
+				TOTAL_HOLIDAY,
 				USE_HOLIDAY,
-				EMHO_HOLIDAY - USE_HOLIDAY REST_HOLIDAY
+				REST_HOLIDAY,
+				STANDARD_HOLIDAY
 		FROM	(
-				SELECT
-						D.EMPL_ID,
-						NVL(E.EMHO_HOLIDAY, 0) AS EMHO_HOLIDAY,
-						SUM((
-							SELECT 
-									COUNT(*)
-							FROM	(
-									SELECT DISTINCT TO_CHAR(A.SIDB_DOC_BE + LEVEL - 1, 'YYYYMMDD') AS HOLI_DATE
-									FROM DUAL
-									CONNECT BY LEVEL <= (A.SIDB_DOC_END - A.SIDB_DOC_BE) + 1
-									MINUS
-									SELECT HOLI_DATE FROM HOLIDAY WHERE HOLI_FLAG = 'Y'
-									)	
-						)) AS USE_HOLIDAY
-				FROM 		SIGN_DOC_BOX A
-				INNER JOIN SIGN_CATEGORY B ON A.SICA_CD = B.SICA_CD
-				INNER JOIN SIGN_DOC_TEMP C ON A.SIDT_TEMP_CD = C.SIDT_TEMP_CD
-				INNER JOIN EMPLOYEE D ON A.EMPL_ID = D.EMPL_ID
-				LEFT OUTER JOIN (
-								SELECT EMPL_ID, EMHO_YEAR, EMHO_HOLIDAY
-								FROM EMP_HOLIDAY
-								WHERE (EMPL_ID, EMHO_YEAR) IN (
-										SELECT EMPL_ID, MAX(EMHO_YEAR) EMHO_YEAR
-										FROM EMP_HOLIDAY
-										GROUP BY EMPL_ID
-								)
-				) E ON D.EMPL_ID = E.EMPL_ID
-				WHERE A.SIDB_DOC_STAT = '3'
-				AND A.SICA_CD = 'CC000001'
-				AND A.SIDT_TEMP_CD IN ('TC000001', 'TC000002')
-				AND E.EMHO_YEAR || TO_CHAR(TO_DATE(D.EMPL_JOINDATE, 'YYYY-MM-DD'), '-MM-DD') < TO_CHAR(A.SIDB_DOC_BE, 'YYYY-MM-DD')	--휴가부여년도/입사월일 기준으로 휴가정보 처리
-				GROUP BY D.EMPL_ID, E.EMHO_HOLIDAY
+				SELECT 
+						EMPL_ID,
+						SUM(EMHO_HOLIDAY) TOTAL_HOLIDAY,
+						SUM(USE_HOLIDAY) USE_HOLIDAY,
+						CASE WHEN SUM(REST_HOLIDAY) < 0 THEN 0
+						ELSE SUM(REST_HOLIDAY) 
+						END REST_HOLIDAY,
+						TO_CHAR(HOLI_SDATE, 'YYYY-MM-DD') AS STANDARD_HOLIDAY,
+						HOLI_SDATE
+				FROM	(
+						-- 총휴가일수
+						SELECT
+								A.EMPL_ID,
+								SUM(A.EMHO_HOLIDAY) EMHO_HOLIDAY,
+								NVL(C.USE_HOLIDAY, 0) USE_HOLIDAY,
+								A.EMHO_HOLIDAY-NVL(C.USE_HOLIDAY, 0) AS REST_HOLIDAY,
+								TO_DATE(A.EMHO_YEAR || TO_CHAR(TO_DATE(B.EMPL_JOINDATE, 'YYYY-MM-DD'), '-MM-DD'), 'YYYY-MM-DD') AS HOLI_SDATE
+						FROM		(
+						            SELECT EMPL_ID, EMHO_YEAR, EMHO_HOLIDAY
+						            FROM EMP_HOLIDAY
+						            WHERE (EMPL_ID, EMHO_YEAR) IN (
+						                  SELECT EMPL_ID, MAX(EMHO_YEAR) EMHO_YEAR
+						                  FROM EMP_HOLIDAY
+						                  GROUP BY EMPL_ID
+						            	  )
+						            ) A 
+						INNER JOIN EMPLOYEE B ON A.EMPL_ID = B.EMPL_ID
+						LEFT OUTER JOIN (
+									-- 휴가 사용일
+									SELECT 
+												EMPL_ID,
+												COUNT(HOLI_DATE) USE_HOLIDAY,
+												HOLI_SDATE
+									FROM		(
+												SELECT 		DISTINCT
+															A.EMPL_ID,
+															CASE WHEN HOLI_SDATE > A.SIDB_DOC_BE THEN TO_CHAR(HOLI_SDATE + LEVEL - 1, 'YYYYMMDD')
+																 ELSE TO_CHAR(A.SIDB_DOC_BE + LEVEL - 1, 'YYYYMMDD') 
+																 END AS HOLI_DATE,
+															HOLI_SDATE
+												FROM		(
+															SELECT
+																	EMPL_ID,
+																	SIDB_DOC_BE,
+																	SIDB_DOC_END
+															FROM	SIGN_DOC_BOX
+															WHERE	SIDB_DOC_STAT = '3'
+												            AND		SICA_CD = 'CC000001'
+												            AND		SIDT_TEMP_CD IN ('TC000001', 'TC000002')
+															) A
+												INNER JOIN 	(
+												            SELECT A.EMPL_ID, A.EMHO_YEAR, A.EMHO_HOLIDAY, TO_DATE(A.EMHO_YEAR || TO_CHAR(TO_DATE(B.EMPL_JOINDATE, 'YYYY-MM-DD'), '-MM-DD'), 'YYYY-MM-DD') AS HOLI_SDATE
+												            FROM EMP_HOLIDAY A
+												            INNER JOIN EMPLOYEE B ON A.EMPL_ID = B.EMPL_ID
+												            WHERE (A.EMPL_ID, A.EMHO_YEAR) IN (
+												                  SELECT EMPL_ID, MAX(EMHO_YEAR) EMHO_YEAR
+												                  FROM EMP_HOLIDAY
+												                  GROUP BY EMPL_ID
+												            	  )
+															) D ON A.EMPL_ID = D.EMPL_ID
+												CONNECT BY LEVEL <= (A.SIDB_DOC_END - CASE WHEN HOLI_SDATE > A.SIDB_DOC_BE THEN HOLI_SDATE ELSE A.SIDB_DOC_BE END) + 1
+												) T
+									WHERE 		T.HOLI_DATE NOT IN (
+												SELECT HOLI_DATE FROM HOLIDAY WHERE HOLI_FLAG = 'Y'
+												)
+									GROUP BY EMPL_ID, HOLI_SDATE
+									) C ON A.EMPL_ID = C.EMPL_ID
+						GROUP BY A.EMPL_ID, A.EMHO_YEAR, A.EMHO_HOLIDAY, C.USE_HOLIDAY, HOLI_SDATE, B.EMPL_JOINDATE
+				 		)
+				GROUP BY EMPL_ID, HOLI_SDATE
 		) A
 		INNER JOIN EMPLOYEE B ON A.EMPL_ID = B.EMPL_ID
 		INNER JOIN COMMON_CODE C ON B.EMPL_DEPT_CD = C.COCO_CD
