@@ -41,7 +41,7 @@ public class TemplateController {
 	@Autowired
 	private ITemplateService service;
 
-	@GetMapping("/template.do")
+	@GetMapping("/templateAdmin.do")
 	public String template(Model model) {
 		log.info("TemplateController 템플릿 전체 값을 저장하여 이동하는 template");
 		List<TemplateDto> lst = service.getTempList();
@@ -49,7 +49,7 @@ public class TemplateController {
 		return "doc/template/template";
 	}
 
-	@GetMapping("/detailTemplate.do")
+	@GetMapping("/detailTemplateAdmin.do")
 	public String detailTempate(String sidt_temp_cd, Model model) {
 		log.info("TemplateController 템플릿 상세 내용 조회하는 detailTemplate");
 		TemplateDto temDto = service.getDetailTemp(sidt_temp_cd);
@@ -57,13 +57,13 @@ public class TemplateController {
 		return "doc/template/detailTemplate";
 	}
 
-	@GetMapping("/writeTemplate.do")
+	@GetMapping("/writeTemplateAdmin.do")
 	public String writeTemplate() {
 		log.info("TemplateController 템플릿 등록화면으로 이동하는 writeTemplate");
 		return "doc/template/writeTemplate";
 	}
 
-	@GetMapping("/selectCategory.do")
+	@GetMapping("/selectCategoryAdmin.do")
 	@ResponseBody
 	public ResponseEntity<?> selectCategory() {
 		log.info("TemplateController 템플릿 카테고리 조회하는 selectCategory");
@@ -71,11 +71,11 @@ public class TemplateController {
 		return ResponseEntity.ok(list);
 	}
 
-	@PostMapping("/insertTemplate.do")
+	@PostMapping("/insertTemplateAdmin.do")
 	public String insertTemplate(@ModelAttribute TemplateDto dto) {
 		log.info("TemplateController 템플릿 등록하는 insertTemplate");
 		int n = service.insertTemp(dto);
-		return (n == 0) ? "" : "redirect:template.do";
+		return (n == 0) ? "" : "redirect:templateAdmin.do";
 	}
 	
 //  @PostMapping("/insertTemplate.do")
@@ -90,7 +90,7 @@ public class TemplateController {
 //  }
 
 
-	@GetMapping("/modifyTemplate.do")
+	@GetMapping("/modifyTemplateAdmin.do")
 	public String modifyTemplate(String sidt_temp_cd, Model model) {
 		log.info("TemplateController 템플릿 수정화면으로 이동하는 modifyTemplate");
 		TemplateDto temDto = service.getDetailTemp(sidt_temp_cd);
@@ -98,7 +98,7 @@ public class TemplateController {
 		return "doc/template/modifyTemplate";
 	}
 	
-	@PostMapping("updateTemplate.do")
+	@PostMapping("updateTemplateAdmin.do")
 	public String updateTemplate(@ModelAttribute TemplateDto dto, Model model) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("sica_cd", dto.getSica_cd());
@@ -107,7 +107,7 @@ public class TemplateController {
 		map.put("sidt_temp_cd", dto.getSidt_temp_cd());
 		service.updateTemp(map);
 //		model.addAttribute("lst", dto);
-		return "redirect:detailTemplate.do?sidt_temp_cd=" + map.get("sidt_temp_cd");
+		return "redirect:detailTemplateAdmin.do?sidt_temp_cd=" + map.get("sidt_temp_cd");
 	}
 
 //	@PostMapping(value = "/updateTemplate.do")
@@ -122,14 +122,14 @@ public class TemplateController {
 ////		return "redirect:/detailTemplate.do?sidt_temp_cd=" + map.get("sidt_temp_cd");
 //	}
 
-	@GetMapping("/deleteTemplate.do")
+	@GetMapping("/deleteTemplateAdmin.do")
 	public String deleteTemplate(@RequestParam(name = "sidt_temp_cd") String sidt_temp_cd) {
 		log.info("TemplateController 템플릿 삭제하는 deleteTemplate");
 		int n = service.deleteTemp(sidt_temp_cd);
-		return "redirect:template.do";
+		return "redirect:templateAdmin.do";
 	}
 
-	@GetMapping(value = "/getTemplate.do", produces = "text/html; charset=UTF-8")
+	@GetMapping(value = "/getTemplateAdmin.do", produces = "text/html; charset=UTF-8")
 	@ResponseBody
 	public String getTemplate(String sidt_temp_cd, Model model) {
 		log.info("TemplateController 선택한 템플릿 에디터로 가져오는 getTemplate: {}", sidt_temp_cd);
@@ -139,7 +139,7 @@ public class TemplateController {
 
 	}
 
-	@PostMapping(value = "/uploadImage.do")
+	@PostMapping(value = "/uploadImageAdmin.do")
 	@ResponseBody
 	public Map<String, String> uploadImage(MultipartFile upload, HttpServletRequest request) {
 		log.info("TemplateController 이미지 업로드 uploadImage {}", upload);

@@ -3,7 +3,7 @@
 // 메뉴명
 String docLeftMenu [] = {"내결재관리", "기안서작성", "임시저장", "결재설정" , "서명관리" , "관리자메뉴"};
 // 메뉴링크
-String docLeftMenuLink [] = {"/doc/docBox.do", "/doc/writeDoc.do", "/doc/tempDocs.do", "/doc/signFavo.do" ,"/doc/signManagement.do","/doc/template.do"};
+String docLeftMenuLink [] = {"/doc/docBox.do", "/doc/writeDoc.do", "/doc/tempDocs.do", "/doc/signFavo.do" ,"/doc/signManagement.do","/doc/templateAdmin.do"};
 
 String docUri = request.getRequestURI();
 String currentDocPageName = docUri.substring(docUri.lastIndexOf("/") + 1).replace(".jsp","");

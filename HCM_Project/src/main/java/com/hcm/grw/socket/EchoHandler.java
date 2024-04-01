@@ -40,7 +40,7 @@ public class EchoHandler extends TextWebSocketHandler {
 		sessionList.add(session);
 		String empl_id = userInfo(session);
 		userSessionMap.put(empl_id, session);
-		log.info("접속한 사원 : {}", userInfo(session));
+//		log.info("접속한 사원 : {}", userInfo(session));
 		log.info("접속중인 사원 수 : {}", sessionList.size());
 		
 	}
@@ -100,7 +100,7 @@ public class EchoHandler extends TextWebSocketHandler {
 			// 비접속중인경우
 		}
 		
-		log.info(session.getId());
+//		log.info(session.getId());
 		
 	}
 	
@@ -130,12 +130,13 @@ public class EchoHandler extends TextWebSocketHandler {
 		
 	}
 	
+	// 웹소켓에 바로접근하여 모든 접속인원에대해 알림전송할수 있는 메소드
 	public void sendMessageToClients(String message) {
 		for (WebSocketSession clientSession : sessionList) {
 			if (clientSession.isOpen()) {
 				try {
 					clientSession.sendMessage(new TextMessage(message));
-					log.info(message);
+//					log.info(message);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

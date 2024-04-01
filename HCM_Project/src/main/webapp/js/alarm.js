@@ -6,7 +6,7 @@ function offAlarm(icon) {
 	})
 		.then(resp => { return resp.text() })
 		.then(data => { 
-			console.log(data)
+//			console.log(data)
 			
 			paDiv.classList.add('slide-out-right');
 			setTimeout(function() {
@@ -40,7 +40,7 @@ function offAlarmAll() {
 	})
 		.then(resp => { return resp.text() })
 		.then(data => { 
-			console.log(data) 
+//			console.log(data) 
 			var timeLines = document.getElementsByClassName('timeline-item');
 			timeLines.forEach(function(time) {
 				time.classList.add('slide-out-right');
