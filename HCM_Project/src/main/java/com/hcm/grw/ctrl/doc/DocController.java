@@ -182,7 +182,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
-
+            table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -234,6 +234,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -285,6 +286,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -337,6 +339,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -389,6 +392,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -441,6 +445,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -496,6 +501,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -550,6 +556,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -605,6 +612,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -661,6 +669,7 @@ public class DocController {
 		
 		for (int i = 0; i < table.size(); i++) {
 		table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+		table.get(i).setEmpl_picture(null);
 		}
 		model.addAttribute("lists", table);
 		return "/doc/tempDocs/tempDocs";
@@ -684,6 +693,7 @@ public class DocController {
 		
 		for (int i = 0; i < table.size(); i++) {
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			}
 		
 		if (n==1) {
