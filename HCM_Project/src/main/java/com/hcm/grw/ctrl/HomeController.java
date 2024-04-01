@@ -263,7 +263,7 @@ public class HomeController {
 		}
 		
 		if(cnt > 0) {
-			Function.alertLocation(commuteMsg + "처리가 완료 되었습니다.", "/mainTmp.do", "", "", "");
+			Function.alertLocation(commuteMsg + "처리가 완료 되었습니다.", "/", "", "", "");
 		}else {
 			Function.alertHistoryBack(commuteMsg + "처리 중 오류가 발생하였습니다.<br>관리자에게 문의하세요.", "", "");
 		}
