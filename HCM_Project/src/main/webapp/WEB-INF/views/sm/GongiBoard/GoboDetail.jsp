@@ -82,17 +82,19 @@
                             <p>작성자: ${dto.gobo_writer}</p>
                             <p>작성일: <fmt:formatDate value="${dto.gobo_regdate}" pattern="yyyy-MM-dd HH:mm"/></p>
                             <p  style="font-size: 20px;">${dto.gobo_content}</p>
-                            <!-- 댓글 표시 -->
+                            <!-- 댓글 표시 -->  
                             <h3>댓글</h3>
                           <ul class="list-group" id="commentList">
                       <c:forEach var="comment" items="${list}" varStatus="index">
-                          <li id="firstReply">
+                          <li id="firstReply${comment.rebo_no}">
                           <input type="hidden" name="rebo_no" id="rebo_no" value="${comment.rebo_no}">
-                              <div class="d-flex align-items-center no-border" style="border: none;">
+                          <input type="hidden" name="rebo_no" id="rebo_no" value="${comment.rebo_no}">
+                              <div class="d-flex align-items-center no-border replyName${comment.rebo_no}" style="border: none;">
 							        <img src="data:image/png;base64,${comment.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">
                                   <div style="margin-left: 10px; position: relative; width: 100%;">
-								    <strong>${comment.rebo_writer}</strong><br>
-								    <div>${comment.rebo_content}</div>
+								    <strong id="rebo_writer${comment.rebo_no}">${comment.rebo_writer}</strong><br>
+								    <div id="replycontent${comment.rebo_no}">${comment.rebo_content}</div>
+								    <c:if test="${sessionScope.userInfoVo.empl_name == comment.rebo_writer}">
 								    <div>
 								        <small><fmt:formatDate value="${comment.rebo_regdate}" pattern="yyyy-MM-dd HH:mm"/></small>
 								        <div style="position: absolute; top: -12px; right: 0; float: right">
@@ -103,6 +105,7 @@
 												</div>
 								        </div>
 								    </div>
+								    </c:if>
 								</div>
 							</div>
                           </li>

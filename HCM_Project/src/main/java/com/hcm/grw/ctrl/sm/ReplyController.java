@@ -36,14 +36,20 @@ public class ReplyController {
 	}
 	
 	@GetMapping("updateReply.do")
-	public Boolean updateReply(ReplyDto dto) {
+	@ResponseBody
+	public Boolean updateReply(ReplyDto dto,HttpSession session) {
 		log.info("ReplyController insertReplyTwo 댓글 수정 :  {} ", dto);
+		EmployeeDto empldto = (EmployeeDto)session.getAttribute("userInfoVo");
+		 dto.setRebo_writer(empldto.getEmpl_name());
+		 dto.setRebo_writer_id(empldto.getEmpl_id());
+		 System.out.println(dto.getRebo_content());
 		int n = service.updateReply(dto);
 		return (n>0)?true:false;
 	}
 	
 	
 	@GetMapping("updateReplyDelFlag.do")
+	@ResponseBody
 	public Boolean updateReplyDelFlag(String rebo_no) {
 		log.info("ReplyController insertReplyTwo 댓글 삭제 :  {} ",rebo_no);
 		int n = service.updateReplyDelFlag(rebo_no);

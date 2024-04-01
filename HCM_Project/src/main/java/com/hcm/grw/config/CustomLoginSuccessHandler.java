@@ -93,7 +93,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 			if(StringUtils.defaultIfEmpty(String.valueOf(request.getSession().getAttribute("ckMobile")), "").equals("Y")) {
 				response.sendRedirect("/hr/commute/registCommute.do");
 			}else {
-				response.sendRedirect("/mainTmp.do");
+				response.sendRedirect("/");
 			}
 			return;
 		}

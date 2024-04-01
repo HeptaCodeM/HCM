@@ -38,7 +38,7 @@ public class AuthCheckHandler implements HandlerInterceptor {
 			// Authentication Check
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	        log.info("Authentication Info : {}", authentication);
-			if(authentication == null) {
+			if(authentication == null || authentication.getName().equals("anonymousUser")) {
 				log.info("{} - AuthError : 인증정보가 없습니다.", Function.getMethodName());
 				response.sendRedirect("/login/login.do");
 				return false;
@@ -53,18 +53,6 @@ public class AuthCheckHandler implements HandlerInterceptor {
 	        log.info("{} - Auth_Role : {}", Function.getMethodName(), authRole);
 
 	        
-			// 세션정보 확인
-			HttpSession session = request.getSession();
-	        EmployeeDto sessionDto = (EmployeeDto)session.getAttribute("userInfoVo");
-	        log.info("Session Info : {}", sessionDto);
-			if(sessionDto == null) {
-				log.info("{} - AuthError : Session정보가 없습니다.", Function.getMethodName());
-				response.sendRedirect("/login/login.do");
-				return false;
-			}
-	        log.info("{} - Session_Role : {}", Function.getMethodName(), sessionDto.getEmpl_auth());
-	        
-	        
 	        //DB Role Info Get
 	        EmployeeDto empDto = employeeService.getUserInfo(authentication.getName());
 			// DB Check
@@ -78,8 +66,23 @@ public class AuthCheckHandler implements HandlerInterceptor {
 			/* 사용자 로그인 정보 가져오기 종료 */
 
 	        
+			// 세션정보 확인
+	        HttpSession session = request.getSession();
+	        EmployeeDto sessionDto = (EmployeeDto)session.getAttribute("userInfoVo");
+	        log.info("Session Info : {}", sessionDto);
+			/*
+			if(sessionDto == null) {
+				log.info("{} - AuthError : Session정보가 없습니다.", Function.getMethodName());
+				response.sendRedirect("/login/login.do");
+				return false;
+			}
+	        log.info("{} - Session_Role : {}", Function.getMethodName(), sessionDto.getEmpl_auth());
+	        */
+
+	        
 	        // 권한변경 체크 - 변경 시 Authentication, Session 정보 변경처리
-	        if(!authRole.equals(dbRole) || !authRole.equals(sessionDto.getEmpl_auth())) {
+	        //if(!authRole.equals(dbRole) || !authRole.equals(sessionDto.getEmpl_auth())) {
+		    if(!authRole.equals(dbRole)) {
 		        log.info("Roll정보 Update");
 				//Role정보 Update
 				//Security Role정보 Update(Session등록 포함)
@@ -89,6 +92,12 @@ public class AuthCheckHandler implements HandlerInterceptor {
 					response.sendRedirect("/login/login.do");
 					return false;
 				}
+	        }else if(sessionDto == null){	// remember-me를 통한 로그인 시 세션 생성
+	    		//이미지 스트링 정보로 처리
+	        	empDto.setEmpl_picture_str(Function.blobImageToString(empDto.getEmpl_picture()));
+	    		//2진정보 초기화
+	        	empDto.setEmpl_picture(null);
+	    		session.setAttribute("userInfoVo", empDto);	        	
 	        }
 	        
 
