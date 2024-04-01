@@ -110,9 +110,11 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 
 
 	// -----------------------------------> [ 모달창 ] 로그인 정보를 포함한 에디터 화면으로 변경
+	// 화면 전환 (템플릿 선택 -> 템플릿 작성)
 	$("#template_div").hide();
 	$("#editor_div").show();
 	document.getElementById('closeBtn').click();
+	
 	var sessionName = document.getElementById('myName');
 	var sessionDept = document.getElementById('myDept');
 	var sessionRank = document.getElementById('myRank');
@@ -124,6 +126,7 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 	var sessioncompTel = document.getElementById('comp_tel').value;
 	var sessioncompAddr1 = document.getElementById('comp_addr1').value;
 	var sessioncompAddr2 = document.getElementById('comp_addr2').value;
+	// 로그인한 유저 정보 넣어주기
 	var insertName = docData.replace("홍길동", sessionName.value)
 	var insertDept = insertName.replace("인사팀", sessionDept.value)
 	var insertRank = insertDept.replace("대리", sessionRank.value)
@@ -154,17 +157,22 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 		})
 	}, 1500)
 	
-	
+	// -----------------------------------> [ 작성화면 ] 휴가/연차 일자 표시
 	if (sidt_temp_cd == 'TC000001' || sidt_temp_cd == 'TC000002') {
 		var span1 = document.createElement('span');
 		var span2 = document.createElement('span');
 		var span3 = document.createElement('span');
 		var div = document.createElement('div')
 		
-		span1.setAttribute('style', 'font-size: 13px; font-weight: bold; color: orange;');
-		span2.setAttribute('style', 'font-size: 13px; margin-left: 20px; font-weight: bold; color: orange;');
-		span3.setAttribute('style', 'font-size: 13px; margin-left: 20px; font-weight: bold; color: orange;');
-		div.setAttribute('style', 'text-align: right;')
+		span1.setAttribute('style', 'font-size: 13px; margin-left: 800px; font-weight: bold; color: orange;');
+		span2.setAttribute('style', 'font-size: 13px; margin-left: 20px;  font-weight: bold; color: orange;');
+		span3.setAttribute('style', 'font-size: 13px; margin-left: 20px;  font-weight: bold; color: orange;');
+//=======
+//		span1.setAttribute('style', 'font-size: 13px; font-weight: bold; color: orange;');
+//		span2.setAttribute('style', 'font-size: 13px; margin-left: 20px; font-weight: bold; color: orange;');
+//		span3.setAttribute('style', 'font-size: 13px; margin-left: 20px; font-weight: bold; color: orange;');
+//		div.setAttribute('style', 'text-align: right;')
+//>>>>>>> branch 'doc' of https://github.com/HeptaCodeM/HCM.git
 		
 		span1.textContent = '* 총 휴가일수 : ' + document.getElementById('totalHoli').value; 
 		span2.textContent = '사용한 휴가일수 : ' + document.getElementById('useHoli').value;
@@ -290,14 +298,21 @@ function insertDoc() {
 		sidb_doc_be = be.replace('월', '-')
 		sidb_doc_end = end.replace('월', '-')
 		
+		var currentDate = new Date();
 		var calEndDate = new Date(sidb_doc_end);
 		var calBeDate = new Date(sidb_doc_be);
 		if(calBeDate > calEndDate) {
 			swalAlert('기간을 다시 확인해주세요','','','확인');
 			return;
 		}
+		
+		if(currentDate > calBeDate || currentDate > calEndDate) {
+			swalAlert('시작일과 종료일을 확인해주세요','','','확인');
+			return;
+		} 
 	}
 	
+	// -----------------------------------> [ 작성화면 ] 휴가/연차 날짜 유효성 검사
 	if (sidt_temp_cd == 'TC000001' || sidt_temp_cd == 'TC000002') {
 		
 		var rest = document.getElementById('restHoli').value
@@ -310,7 +325,8 @@ function insertDoc() {
 		}
 	}
 	
-	var file = document.getElementById('sidf_file_content').files[0]; // 파일 가져오기
+	// -----------------------------------> [ 작성화면 ] 
+	var file = document.getElementById('sidf_file_content').files[0]; 
 	var formData = new FormData();
 
 	if (ref == undefined) {
@@ -402,7 +418,6 @@ function insertDoc() {
 document.getElementById('insertTempDoc').addEventListener('click', insertTempDoc)
 // -----------------------------------> [ 작성화면 ] 제출하기 insertDoc button
 document.getElementById('insertDoc').addEventListener('click', insertDoc);
-
 
 
 // 참조 팝업창

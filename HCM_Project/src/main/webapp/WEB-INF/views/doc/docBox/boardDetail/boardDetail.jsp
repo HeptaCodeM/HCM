@@ -16,10 +16,10 @@
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp"%>
 <style>
-.modal {
+/* .modal {
     --bs-modal-zindex: 1055;
     --bs-modal-width: 1080px;
-    }
+    } */
 .flex {
   display: flex;
   justify-content: flex-end; 
@@ -312,9 +312,9 @@ padding-left:15%;
 								
 		<div style="text-align: center; margin-top: 30px;">
 	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.sidb_curr_id and docDto1.sidb_doc_stat != 3 and docDto1.sidb_doc_stat != 4 }">
-    <button type="button" class="btn btn-primary btnSm" data-bs-toggle="modal" data-bs-target="#kt_modal_3">승인</button>
+    <button type="button" class="btn btn-light-primary btnSm" data-bs-toggle="modal" data-bs-target="#kt_modal_3">승인</button>
     <span style="min-width:100px;">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button type="button" class="btn btn-danger btnSm " data-bs-toggle="modal" data-bs-target="#kt_deny">반려</button>
+    <button type="button" class="btn btn-light-danger btnSm " data-bs-toggle="modal" data-bs-target="#kt_deny">반려</button>
 	</c:if>
 
 	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.empl_id and docDto1.sidb_doc_stat == 1}">
@@ -342,8 +342,8 @@ padding-left:15%;
 
 
 	<!-- 승인 모달창 -->
-	<div class="modal fade" tabindex="-1" id="kt_modal_3">
-		<div class="modal-dialog">
+	<div class="modal fade" style="--bs-modal-width: 1080px;"  tabindex="-1" id="kt_modal_3">
+		<div class="modal-dialog" >
 			<div class="modal-content position-absolute">
 				<div class="modal-header">
 					<h5 class="modal-title">승인</h5>
@@ -399,7 +399,7 @@ padding-left:15%;
 	</div>
 
 	<!-- 반려 모달창 -->
-	<div class="modal fade" tabindex="-1" id="kt_deny">
+	<div class="modal fade"  style="--bs-modal-width: 1080px;" tabindex="-1" id="kt_deny">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
