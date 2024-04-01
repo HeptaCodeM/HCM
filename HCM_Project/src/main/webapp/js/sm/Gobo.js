@@ -216,15 +216,25 @@ function updateButton(rebo_no) {
 
 
 function updateAjax(rebo_no){
-	var rebo_content = $('#rebo_content' + rebo_no).text().trim();
-	console.log(rebo_no);
+	var rebo_content = $('#rebo_content' + rebo_no).val();
+	console.log(rebo_content);
 	$.ajax({
 		url: "/sm/updateReply.do",
 		data: {rebo_no:rebo_no,rebo_content:rebo_content},
 		type:"get",
 		dataType: "json",
-		success: function(){
-			console.log("성공");
+		success: function(isc){
+			if(isc>0){
+			 var updatedContent = $('#updatedContent' + rebo_no);
+            var newContent = $('#rebo_content' + rebo_no).val();
+
+            // 기존의 내용을 갱신합니다.
+            $('#replycontent' + rebo_no).text(newContent);
+
+            // 기존 내용을 갱신한 후 새로운 내용을 보여줍니다.
+            $('#firstReply' + rebo_no).show();
+            updatedContent.remove();
+            }
 		},
 		error:function(){
 			

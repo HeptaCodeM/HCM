@@ -200,7 +200,9 @@
                        <label for="sel1" class="col-form-label">구분</label>
                        <select class="form-select" id="scbo_cgory_no_update" name="scbo_cgory_no" required="required">
                          <option value="100">개인일정</option>
-                         <option value="200">외근</option>
+                         <option value="200">외근일정</option>
+                         <option value="TC000002">휴가</option>
+                         <option value="TC000001">연차</option>
                        </select>
                      <label for="title" class="col-form-label">일정 제목</label>
                      <input type="text" class="form-control" id="scbo_title1" name="scbo_title">
@@ -229,7 +231,6 @@
                     </form> 
                </div>
             </div>
-
             <div class="modal-footer">
             	<button type="button" class="btn btn-primary" id="deleteButton" onclick="deleteCalendar()">삭제</button>
             	<button type="button" class="btn btn-primary" id="updateButton" onclick="updateCalendar()">수정</button>

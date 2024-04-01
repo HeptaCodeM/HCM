@@ -99,6 +99,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
+
+
 function listAjax(daygridmonth) {
 	
 	    // 기존에 동일한 ID를 가진 이벤트 소스가 있는지 확인하고 있다면 삭제합니다.
@@ -107,19 +109,6 @@ function listAjax(daygridmonth) {
         existingEventSource.remove();
     }
 	
-//			calendar.getEventSources().forEach(function(source) {
-			    // 이벤트 소스의 클래스 이름이 "koHol"을 포함하는지 확인합니다.
-//			    var google = source.context.eventSources
-//			    console.log(google);
-//			    console.log(source);
-//			    source.remove();
-			   
-//			    calendar.addEventSource(google);
-//			    if(source.context.eventSources){
-//					google += source;
-//				}else{}
-			    // "koHol" 클래스를 가지지 않은 이벤트 소스를 제거합니다.
-//});
 	
     var formData = $("#filter").serializeArray();
     var selectedValues = [];
@@ -158,7 +147,6 @@ function listAjax(daygridmonth) {
                 id: "calendarData", // 이벤트 소스에 대한 ID
                 events: events // 새로운 이벤트 데이터
             });
-
             // FullCalendar에 추가된 이벤트를 다시 그립니다.
             calendar.refetchEvents();
         },
@@ -176,15 +164,26 @@ function detail(scbo_no){
         dataType: "json", // seq를 key로 하는 객체를 전송
         success: function(data) {
 			if(data.scbo_cgory_no == 100){
-            $("#scbo_cgory_no1").val("개인일정");
+            $("#scbo_cgory_no_update").val("100");
+            $("#scbo_content1").show();
+            $("#deleteButton").show();
+            $("#updateButton").show();
 			}else if(data.scbo_cgory_no == 200){
-				$("#scbo_cgory_no1").val("외근일정");
+				$("#scbo_cgory_no_update").val("200");
+				 $("#scbo_content1").show();
+				$("#deleteButton").show();
+            	$("#updateButton").show();
 			}else if(data.scbo_cgory_no == "TC000002"){
-				$("#scbo_cgory_no1").val("휴가");
+				$("#scbo_cgory_no_update").val("TC000002");
+				 $("#scbo_content1").hide();
+				$("#deleteButton").hide();
+         	   $("#updateButton").hide();
 			}else if(data.scbo_cgory_no == "TC000001"){
-				$("#scbo_cgory_no1").val("연차");
+				$("#scbo_cgory_no_update").val("TC000001");
+				 $("#scbo_content1").hide();
+				$("#deleteButton").hide();
+            	$("#updateButton").hide();
 			}
-			
 			var start = new Date(data.scbo_start);
 			var end = new Date(data.scbo_end);
 			var formatstart = start.getFullYear() + '/' + (start.getMonth() + 1).toString().padStart(2, '0') + '/' + start.getDate().toString().padStart(2, '0') + ' ' + start.getHours().toString().padStart(2, '0') + ':' + start.getMinutes().toString().padStart(2, '0');
@@ -237,7 +236,6 @@ function insert(day) {
             alert("종료일이 시작일보다 먼저입니다.");
         } else { // 정상적인 입력 시
             var data = $("#form").serialize()
-			
             $.ajax({
                 url: "/sm/insertScbo.do",
                 data: data,
@@ -278,6 +276,8 @@ $(document).ready(function(){
 		 '18:00','18:30','19:00','19:30','20:00','20:30','21:00'], // 선택 가능한 시간
 		 
 	});
+	
+	
 // datetimepicker 생성
 $("#scbo_start").datetimepicker({
 	
@@ -352,7 +352,6 @@ function updateCalendar(){
 				});
 			}
 }
-
 function deleteCalendar(){
 	var daygridmonth = $(".fc-toolbar-title").text();
 	var result = confirm("글을 삭제 하시겠습니까?");
