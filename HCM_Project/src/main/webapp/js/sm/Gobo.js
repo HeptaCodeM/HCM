@@ -197,7 +197,7 @@ function updateButton(rebo_no) {
     newContent += '<input type="hidden" name="rebo_modify_id" id="rebo_modify_id" value="${sessionScope.userInfoVo.empl_id}">';
     newContent += '<input type="hidden" name="rebo_writer" id="rebo_writer" value="${sessionScope.userInfoVo.empl_name}">';
     newContent += '<em class="comment_inbox_name">' + writer + '</em>';
-    newContent += '<textarea id="rebo_content" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" oninput="checkInput()" name="rebo_content">'+Content+'</textarea>';
+    newContent += '<textarea id="rebo_content'+rebo_no+'" placeholder="댓글을 남겨보세요" rows="2" class="comment_inbox_text form-control border-0" oninput="checkInput()" name="rebo_content">'+Content+'</textarea>';
     newContent += '<div class="d-flex justify-content-end align-items-end">';
     newContent += '<div class="register_box">';
     newContent += '<button id="cancelButton" type="button" class="btn btn-danger ml-2" onclick="cancelUpdate(' + rebo_no + ')">취소</button>';
@@ -216,15 +216,25 @@ function updateButton(rebo_no) {
 
 
 function updateAjax(rebo_no){
-	var data = $("#ReplyForm"+rebo_no).serialize()
-	console.log(data);
+	var rebo_content = $('#rebo_content' + rebo_no).val();
+	console.log(rebo_content);
 	$.ajax({
 		url: "/sm/updateReply.do",
-		data:data,
+		data: {rebo_no:rebo_no,rebo_content:rebo_content},
 		type:"get",
 		dataType: "json",
-		success: function(){
-			console.log("성공");
+		success: function(isc){
+			if(isc>0){
+			 var updatedContent = $('#updatedContent' + rebo_no);
+            var newContent = $('#rebo_content' + rebo_no).val();
+
+            // 기존의 내용을 갱신합니다.
+            $('#replycontent' + rebo_no).text(newContent);
+
+            // 기존 내용을 갱신한 후 새로운 내용을 보여줍니다.
+            $('#firstReply' + rebo_no).show();
+            updatedContent.remove();
+            }
 		},
 		error:function(){
 			
