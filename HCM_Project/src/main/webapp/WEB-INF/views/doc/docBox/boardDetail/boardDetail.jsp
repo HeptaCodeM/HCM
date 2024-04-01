@@ -319,7 +319,7 @@ padding-left:15%;
 
 	<c:if test="${sessionScope.userInfoVo.empl_id eq docDto1.empl_id and docDto1.sidb_doc_stat == 1}">
   <!--   <button type="button" class="btn btn-primary" onclick="docEdit()">품의수정</button> -->
-    <button type="button" style="height:40px;" class="btn btn-danger" onclick="gianCancel()">상신취소</button>
+    <button type="button" style="height:40px;" class="btn btn-light-danger" onclick="gianCancel()">상신취소</button>
 	<form id="gianCancel" action="./gianCancel.do" method="post">
 						<input type="hidden" value="${docDto1.sidb_doc_num}" name="docNum"/>
 					</form>

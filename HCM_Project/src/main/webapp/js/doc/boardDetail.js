@@ -196,7 +196,7 @@ docNum = document.getElementById('docNum').value;
 console.log(docNum)
 getFile();
 document.getElementById('downBtn').addEventListener('click', function() {
-	var sel = document.getElementById('selectFile');
+	var sel = document.getElementById('fileNum');
 	location.href = './fileDown.do?sidf_file_num=' + sel.value;
 
 });
@@ -211,18 +211,24 @@ function getFile() {
 			var sel = document.getElementById('selectFile');
 			console.log(data);
 			console.log("데이터들고왔니?"+data.length);
+             
+             var opt = document.createElement('span');
 			 if (data.length === 0) {
 				var downBtn = document.getElementById('downBtn');
    				 downBtn.disabled = true;
-                var opt = document.createElement('span');
                 opt.textContent = " 첨부된 파일이 없습니다.";
                 sel.appendChild(opt);
             } else {
 			for (let d of data) {
-				var opt = document.createElement('span');
-				opt.setAttribute('value', d.sidf_file_num);
 				opt.textContent = d.sidf_file_origin;
 				sel.appendChild(opt);
+				
+				var fileNum = document.createElement('input');
+				fileNum.setAttribute('type','hidden');
+				fileNum.setAttribute('id','fileNum');
+				fileNum.setAttribute('value', d.sidf_file_num);
+				sel.appendChild(fileNum);
+
 			}
 			}
 		})
