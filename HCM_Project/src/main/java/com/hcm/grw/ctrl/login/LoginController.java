@@ -20,13 +20,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.EmailService;
 import com.hcm.grw.comm.Function;
-import com.hcm.grw.dto.hr.CompanyDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.hr.CompanyService;
 import com.hcm.grw.model.service.hr.EmployeeService;
@@ -35,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
+@RequestMapping("/login/**")
 public class LoginController {
 
 	@Autowired
@@ -43,9 +44,6 @@ public class LoginController {
 	@Autowired
 	private EmailService emailService;
 	
-	@Autowired
-	private CompanyService companyService;
-
 	@Autowired
 	private NaverOAuth naverOAuth;
 
@@ -58,7 +56,7 @@ public class LoginController {
 	private String clientId;
 	
 	
-	@GetMapping("/login/login.do")
+	@GetMapping("login.do")
 	public String login(String error, 
 						String logout,
 						Model model, 
@@ -142,14 +140,14 @@ public class LoginController {
 	}
 	
 	
-	@GetMapping("/login/restPwd.do")
+	@GetMapping("restPwd.do")
 	public String restPwd(Model model) {
 		log.info("LoginController restPwd");
 		
 		return "/login/restPwd";
 	}
 
-	@PostMapping("/login/initPwdAuthNumSend.do")
+	@PostMapping("initPwdAuthNumSend.do")
 	public @ResponseBody void initPwdAuthNumSend(@RequestParam Map<String, Object> empMap, HttpServletResponse resp) throws IOException {
 		log.info("LoginController initPwdAuthNumSend empMap : {}", empMap);
 		resp.setContentType("text/html; charset=UTF-8;");
@@ -186,7 +184,7 @@ public class LoginController {
 	}
 
 	
-	@PostMapping("/login/initPwdAuthNumCheck.do")
+	@PostMapping("initPwdAuthNumCheck.do")
 	public @ResponseBody void initPwdAuthNumCheck(@RequestParam Map<String, Object> authNumMap, HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		log.info("LoginController initPwdAuthNumCheck empMap : {}", authNumMap);
 		resp.setContentType("text/html; charset=UTF-8;");

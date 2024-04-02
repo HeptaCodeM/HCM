@@ -29,18 +29,23 @@
 	<security:http auto-config="true" use-expressions="true">
 		<!-- 접근제한 설정 : URL 단위로 매핑 -->
 		<!-- 모든 사용자 접근 권한 -->
-		<!-- <security:intercept-url pattern="/login.*" access="permitAll" /> -->
+		<security:intercept-url pattern="/login/*" access="permitAll" />
 		<security:intercept-url pattern="/main*.do" access="permitAll" />
 		<security:intercept-url pattern="/error/**" access="permitAll" />
+
 		<security:intercept-url pattern="/assets/**" access="permitAll" />
-		<security:intercept-url pattern="/images/**" access="permitAll" />
+		<security:intercept-url pattern="/ckeditor5/**" access="permitAll" />
+		<security:intercept-url pattern="/css/**" access="permitAll" />
+		<security:intercept-url pattern="/image/**" access="permitAll" />
+		<security:intercept-url pattern="/css/**" access="permitAll" />
+		<security:intercept-url pattern="/js/**" access="permitAll" />
+		<security:intercept-url pattern="/json/**" access="permitAll" />
+		<security:intercept-url pattern="/src/**" access="permitAll" />
 		
 		<!-- /WEB-INF/ 접근권한 -->
-		<security:intercept-url pattern="/WEB-INF/error/**" access="permitAll" />
 		<security:intercept-url pattern="/WEB-INF/views/**" access="permitAll" />
 
 		<!-- 시스템 권한 -->
-
 		<!-- <security:intercept-url pattern="/system.do" access="hasRole('SYS_ADMIN')" /> -->
 		<security:intercept-url pattern="/system.do" access="permitAll" />
 		<!-- 인사관리자 접근 권한 -->
