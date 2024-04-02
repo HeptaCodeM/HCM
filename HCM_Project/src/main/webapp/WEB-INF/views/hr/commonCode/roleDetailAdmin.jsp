@@ -42,7 +42,7 @@ function deleteRole(){
 function delOk(){
     var coco_cd = document.getElementById("coco_cd").value;
     var role = document.getElementById("role").value;
-    location.href="/hr/commonCode/deleteRoleOne.do?coco_cd="+coco_cd+"&role="+role;
+    location.href="/hr/commonCode/deleteRoleOneAdmin.do?coco_cd="+coco_cd+"&role="+role;
 }
 function returnFlase(){
 	return false;
@@ -84,7 +84,7 @@ function returnFlase(){
 								<h3 class="card-title text-gray-800 fw-bold">${roleDto.getCoco_name()} 정보수정</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
-							<form action="/hr/commonCode/correctionRole.do" onsubmit="return checkNameValue()" method="post">
+							<form action="/hr/commonCode/correctionRoleAdmin.do" onsubmit="return checkNameValue()" method="post">
 								<div class="card-body pt-5">
 									${thisRole}명<input id="coco_name" name="coco_name" class="form-control form-control-solid" type="text" maxlength="6" value="${roleDto.getCoco_name()}">
 										<span id="nameSpan" class="fs-6 text-muted">한글 6글자 이내로 입력해주세요!</span><br>
@@ -147,7 +147,7 @@ function valueChk(){
 	valueChk.append('role', role);
 	
 	if(coco_name != orgCoco_name){
-		fetch('/hr/commonCode/roleNameDuplicateChk.do',{
+		fetch('/hr/commonCode/roleNameDuplicateChkAdmin.do',{
 			method: "POST",
 			headers: {
 			    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'

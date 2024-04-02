@@ -67,7 +67,7 @@
 										<tbody>
 											<c:forEach var="codeList" items="${codeList}" varStatus="var">
 												<c:if test="${codeList.getCoco_delflag() eq 'N'}">
-												<tr style="cursor: pointer;" onclick="location.href='/hr/commonCode/roleDetail.do?coco_cd=${codeList.getCoco_cd()}&role=${role}'" class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
+												<tr style="cursor: pointer;" onclick="location.href='/hr/commonCode/roleDetailAdmin.do?coco_cd=${codeList.getCoco_cd()}&role=${role}'" class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
 												</c:if>
 												<c:if test="${codeList.getCoco_delflag() eq 'Y'}">
 												<tr class="py-5 fw-semibold  border-bottom border-gray-300 fs-6">
@@ -96,7 +96,7 @@
 							</div>
 							<div class="card-footer">
 								<!-- <a href="#" class="btn btn-primary me-10">삭제</a> -->
-								<a href="/hr/commonCode/insertRole.do?role=${role}" class="btn btn-primary me-10">추가</a>
+								<a href="/hr/commonCode/insertRoleAdmin.do?role=${role}" class="btn btn-primary me-10">추가</a>
 						    </div>
 						</div>
 					</div>

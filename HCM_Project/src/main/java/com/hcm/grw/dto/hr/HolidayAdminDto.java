@@ -20,4 +20,5 @@ public class HolidayAdminDto {
 	private String total_holiday;
 	private String use_holiday;
 	private String rest_holiday;
+	private String standard_holiday;
 }

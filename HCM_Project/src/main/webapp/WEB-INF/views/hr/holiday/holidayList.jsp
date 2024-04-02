@@ -49,11 +49,13 @@
 								<div class="table-responsive">
 									<table class="table table-bordered holiCntInfo">
 										<tr>
+											<th>휴가부여기준일</th>
 											<th>총 휴가일 수</th>
 											<th>휴가 사용일 수</th>
 											<th>잔여 휴가일 수</th>
 										</tr>
 										<tr>
+											<td id="standardHoliday"></td>
 											<td id="totHoliday"></td>
 											<td id="useHoliday"></td>
 											<td id="restHoliday"></td>
