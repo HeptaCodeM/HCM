@@ -15,6 +15,7 @@
 	.modal { 
 		--bs-modal-width: 1200px;
 	}
+	/* 만료일 달력 높이 조절 */
 	.form-control {
 		height: 30px !important;
 	}
@@ -54,7 +55,7 @@
 
 							<!-- ---------------------------- 내 용 입 력 -------------------------------- -->
 							
-							<!-- ---------- 1. 템플릿양식 선택화면 버튼 ---------- -->
+							<!-- ---------- 1. 템플릿양식 선택 모달화면 버튼 ---------- -->
 							<div id="template_div" style="text-align: center;">
 									결재 진행을 위해 양식을 선택해주세요. <br><br>
 								<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_3">

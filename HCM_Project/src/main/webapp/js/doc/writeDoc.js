@@ -77,7 +77,6 @@ $('#jstree').on('select_node.jstree', function(e, data) {
 		.then(resp => { return resp.text() })
 		.then(data => {
 			docData = data;
-			//         console.log(data);
 			var template = document.getElementById('template')
 			template.innerHTML = data;
 		})
@@ -100,11 +99,11 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 	sidt_temp_cd = selNode[0];
 	// 템플릿 선택 유효성 검사
 	if (selNode.length == 0) {
-		alert('템플릿을 선택해주세요');
+		swalAlert('템플릿을 선택해주세요', '', '', '확인');
 		return;
 	}
 	if (selNode[0].startsWith("CC")) {
-		alert('템플릿을 선택해주세요');
+		swalAlert('템플릿을 선택해주세요', '', '', '확인');
 		return;
 	}
 
@@ -114,7 +113,7 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 	$("#template_div").hide();
 	$("#editor_div").show();
 	document.getElementById('closeBtn').click();
-	
+	// 화면으로 전달할 session 정보 설정
 	var sessionName = document.getElementById('myName');
 	var sessionDept = document.getElementById('myDept');
 	var sessionRank = document.getElementById('myRank');
@@ -126,7 +125,7 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 	var sessioncompTel = document.getElementById('comp_tel').value;
 	var sessioncompAddr1 = document.getElementById('comp_addr1').value;
 	var sessioncompAddr2 = document.getElementById('comp_addr2').value;
-	// 로그인한 유저 정보 넣어주기
+	// 템플릿에 로그인한 유저 정보 넣어주기
 	var insertName = docData.replace("홍길동", sessionName.value)
 	var insertDept = insertName.replace("인사팀", sessionDept.value)
 	var insertRank = insertDept.replace("대리", sessionRank.value)
@@ -146,6 +145,11 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 	var insertCompAddr = insertCompTel.replace('　　　　　', sessioncompAddr1 + sessioncompAddr2);
 	var insertToday = insertCompAddr.replace('2024년 01월 01일', formatDate)
 	editor.setData(insertToday);
+	
+	// -----------------------------------> [ 작성화면 ]이벤트 날짜 유효성검사
+	
+	
+
 
 
 	// -----------------------------------> [ 작성화면 ] 사원정보 유효성검사
@@ -177,16 +181,15 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 		div.append(span2);
 		div.append(span3);
 		
-		document.getElementById('editor_div').prepend(div);
-		
-		
+		document.getElementById('editor_div').prepend(div);		
 	}
 
 })
 
 // -----------------------------------> [ 작성화면 ] 현재 작성일 설정   
 var currentDate = new Date();
-var formatDate = currentDate.getFullYear() + '-' + ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' + ('0' + currentDate.getDate()).slice(-2);
+//var formatDate = currentDate.getFullYear() + '-' + ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' + ('0' + currentDate.getDate()).slice(-2);
+var formatDate = moment(currentDate).format('YYYY-MM-DD');
 document.getElementById('currentDate').innerHTML = formatDate;
 
 
@@ -195,7 +198,11 @@ function insertTempDoc() {
 	// 로그인 정보
 	var empl_id = document.getElementById('id').value;
 	// 기안서 제목
-	var sitb_doc_title = document.getElementById('sitb_doc_title').value;
+	var sitb_doc_title = document.getElementById('sitb_doc_title').value;	
+	if(sitb_doc_title.length == 0) {
+		swalAlert('제목을 입력해주세요','','','확인');
+		return;
+	}
 	// 기안서 내용
 	var sitb_doc_content = editor.getData();
 	// 기안 만료일
@@ -222,7 +229,7 @@ function insertTempDoc() {
 		console.log(sitb_doc_end)
 	}
 	
-	// 이벤트 날짜
+	// 기안문 임시저장 정보
 	var docData = {
 		sitb_doc_title: sitb_doc_title,
 		sitb_doc_content: sitb_doc_content,
