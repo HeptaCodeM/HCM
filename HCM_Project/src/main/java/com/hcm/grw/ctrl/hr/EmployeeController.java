@@ -436,7 +436,7 @@ public class EmployeeController {
 // =========================== 구분선 =========================================	
 	
 	
-	@GetMapping("list.do")
+	@GetMapping("listAdmin.do")
 	public String employeeAllList(Model model) {
 		log.info("{} 사원정보 리스트 진입", Function.getMethodName());
 		
@@ -460,7 +460,7 @@ public class EmployeeController {
 		model.addAttribute("positionList", positionList);
 		model.addAttribute("lists", lists);
 		
-		return "/hr/employee/list";
+		return "/hr/employee/listAdmin";
 	}	
 
 	@GetMapping("modifyAdmin.do")

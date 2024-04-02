@@ -16,7 +16,7 @@ String hrSubLeftMenu [][] = {
 //소분류 링크
 String hrSubLinkLeftMenu [][] = {
 		{"/hr/employee/empModify.do", "/hr/employee/updatePwd.do", "/hr/employee/naverSns.do", "/hr/employee/registEmpAdmin.do", 
-		"/hr/employee/list.do", "/hr/commonCode/roleListAdmin.do?role=DT","/hr/commonCode/roleListAdmin.do?role=RK", "/hr/commonCode/roleListAdmin.do?role=PN", 
+		"/hr/employee/listAdmin.do", "/hr/commonCode/roleListAdmin.do?role=DT","/hr/commonCode/roleListAdmin.do?role=RK", "/hr/commonCode/roleListAdmin.do?role=PN", 
 		"/hr/employee/authAdminList.do", "/hr/company/companyInfoAdmin.do"},		//hrLeftMenu[0]
 		{"/hr/certificate/certificate.do"},									//hrLeftMenu[1]
 		{"/hr/commute/registCommute.do", "/hr/commute/empCommuteList.do"},	//hrLeftMenu[2]
