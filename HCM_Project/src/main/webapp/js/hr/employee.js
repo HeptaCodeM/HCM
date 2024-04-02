@@ -37,6 +37,13 @@ function registEmployee(){
 		return;
 	}
 	
+	if(f.empl_tel.value.length>0){
+		if(!only_Num(f.empl_tel.value)){
+			swalAlert("내선번호는 정수로만 입력하세요.","","","","empl_tel");
+			return;
+		}
+	}
+	
 	if(f.empl_joindate.value < 10){
 		swalAlert("올바른 입사일자을 입력하세요.","","","","empl_birth");
 		return;
@@ -83,6 +90,13 @@ function modifyEmployee(){
 		return;
 	}
 
+	if(f.empl_tel.value.length>0){
+		if(!only_Num(f.empl_tel.value)){
+			swalAlert("내선번호는 정수로만 입력하세요.","","","","empl_tel");
+			return;
+		}
+	}
+
 	sweetAlertConfirm("현재 입력하신 정보로 수정 하시겠습니까?", modifyEmployeeSubmit, "");
 	/*
 	if(confirm("현재 입력하신 정보로 수정 하시겠습니까?")){
@@ -110,7 +124,7 @@ function updatePwd(){
 	}
 
 	if(!checkPw(f.empl_new_pwd.value)){
-		swalAlert("올바르지 않은 비밀번호 확인 입니다.","","","","");
+		swalAlert("규칙에 맞는 비밀번호를 입력하여 주세요.","","","","");
 		return;
 	}
 

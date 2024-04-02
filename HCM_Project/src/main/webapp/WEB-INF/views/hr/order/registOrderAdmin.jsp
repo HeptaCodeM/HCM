@@ -70,7 +70,7 @@
 										<tbody id="repeater">
 										<tr class="item" id="item1" data-idnum="1">
 											<td>
-						                        <input type="text" class="form-control form-control-solid datepicker" name="emod_order_dt" readonly>
+						                        <input type="text" class="form-control form-control-solid datepicker" name="emod_order_dt" readonly autocomplete="off">
 											</td>
 											<td>
 												<input type="text" class="form-control form-control-solid" name="empl_id" maxlength="20" readonly required="required">
@@ -223,7 +223,7 @@ var idNum = 0;
 var repeatHtml = "";
 repeatHtml+="<tr class='item' id='item_idNum' data-idnum='_idNum'>"
 repeatHtml+="<td>"
-repeatHtml+="	<input type='text' class='form-control form-control-solid datepicker' name='emod_order_dt'>";
+repeatHtml+="	<input type='text' class='form-control form-control-solid datepicker' name='emod_order_dt' readonly  autocomplete='off'>";
 repeatHtml+="</td>";
 repeatHtml+="<td>";
 repeatHtml+="	<input type='text' class='form-control form-control-solid' name='empl_id' maxlength='20' readonly required='required'>";

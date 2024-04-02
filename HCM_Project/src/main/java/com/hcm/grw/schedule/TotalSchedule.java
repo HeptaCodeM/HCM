@@ -52,7 +52,7 @@ public class TotalSchedule {
 	/*평/휴일(특일제외)정보 입력*/
 	//@Scheduled(cron="0/30 * * * * ?")	//매 30초 동작
 	//@Scheduled(cron="0 0 0 1 * ?")	// 매월1일 동작
-	@Scheduled(cron="0 5 * * * ?")	// 매시 5분 동작
+	@Scheduled(cron="0 0 * * * ?")	// 매시 정각 동작
 	@Transactional
 	public void registSpecialDay() throws IOException {
         log.info("SpecialDaySchedule registSpecialDay 특/평/휴일정보 입력/수정");
@@ -133,14 +133,15 @@ public class TotalSchedule {
          * 평/휴일정보 가져오기
         */
         m += scheduleService.registNomalDay();
-        log.info("평/휴일 수행건 수 : {}", n);
+        log.info("평/휴일 수행건 수 : {}", m);
 
         log.info("총 수행건 수 : {}", (n+m));
 	}
 	
 	
 	/* 인사발령정보 적용 스케쥴 처리 */
-	@Scheduled(cron="0 0 0 * * ?")	// 매일 0시 동작
+	//@Scheduled(cron="0 0 0 * * ?")	// 매일 0시 동작
+	@Scheduled(cron="0 0 * * * ?")	// 매일 0시 동작
 	public void orderApplySchedule() {
 		int cnt = scheduleService.updateOrderSchedule();
 	}
