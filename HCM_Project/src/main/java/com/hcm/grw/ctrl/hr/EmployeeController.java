@@ -479,7 +479,7 @@ public class EmployeeController {
 	
 	
 	@PostMapping("modifyAdminOk.do")
-	public @ResponseBody void employeeModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, 
+	public @ResponseBody void modifyAdminOk(@RequestParam("empl_picture") List<MultipartFile> file, 
 												@RequestParam Map<String, String> map, 
 												Authentication authentication,
 												HttpServletRequest req,
@@ -525,7 +525,7 @@ public class EmployeeController {
 			session.setAttribute("userInfoVo", employeeDto);
 
 			
-			Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/empModify.do", "","","");
+			Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/list.do", "","","");
 			return;
 			//sb.append("alert('정상적으로 수정 되었습니다.');");
 			//sb.append("location.href='/hr/employee/list.do';");
