@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<title>SM메인화면</title>
+<title>HCM GroupWare</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
@@ -14,7 +14,8 @@
 <style type="text/css">
 
 	#calendar {
-      max-width: 1050px;
+      max-width: 1000px;
+      max-height:800px;
       margin:  auto;
     }
     .koHol{
@@ -56,7 +57,7 @@
    color:blue;
    }
    #filterLayer { position: absolute; background-color:#fff; 
-	z-index:999; width:140px; height:300px; left: 34%; transform: translateX(-50%); 
+	z-index:999; width:140px; height:300px; left: 32%; transform: translateX(-50%); 
 	top: 20%; padding: 20px; border:1px solid #ccc; 
 	border-radius: 20px; display: none; 
 	}
@@ -72,7 +73,6 @@
     }
 </style>
 	
-</style>
 
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
@@ -86,15 +86,6 @@
 
 		<div class="app-wrapper flex-column flex-row-fluid">
 			<div class="app-toolbar py-3 py-lg-6">
-				<div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
-					<!--begin::Page title-->
-					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-						<!--begin::Title-->
-						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">캘린더</h1>
-						<!--end::Title-->
-					</div>
-					<!--end::Page title-->
-				</div>		
 			</div>
 			<div class="app-content flex-column-fluid">
 				<!-- 내용 시작 -->
@@ -300,7 +291,6 @@ $(document).ready(function(){
         $('#form')[0].reset();
     });
 });
-
 
 
 

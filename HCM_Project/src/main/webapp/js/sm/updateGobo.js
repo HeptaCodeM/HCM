@@ -14,7 +14,7 @@
 		else if (gobo_content == "" || gobo_content == null || gobo_content == '&nbsp;' ||
 			gobo_content == '<br>' || gobo_content == '<br/>' || gobo_content == '<p>&nbsp;</p>' || gobo_content == '<p><br></p>') {
 			alert("본문을 작성해주세요.");
-			oEditors.getById["smartEditor"].exec("FOCUS"); //포커싱
+			editor.focus(); //포커싱
 			return;
 		} else {//이 부분은 스마트에디터 유효성 검사 부분이니 참고하시길 바랍니다.
 			sweetAlertConfirm("수정 하시겠습니까?",function(){
@@ -43,12 +43,6 @@
 		}
 
 
-	});
-		//초기화버튼 클릭이벤트
-	$("#resetbutton").click(function() {
-		editor.setData("");
-		$("#updateForm").reset();
-		
 	});
 
 

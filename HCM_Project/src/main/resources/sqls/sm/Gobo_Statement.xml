@@ -32,7 +32,7 @@ WHERE GOBO_NO = #{gobo_no}
 <!-- 조회수 업데이트 -->
 <update id="updateGoboView">
 UPDATE ADMIN.GONGJI_BOARD
-SET GOBO_VIEW = (SELECT MAX(GOBO_VIEW) + 1 FROM ADMIN.GONGJI_BOARD)
+SET GOBO_VIEW = (SELECT GOBO_VIEW FROM ADMIN.GONGJI_BOARD WHERE GOBO_NO = #{gobo_no})+1
 WHERE GOBO_NO = #{gobo_no}
 </update>
 

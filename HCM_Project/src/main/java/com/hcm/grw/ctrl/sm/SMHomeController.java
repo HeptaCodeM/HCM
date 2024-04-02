@@ -61,8 +61,6 @@ public class SMHomeController {
 		return "sm/GongiBoard/GoboDetail";
 	}
 	
-	
-	
 	@PostMapping("updateGobo.do")
 	@ResponseBody
 	public Boolean updateGobo(GoboDto dto) {
@@ -75,7 +73,7 @@ public class SMHomeController {
 		log.info("SMHomeController updateGobo.do 공지사항 수정화면 이동 ");
 		GoboDto dto =  GoboService.getDetailGobo(gobo_no);
 		model.addAttribute("dto",dto);
-		return "sm/GongiBoard/updateGobo";
+		return "sm/GongiBoard/updateAdminGobo";
 	}
 	
 	
@@ -90,7 +88,7 @@ public class SMHomeController {
 	@GetMapping("insertGoboForm.do")
 	public String insertGoboWrite() {
 		log.info("SMHomeController insertGobo.do 공지사항 글등록 화면 이동");
-		return "sm/GongiBoard/insertGobo";
+		return "sm/GongiBoard/insertAdminGobo";
 	}
 	
 	
