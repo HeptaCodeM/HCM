@@ -119,7 +119,7 @@
 											</tr>
 											<tr>
 												<th>내선번호</th>
-												<td><input type="text" class="form-control form-control-solid" name="empl_tel" maxlength="3"></td>
+												<td><input type="text" class="form-control form-control-solid" name="empl_tel" id="empl_tel" maxlength="3"></td>
 											</tr>
 											<tr>
 												<th>팩스번호</th>
