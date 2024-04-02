@@ -12,6 +12,10 @@ $(document).ready( function () {
             "lengthMenu": " _MENU_ 개씩 보기",
             "info": "현재 _START_ - _END_ / _TOTAL_건",
             "search": "검색: ",
+            "zeroRecords":"검색 조건을 충족하는 문서가 없습니다.",
+            "infoFiltered": "(전체 _MAX_개의 문서 중)",
+            "infoPostFix":"",
+            "infoEmpty":      "0건",
             "paginate": {
                 "next": "다음",
                 "previous": "이전",
@@ -40,6 +44,8 @@ $(document).ready( function () {
 
 //전체 문서함 Ajax
 function allDocs(){
+	var cardTitle = document.querySelector('.card-title.text-gray-800.fw-bold');
+	cardTitle.textContent = '내가 작성한 모든 문서 보관함';
 	// 기존에 있던 테이블 삭제
 	$("#myTable").DataTable().destroy(); 
 	var mainDiv = document.getElementById('tableOuter');
@@ -75,13 +81,13 @@ function allDocs(){
                       + '                        </i> <br>    ' + d.sidt_temp_name
                       + '                    </td>'             
               }
-               else if (d.sidt_temp_cd == 'TC000002')  {
+               else if (d.sidt_temp_cd == 'TC000002' || d.sidt_temp_cd == 'TC000001')  {
                   in2 += '                <tr style="min-height:200px; text-align:center; ">'
                       + '                    <td>'
                       + '                        <i class="ki-duotone ki-home fs-3x text-muted">'
                       + '                        </i> <br>       ' + d.sidt_temp_name
                       + '                    </td>'
-              }  else if (d.sidt_temp_cd == 'TC000013') {
+              }  else if (d.sidt_temp_cd == 'TC000013' || d.sidt_temp_cd == 'TC000006') {
                   in2 += '                <tr style="min-height:200px; text-align:center; ">'
                       + '                    <td>'
                       + '                        <i class="ki-duotone ki-briefcase fs-3x text-gray-900">'
@@ -104,7 +110,7 @@ function allDocs(){
 	    	            + '                     기안일자| ' + formattedDate
 	    	       
 	    	    //사진 + 사원이름        
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+					  + '   <td> <div class="picture" style="background-image: url('+d.empl_pictureStr+')"></div> <span style="vertical-align: middle;">'+ d.empl_name + '</span></td>'
 
 	    	    //프로그래스바 시작         
 	    	            + '                    <td style="text-align:center;"> ';
@@ -167,8 +173,8 @@ function allDocs(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">'
-	    	            		+'<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">'
-	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:22%;"></span>'+d.appr_name1
+	    	            		+'<br> 기안 <span style="display:inline-block; width:27%;"> </span><span style="color: red;  font-size: large;">'
+	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:23%;"></span>'+d.appr_name1
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name2 == undefined && d.appr_flag1 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">'
@@ -232,6 +238,9 @@ function allDocs(){
 	             "emptyTable": "열람 가능한 결재문서가 없습니다.",
 	             "search": "검색: ",
 	             "info": "현재 _START_ - _END_ / _TOTAL_건",
+	             "zeroRecords":"검색 조건을 충족하는 문서가 없습니다.",
+          	     "infoFiltered": "(전체 _MAX_개의 문서 중)",
+          	     "infoEmpty":      "0건",
 	             "paginate": {
 	                 "next": "다음",
 	                 "previous": "이전",
@@ -265,6 +274,8 @@ function allDocs(){
 
 //기안함 Ajax
 function gianBox(){
+	var cardTitle = document.querySelector('.card-title.text-gray-800.fw-bold');
+	cardTitle.textContent = '기안중인 문서 보관함';
 	// 기존에 있던 테이블 삭제
 	$("#myTable").DataTable().destroy(); 
 	var mainDiv = document.getElementById('tableOuter');
@@ -300,13 +311,13 @@ function gianBox(){
                       + '                        </i> <br>    ' + d.sidt_temp_name
                       + '                    </td>'             
               }
-               else if (d.sidt_temp_cd == 'TC000002')  {
+               else if (d.sidt_temp_cd == 'TC000002' || d.sidt_temp_cd == 'TC000001')  {
                   in2 += '                <tr style="min-height:200px; text-align:center; ">'
                       + '                    <td>'
                       + '                        <i class="ki-duotone ki-home fs-3x text-muted">'
                       + '                        </i> <br>       ' + d.sidt_temp_name
                       + '                    </td>'
-              }  else if (d.sidt_temp_cd == 'TC000013') {
+              }  else if (d.sidt_temp_cd == 'TC000013' || d.sidt_temp_cd == 'TC000006') {
                   in2 += '                <tr style="min-height:200px; text-align:center; ">'
                       + '                    <td>'
                       + '                        <i class="ki-duotone ki-briefcase fs-3x text-gray-900">'
@@ -330,7 +341,7 @@ function gianBox(){
 	    	            + '                     기안일자| ' + formattedDate
 	    	       
 	    	    //사진 + 사원이름        
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+					  + '  						 <td> <div class="picture" style="background-image: url('+d.empl_pictureStr+')"></div> <span style="vertical-align: middle;">'+ d.empl_name + '</span></td>'
 
 	    	    //프로그래스바 시작         
 	    	            + '                    <td style="text-align:center;"> ';
@@ -393,8 +404,8 @@ function gianBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">'
-	    	            		+'<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">'
-	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:22%;"></span>'+d.appr_name1
+	    	            		+'<br> 기안 <span style="display:inline-block; width:27%;"> </span><span style="color: red;  font-size: large;">'
+	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:23%;"></span>'+d.appr_name1
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name2 == undefined && d.appr_flag1 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">'
@@ -458,6 +469,9 @@ function gianBox(){
 	             "emptyTable": "기안중인 문서가 없습니다.",
 	             "search": "검색: ",
 	             "info": "현재 _START_ - _END_ / _TOTAL_건",
+	             "zeroRecords":"검색 조건을 충족하는 문서가 없습니다.",
+          	     "infoFiltered": "(전체 _MAX_개의 문서 중)",
+          	     "infoEmpty":      "0건",
 	             "paginate": {
 	                 "next": "다음",
 	                 "previous": "이전",
@@ -490,6 +504,8 @@ function gianBox(){
 
 //진행함 Ajax
 function ingBox(){
+	var cardTitle = document.querySelector('.card-title.text-gray-800.fw-bold');
+	cardTitle.textContent = '결재 진행중인 문서 보관함';
 	// 기존에 있던 테이블 삭제
 	$("#myTable").DataTable().destroy(); 
 	var mainDiv = document.getElementById('tableOuter');
@@ -525,13 +541,13 @@ function ingBox(){
                       + '                        </i> <br>    ' + d.sidt_temp_name
                       + '                    </td>'             
               }
-               else if (d.sidt_temp_cd == 'TC000002')  {
+               else if (d.sidt_temp_cd == 'TC000002' || d.sidt_temp_cd == 'TC000001')  {
                   in2 += '                <tr style="min-height:200px; text-align:center; ">'
                       + '                    <td>'
                       + '                        <i class="ki-duotone ki-home fs-3x text-muted">'
                       + '                        </i> <br>       ' + d.sidt_temp_name
                       + '                    </td>'
-              }  else if (d.sidt_temp_cd == 'TC000013') {
+              }  else if (d.sidt_temp_cd == 'TC000013' || d.sidt_temp_cd == 'TC000006') {
                   in2 += '                <tr style="min-height:200px; text-align:center; ">'
                       + '                    <td>'
                       + '                        <i class="ki-duotone ki-briefcase fs-3x text-gray-900">'
@@ -555,7 +571,7 @@ function ingBox(){
 	    	            + '                     기안일자| ' + formattedDate
 	    	       
 	    	    //사진 + 사원이름        
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+					  + '  						 <td> <div class="picture" style="background-image: url('+d.empl_pictureStr+')"></div> <span style="vertical-align: middle;">'+ d.empl_name + '</span></td>'
 
 	    	    //프로그래스바 시작         
 	    	            + '                    <td style="text-align:center;"> ';
@@ -618,8 +634,8 @@ function ingBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">'
-	    	            		+'<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">'
-	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:22%;"></span>'+d.appr_name1
+	    	            		+'<br> 기안 <span style="display:inline-block; width:27%;"> </span><span style="color: red;  font-size: large;">'
+	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:23%;"></span>'+d.appr_name1
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name2 == undefined && d.appr_flag1 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">'
@@ -683,6 +699,9 @@ function ingBox(){
 	             "emptyTable": "결재 진행중인 문서가 없습니다.",
 	             "search": "검색: ",
 	             "info": "현재 _START_ - _END_ / _TOTAL_건",
+	             "zeroRecords":"검색 조건을 충족하는 문서가 없습니다.",
+          	     "infoFiltered": "(전체 _MAX_개의 문서 중)",
+          	     "infoEmpty":      "0건",
 	             "paginate": {
 	                 "next": "다음",
 	                 "previous": "이전",
@@ -714,6 +733,8 @@ function ingBox(){
 
 //완료함 Ajax
 function approveBox(){
+	var cardTitle = document.querySelector('.card-title.text-gray-800.fw-bold');
+	cardTitle.textContent = '결재 완료된 문서 보관함';
 	// 기존에 있던 테이블 삭제
 	$("#myTable").DataTable().destroy(); 
 	var mainDiv = document.getElementById('tableOuter');
@@ -749,13 +770,13 @@ function approveBox(){
                       + '                        </i> <br>    ' + d.sidt_temp_name
                       + '                    </td>'             
               }
-               else if (d.sidt_temp_cd == 'TC000002')  {
+               else if (d.sidt_temp_cd == 'TC000002' || d.sidt_temp_cd == 'TC000001')  {
                   in2 += '                <tr style="min-height:200px; text-align:center; ">'
                       + '                    <td>'
                       + '                        <i class="ki-duotone ki-home fs-3x text-muted">'
                       + '                        </i> <br>       ' + d.sidt_temp_name
                       + '                    </td>'
-              }  else if (d.sidt_temp_cd == 'TC000013') {
+              }  else if (d.sidt_temp_cd == 'TC000013' || d.sidt_temp_cd == 'TC000006') {
                   in2 += '                <tr style="min-height:200px; text-align:center; ">'
                       + '                    <td>'
                       + '                        <i class="ki-duotone ki-briefcase fs-3x text-gray-900">'
@@ -779,7 +800,7 @@ function approveBox(){
 	    	            + '                     기안일자| ' + formattedDate
 	    	       
 	    	    //사진 + 사원이름        
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+					  + '  						 <td> <div class="picture" style="background-image: url('+d.empl_pictureStr+')"></div> <span style="vertical-align: middle;">'+ d.empl_name + '</span></td>'
 
 	    	    //프로그래스바 시작         
 	    	            + '                    <td style="text-align:center;"> ';
@@ -842,8 +863,8 @@ function approveBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">'
-	    	            		+'<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">'
-	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:22%;"></span>'+d.appr_name1
+	    	            		+'<br> 기안 <span style="display:inline-block; width:27%;"> </span><span style="color: red;  font-size: large;">'
+	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:23%;"></span>'+d.appr_name1
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name2 == undefined && d.appr_flag1 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">'
@@ -907,6 +928,9 @@ function approveBox(){
 	             "emptyTable": "결재 완료된 문서가 없습니다.",
 	             "search": "검색: ",
 	             "info": "현재 _START_ - _END_ / _TOTAL_건",
+	             "zeroRecords":"검색 조건을 충족하는 문서가 없습니다.",
+          	     "infoFiltered": "(전체 _MAX_개의 문서 중)",
+          	     "infoEmpty":      "0건",
 	             "paginate": {
 	                 "next": "다음",
 	                 "previous": "이전",
@@ -940,7 +964,9 @@ function approveBox(){
 
 //반려함 Ajax
 function denyBox(){
-	// 기존에 있던 테이블 삭제
+	var cardTitle = document.querySelector('.card-title.text-gray-800.fw-bold');
+	cardTitle.textContent = '반려된 문서 보관함';
+	
 	$("#myTable").DataTable().destroy(); 
 	var mainDiv = document.getElementById('tableOuter');
 	mainDiv.innerHTML = ''; 
@@ -975,13 +1001,13 @@ function denyBox(){
                       + '                        </i> <br>    ' + d.sidt_temp_name
                       + '                    </td>'             
               }
-               else if (d.sidt_temp_cd == 'TC000002')  {
+               else if (d.sidt_temp_cd == 'TC000002' || d.sidt_temp_cd == 'TC000001')  {
                   in2 += '                <tr style="min-height:200px; text-align:center; ">'
                       + '                    <td>'
                       + '                        <i class="ki-duotone ki-home fs-3x text-muted">'
                       + '                        </i> <br>       ' + d.sidt_temp_name
                       + '                    </td>'
-              }  else if (d.sidt_temp_cd == 'TC000013') {
+              }  else if (d.sidt_temp_cd == 'TC000013' || d.sidt_temp_cd == 'TC000006') {
                   in2 += '                <tr style="min-height:200px; text-align:center; ">'
                       + '                    <td>'
                       + '                        <i class="ki-duotone ki-briefcase fs-3x text-gray-900">'
@@ -1005,7 +1031,7 @@ function denyBox(){
 	    	            + '                     기안일자| ' + formattedDate
 	    	       
 	    	    //사진 + 사원이름        
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+					  + '  						 <td> <div class="picture" style="background-image: url('+d.empl_pictureStr+')"></div> <span style="vertical-align: middle;">'+ d.empl_name + '</span></td>'
 
 	    	    //프로그래스바 시작         
 	    	            + '                    <td style="text-align:center;"> ';
@@ -1068,8 +1094,8 @@ function denyBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">'
-	    	            		+'<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">'
-	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:22%;"></span>'+d.appr_name1
+	    	            		+'<br> 기안 <span style="display:inline-block; width:27%;"> </span><span style="color: red;  font-size: large;">'
+	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:23%;"></span>'+d.appr_name1
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name2 == undefined && d.appr_flag1 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">'
@@ -1133,6 +1159,9 @@ function denyBox(){
 	             "emptyTable": "반려된 문서가 없습니다.",
 	             "search": "검색: ",
 	             "info": "현재 _START_ - _END_ / _TOTAL_건",
+	             "zeroRecords":"검색 조건을 충족하는 문서가 없습니다.",
+          	     "infoFiltered": "(전체 _MAX_개의 문서 중)",
+          	     "infoEmpty":      "0건",
 	             "paginate": {
 	                 "next": "다음",
 	                 "previous": "이전",
@@ -1167,7 +1196,8 @@ function denyBox(){
 
 //참조함 Ajax
 function chamjoBox(){
-	// 기존에 있던 테이블 삭제
+	var cardTitle = document.querySelector('.card-title.text-gray-800.fw-bold');
+	cardTitle.textContent = '참조 지정된 문서 보관함';
 	$("#myTable").DataTable().destroy(); 
 	var mainDiv = document.getElementById('tableOuter');
 	mainDiv.innerHTML = ''; 
@@ -1202,13 +1232,13 @@ function chamjoBox(){
                       + '                        </i> <br>    ' + d.sidt_temp_name
                       + '                    </td>'             
               }
-               else if (d.sidt_temp_cd == 'TC000002')  {
+               else if (d.sidt_temp_cd == 'TC000002' || d.sidt_temp_cd == 'TC000001')  {
                   in2 += '                <tr style="min-height:200px; text-align:center; ">'
                       + '                    <td>'
                       + '                        <i class="ki-duotone ki-home fs-3x text-muted">'
                       + '                        </i> <br>       ' + d.sidt_temp_name
                       + '                    </td>'
-              }  else if (d.sidt_temp_cd == 'TC000013') {
+              }  else if (d.sidt_temp_cd == 'TC000013' || d.sidt_temp_cd == 'TC000006') {
                   in2 += '                <tr style="min-height:200px; text-align:center; ">'
                       + '                    <td>'
                       + '                        <i class="ki-duotone ki-briefcase fs-3x text-gray-900">'
@@ -1232,7 +1262,7 @@ function chamjoBox(){
 	    	            + '                     기안일자| ' + formattedDate
 	    	       
 	    	    //사진 + 사원이름        
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+					  + '  						 <td> <div class="picture" style="background-image: url('+d.empl_pictureStr+')"></div> <span style="vertical-align: middle;">'+ d.empl_name + '</span></td>'
 
 	    	    //프로그래스바 시작         
 	    	            + '                    <td style="text-align:center;"> ';
@@ -1295,8 +1325,8 @@ function chamjoBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">'
-	    	            		+'<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">'
-	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:22%;"></span>'+d.appr_name1
+	    	            		+'<br> 기안 <span style="display:inline-block; width:27%;"> </span><span style="color: red;  font-size: large;">'
+	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:23%;"></span>'+d.appr_name1
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name2 == undefined && d.appr_flag1 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">'
@@ -1360,6 +1390,9 @@ function chamjoBox(){
 	             "emptyTable": "참조 지정된 문서가 없습니다.",
 	             "search": "검색: ",
 	             "info": "현재 _START_ - _END_ / _TOTAL_건",
+	             "zeroRecords":"검색 조건을 충족하는 문서가 없습니다.",
+          	     "infoFiltered": "(전체 _MAX_개의 문서 중)",
+          	     "infoEmpty":      "0건",
 	             "paginate": {
 	                 "next": "다음",
 	                 "previous": "이전",
@@ -1393,7 +1426,8 @@ function chamjoBox(){
 
 //나한테 온 결재 요청함 Ajax
 function myTurnBox(){
-	// 기존에 있던 테이블 삭제
+	var cardTitle = document.querySelector('.card-title.text-gray-800.fw-bold');
+	cardTitle.textContent = '결재 대기중인 문서 보관함';
 	$("#myTable").DataTable().destroy(); 
 	var mainDiv = document.getElementById('tableOuter');
 	mainDiv.innerHTML = ''; 
@@ -1428,13 +1462,13 @@ function myTurnBox(){
                       + '                        </i> <br>    ' + d.sidt_temp_name
                       + '                    </td>'             
               }
-               else if (d.sidt_temp_cd == 'TC000002')  {
+               else if (d.sidt_temp_cd == 'TC000002' || d.sidt_temp_cd == 'TC000001')  {
                   in2 += '                <tr style="min-height:200px; text-align:center; ">'
                       + '                    <td>'
                       + '                        <i class="ki-duotone ki-home fs-3x text-muted">'
                       + '                        </i> <br>       ' + d.sidt_temp_name
                       + '                    </td>'
-              }  else if (d.sidt_temp_cd == 'TC000013') {
+              }  else if (d.sidt_temp_cd == 'TC000013' || d.sidt_temp_cd == 'TC000006') {
                   in2 += '                <tr style="min-height:200px; text-align:center; ">'
                       + '                    <td>'
                       + '                        <i class="ki-duotone ki-briefcase fs-3x text-gray-900">'
@@ -1458,7 +1492,7 @@ function myTurnBox(){
 	    	            + '                     기안일자| ' + formattedDate
 	    	       
 	    	    //사진 + 사원이름        
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+					  + '  						 <td> <div class="picture" style="background-image: url('+d.empl_pictureStr+')"></div> <span style="vertical-align: middle;">'+ d.empl_name + '</span></td>'
 
 	    	    //프로그래스바 시작         
 	    	            + '                    <td style="text-align:center;"> ';
@@ -1521,8 +1555,8 @@ function myTurnBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">'
-	    	            		+'<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">'
-	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:22%;"></span>'+d.appr_name1
+	    	            		+'<br> 기안 <span style="display:inline-block; width:27%;"> </span><span style="color: red;  font-size: large;">'
+	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:23%;"></span>'+d.appr_name1
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name2 == undefined && d.appr_flag1 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">'
@@ -1586,6 +1620,9 @@ function myTurnBox(){
 	             "emptyTable": "결재 요청 받은 문서가 없습니다.",
 	             "search": "검색: ",
 	             "info": "현재 _START_ - _END_ / _TOTAL_건",
+	             "zeroRecords":"검색 조건을 충족하는 문서가 없습니다.",
+          	     "infoFiltered": "(전체 _MAX_개의 문서 중)",
+          	     "infoEmpty":      "0건",
 	             "paginate": {
 	                 "next": "다음",
 	                 "previous": "이전",
@@ -1619,7 +1656,8 @@ function myTurnBox(){
 
 //내가 결재한 문서 조회함 Ajax
 function iDidBox(){
-	// 기존에 있던 테이블 삭제
+	var cardTitle = document.querySelector('.card-title.text-gray-800.fw-bold');
+	cardTitle.textContent = '내가 결재한 문서 보관함';
 	$("#myTable").DataTable().destroy(); 
 	var mainDiv = document.getElementById('tableOuter');
 	mainDiv.innerHTML = ''; 
@@ -1654,13 +1692,13 @@ function iDidBox(){
                       + '                        </i> <br>    ' + d.sidt_temp_name
                       + '                    </td>'             
               }
-               else if (d.sidt_temp_cd == 'TC000002')  {
+               else if (d.sidt_temp_cd == 'TC000002' || d.sidt_temp_cd == 'TC000001')  {
                   in2 += '                <tr style="min-height:200px; text-align:center; ">'
                       + '                    <td>'
                       + '                        <i class="ki-duotone ki-home fs-3x text-muted">'
                       + '                        </i> <br>       ' + d.sidt_temp_name
                       + '                    </td>'
-              }  else if (d.sidt_temp_cd == 'TC000013') {
+              }  else if (d.sidt_temp_cd == 'TC000013' || d.sidt_temp_cd == 'TC000006') {
                   in2 += '                <tr style="min-height:200px; text-align:center; ">'
                       + '                    <td>'
                       + '                        <i class="ki-duotone ki-briefcase fs-3x text-gray-900">'
@@ -1684,7 +1722,7 @@ function iDidBox(){
 	    	            + '                     기안일자| ' + formattedDate
 	    	       
 	    	    //사진 + 사원이름        
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+					  + '  						 <td> <div class="picture" style="background-image: url('+d.empl_pictureStr+')"></div> <span style="vertical-align: middle;">'+ d.empl_name + '</span></td>'
 
 	    	    //프로그래스바 시작         
 	    	            + '                    <td style="text-align:center;"> ';
@@ -1747,8 +1785,8 @@ function iDidBox(){
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name1 != undefined && d.appr_name2 == undefined && d.appr_flag0 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">'
-	    	            		+'<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">'
-	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:22%;"></span>'+d.appr_name1
+	    	            		+'<br> 기안 <span style="display:inline-block; width:27%;"> </span><span style="color: red;  font-size: large;">'
+	    	            		+d.appr_name0+' > </span> <span style="display:inline-block; width:23%;"></span>'+d.appr_name1
 	    	            }
 	    	            if(d.sidb_doc_stat == 4 && d.appr_name2 == undefined && d.appr_flag1 == 2){
 	    	            	in2 += '<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">'
@@ -1809,9 +1847,12 @@ function iDidBox(){
 	     $('#myTable').DataTable({  
 	    	 "language": { 
 	             "lengthMenu": " _MENU_ 개씩 보기",
-	             "emptyTable": "승인 및 반려한 문서가 없습니다.",
+	             "emptyTable": "승인 또는 반려한 문서가 없습니다.",
 	             "search": "검색: ",
 	             "info": "현재 _START_ - _END_ / _TOTAL_건",
+	             "zeroRecords":"검색 조건을 충족하는 문서가 없습니다.",
+          	     "infoFiltered": "(전체 _MAX_개의 문서 중)",
+          	     "infoEmpty":      "0건",
 	             "paginate": {
 	                 "next": "다음",
 	                 "previous": "이전",
@@ -1854,6 +1895,9 @@ $(document).ready( function () {
             "lengthMenu": " _MENU_ 개씩 보기",
             "info": "현재 _START_ - _END_ / _TOTAL_건",
             "search": "검색: ",
+            "zeroRecords":"검색 조건을 충족하는 문서가 없습니다.",
+          	"infoFiltered": "(전체 _MAX_개의 문서 중)",
+          	"infoEmpty":      "0건",
             "paginate": {
                 "next": "다음",
                 "previous": "이전",
@@ -1935,7 +1979,7 @@ function deleteAjax(docNum, docName){
 	    	    // 제목 
 	    	         in2   += '                    <td><a href="#" onclick="detailBoard(' + d.sidb_doc_num + ')"> ' + d.sidb_doc_title + '  </a> </td>'
 	    	       
-	    	            + '                    <td> <img style="width:50px; height:50px; border-radius: 22px;" src="'+d.empl_pictureStr+'">' + d.empl_name + '</td>'
+					  + '  						 <td> <div class="picture" style="background-image: url('+d.empl_pictureStr+')"></div> <span style="vertical-align: middle;">'+ d.empl_name + '</span></td>'
 
 	    	            + '<td style="text-align:center;">' +formattedDate + '</td>'
 	    	            

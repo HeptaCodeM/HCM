@@ -1,6 +1,7 @@
 package com.hcm.grw.model.service.doc;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -100,6 +101,18 @@ public class SignBoxServiceImpl implements ISignBoxService {
 		int n1 = dao.insertDoc(bDto);
 		int n2 = bDao.deleteTempDocs(sitb_doc_num);
 		return n1 + n2 == 2 ? 1 : 0;
+	}
+	
+	@Override
+	public List<SignBoxDto> selectNumber(String empl_id) {
+		log.info("SignBoxServiceImpl selectNumber Service 기안한 전체문서 번호 조회");
+		return dao.selectNumber(empl_id);
+	}
+	
+	@Override
+	public String duplicateDate(Map<String, Object> map) {
+		log.info("SignBoxServiceImpl duplicateDate Service 시작일 종료일 중복 검사");
+		return dao.duplicateDate(map);
 	}
 	
 }

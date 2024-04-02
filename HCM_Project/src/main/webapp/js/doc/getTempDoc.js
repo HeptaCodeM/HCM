@@ -12,6 +12,12 @@ function insertTempDoc() {
 	var empl_id = document.getElementById('id').value;
 	// 기안서 제목
 	var sitb_doc_title = document.getElementsByClassName('sitb_doc_title')[0].value;
+	
+	if (sitb_doc_title.length == 0) {
+		swalAlert('제목을 입력해주세요', '', '', '확인');
+		return;
+		}
+		
 	// 기안서 내용
 	var sitb_doc_content = editor.getData();
 	// 기안 만료일
@@ -36,6 +42,8 @@ function insertTempDoc() {
 		console.log(sitb_doc_end)
 	}
 	
+	
+	
 	var docData = {
 		sitb_doc_title : sitb_doc_title,
 		sitb_doc_content : sitb_doc_content,
@@ -48,8 +56,10 @@ function insertTempDoc() {
 		sidt_temp_cd : sidt_temp_cd
 	}	
 		console.log("기안문 임시저장 정보:",docData);
+		
 		var formData = new FormData();
 		formData.append('dto', new Blob([JSON.stringify(docData)], {type : 'application/json'}));
+		
 		
 		fetch('/doc/insertTempDoc.do', {
 		method : 'post',

@@ -1,6 +1,7 @@
 package com.hcm.grw.model.mapper.doc;
 
 import java.util.List;
+import java.util.Map;
 
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.doc.SignFileDto;
@@ -23,4 +24,9 @@ public interface ISignBoxDao {
 	public List<SignFileDto> getFile();
 	
 	public SignFileDto getDetailFile(String sidf_file_num);
+	
+	public List<SignBoxDto> selectNumber(String empl_id);
+	
+	public String duplicateDate(Map<String, Object> map);
+	
 }

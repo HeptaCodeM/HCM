@@ -305,9 +305,9 @@ function empInfoLayer(empl_id, element){
 		htmlBody += "</div>";
 		htmlBody += "<div class='d-flex flex-column'>";
 		htmlBody += "	<div class='fw-bold d-flex align-items-center fs-5'>"+data.empl_name;
-		htmlBody += "		<span class='badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2'>"+data.empl_rank_nm+"</span>";
+		htmlBody += "		<span class='badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2'>"+data.coco_name_rnm+"</span>";
 		htmlBody += "	</div>";
-		htmlBody += "	<div class='fw-semibold text-muted fs-7'>"+data.empl_dept_nm+"</div>";
+		htmlBody += "	<div class='fw-semibold text-muted fs-7'>"+data.coco_name_dnm+"</div>";
 		htmlBody += "	<a href='mailto:${userInfoVo.empl_email}' class='fw-semibold text-muted text-hover-primary fs-7'>"+data.empl_email+"</a>";
 		htmlBody += "</div>";
 
