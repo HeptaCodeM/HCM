@@ -354,8 +354,7 @@ function updateCalendar(){
 }
 function deleteCalendar(){
 	var daygridmonth = $(".fc-toolbar-title").text();
-	var result = confirm("글을 삭제 하시겠습니까?");
-	if(result){
+	sweetAlertConfirm("삭제 하시겠습니까?",function(){
 	var scbo_no = $("#scbo_no1").val();
 	$.ajax({
 			url: "/sm/updateScboDelFlag.do",
@@ -372,8 +371,8 @@ function deleteCalendar(){
 				alert("jdbc로 넘기지도 못함");
 			}
 		});
-		
-	}
+		},'')
+	
 }
 
 function filterLayer(){

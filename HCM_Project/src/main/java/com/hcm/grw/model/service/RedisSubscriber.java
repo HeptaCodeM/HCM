@@ -2,6 +2,7 @@ package com.hcm.grw.model.service;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,7 +18,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RedisSubscriber implements MessageListener {
 	
+	@Autowired
 	private RedisTemplate<String, Object> redisTemplate; 
+	@Autowired
 	private ObjectMapper objectMapper;
 	private EchoHandler echoHandler;
 	private String roomMessageValue;

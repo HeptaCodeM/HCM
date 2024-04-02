@@ -170,6 +170,10 @@ document.getElementById('initial').addEventListener('click', function() {
 	for (s of span) {
 		s.textContent = '';
 	}
+	var allNode = $('#jstree').jstree('get_json', '#', { flat: true });
+	allNode.forEach(function(node) {
+		$('#jstree').jstree('show_node', node);
+	});
 
 });
 	
