@@ -151,7 +151,7 @@ public class EmployeeController {
 			sb.append("alert('등록 시 오류가 발생하였습니다.'); history.back();");
 		}else {
 			sb.append("alert('정상적으로 등록 되었습니다.');");
-			sb.append("location.href='/hr/employee/list.do';");
+			sb.append("location.href='/hr/employee/listAdmin.do';");
 		}
 		sb.append("</script>");
 		
@@ -525,7 +525,7 @@ public class EmployeeController {
 			session.setAttribute("userInfoVo", employeeDto);
 
 			
-			Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/list.do", "","","");
+			Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/listAdmin.do", "","","");
 			return;
 			//sb.append("alert('정상적으로 수정 되었습니다.');");
 			//sb.append("location.href='/hr/employee/list.do';");
