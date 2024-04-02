@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%
 // 중분류 순서
 String hrLeftMenu [] = {"조직관리", "증명서관리", "근태관리", "인사발령관리" , "휴가관리"};
@@ -15,8 +16,8 @@ String hrSubLeftMenu [][] = {
 //소분류 링크
 String hrSubLinkLeftMenu [][] = {
 		{"/hr/employee/empModify.do", "/hr/employee/updatePwd.do", "/hr/employee/naverSns.do", "/hr/employee/registEmpAdmin.do", 
-		"/hr/employee/list.do", "/hr/commonCode/roleList.do?role=DT","/hr/commonCode/roleList.do?role=RK", "/hr/commonCode/roleList.do?role=PN", 
-		"/hr/employee/authAdminList.do", "/hr/company/companyInfo.do"},		//hrLeftMenu[0]
+		"/hr/employee/listAdmin.do", "/hr/commonCode/roleListAdmin.do?role=DT","/hr/commonCode/roleListAdmin.do?role=RK", "/hr/commonCode/roleListAdmin.do?role=PN", 
+		"/hr/employee/authAdminList.do", "/hr/company/companyInfoAdmin.do"},		//hrLeftMenu[0]
 		{"/hr/certificate/certificate.do"},									//hrLeftMenu[1]
 		{"/hr/commute/registCommute.do", "/hr/commute/empCommuteList.do"},	//hrLeftMenu[2]
 		{"/hr/order/orderList.do", "/hr/order/orderAdminList.do"},			//hrLeftMenu[3]
@@ -92,17 +93,35 @@ Boolean menuFlag2 = false;
 				}
 				%>
 				<%for(int j=0;j<hrSubLeftMenu[i].length;j++){ %>
-						<!-- 소분류1 메뉴 영역 시작 -->
-						<div class="menu-item">
-							<!--begin:Menu link-->
-							<a class="menu-link" href="<%=hrSubLinkLeftMenu[i][j]%>">
-								<span class="menu-bullet">
-									<span class="bullet bullet-dot"></span>
-								</span>
-								<span class="menu-title"><%=hrSubLeftMenu[i][j]%></span>
-							</a>
-						</div>
-						<!-- 소분류1 메뉴 영역 종료 -->
+					<%if(hrSubLinkLeftMenu[i][j].contains("Admin")){%>
+					<sec:authorize access="hasAnyRole('HR_ADMIN','SYS_ADMIN')">
+					<!-- 소분류1 메뉴 영역 시작 -->
+					<div class="menu-item">
+						<!--begin:Menu link-->
+						<a class="menu-link" href="<%=hrSubLinkLeftMenu[i][j]%>">
+							<span class="menu-bullet">
+								<span class="bullet bullet-dot"></span>
+							</span>
+							<span class="menu-title"><%=hrSubLeftMenu[i][j]%></span>
+						</a>
+					</div>
+					<!-- 소분류1 메뉴 영역 종료 -->
+					</sec:authorize>
+					<%}else{%>
+					<sec:authorize access="isAuthenticated()">
+					<!-- 소분류1 메뉴 영역 시작 -->
+					<div class="menu-item">
+						<!--begin:Menu link-->
+						<a class="menu-link" href="<%=hrSubLinkLeftMenu[i][j]%>">
+							<span class="menu-bullet">
+								<span class="bullet bullet-dot"></span>
+							</span>
+							<span class="menu-title"><%=hrSubLeftMenu[i][j]%></span>
+						</a>
+					</div>
+					<!-- 소분류1 메뉴 영역 종료 -->
+					</sec:authorize>
+					<%}%>
 				<%} %>
 					</div>
 					<!-- 소분류 영역 종료 ========================================================-->

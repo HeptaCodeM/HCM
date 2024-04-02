@@ -100,7 +100,7 @@ if ( document.documentElement ) {
 				</div>
 
 				<div class="mb-0">
-					<a href="./mainTmp.do" class="btn btn-sm btn-primary">메인페이지로</a>
+					<a href="/" class="btn btn-sm btn-primary">메인페이지로</a>
 				</div>
 			</div>
 		</div>

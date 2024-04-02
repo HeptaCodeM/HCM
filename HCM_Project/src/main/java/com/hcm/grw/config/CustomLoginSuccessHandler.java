@@ -34,6 +34,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 	@Autowired
 	private EmployeeService employeeService;
 	
+
 	@Autowired
 	@Qualifier("listenerContainer")
     private RedisMessageListenerContainer redisMessageListener;
@@ -69,11 +70,14 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		
 		log.info("ROLE NAME : {}", roleNames);
 		
+
 		// 공지사항 알림채널 참가 - OJS
+
 		ChannelTopic hcmNoticeRoom = new ChannelTopic("hcmNoticeRoom");
 		redisMessageListener.addMessageListener(new RedisSubscriber(), hcmNoticeRoom);
 		redisPublisher.publish(hcmNoticeRoom, RoomMessage.builder().roomId("hcmNoticeRoom").name("hcmNoticeRoom").message("입장~").build());
 		log.info("hcmNoticeRoom 참가 완료");
+
 
 		// 로그인 성공 시 메인화면 이동
 		if(authentication.isAuthenticated()) {

@@ -15,11 +15,9 @@
 	<div>
 
 		<a href="/mainTmp.do">메인템플릿</a><br>
-		<a href="/main.do">main1</a><br>
-		<a href="/error403.do">403ERROR</a><br>
-		<a href="/error404.do">404ERROR</a><br>
-		<a href="/error500.do">500ERROR</a><br>
+		<hr>
 		<a href="/login/login.do">login</a><br>
+		<hr>
 		<a href="/sm/getAllGobo.do">SM넘어가기</a>
 		<hr>
 		<a href="/doc/getDetail.do">결재문서 상세페이지</a>
@@ -32,7 +30,7 @@
 		<hr>
 		<a href="/doc/noticeAlarmTest.do">Alarm 테스트</a>
 		<hr>
-		<a href="/hr/employee/selectEmployeeOne.do?empl_id?20220101">사원정보 요청</a>
+		<a href="/hr/employee/selectEmployeeOne.do?empl_id=20220101">사원정보 요청</a>
 		<br>
 		<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 		<img src="/image/logo-removebg-preview.png" style="height:150px">
