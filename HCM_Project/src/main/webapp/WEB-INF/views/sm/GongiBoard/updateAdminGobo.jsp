@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
 
-<title>SM메인화면</title>
+<title>HCM GroupWare</title>
 <style type="text/css">
  /* 화면늘리는 버튼 숨기기 */
     textarea.comment_inbox_text {
@@ -84,18 +84,20 @@
 					            <label for="id">비고</label>
 					            <textarea class="form-control" rows="1" id="gobo_bigo" name="gobo_bigo" required="required">${dto.gobo_bigo}</textarea>
 					         </div>
-					         <div>
-					         </div>
-					            <input type="button" class="btn btn-success" value="수정"  id="savebutton">
-					            <input type="reset" class="btn btn-danger" value="글초기화" id="resetbutton">
-					            <input type="button" class="btn btn-info" value="이전화면" onclick="history.back(-1)">
+					        
 					      </form>
 					   </div>
                      </div>
-                     	<div style="display: flex; justify-content: flex-end;">
-						<button type="button" class="btn btn-primary" onclick="location.href='/sm/getAllGobo.do'" style="margin-right: 20px">목록</button>                     	
-                     	<button type="button" class="btn btn-primary" onclick="scrollToTop()" id="scrollTopButton" title="맨 위로 이동" style="margin-right: 10px">TOP</button>
-                     	</div>
+                     	<div style="display: flex; justify-content: space-between;">
+						    <div>
+						        <input type="button" class="btn btn-success" value="수정"  id="savebutton">
+						        <input type="button" class="btn btn-info" value="이전화면" onclick="history.back(-1)">
+						    </div>
+						    <div>
+						        <button type="button" class="btn btn-primary" onclick="location.href='/sm/getAllGobo.do'" >목록</button>                     	
+						        <button type="button" class="btn btn-primary" onclick="scrollToTop()" id="scrollTopButton" title="맨 위로 이동" >TOP</button>
+						    </div>
+						</div>
                         </div>
                     </div>
                 </div>
