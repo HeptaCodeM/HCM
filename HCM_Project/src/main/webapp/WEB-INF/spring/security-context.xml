@@ -30,6 +30,7 @@
 		<!-- 접근제한 설정 : URL 단위로 매핑 -->
 		<!-- 모든 사용자 접근 권한 -->
 		<security:intercept-url pattern="/login/*" access="permitAll" />
+		<security:intercept-url pattern="/api/*" access="permitAll" />
 		<security:intercept-url pattern="/main*.do" access="permitAll" />
 		<security:intercept-url pattern="/error/**" access="permitAll" />
 
