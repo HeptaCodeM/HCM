@@ -77,7 +77,7 @@ public class TempTreeController {
 					map.put("sidb_doc_be", dto.getSidb_doc_be());
 					map.put("sidb_doc_end", dto.getSidb_doc_end());
 					String cnt = bService.duplicateDate(map);
-					if(cnt.equalsIgnoreCase("1")) {
+					if(!cnt.equalsIgnoreCase("0")) {
 						return ResponseEntity.ok("중복된 날짜");
 					}
 				}
@@ -111,6 +111,24 @@ public class TempTreeController {
 									   @RequestPart("sitb_doc_num") Map<String, String> sitb_doc_num) throws IOException {
 		log.info("TempTreeController tempLoadInsertDoc.do POST 임시보관함 불러와서 기안문 작성");
 		log.info("{}\n {}\n {}", file, dto, sitb_doc_num);
+		
+		if(dto.getSidt_temp_cd().equalsIgnoreCase("TC000001") || dto.getSidt_temp_cd().equalsIgnoreCase("TC000002")
+				|| dto.getSidt_temp_cd().equalsIgnoreCase("TC000006")) {
+			List<SignBoxDto> docList = bService.selectNumber(dto.getEmpl_id());
+			if(docList.size() != 0) {
+				for(int i=0; i<docList.size(); i++) {
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("sidb_doc_num", docList.get(i).getSidb_doc_num());
+					map.put("sidb_doc_be", dto.getSidb_doc_be());
+					map.put("sidb_doc_end", dto.getSidb_doc_end());
+					String cnt = bService.duplicateDate(map);
+					if(!cnt.equalsIgnoreCase("0")) {
+						return ResponseEntity.ok("중복된 날짜");
+					}
+				}
+			}
+		}
+		
 		if(file != null) {
 			SignFileDto fileDto = new SignFileDto();
 			fileDto.setSidf_file_origin(file.getOriginalFilename());
