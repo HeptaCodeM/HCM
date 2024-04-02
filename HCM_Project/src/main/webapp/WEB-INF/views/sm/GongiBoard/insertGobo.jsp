@@ -47,7 +47,7 @@
 					         </div>
 					         <div class="form-group">
 					            <label for="id">내용</label>
-					            <textarea class="form-control" rows="5" id="smartEditor" name="gobo_content" required="required"></textarea>
+					            <textarea class="form-control" rows="5" id="editor"  name="gobo_content" required="required"></textarea>
 					         </div>
 					         <div class="form-group">
 					            <label for="id">비고</label>
@@ -55,7 +55,7 @@
 					         </div>
 					         <div>
 					         </div>
-					            <input type="button" class="btn btn-success" value="글수정"  id="savebutton">
+					            <input type="button" class="btn btn-success" value="글작성"  id="savebutton">
 					            <input type="reset" class="btn btn-danger" value="글초기화" id="resetbutton">
 					            <input type="button" class="btn btn-info" value="뒤로가기" onclick="history.back(-1)">
 					      </form>
@@ -69,10 +69,9 @@
 		</div>
 			
 <%@include file="/WEB-INF/views/menu/smSideMenu.jsp"%>	
-<script type="text/javascript" src="/smartEditor/js/service/HuskyEZCreator.js" charset="UTF-8"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="/smartEditor/js/smart.js"></script>
-
+<script type="text/javascript" src="/ckeditor5/build/ckeditor.js"></script>
+<script type="text/javascript" src="/js/sm/smart.js"></script>
+<script type="module" src="/ckeditor5/sample/script.js"></script>
 
 </body>
 

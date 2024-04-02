@@ -144,6 +144,7 @@
 							if(data.nameFlag == "false"){
 								nameSpan.innerHTML = "중복된 이름입니다! 다시 입력하세요";
 								coco_cdInput.disabled = true;
+								return false;
 							}else{
 								if(checkNameValue()){
 									nameSpan.innerHTML = "사용가능합니다";
@@ -153,20 +154,28 @@
 									coco_cdInput.disabled = true;
 								}
 							}
-							if(data.codeFlag == "false" || coco_cdInput.value == "" ){
+							
+							if(coco_cdInput.value == "${role}000001"){
+								codeSpan.innerHTML = "EX)\"${role}000001\" 번은 사용할수 없습니다";
+								return false;
+							}
+							
+							if(data.codeFlag == "false" || coco_cdInput.value == ""){
 								if(data.codeFlag == "false"){
 									codeSpan.innerHTML = "중복된 코드입니다! 다시 입력하세요";
 								}else{
-									codeSpan.innerHTML = "EX)\"${role}000001\" 형식으로 입력해주세요";
+									codeSpan.innerHTML = "EX)\"${role}000008\" 형식으로 입력해주세요";
 								}
 								submitBtn.disabled = true;
+								return false;
 							}else{
 								if(checkCodeValue()){
 									codeSpan.innerHTML = "사용가능합니다";
 									submitBtn.disabled = false;
 								}else{
-									codeSpan.innerHTML = "코드형식을 확인해주세요! EX)\"${role}000001\""
+									codeSpan.innerHTML = "코드형식을 확인해주세요! EX)\"${role}000008\""
 									submitBtn.disabled = true;
+									return false;
 								}
 							}
 							

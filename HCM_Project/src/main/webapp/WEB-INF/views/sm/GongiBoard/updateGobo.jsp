@@ -74,11 +74,11 @@
 					      	<input type="hidden" name="gobo_no" id="gobo_no" value="${dto.gobo_no}">
 					         <div class="form-group">
 					            <label for="title">제목</label>
-					            <input class="form-control" id="gobo_title"  name="gobo_title" value="${dto.gobo_title}">
+					            <textarea class="form-control" rows="1" id="gobo_title" name="gobo_title" required="required">${dto.gobo_title}</textarea>
 					         </div>
 					         <div class="form-group">
 					            <label for="id">내용</label>
-					            <textarea class="form-control" rows="5" id="smartEditor"name="gobo_content" required="required">${dto.gobo_content}</textarea>
+					            <textarea class="form-control" rows="5" id="editor" name="gobo_content" required="required">${dto.gobo_content}</textarea>
 					         </div>
 					         <div class="form-group">
 					            <label for="id">비고</label>
@@ -87,7 +87,7 @@
 					         <div>
 					         </div>
 					            <input type="button" class="btn btn-success" value="수정"  id="savebutton">
-					            <input type="reset" class="btn btn-danger" value="초기화" id="resetbutton">
+					            <input type="reset" class="btn btn-danger" value="글초기화" id="resetbutton">
 					            <input type="button" class="btn btn-info" value="이전화면" onclick="history.back(-1)">
 					      </form>
 					   </div>
@@ -100,12 +100,14 @@
                     </div>
                 </div>
             </div>
+            </div>
          
 <%@include file="/WEB-INF/views/menu/smSideMenu.jsp" %>   
 
-<script type="text/javascript" src="/smartEditor/js/service/HuskyEZCreator.js" charset="UTF-8"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="/js/sm/updateGobo.js"></script>  
+<script type="text/javascript" src="/ckeditor5/build/ckeditor.js"></script>
+<script type="text/javascript" src="/js/sm/updateGobo.js"></script>
+<script type="module" src="/ckeditor5/sample/script.js"></script>
+
 </body>
 
 </html>

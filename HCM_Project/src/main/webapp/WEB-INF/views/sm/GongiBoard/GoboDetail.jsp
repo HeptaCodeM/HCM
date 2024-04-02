@@ -188,7 +188,7 @@ function insertReply(gobo_no){
 		var form = $("#ReplyForm").serialize();
 		var additionalData = "gobo_no=" + gobo_no;
 		form += "&" + additionalData;
-		
+	
 		// jQuery를 사용하여 폼 필드의 값을 가져옵니다.
 		var rebo_writer = $("#ReplyForm #rebo_writer").val();
 		var rebo_content = $("#ReplyForm #rebo_content").val();
@@ -214,18 +214,18 @@ function insertReply(gobo_no){
    					    commentHtml +=('<div class="separator border-2 separator-dashed my-5 hrline"></div>');
    				        }                    
 					                        
-					    commentHtml += '<li>';
+					    commentHtml += '<li id="firstReply'+data.rebo_no+'">';
 					    commentHtml += '<div class="d-flex align-items-center no-border" style="border: none;">';
 					    commentHtml += '<img src="${sessionScope.userInfoVo.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">';
 					    commentHtml += '<div style="margin-left: 10px; position: relative; width: 100%;">';
-					    commentHtml += '<strong>'+rebo_writer+'</strong><br>';
-					    commentHtml += '<div>'+rebo_content+'</div>';
+					    commentHtml += '<strong id="rebo_writer'+data.rebo_no+'">'+rebo_writer+'</strong><br>';
+					    commentHtml += '<div id="replycontent'+data.rebo_no+'">'+rebo_content+'</div>';
 					    commentHtml += '<div>';
 					    commentHtml += '<small>'+formattedDate+'</small>';
 					    commentHtml += '<div style="position: absolute; top: 0; right: 0; float: right">';
 					    commentHtml += '<div style="position: relative;">';
-					    commentHtml += '<a role="button" title="더보기" class="comment_tool" href="#" id="comment_tool" onclick="toggleMenu(event,'+data.rebo_no+')">';
-					    commentHtml += '<img alt="더보기" src="https://cdn4.iconfinder.com/data/icons/liny/24/more-menu-vertical-line-64.png" style="height: 60px;">';
+					    commentHtml += '<a role="button" title="더보기" class="comment_tool" href="#" id="comment_tool'+data.rebo_no+'" onclick="toggleMenu(event,'+data.rebo_no+')">';
+					    commentHtml += '<img alt="더보기" src="https://cdn4.iconfinder.com/data/icons/liny/24/more-menu-vertical-line-64.png" style="height: 30px;">';
 					    commentHtml += '</a>';
 					    commentHtml += '</div>';
 					    commentHtml += '</div>';

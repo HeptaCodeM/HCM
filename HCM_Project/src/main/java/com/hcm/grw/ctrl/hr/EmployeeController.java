@@ -482,6 +482,7 @@ public class EmployeeController {
 	public @ResponseBody void employeeModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, 
 												@RequestParam Map<String, String> map, 
 												Authentication authentication,
+												HttpServletRequest req,
 												String empl_id) throws IOException {
 		log.info("{} 수정처리", Function.getMethodName());
 		
@@ -514,11 +515,22 @@ public class EmployeeController {
 			return;
 			//sb.append("alert('수정 시 오류가 발생하였습니다.'); history.back();");
 		}else {
-			Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/modifyAdmin.do?empl_id="+empl_id, "","","");
+			/* Session정보 Update */
+			EmployeeDto employeeDto = employeeService.getUserInfo(map.get("empl_id"));
+			HttpSession session = req.getSession();
+			//이미지 스트링 정보로 처리
+			employeeDto.setEmpl_picture_str(Function.blobImageToString(employeeDto.getEmpl_picture()));
+			//2진정보 초기화
+			employeeDto.setEmpl_picture(null);
+			session.setAttribute("userInfoVo", employeeDto);
+
+			
+			Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/empModify.do", "","","");
 			return;
 			//sb.append("alert('정상적으로 수정 되었습니다.');");
 			//sb.append("location.href='/hr/employee/list.do';");
 		}
+        
 	}
 	
 	

@@ -68,7 +68,7 @@
 		<!--begin::Aside-->
 		<div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center" style="background-image: url(/assets/media/misc/auth-bg.png)">
 			<!--begin::Content-->
-			<div class="d-flex flex-column flex-center p-6 p-lg-10 w-100">
+			<div class="d-flex flex-column flex-center p-6 p-lg-10 w-100" style="background-color: #344672;">
 				<!--begin::Image-->
 				<img class="d-none d-lg-block mx-auto w-300px w-lg-75 w-xl-500px mb-10" style="margin-top: 32.5px;" src="/image/logo-removebg-preview.png" alt="" />
 				<!--end::Image-->

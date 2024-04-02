@@ -56,6 +56,8 @@
 			<mvc:exclude-mapping path="/login/*"/>
 			<mvc:exclude-mapping path="/error/*"/>
 			<mvc:exclude-mapping path="/api/*"/>
+			<mvc:exclude-mapping path="/hcmWs.do"/>
+			<mvc:exclude-mapping path="/getAlarmList.do"/>
 			<mvc:exclude-mapping path="/"/>
 			<bean class="com.hcm.grw.interceptor.AuthCheckHandler"/>
 		</mvc:interceptor>
