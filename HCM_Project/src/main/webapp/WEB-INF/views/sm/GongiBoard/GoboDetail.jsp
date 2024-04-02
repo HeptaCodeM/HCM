@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
 
-<title>SM메인화면</title>
+<title>HCM GroupWare</title>
 <style type="text/css">
  /* 화면늘리는 버튼 숨기기 */
     textarea.comment_inbox_text {
