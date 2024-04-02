@@ -105,7 +105,7 @@
 								</c:choose>
 							</div>
 							<div class="card-footer">
-								<button class="btn btn-primary btnLg me-10" type="button" onclick="location.href='/hr/company/companyInfoCorrection.do'">수정</button>
+								<button class="btn btn-primary btnLg me-10" type="button" onclick="location.href='/hr/company/companyInfoCorrectionAdmin.do'">수정</button>
 								<button class="btn btn-primary btnLg me-10" type="button" data-bs-toggle="modal" data-bs-target="#showSealModal">회사직인조회</button>
 							</div>
 						</div>
@@ -145,7 +145,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">닫기</button>
                 <c:if test="${sealImg eq null}">
-		        	<button type="button" onclick="location.href='/hr/company/insertCompanySealForm.do'" class="btn btn-primary">입력하기</button>
+		        	<button type="button" onclick="location.href='/hr/company/companyInfoCorrectionAdmin.do'" class="btn btn-primary">입력하기</button>
                 </c:if>
             </div>
         </div>

@@ -77,7 +77,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		String enc_empl_pwd = passwordEncoder.encode(empl_pwd);
 		dto.setEmpl_pwd(enc_empl_pwd);
 
-		String subject = "[HCM]그룹웨어 사원 등록이 완료되었습니다.";
+		String subject = "[#{company_name}]그룹웨어 사원 등록이 완료되었습니다.";
 		String content = "임시비밀번호를 안내드립니다.<br />임시 비밀번호 : "+empl_pwd;
 		String toEmail = dto.getEmpl_email();
 		String fromEmail = "";

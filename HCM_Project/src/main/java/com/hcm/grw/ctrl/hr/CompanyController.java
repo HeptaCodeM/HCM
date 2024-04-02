@@ -17,6 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hcm.grw.comm.Function;
@@ -38,7 +40,7 @@ public class CompanyController {
 	private EmployeeDao employeeDao; 
 	
 	
-	@GetMapping(value = "/hr/company/companyInfo.do")
+	@GetMapping(value = "/hr/company/companyInfoAdmin.do")
 	public String companyInfo(Model model, Authentication authentication) {
 		log.info("{} 회사정보 화면 진입", Function.getMethodName());
 		String userId = authentication.getName();
@@ -60,21 +62,21 @@ public class CompanyController {
 		
 		model.addAttribute("sealImg",Base64Utils.encodeToString(sealImg));
 		model.addAttribute("companyDto", companyDto);
-		return "hr/company/companyInfo";
+		return "hr/company/companyInfoAdmin";
 	}
 	
-	@GetMapping(value = "/hr/company/companyInfoCorrection.do")
+	@GetMapping(value = "/hr/company/companyInfoCorrectionAdmin.do")
 	public String companyInfoCorrection(Model model) {
 		log.info("{} 회사정보 수정 화면진입", Function.getMethodName());
 		Map<String, Object> companyMap = new HashMap<String, Object>();
 		companyMap.put("comp_id", "ITCOM0A1");
 		CompanyDto companyDto = companyService.showCompanyInfo(companyMap);
 		model.addAttribute("companyDto", companyDto);
-		return "hr/company/companyInfoCorrection";
+		return "hr/company/companyInfoCorrectionAdmin";
 	}
 	
-	@PostMapping(value = "/hr/company/correctionCompanyInfo.do")
-	public String correctionCompanyInfo(HttpServletRequest request) {
+	@PostMapping(value = "/hr/company/correctionCompanyInfoAdmin.do")
+	public @ResponseBody void correctionCompanyInfo(HttpServletRequest request,@RequestParam("comp_seal") List<MultipartFile> file)throws IOException {
 		log.info("{} 회사정보 수정", Function.getMethodName());
 		String comp_name = request.getParameter("comp_name");
 		String comp_num = request.getParameter("comp_num");
@@ -103,16 +105,38 @@ public class CompanyController {
 		
 		System.out.println(companyDto);
 		
+        if(!file.stream().allMatch(MultipartFile::isEmpty)) {
+			for(MultipartFile f : file){
+		        log.info("f.isEmpty() : {}", f.isEmpty());
+		        log.info("f.getSize() : {}", f.getSize());
+		        log.info("f.getContentType() : {}", f.getContentType());
+		        companyDto.setComp_seal(f.getBytes());
+			}
+		}
+        else {
+//			Map<String, Object> sealChkMap = new HashMap<String, Object>();
+//			sealChkMap.put("comp_id", "ITCOM0A1");
+//			CompanyDto sealDto = companyService.showCompanySeal(sealChkMap);
+//			byte[] sealImg = sealDto.getComp_seal();
+//			companyDto.setComp_seal(sealImg);
+			companyDto.setComp_seal(null);
+		}
+		
 		int cnt = companyService.correctionCompanyInfo(companyDto);
+		
 		if(cnt == 1) {
-			return "redirect:/hr/company/companyInfo.do";
+			Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/company/companyInfoAdmin.do", "","","");
+			return;
+//			return "redirect:/hr/company/companyInfo.do";
 		}else {
-			return "redirect:/hr/company/companyInfo.do";
+			Function.alertHistoryBack("수정 시 오류가 발생하였습니다.", "", "");
+			return;
+//			return "redirect:/hr/company/companyInfo.do";
 		}
 		
 	}
 	
-	@GetMapping(value = "/hr/company/showCompanySeal.do")
+	@GetMapping(value = "/hr/company/showCompanySealAdmin.do")
 	public String showCompanySeal(Model model) {
 		log.info("{} 회사정보 직인 확인", Function.getMethodName());
 		Map<String, Object> sealMap = new HashMap<String, Object>();
@@ -122,25 +146,7 @@ public class CompanyController {
 		
 		System.out.println(Base64Utils.encodeToString(sealImg));
 		model.addAttribute("sealImg",Base64Utils.encodeToString(sealImg));
-		return "hr/company/showCompanySeal";
-	}
-	
-
-	
-	@PostMapping(value = "/hr/company/companySealUpload.do")
-	public String companySealUpload(HttpServletRequest request, List<MultipartFile> file)throws IOException {
-		log.info("{} 회사정보 직인 업로드", Function.getMethodName());
-		System.out.println("동작");
-		System.out.println(file.size());
-		System.out.println(file);
-		Map<String, Object> sealMap = new HashMap<String, Object>();
-		for(MultipartFile f : file) {
-			byte[] comp_seal = f.getBytes();
-			sealMap.put("comp_seal", comp_seal);
-			sealMap.put("comp_id", "ITCOM0A1");
-		}
-		companyService.insertCompanySeal(sealMap);
-		return "redirect:/hr/company/companyInfo.do";
+		return "hr/company/showCompanySealAdmin";
 	}
 	
 }

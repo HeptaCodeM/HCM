@@ -27,6 +27,9 @@
 						   COMP_MODIFY_ID = #{comp_modify_id},
 						   COMP_MODIFY_DT = CURRENT_DATE,
 						   COMP_EMAIL = #{comp_email}
+						   <if test="comp_seal != null and !comp_seal.equals('')">
+						   ,COMP_SEAL = #{comp_seal,jdbcType=BLOB}
+						   </if>
 			WHERE COMP_ID = #{comp_id}
 	</update>
 	

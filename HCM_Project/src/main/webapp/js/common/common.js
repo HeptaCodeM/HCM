@@ -1,6 +1,6 @@
 //Swal Alert
 function swalAlert(msg, movePage, className, btnName, focusid) {
-	console.log(msg, className, btnName);
+	//console.log(msg, className, btnName);
 	if(btnName == "" || className == "undefined"){
 		btnName = "확인";
 	}
@@ -128,7 +128,7 @@ function swalClose(msg, movePage, className, btnName) {
 //Swal Alert Confirm
 async function sweetAlertConfirm(msg, tFunc, fFunc){
 	var cFlag = await sc(msg);
-	console.log(cFlag);
+	//console.log(cFlag);
 	if(cFlag){
 		tFunc();
 	}else{

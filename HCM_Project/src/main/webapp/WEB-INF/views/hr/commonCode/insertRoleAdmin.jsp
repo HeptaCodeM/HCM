@@ -41,7 +41,7 @@
 								<h3 class="card-title text-gray-800 fw-bold">${thisRole}입력</h3>
 							</div>
 							<div class="separator separator-dashed my-3"></div>	
-							<form action="/hr/commonCode/insertRoleOne.do" method="post">
+							<form action="/hr/commonCode/insertRoleOneAdmin.do" method="post">
 								<div class="card-body pt-5">
 									${thisRole}명<input id="coco_name" name="coco_name" class="form-control form-control-solid" type="text" maxlength="6">
 										<span id="nameSpan" class="fs-6 text-muted">한글 6글자 이내로 입력해주세요!</span><br>
@@ -118,10 +118,12 @@
 						valueChk.append('role', role);
 						
 						if(coco_name == "" || coco_cd == ""){
+							document.getElementById("codeSpan").innerHTML = "직위명을 입력하세요";
+							document.getElementById("nameSpan").innerHTML = "직위코드를 입력하세요";
 							return false;
 						}
 						
-						fetch('/hr/commonCode/roleNameDuplicateChk.do',{
+						fetch('/hr/commonCode/roleNameDuplicateChkAdmin.do',{
 							method: "POST",
 							headers: {
 							    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -150,7 +152,7 @@
 									nameSpan.innerHTML = "사용가능합니다";
 									coco_cdInput.disabled = false;
 								}else{
-									nameSpan.innerHTML = "사용가능합니다"
+									nameSpan.innerHTML = "한글만 입력 가능합니다"
 									coco_cdInput.disabled = true;
 								}
 							}
