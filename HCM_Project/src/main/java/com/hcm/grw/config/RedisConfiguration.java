@@ -8,7 +8,6 @@ import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -31,7 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class RedisConfiguration implements BeanClassLoaderAware {
 
 	private ClassLoader loader;
-	private final RedisPassword REDIS_PASSWORD = RedisPassword.of("1004");
+//	private final RedisPassword REDIS_PASSWORD = RedisPassword.of("1004");
 	
 	@Override
 	public void setBeanClassLoader(ClassLoader classLoader) {
@@ -41,14 +40,14 @@ public class RedisConfiguration implements BeanClassLoaderAware {
 	@Bean
 	public RedisConnectionFactory connectionFactory() {
 		RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
-		configuration.setHostName("localhost");
+		configuration.setHostName("158.179.166.134");
 		configuration.setPort(6379);
 		configuration.setDatabase(0);
-		configuration.setPassword(REDIS_PASSWORD);
+//		configuration.setPassword(REDIS_PASSWORD);
 		return new LettuceConnectionFactory(configuration);
 	}
 	
-//	@Bean
+	@Bean
 	public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.registerModules(SecurityJackson2Modules.getModules(this.loader));

@@ -403,6 +403,8 @@ function insertDoc() {
 			console.log(data);
 			if (data == "성공") {
 				location.href = '/doc/docBox.do';
+			} else if (data == "중복된 날짜") {
+				swalAlert('이미 해당 날짜에 일정이 있습니다', '', '', '확인', '')
 			} else {
 				swalAlert('작성에 실패했습니다', '', '', '확인', '')
 			}

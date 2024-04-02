@@ -20,7 +20,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.hcm.grw.comm.Function;
+import com.hcm.grw.dto.RoomMessage;
 import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.model.service.RedisPublisher;
 import com.hcm.grw.model.service.RedisSubscriber;
 import com.hcm.grw.model.service.hr.EmployeeService;
 
@@ -35,6 +37,8 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 	@Autowired
 	@Qualifier("listenerContainer")
     private RedisMessageListenerContainer redisMessageListener;
+	@Autowired
+	private RedisPublisher redisPublisher;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, 
@@ -68,6 +72,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		// 공지사항 알림채널 참가 - OJS
 		ChannelTopic hcmNoticeRoom = new ChannelTopic("hcmNoticeRoom");
 		redisMessageListener.addMessageListener(new RedisSubscriber(), hcmNoticeRoom);
+		redisPublisher.publish(hcmNoticeRoom, RoomMessage.builder().roomId("hcmNoticeRoom").name("hcmNoticeRoom").message("입장~").build());
 		log.info("hcmNoticeRoom 참가 완료");
 
 		// 로그인 성공 시 메인화면 이동
