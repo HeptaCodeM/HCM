@@ -68,24 +68,26 @@ function valChk() {
     
     var regexPhoneNum = /^\d{3}-\d{4}-\d{4}$/;
     if(!regexPhoneNum.test(aftEmpl_phone)){
-    	swalAlert("\"010-1234-1234\"형식으로 입력하세요!","","","","");
+    	swalAlert("올바른 휴대폰 번호를 입력하세요.","","","","");
     	return false;
     }
     
     
+    if(aftEmpl_tel != ""){
+	    var regexTelNum = /^\d{3}$/;
+	    if(!regexTelNum.test(aftEmpl_tel)){
+	    	swalAlert("내선번호는 정수로만 입력하세요.","","","","");
+	    	return false;
+	    }
+	}
     
-    var regexTelNum = /^\d{3}$/;
-    if(!regexTelNum.test(aftEmpl_tel)){
-    	swalAlert("\"111\"형식으로 입력하세요!","","","","");
-    	return false;
-    }
-    
-    
-    var regexFaxNum = /^\d{2,3}-\d{3}-\d{4}$/;
-    if(!regexFaxNum.test(aftEmpl_fax)){
-    	swalAlert("\"(02)031-123-1234\"형식으로 입력하세요!","","","","");
-    	return false;
-    }
+    if(aftEmpl_fax != ""){
+	    var regexFaxNum = /^\d{2,3}-\d{3}-\d{4}$/;
+	    if(!regexFaxNum.test(aftEmpl_fax)){
+	    	swalAlert("올바른 팩스번호를 입력하세요.","","","","");
+	    	return false;
+	    }
+	}
     
 }
 var phoneNumChk = document.querySelector("#empl_phone");
