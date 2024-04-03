@@ -460,7 +460,7 @@ public class EmployeeController {
 		model.addAttribute("positionList", positionList);
 		model.addAttribute("lists", lists);
 		
-		return "/hr/employee/listAdmin";
+		return "hr/employee/listAdmin";
 	}	
 
 	@GetMapping("modifyAdmin.do")
