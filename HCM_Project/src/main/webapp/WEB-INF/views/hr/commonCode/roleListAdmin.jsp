@@ -61,7 +61,7 @@
 												<th>${thisRole}명</th>
 												<th>생성자ID</th>
 												<th>생성일자</th>
-												<th>삭제여부</th>
+												<th>비고</th>
 											</tr>
 										</thead>	
 										<tbody>
@@ -80,10 +80,10 @@
 													<td>
 														<c:choose>
 															<c:when test="${codeList.getCoco_delflag() eq 'Y'}">
-																삭제
+																미사용
 															</c:when>
 															<c:when test="${codeList.getCoco_delflag() eq 'N'}">
-																활성화
+																사용
 															</c:when>
 														</c:choose>
 													</td>

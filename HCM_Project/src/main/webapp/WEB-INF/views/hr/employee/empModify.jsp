@@ -89,15 +89,15 @@
 
 										<tr>
 											<th class="required">휴대폰</th>
-											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_phone" id="empl_phone" maxlength="15" value="${empInfo.empl_phone}" required="required"></td>
+											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_phone" id="empl_phone" maxlength="15" value="${empInfo.empl_phone}"></td>
 										</tr>
 										<tr>
 											<th>내선번호</th>
-											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_tel" maxlength="3" value="${empInfo.empl_tel}"></td>
+											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_tel" id="empl_tel" maxlength="3" value="${empInfo.empl_tel}"></td>
 										</tr>
 										<tr>
 											<th>팩스번호</th>
-											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_fax" maxlength="15" value="${empInfo.empl_fax}"></td>
+											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_fax" id="empl_fax" maxlength="15" value="${empInfo.empl_fax}"></td>
 										</tr>
 										<tr>
 											<th>입사년도</th>
@@ -135,9 +135,9 @@
 												        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 												    </span>
 												</button>
-												<button type="button" class="btn btn-success me-10" id="kt_button_1" onclick="location.href='/hr/employee/list.do';">
+												<button type="button" class="btn btn-success me-10" id="kt_button_1" onclick="location.href='/hr/employee/empModify.do';">
 												    <span class="indicator-label">
-												        리스트
+												        취소
 												    </span>
 												</button>
 											</td>

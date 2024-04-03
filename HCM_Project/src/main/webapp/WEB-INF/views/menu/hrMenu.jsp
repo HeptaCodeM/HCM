@@ -1,8 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%
-// 중분류 순서
+//중분류 순서
 String hrLeftMenu [] = {"조직관리", "증명서관리", "근태관리", "인사발령관리" , "휴가관리"};
+//중분류 메뉴주소
+String hrLeftMenuLinkNm [][] = {
+		{"employee", "commonCode", "company"}, 
+		{"certificate"}, 
+		{"commute"},
+		{"order"}, 
+		{"holiday"}
+};
+
 // 소분류 메뉴명
 String hrSubLeftMenu [][] = {
 		{"정보수정", "비밀번호변경", "간편로그인관리", "사원등록", 
@@ -27,10 +36,9 @@ String hrSubLinkLeftMenu [][] = {
 String uri = request.getRequestURI();
 String currentPageName = uri.substring(uri.lastIndexOf("/") + 1).replace(".jsp","");
 String currentRootName = uri.replace("/WEB-INF/views/hr/","");
-//currentRootName = currentRootName.substring(0, currentRootName.indexOf("/"));
+currentRootName = currentRootName.substring(0, currentRootName.indexOf("/"));
 
-Boolean menuFlag1 = false;
-Boolean menuFlag2 = false;
+Boolean openHrMenuFlag = false;
 %>
 	<!-- 대분류별 영역 시작 -->
 	<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
@@ -56,7 +64,7 @@ Boolean menuFlag2 = false;
 			<div class="menu-sub menu-sub-accordion">
 			<%for(int i=0;i<hrLeftMenu.length;i++){ %>
 				<!-- 중분류 1 시작 -->
-				<div  data-kt-menu-trigger="click" class="menu-item menu-accordion hover show">
+				<div  data-kt-menu-trigger="click" class="menu-item menu-accordionn">
 
 					<!-- 중분류1 메뉴링크 시작 -->
 					<span class="menu-link">
@@ -75,20 +83,20 @@ Boolean menuFlag2 = false;
 					<!-- 소분류 영역 시작 ========================================================-->
 					
 				<%
-				menuFlag2 = false;
+				openHrMenuFlag = false;
 				for(int j=0;j<hrSubLeftMenu[i].length;j++){ 
-					if(hrSubLinkLeftMenu[i][j].indexOf(currentPageName)>=0 || currentPageName.equals("hrMainTmp")){
-						menuFlag2 = true;
+					if(hrSubLinkLeftMenu[i][j].indexOf(currentPageName)>=0){
+						openHrMenuFlag = true;
 					}
 				}
 
-				if(menuFlag2 == true){
+				if(openHrMenuFlag == true){
 				%>
 					<div class="menu-sub menu-sub-accordion show" style="">
 				<%
 				}else{
 				%>
-					<div class="menu-sub menu-sub-accordion" style="display: block; overflow: hidden;">
+					<div class="menu-sub menu-sub-accordion" style="display: none; overflow: hidden;">
 				<%
 				}
 				%>

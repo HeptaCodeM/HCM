@@ -43,6 +43,13 @@ function registEmployee(){
 			return;
 		}
 	}
+
+	if(f.empl_fax.value.length>0){
+		if(!checkTel(f.empl_fax.value)){
+			swalAlert("올바른 팩스번호를 입력하세요.","","","","empl_fax");
+			return;
+		}
+	}
 	
 	if(f.empl_joindate.value < 10){
 		swalAlert("올바른 입사일자을 입력하세요.","","","","empl_birth");
