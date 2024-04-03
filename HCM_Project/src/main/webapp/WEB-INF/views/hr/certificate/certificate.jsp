@@ -75,7 +75,7 @@
 				</div>
 				<!-- 내용 끝 -->
 				
-				<!-- 내용 시작 -->
+				<%-- <!-- 내용 시작 -->
 				<div id="kt_app_content" class="app-content flex-column-fluid">
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
@@ -128,7 +128,7 @@
 						</div>
 					</div>
 				</div>
-				<!-- 내용 끝 -->				
+				<!-- 내용 끝 --> --%>				
 			</div>
 		</div>
 			

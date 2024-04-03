@@ -223,6 +223,26 @@
 				</div>
 				<!--end::Col-->
 				
+				<div class="col-xxl-6 mb-5 mb-xl-10">
+					<div class="card shadow-sm fixheightCard">
+					    <div class="card-header">
+					        <h3 class="card-title">뉴스검색</h3>
+					    </div>
+					    <div class="card-body">
+					    	<div class="bodyTop">
+					    		<input type="text" id="newsSearch" name="newsSearch" class="form-control form-control-solid newsInput" placeholder="검색어를 입력하세요">
+					    		<button type="button" id="newsSearchBtn" class="btn btn-primary btnLg">검색</button>
+					    	</div>
+
+					    	<div class="separator border-2 my-10"></div>
+
+					    	<div id="resultZone" class="resultZone">
+
+					    	</div>
+
+					    </div>
+					</div>
+				</div>
 				
 			</div>
 			
@@ -269,4 +289,5 @@ function init() {
 init();
 
 </script>
+<script type="text/javascript" src="/js/news.js"></script>
 </html>

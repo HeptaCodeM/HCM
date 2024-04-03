@@ -69,7 +69,7 @@
 						<!--begin::Heading-->
 						<div class="text-center mb-11">
 							<!--begin::Title-->
-							<h1 class="text-gray-900 fw-bolder mb-3">비밀번호 찾기</h1>
+							<h1 class="text-gray-900 fw-bolder mb-3">비밀번호 초기화</h1>
 							<!--end::Title-->
 						</div>
 						<!--begin::Heading-->
@@ -82,15 +82,15 @@
 						<!--begin::Input group=-->
 						<div class="fv-row mb-8">
 							<div>사번</div>
-							<input type="text" placeholder="사번 입력" name="empl_id" id="empl_id" autocomplete="off" class="form-control" value="20220101" />
+							<input type="text" placeholder="사번 입력" name="empl_id" id="empl_id" autocomplete="off" class="form-control"/>
 						</div>
 						<div class="fv-row mb-8">
 							<div>성명</div>
-							<input type="text" placeholder="성명 입력" name="empl_name" id="empl_name" autocomplete="off" class="form-control" value="신동준" />
+							<input type="text" placeholder="성명 입력" name="empl_name" id="empl_name" autocomplete="off" class="form-control"/>
 						</div>
 						<div class="fv-row mb-8">
 							<div>이메일</div>
-							<input type="text" placeholder="이메일 입력" name="empl_email" id="empl_email" autocomplete="off" class="form-control" value="jjang2121@gmail.com" />
+							<input type="text" placeholder="이메일 입력" name="empl_email" id="empl_email" autocomplete="off" class="form-control"/>
 						</div>
 						<!--end::Input group=-->
 
