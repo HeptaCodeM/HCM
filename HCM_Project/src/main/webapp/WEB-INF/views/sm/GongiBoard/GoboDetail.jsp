@@ -60,7 +60,7 @@
 					<h1
 						class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">${dto.gobo_title}</h1>
 				</div>
-				
+				<c:if test="${sessionScope.userInfoVo.empl_auth == 'ROLE_SM_ADMIN' || sessionScope.userInfoVo.empl_auth == 'ROLE_SYS_ADMIN'}">
 				<div>
 					<button type="button" class="btn btn-primary"
 						onclick="location.href='/sm/updateGoboMove.do?gobo_no=${dto.gobo_no}'"
@@ -69,6 +69,7 @@
 						onclick="updateGoboDelFlag(${dto.gobo_no})"
 						style="margin-right: 20px">삭제</button>
 				</div>
+				</c:if>
 			</div>
 		</div>
 

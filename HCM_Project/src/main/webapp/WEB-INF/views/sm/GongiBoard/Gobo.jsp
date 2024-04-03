@@ -31,9 +31,11 @@
                 <!-- end::Title -->
 
                 <!-- 버튼을 우측 끝으로 정렬 -->
+                	<c:if test="${sessionScope.userInfoVo.empl_auth == 'ROLE_SM_ADMIN' || sessionScope.userInfoVo.empl_auth == 'ROLE_SYS_ADMIN'}">
                 <div class="col-auto">
                     <button class="btn btn-success" onclick="location.href='/sm/insertGoboForm.do'">글작성</button>
                 </div>
+                	</c:if>
             </div>
         </div>
     </div>
@@ -55,12 +57,12 @@
                             <tbody>
                             <c:forEach var="vo" items="${lists}" varStatus="vs">
                                 <c:if test="${vo.gobo_delflag == 'N'}">
-                                    <tr>
+                                    <tr onclick="location.href='/sm/getDetailGobo.do?gobo_no=${vo.gobo_no}';" style="cursor: pointer;">
                                         <td><strong class="board-tag-txt">
 											<span class="inner">공지</span>
 											</strong></td>
-                                        <td><a href="/sm/getDetailGobo.do?gobo_no=${vo.gobo_no}"><div>${vo.gobo_title}</div></a></td>
-                                        <td><fmt:formatDate value="${vo.gobo_regdate}" pattern="yyyy-MM-dd"/></td>
+                                        <td><div>${vo.gobo_title}</div></td>
+                                        <td><fmt:formatDate value="${vo.gobo_regdate}" pattern="yyyy-MM-dd hh:mm"/></td>
                                         <td>${vo.gobo_view}</td>
                                     </tr>
                                 </c:if>
