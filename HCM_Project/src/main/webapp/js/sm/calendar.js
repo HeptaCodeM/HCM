@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         eventSources: [
             {
                 // 구글 캘린더에서 가져올 이벤트의 ID 특일정보 아이디
-                googleCalendarId: "ko.south_korea#holiday@group.v.calendar.google.com"
+                googleCalendarId: "ko.south_korea.official#holiday@group.v.calendar.google.com"
                 // 클릭 이벤트를 제거하기 위해 넣은 클래스
                 , className: "koHol"
                 //이벤트의 색
@@ -132,8 +132,21 @@ function listAjax(daygridmonth) {
         success: function(data) {
 		// 받아온 데이터를 FullCalendar의 이벤트 형식으로 가공합니다.
             var events = data.map(function(item) {
-                return {
-                    title: item.title, // 이벤트 제목
+				  var title;
+				    // scbo_cgory_no가 TC000001인 경우 title을 "연차"로 설정
+				    if (item.scbo_cgory_no === "TC000001") {
+				        title = "연차";
+				    }
+				    // scbo_cgory_no가 TC000002인 경우 title을 "휴가"로 설정
+				    else if (item.scbo_cgory_no === "TC000002") {
+				        title = "휴가";
+				    }
+				    // 그 외의 경우에는 title을 그대로 사용
+				    else {
+				        title = item.title;
+				    }
+				    return {
+                    title: title, // 이벤트 제목
                     start: item.start, // 이벤트 시작일
                     end: item.end,     // 이벤트 종료일
                     scbo_no: item.scbo_no,
@@ -168,21 +181,25 @@ function detail(scbo_no){
             $("#scbo_content1").show();
             $("#deleteButton").show();
             $("#updateButton").show();
+            $("#favo").hide();
 			}else if(data.scbo_cgory_no == 200){
 				$("#scbo_cgory_no_update").val("200");
 				 $("#scbo_content1").show();
 				$("#deleteButton").show();
             	$("#updateButton").show();
+            	$("#favo").hide();
 			}else if(data.scbo_cgory_no == "TC000002"){
 				$("#scbo_cgory_no_update").val("TC000002");
 				 $("#scbo_content1").hide();
 				$("#deleteButton").hide();
          	   $("#updateButton").hide();
+         	   $("#schtitle").hide();
 			}else if(data.scbo_cgory_no == "TC000001"){
 				$("#scbo_cgory_no_update").val("TC000001");
 				 $("#scbo_content1").hide();
 				$("#deleteButton").hide();
             	$("#updateButton").hide();
+            	$("#schtitle").hide();
 			}
 			var start = new Date(data.scbo_start);
 			var end = new Date(data.scbo_end);
@@ -190,7 +207,7 @@ function detail(scbo_no){
 			var formatend = end.getFullYear() + '/' + (end.getMonth() + 1).toString().padStart(2, '0') + '/' + end.getDate().toString().padStart(2, '0') + ' ' + end.getHours().toString().padStart(2, '0') + ':' + end.getMinutes().toString().padStart(2, '0');
             $("#scbo_no1").val(data.scbo_no);
             $("#scbo_title1").val(data.scbo_title);
-            $("#scbo_title1").val(data.scbo_title);
+            $("#scbo_writer").val(data.scbo_writer);
             $("#scbo_content1").val(data.scbo_content);
             $("#scbo_start1").val(formatstart);
             $("#scbo_end1").val(formatend);
@@ -338,7 +355,6 @@ function updateCalendar(){
 					success: function(msg) {
 						console.log(msg);
 						if (msg != true) {
-							alert("insert 실패!!")
 							return false;
 						} else {
 							$("#form")[0].reset(); // 폼 초기화
@@ -347,7 +363,6 @@ function updateCalendar(){
 						}
 					},
 					error: function() {
-						alert("jdbc로 넘기지도 못함");
 					}
 				});
 			}
@@ -368,7 +383,6 @@ function deleteCalendar(){
 					$("#detailModal").modal("hide");
 			},
 			error: function() {
-				alert("jdbc로 넘기지도 못함");
 			}
 		});
 		},'')

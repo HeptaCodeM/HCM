@@ -195,8 +195,14 @@
                          <option value="TC000002">휴가</option>
                          <option value="TC000001">연차</option>
                        </select>
+                       <div id="schtitle">
                      <label for="title" class="col-form-label">일정 제목</label>
                      <input type="text" class="form-control" id="scbo_title1" name="scbo_title">
+                     </div>
+                       <div id="favo">
+                     <label for="title" class="col-form-label">기안자</label>
+                     <input type="text" class="form-control" id="scbo_writer" name="scbo_writer">
+                     </div>
                      </div>
                        <label for="content" class="col-form-label">일정 내용</label>
                        <textarea class="form-control" rows="5" id="scbo_content1" name="scbo_content"></textarea>

@@ -75,10 +75,11 @@ document.getElementById("rebo_content").addEventListener("#rebo_content", checkI
 
 
 function updateGoboDelFlag(gobo_no){
-	var result = confirm("글을 삭제 하시겠습니까?");
-	if(result){
+	sweetAlertConfirm("글을 삭제 하시겠습니까?",function(){
+	
 		location.href="/sm/updateGoboDelFlag.do?gobo_no="+gobo_no;
-	}
+	
+	},'')
 }
 
 
