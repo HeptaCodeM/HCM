@@ -107,7 +107,6 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 		return;
 	}
 
-
 	// -----------------------------------> [ 모달창 ] 로그인 정보를 포함한 에디터 화면으로 변경
 	// 화면 전환 (템플릿 선택 -> 템플릿 작성)
 	$("#template_div").hide();
@@ -182,9 +181,14 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 		div.append(span3);
 		
 		document.getElementById('editor_div').prepend(div);		
+			
 	}
 
 })
+
+	var restHoli = document.getElementById('restHoli').value;
+	console.log('restHoli: ',restHoli);
+	
 
 // -----------------------------------> [ 작성화면 ] 현재 작성일 설정   
 var currentDate = new Date();
@@ -330,7 +334,7 @@ function insertDoc() {
 		}
 	}
 	
-	// -----------------------------------> [ 작성화면 ] 
+	// -----------------------------------> [ 작성화면 ] 유효성 검사
 	var file = document.getElementById('sidf_file_content').files[0]; 
 	var formData = new FormData();
 
@@ -348,7 +352,6 @@ function insertDoc() {
 		sidb_doc_end = '2024-01-01';
 	}
 
-	// -----------------------------------> 유효성검사
 	if (sidb_doc_title.length == 0) {
 		swalAlert('제목을 입력해주세요', '', '', '확인');
 		return;
@@ -438,6 +441,7 @@ document.getElementById('selectSign').addEventListener('click', function() {
 	open('/doc/writeDoc/selectSign.do', '', 'width=1200px height=720px left=400');
 });
 
+// 전역변수 설정
 var ref;
 var dept;
 var json;
