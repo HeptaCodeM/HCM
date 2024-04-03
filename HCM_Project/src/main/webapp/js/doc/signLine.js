@@ -71,7 +71,7 @@ $('#schName').focus();
 			return node.id == empl_id;
 		})
 		$('#jstree').jstree('hide_node', sel);
-	}, 1000)
+	}, 2000)
 	
 	
 	// 결재자 리스트를 json형태로 저장 (즐겨찾기 라인추가)
@@ -240,8 +240,12 @@ document.getElementById('initial').addEventListener('click', function() {
 	for (s of span) {
 		s.textContent = '';
 	}
-		
+	var allNode = $('#jstree').jstree('get_json', '#', { flat: true });
+	allNode.forEach(function(node) {
+		$('#jstree').jstree('show_node', node);
 	});
+		
+});
 	
 	// 즐겨찾기 삭제
 	document.getElementById('delBtn').addEventListener('click', function() {

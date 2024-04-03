@@ -54,7 +54,7 @@ public class CertificateController {
 		System.out.println(docDownloadList);
 		model.addAttribute("docList" ,docList);
 		model.addAttribute("docDownloadList" ,docDownloadList);
-		return "hr/certificate/certificateMain";
+		return "hr/certificate/certificate";
 	}
 	
 	

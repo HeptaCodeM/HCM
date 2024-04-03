@@ -1,6 +1,7 @@
 package com.hcm.grw.model.mapper.doc;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +66,17 @@ public class SIgnBoxDaoImpl implements ISignBoxDao {
 	public SignFileDto getDetailFile(String sidf_file_num) {
 		log.info("SignBoxDaoImpl getDetailFile DAO Access");
 		return template.selectOne(NS + "getDetailFile", sidf_file_num);
+	}
+	
+	@Override
+	public List<SignBoxDto> selectNumber(String empl_id) {
+		log.info("SignBoxDaoImpl selectNumber DAO Access");
+		return template.selectList(NS + "selectNumber", empl_id);
+	}
+	
+	@Override
+	public String duplicateDate(Map<String, Object> map) {
+		log.info("SignBoxDaoImpl duplicateDate DAO Access");
+		return template.selectOne(NS + "duplicateDate", map);
 	}
 }

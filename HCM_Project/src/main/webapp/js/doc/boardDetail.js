@@ -16,6 +16,12 @@ function approve() {
 	})
 	var num = document.getElementById('docNum').value;
 	var reply = document.getElementById('approvalReply').value;
+	
+	if (!sign) {
+        swalAlert('서명을 선택해주세요', '', '', '확인');
+        return; 
+    }
+	
 	var dto = {
 		sidb_doc_num : num,
 		appr_reply : reply,

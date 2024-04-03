@@ -325,17 +325,17 @@ function insertDoc() {
 	}
 	
 	// -----------------------------------> [ 작성화면 ] 휴가/연차 날짜 유효성 검사
-	if (sidt_temp_cd == 'TC000001' || sidt_temp_cd == 'TC000002') {
-		
-		var rest = document.getElementById('restHoli').value
-		var calEndDate = new Date(sidb_doc_end);
-		var calBeDate = new Date(sidb_doc_be);
-		var calResult = (calEndDate - calBeDate) / 1000 / 60 / 60 / 24;
-		if(calResult > rest) {
-			swalAlert('휴가 신청 기간이 잔여 휴가일보다 많습니다','','','확인');
-			return;
-		}
-	}
+//	if (sidt_temp_cd == 'TC000001' || sidt_temp_cd == 'TC000002') {
+//		
+//		var rest = document.getElementById('restHoli').value
+//		var calEndDate = new Date(sidb_doc_end);
+//		var calBeDate = new Date(sidb_doc_be);
+//		var calResult = (calEndDate - calBeDate) / 1000 / 60 / 60 / 24;
+//		if(calResult > rest) {
+//			swalAlert('휴가 신청 기간이 잔여 휴가일보다 많습니다','','','확인');
+//			return;
+//		}
+//	}
 	
 	// -----------------------------------> [ 작성화면 ] 유효성 검사
 	var file = document.getElementById('sidf_file_content').files[0]; 
@@ -416,6 +416,8 @@ function insertDoc() {
 			console.log(data);
 			if (data == "성공") {
 				location.href = '/doc/docBox.do';
+			} else if (data == "중복된 날짜") {
+				swalAlert('이미 해당 날짜에 일정이 있습니다', '', '', '확인', '')
 			} else {
 				swalAlert('작성에 실패했습니다', '', '', '확인', '')
 			}

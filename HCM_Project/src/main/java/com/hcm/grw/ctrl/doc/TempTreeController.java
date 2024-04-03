@@ -1,11 +1,11 @@
 package com.hcm.grw.ctrl.doc;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,8 +26,6 @@ import com.hcm.grw.dto.doc.SignFileDto;
 import com.hcm.grw.dto.doc.SignTempBoxDto;
 import com.hcm.grw.dto.doc.TempTreeDto;
 import com.hcm.grw.dto.doc.TemplateDto;
-import com.hcm.grw.model.mapper.doc.IDocBoxDao;
-import com.hcm.grw.model.service.doc.IDocBoxService;
 import com.hcm.grw.model.service.doc.ISignBoxService;
 import com.hcm.grw.model.service.doc.ITempTreeService;
 import com.hcm.grw.model.service.doc.ITemplateService;
@@ -45,8 +43,6 @@ public class TempTreeController {
 	private ITemplateService tService;
 	@Autowired
 	private ISignBoxService bService;
-	@Autowired
-	private IDocBoxService dService;
 	
 	@GetMapping("getTempTree.do")
 	public ResponseEntity<?> tempTree(){
@@ -70,6 +66,19 @@ public class TempTreeController {
 									   @RequestPart("dto") SignBoxDto dto) throws IOException {
 		log.info("TempTreeController insertTempDoc.do POST 기안문 작성");
 		log.info("{}\n {}", file, dto);
+		
+		if(dto.getSidt_temp_cd().equalsIgnoreCase("TC000001") || dto.getSidt_temp_cd().equalsIgnoreCase("TC000002")
+				|| dto.getSidt_temp_cd().equalsIgnoreCase("TC000006")) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("empl_id", dto.getEmpl_id());
+			map.put("sidb_doc_be", dto.getSidb_doc_be());
+			map.put("sidb_doc_end", dto.getSidb_doc_end());
+			String cnt = bService.duplicateDate(map);
+			if (!cnt.equalsIgnoreCase("0")) {
+				return ResponseEntity.ok("중복된 날짜");
+			}
+		}
+		
 		if(file != null) {
 			SignFileDto fileDto = new SignFileDto();
 			fileDto.setSidf_file_origin(file.getOriginalFilename());
@@ -97,6 +106,19 @@ public class TempTreeController {
 									   @RequestPart("sitb_doc_num") Map<String, String> sitb_doc_num) throws IOException {
 		log.info("TempTreeController tempLoadInsertDoc.do POST 임시보관함 불러와서 기안문 작성");
 		log.info("{}\n {}\n {}", file, dto, sitb_doc_num);
+		
+		if(dto.getSidt_temp_cd().equalsIgnoreCase("TC000001") || dto.getSidt_temp_cd().equalsIgnoreCase("TC000002")
+				|| dto.getSidt_temp_cd().equalsIgnoreCase("TC000006")) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("empl_id", dto.getEmpl_id());
+			map.put("sidb_doc_be", dto.getSidb_doc_be());
+			map.put("sidb_doc_end", dto.getSidb_doc_end());
+			String cnt = bService.duplicateDate(map);
+			if (!cnt.equalsIgnoreCase("0")) {
+				return ResponseEntity.ok("중복된 날짜");
+			}
+		}
+		
 		if(file != null) {
 			SignFileDto fileDto = new SignFileDto();
 			fileDto.setSidf_file_origin(file.getOriginalFilename());

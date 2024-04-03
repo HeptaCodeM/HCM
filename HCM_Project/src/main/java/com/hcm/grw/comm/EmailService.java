@@ -38,23 +38,39 @@ public class EmailService {
 	*/
 	public Boolean sendMail(String subject, String content, String toEmail, String fromEmail, boolean htmlFlag) {
 		try {
+			Map<String, Object> companyMap = new HashMap<String, Object>();
+			companyMap.put("comp_id", "ITCOM0A1");
+			CompanyDto comDto = companyDao.showCompanyInfo(companyMap);
+
 			if(fromEmail == "" || fromEmail == null) {
-				Map<String, Object> companyMap = new HashMap<String, Object>();
-				companyMap.put("comp_id", "ITCOM0A1");
 				
-				CompanyDto comDto = companyDao.showCompanyInfo(companyMap);
 				fromEmail = comDto.getComp_email();
 				log.info("companyMap : {}", companyMap);
 				System.out.println("companyMap : {}"+ companyMap);
 			}
 			
-			log.info("subject : {}, content : {}, toEmail : {}, fromEmail : {}", subject, content, toEmail, fromEmail);
+			String companyNm = comDto.getComp_name();
+			String companyNum = comDto.getComp_num();
+			String companyCeoNm = comDto.getComp_ceo_name();
+			String companyTel = comDto.getComp_tel();
+			String companyAddr = comDto.getComp_addr1() +" "+comDto.getComp_addr2();
+			
 			
 			log.info(Function.getHtmlTemplate("mailForm"));
 			if(htmlFlag) {
 				content = Function.getHtmlTemplate("mailForm").replace("#{content}", content);
 			}
+
+			subject = subject.replace("#{company_name}", companyNm);
+
+			content = content.replace("#{company_name}", companyNm);
+			content = content.replace("#{company_num}", companyNum);
+			content = content.replace("#{company_ceo_name}", companyCeoNm);
+			content = content.replace("#{company_tel}", companyTel);
+			content = content.replace("#{company_address}", companyAddr);
 			
+			log.info("subject : {}, content : {}, toEmail : {}, fromEmail : {}", subject, content, toEmail, fromEmail);
+
 			MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
             messageHelper.setSubject(subject);	// 메일제목은 생략이 가능하다			

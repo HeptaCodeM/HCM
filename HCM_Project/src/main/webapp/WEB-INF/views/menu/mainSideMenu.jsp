@@ -9,7 +9,7 @@
 						<!--begin::Logo-->
 						<div class="app-sidebar-logo px-6" style="justify-content: center;" id="kt_app_sidebar_logo">
 							<!--begin::Logo image-->
-							<a href="/mainTmp.do">
+							<a href="/">
 								<img alt="HCM" src="/image/logo-removebg-preview.png" style="width: 190px;">
 							</a>
 							<!--end::Logo image-->

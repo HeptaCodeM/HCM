@@ -6,13 +6,13 @@ String smLeftMenu [] = {"캘린더","공지사항"};
 String smLeftMenuLink [] = {"/sm/calendar.do", "/sm/getAllGobo.do"};
 
 String smUri = request.getRequestURI();
-String currentsmPageName = smUri.substring(smUri.lastIndexOf("/") + 1).replace(".jsp","");
-Boolean opensmMenuFlag = false;
+String currentSmPageName = smUri.substring(smUri.lastIndexOf("/") + 1).replace(".jsp","");
+Boolean openSmMenuFlag = false;
 %>
 	<!-- 대분류별 영역 시작 -->
 	<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 		
-		<div data-kt-menu-trigger="click" class="menu-item pt-5 menu-item menu-accordion">
+		<div data-kt-menu-trigger="click" class="menu-item pt-5 menu-item menu-accordion hover show">
 
 			<!-- 대분류 타이틀 영역 시작 ------------------------------------------------------------------------->
 			<span class="menu-link">
@@ -30,7 +30,7 @@ Boolean opensmMenuFlag = false;
 
 
 			<!-- 중분류 영역 시작 ********************************************************************************-->
-			<div class="menu-sub menu-sub-accordion  show" style="display: none; overflow: hidden;">
+			<div class="menu-sub menu-sub-accordion  show">
 			<%for(int i=0;i<smLeftMenu.length;i++){ %>
 				<!-- 중분류 1 시작 -->
 				<div class="menu-item menu-accordion">

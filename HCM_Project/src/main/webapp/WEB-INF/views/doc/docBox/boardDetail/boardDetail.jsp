@@ -178,9 +178,9 @@ padding-left:15%;
 							<div id="pdfZone">
 								<div class="flex">
 								<div style="max-width:53%;">
-									<table class="top-table">
+									<table class="top-table" style="border-collapse: collapse;">
 										<tr>
-											<th rowspan="4" style="width:30px">결<br>재
+											<th rowspan="4" style="width:30px;  border: none;">결<br>재
 											</th>
 										<tr style="height:30px;">
 										    <td style="min-width:95px;"> ${docDto1.empl_name} ${docDto1.empl_rank}</td>

@@ -1,6 +1,7 @@
 package com.hcm.grw.model.service.doc;
 
 import java.util.List;
+import java.util.Map;
 
 import com.hcm.grw.dto.doc.SignBoxDto;
 import com.hcm.grw.dto.doc.SignFileDto;
@@ -29,5 +30,9 @@ public interface ISignBoxService {
 	public int insertTempTransaction(SignBoxDto bDto, SignFileDto fDto, String sitb_doc_num);
 	
 	public int insertTempNoFileTransaction(SignBoxDto bDto, String sitb_doc_num);
+	
+	public List<SignBoxDto> selectNumber(String empl_id);
+	
+	public String duplicateDate(Map<String, Object> map);
 	
 }
