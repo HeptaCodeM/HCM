@@ -93,11 +93,11 @@
 										</tr>
 										<tr>
 											<th>내선번호</th>
-											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_tel" maxlength="3" value="${empInfo.empl_tel}"></td>
+											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_tel" id="empl_tel" maxlength="3" value="${empInfo.empl_tel}"></td>
 										</tr>
 										<tr>
 											<th>팩스번호</th>
-											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_fax" maxlength="15" value="${empInfo.empl_fax}"></td>
+											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_fax" id="empl_fax" maxlength="15" value="${empInfo.empl_fax}"></td>
 										</tr>
 										<tr>
 											<th>입사년도</th>
