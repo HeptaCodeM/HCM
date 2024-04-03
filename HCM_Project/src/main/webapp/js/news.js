@@ -31,7 +31,7 @@ function searchNews(){
 //			console.log(Obj.items[i].description);
 //			console.log(Obj.items[i].pubDate);
 //			console.log(Obj.items[i].link);
-			var emptyTr = "<input type='hidden' value='"+Obj.items[i].link+"' name='thisPage'><tr style='cursor: pointer;' onclick='moveNewsPage("+i+")'><td>"+Obj.items[i].title+"</td><td>"+Obj.items[i].description+"</td><td class='tdWidth'>"+replaceDate(Obj.items[i].pubDate)+"</td></tr>";
+			var emptyTr = "<input type='hidden' value='"+Obj.items[i].link+"' name='thisPage'><tr style='cursor: pointer;' onclick='moveNewsPage("+i+")'><td colspan='2'>"+Obj.items[i].title+"</td><td rowspan='2'>"+replaceDate(Obj.items[i].pubDate)+"</td></tr><tr><td colspan='2'>"+Obj.items[i].description+"</td></tr>";
 			newsResult += emptyTr;
 		}
 		
@@ -59,13 +59,13 @@ function replaceDate(arr){
 	
 	var week = "";
 	switch((repArr[0]).split(",")[0]){
-		case 'Mon': week="월요일"; break;
-		case 'Tue': week="화요일"; break;
-		case 'Wed': week="수요일"; break;
-		case 'Thu': week="목요일"; break;
-		case 'Fri': week="금요일"; break;
-		case 'Sat': week="토요일"; break;
-		case 'Sun': week="일요일"; break;
+		case 'Mon': week="(월)"; break;
+		case 'Tue': week="(화)"; break;
+		case 'Wed': week="(수)"; break;
+		case 'Thu': week="(목)"; break;
+		case 'Fri': week="(금)"; break;
+		case 'Sat': week="(토)"; break;
+		case 'Sun': week="(일)"; break;
 	}
 //	console.log(week);
 	

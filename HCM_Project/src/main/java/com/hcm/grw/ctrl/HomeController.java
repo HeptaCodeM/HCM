@@ -297,7 +297,7 @@ public class HomeController {
         }
 
 
-        String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + text + "&display=5&start=1&sort=sim";    // JSON 결과
+        String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + text + "&display=4&start=1&sort=sim";    // JSON 결과
 
 
         Map<String, String> requestHeaders = new HashMap<>();

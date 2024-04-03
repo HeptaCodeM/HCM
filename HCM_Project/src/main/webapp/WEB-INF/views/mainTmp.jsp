@@ -250,14 +250,7 @@
 					    	</div>
 					    	<br><br><br>
 					    	<div class="table-responsive resultZone">
-								<table class="table table-hover gs-7 gy-7 gx-7">
-									<thead class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
-										<tr style="text-align: center;">
-											<td>제목</td>
-											<td>내용</td>
-											<td>발행일</td>
-										</tr>
-									</thead>
+								<table class="table table-hover gs-5 gy-5 gx-5">
 									<tbody id="resultZone">
 									</tbody>
 								</table>
