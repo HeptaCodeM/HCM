@@ -80,11 +80,12 @@
                     <div class="card card-flush h-md-50 mb-xl-10">
                         <div class="card-body pt-5">
                             <!-- 공지사항 상세 내용 표시 -->
-                            <p>작성자: ${dto.gobo_writer}</p>
-                            <p>작성일: <fmt:formatDate value="${dto.gobo_regdate}" pattern="yyyy-MM-dd HH:mm"/></p>
+                            <div style="display: flex; justify-content: space-between;"><p><strong>작성자: 관리자</strong></p><p>조회수:${dto.gobo_view }</p></div>
+                            <p><fmt:formatDate value="${dto.gobo_regdate}" pattern="yyyy-MM-dd HH:mm"/></p>
+                            <hr style="margin-bottom: 100px;">
                             <p  style="font-size: 20px;">${dto.gobo_content}</p>
                             <!-- 댓글 표시 -->  
-                            <h3>댓글</h3>
+                            <h3 style="margin-top: 100px">댓글</h3>
                           <ul class="list-group" id="commentList">
                       <c:forEach var="comment" items="${list}" varStatus="index">
                           <li id="firstReply${comment.rebo_no}">
@@ -209,7 +210,7 @@ function insertReply(gobo_no){
 					                        ('0' + currentDate.getHours()).slice(-2) + ':' + 
 					                        ('0' + currentDate.getMinutes()).slice(-2);
 
-
+					   
 					   	var	commentHtml = '';
                        if ($("#commentList li").length > 0) {
    					    commentHtml +=('<div class="separator border-2 separator-dashed my-5 hrline"></div>');
