@@ -42,19 +42,19 @@
 											</tr>
 											<tr>
 												<th class="required">성명</th>
-												<td><input type="text" class="form-control form-control-solid" name="empl_name" id="empl_name" maxlength="20"  readonly required="required"></td>
+												<td><input type="text" class="form-control form-control-solid" name="empl_name" id="empl_name" maxlength="20"  readonly></td>
 											</tr>
 											<tr>
 												<th class="required">부서</th>
-												<td><input type="text" class="form-control form-control-solid" name="empl_dept_nm" id="empl_dept_nm" maxlength="20"  readonly required="required"></td>
+												<td><input type="text" class="form-control form-control-solid" name="empl_dept_nm" id="empl_dept_nm" maxlength="20"  readonly></td>
 											</tr>
 											<tr>
 												<th class="required">직위</th>
-												<td><input type="text" class="form-control form-control-solid" name="empl_rank_nm" id="empl_rank_nm" maxlength="20"  readonly required="required"></td>
+												<td><input type="text" class="form-control form-control-solid" name="empl_rank_nm" id="empl_rank_nm" maxlength="20"  readonly></td>
 											</tr>
 											<tr>
 												<th class="required">직책</th>
-												<td><input type="text" class="form-control form-control-solid" name="empl_position_nm" id="empl_position_nm" maxlength="20"  readonly required="required"></td>
+												<td><input type="text" class="form-control form-control-solid" name="empl_position_nm" id="empl_position_nm" maxlength="20"  readonly></td>
 											</tr>
 											<tr>
 												<th class="required">권한</th>

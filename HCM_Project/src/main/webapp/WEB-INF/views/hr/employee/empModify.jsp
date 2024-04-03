@@ -89,7 +89,7 @@
 
 										<tr>
 											<th class="required">휴대폰</th>
-											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_phone" id="empl_phone" maxlength="15" value="${empInfo.empl_phone}" required="required"></td>
+											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_phone" id="empl_phone" maxlength="15" value="${empInfo.empl_phone}"></td>
 										</tr>
 										<tr>
 											<th>내선번호</th>

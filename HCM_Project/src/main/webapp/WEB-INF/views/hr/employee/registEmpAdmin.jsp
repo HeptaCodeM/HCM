@@ -89,7 +89,7 @@
 										<table class="table table-bordered">
 											<tr>
 												<th class="required">성명</th>
-												<td><input type="text" class="form-control form-control-solid" name="empl_name" id="empl_name" maxlength="20" required="required"></td>
+												<td><input type="text" class="form-control form-control-solid" name="empl_name" id="empl_name" maxlength="20"></td>
 											</tr>
 											<tr>
 												<th class="required">생년월일</th>
@@ -111,11 +111,11 @@
 											</tr>
 											<tr>
 												<th class="required">이메일</th>
-												<td><input type="text" class="form-control form-control-solid" name="empl_email" id="empl_email" maxlength="50" required="required"></td>
+												<td><input type="text" class="form-control form-control-solid" name="empl_email" id="empl_email" maxlength="50"></td>
 											</tr>
 											<tr>
 												<th class="required">휴대폰</th>
-												<td><input type="text" class="form-control form-control-solid" name="empl_phone" id="empl_phone" maxlength="15" required="required"></td>
+												<td><input type="text" class="form-control form-control-solid" name="empl_phone" id="empl_phone" maxlength="15"></td>
 											</tr>
 											<tr>
 												<th>내선번호</th>
@@ -139,21 +139,21 @@
 											<!-- 
 											<tr>
 												<th>우편번호</th>
-												<td><input type="text" name="zipcode" id="zipcode" readonly required="required"> <button type="button" class="btn btn-info" onclick="searchAddr()">주소찾기</button></td>
+												<td><input type="text" name="zipcode" id="zipcode" readonly> <button type="button" class="btn btn-info" onclick="searchAddr()">주소찾기</button></td>
 											</tr>
 											<tr>
 												<th>주소</th>
-												<td><input type="text" name="addr1" id="addr1" readonly required="required"></td>
+												<td><input type="text" name="addr1" id="addr1" readonly></td>
 											</tr>
 											<tr>
 												<th>상세주소</th>
-												<td><input type="text" name="addr2" id="addr2" maxlength="100" required="required"></td>
+												<td><input type="text" name="addr2" id="addr2" maxlength="100"></td>
 											</tr>
 											 -->
 											<tr>
 												<th class="required">부서</th>
 												<td>
-													<select name="empl_dept_cd" required="required" class="form-select">
+													<select name="empl_dept_cd" class="form-select">
 														<option value="">==== 부서선택 ====</option>
 														<c:forEach items="${deptList}" var="dept">
 														<option value="${dept.coco_cd}">${dept.coco_name}</option>
@@ -164,7 +164,7 @@
 											<tr>
 												<th class="required">직위</th>
 												<td>
-													<select name="empl_rank_cd" required="required" class="form-select">
+													<select name="empl_rank_cd" class="form-select">
 														<option value="">==== 직위선택 ====</option>
 														<c:forEach items="${rankList}" var="rank">
 														<option value="${rank.coco_cd}">${rank.coco_name}</option>
