@@ -52,7 +52,7 @@ public class HomeController {
 	private IGoboService GoboService;
 	
 	
-	@GetMapping({"/index.do", "/"})
+//	@GetMapping({"/index.do", "/"})
 	public String index(Model model, Authentication authentication, HttpSession session) {
 		
 		String getId = "";
@@ -183,7 +183,8 @@ public class HomeController {
 	
 	
 	
-	@GetMapping("/mainTmp.do")
+//	@GetMapping("/mainTmp.do")
+	@GetMapping({"/index.do", "/"})
 	public String mainTmp(Authentication authentication, Model model, HttpServletResponse resp) throws JsonProcessingException {
 		log.info("{} 메인화면 진입", Function.getMethodName());
 
