@@ -1,4 +1,4 @@
-/* 휴가현황 검색(임직원) */
+/* 발령현황 검색(임직원) */
 function orderSearchList(){
 	var f = $("#searchOrderDate");
 	/*
@@ -53,7 +53,7 @@ function orderSearchList(){
 }
 
 
-/* 휴가현황 검색(관리자) */
+/* 발령현황 검색(관리자) */
 function orderSearchAdminList(){
 	var f = $("#searchOrderAdminForm");
 	
@@ -330,6 +330,8 @@ function delelteOrderAdminOk(){
 
 var confirm_emor_id="";
 function confirmOrderAdmin(emor_id){
+	var f = document.modifyOrderForm;
+	f.reset();
 	confirm_emor_id = emor_id;
 	
 	var rows = document.getElementsByClassName('item');
