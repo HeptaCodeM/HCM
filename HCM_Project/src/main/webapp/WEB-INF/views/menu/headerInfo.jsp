@@ -1,6 +1,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="canonical" href="https://preview.keenthemes.com/keen" />
-<link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
+<link rel="shortcut icon" href="/image/logoMini-removebg-preview.png" />
 <!--begin::Fonts(mandatory for all pages)-->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 <!--end::Fonts-->
