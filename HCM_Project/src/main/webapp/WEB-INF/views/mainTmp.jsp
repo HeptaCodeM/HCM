@@ -48,6 +48,15 @@
 	.fc-scrollgrid-sync-table{
        pointer-events: none;
     }
+    .searchNewsPick{
+    	width: 200px;
+    }
+	.fixUnderHeight{
+		height: 790px;
+	}
+	.tdWidth{
+		width: 200px;
+	}
 	
 </style>
 </head>
@@ -216,7 +225,7 @@
 					    <div class="card-header">
 					        <h3 class="card-title">캘린더</h3>
 					    </div>
-					    <div class="card-body" id="calendar">
+					    <div class="card-body fixUnderHeight" id="calendar">
 					    	
 					    </div>
 					</div>
@@ -224,20 +233,34 @@
 				<!--end::Col-->
 				
 				<div class="col-xxl-6 mb-5 mb-xl-10">
-					<div class="card shadow-sm fixheightCard">
+					<div class="card shadow-sm">
 					    <div class="card-header">
 					        <h3 class="card-title">뉴스검색</h3>
 					    </div>
-					    <div class="card-body">
+					    <div class="card-body fixUnderHeight">
 					    	<div class="bodyTop">
 					    		<input type="text" id="newsSearch" name="newsSearch" class="form-control form-control-solid newsInput" placeholder="검색어를 입력하세요">
+								<select id="newsSearchPick" class="form-select form-select-solid searchNewsPick">
+									<option value="HCM" selected="selected">토픽선택</option>
+									<option value="개발자">개발자</option>
+									<option value="과학">과학</option>
+									<option value="오늘날씨">오늘날씨</option>
+								</select>
 					    		<button type="button" id="newsSearchBtn" class="btn btn-primary btnLg">검색</button>
 					    	</div>
-
-					    	<div class="separator border-2 my-10"></div>
-
-					    	<div id="resultZone" class="resultZone">
-
+					    	<br><br><br>
+					    	<div class="table-responsive resultZone">
+								<table class="table table-hover gs-7 gy-7 gx-7">
+									<thead class="fw-semibold fs-6 text-gray-800 border-bottom border-gray-200">
+										<tr style="text-align: center;">
+											<td>제목</td>
+											<td>내용</td>
+											<td>발행일</td>
+										</tr>
+									</thead>
+									<tbody id="resultZone">
+									</tbody>
+								</table>
 					    	</div>
 
 					    </div>
