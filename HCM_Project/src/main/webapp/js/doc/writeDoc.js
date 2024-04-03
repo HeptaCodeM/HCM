@@ -147,6 +147,10 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 	
 	// -----------------------------------> [ 작성화면 ]이벤트 날짜 유효성검사
 	
+	var restHoli = document.getElementById('restHoli').value;
+	console.log('restHoli: ',restHoli);
+	
+	
 	
 
 
@@ -186,8 +190,7 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 
 })
 
-	var restHoli = document.getElementById('restHoli').value;
-	console.log('restHoli: ',restHoli);
+	
 	
 
 // -----------------------------------> [ 작성화면 ] 현재 작성일 설정   
