@@ -135,9 +135,9 @@
 												        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 												    </span>
 												</button>
-												<button type="button" class="btn btn-success me-10" id="kt_button_1" onclick="location.href='/hr/employee/list.do';">
+												<button type="button" class="btn btn-success me-10" id="kt_button_1" onclick="location.href='/hr/employee/empModify.do';">
 												    <span class="indicator-label">
-												        리스트
+												        취소
 												    </span>
 												</button>
 											</td>
