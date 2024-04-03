@@ -119,26 +119,37 @@
 											</td>
 											<td class="center">
 												<fmt:formatDate value="${list.emco_in_dt}" pattern="HH:mm:ss" />
+												<fmt:formatDate var="emco_in_hr" value="${list.emco_in_dt}" pattern="HHmm" />
 											</td>
 											<td class="center">
 												<fmt:formatDate value="${list.emco_out_dt}" pattern="HH:mm:ss" />
+												<fmt:formatDate var="emco_out_hr" value="${list.emco_out_dt}" pattern="HHmm" />
 											</td>
 											<td class="center">
 												${list.duration_hour}
 											</td>
 											<td class="center">
-												<c:if test="${weekName ne '토요일' and weekName ne '일요일' and list.yyyymmdd < formattedDate}">
-													<c:if test="${list.duration_hour < 9}">
-														<c:if test="${list.duration_hour == 0}">
+												<c:if test="${weekName ne '토요일' and weekName ne '일요일' and (list.yyyymmdd < formattedDate or (list.yyyymmdd eq formattedDate and emco_out_hr>'1800'))}">
+													<c:choose>
+														<c:when test="${list.duration_hour == 0}">
 															<span style="color:#B40404;">결근</span>
-														</c:if>
-														<c:if test="${list.duration_hour > 0}">
-															<span style="color:#04B404;">조퇴</span>
-														</c:if>
-													</c:if>
-													<c:if test="${list.duration_hour >= 9}">
-														<span style="color:#08088A;">조퇴</span>
-													</c:if>
+														</c:when>
+														<c:otherwise>
+															<c:choose>
+																<c:when test="${emco_in_hr <= '0900'}">
+																	<c:if test="${list.duration_hour < 9}">
+																	<span style="color:#04B404;">조퇴</span>
+																	</c:if>
+																	<c:if test="${list.duration_hour >= 9}">
+																	<span style="color:#08088A;">출근</span>
+																	</c:if>
+																</c:when>
+																<c:otherwise>
+																	<span style="color:#04B404;">지각</span>
+																</c:otherwise>															
+															</c:choose>
+														</c:otherwise>
+													</c:choose>
 												</c:if>
 											</td>
 											<td class="left">
