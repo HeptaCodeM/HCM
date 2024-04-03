@@ -318,17 +318,17 @@ function insertDoc() {
 	}
 	
 	// -----------------------------------> [ 작성화면 ] 휴가/연차 날짜 유효성 검사
-	if (sidt_temp_cd == 'TC000001' || sidt_temp_cd == 'TC000002') {
-		
-		var rest = document.getElementById('restHoli').value
-		var calEndDate = new Date(sidb_doc_end);
-		var calBeDate = new Date(sidb_doc_be);
-		var calResult = (calEndDate - calBeDate) / 1000 / 60 / 60 / 24;
-		if(calResult > rest) {
-			swalAlert('휴가 신청 기간이 잔여 휴가일보다 많습니다','','','확인');
-			return;
-		}
-	}
+//	if (sidt_temp_cd == 'TC000001' || sidt_temp_cd == 'TC000002') {
+//		
+//		var rest = document.getElementById('restHoli').value
+//		var calEndDate = new Date(sidb_doc_end);
+//		var calBeDate = new Date(sidb_doc_be);
+//		var calResult = (calEndDate - calBeDate) / 1000 / 60 / 60 / 24;
+//		if(calResult > rest) {
+//			swalAlert('휴가 신청 기간이 잔여 휴가일보다 많습니다','','','확인');
+//			return;
+//		}
+//	}
 	
 	// -----------------------------------> [ 작성화면 ] 
 	var file = document.getElementById('sidf_file_content').files[0]; 

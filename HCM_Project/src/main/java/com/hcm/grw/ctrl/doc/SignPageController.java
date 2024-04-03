@@ -93,7 +93,9 @@ public class SignPageController {
 			model.addAttribute("loginInfo", dto.get(0));
 			Map<String, Object> map = holiService.selectEmpTotalHoliDayInfo(dto.get(0).getEmpl_id());
 			model.addAttribute("holiMap", map);
-			log.info(map.toString());
+			if(map != null) {
+				log.info(map.toString());
+			}
 		}
 		CompanyDto cDto = tService.getCompInfo();
 		if(cDto.getComp_seal() != null) {

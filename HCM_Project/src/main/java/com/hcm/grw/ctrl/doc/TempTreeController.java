@@ -69,18 +69,13 @@ public class TempTreeController {
 		
 		if(dto.getSidt_temp_cd().equalsIgnoreCase("TC000001") || dto.getSidt_temp_cd().equalsIgnoreCase("TC000002")
 				|| dto.getSidt_temp_cd().equalsIgnoreCase("TC000006")) {
-			List<SignBoxDto> docList = bService.selectNumber(dto.getEmpl_id());
-			if(docList.size() != 0) {
-				for(int i=0; i<docList.size(); i++) {
-					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("sidb_doc_num", docList.get(i).getSidb_doc_num());
-					map.put("sidb_doc_be", dto.getSidb_doc_be());
-					map.put("sidb_doc_end", dto.getSidb_doc_end());
-					String cnt = bService.duplicateDate(map);
-					if(!cnt.equalsIgnoreCase("0")) {
-						return ResponseEntity.ok("중복된 날짜");
-					}
-				}
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("empl_id", dto.getEmpl_id());
+			map.put("sidb_doc_be", dto.getSidb_doc_be());
+			map.put("sidb_doc_end", dto.getSidb_doc_end());
+			String cnt = bService.duplicateDate(map);
+			if (!cnt.equalsIgnoreCase("0")) {
+				return ResponseEntity.ok("중복된 날짜");
 			}
 		}
 		
@@ -114,18 +109,13 @@ public class TempTreeController {
 		
 		if(dto.getSidt_temp_cd().equalsIgnoreCase("TC000001") || dto.getSidt_temp_cd().equalsIgnoreCase("TC000002")
 				|| dto.getSidt_temp_cd().equalsIgnoreCase("TC000006")) {
-			List<SignBoxDto> docList = bService.selectNumber(dto.getEmpl_id());
-			if(docList.size() != 0) {
-				for(int i=0; i<docList.size(); i++) {
-					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("sidb_doc_num", docList.get(i).getSidb_doc_num());
-					map.put("sidb_doc_be", dto.getSidb_doc_be());
-					map.put("sidb_doc_end", dto.getSidb_doc_end());
-					String cnt = bService.duplicateDate(map);
-					if(!cnt.equalsIgnoreCase("0")) {
-						return ResponseEntity.ok("중복된 날짜");
-					}
-				}
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("empl_id", dto.getEmpl_id());
+			map.put("sidb_doc_be", dto.getSidb_doc_be());
+			map.put("sidb_doc_end", dto.getSidb_doc_end());
+			String cnt = bService.duplicateDate(map);
+			if (!cnt.equalsIgnoreCase("0")) {
+				return ResponseEntity.ok("중복된 날짜");
 			}
 		}
 		
