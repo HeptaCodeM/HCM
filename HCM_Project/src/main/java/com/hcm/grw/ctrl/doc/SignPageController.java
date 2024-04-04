@@ -106,11 +106,14 @@ public class SignPageController {
 		return "doc/writeDoc/writeDoc";
 	}
 	
+	@SuppressWarnings("deprecation")
 	@GetMapping(value = "getTempDoc.do")
 	public String getTempDoc(@RequestParam String sitb_doc_num, Model model) throws JsonMappingException, JsonProcessingException {
 		log.info("SignPageController getTempDoc.do 임시보관함 문서 불러오기");
 		SignTempBoxDto dto = bService.getTempDoc(sitb_doc_num);
 		model.addAttribute("dto", dto);
+		Map<String, Object> map = holiService.selectEmpTotalHoliDayInfo(dto.getEmpl_id());
+		model.addAttribute("holiMap",map);
 		return "/doc/writeDoc/getTempDoc";
 	}
 	
