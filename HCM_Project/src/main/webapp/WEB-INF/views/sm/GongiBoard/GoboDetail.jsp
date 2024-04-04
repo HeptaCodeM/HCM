@@ -63,7 +63,7 @@
 				<c:if test="${sessionScope.userInfoVo.empl_auth == 'ROLE_SM_ADMIN' || sessionScope.userInfoVo.empl_auth == 'ROLE_SYS_ADMIN'}">
 				<div>
 					<button type="button" class="btn btn-primary"
-						onclick="location.href='/sm/updateGoboMove.do?gobo_no=${dto.gobo_no}'"
+						onclick="location.href='/sm/updateGoboMoveAdmin.do?gobo_no=${dto.gobo_no}'"
 						style="margin-right: 20px">수정</button>
 					<button type="button" class="btn btn-primary"
 						onclick="updateGoboDelFlag(${dto.gobo_no})"

@@ -132,19 +132,42 @@ function listAjax(daygridmonth) {
         success: function(data) {
 		// 받아온 데이터를 FullCalendar의 이벤트 형식으로 가공합니다.
             var events = data.map(function(item) {
+	
 				  var title;
 				    // scbo_cgory_no가 TC000001인 경우 title을 "연차"로 설정
-				    if (item.scbo_cgory_no === "TC000001") {
-				        title = "연차";
-				    }
-				    // scbo_cgory_no가 TC000002인 경우 title을 "휴가"로 설정
-				    else if (item.scbo_cgory_no === "TC000002") {
-				        title = "휴가";
-				    }
-				    // 그 외의 경우에는 title을 그대로 사용
-				    else {
-				        title = item.title;
-				    }
+				          if (item.scbo_cgory_no === "TC000001") {
+					            title = "연차";
+					        }
+					        // scbo_cgory_no가 TC000002인 경우 title을 "휴가"로 설정
+					        else if (item.scbo_cgory_no === "TC000002") {
+					            title = "휴가";
+					        }
+					        // 그 외의 경우에는 title을 그대로 사용
+					        else {
+					            title = item.title;
+					        }
+					        
+					        // scbo_writer 값을 title 앞에 추가
+					        if (title === "연차" || title === "휴가") {
+					            title = item.scbo_writer + " - " + title;
+					        }
+					         var className;
+				            switch (item.scbo_cgory_no) {
+				                case "100":
+				                    className = "category-100"; // 카테고리 100의 경우 클래스명은 "category-100"
+				                    break;
+				                case "200":
+				                    className = "category-200"; // 카테고리 200의 경우 클래스명은 "category-200"
+				                    break;
+				                case "TC000001":
+				                    className = "category-TC000001"; // 카테고리 300의 경우 클래스명은 "category-300"
+				                    break;
+				                case "TC000002":
+				                    className = "category-TC000002"; // 카테고리 400의 경우 클래스명은 "category-400"
+				                    break;
+				                default:
+				                    className = ""; // 기타 경우 클래스명은 없음
+				            }
 				    return {
                     title: title, // 이벤트 제목
                     start: item.start, // 이벤트 시작일
@@ -152,6 +175,8 @@ function listAjax(daygridmonth) {
                     scbo_no: item.scbo_no,
                     scbo_empno: item.scbo_empno,
                     scbo_cgory_no: item.scbo_cgory_no,
+                    scbo_writer:scbo_writer,
+                    className:className
                 };
             });
 
@@ -166,6 +191,7 @@ function listAjax(daygridmonth) {
         error: function() {
             // 오류 시 처리할 코드
         }
+        
     });
 }
 
@@ -181,12 +207,13 @@ function detail(scbo_no){
             $("#scbo_content1").show();
             $("#deleteButton").show();
             $("#updateButton").show();
+            $("#schtitle").show();
             $("#favo").hide();
 			}else if(data.scbo_cgory_no == 200){
 				$("#scbo_cgory_no_update").val("200");
 				 $("#scbo_content1").show();
 				$("#deleteButton").show();
-            	$("#updateButton").show();
+            	$("#schtitle").show();
             	$("#favo").hide();
 			}else if(data.scbo_cgory_no == "TC000002"){
 				$("#scbo_cgory_no_update").val("TC000002");
@@ -194,12 +221,14 @@ function detail(scbo_no){
 				$("#deleteButton").hide();
          	   $("#updateButton").hide();
          	   $("#schtitle").hide();
+         	   $("#favo").show();
 			}else if(data.scbo_cgory_no == "TC000001"){
 				$("#scbo_cgory_no_update").val("TC000001");
 				 $("#scbo_content1").hide();
 				$("#deleteButton").hide();
             	$("#updateButton").hide();
             	$("#schtitle").hide();
+            	$("#favo").show();
 			}
 			var start = new Date(data.scbo_start);
 			var end = new Date(data.scbo_end);
@@ -219,6 +248,7 @@ function detail(scbo_no){
         error: function() {
             console.log("오류임");
         }
+        
     });
 }
 
