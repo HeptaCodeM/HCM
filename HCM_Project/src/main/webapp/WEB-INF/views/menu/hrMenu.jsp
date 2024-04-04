@@ -41,6 +41,7 @@ currentRootName = currentRootName.substring(0, currentRootName.indexOf("/"));
 Boolean openHrMenuFlag1 = false;
 Boolean openHrMenuFlag2 = false;
 %>
+<%=currentRootName%>//<%=currentPageName%>
 	<!-- 대분류별 영역 시작 -->
 	<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 		
