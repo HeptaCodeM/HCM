@@ -38,8 +38,10 @@ String currentPageName = uri.substring(uri.lastIndexOf("/") + 1).replace(".jsp",
 String currentRootName = uri.replace("/WEB-INF/views/hr/","");
 currentRootName = currentRootName.substring(0, currentRootName.indexOf("/"));
 
-Boolean openHrMenuFlag = false;
+Boolean openHrMenuFlag1 = false;
+Boolean openHrMenuFlag2 = false;
 %>
+<%=currentRootName%>//<%=currentPageName%>
 	<!-- 대분류별 영역 시작 -->
 	<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 		
@@ -63,8 +65,18 @@ Boolean openHrMenuFlag = false;
 			<!-- 중분류 영역 시작 ********************************************************************************-->
 			<div class="menu-sub menu-sub-accordion">
 			<%for(int i=0;i<hrLeftMenu.length;i++){ %>
+				<%
+				
+				openHrMenuFlag1 = false;
+				for(int j=0;j<hrLeftMenuLinkNm[i].length;j++){
+					if(hrLeftMenuLinkNm[i][j].equals(currentRootName)){
+						openHrMenuFlag1 = true;
+						break;
+					}
+				}
+				%>
 				<!-- 중분류 1 시작 -->
-				<div  data-kt-menu-trigger="click" class="menu-item menu-accordionn">
+				<div  data-kt-menu-trigger="click" class="menu-item menu-accordion <%if(openHrMenuFlag1){%>hover show<%}%>">
 
 					<!-- 중분류1 메뉴링크 시작 -->
 					<span class="menu-link">
@@ -83,14 +95,14 @@ Boolean openHrMenuFlag = false;
 					<!-- 소분류 영역 시작 ========================================================-->
 					
 				<%
-				openHrMenuFlag = false;
+				openHrMenuFlag2 = false;
 				for(int j=0;j<hrSubLeftMenu[i].length;j++){ 
 					if(hrSubLinkLeftMenu[i][j].indexOf(currentPageName)>=0){
-						openHrMenuFlag = true;
+						openHrMenuFlag2 = true;
 					}
 				}
 
-				if(openHrMenuFlag == true){
+				if(openHrMenuFlag2 == true){
 				%>
 					<div class="menu-sub menu-sub-accordion show" style="">
 				<%

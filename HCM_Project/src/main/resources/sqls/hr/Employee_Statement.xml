@@ -242,7 +242,6 @@
 	INNER JOIN      COMMON_CODE C1 ON A.EMPL_DEPT_CD = C1.COCO_CD
 	INNER JOIN      COMMON_CODE C2 ON A.EMPL_RANK_CD = C2.COCO_CD
 	LEFT OUTER JOIN   COMMON_CODE C3 ON A.EMPL_POSITION_CD  = C3.COCO_CD
-	ORDER BY A.EMPL_ID DESC
 	</select>
 	
 	<select id="searchAllEmployee" parameterType="Map" resultType="EmployeeDto">

@@ -65,3 +65,8 @@ table tr th {vertical-align: middle;}
     background-position: center;
     background-repeat: no-repeat;
 }
+
+.mainMenuLog{
+	width: 140px;
+	padding-top: 8px;
+}

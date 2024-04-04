@@ -41,7 +41,8 @@ function orderSearchList(){
 				info: false,
 				language: {
 					emptyTable: "조회된 정보가 없습니다."
-				}
+				},
+				order : [[0,"desc"]]
 			});
 
 		},
@@ -119,7 +120,8 @@ function orderSearchAdminList(){
 				info: false,
 				language: {
 					emptyTable: "조회된 정보가 없습니다."
-				}
+				},
+				order : [[0,"desc"]]
 			});
 
 		},
@@ -178,7 +180,8 @@ function empInfoSearch(flag){
 				info: false,
 				language: {
 					emptyTable: "조회된 정보가 없습니다."
-				}
+				},
+				order : [[1,"desc"]]
 			});
 		},
 		error:function(request, error){

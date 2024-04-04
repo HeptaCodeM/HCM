@@ -131,7 +131,7 @@
 							</div>
 
 							<!--begin::Link-->
-							<a href="/login/restPwd.do" class="link-primary">비밀번호찾기</a>
+							<a href="/login/restPwd.do" class="link-primary">비밀번호 초기화</a>
 							<!--end::Link-->
 						</div>
 						<!--end::Wrapper-->
