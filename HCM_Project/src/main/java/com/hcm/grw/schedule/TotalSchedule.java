@@ -141,7 +141,7 @@ public class TotalSchedule {
 	
 	/* 인사발령정보 적용 스케쥴 처리 */
 	//@Scheduled(cron="0 0 0 * * ?")	// 매일 0시 동작
-	@Scheduled(cron="0 0 * * * ?")	// 매일 0시 동작
+	@Scheduled(cron="0 * * * * ?")	// 매일 0시 동작
 	public void orderApplySchedule() {
 		int cnt = scheduleService.updateOrderSchedule();
 	}
