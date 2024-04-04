@@ -181,7 +181,9 @@
 							
 							<c:if test="${dto.sidb_doc_stat == 2  and !empty dto.appr_name2 and dto.appr_flag1 == 1 and dto.appr_flag2 == 0}">
 							<img style="width:80%;" src="/image/doc/docBox/s2a3d3.png">
-							<br> 기안 &nbsp;&nbsp; <span style="color: MediumSeaGreen;">${dto.appr_name0} ></span> &nbsp;&nbsp;&nbsp; &nbsp;<span style="color: blue; font-size: larger;">${dto.appr_name1} &nbsp;></span>&nbsp;&nbsp; ${dto.appr_name2}&nbsp; &nbsp;
+							<br>  &nbsp; &nbsp; &nbsp;기안 <span style="display:inline-block; width:14%;"></span><span style="color: MediumSeaGreen;">${dto.appr_name0} ></span> 
+							<span style="display:inline-block; width:12%;"></span>&nbsp;&nbsp;&nbsp; &nbsp;<span style="color: MediumSeaGreen;">${dto.appr_name1} &nbsp;></span>
+							&nbsp;&nbsp; <span style="display:inline-block; width:13%;"></span><span style="color: DodgerBlue; font-size: large;">${dto.appr_name2}</span>&nbsp; &nbsp;
 							</c:if>
 							
 							<c:if test="${dto.sidb_doc_stat == 1  and !empty dto.appr_name2 and dto.appr_flag0 == 0 }">
