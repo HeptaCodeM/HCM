@@ -125,6 +125,7 @@ empSearchBtn.addEventListener('click',function(){
 				},
 				order : [[0,"desc"]]
 	        });
+	        empSearchValue = "";
 	        startDate = "";
 	        endDate = "";
 	    },

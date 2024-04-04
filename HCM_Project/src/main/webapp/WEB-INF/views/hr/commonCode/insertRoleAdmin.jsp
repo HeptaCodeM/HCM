@@ -61,6 +61,11 @@
 					</div>
 				</div>
 				<!-- 내용 끝 -->
+			</div>
+		</div>
+			
+<%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
+</body>
 				<!-- 헤더 위로가면 작동(X) -->
 				<script type="text/javascript">
 					$('#coco_name').maxlength({
@@ -117,9 +122,11 @@
 						valueChk.append('coco_cd', coco_cd);
 						valueChk.append('role', role);
 						
+						
+						
 						if(coco_name == "" || coco_cd == ""){
-							document.getElementById("codeSpan").innerHTML = "직위명을 입력하세요";
-							document.getElementById("nameSpan").innerHTML = "직위코드를 입력하세요";
+							document.getElementById("nameSpan").innerHTML = "${thisRole}명을 입력하세요";
+							document.getElementById("codeSpan").innerHTML = "${thisRole}코드를 입력하세요";
 							return false;
 						}
 						
@@ -188,9 +195,4 @@
 					    });
 					}
 				</script>
-			</div>
-		</div>
-			
-<%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
-</body>
 </html>
