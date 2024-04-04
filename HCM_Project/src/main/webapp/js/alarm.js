@@ -194,13 +194,13 @@ function getAlarmList() {
 			alDiv11.setAttribute('style', 'width: 70px;');
 			alA1.setAttribute('class', 'fs-5 text-gray-900 text-hover-primary fw-semibold w-300px min-w-200px'); // 제목
 			if (d.al_flag == 1) {
-				alA1.textContent = d.al_title;
+				alA1.textContent = d.al_title.length > 12 ? d.al_title.substring(0, 12) + "..." : d.al_title;
 				alA1.setAttribute('href', '/sm/getDetailGobo.do?gobo_no=' + d.al_key); // 공지링크
 			} else if (d.al_flag == 2) {
-				alA1.textContent = d.al_title;
+				alA1.textContent = d.al_title.length > 12 ? d.al_title.substring(0, 12) + "..." : d.al_title;
 				alA1.setAttribute('href', '/sm/getDetailGobo.do?gobo_no=' + d.al_key); // 일정링크
 			} else if (d.al_flag == 3 || d.al_flag == 4 || d.al_flag == 5) {
-				alA1.textContent = d.al_title;
+				alA1.textContent = d.al_title.length > 12 ? d.al_title.substring(0, 12) + "..." : d.al_title;
 				alA1.setAttribute('href', '/doc/docBox/getDetail.do?docNum=' + d.al_key); // 결재링크
 			}
 			alDiv12.setAttribute('class', 'symbol-group symbol-hover flex-nowrap flex-grow-1 min-w-60px pe-2');
@@ -220,7 +220,11 @@ function getAlarmList() {
 			alDiv13.setAttribute('class', 'symbol symbol-circle symbol-25px')
 			alDiv13.textContent = d.producer_name; // 제공자 이름
 			alDiv13.prepend(alImg);
-			alImg.setAttribute('src','https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77') // 사진
+			if(d.empl_picture_str.length > 0) {
+				alImg.setAttribute('src', d.empl_picture_str);
+			} else {
+				alImg.setAttribute('src','https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77') // 사진
+			}
 			alI2.append(alSpan5);
 			alI2.append(alSpan6);
 			alSpan5.setAttribute('class', 'path1');
