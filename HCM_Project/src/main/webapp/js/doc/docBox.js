@@ -3,6 +3,11 @@ function detailBoard(docNum) {
     window.location.href = url;
 }
 
+function tempWrite(docNum) {
+    var url = '/doc/getTempDoc.do?sitb_doc_num=' + encodeURIComponent(docNum);
+    window.location.href = url;
+}
+
 
 $(document).ready( function () {
 	$('#myTable').DataTable({ 
@@ -1977,7 +1982,7 @@ function deleteAjax(docNum, docName){
 					  + '<input type="hidden" value="' + d.sidb_doc_name + '" class="docName">    </td>'                         
          
 	    	    // 제목 
-	    	         in2   += '                    <td><a href="#" onclick="detailBoard(' + d.sidb_doc_num + ')"> ' + d.sidb_doc_title + '  </a> </td>'
+	    	         in2   += '                    <td><a href="#" onclick="tempWrite(' + d.sidb_doc_num + ')"> ' + d.sidb_doc_title + '  </a> </td>'
 	    	       
 					  + '  						 <td> <div class="picture" style="background-image: url('+d.empl_pictureStr+')"></div> <span style="vertical-align: middle;">'+ d.empl_name + '</span></td>'
 
