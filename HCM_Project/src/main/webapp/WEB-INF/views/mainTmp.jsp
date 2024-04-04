@@ -55,7 +55,8 @@
 		height: 790px;
 	}
 	.tdWidth{
-		width: 200px;
+		width: 190px;
+		text-align: center;
 	}
 	
 </style>
@@ -240,15 +241,16 @@
 					    <div class="card-body fixUnderHeight">
 					    	<div class="bodyTop">
 					    		<input type="text" id="newsSearch" name="newsSearch" class="form-control form-control-solid newsInput" placeholder="검색어를 입력하세요">
+								&nbsp;&nbsp;&nbsp;
 								<select id="newsSearchPick" class="form-select form-select-solid searchNewsPick">
 									<option value="HCM" selected="selected">토픽선택</option>
 									<option value="개발자">개발자</option>
 									<option value="과학">과학</option>
 									<option value="오늘날씨">오늘날씨</option>
-								</select>
+								</select>&nbsp;&nbsp;&nbsp;
 					    		<button type="button" id="newsSearchBtn" class="btn btn-primary btnLg">검색</button>
 					    	</div>
-					    	<br><br><br>
+					    	<br>
 					    	<div class="table-responsive resultZone">
 								<table class="table table-hover gs-5 gy-5 gx-5">
 									<tbody id="resultZone">

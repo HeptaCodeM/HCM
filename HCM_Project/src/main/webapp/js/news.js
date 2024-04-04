@@ -7,8 +7,18 @@ function searchNews(){
 	var newsSearchPick = document.getElementById("newsSearchPick").value;
 	console.log(newsSearch);
 	console.log(newsSearchPick);
+	var text = "";
+
+	if(newsSearchPick == "HCM" && newsSearch == ""){
+		text = newsSearchPick;
+	}else if(newsSearch != ""){
+		text = newsSearch;
+	}else {
+		text = newsSearchPick;
+	}
+
 	
-	fetch('searchNews.do?newsSearch='+newsSearchPick,{
+	fetch('searchNews.do?newsSearch='+text,{
 		method: "GET",
 		header:{
 			"Content-Type":"application/json; charset:UTF-8"
@@ -31,7 +41,7 @@ function searchNews(){
 //			console.log(Obj.items[i].description);
 //			console.log(Obj.items[i].pubDate);
 //			console.log(Obj.items[i].link);
-			var emptyTr = "<input type='hidden' value='"+Obj.items[i].link+"' name='thisPage'><tr style='cursor: pointer;' onclick='moveNewsPage("+i+")'><td colspan='2'>"+Obj.items[i].title+"</td><td rowspan='2'>"+replaceDate(Obj.items[i].pubDate)+"</td></tr><tr><td colspan='2'>"+Obj.items[i].description+"</td></tr>";
+			var emptyTr = "<input type='hidden' value='"+Obj.items[i].link+"' name='thisPage'><tr style='cursor: pointer;' onclick='moveNewsPage("+i+")'><td colspan='2'>"+Obj.items[i].title+"</td><td rowspan='2' class='tdWidth'>발행일<br><br><br>"+replaceDate(Obj.items[i].pubDate)+"</td></tr><tr><td colspan='2'>"+Obj.items[i].description+"</td></tr>";
 			newsResult += emptyTr;
 		}
 		
