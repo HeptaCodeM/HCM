@@ -62,6 +62,9 @@
 							<input id="tempAlflag" type="hidden" value="${dto.sitb_doc_alflag }">
 							<input id="tempCd" type="hidden" value="${dto.sidt_temp_cd }">
 							<input type="hidden" value="${userInfoVo.emsi_seq }" id="emsi_seq">
+							<input type="hidden" value="${holiMap.USE_HOLIDAY }" id="useHoli">
+							<input type="hidden" value="${holiMap.REST_HOLIDAY }" id="restHoli">
+							<input type="hidden" value="${holiMap.TOTAL_HOLIDAY }" id="totalHoli">
 
 							<table class="table table-bordered">
 								<tr class="success">
@@ -93,16 +96,16 @@
 								<tr>
 									<th id="signRefer" style="cursor: pointer;">참조 및 참조부서</th>
 									<td colspan="3">
-										<input type="text" class="form-control form-control-solid" id="refName" readonly>
+										<input type="text" class="form-control form-control-solid" id="refName" readonly placeholder="참조자 없음">
 									</td>
 									<td colspan="2">
-										<input type="text" class="form-control form-control-solid" id="deptName" readonly>
+										<input type="text" class="form-control form-control-solid" id="deptName" readonly placeholder="참조부서 없음">
 									</td>
 								</tr>
 								<tr id="signLine">
 									<th id="selectSign" style="cursor: pointer;">서명선택</th>
 									<td colspan="3">
-										<input id="signMsg" class="form-control form-control-solid" readonly>
+										<input id="signMsg" class="form-control form-control-solid" readonly placeholder="서명을 선택해주세요">
 									</td>
 									<th style="text-align: center;">대표 등록 서명사용</th>
 									<td style="text-align: center; vertical-align: middle;">
@@ -112,7 +115,7 @@
 								
 								<tr>
 									<th>제목</th>
-									<td colspan="5"><input type="text" class="sitb_doc_title form-control form-solid" name="sidb_doc_title" maxlength="20"></td>
+									<td colspan="5"><input type="text" class="sitb_doc_title form-control form-solid" name="sidb_doc_title" maxlength="20" id="sidb_doc_title"></td>
 									
 								</tr>
 							</table>

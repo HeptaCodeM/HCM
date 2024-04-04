@@ -77,7 +77,7 @@ document.getElementById("rebo_content").addEventListener("#rebo_content", checkI
 function updateGoboDelFlag(gobo_no){
 	sweetAlertConfirm("글을 삭제 하시겠습니까?",function(){
 	
-		location.href="/sm/updateGoboDelFlag.do?gobo_no="+gobo_no;
+		location.href="/sm/updateGoboDelFlagAdmin.do?gobo_no="+gobo_no;
 	
 	},'')
 }
@@ -151,7 +151,7 @@ function deleteButton(rebo_no){
 
 function deleteAjax(rebo_no){
 	$.ajax({
-		url: "/sm/updateReplyDelFlag.do",
+		url: "/sm/updateReplyDelFlagAdmin.do",
 		data:{rebo_no:rebo_no},
 		type:"get",
 		dataType: "json",

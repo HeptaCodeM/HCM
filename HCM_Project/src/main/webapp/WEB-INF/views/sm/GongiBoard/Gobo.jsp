@@ -33,7 +33,7 @@
                 <!-- 버튼을 우측 끝으로 정렬 -->
                 	<c:if test="${sessionScope.userInfoVo.empl_auth == 'ROLE_SM_ADMIN' || sessionScope.userInfoVo.empl_auth == 'ROLE_SYS_ADMIN'}">
                 <div class="col-auto">
-                    <button class="btn btn-success" onclick="location.href='/sm/insertGoboForm.do'">글작성</button>
+                    <button class="btn btn-success" onclick="location.href='/sm/insertGoboFormAdmin.do'">글작성</button>
                 </div>
                 	</c:if>
             </div>

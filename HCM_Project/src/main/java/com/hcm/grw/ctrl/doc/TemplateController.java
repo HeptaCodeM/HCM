@@ -44,7 +44,7 @@ public class TemplateController {
 		log.info("TemplateController 템플릿 전체 값을 저장하여 이동하는 template");
 		List<TemplateDto> lst = service.getTempList();
 		model.addAttribute("lst", lst);
-		return "doc/template/template";
+		return "doc/template/templateAdmin";
 	}
 
 	@GetMapping("/detailTemplateAdmin.do")
@@ -52,13 +52,13 @@ public class TemplateController {
 		log.info("TemplateController 템플릿 상세 내용 조회하는 detailTemplate");
 		TemplateDto temDto = service.getDetailTemp(sidt_temp_cd);
 		model.addAttribute("temDto", temDto);
-		return "doc/template/detailTemplate";
+		return "doc/template/detailTemplateAdmin";
 	}
 
 	@GetMapping("/writeTemplateAdmin.do")
 	public String writeTemplate() {
 		log.info("TemplateController 템플릿 등록화면으로 이동하는 writeTemplate");
-		return "doc/template/writeTemplate";
+		return "doc/template/writeTemplateAdmin";
 	}
 
 	@GetMapping("/selectCategoryAdmin.do")
@@ -93,7 +93,7 @@ public class TemplateController {
 		log.info("TemplateController 템플릿 수정화면으로 이동하는 modifyTemplate");
 		TemplateDto temDto = service.getDetailTemp(sidt_temp_cd);
 		model.addAttribute("temDto", temDto);
-		return "doc/template/modifyTemplate";
+		return "doc/template/modifyTemplateAdmin";
 	}
 	
 	@PostMapping("updateTemplateAdmin.do")
