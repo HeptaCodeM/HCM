@@ -4,7 +4,8 @@ var endDate = "";
 $(document).ready(function(){
 	$('#emplListTable').DataTable({
         lengthChange: false,
-        info: false
+        info: false,
+        order: [ [ 0, "desc"] ] 
 	});
 	
 	$("#emplListTable tbody").on('click', 'tr', function () {
@@ -119,9 +120,10 @@ empSearchBtn.addEventListener('click',function(){
                            return data === "Y" ? "퇴직자" : "재직자";
 				       }
 				       }],
-				       language: {
-					emptyTable: "조회된 정보가 없습니다."
-				}
+				       	language: {
+							emptyTable: "조회된 정보가 없습니다."
+						},
+				order: [ [ 0, "desc"] ]
 	        });
 	        startDate = "";
 	        endDate = "";
