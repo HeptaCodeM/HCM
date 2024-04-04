@@ -65,7 +65,7 @@
 							<input type="hidden" value="${holiMap.USE_HOLIDAY }" id="useHoli">
 							<input type="hidden" value="${holiMap.REST_HOLIDAY }" id="restHoli">
 							<input type="hidden" value="${holiMap.TOTAL_HOLIDAY }" id="totalHoli">
-							
+
 							<table class="table table-bordered">
 								<tr class="success">
 									<th>기안일</th>
@@ -115,7 +115,7 @@
 								
 								<tr>
 									<th>제목</th>
-									<td colspan="5"><input type="text" class="sitb_doc_title form-control form-solid" name="sidb_doc_title" maxlength="20"></td>
+									<td colspan="5"><input type="text" class="sitb_doc_title form-control form-solid" name="sidb_doc_title" maxlength="20" id="sidb_doc_title"></td>
 									
 								</tr>
 							</table>
