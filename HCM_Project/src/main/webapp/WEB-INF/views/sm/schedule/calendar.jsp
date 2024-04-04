@@ -71,6 +71,22 @@
         padding: 5px; /* 적절한 값으로 조절 */
         margin: 0;
     }
+    .category-100 >*{
+      background-color: #39CEFA;
+      color:white;
+    }
+    .category-200 >*{
+      background-color: orange;
+      color:white;
+    }
+    .category-TC000001 >*{
+    background-color: #70DB8A;
+    color:white;
+    }
+    .category-TC000002 >*{
+     background-color: #9368DC;
+     color:white;
+    }
 </style>
 	
 
@@ -250,28 +266,27 @@
     <div class="menu-item px-3" style="overflow: hidden;">
         <form name="filter" id="filter" method="post" onsubmit="return false;">
             <table class="table">
-                <thead></thead>
                 <tbody>
                     <tr>
-					    <th>&nbsp;&nbsp;개인 &nbsp;&nbsp;&nbsp;
+					    <th style="color: #39CEFA; ">&nbsp;&nbsp;개인 &nbsp;&nbsp;&nbsp;
 					    <input class="form-check-input" type="checkbox" name="type" value="3">
 					    </th>
 					</tr>
 					
                     <tr>
-                        <th>&nbsp;&nbsp;외근 &nbsp;&nbsp;&nbsp;
+                        <th  style="color: orange;">&nbsp;&nbsp;외근 &nbsp;&nbsp;&nbsp;
                         <input class="form-check-input" type="checkbox" name="type" value="4">
                         </th>
                     </tr>
                        
-                    <tr>
-                        <th>&nbsp;&nbsp;연차 &nbsp;&nbsp;&nbsp;
+                    <tr >
+                        <th style="color:#70DB8A;">&nbsp;&nbsp;연차 &nbsp;&nbsp;&nbsp;
                         <input class="form-check-input" type="checkbox" name="type" value="2">
                         </th>
                     </tr> 
                       
-                    <tr>
-                        <th>&nbsp;&nbsp;휴가 &nbsp;&nbsp;&nbsp;
+                    <tr >
+                        <th style="color:#9368DC;">&nbsp;&nbsp;휴가 &nbsp;&nbsp;&nbsp;
                         <input class="form-check-input" type="checkbox" name="type" value="1">
                         </th>
                     </tr>
