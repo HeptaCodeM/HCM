@@ -88,9 +88,11 @@ public class CalendarController {
 				obj.put("title", vo.getScbo_title());
 				obj.put("start", vo.getScbo_start());
 				obj.put("end", vo.getScbo_end());
+				obj.put("scbo_writer", vo.getScbo_writer());
 				arr.add(obj);
 			}
 			return arr;
+		
 	}
 	
 	

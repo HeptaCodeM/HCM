@@ -61,14 +61,14 @@ public class SMHomeController {
 		return "sm/GongiBoard/GoboDetail";
 	}
 	
-	@PostMapping("updateGobo.do")
+	@PostMapping("updateGoboAdmin.do")
 	@ResponseBody
 	public Boolean updateGobo(GoboDto dto) {
 		log.info("SMHomeController updateGobo.do 공지사항 수정 ");
 		int n = GoboService.updateGobo(dto);
 		return (n>0)?true:false;
 	}
-	@GetMapping("updateGoboMove.do")
+	@GetMapping("updateGoboMoveAdmin.do")
 	public String updateGoboMove(String gobo_no,Model model) {
 		log.info("SMHomeController updateGobo.do 공지사항 수정화면 이동 ");
 		GoboDto dto =  GoboService.getDetailGobo(gobo_no);
@@ -77,7 +77,7 @@ public class SMHomeController {
 	}
 	
 	
-	@GetMapping("updateGoboDelFlag.do")
+	@GetMapping("updateGoboDelFlagAdmin.do")
 	public String updateGoboDelFlag(String gobo_no) {
 		log.info("SMHomeController updateGoboDelFlag.do 공지사항 삭제 : {} ", gobo_no);
 		int n = GoboService.updateGoboDelFlag(gobo_no);
@@ -85,14 +85,14 @@ public class SMHomeController {
 		return "redirect:/sm/getAllGobo.do";
 	}
 	
-	@GetMapping("insertGoboForm.do")
+	@GetMapping("insertGoboFormAdmin.do")
 	public String insertGoboWrite() {
 		log.info("SMHomeController insertGobo.do 공지사항 글등록 화면 이동");
 		return "sm/GongiBoard/insertAdminGobo";
 	}
 	
 	
-	@PostMapping("insertGobo.do")
+	@PostMapping("insertGoboAdmin.do")
 	@ResponseBody
 	public Boolean insertGobo(GoboDto dto, HttpSession session) {
 	    log.info("SMHomeController insertGobo.do 공지사항 글 등록: {}", dto);
