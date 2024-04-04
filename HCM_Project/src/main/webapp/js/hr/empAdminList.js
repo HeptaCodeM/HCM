@@ -120,10 +120,10 @@ empSearchBtn.addEventListener('click',function(){
                            return data === "Y" ? "퇴직자" : "재직자";
 				       }
 				       }],
-				       	language: {
-							emptyTable: "조회된 정보가 없습니다."
-						},
-				order: [ [ 0, "desc"] ]
+				       language: {
+					emptyTable: "조회된 정보가 없습니다."
+				},
+				order : [[0,"desc"]]
 	        });
 	        startDate = "";
 	        endDate = "";
