@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.GsonBuilder;
+import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.AlarmDto;
 import com.hcm.grw.model.service.AlarmService;
 
@@ -42,6 +43,12 @@ public class AlarmController {
 	public ResponseEntity<?> getAlarmList(@RequestParam String al_target) {
 		log.info("AlarmController getAlarmList 알림전체목록 : {}", al_target);
 		List<AlarmDto> alarmList = service.selectAllAlarm(al_target);
+		for (AlarmDto alarmDto : alarmList) {
+			if(alarmDto.getEmpl_picture() != null) {
+				alarmDto.setEmpl_picture_str(Function.blobImageToString(alarmDto.getEmpl_picture()));
+				alarmDto.setEmpl_picture(null);
+			}
+		}
 		return ResponseEntity.ok(new GsonBuilder().create().toJson(alarmList));
 	}
 	

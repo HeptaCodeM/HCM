@@ -28,4 +28,7 @@ public class AlarmDto {
 	private String target_name;
 
 	private String template;
+	
+	private byte[] empl_picture;
+	private String empl_picture_str;
 }
