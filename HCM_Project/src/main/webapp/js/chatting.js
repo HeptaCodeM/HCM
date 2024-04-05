@@ -58,7 +58,7 @@ onload = function() {
 				dong.removeAttribute('class');
 				dong.setAttribute('class', 'badge badge-danger badge-circle w-10px h-10px me-1');
 				text.textContent = '오프라인';
-			}, 1000)
+			}, 1500)
 			
 			return;
 		}
@@ -435,6 +435,8 @@ function chatUserList() {
 				var span = document.createElement('span');
 				div1.setAttribute('class', 'rounded d-flex flex-stack bg-active-lighten p-4');
 				div1.setAttribute('data-user-id', idx);
+				div1.setAttribute('onclick', 'selectNode(this)');
+				div1.setAttribute('style', 'cursor: pointer;')
 				div2.setAttribute('class', 'd-flex align-items-center');
 				div3.setAttribute('class', 'symbol symbol-35px symbol-circle');
 				div4.setAttribute('class', 'ms-5');
@@ -491,6 +493,18 @@ function chatUserList() {
 				document.getElementById('searchMainDiv').append(div1);
 				document.getElementById('searchMainDiv').append(div7);
 				
+//				$('.bg-active-lighten').on('mouseenter', function() {
+//					$(this).css('backgroundColor' , 'black')
+//				});
+				var elements = document.getElementsByClassName('bg-active-lighten');
+				for (var i = 0; i < elements.length; i++) {
+					elements[i].addEventListener('mouseover', function() {
+						this.style.backgroundColor = '#f5f5f5';
+					});
+					elements[i].addEventListener('mouseleave', function() {
+						this.style.backgroundColor = 'white';
+					});
+				}
 				
 			}
 		});
@@ -499,6 +513,11 @@ function chatUserList() {
 	})
 	.catch(err => {console.log(err)})
 	
+}
+
+function selectNode(node) {
+	var a = node.querySelector('a');
+	a.click();
 }
 
 

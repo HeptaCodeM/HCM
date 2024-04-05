@@ -692,7 +692,8 @@ function loadFavoLineList() {
 //			console.log(data);
 			var lineList = data.lineList;
 			var empList = data.resultList[0];
-//			console.log(empList);
+			console.log(lineList);
+			console.log(empList);
 
 			for (let i = 0; i < lineList.length; i++) {
 //				console.log(lineList[i].siaf_favo_cd, lineList[i].siaf_favo_name);

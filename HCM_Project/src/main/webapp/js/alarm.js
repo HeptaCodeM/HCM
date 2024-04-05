@@ -220,10 +220,11 @@ function getAlarmList() {
 			alDiv13.setAttribute('class', 'symbol symbol-circle symbol-25px')
 			alDiv13.textContent = d.producer_name; // 제공자 이름
 			alDiv13.prepend(alImg);
-			if(d.empl_picture_str.length > 0) {
+			alImg.setAttribute('style', 'margin-right: 5px;');
+			if(d.empl_picture_str != undefined) {
 				alImg.setAttribute('src', d.empl_picture_str);
 			} else {
-				alImg.setAttribute('src','https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77') // 사진
+				alImg.setAttribute('src','/image/blank.png'); // 사진
 			}
 			alI2.append(alSpan5);
 			alI2.append(alSpan6);
