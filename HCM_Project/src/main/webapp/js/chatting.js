@@ -250,10 +250,10 @@ function sendMessage() {
 }
 
 // 대화내용 불러오기
-function loadMessage(event, empl_id) {
+function loadMessage(node, empl_id) {
 	sender = document.getElementById('id').value;
 	target = empl_id;
-	var ele = event.target.text;
+	var ele = node.querySelector('a').textContent;
 	document.getElementById('mainDiv').textContent = '';
 //	console.log(sender, target, message);
 	fetch('/loadMessage.do?ch_sender=' + sender + '&ch_target=' + target)
@@ -435,7 +435,7 @@ function chatUserList() {
 				var span = document.createElement('span');
 				div1.setAttribute('class', 'rounded d-flex flex-stack bg-active-lighten p-4');
 				div1.setAttribute('data-user-id', idx);
-				div1.setAttribute('onclick', 'selectNode(this)');
+				div1.setAttribute('onclick', 'loadMessage(this,' + d.ch_sender + ')');
 				div1.setAttribute('style', 'cursor: pointer;')
 				div2.setAttribute('class', 'd-flex align-items-center');
 				div3.setAttribute('class', 'symbol symbol-35px symbol-circle');
@@ -450,8 +450,6 @@ function chatUserList() {
 					img.setAttribute('src', 'https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77');
 				}
 				a.setAttribute('class', 'fs-5 fw-bold text-gray-900 text-hover-primary mb-2');
-				a.setAttribute('onclick', 'loadMessage(event,' + d.ch_sender + ')');
-				a.setAttribute('style', 'cursor: pointer;');
 				span.setAttribute('class', 'badge badge-light');
 
 				a.textContent = d.empl_name;
@@ -515,10 +513,6 @@ function chatUserList() {
 	
 }
 
-function selectNode(node) {
-	var a = node.querySelector('a');
-	a.click();
-}
 
 
 

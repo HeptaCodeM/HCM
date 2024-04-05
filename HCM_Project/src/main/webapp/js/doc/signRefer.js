@@ -211,6 +211,8 @@ function saveRefer() {
 		empl_dept_cd : referDept,
 		empl_dept_name : refDeptName
 	}
+	console.log(ref)
+	console.log(refDept)
 	
 	if(refer.length == 0 && referDept.length == 0) {
 		sweetAlertConfirm('참조자가 없습니다 저장할까요?',function() {
