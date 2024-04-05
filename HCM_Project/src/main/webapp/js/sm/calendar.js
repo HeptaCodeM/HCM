@@ -151,6 +151,21 @@ function listAjax(daygridmonth) {
 					        if (title === "연차" || title === "휴가") {
 					            title = item.scbo_writer + " - " + title;
 					        }
+					        
+					       var start = new Date(item.start);
+						    var end;
+						
+						    // JSON 데이터에서 받은 end 값이 숫자로 주어진 경우
+						    if (typeof item.end === 'number') {
+						        end = new Date(item.end);
+						        // 시작 시간이 00:00 인 경우에만 시간초를 추가하여 시간을 23:59:59로 설정
+						        if (start.getHours() === 0 && start.getMinutes() === 0) {
+						            end.setTime(end.getTime() + (86399 * 1000)); // 86399초를 밀리초로 변환하여 더해줍니다.
+						        }
+						    } else {
+						        end = new Date(item.end);
+						    }
+    						
 					         var className;
 				            switch (item.scbo_cgory_no) {
 				                case "100":
@@ -171,7 +186,7 @@ function listAjax(daygridmonth) {
 				    return {
                     title: title, // 이벤트 제목
                     start: item.start, // 이벤트 시작일
-                    end: item.end,     // 이벤트 종료일
+                    end: end,     // 이벤트 종료일
                     scbo_no: item.scbo_no,
                     scbo_empno: item.scbo_empno,
                     scbo_cgory_no: item.scbo_cgory_no,

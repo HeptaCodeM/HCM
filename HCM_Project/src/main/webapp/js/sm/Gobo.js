@@ -151,7 +151,7 @@ function deleteButton(rebo_no){
 
 function deleteAjax(rebo_no){
 	$.ajax({
-		url: "/sm/updateReplyDelFlagAdmin.do",
+		url: "/sm/updateReplyDelFlag.do",
 		data:{rebo_no:rebo_no},
 		type:"get",
 		dataType: "json",

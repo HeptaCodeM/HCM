@@ -26,7 +26,7 @@
             <div class="row justify-content-between align-items-center">
                 <!-- begin::Title -->
                 <div class="col-auto">
-                    <h1 class="page-heading text-gray-900 fw-bold fs-3 my-0">공지사항</h1>
+                    <h1 class="page-heading text-gray-900 fw-bold fs-3 my-0">&nbsp;공지사항</h1>
                 </div>
                 <!-- end::Title -->
 
@@ -62,7 +62,7 @@
 											<span class="inner">공지</span>
 											</strong></td>
                                         <td><div>${vo.gobo_title}</div></td>
-                                        <td><fmt:formatDate value="${vo.gobo_regdate}" pattern="yyyy-MM-dd hh:mm"/></td>
+                                        <td><fmt:formatDate value="${vo.gobo_regdate}" pattern="yyyy-MM-dd"/></td>
                                         <td>${vo.gobo_view}</td>
                                     </tr>
                                 </c:if>
