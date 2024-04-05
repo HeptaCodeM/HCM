@@ -13,7 +13,7 @@ onload = function() {
 }, 1000);
 	
 	if (ws === null) {
-		ws = new WebSocket('ws://localhost:8080/hcmWs.do');
+		ws = new WebSocket('ws://192.168.8.28:8080/hcmWs.do');
 		ws.onopen = function() {
 			console.log('WebSocket 연결 성공');
 		}
@@ -149,7 +149,7 @@ onload = function() {
 		dong.setAttribute('class', 'badge badge-danger badge-circle w-10px h-10px me-1');
 		text.textContent = '오프라인';
 		
-		ws = new WebSocket('ws://localhost:8080/hcmWs.do');
+		ws = new WebSocket('ws://192.168.8.28:8080/hcmWs.do');
 	}
 
 	document.getElementById('send').addEventListener('click', sendMessage);
@@ -161,7 +161,7 @@ onload = function() {
 function sendMessage() {
 //	console.log(ws);
 	if(ws === null) {
-		ws = new WebSocket('ws://localhost:8080/hcmWs.do');
+		ws = new WebSocket('ws://192.168.8.28:8080/hcmWs.do');
 		ws.onopen = function() {
 			console.log('WebSocket 연결 성공');
 		}
