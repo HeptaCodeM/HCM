@@ -84,7 +84,7 @@ public class EmployeeController {
 		model.addAttribute("rankList", rankList);
 		model.addAttribute("positionList", positionList);
 		
-		return "/hr/employee/registEmpAdmin";
+		return "hr/employee/registEmpAdmin";
 	}
 
 	@PostMapping("registEmpAdminOk.do")
@@ -180,7 +180,7 @@ public class EmployeeController {
 		
 		model.addAttribute("empInfo", empInfo);
 		
-		return "/hr/employee/empModify";
+		return "hr/employee/empModify";
 	}	
 	
 	
@@ -473,7 +473,7 @@ public class EmployeeController {
 		byte[] empPic = empInfo.getEmpl_picture();
 		empInfo.setEmpl_picture_str(Function.blobImageToString(empPic));
 		model.addAttribute("empInfo", empInfo);
-//		return "/hr/employee/modifyAdmin";
+//		return "hr/employee/modifyAdmin";
 		
 	}	
 	
