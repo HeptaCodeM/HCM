@@ -41,7 +41,6 @@ currentRootName = currentRootName.substring(0, currentRootName.indexOf("/"));
 Boolean openHrMenuFlag1 = false;
 Boolean openHrMenuFlag2 = false;
 %>
-<%=currentRootName%>//<%=currentPageName%>
 	<!-- 대분류별 영역 시작 -->
 	<div class="menu menu-column menu-rounded menu-sub-indention fw-semibold" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 		
@@ -97,7 +96,7 @@ Boolean openHrMenuFlag2 = false;
 				<%
 				openHrMenuFlag2 = false;
 				for(int j=0;j<hrSubLeftMenu[i].length;j++){ 
-					if(hrSubLinkLeftMenu[i][j].indexOf(currentPageName)>=0){
+					if(hrSubLinkLeftMenu[i][j].contains(currentPageName)){
 						openHrMenuFlag2 = true;
 					}
 				}
@@ -116,7 +115,7 @@ Boolean openHrMenuFlag2 = false;
 					<%if(hrSubLinkLeftMenu[i][j].contains("Admin")){%>
 					<sec:authorize access="hasAnyRole('HR_ADMIN','SYS_ADMIN')">
 					<!-- 소분류1 메뉴 영역 시작 -->
-					<div class="menu-item">
+					<div class="menu-item <%if(currentPageName.contains(hrSubLinkLeftMenu[i][j])){%>hover<%}%>">
 						<!--begin:Menu link-->
 						<a class="menu-link" href="<%=hrSubLinkLeftMenu[i][j]%>">
 							<span class="menu-bullet">
@@ -130,7 +129,7 @@ Boolean openHrMenuFlag2 = false;
 					<%}else{%>
 					<sec:authorize access="isAuthenticated()">
 					<!-- 소분류1 메뉴 영역 시작 -->
-					<div class="menu-item">
+					<div class="menu-item <%if(hrSubLinkLeftMenu[i][j].contains(currentPageName)){%>hover<%}%>">
 						<!--begin:Menu link-->
 						<a class="menu-link" href="<%=hrSubLinkLeftMenu[i][j]%>">
 							<span class="menu-bullet">
