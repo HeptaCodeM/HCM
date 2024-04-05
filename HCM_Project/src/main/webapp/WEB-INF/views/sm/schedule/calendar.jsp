@@ -100,12 +100,12 @@
 		data-kt-app-sidebar-push-footer="true"
 		data-kt-app-toolbar-enabled="true" class="app-default">
 
-		<div class="app-wrapper flex-column flex-row-fluid">
-			<div class="app-toolbar py-3 py-lg-6">
+		<div class="app-wrapper flex-column flex-row-fluid" style="padding-bottom: 0px;">
+			<div class="app-toolbar">
 			</div>
-			<div class="app-content flex-column-fluid">
+			<div class="app-content flex-column-fluid" style="padding-bottom: 0px;">
 				<!-- 내용 시작 -->
-				<div id="kt_app_content" class="app-content flex-column-fluid">
+				<div id="kt_app_content" class="app-content flex-column-fluid" style="padding-bottom: 0px;">
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-body pt-5 calendarwidth" id="calendar">
