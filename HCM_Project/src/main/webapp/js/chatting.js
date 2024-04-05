@@ -18,11 +18,12 @@ onload = function() {
 			console.log('WebSocket 연결 성공');
 		}
 	}
+	
 	document.addEventListener('keydown', function(e) {
 		if (e.keyCode == '13') {
 			sendMessage();
 		}
-	})
+	});
 	
 	document.getElementById('chatMain').addEventListener('click', function() {
 		chatUserList();
@@ -39,20 +40,26 @@ onload = function() {
 		}
 		if(e.data === '접속여부판단:온라인') {
 //			console.log(e.data);
-			var parent = document.getElementById('target').parentNode;
-			var dong = parent.querySelector('.badge-circle');
-			var text = parent.querySelector('.text-muted');
-			dong.removeAttribute('class');
-			dong.setAttribute('class', 'badge badge-success badge-circle w-10px h-10px me-1');
-			text.textContent = '접속중';
+			setTimeout(function() {
+				var parent = document.getElementById('target').parentNode;
+				var dong = parent.querySelector('.badge-circle');
+				var text = parent.querySelector('.text-muted');
+				dong.removeAttribute('class');
+				dong.setAttribute('class', 'badge badge-success badge-circle w-10px h-10px me-1');
+				text.textContent = '접속중';
+			}, 1000)
+			
 			return;
 		} else if (e.data === '접속여부판단:오프라인') {
-			var parent = document.getElementById('target').parentNode;
-			var dong = parent.querySelector('.badge-circle');
-			var text = parent.querySelector('.text-muted');
-			dong.removeAttribute('class');
-			dong.setAttribute('class', 'badge badge-danger badge-circle w-10px h-10px me-1');
-			text.textContent = '오프라인';
+			setTimeout(function() {
+				var parent = document.getElementById('target').parentNode;
+				var dong = parent.querySelector('.badge-circle');
+				var text = parent.querySelector('.text-muted');
+				dong.removeAttribute('class');
+				dong.setAttribute('class', 'badge badge-danger badge-circle w-10px h-10px me-1');
+				text.textContent = '오프라인';
+			}, 1000)
+			
 			return;
 		}
 		
@@ -141,6 +148,8 @@ onload = function() {
 		dong.removeAttribute('class');
 		dong.setAttribute('class', 'badge badge-danger badge-circle w-10px h-10px me-1');
 		text.textContent = '오프라인';
+		
+		ws = new WebSocket('ws://localhost:8080/hcmWs.do');
 	}
 
 	document.getElementById('send').addEventListener('click', sendMessage);
