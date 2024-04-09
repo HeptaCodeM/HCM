@@ -56,16 +56,16 @@ ClassicEditor
 		},
 		/* 이미지 업로드 */
         simpleUpload: {
-            uploadUrl: './uploadImage.do',
+            uploadUrl: './uploadImageAdmin.do',
             withCredentials: true
-            
+           
         }, 
         /* 문서 자동저장 */
-		autosave: {
-            save( editor ) {
-                return saveData( editor.getData() );
-        }
-        },
+//		autosave: {
+//            save( editor ) {
+//                return saveData( editor.getData() );
+//        }
+//        },
         /* html support */
         htmlSupport: {
                     allow: [
@@ -86,15 +86,15 @@ ClassicEditor
 	})
 	
 	/* 문서 자동저장 */		
-	const HTTP_SERVER_LAG = Math.floor(Math.random() * (2000 - 500 + 1)) + 500;	
-	function saveData( data ) {
-	    return new Promise( resolve => {
-	        setTimeout( () => {
-	            console.log( 'Saved', data );
-	            
-	            resolve();
-	        }, HTTP_SERVER_LAG );
-		} );
-	}
+//	const HTTP_SERVER_LAG = Math.floor(Math.random() * (2000 - 500 + 1)) + 500;	
+//	function saveData( data ) {
+//	    return new Promise( resolve => {
+//	        setTimeout( () => {
+//	            console.log( 'Saved', data );
+//	            
+//	            resolve();
+//	        }, HTTP_SERVER_LAG );
+//		} );
+//	}
 	
 

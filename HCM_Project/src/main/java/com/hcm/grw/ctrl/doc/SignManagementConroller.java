@@ -25,7 +25,7 @@ public class SignManagementConroller {
 	
 	@PostMapping("insertSign.do")
 	public boolean insertSign(@RequestBody Map<String, Object> map) {
-		log.info("SignManagementConroller insertSign.do 서명 저장 : {}", map);
+		log.info("SignManagementConroller insertSign.do 서명 저장");
 		int n = signService.insertSign(map);
 		if(n == 1) {
 			return true;

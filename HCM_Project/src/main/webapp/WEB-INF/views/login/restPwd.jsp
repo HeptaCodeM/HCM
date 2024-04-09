@@ -13,14 +13,10 @@
 	<meta http-equiv="Expires" content="0">
 
 	<link rel="canonical" href="https://preview.keenthemes.com/keen" />
-	<link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
+	<link rel="shortcut icon" href="/image/logoMini-removebg-preview.png" />
 	<!--begin::Fonts(mandatory for all pages)-->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 	<!--end::Fonts-->
-	<!--begin::Vendor Stylesheets(used for this page only)-->
-	<link href="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
-	<link href="/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
-	<!--end::Vendor Stylesheets-->
 	<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
 	<link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 	<link href="/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
@@ -32,13 +28,12 @@
 		.fv-row.auth>div{ line-height:65px; }
 		.fv-row.auth>input{ width:40%; }
 		.fv-row.auth>button { width:35%; margin-left:5%; }
+		
+		@media (max-width: 990px) {
+			.auth-num { width: 61px !important; }
+		}
 	</style>
 
-	<script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) 
-		if (window.top != window.self) { 
-			window.top.location.replace(window.self.location.href); 
-		}
-	</script>
 	<title>비밀번호 찾기</title>
 	<script src="/js/common/common.js" type="text/javascript"></script>
 	<script src="/js/login/login.js" type="text/javascript"></script>
@@ -55,26 +50,10 @@
 		<!--begin::Aside-->
 		<div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center" style="background-image: url(/assets/media/misc/auth-bg.png)">
 			<!--begin::Content-->
-			<div class="d-flex flex-column flex-center p-6 p-lg-10 w-100">
-				<!--begin::Logo-->
-				<a href="/main.do" class="mb-0 mb-lg-20">
-					<img alt="Logo" src="/image/naverLogo.svg" class="h-40px h-lg-50px" />
-				</a>
-				<!--end::Logo-->
+			<div class="d-flex flex-column flex-center p-6 p-lg-10 w-100" style="background-color: #344672;">
 				<!--begin::Image-->
-				<img class="d-none d-lg-block mx-auto w-300px w-lg-75 w-xl-500px mb-10 mb-lg-20" src="/image/naverworks.png" alt="" />
+				<img class="d-none d-lg-block mx-auto w-300px w-lg-75 w-xl-500px mb-10" style="margin-top: 32.5px;" src="/image/logo-removebg-preview.png" alt="" />
 				<!--end::Image-->
-				<!--begin::Title-->
-				<h1 class="d-none d-lg-block text-white fs-2qx fw-bold text-center mb-7">출근하세요 빨리...</h1>
-				<!--end::Title-->
-				<!--begin::Text-->
-				<div class="d-none d-lg-block text-white fs-base text-center">
-					<!-- 여기에는<br>
-					대충<br>
-					설명이<br>
-					들어가요! -->
-				</div>
-				<!--end::Text-->
 			</div>
 			<!--end::Content-->
 		</div>
@@ -90,7 +69,7 @@
 						<!--begin::Heading-->
 						<div class="text-center mb-11">
 							<!--begin::Title-->
-							<h1 class="text-gray-900 fw-bolder mb-3">비밀번호 찾기</h1>
+							<h1 class="text-gray-900 fw-bolder mb-3">비밀번호 초기화</h1>
 							<!--end::Title-->
 						</div>
 						<!--begin::Heading-->
@@ -103,22 +82,26 @@
 						<!--begin::Input group=-->
 						<div class="fv-row mb-8">
 							<div>사번</div>
-							<input type="text" placeholder="사번 입력" name="empl_id" id="empl_id" autocomplete="off" class="form-control" value="20220101" />
+							<input type="text" placeholder="사번 입력" name="empl_id" id="empl_id" autocomplete="off" class="form-control"/>
 						</div>
 						<div class="fv-row mb-8">
 							<div>성명</div>
-							<input type="text" placeholder="성명 입력" name="empl_name" id="empl_name" autocomplete="off" class="form-control" value="신동준" />
+							<input type="text" placeholder="성명 입력" name="empl_name" id="empl_name" autocomplete="off" class="form-control"/>
 						</div>
 						<div class="fv-row mb-8">
 							<div>이메일</div>
-							<input type="text" placeholder="이메일 입력" name="empl_email" id="empl_email" autocomplete="off" class="form-control" value="jjang2121@gmail.com" />
+							<input type="text" placeholder="이메일 입력" name="empl_email" id="empl_email" autocomplete="off" class="form-control"/>
 						</div>
 						<!--end::Input group=-->
 
 						<div class="fv-row mb-8 auth" id="auth-area">
-							<div>인증번호</div>
+							<div class="auth-num" style="width:73px;">인증번호</div>
 							<input type="text" placeholder="인증번호 입력" name="authnum" id="authnum" autocomplete="off" class="form-control" maxlength="4" />
-							<button type="button" class="btn btn-success" onclick="initPwdAuthNumCheck()">인증번호<br>확인</button>
+							<button type="button" class="btn btn-primary" onclick="initPwdAuthNumCheck()">인증번호<br>확인</button>
+						</div>
+						<div class="fv-row mb-8" style="display:none;" id="auth-area-time">
+							<div>제한시간</div>
+							<div id="time"></div>
 						</div>
 						<!--end::Wrapper-->
 						<!--begin::Submit button-->
@@ -127,6 +110,7 @@
 								<!--begin::Indicator label-->
 								<span class="indicator-label">인증번호 발송</span>
 								<!--end::Indicator label-->
+								
 							</button>
 						</div>
 						<div class="d-grid mb-10">
@@ -164,9 +148,6 @@
 <script src="/assets/plugins/global/plugins.bundle.js"></script>
 <script src="/assets/js/scripts.bundle.js"></script>
 <!--end::Global Javascript Bundle-->
-<!--begin::Custom Javascript(used for this page only)-->
-<script src="/assets/js/custom/authentication/sign-in/general.js"></script>
-<!--end::Custom Javascript-->
 <!--end::Javascript-->
 
 </html>

@@ -18,11 +18,12 @@ onload = function() {
 			console.log('WebSocket 연결 성공');
 		}
 	}
+	
 	document.addEventListener('keydown', function(e) {
 		if (e.keyCode == '13') {
 			sendMessage();
 		}
-	})
+	});
 	
 	document.getElementById('chatMain').addEventListener('click', function() {
 		chatUserList();
@@ -31,22 +32,34 @@ onload = function() {
 	ws.onmessage = function(e) {
 //		console.log('웹소켓 서버 수신')
 		var myId = document.getElementById('id').value;
+//		console.log('웹소켓 수신', e.data);
+		if(e.data === '새로운 공지사항이 등록되었습니다') {
+			notify(e.data);
+			
+			return;
+		}
 		if(e.data === '접속여부판단:온라인') {
 //			console.log(e.data);
-			var parent = document.getElementById('target').parentNode;
-			var dong = parent.querySelector('.badge-circle');
-			var text = parent.querySelector('.text-muted');
-			dong.removeAttribute('class');
-			dong.setAttribute('class', 'badge badge-success badge-circle w-10px h-10px me-1');
-			text.textContent = '접속중';
+			setTimeout(function() {
+				var parent = document.getElementById('target').parentNode;
+				var dong = parent.querySelector('.badge-circle');
+				var text = parent.querySelector('.text-muted');
+				dong.removeAttribute('class');
+				dong.setAttribute('class', 'badge badge-success badge-circle w-10px h-10px me-1');
+				text.textContent = '접속중';
+			}, 1000)
+			
 			return;
 		} else if (e.data === '접속여부판단:오프라인') {
-			var parent = document.getElementById('target').parentNode;
-			var dong = parent.querySelector('.badge-circle');
-			var text = parent.querySelector('.text-muted');
-			dong.removeAttribute('class');
-			dong.setAttribute('class', 'badge badge-danger badge-circle w-10px h-10px me-1');
-			text.textContent = '오프라인';
+			setTimeout(function() {
+				var parent = document.getElementById('target').parentNode;
+				var dong = parent.querySelector('.badge-circle');
+				var text = parent.querySelector('.text-muted');
+				dong.removeAttribute('class');
+				dong.setAttribute('class', 'badge badge-danger badge-circle w-10px h-10px me-1');
+				text.textContent = '오프라인';
+			}, 1000)
+			
 			return;
 		}
 		
@@ -135,6 +148,8 @@ onload = function() {
 		dong.removeAttribute('class');
 		dong.setAttribute('class', 'badge badge-danger badge-circle w-10px h-10px me-1');
 		text.textContent = '오프라인';
+		
+		ws = new WebSocket('ws://localhost:8080/hcmWs.do');
 	}
 
 	document.getElementById('send').addEventListener('click', sendMessage);
@@ -144,7 +159,7 @@ onload = function() {
 
 // 메세지 보내기
 function sendMessage() {
-	console.log(ws);
+//	console.log(ws);
 	if(ws === null) {
 		ws = new WebSocket('ws://localhost:8080/hcmWs.do');
 		ws.onopen = function() {
@@ -160,7 +175,7 @@ function sendMessage() {
 	sender = document.getElementById('id').value;
 	target = document.getElementById('target').value;
 	message = document.getElementById('message').value;
-	console.log(sender, target, message);
+//	console.log(sender, target, message);
 	var obj = {
 				ch_sender : sender,
 				ch_target : target,
@@ -178,7 +193,7 @@ function sendMessage() {
 			return resp.text();
 		})
 		.then(data => {
-			console.log(data);
+//			console.log(data);
 			var seDiv1 = document.createElement('div');
 			var seDiv2 = document.createElement('div');
 			var seDiv3 = document.createElement('div');
@@ -240,13 +255,13 @@ function loadMessage(event, empl_id) {
 	target = empl_id;
 	var ele = event.target.text;
 	document.getElementById('mainDiv').textContent = '';
-	console.log(sender, target, message);
+//	console.log(sender, target, message);
 	fetch('/loadMessage.do?ch_sender=' + sender + '&ch_target=' + target)
 		.then(resp => {
 			return resp.json();
 		})
 		.then(data => {
-			console.log(data);
+//			console.log(data);
 			if(data.length == 0) { 
 				document.getElementById('mainDiv').textContent = '대화 기록이 없습니다';
 			}
@@ -272,7 +287,7 @@ function loadMessage(event, empl_id) {
 
 			data.forEach(function(d, idx) {
 				if (d.ch_sender == sender) {
-					console.log('보낸데이터 : ', d)
+//					console.log('보낸데이터 : ', d)
 					var seDiv1 = document.createElement('div');
 					var seDiv2 = document.createElement('div');
 					var seDiv3 = document.createElement('div');
@@ -309,7 +324,7 @@ function loadMessage(event, empl_id) {
 					seDiv1.append(seDiv2);
 					document.getElementById('mainDiv').append(seDiv1);
 				} else {
-					console.log('받은데이터 : ', d)
+//					console.log('받은데이터 : ', d)
 					var reDiv1 = document.createElement('div') // 아우터
 					var reDiv2 = document.createElement('div') // 이너
 					var reDiv3 = document.createElement('div') // 헤더아우터
@@ -404,7 +419,7 @@ function chatUserList() {
 	.then(resp => {return resp.json()})
 	.then(data => {
 		document.getElementById('searchMainDiv').textContent = '';
-		console.log(data)
+//		console.log(data)
 		data.forEach(function(d, idx) {
 			if(d.ch_sender != myId) {
 			

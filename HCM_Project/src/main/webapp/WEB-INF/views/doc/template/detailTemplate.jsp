@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp"%>
 <title>DOC메인화면</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <link rel="stylesheet" href="/ckeditor5/sample/template.css">	
@@ -64,10 +63,10 @@
 <%-- 							<h2 style="text-align: center;">${temDto.sidt_temp_name}</h2> --%>
 							<div class="ck_content_detail">${temDto.sidt_temp_content}</div>
 							
-							
 							<div style="text-align: center;">
 								<button class="modifyTemplate btn btn-light-primary btnMd btn-color-gray-600">수정하기</button>
 								<button class="deleteTemplate btn btn-light-primary btnMd btn-color-gray-600">삭제하기</button>
+<!-- 								<button class="returnTemplate btn btn-light-primary btnMd btn-color-gray-600">복구하기</button> -->
 							</div>
 			
 
@@ -94,19 +93,21 @@
 	/* 수정하기 */
 	var modifybtn = document.querySelector('.modifyTemplate');
 	modifybtn.addEventListener("click", function(){
-		window.location.href = "./modifyTemplate.do?sidt_temp_cd=${temDto.sidt_temp_cd}";
+		window.location.href = "/doc/modifyTemplateAdmin.do?sidt_temp_cd=${temDto.sidt_temp_cd}";
 	});
 	
 	/* 삭제하기 */
 	var deletebtn = document.querySelector('.deleteTemplate');
 	deletebtn.addEventListener("click", function(){
-		var confirmation = confirm("해당 템플릿을 삭제하시겠습니까?");
-		if(confirmation){
-			window.location.href = "./deleteTemplate.do?sidt_temp_cd=${temDto.sidt_temp_cd}";
-			alert("삭제되었습니다");
-		} else {
-			return;
-		}		
+		var confirmation = sweetAlertConfirm("해당 템플릿을 삭제하시겠습니까?", function(){
+			if(confirmation){
+				window.location.href = "/doc/deleteTemplateAdmin.do?sidt_temp_cd=${temDto.sidt_temp_cd}";
+			} else {
+				self.close();
+			}					
+		}, '');
 	});
+	
+	
 </script>
 </html>

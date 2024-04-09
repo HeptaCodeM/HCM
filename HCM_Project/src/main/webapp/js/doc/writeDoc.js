@@ -77,7 +77,6 @@ $('#jstree').on('select_node.jstree', function(e, data) {
 		.then(resp => { return resp.text() })
 		.then(data => {
 			docData = data;
-			//         console.log(data);
 			var template = document.getElementById('template')
 			template.innerHTML = data;
 		})
@@ -100,19 +99,20 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 	sidt_temp_cd = selNode[0];
 	// 템플릿 선택 유효성 검사
 	if (selNode.length == 0) {
-		alert('템플릿을 선택해주세요');
+		swalAlert('템플릿을 선택해주세요', '', '', '확인');
 		return;
 	}
 	if (selNode[0].startsWith("CC")) {
-		alert('템플릿을 선택해주세요');
+		swalAlert('템플릿을 선택해주세요', '', '', '확인');
 		return;
 	}
 
-
 	// -----------------------------------> [ 모달창 ] 로그인 정보를 포함한 에디터 화면으로 변경
+	// 화면 전환 (템플릿 선택 -> 템플릿 작성)
 	$("#template_div").hide();
 	$("#editor_div").show();
 	document.getElementById('closeBtn').click();
+	// 화면으로 전달할 session 정보 설정
 	var sessionName = document.getElementById('myName');
 	var sessionDept = document.getElementById('myDept');
 	var sessionRank = document.getElementById('myRank');
@@ -124,6 +124,7 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 	var sessioncompTel = document.getElementById('comp_tel').value;
 	var sessioncompAddr1 = document.getElementById('comp_addr1').value;
 	var sessioncompAddr2 = document.getElementById('comp_addr2').value;
+	// 템플릿에 로그인한 유저 정보 넣어주기
 	var insertName = docData.replace("홍길동", sessionName.value)
 	var insertDept = insertName.replace("인사팀", sessionDept.value)
 	var insertRank = insertDept.replace("대리", sessionRank.value)
@@ -143,6 +144,15 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 	var insertCompAddr = insertCompTel.replace('　　　　　', sessioncompAddr1 + sessioncompAddr2);
 	var insertToday = insertCompAddr.replace('2024년 01월 01일', formatDate)
 	editor.setData(insertToday);
+	
+	// -----------------------------------> [ 작성화면 ]이벤트 날짜 유효성검사
+	
+	var restHoli = document.getElementById('restHoli').value;
+	console.log('restHoli: ',restHoli);
+	
+	
+	
+
 
 
 	// -----------------------------------> [ 작성화면 ] 사원정보 유효성검사
@@ -154,30 +164,39 @@ document.getElementById('getTemplate').addEventListener('click', function(e) {
 		})
 	}, 1500)
 	
-	
+	// -----------------------------------> [ 작성화면 ] 휴가/연차 일자 표시
 	if (sidt_temp_cd == 'TC000001' || sidt_temp_cd == 'TC000002') {
 		var span1 = document.createElement('span');
 		var span2 = document.createElement('span');
 		var span3 = document.createElement('span');
+		var div = document.createElement('div')
 		
-		span1.setAttribute('style', 'font-size: 13px; margin-left: 800px; font-weight: bold; color: orange;');
+		span1.setAttribute('style', 'font-size: 13px; font-weight: bold; color: orange;');
 		span2.setAttribute('style', 'font-size: 13px; margin-left: 20px; font-weight: bold; color: orange;');
 		span3.setAttribute('style', 'font-size: 13px; margin-left: 20px; font-weight: bold; color: orange;');
+		div.setAttribute('style', 'text-align: right;')
 		
 		span1.textContent = '* 총 휴가일수 : ' + document.getElementById('totalHoli').value; 
 		span2.textContent = '사용한 휴가일수 : ' + document.getElementById('useHoli').value;
 		span3.textContent = '잔여 휴가일수 : ' + document.getElementById('restHoli').value;
 		
-		document.getElementById('editor_div').prepend(span3);
-		document.getElementById('editor_div').prepend(span2);
-		document.getElementById('editor_div').prepend(span1);
+		div.append(span1);
+		div.append(span2);
+		div.append(span3);
+		
+		document.getElementById('editor_div').prepend(div);		
+			
 	}
 
 })
 
+	
+	
+
 // -----------------------------------> [ 작성화면 ] 현재 작성일 설정   
 var currentDate = new Date();
-var formatDate = currentDate.getFullYear() + '-' + ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' + ('0' + currentDate.getDate()).slice(-2);
+//var formatDate = currentDate.getFullYear() + '-' + ('0' + (currentDate.getMonth() + 1)).slice(-2) + '-' + ('0' + currentDate.getDate()).slice(-2);
+var formatDate = moment(currentDate).format('YYYY-MM-DD');
 document.getElementById('currentDate').innerHTML = formatDate;
 
 
@@ -186,7 +205,11 @@ function insertTempDoc() {
 	// 로그인 정보
 	var empl_id = document.getElementById('id').value;
 	// 기안서 제목
-	var sitb_doc_title = document.getElementById('sitb_doc_title').value;
+	var sitb_doc_title = document.getElementById('sitb_doc_title').value;	
+	if(sitb_doc_title.length == 0) {
+		swalAlert('제목을 입력해주세요','','','확인');
+		return;
+	}
 	// 기안서 내용
 	var sitb_doc_content = editor.getData();
 	// 기안 만료일
@@ -213,7 +236,7 @@ function insertTempDoc() {
 		console.log(sitb_doc_end)
 	}
 	
-	// 이벤트 날짜
+	// 기안문 임시저장 정보
 	var docData = {
 		sitb_doc_title: sitb_doc_title,
 		sitb_doc_content: sitb_doc_content,
@@ -284,14 +307,24 @@ function insertDoc() {
 		sidb_doc_be = be.replace('월', '-')
 		sidb_doc_end = end.replace('월', '-')
 		
-		var calEndDate = new Date(sidb_doc_end);
-		var calBeDate = new Date(sidb_doc_be);
+		var currentDate = moment(new Date()).format('YYYY-MM-DD');
+		var calEndDate = moment(new Date(sidb_doc_end)).format('YYYY-MM-DD');
+		var calBeDate = moment(new Date(sidb_doc_be)).format('YYYY-MM-DD');
+		console.log(currentDate);
+		console.log(calBeDate)
+		console.log(calEndDate)
 		if(calBeDate > calEndDate) {
 			swalAlert('기간을 다시 확인해주세요','','','확인');
 			return;
 		}
+		
+		if(currentDate > calBeDate || currentDate > calEndDate) {
+			swalAlert('시작일과 종료일을 확인해주세요','','','확인');
+			return;
+		} 
 	}
 	
+	// -----------------------------------> [ 작성화면 ] 휴가/연차 날짜 유효성 검사
 	if (sidt_temp_cd == 'TC000001' || sidt_temp_cd == 'TC000002') {
 		
 		var rest = document.getElementById('restHoli').value
@@ -304,7 +337,8 @@ function insertDoc() {
 		}
 	}
 	
-	var file = document.getElementById('sidf_file_content').files[0]; // 파일 가져오기
+	// -----------------------------------> [ 작성화면 ] 유효성 검사
+	var file = document.getElementById('sidf_file_content').files[0]; 
 	var formData = new FormData();
 
 	if (ref == undefined) {
@@ -321,7 +355,6 @@ function insertDoc() {
 		sidb_doc_end = '2024-01-01';
 	}
 
-	// -----------------------------------> 유효성검사
 	if (sidb_doc_title.length == 0) {
 		swalAlert('제목을 입력해주세요', '', '', '확인');
 		return;
@@ -383,6 +416,8 @@ function insertDoc() {
 			console.log(data);
 			if (data == "성공") {
 				location.href = '/doc/docBox.do';
+			} else if (data == "중복된 날짜") {
+				swalAlert('이미 해당 날짜에 일정이 있습니다', '', '', '확인', '')
 			} else {
 				swalAlert('작성에 실패했습니다', '', '', '확인', '')
 			}
@@ -398,20 +433,20 @@ document.getElementById('insertTempDoc').addEventListener('click', insertTempDoc
 document.getElementById('insertDoc').addEventListener('click', insertDoc);
 
 
-
 // 참조 팝업창
 document.getElementById('signRefer').addEventListener('click', function() {
 	open('/doc/writeDoc/signRefer.do', '', 'width=720px height=900px left=400');
 });
 // 결재선 팝업
 document.getElementById('signLine').addEventListener('click', function() {
-	open('/doc/writeDoc/signLine.do', '', 'width=1600px height=900px left=400');
+	open('/doc/writeDoc/signLine.do', '', 'width=1600px height=900px left=100');
 });
 // 서명 팝업
 document.getElementById('selectSign').addEventListener('click', function() {
 	open('/doc/writeDoc/selectSign.do', '', 'width=1200px height=720px left=400');
 });
 
+// 전역변수 설정
 var ref;
 var dept;
 var json;
@@ -421,7 +456,6 @@ var sign;
 // -----------------------------------> [ 작성화면 ] 기안문 기본 정보 load
 window.addEventListener('message', function(e) {
 	var data = e.data;
-
 	if (data.hasOwnProperty('empl_ref')) {
 		ref = data;
 		document.getElementById('refName').value = ref.empl_ref_name;
@@ -438,7 +472,7 @@ window.addEventListener('message', function(e) {
 			document.getElementById('apprName').value = data[0].appr_name + " (" + data[0].appr_position + ")" + " ➡️ " + data[1].appr_name + " (" + data[1].appr_position + ")" + " ➡️ " + data[2].appr_name + " (" + data[2].appr_position + ")";
 		} else if (data.length == 2) {
 			document.getElementById('apprName').value = data[0].appr_name + " (" + data[0].appr_position + ")" + " ➡️ " + data[1].appr_name + " (" + data[1].appr_position + ")";
-		} else {
+		} else if (data.length == 1) {
 			document.getElementById('apprName').value = data[0].appr_name + " (" + data[0].appr_position + ")";
 		}
 	}

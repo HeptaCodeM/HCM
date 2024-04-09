@@ -30,7 +30,7 @@ public class CommonCodeController {
 	private CommonCodeService codeService;	
 	
 	
-	@GetMapping(value = "/hr/commonCode/roleList.do")
+	@GetMapping(value = "/hr/commonCode/roleListAdmin.do")
 	public String roleList(Model model, String role){
 		log.info("{} 직위/직책/부서 리스트 화면진입", Function.getMethodName());
 		System.out.println(role);
@@ -41,11 +41,11 @@ public class CommonCodeController {
 		model.addAttribute("codeList", codeList);
 		model.addAttribute("role", role);
 		
-		return "hr/commonCode/roleList";
+		return "hr/commonCode/roleListAdmin";
 	}	
 	
 	
-	@GetMapping(value = "/hr/commonCode/roleDetail.do")
+	@GetMapping(value = "/hr/commonCode/roleDetailAdmin.do")
 	public String hrRoleDetail(String coco_cd , String role , Model model) {
 		log.info("{} 직위/직책/부서 상세 화면진입", Function.getMethodName());
 		System.out.println(coco_cd);
@@ -74,10 +74,10 @@ public class CommonCodeController {
 		System.out.println(roleDto);
 		model.addAttribute("roleDto" , roleDto);
 		model.addAttribute("role", role);
-		return "hr/commonCode/roleDetail";
+		return "hr/commonCode/roleDetailAdmin";
 	}
 	
-	@GetMapping(value = "/hr/commonCode/deleteRoleOne.do")
+	@GetMapping(value = "/hr/commonCode/deleteRoleOneAdmin.do")
 	public String deleteRoleOne(HttpServletRequest request) {
 		log.info("{} 직위/직책/부서 삭제", Function.getMethodName());
 		String coco_cd = request.getParameter("coco_cd");
@@ -87,13 +87,13 @@ public class CommonCodeController {
 		map.put("coco_cd", coco_cd);
 		int cnt = codeService.deleteRoleOne(map);
 		if(cnt == 1) {
-			return "redirect:/hr/commonCode/roleList.do?role="+role;
+			return "redirect:/hr/commonCode/roleListAdmin.do?role="+role;
 		}else {
-			return "redirect:/hr/commonCode/roleList.do?role="+role;
+			return "redirect:/hr/commonCode/roleListAdmin.do?role="+role;
 		}
 	}	
 
-	@PostMapping(value = "/hr/commonCode/correctionRole.do")
+	@PostMapping(value = "/hr/commonCode/correctionRoleAdmin.do")
 	public @ResponseBody void correctionRole(HttpServletRequest request , Authentication authentication ,HttpServletResponse resp) {
 		log.info("{} 직위/직책/부서 수정", Function.getMethodName());
 
@@ -112,7 +112,7 @@ public class CommonCodeController {
 		int cnt =  codeService.correctionRole(map);
 		String msg;
 		if(cnt == 1) {
-			Function.alertLocation("입력 되었습니다.", "/hr/commonCode/roleList.do?role="+role, "","","");
+			Function.alertLocation("입력 되었습니다.", "/hr/commonCode/roleListAdmin.do?role="+role, "","","");
 			return;
 		}else {
 			Function.alertHistoryBack("입력 시 오류가 발생하였습니다.", "", "");
@@ -122,14 +122,14 @@ public class CommonCodeController {
 	}
 	
 
-	@GetMapping(value = "/hr/commonCode/insertRole.do")
+	@GetMapping(value = "/hr/commonCode/insertRoleAdmin.do")
 	public String insertRole(String role , Model model) {
 		log.info("{} 직위/직책/부서 입력 화면진입", Function.getMethodName());
 		model.addAttribute("role", role);
-		return "hr/commonCode/insertRole";
+		return "hr/commonCode/insertRoleAdmin";
 	}
 	
-	@PostMapping(value = "/hr/commonCode/insertRoleOne.do")
+	@PostMapping(value = "/hr/commonCode/insertRoleOneAdmin.do")
 	public @ResponseBody void insertRoleOne(HttpServletRequest request , Authentication authentication ,HttpServletResponse resp) {
 		log.info("{} 직위/직책/부서 입력", Function.getMethodName());
 
@@ -150,7 +150,7 @@ public class CommonCodeController {
 		int cnt = codeService.insertRoleOne(map);
 		String msg;
 		if(cnt == 1) {
-			Function.alertLocation("입력 되었습니다.", "/hr/commonCode/roleList.do?role="+role, "","","");
+			Function.alertLocation("입력 되었습니다.", "/hr/commonCode/roleListAdmin.do?role="+role, "","","");
 			return;
 //			return "redirect:/hr/commonCode/roleList.do?role="+role;
 		}else {
@@ -162,7 +162,7 @@ public class CommonCodeController {
 	
 	
 	
-	@PostMapping(value = "/hr/commonCode/roleNameDuplicateChk.do")
+	@PostMapping(value = "/hr/commonCode/roleNameDuplicateChkAdmin.do")
 	@ResponseBody
 	public Map<String, Object> roleDuplicateChk(@RequestParam("coco_name") String coco_name ,
 												@RequestParam("coco_cd") String coco_cd ,

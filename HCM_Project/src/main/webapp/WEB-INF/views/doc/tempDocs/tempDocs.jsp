@@ -19,6 +19,16 @@ table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, ta
 .btnSm{
 width:70px;
 }
+.picture{
+ display: inline-block; 
+ vertical-align: middle;
+ width: 50px; 
+ height: 50px; 
+ border-radius: 22px;
+ background-repeat: no-repeat; 
+ background-position: center; 
+ background-size: cover;
+}
 </style>
 </head>
 
@@ -80,8 +90,8 @@ width:70px;
 						</td>
 						<td><a href="/doc/getTempDoc.do?sitb_doc_num=${dto.sidb_doc_num}">${dto.sidb_doc_title}</a></td>
 						
-						<td><img style="width:50px; height:50px; border-radius: 22px;"  src="${dto.empl_pictureStr}" /> ${dto.empl_name}</td>
-						
+						<td><div class="picture" style="background-image: url('${dto.empl_pictureStr}');"></div>
+    						<span style="vertical-align: middle;">${dto.empl_name}</span></td>						
 						<td style="text-align:center;">
 						<fmt:parseDate var="patternDate"	value="${dto.sidb_doc_writedt}"	pattern="yyyy-MM-dd HH:mm:ss" /> 
 								<fmt:formatDate value="${patternDate}" pattern="yyyy년 MM월 dd일" /></td>

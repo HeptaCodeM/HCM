@@ -7,13 +7,13 @@ var signature = new SignaturePad(canvas, {
  
 var clear = document.querySelector("#clear");
 clear.addEventListener("click",function(){
-	console.log("작동");
+//	console.log("작동");
 	signature.clear();
 });
 
 var save = document.querySelector("#save");
 save.addEventListener("click",function(){
-	console.log("작동");
+//	console.log("작동");
 	var data = signature.toDataURL("image/png");
 	var emsi_title = document.getElementById("emsi_title").value;
 	var empl_id = document.getElementById("empl_id").value;
@@ -27,7 +27,7 @@ save.addEventListener("click",function(){
 		signData.emsi_title = emsi_title;
 		signData.empl_id = empl_id;
 		signData.emsi_create_id = emsi_create_id;
-		console.log(signData);
+//		console.log(signData);
 		fetch('/doc/signManagement/insertSign.do',{
 			method:"post",
 			headers: {
@@ -36,7 +36,7 @@ save.addEventListener("click",function(){
 			body:JSON.stringify(signData)
 		})
 		.then(response =>{
-			console.log(response);
+//			console.log(response);
 			if(!response.ok){
 				throw new Error("에러! :( ");
 			}else{
@@ -44,7 +44,7 @@ save.addEventListener("click",function(){
 			}
 		})
 		.then(data => {
-			console.log(data);
+//			console.log(data);
 			if(data === 'true') {
 				swalAlert('저장되었습니다', '', '', '확인');
 				setTimeout(function() {
@@ -76,7 +76,7 @@ function saveSign() {
 	} else {
 		sweetAlertConfirm("선택한 서명을 저장할까요?", function() {
 			var sign = selCheck[0].value;
-			opener.postMessage(sign, '*');
+			opener.postMessage(sign, location.origin);
 			self.close();
 		}, '');
 	}

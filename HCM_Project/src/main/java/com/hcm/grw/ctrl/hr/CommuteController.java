@@ -117,7 +117,7 @@ public class CommuteController {
 	public String empCommuteList(@RequestParam(required = false, name = "getYM") String getYM,
 								Authentication authentication, 
 								Model model) throws IOException {
-		log.info("{} 출/퇴근 처리 페이지", Function.getMethodName());
+		log.info("{} 출/퇴근 현황", Function.getMethodName());
 		
 		if(authentication == null) {
 			Function.alertLocation("로그인 정보가 없습니다.("+Function.getMethodName()+")", "/login/login.do", "", "", "");

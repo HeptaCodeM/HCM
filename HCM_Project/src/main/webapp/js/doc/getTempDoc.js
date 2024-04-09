@@ -12,6 +12,12 @@ function insertTempDoc() {
 	var empl_id = document.getElementById('id').value;
 	// 기안서 제목
 	var sitb_doc_title = document.getElementsByClassName('sitb_doc_title')[0].value;
+	
+	if (sitb_doc_title.length == 0) {
+		swalAlert('제목을 입력해주세요', '', '', '확인');
+		return;
+		}
+		
 	// 기안서 내용
 	var sitb_doc_content = editor.getData();
 	// 기안 만료일
@@ -36,6 +42,8 @@ function insertTempDoc() {
 		console.log(sitb_doc_end)
 	}
 	
+	
+	
 	var docData = {
 		sitb_doc_title : sitb_doc_title,
 		sitb_doc_content : sitb_doc_content,
@@ -48,8 +56,10 @@ function insertTempDoc() {
 		sidt_temp_cd : sidt_temp_cd
 	}	
 		console.log("기안문 임시저장 정보:",docData);
+		
 		var formData = new FormData();
 		formData.append('dto', new Blob([JSON.stringify(docData)], {type : 'application/json'}));
+		
 		
 		fetch('/doc/insertTempDoc.do', {
 		method : 'post',
@@ -95,6 +105,7 @@ function insertDoc() {
 	
 	if (sidt_temp_cd == 'TC000001' || sidt_temp_cd == 'TC000002' || sidt_temp_cd == 'TC000006') {
 		var sidb_doc_event = document.getElementById('sidb_doc_event').textContent;
+		console.log(sidb_doc_event);
 			var eventArr = sidb_doc_event.split('~');
 		const bebe = eventArr[0].replace(/\s+/g, '');
 		const enen = eventArr[1].replace(/\s+/g, '');
@@ -106,6 +117,34 @@ function insertDoc() {
 		sidb_doc_be = be.replace('월', '-')
 		sidb_doc_end = end.replace('월', '-')
 		
+	}
+	
+	var currentDate = moment(new Date()).format('YYYY-MM-DD');
+	var calEndDate = moment(new Date(sidb_doc_end)).format('YYYY-MM-DD');
+	var calBeDate = moment(new Date(sidb_doc_be)).format('YYYY-MM-DD');
+	console.log(currentDate);
+	console.log(calBeDate)
+	console.log(calEndDate)
+	if (calBeDate > calEndDate) {
+		swalAlert('기간을 다시 확인해주세요', '', '', '확인');
+		return;
+	}
+
+	if (currentDate > calBeDate || currentDate > calEndDate) {
+		swalAlert('시작일과 종료일을 확인해주세요', '', '', '확인');
+		return;
+	} 
+	
+	if (sidt_temp_cd == 'TC000001' || sidt_temp_cd == 'TC000002') {
+		
+		var rest = document.getElementById('restHoli').value
+		var calEndDate = new Date(sidb_doc_end);
+		var calBeDate = new Date(sidb_doc_be);
+		var calResult = (calEndDate - calBeDate) / 1000 / 60 / 60 / 24;
+		if(calResult > rest) {
+			swalAlert('휴가 신청 기간이 잔여 휴가일보다 많습니다','','','확인');
+			return;
+		}
 	}
 	
 	if (ref == undefined) {
@@ -192,6 +231,8 @@ function insertDoc() {
 			console.log(data);
 			if(data == "성공") {
 				location.href = '/doc/docBox.do';
+			} else if (data == "중복된 날짜") {
+				swalAlert('이미 해당 날짜에 일정이 있습니다', '', '', '확인', '')
 			} else {
 				swalAlert('작성에 실패했습니다','','','확인','')
 			}
@@ -248,6 +289,7 @@ window.addEventListener('message', function(e) {
 			document.getElementById('apprName').value = data[0].appr_name + " (" + data[0].appr_position + ")";
 		}
 	}
+	
 	console.log('ref : ', ref);
 	console.log('dept : ', dept);
 	console.log('json : ', json);
@@ -281,6 +323,8 @@ setTimeout(function() {
 	// 에디터 템플릿 정보
 	var tempContent = document.getElementById('tempContent').innerHTML;
 	editor.setData(tempContent);
+	document.getElementById('tempContent').innerHTML = '';
+	
 	// 문서 제목
 	var tempTitle = document.getElementById('tempTitle').value;
 	// 문서 카테고리
@@ -301,6 +345,37 @@ setTimeout(function() {
 	if(tempAlflag == 'Y') {
 		document.querySelector('input[name="alflag"]').checked = true;
 	} 
+	
+	if (sidt_temp_cd == 'TC000001' || sidt_temp_cd == 'TC000002') {
+		var span1 = document.createElement('span');
+		var span2 = document.createElement('span');
+		var span3 = document.createElement('span');
+		var div = document.createElement('div')
+		
+		span1.setAttribute('style', 'font-size: 13px; font-weight: bold; color: orange;');
+		span2.setAttribute('style', 'font-size: 13px; margin-left: 20px; font-weight: bold; color: orange;');
+		span3.setAttribute('style', 'font-size: 13px; margin-left: 20px; font-weight: bold; color: orange;');
+		div.setAttribute('style', 'text-align: right;')
+		
+		span1.textContent = '* 총 휴가일수 : ' + document.getElementById('totalHoli').value; 
+		span2.textContent = '사용한 휴가일수 : ' + document.getElementById('useHoli').value;
+		span3.textContent = '잔여 휴가일수 : ' + document.getElementById('restHoli').value;
+		
+		div.append(span1);
+		div.append(span2);
+		div.append(span3);
+		
+		document.getElementById('editor_div').prepend(div);		
+	}
+	
+	setTimeout(function() {
+		var noTouch = document.getElementById('noTouch');
+		noTouch.addEventListener('click', function() {
+			swalAlert('편집불가한 영역입니다', '', '', '확인');
+			document.getElementById('sidb_doc_title').focus();
+		})
+	}, 1500)
+
 	
 },1000);
 

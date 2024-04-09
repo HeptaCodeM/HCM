@@ -144,7 +144,6 @@ public class DocController {
 		model.addAttribute("signList", signList);
 
 		model.addAttribute("docDto", docDto);
-		log.info("getDetailBoard getDetail.do 상세조회 리스트 결과 : {}", docDto);
 
 		if (n != 1) {
 			response.setContentType("text/html; charset=UTF-8");
@@ -183,7 +182,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
-
+            table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -235,6 +234,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -286,6 +286,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -338,6 +339,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -390,6 +392,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -442,6 +445,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -497,6 +501,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -551,6 +556,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -606,6 +612,7 @@ public class DocController {
 				}
 			}
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			table.get(i).setAppr_name(apprName);
 			table.get(i).setAppr_depth(apprDepth);
 			table.get(i).setAppr_flag(apprFlag);
@@ -642,6 +649,7 @@ public class DocController {
 
 	//상세조회 문서에 첨부된 파일 다운로드
 	@GetMapping("/doc/docBox/fileDown.do")
+	@ResponseBody
 	public void fileDown(@RequestParam String sidf_file_num)
 			throws IOException, SerialException, SQLException {
 		SignFileDto dto = docService.getDocsDetailFile(sidf_file_num);
@@ -662,6 +670,7 @@ public class DocController {
 		
 		for (int i = 0; i < table.size(); i++) {
 		table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+		table.get(i).setEmpl_picture(null);
 		}
 		model.addAttribute("lists", table);
 		return "/doc/tempDocs/tempDocs";
@@ -685,6 +694,7 @@ public class DocController {
 		
 		for (int i = 0; i < table.size(); i++) {
 			table.get(i).setEmpl_pictureStr(Function.blobImageToString(table.get(i).getEmpl_picture()));
+			table.get(i).setEmpl_picture(null);
 			}
 		
 		if (n==1) {

@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp"%>
-<title>기안서작성</title>
+<title>HCM GROUPWARE</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <link rel="stylesheet" href="/ckeditor5/sample/template.css">
@@ -15,6 +15,7 @@
 	.modal { 
 		--bs-modal-width: 1200px;
 	}
+	/* 만료일 달력 높이 조절 */
 	.form-control {
 		height: 30px !important;
 	}
@@ -29,31 +30,20 @@
 	data-kt-app-sidebar-push-toolbar="true"
 	data-kt-app-sidebar-push-footer="true"
 	data-kt-app-toolbar-enabled="true" class="app-default modal-open" style="overflow: auto; padding-right: 0px;">
-	<!-- 전체페이지 감싸기 -->
 	<div class="app-wrapper flex-column flex-row-fluid">
-		<!-- 메인페이지 -->
 		<div class="app-toolbar py-3 py-lg-6">
-			<div id="kt_app_toolbar_container"
-				class="app-container container-fluid d-flex flex-stack">
-				<!--begin::Page title-->
-				<div
-					class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-					<!--begin::Title-->
+			<div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
+				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">
-						기안서 작성</h1>
-					<!--end::Title-->
+						기안서 작성
+					</h1>
 				</div>
-				<!--end::Page title-->
 			</div>
 		</div>
 
 		<div class="app-content flex-column-fluid">
-			<!-- 내용 시작 -->
 			<div id="kt_app_content" class="app-content flex-column-fluid">
-
-				<!-- 컨테이너 -->
 				<div class="app-container container-fluid">
-
 					<div class="card card-flush h-md-50 mb-xl-10">
 						<div class="card-header pt-5">
 							<h3 class="card-title text-gray-800 fw-bold">
@@ -64,17 +54,18 @@
 						<div class="card-body pt-5">
 
 							<!-- ---------------------------- 내 용 입 력 -------------------------------- -->
-							<!-- 템플릿양식 선택화면 버튼 -->
+							
+							<!-- ---------- 1. 템플릿양식 선택 모달화면 버튼 ---------- -->
 							<div id="template_div" style="text-align: center;">
-								결재 진행을 위해 양식을 선택해주세요. <br><br>
-								<button type="button" class="btn btn-primary"
-									data-bs-toggle="modal" data-bs-target="#kt_modal_3">
-									기안문 템플릿 선택하기</button>
+									결재 진행을 위해 양식을 선택해주세요. <br><br>
+								<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_3">
+									기안문 템플릿 선택하기
+								</button>
 							</div>
 							
-							<!-- 기안문 작성 화면 -->
+							<!-- ------------- 2. 기안문 작성 화면 ------------ -->
 							<div id="editor_div" style="display: none; max-width: 80%; margin: 0px auto;">
-							
+							<!-- 정보 설정 : userInfo. company, holiday -->
 							<input type="hidden" value="${userInfoVo.emsi_seq }" id="emsi_seq">
 							<input type="hidden" value="${userInfoVo.empl_birth }" id="empl_birth">
 							<input type="hidden" value="${userInfoVo.empl_joindate }" id="empl_joindate">
@@ -87,13 +78,15 @@
 							<input type="hidden" value="${holiMap.USE_HOLIDAY }" id="useHoli">
 							<input type="hidden" value="${holiMap.REST_HOLIDAY }" id="restHoli">
 							<input type="hidden" value="${holiMap.TOTAL_HOLIDAY }" id="totalHoli">
+							
+							
 							<table class="table table-bordered">
 								<tr class="success">
 									<th>기안일</th>
 <!-- 									<td><input id="currentDate" name="sidb_doc_writedt" maxlength="20"></td> -->
 									<td style="text-align: center; vertical-align: middle;"><div id="currentDate" name="sidb_doc_writedt" maxlength="20"></div></td>
 									<th style="text-align: center;">만료일</th>
-									<td>
+									<td style="width: 28%;">
 									<div class="input-group" id="kt_td_picker_localization" data-td-target-input="nearest" data-td-target-toggle="nearest">
 									    <input type="text" class="form-control sitb_doc_expiredt" name="sidb_doc_expiredt" data-td-target="#kt_td_picker_localization"/>
 									    <span class="input-group-text" data-td-target="#kt_td_picker_localization" data-td-toggle="datetimepicker" style="height: 30px !important;">

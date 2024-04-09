@@ -5,7 +5,7 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="canonical" href="https://preview.keenthemes.com/keen" />
-	<link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
+	<link rel="shortcut icon" href="/image/logoMini-removebg-preview.png" />
 	<!--begin::Fonts(mandatory for all pages)-->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 	<!--end::Fonts-->
@@ -68,7 +68,7 @@
 		<!--begin::Aside-->
 		<div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center" style="background-image: url(/assets/media/misc/auth-bg.png)">
 			<!--begin::Content-->
-			<div class="d-flex flex-column flex-center p-6 p-lg-10 w-100">
+			<div class="d-flex flex-column flex-center p-6 p-lg-10 w-100" style="background-color: #344672;">
 				<!--begin::Image-->
 				<img class="d-none d-lg-block mx-auto w-300px w-lg-75 w-xl-500px mb-10" style="margin-top: 32.5px;" src="/image/logo-removebg-preview.png" alt="" />
 				<!--end::Image-->
@@ -125,9 +125,13 @@
 						<!--end::Input group=-->
 						<!--begin::Wrapper-->
 						<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
-							<div></div>
+							<div class="form-check" style="float:left;margin-right:20px;">
+							    <input class="form-check-input" type="checkbox" name="autoLogin" id="remember">
+							    <label class="form-check-label" for="remember">자동로그인</label>
+							</div>
+
 							<!--begin::Link-->
-							<a href="/login/restPwd.do" class="link-primary">비밀번호찾기</a>
+							<a href="/login/restPwd.do" class="link-primary">비밀번호 초기화</a>
 							<!--end::Link-->
 						</div>
 						<!--end::Wrapper-->

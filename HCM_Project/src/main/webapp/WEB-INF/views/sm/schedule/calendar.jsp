@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
-<title>SM메인화면</title>
+<title>HCM GroupWare</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
@@ -14,7 +14,8 @@
 <style type="text/css">
 
 	#calendar {
-      max-width: 1050px;
+      max-width: 1000px;
+      max-height:800px;
       margin:  auto;
     }
     .koHol{
@@ -56,7 +57,7 @@
    color:blue;
    }
    #filterLayer { position: absolute; background-color:#fff; 
-	z-index:999; width:140px; height:300px; left: 34%; transform: translateX(-50%); 
+	z-index:999; width:140px; height:300px; left: 32%; transform: translateX(-50%); 
 	top: 20%; padding: 20px; border:1px solid #ccc; 
 	border-radius: 20px; display: none; 
 	}
@@ -70,9 +71,24 @@
         padding: 5px; /* 적절한 값으로 조절 */
         margin: 0;
     }
+    .category-100 >*{
+      background-color: #39CEFA;
+      color:white;
+    }
+    .category-200 >*{
+      background-color: orange;
+      color:white;
+    }
+    .category-TC000001 >*{
+    background-color: #70DB8A;
+    color:white;
+    }
+    .category-TC000002 >*{
+     background-color: #9368DC;
+     color:white;
+    }
 </style>
 	
-</style>
 
 </head>
 <%@include file="/WEB-INF/views/menu/header.jsp" %>
@@ -84,21 +100,12 @@
 		data-kt-app-sidebar-push-footer="true"
 		data-kt-app-toolbar-enabled="true" class="app-default">
 
-		<div class="app-wrapper flex-column flex-row-fluid">
-			<div class="app-toolbar py-3 py-lg-6">
-				<div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
-					<!--begin::Page title-->
-					<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-						<!--begin::Title-->
-						<h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">캘린더</h1>
-						<!--end::Title-->
-					</div>
-					<!--end::Page title-->
-				</div>		
+		<div class="app-wrapper flex-column flex-row-fluid" style="padding-bottom: 0px;">
+			<div class="app-toolbar">
 			</div>
-			<div class="app-content flex-column-fluid">
+			<div class="app-content flex-column-fluid" style="padding-bottom: 0px;">
 				<!-- 내용 시작 -->
-				<div id="kt_app_content" class="app-content flex-column-fluid">
+				<div id="kt_app_content" class="app-content flex-column-fluid" style="padding-bottom: 0px;">
 					<div class="app-container container-fluid">
 						<div class="card card-flush h-md-50 mb-xl-10">
 							<div class="card-body pt-5 calendarwidth" id="calendar">
@@ -200,10 +207,18 @@
                        <label for="sel1" class="col-form-label">구분</label>
                        <select class="form-select" id="scbo_cgory_no_update" name="scbo_cgory_no" required="required">
                          <option value="100">개인일정</option>
-                         <option value="200">외근</option>
+                         <option value="200">외근일정</option>
+                         <option value="TC000002">휴가</option>
+                         <option value="TC000001">연차</option>
                        </select>
+                       <div id="schtitle">
                      <label for="title" class="col-form-label">일정 제목</label>
                      <input type="text" class="form-control" id="scbo_title1" name="scbo_title">
+                     </div>
+                       <div id="favo">
+                     <label for="title" class="col-form-label">기안자</label>
+                     <input type="text" class="form-control" id="scbo_writer" name="scbo_writer">
+                     </div>
                      </div>
                        <label for="content" class="col-form-label">일정 내용</label>
                        <textarea class="form-control" rows="5" id="scbo_content1" name="scbo_content"></textarea>
@@ -229,7 +244,6 @@
                     </form> 
                </div>
             </div>
-
             <div class="modal-footer">
             	<button type="button" class="btn btn-primary" id="deleteButton" onclick="deleteCalendar()">삭제</button>
             	<button type="button" class="btn btn-primary" id="updateButton" onclick="updateCalendar()">수정</button>
@@ -252,28 +266,27 @@
     <div class="menu-item px-3" style="overflow: hidden;">
         <form name="filter" id="filter" method="post" onsubmit="return false;">
             <table class="table">
-                <thead></thead>
                 <tbody>
                     <tr>
-					    <th>&nbsp;&nbsp;개인 &nbsp;&nbsp;&nbsp;
+					    <th style="color: #39CEFA; ">&nbsp;&nbsp;개인 &nbsp;&nbsp;&nbsp;
 					    <input class="form-check-input" type="checkbox" name="type" value="3">
 					    </th>
 					</tr>
 					
                     <tr>
-                        <th>&nbsp;&nbsp;외근 &nbsp;&nbsp;&nbsp;
+                        <th  style="color: orange;">&nbsp;&nbsp;외근 &nbsp;&nbsp;&nbsp;
                         <input class="form-check-input" type="checkbox" name="type" value="4">
                         </th>
                     </tr>
                        
-                    <tr>
-                        <th>&nbsp;&nbsp;연차 &nbsp;&nbsp;&nbsp;
+                    <tr >
+                        <th style="color:#70DB8A;">&nbsp;&nbsp;연차 &nbsp;&nbsp;&nbsp;
                         <input class="form-check-input" type="checkbox" name="type" value="2">
                         </th>
                     </tr> 
                       
-                    <tr>
-                        <th>&nbsp;&nbsp;휴가 &nbsp;&nbsp;&nbsp;
+                    <tr >
+                        <th style="color:#9368DC;">&nbsp;&nbsp;휴가 &nbsp;&nbsp;&nbsp;
                         <input class="form-check-input" type="checkbox" name="type" value="1">
                         </th>
                     </tr>
@@ -299,7 +312,6 @@ $(document).ready(function(){
         $('#form')[0].reset();
     });
 });
-
 
 
 

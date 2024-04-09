@@ -24,10 +24,12 @@ function holidaySearchList(){
 			console.log(data.holidayTotalMap.TOTAL_HOLIDAY);
 			console.log(data.holidayTotalMap.USE_HOLIDAY);
 			console.log(data.holidayTotalMap.REST_HOLIDAY);
+			console.log(data.holidayTotalMap.STARDARD_HOLIDAY);
 			*/
 			$("#totHoliday").html(data.holidayTotalMap.TOTAL_HOLIDAY);
 			$("#useHoliday").html(data.holidayTotalMap.USE_HOLIDAY);
 			$("#restHoliday").html(data.holidayTotalMap.REST_HOLIDAY);
+			$("#standardHoliday").html(data.holidayTotalMap.STANDARD_HOLIDAY);
 
 			// data 객체의 holidayLists 배열의 각 요소의 날짜 값을 변환
 			data.holidayLists.forEach(function(item) {
@@ -104,6 +106,7 @@ function holidaySearchAdminList(){
 					{ data: 'total_holiday' },
 					{ data: 'use_holiday' },
 					{ data: 'rest_holiday' },
+					{ data: 'standard_holiday' },
 				],
 				displayLength: 10,
 				lengthChange: false,

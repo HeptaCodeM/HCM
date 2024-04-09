@@ -9,8 +9,8 @@
 						<!--begin::Logo-->
 						<div class="app-sidebar-logo px-6" style="justify-content: center;" id="kt_app_sidebar_logo">
 							<!--begin::Logo image-->
-							<a href="/mainTmp.do">
-								<img alt="HCM" src="/image/logo-removebg-preview.png" style="width: 190px;">
+							<a href="/">
+								<img class="mainMenuLog" alt="HCM" src="/image/logo-removebg-preview.png">
 							</a>
 							<!--end::Logo image-->
 						</div>
@@ -27,8 +27,8 @@
 											<!--begin::Member-->
 											<div class="d-flex flex-column text-center mb-9 px-9">
 												<!--begin::Photo-->
-												<div class="symbol symbol-80px symbol-lg-150px mb-4">
-													<img src="${userInfoVo.empl_picture_str}" alt="사진">
+												<div class="symbol symbol-80px symbol-lg-150px mb-4" style="width:150px; height:180px;" alt="사진">
+													<div class="emp-pic" style="background-image:url('${userInfoVo.empl_picture_str}')"></div>
 												</div>
 												<!--end::Photo-->
 												<!--begin::Info-->

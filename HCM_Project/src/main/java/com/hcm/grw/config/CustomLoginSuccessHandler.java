@@ -13,12 +13,15 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.listener.ChannelTopic;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import com.hcm.grw.comm.CookiesMgr;
 import com.hcm.grw.comm.Function;
 import com.hcm.grw.dto.hr.EmployeeDto;
+import com.hcm.grw.model.service.RedisSubscriber;
 import com.hcm.grw.model.service.hr.EmployeeService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +31,11 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Autowired
 	private EmployeeService employeeService;
+	
+
+	@Autowired
+	@Qualifier("listenerContainer")
+    private RedisMessageListenerContainer redisMessageListener;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, 
@@ -57,6 +65,13 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 		session.setAttribute("userInfoVo", employeeDto);
 		
 		log.info("ROLE NAME : {}", roleNames);
+		
+
+		// 공지사항 알림채널 참가 - OJS
+		ChannelTopic hcmNoticeRoom = new ChannelTopic("hcmNoticeRoom");
+		redisMessageListener.addMessageListener(new RedisSubscriber(), hcmNoticeRoom);
+		log.info("hcmNoticeRoom 참가 완료");
+
 
 		// 로그인 성공 시 메인화면 이동
 		if(authentication.isAuthenticated()) {
@@ -81,7 +96,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 			if(StringUtils.defaultIfEmpty(String.valueOf(request.getSession().getAttribute("ckMobile")), "").equals("Y")) {
 				response.sendRedirect("/hr/commute/registCommute.do");
 			}else {
-				response.sendRedirect("/mainTmp.do");
+				response.sendRedirect("/");
 			}
 			return;
 		}

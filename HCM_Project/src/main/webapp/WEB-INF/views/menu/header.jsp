@@ -163,8 +163,10 @@
 					<div class="app-navbar-item ms-2 ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 						<div class="cursor-pointer symbol symbol-35px symbol-md-40px"
 							data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
-							data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-							<img src="${userInfoVo.empl_picture_str}" alt="user">
+							data-kt-menu-attach="parent" 
+							data-kt-menu-placement="bottom-end"
+							style="width:40px; height:40px;">
+							<div style="background-image:url('${userInfoVo.empl_picture_str}') !important;" class="emp-pic"></div>
 						</div>
 
 
@@ -174,8 +176,8 @@
 							<div class="menu-item px-3">
 								<div class="menu-content d-flex align-items-center px-3">
 									<!--begin::Avatar-->
-									<div class="symbol symbol-50px me-5">
-										<img alt="Logo" src="${userInfoVo.empl_picture_str}" />
+									<div class="symbol symbol-50px me-5" style="width:50px; height:55px;">
+										<div style="background-image:url('${userInfoVo.empl_picture_str}') !important;" class="emp-pic"></div>
 									</div>
 									<!--end::Avatar-->
 									<!--begin::Username-->

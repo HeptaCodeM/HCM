@@ -16,7 +16,7 @@
 	
 
 			var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
-			var imgHeight = canvas.height * imgWidth / canvas.width*1.3;//이미지의 세로길이
+			var imgHeight = canvas.height * imgWidth / canvas.width*1.2;//이미지의 세로길이
 
 			var doc = new jsPDF('p', 'mm');	//PDF를 생성하고 조작하기 위한 객체 생성
 			//매개변수는 PDF의 생성되는 방향과 단위를 의미한다 ,'p'는 세로'l'은 가로방향 'mm'단위로 페이지의 크기 단위

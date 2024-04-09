@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         eventSources: [
             {
                 // 구글 캘린더에서 가져올 이벤트의 ID 특일정보 아이디
-                googleCalendarId: "ko.south_korea#holiday@group.v.calendar.google.com"
+                googleCalendarId: "ko.south_korea.official#holiday@group.v.calendar.google.com"
                 // 클릭 이벤트를 제거하기 위해 넣은 클래스
                 , className: "koHol"
                 //이벤트의 색
@@ -64,8 +64,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         },
-        dateClick: function() {   //일자 클릭시 이벤트
-            insert();
+        dateClick: function(info) {   //일자 클릭시 이벤트
+            // 클릭된 날짜 정보 가져오기
+    		var clickedDate = info.date;
+
+    // 클릭된 날짜를 원하는 형식으로 변환
+   	 		var formattedDate = clickedDate.getFullYear() + '/' +
+                        ('0' + (clickedDate.getMonth() + 1)).slice(-2) + '/' +
+                        ('0' + clickedDate.getDate()).slice(-2) + ' ' +
+                        ('0' + clickedDate.getHours()).slice(-2) + ':' +
+                        ('0' + clickedDate.getMinutes()).slice(-2);
+
+    // insert 함수 호출 및 클릭된 날짜 정보 전달
+   		 insert(formattedDate);
         },
         eventClick: function(info) {  // 일정명 클릭시 이벤트
             var scbo_no = info.event.extendedProps.scbo_no;
@@ -88,6 +99,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
+
+
 function listAjax(daygridmonth) {
 	
 	    // 기존에 동일한 ID를 가진 이벤트 소스가 있는지 확인하고 있다면 삭제합니다.
@@ -96,19 +109,6 @@ function listAjax(daygridmonth) {
         existingEventSource.remove();
     }
 	
-//			calendar.getEventSources().forEach(function(source) {
-			    // 이벤트 소스의 클래스 이름이 "koHol"을 포함하는지 확인합니다.
-//			    var google = source.context.eventSources
-//			    console.log(google);
-//			    console.log(source);
-//			    source.remove();
-			   
-//			    calendar.addEventSource(google);
-//			    if(source.context.eventSources){
-//					google += source;
-//				}else{}
-			    // "koHol" 클래스를 가지지 않은 이벤트 소스를 제거합니다.
-//});
 	
     var formData = $("#filter").serializeArray();
     var selectedValues = [];
@@ -132,13 +132,66 @@ function listAjax(daygridmonth) {
         success: function(data) {
 		// 받아온 데이터를 FullCalendar의 이벤트 형식으로 가공합니다.
             var events = data.map(function(item) {
-                return {
-                    title: item.title, // 이벤트 제목
+	
+				  var title;
+				    // scbo_cgory_no가 TC000001인 경우 title을 "연차"로 설정
+				          if (item.scbo_cgory_no === "TC000001") {
+					            title = "연차";
+					        }
+					        // scbo_cgory_no가 TC000002인 경우 title을 "휴가"로 설정
+					        else if (item.scbo_cgory_no === "TC000002") {
+					            title = "휴가";
+					        }
+					        // 그 외의 경우에는 title을 그대로 사용
+					        else {
+					            title = item.title;
+					        }
+					        
+					        // scbo_writer 값을 title 앞에 추가
+					        if (title === "연차" || title === "휴가") {
+					            title = item.scbo_writer + " - " + title;
+					        }
+					        
+					       var start = new Date(item.start);
+						    var end;
+						
+						    // JSON 데이터에서 받은 end 값이 숫자로 주어진 경우
+						    if (typeof item.end === 'number') {
+						        end = new Date(item.end);
+						        // 시작 시간이 00:00 인 경우에만 시간초를 추가하여 시간을 23:59:59로 설정
+						        if (start.getHours() === 0 && start.getMinutes() === 0) {
+						            end.setTime(end.getTime() + (86399 * 1000)); // 86399초를 밀리초로 변환하여 더해줍니다.
+						        }
+						    } else {
+						        end = new Date(item.end);
+						    }
+    						
+					         var className;
+				            switch (item.scbo_cgory_no) {
+				                case "100":
+				                    className = "category-100"; // 카테고리 100의 경우 클래스명은 "category-100"
+				                    break;
+				                case "200":
+				                    className = "category-200"; // 카테고리 200의 경우 클래스명은 "category-200"
+				                    break;
+				                case "TC000001":
+				                    className = "category-TC000001"; // 카테고리 300의 경우 클래스명은 "category-300"
+				                    break;
+				                case "TC000002":
+				                    className = "category-TC000002"; // 카테고리 400의 경우 클래스명은 "category-400"
+				                    break;
+				                default:
+				                    className = ""; // 기타 경우 클래스명은 없음
+				            }
+				    return {
+                    title: title, // 이벤트 제목
                     start: item.start, // 이벤트 시작일
-                    end: item.end,     // 이벤트 종료일
+                    end: end,     // 이벤트 종료일
                     scbo_no: item.scbo_no,
                     scbo_empno: item.scbo_empno,
                     scbo_cgory_no: item.scbo_cgory_no,
+                    scbo_writer:scbo_writer,
+                    className:className
                 };
             });
 
@@ -147,13 +200,13 @@ function listAjax(daygridmonth) {
                 id: "calendarData", // 이벤트 소스에 대한 ID
                 events: events // 새로운 이벤트 데이터
             });
-
             // FullCalendar에 추가된 이벤트를 다시 그립니다.
             calendar.refetchEvents();
         },
         error: function() {
             // 오류 시 처리할 코드
         }
+        
     });
 }
 
@@ -165,22 +218,40 @@ function detail(scbo_no){
         dataType: "json", // seq를 key로 하는 객체를 전송
         success: function(data) {
 			if(data.scbo_cgory_no == 100){
-            $("#scbo_cgory_no1").val("개인일정");
+            $("#scbo_cgory_no_update").val("100");
+            $("#scbo_content1").show();
+            $("#deleteButton").show();
+            $("#updateButton").show();
+            $("#schtitle").show();
+            $("#favo").hide();
 			}else if(data.scbo_cgory_no == 200){
-				$("#scbo_cgory_no1").val("외근일정");
+				$("#scbo_cgory_no_update").val("200");
+				 $("#scbo_content1").show();
+				$("#deleteButton").show();
+            	$("#schtitle").show();
+            	$("#favo").hide();
 			}else if(data.scbo_cgory_no == "TC000002"){
-				$("#scbo_cgory_no1").val("휴가");
+				$("#scbo_cgory_no_update").val("TC000002");
+				 $("#scbo_content1").hide();
+				$("#deleteButton").hide();
+         	   $("#updateButton").hide();
+         	   $("#schtitle").hide();
+         	   $("#favo").show();
 			}else if(data.scbo_cgory_no == "TC000001"){
-				$("#scbo_cgory_no1").val("연차");
+				$("#scbo_cgory_no_update").val("TC000001");
+				 $("#scbo_content1").hide();
+				$("#deleteButton").hide();
+            	$("#updateButton").hide();
+            	$("#schtitle").hide();
+            	$("#favo").show();
 			}
-			
 			var start = new Date(data.scbo_start);
 			var end = new Date(data.scbo_end);
 			var formatstart = start.getFullYear() + '/' + (start.getMonth() + 1).toString().padStart(2, '0') + '/' + start.getDate().toString().padStart(2, '0') + ' ' + start.getHours().toString().padStart(2, '0') + ':' + start.getMinutes().toString().padStart(2, '0');
 			var formatend = end.getFullYear() + '/' + (end.getMonth() + 1).toString().padStart(2, '0') + '/' + end.getDate().toString().padStart(2, '0') + ' ' + end.getHours().toString().padStart(2, '0') + ':' + end.getMinutes().toString().padStart(2, '0');
             $("#scbo_no1").val(data.scbo_no);
             $("#scbo_title1").val(data.scbo_title);
-            $("#scbo_title1").val(data.scbo_title);
+            $("#scbo_writer").val(data.scbo_writer);
             $("#scbo_content1").val(data.scbo_content);
             $("#scbo_start1").val(formatstart);
             $("#scbo_end1").val(formatend);
@@ -192,16 +263,22 @@ function detail(scbo_no){
         error: function() {
             console.log("오류임");
         }
+        
     });
 }
 
-function insert() {
+function insert(day) {
     var daygridmonth = $(".fc-toolbar-title").text();
+    $("#scbo_start").val(day);
+    $("#scbo_end").val(day);
     $("#insertModal").modal("show"); // modal 나타내기
-
+	 $('#insertModal').on('hidden.bs.modal', function () {
+        // 폼 초기화
+        $("#form")[0].reset();
+    });
     // 기존의 이벤트 핸들러를 제거합니다.
     $("#addCalendar").off("click");
-
+	
     // 추가 버튼 클릭 시 이벤트 핸들러를 설정합니다.
     $("#addCalendar").on("click", function() {
         var scbo_cgory_no = $("#scbo_cgory_no").val();
@@ -209,7 +286,7 @@ function insert() {
         var scbo_content = $("#scbo_content").val();
         var scbo_start = $("#scbo_start").val();
         var scbo_end = $("#scbo_end").val();
-
+		
         //내용 입력 여부 확인
         if (scbo_title == null || scbo_title == "") {
             alert("제목을 입력하세요.");
@@ -221,7 +298,6 @@ function insert() {
             alert("종료일이 시작일보다 먼저입니다.");
         } else { // 정상적인 입력 시
             var data = $("#form").serialize()
-
             $.ajax({
                 url: "/sm/insertScbo.do",
                 data: data,
@@ -257,11 +333,13 @@ $(document).ready(function(){
 
 	// start day와 end day datetimepicker 설정
 	$("#scbo_start, #scbo_end,scbo_start1, #scbo_end1").datetimepicker({
-		disabledWeekDays: [0, 6], // 0: 일요일, 6: 토요일 // 주말 선택 불가
 		allowTimes: ['09:00','09:30', '10:00','10:30', '11:00','11:30','12:00','12:30',
 		 '13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30',
 		 '18:00','18:30','19:00','19:30','20:00','20:30','21:00'], // 선택 가능한 시간
+		 
 	});
+	
+	
 // datetimepicker 생성
 $("#scbo_start").datetimepicker({
 	
@@ -322,7 +400,6 @@ function updateCalendar(){
 					success: function(msg) {
 						console.log(msg);
 						if (msg != true) {
-							alert("insert 실패!!")
 							return false;
 						} else {
 							$("#form")[0].reset(); // 폼 초기화
@@ -331,16 +408,13 @@ function updateCalendar(){
 						}
 					},
 					error: function() {
-						alert("jdbc로 넘기지도 못함");
 					}
 				});
 			}
 }
-
 function deleteCalendar(){
 	var daygridmonth = $(".fc-toolbar-title").text();
-	var result = confirm("글을 삭제 하시겠습니까?");
-	if(result){
+	sweetAlertConfirm("삭제 하시겠습니까?",function(){
 	var scbo_no = $("#scbo_no1").val();
 	$.ajax({
 			url: "/sm/updateScboDelFlag.do",
@@ -354,11 +428,10 @@ function deleteCalendar(){
 					$("#detailModal").modal("hide");
 			},
 			error: function() {
-				alert("jdbc로 넘기지도 못함");
 			}
 		});
-		
-	}
+		},'')
+	
 }
 
 function filterLayer(){

@@ -30,12 +30,16 @@
 	<task:annotation-driven scheduler="scheduler"/>
 	<task:scheduler id="scheduler" pool-size="10"/>
 	
+	<bean id="echoHandler" class="com.hcm.grw.socket.EchoHandler"/>
+	
 	<websocket:handlers>
-		<websocket:mapping handler="hcmWs.do" path="/hcmWs.do"/>
+		<websocket:mapping handler="echoHandler" path="/hcmWs.do"/>
 		<websocket:handshake-interceptors>
 			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
 		</websocket:handshake-interceptors>
 	</websocket:handlers>
+	
+	
 	
 	
 	
@@ -52,6 +56,8 @@
 			<mvc:exclude-mapping path="/login/*"/>
 			<mvc:exclude-mapping path="/error/*"/>
 			<mvc:exclude-mapping path="/api/*"/>
+			<mvc:exclude-mapping path="/hcmWs.do"/>
+			<mvc:exclude-mapping path="/getAlarmList.do"/>
 			<mvc:exclude-mapping path="/"/>
 			<bean class="com.hcm.grw.interceptor.AuthCheckHandler"/>
 		</mvc:interceptor>

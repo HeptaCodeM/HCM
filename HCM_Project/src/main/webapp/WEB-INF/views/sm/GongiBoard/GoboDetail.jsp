@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/views/menu/headerInfo.jsp" %>
 
-<title>SM메인화면</title>
+<title>HCM GroupWare</title>
 <style type="text/css">
  /* 화면늘리는 버튼 숨기기 */
     textarea.comment_inbox_text {
@@ -60,15 +60,16 @@
 					<h1
 						class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">${dto.gobo_title}</h1>
 				</div>
-				
+				<c:if test="${sessionScope.userInfoVo.empl_auth == 'ROLE_SM_ADMIN' || sessionScope.userInfoVo.empl_auth == 'ROLE_SYS_ADMIN'}">
 				<div>
 					<button type="button" class="btn btn-primary"
-						onclick="location.href='/sm/updateGoboMove.do?gobo_no=${dto.gobo_no}'"
+						onclick="location.href='/sm/updateGoboMoveAdmin.do?gobo_no=${dto.gobo_no}'"
 						style="margin-right: 20px">수정</button>
 					<button type="button" class="btn btn-primary"
 						onclick="updateGoboDelFlag(${dto.gobo_no})"
 						style="margin-right: 20px">삭제</button>
 				</div>
+				</c:if>
 			</div>
 		</div>
 
@@ -79,20 +80,23 @@
                     <div class="card card-flush h-md-50 mb-xl-10">
                         <div class="card-body pt-5">
                             <!-- 공지사항 상세 내용 표시 -->
-                            <p>작성자: ${dto.gobo_writer}</p>
-                            <p>작성일: <fmt:formatDate value="${dto.gobo_regdate}" pattern="yyyy-MM-dd HH:mm"/></p>
+                            <div style="display: flex; justify-content: space-between;"><p><strong>작성자: 관리자</strong></p><p>조회수:${dto.gobo_view }</p></div>
+                            <p><fmt:formatDate value="${dto.gobo_regdate}" pattern="yyyy-MM-dd HH:mm"/></p>
+                            <hr style="margin-bottom: 100px;">
                             <p  style="font-size: 20px;">${dto.gobo_content}</p>
-                            <!-- 댓글 표시 -->
-                            <h3>댓글</h3>
+                            <!-- 댓글 표시 -->  
+                            <h3 style="margin-top: 100px">댓글</h3>
                           <ul class="list-group" id="commentList">
                       <c:forEach var="comment" items="${list}" varStatus="index">
-                          <li id="firstReply">
+                          <li id="firstReply${comment.rebo_no}">
                           <input type="hidden" name="rebo_no" id="rebo_no" value="${comment.rebo_no}">
-                              <div class="d-flex align-items-center no-border" style="border: none;">
+                          <input type="hidden" name="rebo_no" id="rebo_no" value="${comment.rebo_no}">
+                              <div class="d-flex align-items-center no-border replyName${comment.rebo_no}" style="border: none;">
 							        <img src="data:image/png;base64,${comment.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">
                                   <div style="margin-left: 10px; position: relative; width: 100%;">
-								    <strong>${comment.rebo_writer}</strong><br>
-								    <div>${comment.rebo_content}</div>
+								    <strong id="rebo_writer${comment.rebo_no}">${comment.rebo_writer}</strong><br>
+								    <div id="replycontent${comment.rebo_no}">${comment.rebo_content}</div>
+								    <c:if test="${sessionScope.userInfoVo.empl_name == comment.rebo_writer}">
 								    <div>
 								        <small><fmt:formatDate value="${comment.rebo_regdate}" pattern="yyyy-MM-dd HH:mm"/></small>
 								        <div style="position: absolute; top: -12px; right: 0; float: right">
@@ -103,6 +107,7 @@
 												</div>
 								        </div>
 								    </div>
+								    </c:if>
 								</div>
 							</div>
                           </li>
@@ -185,7 +190,7 @@ function insertReply(gobo_no){
 		var form = $("#ReplyForm").serialize();
 		var additionalData = "gobo_no=" + gobo_no;
 		form += "&" + additionalData;
-		
+	
 		// jQuery를 사용하여 폼 필드의 값을 가져옵니다.
 		var rebo_writer = $("#ReplyForm #rebo_writer").val();
 		var rebo_content = $("#ReplyForm #rebo_content").val();
@@ -205,24 +210,24 @@ function insertReply(gobo_no){
 					                        ('0' + currentDate.getHours()).slice(-2) + ':' + 
 					                        ('0' + currentDate.getMinutes()).slice(-2);
 
-
+					   
 					   	var	commentHtml = '';
                        if ($("#commentList li").length > 0) {
    					    commentHtml +=('<div class="separator border-2 separator-dashed my-5 hrline"></div>');
    				        }                    
 					                        
-					    commentHtml += '<li>';
+					    commentHtml += '<li id="firstReply'+data.rebo_no+'">';
 					    commentHtml += '<div class="d-flex align-items-center no-border" style="border: none;">';
 					    commentHtml += '<img src="${sessionScope.userInfoVo.empl_picture_str}" alt="프로필 사진" width="36" height="36" class="mr-3">';
 					    commentHtml += '<div style="margin-left: 10px; position: relative; width: 100%;">';
-					    commentHtml += '<strong>'+rebo_writer+'</strong><br>';
-					    commentHtml += '<div>'+rebo_content+'</div>';
+					    commentHtml += '<strong id="rebo_writer'+data.rebo_no+'">'+rebo_writer+'</strong><br>';
+					    commentHtml += '<div id="replycontent'+data.rebo_no+'">'+rebo_content+'</div>';
 					    commentHtml += '<div>';
 					    commentHtml += '<small>'+formattedDate+'</small>';
 					    commentHtml += '<div style="position: absolute; top: 0; right: 0; float: right">';
 					    commentHtml += '<div style="position: relative;">';
-					    commentHtml += '<a role="button" title="더보기" class="comment_tool" href="#" id="comment_tool" onclick="toggleMenu(event,'+data.rebo_no+')">';
-					    commentHtml += '<img alt="더보기" src="https://cdn4.iconfinder.com/data/icons/liny/24/more-menu-vertical-line-64.png" style="height: 60px;">';
+					    commentHtml += '<a role="button" title="더보기" class="comment_tool" href="#" id="comment_tool'+data.rebo_no+'" onclick="toggleMenu(event,'+data.rebo_no+')">';
+					    commentHtml += '<img alt="더보기" src="https://cdn4.iconfinder.com/data/icons/liny/24/more-menu-vertical-line-64.png" style="height: 30px;">';
 					    commentHtml += '</a>';
 					    commentHtml += '</div>';
 					    commentHtml += '</div>';

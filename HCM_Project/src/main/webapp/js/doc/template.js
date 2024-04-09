@@ -1,7 +1,7 @@
 /* 템플릿 카테고리 선택 */
 var select = document.getElementById('selectCategory');
 // 서버에서 데이터를 가져와서 select 옵션 추가
-fetch('./selectCategory.do')
+fetch('./selectCategoryAdmin.do')
 	.then(resp => {
 		return resp.json();
 	})

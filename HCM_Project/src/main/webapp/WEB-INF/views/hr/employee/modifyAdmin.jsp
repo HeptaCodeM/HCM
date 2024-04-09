@@ -89,7 +89,7 @@
 
 										<tr>
 											<th class="required">휴대폰</th>
-											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_phone" id="empl_phone" maxlength="15" value="${empInfo.empl_phone}" required="required"></td>
+											<td colspan="2"><input type="text" class="form-control form-control-solid" name="empl_phone" id="empl_phone" maxlength="15" value="${empInfo.empl_phone}"></td>
 										</tr>
 										<tr>
 											<th>내선번호</th>
@@ -123,7 +123,9 @@
 										</tr>
 										<tr>
 											<th>증명사진</th>
-											<td colspan="2"><input type="file" class="form-control form-control-solid" name="empl_picture"></td>
+											<td colspan="2">
+												<input type="file" class="form-control form-control-solid" id="picChk" name="empl_picture">
+											</td>
 										</tr>
 										<tr>
 											<td colspan="3" style="text-align:center;">
@@ -135,7 +137,7 @@
 												        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
 												    </span>
 												</button>
-												<button type="button" class="btn btn-success btnMd me-10" id="kt_button_1" onclick="location.href='/hr/employee/list.do';">
+												<button type="button" class="btn btn-success btnMd me-10" id="kt_button_1" onclick="location.href='/hr/employee/listAdmin.do'">
 												    <span class="indicator-label">
 												        리스트
 												    </span>
@@ -155,150 +157,5 @@
 			
 <%@include file="/WEB-INF/views/menu/hrSideMenu.jsp" %>		
 </body>
-<script type="text/javascript">
-
-var orgEmpl_phone = "";
-var orgEmpl_tel = "";
-var orgEmpl_fax = "";
-var aftEmpl_phone = "";
-var aftEmpl_tel = "";
-var aftEmpl_fax = "";
-
-window.onload = function(){
-
-    orgEmpl_phone = document.getElementById("empl_phone").value;
-    orgEmpl_tel = document.getElementById("empl_tel").value;
-    orgEmpl_fax = document.getElementById("empl_fax").value;
-
-
-    console.log(orgEmpl_phone);
-    console.log(orgEmpl_tel);
-    console.log(orgEmpl_fax);
-
-}
-
-document.onkeydown = function(e) {
-	key = (e) ? e.keyCode : event.keyCode;
-	aftEmpl_phone = document.getElementById("empl_phone").value;
-	aftEmpl_tel = document.getElementById("empl_tel").value;
-	aftEmpl_fax = document.getElementById("empl_fax").value;
-    
-    
-    if(orgEmpl_phone == aftEmpl_phone ||
-        	orgEmpl_tel == aftEmpl_tel ||	
-        	orgEmpl_fax == aftEmpl_fax){
-    		if(key==116) {
-    			if(e) {
-    			e.preventDefault();
-    			} else {
-    			event.keyCode = 0;
-    			event.returnValue = false;
-    			}
-    		}    	
-        }
-    
-}
-
-
-
-function valChk() {
-	
-	aftEmpl_phone = document.getElementById("empl_phone").value;
-	aftEmpl_tel = document.getElementById("empl_tel").value;
-	aftEmpl_fax = document.getElementById("empl_fax").value
-	
-    console.log(orgEmpl_phone);
-    console.log(orgEmpl_tel);
-    console.log(orgEmpl_fax);
-    console.log(aftEmpl_phone);
-    console.log(aftEmpl_tel);
-    console.log(aftEmpl_fax);
-    
-     if(orgEmpl_phone == aftEmpl_phone &&
-        	orgEmpl_tel == aftEmpl_tel &&	
-        	orgEmpl_fax == aftEmpl_fax){
-    		swalAlert("변경된 값이 없습니다!","","","","");
-    		return false;
-        } 
-    
-    
-    var regexPhoneNum = /^\d{3}-\d{4}-\d{4}$/;
-    if(!regexPhoneNum.test(aftEmpl_phone)){
-    	swalAlert("\"010-1234-1234\"형식으로 입력하세요!","","","","");
-    }
-    
-    
-    
-    var regexTelNum = /^\d{3}$/;
-    if(!regexTelNum.test(aftEmpl_tel)){
-    	swalAlert("\"111\"형식으로 입력하세요!","","","","");
-    }
-    
-    
-    var regexFaxNum = /^\d{2,3}-\d{3}-\d{4}$/;
-    if(!regexFaxNum.test(aftEmpl_fax)){
-    	swalAlert("\"(02)031-123-1234\"형식으로 입력하세요!","","","","");
-    }
-    
-}
-var phoneNumChk = document.querySelector("#empl_phone");
-phoneNumChk.addEventListener("focusout",function(){ phoneChk(); });
-var telNumChk = document.querySelector("#empl_tel");
-telNumChk.addEventListener("focusout",function(){ telChk(); });
-var faxNumChk = document.querySelector("#empl_fax");
-faxNumChk.addEventListener("focusout",function(){ faxChk(); });
-
-function phoneChk() {
-	const chkNum = document.getElementById("empl_phone").value;
-	$.ajax({
-	    type: "GET",
-	    url: "/hr/employee/empAdminValueChk.do?empl_phone="+chkNum,	
-	    success: function (data) {
-	        console.log(data);
-	        if(data == false){
-	        	swalAlert("중복된 전화번호입니다.","","","","empl_phone");
-	        }
-	    },
-	    error:function(err){
-			console.log(err);
-		}
-	});
-}
-
-function telChk(){
-	const chkNum = document.getElementById("empl_tel").value;
-	$.ajax({
-	    type: "GET",
-	    url: "/hr/employee/empAdminValueChk.do?empl_tel="+chkNum,	
-	    success: function (data) {
-	        console.log(data);
-	        if(data == false){
-	        	swalAlert("중복된 내선번호입니다.","","","","empl_tel");
-	        }	        
-	        
-	    },
-	    error:function(err){
-			console.log(err);
-		}
-	});	
-}
-
-function faxChk() {
-	const chkNum = document.getElementById("empl_fax").value;
-	$.ajax({
-	    type: "GET",
-	    url: "/hr/employee/empAdminValueChk.do?empl_fax="+chkNum,	
-	    success: function (data) {
-	        console.log(data);
-	        if(data == false){
-	        	swalAlert("중복된 팩스번호입니다.","","","","empl_fax");
-	        }	 	        
-	    },
-	    error:function(err){
-			console.log(err);
-		}
-	});
-}
-
-</script>
+<script type="text/javascript" src="/js/hr/modifyAdmin.js"></script>
 </html>

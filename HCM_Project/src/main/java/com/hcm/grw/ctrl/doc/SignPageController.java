@@ -50,12 +50,6 @@ public class SignPageController {
 	@Autowired
 	private HolidayService holiService;
 	
-	@GetMapping("write.do")
-	public String write() {
-		log.info("SignTreeController write.do GET 문서작성 페이지");
-		return "doc/write";
-	}
-
 	@GetMapping("signFavo.do")
 	public String signFavo(Model model, HttpSession session) {
 		log.info("SignTreeController signFavo.do GET 결재선 관리 페이지");
@@ -99,27 +93,26 @@ public class SignPageController {
 			model.addAttribute("loginInfo", dto.get(0));
 			Map<String, Object> map = holiService.selectEmpTotalHoliDayInfo(dto.get(0).getEmpl_id());
 			model.addAttribute("holiMap", map);
-			log.info(map.toString());
 		}
 		CompanyDto cDto = tService.getCompInfo();
 		if(cDto.getComp_seal() != null) {
 			cDto.setComp_seal_str(Base64Utils.encodeToString(cDto.getComp_seal()));
+			cDto.setComp_seal(null);
 		}
 		model.addAttribute("com", cDto);
 		return "doc/writeDoc/writeDoc";
 	}
 	
+	@SuppressWarnings("deprecation")
 	@GetMapping(value = "getTempDoc.do")
 	public String getTempDoc(@RequestParam String sitb_doc_num, Model model) throws JsonMappingException, JsonProcessingException {
 		log.info("SignPageController getTempDoc.do 임시보관함 문서 불러오기");
 		SignTempBoxDto dto = bService.getTempDoc(sitb_doc_num);
 		model.addAttribute("dto", dto);
+		Map<String, Object> map = holiService.selectEmpTotalHoliDayInfo(dto.getEmpl_id());
+		model.addAttribute("holiMap",map);
+
 		return "/doc/writeDoc/getTempDoc";
-	}
-	
-	@GetMapping("fileTest.do")
-	public String fileTest() {
-		return "doc/fileTest";
 	}
 	
 	@GetMapping("signManagement.do")

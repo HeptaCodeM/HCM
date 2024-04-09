@@ -19,6 +19,17 @@
     line-height: 12px;
 }
 
+.picture{
+ display: inline-block; 
+ vertical-align: middle;
+ width: 50px; 
+ height: 50px; 
+ border-radius: 22px;
+ background-repeat: no-repeat; 
+ background-position: center; 
+ background-size: cover;
+}
+
 </style>
 </head>
 
@@ -53,7 +64,7 @@
 				<div class="app-container container-fluid">
 					<div class="card card-flush h-md-50 mb-xl-10">
 						<div class="card-header pt-5">
-							<h3 class="card-title text-gray-800 fw-bold">결재문서</h3>
+							<h3 class="card-title text-gray-800 fw-bold">내가 작성한 모든 문서 보관함</h3>
 						</div>
 						<div class="separator separator-dashed my-3"></div>
 						<div class="card-body pt-5" style="height: 80%;">
@@ -118,12 +129,12 @@
 									<span class="path1"></span> <span class="path2"></span>
 								</i> <br> ${dto.sidt_temp_name}
 							</c:when>
-							<c:when test="${dto.sidt_temp_cd eq 'TC000013'}">
+							<c:when test="${dto.sidt_temp_cd eq 'TC000013'|| dto.sidt_temp_cd eq  'TC000006'}">
 								<i class="ki-duotone ki-briefcase fs-3x text-gray-900">
  							<span class="path1"></span><span class="path2"></span>
 								</i> <br> ${dto.sidt_temp_name}
 							</c:when>
-							<c:when test="${dto.sidt_temp_cd eq 'TC000002'}">
+							<c:when test="${dto.sidt_temp_cd eq 'TC000002' || dto.sidt_temp_cd eq 'TC000001'}">
 								<i class="ki-duotone ki-home fs-3x text-muted">
 								</i> <br> ${dto.sidt_temp_name}
 							</c:when>
@@ -139,7 +150,8 @@
 						<td><a href="#" onclick="detailBoard(${dto.sidb_doc_num})">${dto.sidb_doc_title}</a> <br> <br>
 						기안일자 |<fmt:parseDate var="patternDate"	value="${dto.sidb_doc_writedt}"	pattern="yyyy-MM-dd HH:mm:ss" /> 
 								<fmt:formatDate value="${patternDate}" pattern="yyyy년 MM월 dd일" /></td>
-						<td><img style="width:50px; height:50px; border-radius: 22px;"  src="${dto.empl_pictureStr}" /> ${dto.empl_name}</td>
+						<td><div class="picture" style="background-image: url('${dto.empl_pictureStr}');"></div>
+    						<span style="vertical-align: middle;">${dto.empl_name}</span></td>
 						
 						<td style="text-align:center;">
 						
@@ -150,32 +162,34 @@
 							
 							<c:if test="${dto.sidb_doc_stat == 1  and !empty dto.appr_name1 and empty dto.appr_name2 and  dto.appr_flag0 == 0}">
 							<img style="width:80%;" src="/image/doc/docBox/s1a2d1.png">
-							<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: DodgerBlue;  font-size: large;">
-							${dto.appr_name0} ></span> <span style="display:inline-block; width:22%;"></span>${dto.appr_name1}
+							<br> 기안 <span style="display:inline-block; width:27%;"> </span><span style="color: DodgerBlue;  font-size: large;">
+							${dto.appr_name0} ></span> <span style="display:inline-block; width:23%;"></span>${dto.appr_name1}
 							</c:if>
 							
 							<c:if test="${dto.sidb_doc_stat == 2  and empty dto.appr_name2 and dto.appr_flag0 == 1 and dto.appr_flag1 == 0}">
 							<img style="width:80%;" src="/image/doc/docBox/s2a2d2.png">
-							<br>  &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:20%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">
-							${dto.appr_name0} > </span> <span style="display:inline-block; width:24%;"></span><span style="color: DodgerBlue; font-size: large; ">${dto.appr_name1} &nbsp; &nbsp;</span> 
+							<br>  &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:21%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">
+							${dto.appr_name0} > </span> <span style="display:inline-block; width:26%;"></span><span style="color: DodgerBlue; font-size: large; ">${dto.appr_name1} &nbsp; &nbsp;</span> 
 							</c:if>
 							
 							<c:if test="${dto.sidb_doc_stat == 2  and !empty dto.appr_name2 and dto.appr_flag0 == 1 and dto.appr_flag1 == 0}">
 							<img style="width:80%;" src="/image/doc/docBox/s2a3d2.png">
 							<br>   &nbsp;&nbsp;기안 <span style="display:inline-block; width:13%;"></span><span style="color: MediumSeaGreen;">${dto.appr_name0} ></span> 
-							<span style="display:inline-block; width:11%;"></span>&nbsp;&nbsp;&nbsp; &nbsp;<span style="color: DodgerBlue; font-size: large;">${dto.appr_name1} &nbsp;></span>
-							&nbsp;&nbsp; <span style="display:inline-block; width:9%;"></span>${dto.appr_name2}&nbsp; &nbsp;
+							<span style="display:inline-block; width:13%;"></span>&nbsp;&nbsp;&nbsp; &nbsp;<span style="color: DodgerBlue; font-size: large;">${dto.appr_name1} &nbsp;></span>
+							&nbsp;&nbsp; <span style="display:inline-block; width:10%;"></span>${dto.appr_name2}&nbsp; &nbsp;
 							</c:if>
 							
 							<c:if test="${dto.sidb_doc_stat == 2  and !empty dto.appr_name2 and dto.appr_flag1 == 1 and dto.appr_flag2 == 0}">
 							<img style="width:80%;" src="/image/doc/docBox/s2a3d3.png">
-							<br> 기안 &nbsp;&nbsp; <span style="color: MediumSeaGreen;">${dto.appr_name0} ></span> &nbsp;&nbsp;&nbsp; &nbsp;<span style="color: blue; font-size: larger;">${dto.appr_name1} &nbsp;></span>&nbsp;&nbsp; ${dto.appr_name2}&nbsp; &nbsp;
+							<br>  &nbsp; &nbsp; &nbsp;기안 <span style="display:inline-block; width:14%;"></span><span style="color: MediumSeaGreen;">${dto.appr_name0} ></span> 
+							<span style="display:inline-block; width:12%;"></span>&nbsp;&nbsp;&nbsp; &nbsp;<span style="color: MediumSeaGreen;">${dto.appr_name1} &nbsp;></span>
+							&nbsp;&nbsp; <span style="display:inline-block; width:13%;"></span><span style="color: DodgerBlue; font-size: large;">${dto.appr_name2}</span>&nbsp; &nbsp;
 							</c:if>
 							
 							<c:if test="${dto.sidb_doc_stat == 1  and !empty dto.appr_name2 and dto.appr_flag0 == 0 }">
 							<img style="width:80%;" src="/image/doc/docBox/s1a3d1.png">
-							<br> &nbsp;&nbsp;기안 <span style="display:inline-block; width:12%;"></span><span style="color: DodgerBlue; font-size: large;">${dto.appr_name0} ></span> 
-							<span style="display:inline-block; width:10%;"></span>&nbsp;&nbsp;&nbsp; &nbsp;${dto.appr_name1} &nbsp;>
+							<br> &nbsp;&nbsp;기안 <span style="display:inline-block; width:13%;"></span><span style="color: DodgerBlue; font-size: large;">${dto.appr_name0} ></span> 
+							<span style="display:inline-block; width:13%;"></span>&nbsp;&nbsp;&nbsp; &nbsp;${dto.appr_name1} &nbsp;>
 							&nbsp;&nbsp; <span style="display:inline-block; width:10%;"></span>${dto.appr_name2}&nbsp; &nbsp;
 							</c:if>
 							
@@ -186,14 +200,14 @@
 							
 							<c:if test="${dto.sidb_doc_stat == 3 and !empty dto.appr_name1 and empty dto.appr_name2 and dto.appr_flag1 == 1 }">
 							<img style="width:80%;" src="/image/doc/docBox/s3a2d2.png">
-							<br>   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:20%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">
-							${dto.appr_name0} > </span> <span style="display:inline-block; width:24%;"></span><span style="color: MediumSeaGreen; font-size: large; ">${dto.appr_name1} &nbsp; &nbsp;</span> 
+							<br>   &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:21%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">
+							${dto.appr_name0} > </span> <span style="display:inline-block; width:26%;"></span><span style="color: MediumSeaGreen; font-size: large; ">${dto.appr_name1} &nbsp; &nbsp;</span> 
 							</c:if>
 							
 							<c:if test="${dto.sidb_doc_stat == 3  and !empty dto.appr_name2 and dto.appr_flag2 == 1 }">
 							<img style="width:80%;" src="/image/doc/docBox/s3a3d3.png">
-							<br>  &nbsp; &nbsp; &nbsp;기안 <span style="display:inline-block; width:13%;"></span><span style="color: MediumSeaGreen;">${dto.appr_name0} ></span> 
-							<span style="display:inline-block; width:12%;"></span>&nbsp;&nbsp;&nbsp; &nbsp;<span style="color: MediumSeaGreen;">${dto.appr_name1} &nbsp;></span>
+							<br>  &nbsp; &nbsp; &nbsp;기안 <span style="display:inline-block; width:15%;"></span><span style="color: MediumSeaGreen;">${dto.appr_name0} ></span> 
+							<span style="display:inline-block; width:14%;"></span>&nbsp;&nbsp;&nbsp; &nbsp;<span style="color: MediumSeaGreen;">${dto.appr_name1} &nbsp;></span>
 							&nbsp;&nbsp; <span style="display:inline-block; width:10%;"></span><span style="color: MediumSeaGreen; font-size: large;">${dto.appr_name2}</span>&nbsp; &nbsp;
 							</c:if>
 				
@@ -205,20 +219,20 @@
 							
 							<c:if test="${dto.sidb_doc_stat == 4  and !empty dto.appr_name1 and empty dto.appr_name2 and dto.appr_flag0 == 2 }">
 							<img style="width:80%;" src="/image/doc/docBox/s4a2d1.png">
-							<br> 기안 <span style="display:inline-block; width:25%;"> </span><span style="color: red;  font-size: large;">
-							${dto.appr_name0} > </span> <span style="display:inline-block; width:22%;"></span>${dto.appr_name1}
+							<br> 기안 <span style="display:inline-block; width:27%;"> </span><span style="color: red;  font-size: large;">
+							${dto.appr_name0} > </span> <span style="display:inline-block; width:23%;"></span>${dto.appr_name1}
 							</c:if>
 							
 							<c:if test="${dto.sidb_doc_stat == 4  and empty dto.appr_name2 and dto.appr_flag1 == 2 }">
 							<img style="width:80%;" src="/image/doc/docBox/s4a2d2.png">
 							<br> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;기안 &nbsp;  &nbsp;  <span style="display:inline-block; width:21%;"> </span>&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;<span style="color: MediumSeaGreen; ">
-							${dto.appr_name0} > </span> <span style="display:inline-block; width:24%;"></span><span style="color: red; font-size: large; ">${dto.appr_name1} &nbsp; &nbsp;</span> 
+							${dto.appr_name0} > </span> <span style="display:inline-block; width:26%;"></span><span style="color: red; font-size: large; ">${dto.appr_name1} &nbsp; &nbsp;</span> 
 							</c:if>
 							
 							<c:if test="${dto.sidb_doc_stat == 4  and !empty dto.appr_name2 and dto.appr_flag0 == 2 }">
 							<img style="width:80%;" src="/image/doc/docBox/s4a3d1.png">
-							<br> &nbsp;&nbsp;기안 <span style="display:inline-block; width:12%;"></span><span style="color: red; font-size: large;">${dto.appr_name0} ></span> 
-							<span style="display:inline-block; width:10%;"></span>&nbsp;&nbsp;&nbsp; &nbsp;${dto.appr_name1} &nbsp;>
+							<br> &nbsp;&nbsp;기안 <span style="display:inline-block; width:13%;"></span><span style="color: red; font-size: large;">${dto.appr_name0} ></span> 
+							<span style="display:inline-block; width:13%;"></span>&nbsp;&nbsp;&nbsp; &nbsp;${dto.appr_name1} &nbsp;>
 							&nbsp;&nbsp; <span style="display:inline-block; width:10%;"></span>${dto.appr_name2}&nbsp; &nbsp;
 							</c:if>
 							
@@ -231,9 +245,9 @@
 							
 							<c:if test="${dto.sidb_doc_stat == 4  and !empty dto.appr_name2 and dto.appr_flag2 == 2 }">
 							<img style="width:80%;" src="/image/doc/docBox/s4a3d3.png">
-							<br>  &nbsp; &nbsp; &nbsp;기안 <span style="display:inline-block; width:13%;"></span><span style="color: MediumSeaGreen;">${dto.appr_name0} ></span> 
-							<span style="display:inline-block; width:12%;"></span>&nbsp;&nbsp;&nbsp; &nbsp;<span style="color: MediumSeaGreen;">${dto.appr_name1} &nbsp;></span>
-							&nbsp;&nbsp; <span style="display:inline-block; width:10%;"></span><span style="color: red; font-size: large;">${dto.appr_name2}</span>&nbsp; &nbsp;
+							<br>  &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;기안 <span style="display:inline-block; width:14%;"></span><span style="color: MediumSeaGreen;">${dto.appr_name0} ></span> 
+							<span style="display:inline-block; width:13%;"></span>&nbsp;&nbsp;&nbsp; &nbsp;<span style="color: MediumSeaGreen;">${dto.appr_name1} &nbsp;></span>
+							&nbsp;&nbsp; <span style="display:inline-block; width:14%;"></span><span style="color: red; font-size: large;">${dto.appr_name2}</span>&nbsp; &nbsp;
 							</c:if>
 						</td>
 						<td>
@@ -271,7 +285,7 @@
 
 
 </body>
-<script type="text/javascript" src="../js/doc/docBox.js"></script>
+<script type="text/javascript" src="/js/doc/docBox.js"></script>
 
 
 </html>

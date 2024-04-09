@@ -29,37 +29,30 @@
 	<security:http auto-config="true" use-expressions="true">
 		<!-- 접근제한 설정 : URL 단위로 매핑 -->
 		<!-- 모든 사용자 접근 권한 -->
-		<!-- <security:intercept-url pattern="/login.*" access="permitAll" /> -->
-		<security:intercept-url pattern="/main*.do" access="permitAll" />
-		<security:intercept-url pattern="/error/**" access="permitAll" />
+		<security:intercept-url pattern="/login/*" access="permitAll" />
+		<security:intercept-url pattern="/api/*" access="permitAll" />
+
 		<security:intercept-url pattern="/assets/**" access="permitAll" />
-		<security:intercept-url pattern="/images/**" access="permitAll" />
+		<security:intercept-url pattern="/ckeditor5/**" access="permitAll" />
+		<security:intercept-url pattern="/css/**" access="permitAll" />
+		<security:intercept-url pattern="/image/**" access="permitAll" />
+		<security:intercept-url pattern="/css/**" access="permitAll" />
+		<security:intercept-url pattern="/js/**" access="permitAll" />
+		<security:intercept-url pattern="/json/**" access="permitAll" />
+		<security:intercept-url pattern="/src/**" access="permitAll" />
 		
 		<!-- /WEB-INF/ 접근권한 -->
-		<security:intercept-url pattern="/WEB-INF/error/**" access="permitAll" />
 		<security:intercept-url pattern="/WEB-INF/views/**" access="permitAll" />
 
-		<!-- 시스템 권한 -->
-
-		<!-- <security:intercept-url pattern="/system.do" access="hasRole('SYS_ADMIN')" /> -->
-		<security:intercept-url pattern="/system.do" access="permitAll" />
 		<!-- 인사관리자 접근 권한 -->
-		<security:intercept-url pattern="/hr/*admin*.do" access="hasAnyRole('HR_ADMIN')" />
-		<!-- <security:intercept-url pattern="/hr/*admin*.do" access="permitAll" /> -->
+		<security:intercept-url pattern="/hr/**/*Admin*.do" access="hasAnyRole('HR_ADMIN','SYS_ADMIN')" />
 		<!-- 일정관리자 접근 권한 -->
-		<!-- <security:intercept-url pattern="/sm/*admin*.do" access="hasAnyRole('SM_ADMIN')" /> -->
-		<security:intercept-url pattern="/sm/*admin*.do" access="permitAll" />
+		<security:intercept-url pattern="/sm/*Admin*.do" access="hasAnyRole('SM_ADMIN','SYS_ADMIN')" />
 		<!-- 결재관리자 접근 권한 -->
-		<!-- <security:intercept-url pattern="/doc/*admin*.do" access="hasAnyRole('DOC_ADMIN')" /> -->
-		<security:intercept-url pattern="/doc/*admin*.do" access="permitAll" />
+		<security:intercept-url pattern="/doc/*Admin*.do" access="hasAnyRole('DOC_ADMIN','SYS_ADMIN')" />
 
 		<!-- 일반회원 접근 권한 -->
-		<!-- <security:intercept-url pattern="/hr/*" access="isAuthenticated()" />
-		<security:intercept-url pattern="/sm/*" access="isAuthenticated()" />
-		<security:intercept-url pattern="/doc/*" access="isAuthenticated()" /> -->
-		<security:intercept-url pattern="/hr/**" access="isAuthenticated()" />
-		<security:intercept-url pattern="/sm/*" access="permitAll" />
-		<security:intercept-url pattern="/doc/*" access="permitAll" />
+		<security:intercept-url pattern="/**" access="isAuthenticated()" />
 
 		<!-- 
 		login-page : 로그인 Custom Page 설정
@@ -91,7 +84,9 @@
 		-->
 		<security:remember-me key="HCM"
 							  token-validity-seconds="864000" 
-							  remember-me-parameter="remember-me"/>
+							  remember-me-parameter="autoLogin"
+							  remember-me-cookie="autoLogin"
+							  />
 		<security:session-management>
 			<security:concurrency-control max-sessions="1" expired-url="/logout" />
 		</security:session-management>

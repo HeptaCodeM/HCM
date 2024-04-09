@@ -84,7 +84,7 @@ public class EmployeeController {
 		model.addAttribute("rankList", rankList);
 		model.addAttribute("positionList", positionList);
 		
-		return "/hr/employee/registEmpAdmin";
+		return "hr/employee/registEmpAdmin";
 	}
 
 	@PostMapping("registEmpAdminOk.do")
@@ -151,7 +151,7 @@ public class EmployeeController {
 			sb.append("alert('등록 시 오류가 발생하였습니다.'); history.back();");
 		}else {
 			sb.append("alert('정상적으로 등록 되었습니다.');");
-			sb.append("location.href='/hr/employee/list.do';");
+			sb.append("location.href='/hr/employee/listAdmin.do';");
 		}
 		sb.append("</script>");
 		
@@ -180,7 +180,7 @@ public class EmployeeController {
 		
 		model.addAttribute("empInfo", empInfo);
 		
-		return "/hr/employee/empModify";
+		return "hr/employee/empModify";
 	}	
 	
 	
@@ -436,7 +436,7 @@ public class EmployeeController {
 // =========================== 구분선 =========================================	
 	
 	
-	@GetMapping("list.do")
+	@GetMapping("listAdmin.do")
 	public String employeeAllList(Model model) {
 		log.info("{} 사원정보 리스트 진입", Function.getMethodName());
 		
@@ -460,7 +460,7 @@ public class EmployeeController {
 		model.addAttribute("positionList", positionList);
 		model.addAttribute("lists", lists);
 		
-		return "/hr/employee/list";
+		return "hr/employee/listAdmin";
 	}	
 
 	@GetMapping("modifyAdmin.do")
@@ -473,15 +473,16 @@ public class EmployeeController {
 		byte[] empPic = empInfo.getEmpl_picture();
 		empInfo.setEmpl_picture_str(Function.blobImageToString(empPic));
 		model.addAttribute("empInfo", empInfo);
-//		return "/hr/employee/modifyAdmin";
+//		return "hr/employee/modifyAdmin";
 		
 	}	
 	
 	
 	@PostMapping("modifyAdminOk.do")
-	public @ResponseBody void employeeModifyOk(@RequestParam("empl_picture") List<MultipartFile> file, 
+	public @ResponseBody void modifyAdminOk(@RequestParam("empl_picture") List<MultipartFile> file, 
 												@RequestParam Map<String, String> map, 
 												Authentication authentication,
+												HttpServletRequest req,
 												String empl_id) throws IOException {
 		log.info("{} 수정처리", Function.getMethodName());
 		
@@ -514,11 +515,22 @@ public class EmployeeController {
 			return;
 			//sb.append("alert('수정 시 오류가 발생하였습니다.'); history.back();");
 		}else {
-			Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/modifyAdmin.do?empl_id="+empl_id, "","","");
+			/* Session정보 Update */
+			EmployeeDto employeeDto = employeeService.getUserInfo(map.get("empl_id"));
+			HttpSession session = req.getSession();
+			//이미지 스트링 정보로 처리
+			employeeDto.setEmpl_picture_str(Function.blobImageToString(employeeDto.getEmpl_picture()));
+			//2진정보 초기화
+			employeeDto.setEmpl_picture(null);
+			session.setAttribute("userInfoVo", employeeDto);
+
+			
+			Function.alertLocation("정상적으로 수정 되었습니다.", "/hr/employee/listAdmin.do", "","","");
 			return;
 			//sb.append("alert('정상적으로 수정 되었습니다.');");
 			//sb.append("location.href='/hr/employee/list.do';");
 		}
+        
 	}
 	
 	

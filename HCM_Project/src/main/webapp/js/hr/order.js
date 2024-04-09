@@ -1,4 +1,4 @@
-/* 휴가현황 검색(임직원) */
+/* 발령현황 검색(임직원) */
 function orderSearchList(){
 	var f = $("#searchOrderDate");
 	/*
@@ -41,7 +41,8 @@ function orderSearchList(){
 				info: false,
 				language: {
 					emptyTable: "조회된 정보가 없습니다."
-				}
+				},
+				order : [[0,"desc"]]
 			});
 
 		},
@@ -53,7 +54,7 @@ function orderSearchList(){
 }
 
 
-/* 휴가현황 검색(관리자) */
+/* 발령현황 검색(관리자) */
 function orderSearchAdminList(){
 	var f = $("#searchOrderAdminForm");
 	
@@ -119,7 +120,8 @@ function orderSearchAdminList(){
 				info: false,
 				language: {
 					emptyTable: "조회된 정보가 없습니다."
-				}
+				},
+				order : [[0,"desc"]]
 			});
 
 		},
@@ -178,7 +180,8 @@ function empInfoSearch(flag){
 				info: false,
 				language: {
 					emptyTable: "조회된 정보가 없습니다."
-				}
+				},
+				order : [[1,"desc"]]
 			});
 		},
 		error:function(request, error){
@@ -330,6 +333,8 @@ function delelteOrderAdminOk(){
 
 var confirm_emor_id="";
 function confirmOrderAdmin(emor_id){
+	var f = document.modifyOrderForm;
+	f.reset();
 	confirm_emor_id = emor_id;
 	
 	var rows = document.getElementsByClassName('item');

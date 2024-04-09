@@ -42,6 +42,7 @@ public class CreateNewAuthService {
 		    newAuth.setDetails(auth.getDetails());
 			SecurityContextHolder.getContext().setAuthentication(newAuth);
 			
+			
 			//Session Role정보 Update
 			EmployeeDto employeeDto = employeeService.getUserInfo(newAuth.getName());
 			//이미지 스트링 정보로 처리

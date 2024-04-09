@@ -100,5 +100,26 @@
    		FROM SIGN_DOC_FILE
    		WHERE SIDF_FILE_NUM = #{sidf_file_num}
    </select>
+   
+   <select id="selectNumber" resultType="SignBoxDto">
+		SELECT SIDB_DOC_NUM , SIDB_DOC_BE, SIDB_DOC_END
+			FROM SIGN_DOC_BOX sdb 
+			WHERE EMPL_ID = #{empl_id}
+			AND SIDB_DOC_STAT != '4'
+			AND SIDT_TEMP_CD IN ('TC000001', 'TC000002', 'TC000006')
+   </select>
+   
+   <select id="duplicateDate" resultType="String">
+   		<![CDATA[
+			SELECT COUNT(*)
+				FROM SIGN_DOC_BOX sdb
+				WHERE EMPL_ID = #{empl_id}
+				AND SIDB_DOC_STAT != '4'
+				AND SIDT_TEMP_CD IN ('TC000001', 'TC000002', 'TC000006')
+				AND (#{sidb_doc_be} BETWEEN SIDB_DOC_BE AND SIDB_DOC_END
+				OR #{sidb_doc_end} BETWEEN SIDB_DOC_BE AND SIDB_DOC_END
+				OR (#{sidb_doc_be} < SIDB_DOC_BE AND #{sidb_doc_end} > SIDB_DOC_END))
+		]]>
+   </select>
 
 </mapper>

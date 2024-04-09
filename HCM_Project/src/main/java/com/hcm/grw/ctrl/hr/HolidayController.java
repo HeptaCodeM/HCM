@@ -72,7 +72,15 @@ public class HolidayController {
 		REST_HOLIDAY
 		*/
 		Map<String, Object> holidayTotalMap = holidayService.selectEmpTotalHoliDayInfo(empl_id);
-		
+		log.info("holidayTotalMap : {}", holidayTotalMap);
+		// 휴가정보 없을때 초기값 처리
+		if(holidayTotalMap == null) {
+			holidayTotalMap = new HashMap<String, Object>();
+			holidayTotalMap.put("TOTAL_HOLIDAY", "0");
+			holidayTotalMap.put("USE_HOLIDAY", "0");
+			holidayTotalMap.put("REST_HOLIDAY", "0");
+			holidayTotalMap.put("STANDARD_HOLIDAY", "-");
+		}
 		/*
 		휴가 사용현황 리스트
 		*/
