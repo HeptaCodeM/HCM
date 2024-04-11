@@ -13,7 +13,7 @@ onload = function() {
 }, 1000);
 	
 	if (ws === null) {
-		ws = new WebSocket('ws://129.154.49.247:9090/hcmWs.do');
+		ws = new WebSocket('ws://129.154.49.247:8088/hcmWs.do');
 		ws.onopen = function() {
 			console.log('WebSocket 연결 성공');
 		}
