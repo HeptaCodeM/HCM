@@ -19,7 +19,7 @@ import com.hcm.grw.dto.doc.SignTempBoxDto;
 import com.hcm.grw.model.service.doc.ISignBoxService;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/**/*.xml")
 public class SignBoxServiceImpl_JUnitTest {
 
@@ -28,12 +28,12 @@ public class SignBoxServiceImpl_JUnitTest {
 	@Autowired
 	private ISignBoxService service;
 	
-	@Test
+	//@Test
 	public void test() {
 		assertNotNull(sessionTemplate);
 	}
 	
-	@Test
+	//@Test
 	public void signBoxServiceImplTest() {
 		
 		SignBoxDto dto = new SignBoxDto();

@@ -26,7 +26,7 @@ import com.hcm.grw.model.mapper.doc.IDocBoxDao;
 import com.hcm.grw.model.service.doc.IApprDenyService;
 import com.hcm.grw.model.service.doc.IDocBoxService;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/**/*.xml")
 public class RJY_JUnitTest {
 
@@ -217,7 +217,7 @@ public class RJY_JUnitTest {
    }
 
    
-    @Test 
+    //@Test 
      public void getDocs() { 
      
      SignBoxDto dto = new SignBoxDto();

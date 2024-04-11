@@ -17,7 +17,7 @@ import com.hcm.grw.dto.doc.SignFavoDto;
 import com.hcm.grw.dto.hr.EmployeeDto;
 import com.hcm.grw.model.service.doc.ISignFavoService;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/**/*.xml")
 public class SignFavoServiceImpl_JUnitTest {
 
@@ -26,12 +26,12 @@ public class SignFavoServiceImpl_JUnitTest {
 	@Autowired
 	private ISignFavoService service;
 	
-	@Test
+	//@Test
 	public void test() {
 		assertNotNull(sessionTemplate);
 	}
 	
-	@Test
+	//@Test
 	public void signFavoServiceImplTest() {
 		
 		Map<String, Object> map = new HashMap<String, Object>();

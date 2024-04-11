@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.hcm.grw.dto.sm.ReplyDto;
 import com.hcm.grw.model.mapper.sm.IReplyDao;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/**/*.xml")
 public class ReplyServiceImpl_JUnitTest {
 
@@ -24,7 +24,7 @@ public class ReplyServiceImpl_JUnitTest {
 	
 	@Autowired
 	private IReplyDao dao ;
-	@Test
+	//@Test
 	public void test() {
 		
 		

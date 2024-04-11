@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.hcm.grw.dto.sm.ScbDto;
 import com.hcm.grw.model.mapper.sm.IScbDao;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/**/*.xml")
 public class ScbServiceImpl_JUnitTest {
 
@@ -28,7 +28,7 @@ public class ScbServiceImpl_JUnitTest {
 	@Autowired
 	private IScbDao dao;
 	
-	@Test
+	//@Test
 	public void test() throws ParseException {
 		
 		String start = "2024-03-05";

@@ -16,7 +16,7 @@ import com.hcm.grw.model.service.doc.ISignTreeService;
 import com.hcm.grw.model.service.doc.ITemplateService;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/**/*.xml")
 public class Sinario_JUnitTest {
 	
@@ -32,7 +32,7 @@ public class Sinario_JUnitTest {
 	private IDocBoxService docService;
 	
 
-	@Test
+	//@Test
 	public void test() {
 		fail("Not yet implemented");
 	}

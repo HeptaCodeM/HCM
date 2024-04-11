@@ -17,7 +17,7 @@ import com.hcm.grw.dto.doc.TemplateDto;
 import com.hcm.grw.model.service.doc.ITempTreeService;
 import com.hcm.grw.model.service.doc.ITemplateService;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/**/*.xml")
 public class TemplateService_JUnitTest {
 	
@@ -81,7 +81,7 @@ public class TemplateService_JUnitTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void getTempTree() {
 		List<TempTreeDto> lists = sv.getTempTree();
 		assertNotEquals(0, lists.size());

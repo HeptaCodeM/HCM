@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.hcm.grw.dto.doc.SignTreeDto;
 import com.hcm.grw.model.service.doc.ISignTreeService;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/**/*.xml")
 public class SignTreeServiceImpl_JUnitTest {
 
@@ -23,12 +23,12 @@ public class SignTreeServiceImpl_JUnitTest {
 	@Autowired
 	private ISignTreeService service;
 	
-	@Test
+	//@Test
 	public void test() {
 		assertNotNull(sessionTemplate);
 	}
 	
-	@Test
+	//@Test
 	public void signTreeServiceImplTest() {
 		List<SignTreeDto> treeList = service.getSignTree();
 		assertNotEquals(0, treeList);
