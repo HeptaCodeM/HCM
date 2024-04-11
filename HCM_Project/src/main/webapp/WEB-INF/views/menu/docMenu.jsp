@@ -1,10 +1,23 @@
+<%@page import="com.hcm.grw.dto.hr.EmployeeDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%
 // 메뉴명
-String docLeftMenu [] = {"내결재관리", "기안서작성", "임시저장", "결재설정" , "서명관리" , "관리자메뉴"};
-// 메뉴링크
-String docLeftMenuLink [] = {"/doc/docBox.do", "/doc/writeDoc.do", "/doc/tempDocs.do", "/doc/signFavo.do" ,"/doc/signManagement.do","/doc/templateAdmin.do"};
+EmployeeDto dto = (EmployeeDto)session.getAttribute("userInfoVo");
+
+String auth = dto.getEmpl_auth();
+String[] docLeftMenu;
+String[] docLeftMenuLink;
+if(auth.equalsIgnoreCase("ROLE_DOC_ADMIN")) {
+	docLeftMenu = new String[]{"내결재관리", "기안서작성", "임시저장", "결재설정" , "서명관리" , "관리자메뉴"};
+	// 메뉴링크
+	docLeftMenuLink = new String[]{"/doc/docBox.do", "/doc/writeDoc.do", "/doc/tempDocs.do", "/doc/signFavo.do" ,"/doc/signManagement.do","/doc/templateAdmin.do"};
+} else {
+	docLeftMenu = new String[]{"내결재관리", "기안서작성", "임시저장", "결재설정" , "서명관리"};
+	// 메뉴링크
+	docLeftMenuLink = new String[]{"/doc/docBox.do", "/doc/writeDoc.do", "/doc/tempDocs.do", "/doc/signFavo.do" ,"/doc/signManagement.do"};
+}
+
 
 String docUri = request.getRequestURI();
 String currentDocPageName = docUri.substring(docUri.lastIndexOf("/") + 1).replace(".jsp","");

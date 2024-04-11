@@ -109,6 +109,7 @@ public class SignFavoRestController {
 		}
 		siaf_appr_line = siaf_appr_line.substring(siaf_appr_line.indexOf(",") + 1, siaf_appr_line.lastIndexOf(",")).trim();
 		dto.setSiaf_appr_line(siaf_appr_line);
+		log.info(siaf_appr_line);
 		int n = service.insertFavApprLine(dto);
 		if(n > 0) {
 			return ResponseEntity.ok("저장 성공");
