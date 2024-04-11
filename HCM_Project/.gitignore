@@ -22,9 +22,7 @@ local.properties
 .loadpath
 .recommenders
 *.MF
-db.properties
-email.properties
-api.properties
+
 
 # External tool builders
 .externalToolBuilders/
